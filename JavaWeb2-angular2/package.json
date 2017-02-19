@@ -3,13 +3,28 @@
   "version": "1.0.0",
   "description": "JavaWeb2-angular2",
   "scripts": {
-
+    "server": "webpack-dev-server --inline --colors --progress --port 3000",
+    "start": "npm run server"
   },
   "license": "MIT",
   "devDependencies": {
-
+    "@types/core-js": "0.9.35",
+    "source-map-loader": "0.1.6",
+    "ts-loader": "2.0.0",
+    "typescript": "2.1.6",
+    "typings": "2.1.0",
+    "webpack": "~1.12.9",
+    "webpack-dev-server": "~1.14.0"
   },
   "dependencies": {
-
+    "@angular/common": "2.4.8",
+    "@angular/compiler": "2.4.8",
+    "@angular/core": "2.4.8",
+    "@angular/http": "2.4.8",
+    "@angular/platform-browser": "2.4.8",
+    "@angular/platform-browser-dynamic": "2.4.8",
+    "core-js": "2.4.1",
+    "rxjs": "5.1.1",
+    "zone.js": "0.7.7"
   }
 }

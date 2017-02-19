@@ -3,5 +3,7 @@
 devDependencies在开发中会依赖其一些功能（形如JUnit），但是在部署时不会添加使用进去；
 dependencies是项目开发和部署所依赖的（形如node_modules里的文件）
 2、对于依赖包的查找可以访问：https://www.npmjs.com/
+3、webpack和webpack-dev-server的版本并不是越新越好，到底这两个的版本对应关系如何，本人不大清楚，因此建议网上找个相匹配的
 二、webpack.config.js简要说明
-1、“filename: './bundle.js'”这个是指定打包后的输出文件名，需要被引入到index.html中去
+1、“filename: 'bundle.js'”这个是指定打包后的输出文件名，需要被引入到index.html中去
+2、entry指明了主入口，不可缺少
