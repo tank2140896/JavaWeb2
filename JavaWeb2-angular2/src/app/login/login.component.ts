@@ -19,4 +19,4 @@ import {BrowserModule} from "@angular/platform-browser";
 })
 export class LoginComponent{}
 
-platformBrowserDynamic().bootstrapModule(LoginComponent);//.catch(err => console.error(err));
+platformBrowserDynamic().bootstrapModule(LoginComponent).catch(err => console.error(err));
