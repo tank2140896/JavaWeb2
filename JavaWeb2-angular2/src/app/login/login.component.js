@@ -10,7 +10,9 @@ require("zone.js");
 var platform_browser_dynamic_1 = require("@angular/platform-browser-dynamic");
 var core_1 = require("@angular/core");
 var core_2 = require("@angular/core");
+var http_1 = require("@angular/http");
 var platform_browser_1 = require("@angular/platform-browser");
+//import {Component,NgModule} from '@angular/core';
 var LoginComponent = LoginComponent_1 = (function () {
     function LoginComponent() {
     }
@@ -19,7 +21,7 @@ var LoginComponent = LoginComponent_1 = (function () {
 LoginComponent = LoginComponent_1 = __decorate([
     core_2.NgModule({
         declarations: [LoginComponent_1],
-        imports: [platform_browser_1.BrowserModule],
+        imports: [platform_browser_1.BrowserModule, http_1.HttpModule],
         bootstrap: [LoginComponent_1]
     }),
     core_1.Component({
@@ -29,6 +31,6 @@ LoginComponent = LoginComponent_1 = __decorate([
     })
 ], LoginComponent);
 exports.LoginComponent = LoginComponent;
-platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(LoginComponent); //.catch(err => console.error(err));
+platform_browser_dynamic_1.platformBrowserDynamic().bootstrapModule(LoginComponent).catch(function (err) { return console.error(err); });
 var LoginComponent_1;
 //# sourceMappingURL=login.component.js.map
