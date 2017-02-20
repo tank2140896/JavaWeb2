@@ -4,11 +4,13 @@ import 'zone.js';
 import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 import {Component} from '@angular/core';
 import {NgModule} from '@angular/core';
+import {HttpModule} from '@angular/http';
 import {BrowserModule} from "@angular/platform-browser";
+//import {Component,NgModule} from '@angular/core';
 
 @NgModule({
     declarations: [LoginComponent],
-    imports: [BrowserModule],
+    imports: [BrowserModule,HttpModule],
     bootstrap: [LoginComponent]
 })
 
