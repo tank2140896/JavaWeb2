@@ -6,20 +6,20 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var core_1 = require("@angular/core");
-var login_component_1 = require("./login/login.component");
 var AppComponent = (function () {
     function AppComponent() {
     }
+    AppComponent.prototype.login = function () {
+        console.log(1);
+    };
     return AppComponent;
 }());
 AppComponent = __decorate([
     core_1.Component({
         selector: 'web-app',
-        templateUrl: './login/login.html',
-        styleUrls: ['./login/login.css']
+        templateUrl: 'app/login.html',
+        styleUrls: ['app/login.css']
     })
 ], AppComponent);
 exports.AppComponent = AppComponent;
-var lc = new login_component_1.LoginComponent();
-lc.test();
 //# sourceMappingURL=app.component.js.map

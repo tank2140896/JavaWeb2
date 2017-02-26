@@ -1,5 +1,4 @@
-import 'core-js';
-import 'zone.js';
+
 
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
