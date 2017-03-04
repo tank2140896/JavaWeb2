@@ -1,14 +1,13 @@
-
-
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpModule} from '@angular/http';
+import {FormsModule} from '@angular/forms';
 import {APP_BASE_HREF} from '@angular/common';
 
 import {AppComponent} from './app.component';
 
 @NgModule({
-    imports: [BrowserModule, HttpModule],
+    imports: [BrowserModule, HttpModule, FormsModule],
     declarations: [AppComponent],
     bootstrap: [AppComponent],
     providers: [{
