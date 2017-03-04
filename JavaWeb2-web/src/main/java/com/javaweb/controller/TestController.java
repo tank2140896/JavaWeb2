@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.javaweb.dataobject.po.User;
 import com.javaweb.service.rbac.UserService;
 
 @RestController
@@ -17,6 +20,10 @@ public class TestController {
 	
 	@GetMapping("/test")
 	public String index(){
+		User user = new User();
+		//Gson gson = new Gson();
+		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();  
+		System.out.println(gson.toJson(user));
 		return "aaa";
 	}
 	
