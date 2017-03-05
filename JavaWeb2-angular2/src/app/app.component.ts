@@ -1,4 +1,9 @@
-import {Component} from '@angular/core';
+import {Component, Injectable} from '@angular/core';
+
+import {Http} from '@angular/http';
+//import {Observable} from 'rxjs/Rx';
+
+import {LoginUser} from './models/login/login.user';
 
 @Component({
   selector: 'web-app',
@@ -6,7 +11,10 @@ import {Component} from '@angular/core';
   styleUrls: ['app/login/login.css']
 })
 
+@Injectable()
 export class AppComponent{
+
+  constructor(private http:Http) { }
 
   /*------ 语言切换 start ------*/
   //初始化默认语言
@@ -33,8 +41,14 @@ export class AppComponent{
   }
   /*------ 语言切换 end ------*/
 
+  /*------ 用户登录 start ------*/
+  //用到[()]双向绑定需要初始化
+  private user:LoginUser = new LoginUser();
+
   public login():void{
-    console.log(1);
+    console.log(this.http.get("app/test.json").subscribe());
+    console.log(this.user);
   }
+  /*------ 用户登录 end ------*/
 
 }
