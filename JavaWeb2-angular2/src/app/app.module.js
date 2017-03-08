@@ -9,8 +9,9 @@ var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
 var http_1 = require("@angular/http");
 var forms_1 = require("@angular/forms");
-var common_1 = require("@angular/common");
+//import {APP_BASE_HREF} from '@angular/common';
 var app_component_1 = require("./app.component");
+var home_component_1 = require("./home/home.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -19,12 +20,9 @@ var AppModule = (function () {
 AppModule = __decorate([
     core_1.NgModule({
         imports: [platform_browser_1.BrowserModule, http_1.HttpModule, forms_1.FormsModule],
-        declarations: [app_component_1.AppComponent],
+        declarations: [app_component_1.AppComponent, home_component_1.HomeComponent],
         bootstrap: [app_component_1.AppComponent],
-        providers: [{
-                provide: common_1.APP_BASE_HREF,
-                useValue: '<%=APP_BASE%>'
-            }]
+        providers: []
     })
 ], AppModule);
 exports.AppModule = AppModule;
