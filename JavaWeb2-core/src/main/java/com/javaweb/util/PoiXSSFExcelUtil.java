@@ -7,6 +7,8 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
@@ -41,11 +43,29 @@ public class PoiXSSFExcelUtil {
 		return list;
 	}
 	
+	//根据sheet名字遍历单个sheet
+	public static List<?> readSingleExcelSheet(InputStream inputStream,String sheetName,Map<Integer,String> map,Class<?> objectClass) throws Exception {
+		XSSFWorkbook xssfWorkbook = new XSSFWorkbook(inputStream);
+		XSSFSheet xssfSheet = xssfWorkbook.getSheet(sheetName);
+		List<?> list = readSheet(xssfSheet,map,objectClass);
+		xssfWorkbook.close();
+		return list;
+	}
+	
 	//根据sheet序号遍历单个sheet
 	public static List<List<String>> readSingleExcelSheet(InputStream inputStream,int sheetIndex) throws IOException {
 		XSSFWorkbook xssfWorkbook = new XSSFWorkbook(inputStream);
 		XSSFSheet xssfSheet = xssfWorkbook.getSheetAt(sheetIndex);
 		List<List<String>> list = readSheet(xssfSheet);
+		xssfWorkbook.close();
+		return list;
+	}
+	
+	//根据sheet序号遍历单个sheet
+	public static List<?> readSingleExcelSheet(InputStream inputStream,int sheetIndex,Map<Integer,String> map,Class<?> objectClass) throws Exception {
+		XSSFWorkbook xssfWorkbook = new XSSFWorkbook(inputStream);
+		XSSFSheet xssfSheet = xssfWorkbook.getSheetAt(sheetIndex);
+		List<?> list = readSheet(xssfSheet,map,objectClass);
 		xssfWorkbook.close();
 		return list;
 	}
@@ -113,6 +133,50 @@ public class PoiXSSFExcelUtil {
 				cellList.add(cellValue);
 			}
 			rowList.add(cellList);
+		}
+		return rowList;
+	}
+	
+	//读取每个sheet里的数据
+	private static List<?> readSheet(XSSFSheet xssfSheet,Map<Integer,String> map,Class<?> objectClass) throws Exception{
+		int rows = xssfSheet.getPhysicalNumberOfRows();
+		List<Object> rowList = new ArrayList<>();
+		for(int i=0;i<rows;i++){//遍历每一行
+			Object target = objectClass.newInstance();
+			XSSFRow row = xssfSheet.getRow(i);
+			if(row==null){
+				continue;
+			}
+			Set<Integer> set = map.keySet();
+			for(Integer each:set){
+				XSSFCell cell = row.getCell(each);
+				if(cell==null){
+					continue;
+				}
+				cell.setCellType(CellType.STRING);
+				String fieldName = map.get(each);
+				Class<?> fieldType = objectClass.getDeclaredField(fieldName).getType();
+				fieldName = fieldName.substring(0,1).toUpperCase()+fieldName.substring(1,fieldName.length());
+				Object value = "";
+				try{
+					if("java.lang.Double".equals(fieldType.getName())){
+						value = new Double(cell.toString());
+						target.getClass().getDeclaredMethod("set"+fieldName,Double.class).invoke(target, value);
+					}else if("java.lang.Integer".equals(fieldType.getName())){
+						value = new Double(cell.toString()).intValue();
+						target.getClass().getDeclaredMethod("set"+fieldName,Integer.class).invoke(target, value);
+					}else if("java.lang.Float".equals(fieldType.getName())){
+						value = new Float(cell.toString());
+						target.getClass().getDeclaredMethod("set"+fieldName,Float.class).invoke(target, value);
+					}else{
+						value = cell.toString();
+						target.getClass().getDeclaredMethod("set"+fieldName,String.class).invoke(target, value);
+					}
+				}catch(Exception e){
+					//do nothing
+				}
+			}
+			rowList.add(target);
 		}
 		return rowList;
 	}
