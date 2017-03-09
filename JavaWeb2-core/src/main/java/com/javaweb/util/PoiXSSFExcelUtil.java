@@ -11,6 +11,7 @@ import java.util.List;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
@@ -106,8 +107,9 @@ public class PoiXSSFExcelUtil {
 			List<String> cellList = new ArrayList<>();
 			for(int j=0;j<cells;j++){//遍历每一列
 				XSSFCell cell = row.getCell(j);
+				cell.setCellType(CellType.STRING);
 				//new Double("1.0").intValue()
-				String cellValue = cell.toString();
+				String cellValue = cell.getStringCellValue();
 				cellList.add(cellValue);
 			}
 			rowList.add(cellList);
@@ -127,8 +129,8 @@ public class PoiXSSFExcelUtil {
 			XSSFCell[] cells = new XSSFCell[columns.size()];
 			for(int j=0;j<columns.size();j++){
 				cells[j] = rows[i].createCell(j);
-				cells[j].setCellValue(columns.get(j));
 				//cells[j].setCellStyle(XSSFCellStyle);
+				cells[j].setCellValue(columns.get(j));
 			}
 		}
 		return xssfWorkbook;
@@ -156,6 +158,8 @@ public class PoiXSSFExcelUtil {
 					cells[j].setCellValue(new Double(value.toString()));
 				}else if(value instanceof Integer){
 					cells[j].setCellValue(new Double(value.toString()).intValue());
+				}else if(value instanceof Float){
+					cells[j].setCellValue(new Double(value.toString()));
 				}else{
 					cells[j].setCellValue(value.toString());
 				}
