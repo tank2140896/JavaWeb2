@@ -12,6 +12,9 @@ var forms_1 = require("@angular/forms");
 //import {APP_BASE_HREF} from '@angular/common';
 var app_component_1 = require("./app.component");
 var home_component_1 = require("./home/home.component");
+var header_component_1 = require("./home/header/header.component");
+var sidebar_component_1 = require("./home/sidebar/sidebar.component");
+var centeral_component_1 = require("./home/centeral/centeral.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -20,7 +23,7 @@ var AppModule = (function () {
 AppModule = __decorate([
     core_1.NgModule({
         imports: [platform_browser_1.BrowserModule, http_1.HttpModule, forms_1.FormsModule],
-        declarations: [app_component_1.AppComponent, home_component_1.HomeComponent],
+        declarations: [app_component_1.AppComponent, home_component_1.HomeComponent, header_component_1.HeaderComponent, sidebar_component_1.SidebarComponent, centeral_component_1.CenteralComponent],
         bootstrap: [app_component_1.AppComponent],
         providers: []
     })

@@ -7,10 +7,13 @@ import {FormsModule} from '@angular/forms';
 import {AppComponent} from './app.component';
 
 import {HomeComponent} from './home/home.component';
+import {HeaderComponent} from './home/header/header.component';
+import {SidebarComponent} from './home/sidebar/sidebar.component';
+import {CenteralComponent} from './home/centeral/centeral.component';
 
 @NgModule({
     imports: [BrowserModule, HttpModule, FormsModule],
-    declarations: [AppComponent,HomeComponent],
+    declarations: [AppComponent,HomeComponent,HeaderComponent,SidebarComponent,CenteralComponent],
     bootstrap: [AppComponent],
     providers: [/**{
         provide: APP_BASE_HREF,

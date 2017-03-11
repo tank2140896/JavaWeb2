@@ -1,4 +1,4 @@
-import {Component, Injectable} from '@angular/core';
+import {Component, Injectable, OnInit} from '@angular/core';
 
 import {Http} from '@angular/http';
 //import {Observable} from 'rxjs/Rx';
@@ -12,9 +12,11 @@ import {LoginUser} from './models/login/login.user';
 })
 
 @Injectable()
-export class AppComponent{
+export class AppComponent implements OnInit {
 
   constructor(private http:Http) { }
+
+  ngOnInit(){ }
 
   /*------ 语言切换 start ------*/
   //初始化默认语言
