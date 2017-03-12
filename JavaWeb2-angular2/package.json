@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "JavaWeb2-angular2",
   "scripts": {
-    "server": "webpack-dev-server --inline --colors --progress --port 3000",
+    "server": "webpack-dev-server --inline --colors --progress --port 3000 --content-base src",
     "start": "npm run server"
   },
   "license": "MIT",
@@ -24,6 +24,7 @@
     "@angular/forms": "2.4.8",
     "@angular/platform-browser": "2.4.8",
     "@angular/platform-browser-dynamic": "2.4.8",
+    "@angular/router": "3.4.8",
     "core-js": "2.4.1",
     "rxjs": "5.1.1",
     "zone.js": "0.7.7",

@@ -6,17 +6,18 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var core_1 = require("@angular/core");
-var AppComponent = (function () {
-    function AppComponent() {
+var LogService = (function () {
+    function LogService() {
     }
-    return AppComponent;
+    //constructor(){ }
+    //输出日志的方法
+    LogService.prototype.writeLog = function (logMessage) {
+        console.log(logMessage);
+    };
+    return LogService;
 }());
-AppComponent = __decorate([
-    core_1.Component({
-        selector: 'web-app',
-        //templateUrl: 'app/app.component.html'
-        template: '<router-outlet></router-outlet>'
-    })
-], AppComponent);
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+LogService = __decorate([
+    core_1.Injectable()
+], LogService);
+exports.LogService = LogService;
+//# sourceMappingURL=log.service.js.map

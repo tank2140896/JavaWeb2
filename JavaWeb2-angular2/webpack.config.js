@@ -1,6 +1,8 @@
 var webpack = require('webpack');
 var path = require('path');
+
 module.exports = {
+
   entry: './src/app/main.ts',
 
   output: {
@@ -17,4 +19,5 @@ module.exports = {
       { test: /\.ts$/, loader: 'ts-loader' }
     ]
   }
+
 };
