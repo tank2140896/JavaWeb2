@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {Router} from '@angular/router';
 
 import {LoginUser} from '../models/login/login.user';
 
@@ -10,7 +11,7 @@ import {LoginUser} from '../models/login/login.user';
 
 export class LoginComponent{
 
-    constructor() { }
+    constructor(private router:Router) { }
 
     ngOnInit(){ }
 
@@ -45,6 +46,7 @@ export class LoginComponent{
 
     public login():void{
         console.log(this.user);
+        this.router.navigate(['home']);//<a [routerLink]="['home']">Home</a>
     }
     /*------ 用户登录 end ------*/
 

@@ -5,10 +5,15 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
 var core_1 = require("@angular/core");
+var router_1 = require("@angular/router");
 var login_user_1 = require("../models/login/login.user");
 var LoginComponent = (function () {
-    function LoginComponent() {
+    function LoginComponent(router) {
+        this.router = router;
         /*------ 语言切换 start ------*/
         //初始化默认语言
         this.defaultLangue = { display: '中文', value: 'CN' };
@@ -38,6 +43,7 @@ var LoginComponent = (function () {
     };
     LoginComponent.prototype.login = function () {
         console.log(this.user);
+        this.router.navigate(['home']); //<a [routerLink]="['home']">Home</a>
     };
     return LoginComponent;
 }());
@@ -46,7 +52,8 @@ LoginComponent = __decorate([
         selector: 'web-app',
         templateUrl: 'app/login/login.html',
         styleUrls: ['app/login/login.css']
-    })
+    }),
+    __metadata("design:paramtypes", [router_1.Router])
 ], LoginComponent);
 exports.LoginComponent = LoginComponent;
 //# sourceMappingURL=login.components.js.map
