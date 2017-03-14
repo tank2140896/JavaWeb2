@@ -20,7 +20,7 @@
 		    <artifactId>util-collections</artifactId>  
 		    <version>0.0.1</version>  
 		    <scope>system</scope>  
-		    <systemPath>${project.basedir}/src/main/resources/external/util-collections-0.0.1.jar</systemPath>  
+		    <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/util-collections-0.0.1.jar</systemPath>  
 		</dependency>
 		<!-- 工具类集合 end -->
 		<!-- 添加自己额外扩展的jar包 end -->
