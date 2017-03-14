@@ -46,7 +46,7 @@ export class LoginComponent{
 
     public login():void{
         console.log(this.user);
-        this.router.navigate(['home']);//<a [routerLink]="['home']">Home</a>
+        this.router.navigate(['home']/*,{queryParams:{'myKey':100}}*/);//<a [routerLink]="['home']" [queryParams]="{'myKey':100}" >Home</a>
     }
     /*------ 用户登录 end ------*/
 

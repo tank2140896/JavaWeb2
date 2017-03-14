@@ -2,10 +2,11 @@ import {Routes,RouterModule} from '@angular/router';
 
 import {HomeComponent} from "./home/home.component";
 import {LoginComponent} from "./login/login.components";
+import {ROUTES_CENTERAL} from "./home/centeral/centeral.routes";
 
 const APP_ROUTES:Routes = [
     {path:'',component:LoginComponent},
-    {path:'home',component:HomeComponent}
+    {path:'home',component:HomeComponent,children:ROUTES_CENTERAL}
 ];
 
 /*
