@@ -19,9 +19,9 @@
 		    <groupId>com.github.tank2140896</groupId>  
 		    <artifactId>util-collections</artifactId>  
 		    <version>0.0.1</version>  
-		    <scope>system</scope>  
-	            <!-- TODO 未建相关目录，待补齐 -->		
-		    <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/util-collections-0.0.1.jar</systemPath>  
+		    <scope>system</scope> 
+		    <systemPath>${project.basedir}/src/main/resources/external/util-collections-0.0.1.jar</systemPath>
+		    <!-- <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/util-collections-0.0.1.jar</systemPath> -->  
 		</dependency>
 		<!-- 工具类集合 end -->
 		<!-- 添加自己额外扩展的jar包 end -->
@@ -86,6 +86,7 @@
 					<source>1.8</source>
 					<target>1.8</target>
 					<encoding>utf8</encoding>
+					<!--  
 					<compilerArgs> 
 					    <arg>-verbose</arg>
 					    <arg>-Xlint:unchecked</arg>
@@ -95,6 +96,7 @@
 					    <arg>-extdirs</arg> 
 					    <arg>${project.basedir}/src/main/webapp/WEB-INF/lib</arg>
 					</compilerArgs>
+					-->
 				</configuration>
 			</plugin>
 			<plugin>
