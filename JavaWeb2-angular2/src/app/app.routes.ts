@@ -6,7 +6,8 @@ import {ROUTES_CENTERAL} from "./home/centeral/centeral.routes";
 
 const APP_ROUTES:Routes = [
     {path:'',component:LoginComponent},
-    {path:'home',component:HomeComponent,children:ROUTES_CENTERAL}
+    {path:'home',component:HomeComponent,children:ROUTES_CENTERAL},
+    {path:'**',redirectTo:'/',pathMatch:'full'}//访问任何不存在的URL都将跳回登录页面
 ];
 
 /*

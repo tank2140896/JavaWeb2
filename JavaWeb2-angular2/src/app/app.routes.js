@@ -5,7 +5,8 @@ var login_components_1 = require("./login/login.components");
 var centeral_routes_1 = require("./home/centeral/centeral.routes");
 var APP_ROUTES = [
     { path: '', component: login_components_1.LoginComponent },
-    { path: 'home', component: home_component_1.HomeComponent, children: centeral_routes_1.ROUTES_CENTERAL }
+    { path: 'home', component: home_component_1.HomeComponent, children: centeral_routes_1.ROUTES_CENTERAL },
+    { path: '**', redirectTo: '/', pathMatch: 'full' } //访问任何不存在的URL都将跳回登录页面
 ];
 /*
  路由有两种策略，HashLocationStrategy和PathLocationStrategy，我这里用的是HashLocationStrategy
