@@ -14,11 +14,13 @@ var app_component_1 = require("./app.component");
 var home_component_1 = require("./home/home.component");
 var header_component_1 = require("./home/header/header.component");
 var sidebar_component_1 = require("./home/sidebar/sidebar.component");
-var centeral_app_component_1 = require("./home/centeral/centeral.app.component");
 var login_components_1 = require("./login/login.components");
-var user_list_component_1 = require("./home/centeral/sys_manager/user_manager/user.list.component");
-var role_list_component_1 = require("./home/centeral/sys_manager/role_manager/role.list.component");
+var user_list_component_1 = require("./home/centeral/sys_manager/user_manager/list/user.list.component");
+var user_add_component_1 = require("./home/centeral/sys_manager/user_manager/add/user.add.component");
+var role_list_component_1 = require("./home/centeral/sys_manager/role_manager/list/role.list.component");
 var centeral_component_1 = require("./home/centeral/centeral.component");
+var user_component_1 = require("./home/centeral/sys_manager/user_manager/user.component");
+var role_component_1 = require("./home/centeral/sys_manager/role_manager/role.component");
 var AppModule = (function () {
     function AppModule() {
     }
@@ -33,9 +35,11 @@ AppModule = __decorate([
             home_component_1.HomeComponent,
             header_component_1.HeaderComponent,
             sidebar_component_1.SidebarComponent,
-            centeral_app_component_1.CenteralAppComponent,
             centeral_component_1.CenteralComponent,
+            user_component_1.UserComponent,
             user_list_component_1.UserListComponent,
+            user_add_component_1.UserAddComponent,
+            role_component_1.RoleComponent,
             role_list_component_1.RoleListComponent
         ],
         bootstrap: [app_component_1.AppComponent],

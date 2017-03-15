@@ -9,11 +9,13 @@ import {AppComponent} from './app.component';
 import {HomeComponent} from './home/home.component';
 import {HeaderComponent} from './home/header/header.component';
 import {SidebarComponent} from './home/sidebar/sidebar.component';
-import {CenteralAppComponent} from './home/centeral/centeral.app.component';
 import {LoginComponent} from "./login/login.components";
-import {UserListComponent} from "./home/centeral/sys_manager/user_manager/user.list.component";
-import {RoleListComponent} from "./home/centeral/sys_manager/role_manager/role.list.component";
+import {UserListComponent} from "./home/centeral/sys_manager/user_manager/list/user.list.component";
+import {UserAddComponent} from "./home/centeral/sys_manager/user_manager/add/user.add.component";
+import {RoleListComponent} from "./home/centeral/sys_manager/role_manager/list/role.list.component";
 import {CenteralComponent} from "./home/centeral/centeral.component";
+import {UserComponent} from "./home/centeral/sys_manager/user_manager/user.component";
+import {RoleComponent} from "./home/centeral/sys_manager/role_manager/role.component";
 
 @NgModule({
     imports: [BrowserModule, HttpModule, FormsModule, routes],
@@ -23,9 +25,11 @@ import {CenteralComponent} from "./home/centeral/centeral.component";
             HomeComponent,
                 HeaderComponent,
                 SidebarComponent,
-                CenteralAppComponent,
-                    CenteralComponent,
+                CenteralComponent,
+                    UserComponent,
                         UserListComponent,
+                        UserAddComponent,
+                    RoleComponent,
                         RoleListComponent
     ],
     bootstrap: [AppComponent],

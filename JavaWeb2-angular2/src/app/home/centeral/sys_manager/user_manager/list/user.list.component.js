@@ -6,16 +6,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var core_1 = require("@angular/core");
-var RoleListComponent = (function () {
-    function RoleListComponent() {
+var UserListComponent = (function () {
+    function UserListComponent() {
     }
-    return RoleListComponent;
+    return UserListComponent;
 }());
-RoleListComponent = __decorate([
+UserListComponent = __decorate([
     core_1.Component({
-        selector: 'role-list',
-        templateUrl: 'app/home/centeral/sys_manager/role_manager/role.list.html'
+        selector: 'user-list',
+        templateUrl: 'app/home/centeral/sys_manager/user_manager/list/user.list.html'
     })
-], RoleListComponent);
-exports.RoleListComponent = RoleListComponent;
-//# sourceMappingURL=role.list.component.js.map
+], UserListComponent);
+exports.UserListComponent = UserListComponent;
+//# sourceMappingURL=user.list.component.js.map

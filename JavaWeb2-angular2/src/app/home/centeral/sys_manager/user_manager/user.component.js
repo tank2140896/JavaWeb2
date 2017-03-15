@@ -6,16 +6,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var core_1 = require("@angular/core");
-var UserListComponent = (function () {
-    function UserListComponent() {
+var UserComponent = (function () {
+    function UserComponent() {
     }
-    return UserListComponent;
+    return UserComponent;
 }());
-UserListComponent = __decorate([
+UserComponent = __decorate([
     core_1.Component({
-        selector: 'user-list',
-        templateUrl: 'app/home/centeral/sys_manager/user_manager/user.list.html'
+        selector: 'centeral-user',
+        template: '<router-outlet></router-outlet>'
     })
-], UserListComponent);
-exports.UserListComponent = UserListComponent;
-//# sourceMappingURL=user.list.component.js.map
+], UserComponent);
+exports.UserComponent = UserComponent;
+//# sourceMappingURL=user.component.js.map

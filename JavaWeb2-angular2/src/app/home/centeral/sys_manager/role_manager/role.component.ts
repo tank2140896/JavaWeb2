@@ -1,12 +1,10 @@
 import {Component} from '@angular/core';
 
 @Component({
-    selector: 'centeral-app',
+    selector: 'centeral-role',
     template: '<router-outlet></router-outlet>'
 })
 
-export class CenteralAppComponent {
-
-
+export class RoleComponent {
 
 }

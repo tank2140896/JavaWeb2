@@ -6,16 +6,16 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 var core_1 = require("@angular/core");
-var CenteralAppComponent = (function () {
-    function CenteralAppComponent() {
+var RoleListComponent = (function () {
+    function RoleListComponent() {
     }
-    return CenteralAppComponent;
+    return RoleListComponent;
 }());
-CenteralAppComponent = __decorate([
+RoleListComponent = __decorate([
     core_1.Component({
-        selector: 'centeral-app',
-        template: '<router-outlet></router-outlet>'
+        selector: 'role-list',
+        templateUrl: 'app/home/centeral/sys_manager/role_manager/list/role.list.html'
     })
-], CenteralAppComponent);
-exports.CenteralAppComponent = CenteralAppComponent;
-//# sourceMappingURL=centeral.app.component.js.map
+], RoleListComponent);
+exports.RoleListComponent = RoleListComponent;
+//# sourceMappingURL=role.list.component.js.map
