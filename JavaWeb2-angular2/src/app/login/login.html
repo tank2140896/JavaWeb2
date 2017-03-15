@@ -1,0 +1,26 @@
+<div class="langueStyle">
+    <span>语言</span>
+    <!-- 要想用ngModel需要引入[import {FormsModule} from '@angular/forms';] -->
+    <select [ngModel]="defaultLangue.value" (ngModelChange)="langueChange($event)">
+        <option *ngFor="let langue of langues" [ngValue]="langue.value">{{langue.display}}</option>
+    </select>
+</div>
+<div class="loginStyle">
+    <div>
+        <span>用户名</span>
+        <input type="text" [(ngModel)]="user.username"/>
+    </div>
+    <div>
+        <span>密码</span>
+        <input type="password" [(ngModel)]="user.password"/>
+    </div>
+    <div>
+        <span>验证码</span>
+        未定义
+    </div>
+    <div>
+        <button (click)="login()">登录</button>
+        <a href="#">注册</a>
+        <a href="#">忘记密码</a>
+    </div>
+</div>
