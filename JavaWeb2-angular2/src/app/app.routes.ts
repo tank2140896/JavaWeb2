@@ -4,9 +4,11 @@ import {HomeComponent} from "./home/home.component";
 import {LoginComponent} from "./login/login.components";
 import {ROUTES_CENTERAL} from "./home/centeral/centeral.routes";
 
+import {AuthService} from "./service/auth/AuthService";
+
 const APP_ROUTES:Routes = [
-    {path:'',component:LoginComponent},
-    {path:'home',component:HomeComponent,children:ROUTES_CENTERAL},
+    {path:'',component:LoginComponent},//任何人都可以访问登录界面
+    {path:'home',component:HomeComponent,children:ROUTES_CENTERAL,canActivate:[AuthService]},//只有登录成功后才能访问
     {path:'**',redirectTo:'/',pathMatch:'full'}//访问任何不存在的URL都将跳回登录页面
 ];
 

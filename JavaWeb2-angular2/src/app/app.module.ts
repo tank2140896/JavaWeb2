@@ -16,6 +16,8 @@ import {RoleListComponent} from "./home/centeral/sys_manager/role_manager/list/r
 import {CenteralComponent} from "./home/centeral/centeral.component";
 import {UserComponent} from "./home/centeral/sys_manager/user_manager/user.component";
 import {RoleComponent} from "./home/centeral/sys_manager/role_manager/role.component";
+import {AuthService} from "./service/auth/AuthService";
+import {HttpService} from "./service/http/HttpService";
 
 @NgModule({
     imports: [BrowserModule, HttpModule, FormsModule, routes],
@@ -33,7 +35,7 @@ import {RoleComponent} from "./home/centeral/sys_manager/role_manager/role.compo
                         RoleListComponent
     ],
     bootstrap: [AppComponent],
-    providers: [ ]
+    providers: [AuthService,HttpService]
 })
 
 export class AppModule { }
