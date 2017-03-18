@@ -1,17 +1,20 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
+import {Response, Headers, RequestOptions} from "@angular/http";
 
 import {LoginUser} from '../models/login/login.user';
+import {HttpService} from "../service/http/HttpService";
 
 @Component({
     selector: 'web-app',
     templateUrl: 'app/login/login.html',
-    styleUrls: ['app/login/login.css']
+    styleUrls: ['app/login/login.css'],
+    providers: [HttpService]
 })
 
 export class LoginComponent{
 
-    constructor(private router:Router) { }
+    constructor(private router:Router,private httpService:HttpService) { }
 
     ngOnInit(){ }
 
@@ -45,8 +48,19 @@ export class LoginComponent{
     private user:LoginUser = new LoginUser();
 
     public login():void{
-        console.log(this.user);
-        this.router.navigate(['home']/*,{queryParams:{'myKey':100}}*/);//<a [routerLink]="['home']" [queryParams]="{'myKey':100}" >Home</a>
+        /**
+        let headers = new Headers();
+        headers.append('Content-Type','application/json');
+        let options = new RequestOptions({headers:headers});
+        let body = JSON.stringify('json_value');
+        this.httpService.postData('url',body,options);
+        */
+        this.httpService.getData('app/1test.json').subscribe(
+            (data:any)=>console.log(data),
+            (error:any)=>console.log(error)
+        );
+        //console.log(this.user);
+        //this.router.navigate(['home']/*,{queryParams:{'myKey':100}}*/);//<a [routerLink]="['home']" [queryParams]="{'myKey':100}" >Home</a>
     }
     /*------ 用户登录 end ------*/
 

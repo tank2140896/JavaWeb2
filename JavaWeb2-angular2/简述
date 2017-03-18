@@ -7,3 +7,21 @@ dependencies是项目开发和部署所依赖的（形如node_modules里的文�
 二、webpack.config.js简要说明
 1、“filename: 'bundle.js'”这个是指定打包后的输出文件名，需要被引入到index.html中去
 2、entry指明了主入口，不可缺少
+三、Angular2个人理解的知识点
+1、{{表达式}}及private test:String = "abc";{{test | uppercase}}
+2、[]=>组件到模板；()=>模板到组件
+3、<div [title="x"]>123</div>
+import {Input} from '@angular/core';
+@Input() x = 11;
+4、<img [src]="..."/> <img (click)="..."/> <div [ngClass]="..."></div> <div [ngSubmit]="..."></div>
+5、<p #abc>10</p> <span>{{abc.textContent}}</span>
+6、<input TYPE="text" #abc/> <button (click)="onLog(abc.value)">Log</button>
+7、component注入service
+import service
+@Component providers
+constructor private service
+8、URL代参
+path->'home/:id'
+import  ActivatedRoute from '@angular/router'
+constructor private activatedRoute:ActivatedRoute
+activatedRoute.snapshot.params['id']
