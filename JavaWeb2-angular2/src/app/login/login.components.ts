@@ -55,7 +55,7 @@ export class LoginComponent{
         let body = JSON.stringify('json_value');
         this.httpService.postData('url',body,options);
         */
-        this.httpService.getData('app/1test.json').subscribe(
+        this.httpService.getData('app/test.json').subscribe(
             (data:any)=>console.log(data),
             (error:any)=>console.log(error)
         );
