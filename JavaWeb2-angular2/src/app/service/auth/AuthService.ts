@@ -5,6 +5,8 @@ import {HttpService} from "../http/HttpService";
 @Injectable()
 export class AuthService implements CanActivate {
 
+    static v:Date = new Date();
+
     constructor(private httpService:HttpService){ }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
@@ -15,11 +17,13 @@ export class AuthService implements CanActivate {
         //return ret;
         //console.log(route.toString());
         console.log(state.url);
+        console.log(AuthService.v);
         return true;
     }
 
-    private getSeesion():boolean{
-        return false;
+    public getSeesion(parm:string):boolean{
+        console.log(parm)
+        return true;
     }
 
 }

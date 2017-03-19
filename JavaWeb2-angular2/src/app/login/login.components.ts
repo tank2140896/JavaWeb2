@@ -4,6 +4,7 @@ import {Response, Headers, RequestOptions} from "@angular/http";
 
 import {LoginUser} from '../models/login/login.user';
 import {HttpService} from "../service/http/HttpService";
+import {AuthService} from "../service/auth/AuthService";
 
 @Component({
     selector: 'web-app',
@@ -14,9 +15,15 @@ import {HttpService} from "../service/http/HttpService";
 
 export class LoginComponent{
 
-    constructor(private router:Router,private httpService:HttpService) { }
+    constructor(private router:Router,private httpService:HttpService,private authService:AuthService) { }
 
-    ngOnInit(){ }
+    ngOnInit(){
+
+    }
+
+    buttonAuth:AuthService = this.authService;
+
+    uua = this.authService.getSeesion('wo');
 
     /*------ 语言切换 start ------*/
     //初始化默认语言

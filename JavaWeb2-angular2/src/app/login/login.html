@@ -6,6 +6,10 @@
     </select>
 </div>
 <div class="loginStyle">
+
+    <!-- <button *ngIf="buttonAuth.getSeesion('我是参数')">按钮</button> -->
+    <button *ngIf="uua">按钮</button>
+
     <div>
         <span>用户名</span>
         <input type="text" [(ngModel)]="user.username"/>
