@@ -13,7 +13,9 @@ export class AuthService implements CanActivate {
         //let x = this.httpService.getData('../../app/test.json').subscribe();
         //console.log(x);
         //return ret;
-        return false;
+        //console.log(route.toString());
+        console.log(state.url);
+        return true;
     }
 
     private getSeesion():boolean{
