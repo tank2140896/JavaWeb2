@@ -25,23 +25,18 @@ path->'home/:id'
 import  ActivatedRoute from '@angular/router'
 constructor private activatedRoute:ActivatedRoute
 activatedRoute.snapshot.params['id']
-
-
-
-
-
-
-/**
- {
-     path:'home',component:HomeComponent,children:[
-     ...CenteralRoutes
-      {path:'centeral',component:CenteralComponent},
-      {path:'sysManager/userManger',component:UserComponent,children:ROUTES_USER},
-      {path:'sysManager/roleManger',component:RoleComponent,children:ROUTES_ROLE}
- ]
- }
- */
-
-
-//{path:'home',loadChildren:'app/home/home.module#HomeModule',/*canActivate:[AuthService]*/},//只有登录成功后才能访问
-//export const HomeRoutes =  RouterModule.forChild(HOME_ROUTES);
+9、路径
+方式一：
+{path:'sysManager/userManger',component:UserComponent},
+{path:'sysManager/roleManger',component:RoleComponent}
+方式二：
+{path:'sysManager/userManger',component:UserComponent,children:ROUTES_USER},
+{path:'sysManager/roleManger',component:RoleComponent,children:ROUTES_ROLE}
+方式三：
+{
+    path:'home',component:HomeComponent,children:[
+        ...CenteralRoutes,...UserManageRoutes
+    ]
+}
+方式四：
+{path:'home',loadChildren:'app/home/home.module#HomeModule',canActivate:[AuthService]}
