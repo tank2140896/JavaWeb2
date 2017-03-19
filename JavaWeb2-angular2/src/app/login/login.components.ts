@@ -59,8 +59,8 @@ export class LoginComponent{
             (data:any)=>console.log(data),
             (error:any)=>console.log(error)
         );
-        //console.log(this.user);
-        //this.router.navigate(['home']/*,{queryParams:{'myKey':100}}*/);//<a [routerLink]="['home']" [queryParams]="{'myKey':100}" >Home</a>
+        console.log(this.user);
+        this.router.navigate(['home']/*,{queryParams:{'myKey':100}}*/);//<a [routerLink]="['home']" [queryParams]="{'myKey':100}" >Home</a>
     }
     /*------ 用户登录 end ------*/
 
