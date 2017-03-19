@@ -20,7 +20,7 @@ import {Input} from '@angular/core';
 import service
 @Component providers
 constructor private service
-8、URL代参
+8、URL带参数
 path->'home/:id'
 import  ActivatedRoute from '@angular/router'
 constructor private activatedRoute:ActivatedRoute
