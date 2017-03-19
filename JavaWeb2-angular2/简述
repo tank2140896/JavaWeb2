@@ -40,3 +40,7 @@ activatedRoute.snapshot.params['id']
 }
 方式四：
 {path:'home',loadChildren:'app/home/home.module#HomeModule',canActivate:[AuthService]}
+10、访问权限
+页面URL路径及操作按钮任何人都可见、可操作；
+页面URL路径及操作按钮登录后可见、可操作；
+页面URL路径及操作按钮拥有相应权限后可见、可操作；
