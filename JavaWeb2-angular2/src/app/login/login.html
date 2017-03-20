@@ -6,10 +6,6 @@
     </select>
 </div>
 <div class="loginStyle">
-
-    <!-- <button *ngIf="buttonAuth.getSeesion('我是参数')">按钮</button> -->
-    <button *ngIf="uua">按钮</button>
-
     <div>
         <span>用户名</span>
         <input type="text" [(ngModel)]="user.username"/>
@@ -20,7 +16,7 @@
     </div>
     <div>
         <span>验证码</span>
-        未定义
+        <span *ngIf="UserManage_AddUser">未定义</span>
     </div>
     <div>
         <button (click)="login()">登录</button>

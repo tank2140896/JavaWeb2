@@ -22,8 +22,12 @@ export class AuthService implements CanActivate {
     }
 
     public getSeesion(parm:string):boolean{
-        console.log(parm)
-        return true;
+        //console.log(parm)
+        //从后端获得到当前权限下的所有URL对象集合
+        let backendMap = {
+            '/system/userManage/addUser': '/system/userManage/addUser'
+        }
+        return backendMap[parm]==undefined?false:true;
     }
 
 }

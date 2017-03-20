@@ -17,13 +17,7 @@ export class LoginComponent{
 
     constructor(private router:Router,private httpService:HttpService,private authService:AuthService) { }
 
-    ngOnInit(){
-
-    }
-
-    buttonAuth:AuthService = this.authService;
-
-    uua = this.authService.getSeesion('wo');
+    UserManage_AddUser = this.authService.getSeesion('/system/userManage/addUser');
 
     /*------ 语言切换 start ------*/
     //初始化默认语言
