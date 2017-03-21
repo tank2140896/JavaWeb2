@@ -1,11 +1,10 @@
 package com.javaweb.dataobject.po;
 
 import java.io.Serializable;
-import java.util.Date;
 
-import com.javaweb.constant.SystemConstant;
+import com.javaweb.base.BaseEntity;
 
-public class User implements Serializable {
+public class User extends BaseEntity implements Serializable {
 	
 	private static final long serialVersionUID = -6510578701541824368L;
 
@@ -28,16 +27,6 @@ public class User implements Serializable {
 	private String fcode = null;//层级关系
 	
 	private int level = 0;//第几级(0表示未定义层级数;层级数1为最高,即根节点)
-	
-	private Date createDate = new Date();//创建时间
-	
-	private String creator = SystemConstant.SYSTEM_DEFAULT_CREATOR;//创建者
-	
-	private Date updateDate = new Date();//更新时间
-	
-	private String updater = SystemConstant.SYSTEM_DEFAULT_UPDATER;//更新者
-	
-	private int delFlag = 0;//删除标记(0:未被删除;1:已被删除)
 
 	public String getUserId() {
 		return userId;
@@ -118,45 +107,5 @@ public class User implements Serializable {
 	public void setLevel(int level) {
 		this.level = level;
 	}
-
-	public Date getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(Date createDate) {
-		this.createDate = createDate;
-	}
-
-	public String getCreator() {
-		return creator;
-	}
-
-	public void setCreator(String creator) {
-		this.creator = creator;
-	}
-
-	public Date getUpdateDate() {
-		return updateDate;
-	}
-
-	public void setUpdateDate(Date updateDate) {
-		this.updateDate = updateDate;
-	}
-
-	public String getUpdater() {
-		return updater;
-	}
-
-	public void setUpdater(String updater) {
-		this.updater = updater;
-	}
-
-	public int getDelFlag() {
-		return delFlag;
-	}
-
-	public void setDelFlag(int delFlag) {
-		this.delFlag = delFlag;
-	}
-
+	
 }
