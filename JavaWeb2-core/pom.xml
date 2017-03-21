@@ -88,14 +88,12 @@
 					<encoding>utf8</encoding>
 					<!--  
 					<compilerArgs> 
-					    <arg>-verbose</arg>
-					    <arg>-Xlint:unchecked</arg>
-					    <arg>-Xlint:deprecation</arg>
-					    <arg>-bootclasspath</arg>
-					    <arg>${env.JAVA_HOME}/jre/lib/rt.jar</arg>
-					    <arg>-extdirs</arg> 
-					    <arg>${project.basedir}/src/main/webapp/WEB-INF/lib</arg>
-					</compilerArgs>
+			            		<arg>-verbose</arg>
+			            		<arg>-Xlint:unchecked</arg>
+			            		<arg>-Xlint:deprecation</arg>
+			            		<arg>-extdirs</arg> 
+			            		<arg>${project.basedir}/src/main/webapp/WEB-INF/lib</arg>
+			        	</compilerArgs>
 					-->
 				</configuration>
 			</plugin>
