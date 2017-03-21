@@ -24,6 +24,7 @@ public class TestController {
 		//Gson gson = new Gson();
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();  
 		System.out.println(gson.toJson(user));
+		System.out.println(userService.getUser("a"));
 		return "aaa";
 	}
 	

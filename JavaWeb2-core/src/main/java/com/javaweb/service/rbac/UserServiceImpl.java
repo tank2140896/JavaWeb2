@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.javaweb.dao.datasource1.rbac.UserDao;
+import com.javaweb.dao.rbac.UserDao;
 import com.javaweb.dataobject.po.User;
 
 @Service("userServiceImpl")

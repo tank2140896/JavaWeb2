@@ -1,18 +1,14 @@
 package com.javaweb.dataobject.po;
 
-import java.io.Serializable;
-
 import com.javaweb.base.BaseEntity;
 
-public class User extends BaseEntity implements Serializable {
+public class User extends BaseEntity {
 	
-	private static final long serialVersionUID = -6510578701541824368L;
-
-	private String userId;//用户id,主键(必填)
+	private String userId = null;//用户ID
 	
-	private String userName;//用户名(必填)
+	private String userName = null;//用户名
 	
-	private String password;//用户密码(必填)
+	private String password = null;//用户密码
 	
 	private String personName = null;//用户姓名
 
@@ -22,11 +18,13 @@ public class User extends BaseEntity implements Serializable {
 	
 	private String portrait = null;//头像
 	
-	private String parentId = null;//创建该用户的id
+	private String parentId = null;//创建该用户的ID
 	
 	private String fcode = null;//层级关系
 	
 	private int level = 0;//第几级(0表示未定义层级数;层级数1为最高,即根节点)
+	
+	private String remark = null;//备注
 
 	public String getUserId() {
 		return userId;
@@ -107,5 +105,13 @@ public class User extends BaseEntity implements Serializable {
 	public void setLevel(int level) {
 		this.level = level;
 	}
-	
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
+
 }

@@ -1,4 +1,4 @@
-package com.javaweb.dao.datasource1.rbac;
+package com.javaweb.dao.rbac;
 
 import org.apache.ibatis.annotations.Mapper;
 
