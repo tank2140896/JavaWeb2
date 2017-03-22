@@ -5,25 +5,21 @@
 
 	<insert id="createUser" parameterType="com.javaweb.dataobject.po.User">
 		insert into user(userid,username,password,personname,email,phone,portrait,
-		parentid,fcode,level,remark,create_date,creator,update_date,updater,del_flag)
+		parentid,fcode,level,remark,status,create_date,creator,update_date,updater,del_flag)
 		values(#{userId},#{userName},#{password},#{personName},#{email},#{phone},#{portrait},
-		#{parentId},#{fcode},${level},#{remark},#{createDate},#{creator},null,null,${delFlag})
+		#{parentId},#{fcode},${level},#{remark},${status},#{createDate},#{creator},null,null,${delFlag})
 	</insert>
 	
-	<select id="getUser" parameterType="java.lang.String" resultType="com.javaweb.dataobject.po.User">
+	<select id="getUserByUserId" parameterType="java.lang.String" resultType="com.javaweb.dataobject.po.User">
 		select userid as userId,username as userName,password,personname as personName,email,phone,portrait,
-		parentid as parentId,fcode,level,remark,create_date as createDate,creator,update_date as updateDate,
+		parentid as parentId,fcode,level,remark,status,create_date as createDate,creator,update_date as updateDate,
 		updater,del_flag as delFlag from user where userid = #{_parameter} and del_flag = 0
 	</select>
 	
-	<update id="updateUser" parameterType="com.javaweb.dataobject.po.User">
-		update user set username = #{userName},password = #{password},personname = #{personName},email = #{email},
-		phone = #{phone},portrait = #{portrait},parentid = #{parentId},fcode = #{fcode},level = ${level},remark = #{remark},
-		update_date = #{updateDate},updater = #{updater},del_flag = ${delFlag} where userid = #{userId} and del_flag = 0
-	</update>
-	
-	<delete id="deleteUser" parameterType="java.lang.String">
-		delete from user where userid = #{_parameter}
-	</delete>
+	<select id="getUserByUserName" parameterType="java.lang.String" resultType="com.javaweb.dataobject.po.User">
+		select userid as userId,username as userName,password,personname as personName,email,phone,portrait,
+		parentid as parentId,fcode,level,remark,status,create_date as createDate,creator,update_date as updateDate,
+		updater,del_flag as delFlag from user where username = #{_parameter} and del_flag = 0 limit 1
+	</select>
 	
 </mapper>

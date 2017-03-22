@@ -24,14 +24,29 @@ public class TestController {
 		//Gson gson = new Gson();
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();  
 		System.out.println(gson.toJson(user));
-		System.out.println(userService.getUser("a"));
+		System.out.println(userService.getUserByUserId("a"));
 		return "aaa";
 	}
 	
-	@PostMapping("/test2")
-	public String index2(@RequestBody JsonNode jsonNode){
-		System.out.println(jsonNode);
+	@GetMapping("/test2")
+	public String index2(){
 		return "bbb";
+	}
+	
+	@PostMapping("/test3")
+	public String index3(@RequestBody JsonNode jsonNode){
+		System.out.println(jsonNode);
+		return "ccc";
+	}
+	
+	@GetMapping("/unauthorized")
+	public String index4(){
+		return "没有权限";
+	}
+	
+	@GetMapping("/internalServerError")
+	public String index5(){
+		return "系统内部错误";
 	}
 	
 }

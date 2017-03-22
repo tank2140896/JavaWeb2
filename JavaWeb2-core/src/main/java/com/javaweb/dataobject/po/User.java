@@ -25,6 +25,8 @@ public class User extends BaseEntity {
 	private int level = 0;//第几级(0表示未定义层级数;层级数1为最高,即根节点)
 	
 	private String remark = null;//备注
+	
+	private int status = 0;//账号状态(0:正常)
 
 	public String getUserId() {
 		return userId;
@@ -112,6 +114,14 @@ public class User extends BaseEntity {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
 	}
 
 }

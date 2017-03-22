@@ -82,6 +82,7 @@ CREATE TABLE `user` (
   `fcode` varchar(255) DEFAULT NULL,
   `level` int(11) DEFAULT '0',
   `remark` varchar(255) DEFAULT NULL,
+  `status` int(11) DEFAULT '0',
   `create_date` datetime DEFAULT NULL,
   `creator` varchar(255) DEFAULT NULL,
   `update_date` datetime DEFAULT NULL,

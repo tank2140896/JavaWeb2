@@ -18,18 +18,12 @@ public class UserServiceImpl implements UserService {
 		userDao.createUser(user);
 	}
 
-	public User getUser(String userId){
-		return userDao.getUser(userId); 
+	public User getUserByUserId(String userId){
+		return userDao.getUserByUserId(userId); 
 	}
 	
-	@Transactional
-	public void updateUser(User user){
-		userDao.updateUser(user);
-	}
-	
-	@Transactional
-	public void deleteUser(String userId){
-		userDao.deleteUser(userId);
+	public User getUserByUserName(String userName) {
+		return userDao.getUserByUserName(userName);
 	}
 
 }
