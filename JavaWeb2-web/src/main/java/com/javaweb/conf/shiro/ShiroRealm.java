@@ -1,5 +1,7 @@
 package com.javaweb.conf.shiro;
 
+import java.util.List;
+
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -24,6 +26,17 @@ public class ShiroRealm extends AuthorizingRealm {
 
 	//验证权限
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
+		/**
+		User user = (User)principalCollection.getPrimaryPrincipal();
+		List<String> authoritySessionList = (List<String>) ShiroSession.getSession().getAttribute("AuthoritySession");
+		
+		if(authoritySessionList!=null&&authoritySessionList.size()!=0){
+			
+		}else{
+			return null;
+		}
+		*/
+		
 		/**
 		SysUserEntity user = (SysUserEntity)principals.getPrimaryPrincipal();
 		Long userId = user.getUserId();
@@ -72,7 +85,7 @@ public class ShiroRealm extends AuthorizingRealm {
         if(user.getStatus() != 0){
         	throw new LockedAccountException("账号已被锁定,请联系管理员");
         }
-    	return new SimpleAuthenticationInfo(username, password, getName());
+    	return new SimpleAuthenticationInfo(user, password, getName());
 	}
 
 }

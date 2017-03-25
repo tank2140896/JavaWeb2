@@ -5,6 +5,7 @@ import {Response, Headers, RequestOptions} from "@angular/http";
 import {LoginUser} from '../models/login/login.user';
 import {HttpService} from "../service/http/HttpService";
 import {AuthService} from "../service/auth/AuthService";
+import {HttpRequestUrl} from "../constant/HttpRequestUrl";
 
 @Component({
     selector: 'web-app',
@@ -14,6 +15,12 @@ import {AuthService} from "../service/auth/AuthService";
 })
 
 export class LoginComponent{
+
+    kaptcha = HttpRequestUrl.LOGIN;
+
+    public getKaptcha():void{
+        this.kaptcha = HttpRequestUrl.LOGIN+'?data='+new Date().getTime();
+    }
 
     constructor(private router:Router,private httpService:HttpService,private authService:AuthService) { }
 
