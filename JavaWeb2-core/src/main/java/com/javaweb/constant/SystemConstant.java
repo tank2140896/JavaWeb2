@@ -8,4 +8,6 @@ public final class SystemConstant {
 	
 	public static final String SYSTEM_ADMIN_ID = "admin";
 	
+	public static final String NO_LOGIN_URL_REGEX = "/login|/unauthorized|/internalServerError|/notFound"; 
+	
 }

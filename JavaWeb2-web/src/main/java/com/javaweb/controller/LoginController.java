@@ -1,12 +1,12 @@
 package com.javaweb.controller;
 
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,7 +62,7 @@ public class LoginController extends BaseController {
 				user.setUserName("admin");
 				user.setPassword(password);
 				user.setPersonName("admin");
-				token = new Sha256Hash(username+password).toHex();
+				token = Base64.getEncoder().encodeToString((username+password).getBytes());
 				TokenData tokenData = new TokenData();
 				tokenData.setToken(token);
 				tokenData.setUser(user);
@@ -71,10 +71,10 @@ public class LoginController extends BaseController {
 			}else{
 				Map<String,String> map = new HashMap<>();
 				map.put("username", username);
-				map.put("password", new Sha256Hash(password).toHex());//sha256加密
+				map.put("password", token = Base64.getEncoder().encodeToString((username+password).getBytes()));//sha256加密
 				User user = userService.getUserByUsernameAndPassword(map);
 				if(user!=null){
-					token = new Sha256Hash(username+password).toHex();
+					token = Base64.getEncoder().encodeToString((username+password).getBytes());
 					TokenData tokenData = new TokenData();
 					tokenData.setToken(token);
 					tokenData.setUser(user);
@@ -104,7 +104,14 @@ public class LoginController extends BaseController {
 		return gsonHelp.fromJsonDefault(responseResult);
 	}
 	
-	private static Map<Object,Object> tokenDataMap = new HashMap<>();
+	@GetMapping("/notFound")
+	public String notFound(){
+		ResponseResult responseResult = new ResponseResult(404,"接口不存在",null);
+		GsonHelp gsonHelp = new GsonHelp();
+		return gsonHelp.fromJsonDefault(responseResult);
+	}
+	
+	public static Map<Object,Object> tokenDataMap = new HashMap<>();
 	
 	private void setCache(TokenData tokenData,ValueOperations<Object,Object> valueOperations){
 		try{
