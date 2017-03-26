@@ -14,14 +14,16 @@
         <span>密码</span>
         <input type="password" [(ngModel)]="user.password"/>
     </div>
+    <!--
     <div>
         <span>验证码</span>
+        <input type="text" [(ngModel)]="user.kaptcha"/>
         <img src="{{kaptcha}}" (click)="getKaptcha()"/>
     </div>
+    -->
     <div>
         <button (click)="login()">登录</button>
         <a href="#">注册</a>
         <a href="#">忘记密码</a>
     </div>
-    <span *ngIf="UserManage_AddUser">未定义</span>
 </div>

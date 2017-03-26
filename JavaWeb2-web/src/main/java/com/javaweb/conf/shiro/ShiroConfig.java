@@ -75,7 +75,7 @@ public class ShiroConfig {
     private void loadShiroFilterChain(ShiroFilterFactoryBean shiroFilterFactoryBean){
         Map<String, String> filterChainDefinitionMap = new HashMap<String, String>();
         filterChainDefinitionMap.put("/login", "anon");
-        filterChainDefinitionMap.put("/kaptcha", "anon");
+        //filterChainDefinitionMap.put("/kaptcha", "anon");
         filterChainDefinitionMap.put("/unauthorized", "anon");
         filterChainDefinitionMap.put("/internalServerError", "anon");
         filterChainDefinitionMap.put("/**", "authc");

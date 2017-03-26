@@ -1,5 +1,7 @@
 package com.javaweb.dao.rbac;
 
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.javaweb.dataobject.po.User;
@@ -11,6 +13,6 @@ public interface UserDao {
 
 	public User getUserByUserId(String userId);
 	
-	public User getUserByUserName(String userName);
+	public User getUserByUsernameAndPassword(Map<String,String> map);
 	
 }

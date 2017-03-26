@@ -75,7 +75,7 @@ public class ShiroRealm extends AuthorizingRealm {
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authenticationToken) throws AuthenticationException {
 		String username = (String)authenticationToken.getPrincipal();//得到用户名 
 	    String password = new String((char[])authenticationToken.getCredentials());//得到密码
-	    User user = userService.getUserByUserName(username);
+	    User user = null;//userService.getUserByUserName(username);
 	    if(user==null){
 	    	throw new UnknownAccountException("账号或密码不正确");
 	    }

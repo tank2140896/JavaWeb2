@@ -1,5 +1,7 @@
 package com.javaweb.service.rbac;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,8 +24,8 @@ public class UserServiceImpl implements UserService {
 		return userDao.getUserByUserId(userId); 
 	}
 	
-	public User getUserByUserName(String userName) {
-		return userDao.getUserByUserName(userName);
+	public User getUserByUsernameAndPassword(Map<String,String> map) {
+		return userDao.getUserByUsernameAndPassword(map);
 	}
 
 }

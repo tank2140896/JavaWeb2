@@ -16,15 +16,8 @@ import {HttpRequestUrl} from "../constant/HttpRequestUrl";
 
 export class LoginComponent{
 
-    kaptcha = HttpRequestUrl.LOGIN;
-
-    public getKaptcha():void{
-        this.kaptcha = HttpRequestUrl.LOGIN+'?data='+new Date().getTime();
-    }
-
+    //UserManage_AddUser = this.authService.getSeesion('/system/userManage/addUser');
     constructor(private router:Router,private httpService:HttpService,private authService:AuthService) { }
-
-    UserManage_AddUser = this.authService.getSeesion('/system/userManage/addUser');
 
     /*------ 语言切换 start ------*/
     //初始化默认语言
@@ -51,24 +44,31 @@ export class LoginComponent{
     }
     /*------ 语言切换 end ------*/
 
+    /*------ 验证码获取 start ------*/
+    /**
+    kaptcha = HttpRequestUrl.GET_KAPTCHA;
+
+    public getKaptcha():void{
+        this.kaptcha = HttpRequestUrl.GET_KAPTCHA+'?data='+new Date().getTime();
+    }
+    */
+    /*------ 验证码获取 end ------*/
+
     /*------ 用户登录 start ------*/
     //用到[()]双向绑定需要初始化
     private user:LoginUser = new LoginUser();
 
     public login():void{
-        /**
-        let headers = new Headers();
-        headers.append('Content-Type','application/json');
-        let options = new RequestOptions({headers:headers});
-        let body = JSON.stringify('json_value');
-        this.httpService.postData('url',body,options);
-        */
-        this.httpService.getData('app/test.json').subscribe(
-            (data:any)=>console.log(data),
-            (error:any)=>console.log(error)
+        this.httpService.postJsonData(HttpRequestUrl.LOGIN,JSON.stringify(this.user)).subscribe(
+            result=>{
+                let data = result.data;
+                let token = data.token;
+                let user = data.user;
+                console.log(token);
+                console.log(user);
+                //this.router.navigate(['home']/*,{queryParams:{'myKey':100}}*/);//<a [routerLink]="['home']" [queryParams]="{'myKey':100}" >Home</a>
+            }
         );
-        console.log(this.user);
-        this.router.navigate(['home']/*,{queryParams:{'myKey':100}}*/);//<a [routerLink]="['home']" [queryParams]="{'myKey':100}" >Home</a>
     }
     /*------ 用户登录 end ------*/
 
