@@ -8,6 +8,6 @@ import {Component} from '@angular/core';
 
 export class SidebarComponent {
 
-
+    menuList = JSON.parse(window.sessionStorage.getItem('menuList'));
 
 }

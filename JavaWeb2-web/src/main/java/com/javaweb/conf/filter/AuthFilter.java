@@ -13,9 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.javaweb.constant.SystemConstant;
+import com.javaweb.controller.BaseController;
+import com.javaweb.controller.LoginController;
+import com.javaweb.dataobject.eo.TokenData;
 
 @WebFilter(urlPatterns="/*",filterName="authFilter")
-public class AuthFilter implements Filter {
+public class AuthFilter extends BaseController implements Filter {
 	
 	public void init(FilterConfig arg0) throws ServletException {
 		
@@ -37,10 +40,16 @@ public class AuthFilter implements Filter {
 		if(servletPath.matches(SystemConstant.NO_LOGIN_URL_REGEX)){
 			filterChain.doFilter(httpServletRequest, httpServletResponse);
 		}else{
-			if(servletPath.equals("/a")){
-				filterChain.doFilter(httpServletRequest, httpServletResponse);
-			}else{
+			TokenData tokenData = LoginController.getCache(httpServletRequest.getHeader("token"),valueOperations);
+			if(tokenData==null){
 				httpServletResponse.sendRedirect("/unauthorized");
+			}else{
+				long count = tokenData.getAuthOperateList().stream().filter(i->i.getModuleurl().equals(servletPath)).count();
+				if(count>0){
+					filterChain.doFilter(httpServletRequest, httpServletResponse);
+				}else{
+					httpServletResponse.sendRedirect("/unauthorized");
+				}
 			}
 		}
 	}

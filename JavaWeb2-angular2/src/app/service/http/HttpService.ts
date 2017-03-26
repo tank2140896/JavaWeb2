@@ -8,14 +8,18 @@ export class HttpService{
 
     constructor(private http:Http){ }
 
-    getJsonData(url:string){
-        return this.http.get(url).map((response:Response)=>response.json()).catch(this.handleError);
-    }
-
-    postJsonData(url:string,body:string){
+    getJsonData(url:string,token:string){
         let headers = new Headers();
         headers.append('Content-Type','application/json');
-        //headers.append('Access-Control-Allow-Origin','*');
+        headers.append('token',token);
+        let requestOptions = new RequestOptions({headers:headers});
+        return this.http.get(url,requestOptions).map((response:Response)=>response.json()).catch(this.handleError);
+    }
+
+    postJsonData(url:string,body:string,token:string){
+        let headers = new Headers();
+        headers.append('Content-Type','application/json');
+        headers.append('token',token);
         let requestOptions = new RequestOptions({headers:headers});
         return this.http.post(url,body,requestOptions).map((response:Response)=>response.json()).catch(this.handleError);
     }

@@ -27,6 +27,11 @@ CREATE TABLE `module` (
 -- ----------------------------
 -- Records of module
 -- ----------------------------
+INSERT INTO `module` VALUES ('0147864d-1227-11e7-9162-00ffaea60ab9', '用户列表', '/sys/user/list', null, null, '3', '3', '2', null, null, null, '2017-03-26 21:21:31', '超级管理员', null, null, '0');
+INSERT INTO `module` VALUES ('619c72fe-1222-11e7-9162-00ffaea60ab9', '系统管理', null, null, null, '1', '1', '1', null, null, null, '2017-03-26 20:48:18', '超级管理员', null, null, '0');
+INSERT INTO `module` VALUES ('8627cbc0-1222-11e7-9162-00ffaea60ab9', '用户管理', '/sys/user/list', null, null, '2', '1', '1', null, null, null, '2017-03-26 20:49:07', '超级管理员', null, null, '0');
+INSERT INTO `module` VALUES ('a0b3ed5a-1222-11e7-9162-00ffaea60ab9', '新增用户', '/sys/user/add', null, null, '3', '1', '2', null, null, null, '2017-03-26 20:49:40', '超级管理员', null, null, '0');
+INSERT INTO `module` VALUES ('c4158250-1222-11e7-9162-00ffaea60ab9', '修改用户', '/sys/user/update', null, null, '3', '2', '2', null, null, null, '2017-03-26 20:50:57', '超级管理员', null, null, '0');
 
 -- ----------------------------
 -- Table structure for `role`
@@ -50,6 +55,7 @@ CREATE TABLE `role` (
 -- ----------------------------
 -- Records of role
 -- ----------------------------
+INSERT INTO `role` VALUES ('ba39f8b5-1221-11e7-9162-00ffaea60ab9', '管理员', null, null, '1', null, '2017-03-26 20:43:54', '超级管理员', null, null, '0');
 
 -- ----------------------------
 -- Table structure for `role_module`
@@ -65,6 +71,10 @@ CREATE TABLE `role_module` (
 -- ----------------------------
 -- Records of role_module
 -- ----------------------------
+INSERT INTO `role_module` VALUES ('ea73f860-1222-11e7-9162-00ffaea60ab9', 'ba39f8b5-1221-11e7-9162-00ffaea60ab9', '619c72fe-1222-11e7-9162-00ffaea60ab9');
+INSERT INTO `role_module` VALUES ('ef48666e-1222-11e7-9162-00ffaea60ab9', 'ba39f8b5-1221-11e7-9162-00ffaea60ab9', '8627cbc0-1222-11e7-9162-00ffaea60ab9');
+INSERT INTO `role_module` VALUES ('f3dfe498-1222-11e7-9162-00ffaea60ab9', 'ba39f8b5-1221-11e7-9162-00ffaea60ab9', 'a0b3ed5a-1222-11e7-9162-00ffaea60ab9');
+INSERT INTO `role_module` VALUES ('fa9c2bca-1222-11e7-9162-00ffaea60ab9', 'ba39f8b5-1221-11e7-9162-00ffaea60ab9', 'c4158250-1222-11e7-9162-00ffaea60ab9');
 
 -- ----------------------------
 -- Table structure for `user`
@@ -94,6 +104,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
+INSERT INTO `user` VALUES ('65a85f1b-1209-11e7-9162-00ffaea60ab9', 'admin', 'YWRtaW4=', 'admin', null, null, null, null, null, '2', null, '0', null, null, null, null, '0');
 
 -- ----------------------------
 -- Table structure for `user_role`
@@ -109,3 +120,4 @@ CREATE TABLE `user_role` (
 -- ----------------------------
 -- Records of user_role
 -- ----------------------------
+INSERT INTO `user_role` VALUES ('019dd83d-1222-11e7-9162-00ffaea60ab9', '65a85f1b-1209-11e7-9162-00ffaea60ab9', 'ba39f8b5-1221-11e7-9162-00ffaea60ab9');

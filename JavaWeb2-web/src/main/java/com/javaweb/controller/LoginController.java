@@ -2,8 +2,10 @@ package com.javaweb.controller;
 
 import java.util.Base64;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.javaweb.dataobject.eo.TokenData;
 import com.javaweb.dataobject.eo.UserLogin;
+import com.javaweb.dataobject.eo.UserRoleModule;
 import com.javaweb.dataobject.po.User;
 import com.javaweb.help.GsonHelp;
 import com.javaweb.help.ResponseResult;
@@ -55,13 +58,13 @@ public class LoginController extends BaseController {
 			//String kaptcha = kaptchaValue==null?"":kaptchaValue.toString();
 			String username = userLogin.getUsername();
 			String password = userLogin.getPassword();
-			if("admin".equals(username)&&"admin".equals(password)/*&&kaptcha.equals(kaptcha)*/){//超级管理员
+			if("superAdmin".equals(username)&&"superAdmin".equals(password)/*&&kaptcha.equals(kaptcha)*/){//超级管理员
 				User user = new User();
 				user.setLevel(1);
-				user.setUserId("admin");
-				user.setUserName("admin");
+				user.setUserId("superAdmin");
+				user.setUserName("superAdmin");
 				user.setPassword(password);
-				user.setPersonName("admin");
+				user.setPersonName("superAdmin");
 				token = Base64.getEncoder().encodeToString((username+password).getBytes());
 				TokenData tokenData = new TokenData();
 				tokenData.setToken(token);
@@ -71,20 +74,27 @@ public class LoginController extends BaseController {
 			}else{
 				Map<String,String> map = new HashMap<>();
 				map.put("username", username);
-				map.put("password", token = Base64.getEncoder().encodeToString((username+password).getBytes()));//sha256加密
+				map.put("password", Base64.getEncoder().encodeToString((password).getBytes()));
 				User user = userService.getUserByUsernameAndPassword(map);
 				if(user!=null){
 					token = Base64.getEncoder().encodeToString((username+password).getBytes());
+					List<UserRoleModule> list = userService.getUserRoleModule(user.getUserId());
+					//获得菜单列表
+					List<UserRoleModule> menuList = list.stream().filter(i->"1".equals(i.getModuletype())).collect(Collectors.toList());
+					//获得操作权限列表
+					List<UserRoleModule> authOperateList = list.stream().filter(i->"2".equals(i.getModuletype())).collect(Collectors.toList());
 					TokenData tokenData = new TokenData();
 					tokenData.setToken(token);
 					tokenData.setUser(user);
+					tokenData.setMenuList(menuList);
+					tokenData.setAuthOperateList(authOperateList);
 					setCache(tokenData, valueOperations);
 					responseResult = new ResponseResult(200,"登录成功",tokenData);
 				}else{
 					responseResult = new ResponseResult(600,"用户名或密码错误",null);
 				}
 			}
-		}catch(Exception e){//这里也可以分别捕获异常
+		}catch(Exception e){
 			responseResult = new ResponseResult(500,e.getMessage(),null);
 		}
 		return new GsonHelp().fromJsonDefault(responseResult);
@@ -120,6 +130,16 @@ public class LoginController extends BaseController {
 			System.out.println("redis缓存设置失败，失败原因为："+e.getMessage());
 			tokenDataMap.put(tokenData.getToken(), tokenData);
 		}
+	}
+	
+	public static TokenData getCache(String token,ValueOperations<Object,Object> valueOperations){
+		TokenData tokenData = null;
+		try{
+			tokenData = (TokenData)valueOperations.get(token);
+		}catch(Exception e){
+			tokenData = (TokenData)tokenDataMap.get(token);
+		}
+		return tokenData;
 	}
 	
 }

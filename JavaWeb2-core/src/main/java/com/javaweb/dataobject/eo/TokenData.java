@@ -1,5 +1,7 @@
 package com.javaweb.dataobject.eo;
 
+import java.util.List;
+
 import com.javaweb.dataobject.po.User;
 
 public class TokenData {
@@ -7,6 +9,10 @@ public class TokenData {
 	private String token;
 	
 	private User user;
+	
+	private List<UserRoleModule> menuList;
+	
+	private List<UserRoleModule> authOperateList;
 
 	public String getToken() {
 		return token;
@@ -22,6 +28,22 @@ public class TokenData {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public List<UserRoleModule> getMenuList() {
+		return menuList;
+	}
+
+	public void setMenuList(List<UserRoleModule> menuList) {
+		this.menuList = menuList;
+	}
+
+	public List<UserRoleModule> getAuthOperateList() {
+		return authOperateList;
+	}
+
+	public void setAuthOperateList(List<UserRoleModule> authOperateList) {
+		this.authOperateList = authOperateList;
 	}
 
 }

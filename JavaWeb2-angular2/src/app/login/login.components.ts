@@ -17,7 +17,7 @@ import {HttpRequestUrl} from "../constant/HttpRequestUrl";
 export class LoginComponent{
 
     //UserManage_AddUser = this.authService.getSeesion('/system/userManage/addUser');
-    constructor(private router:Router,private httpService:HttpService,private authService:AuthService) { }
+    constructor(private router:Router,private httpService:HttpService) { }
 
     /*------ 语言切换 start ------*/
     //初始化默认语言
@@ -59,14 +59,21 @@ export class LoginComponent{
     private user:LoginUser = new LoginUser();
 
     public login():void{
-        this.httpService.postJsonData(HttpRequestUrl.LOGIN,JSON.stringify(this.user)).subscribe(
+        this.httpService.postJsonData(HttpRequestUrl.LOGIN,JSON.stringify(this.user),null).subscribe(
             result=>{
+                console.log(result);
                 let data = result.data;
                 let token = data.token;
                 let user = data.user;
-                console.log(token);
-                console.log(user);
-                //this.router.navigate(['home']/*,{queryParams:{'myKey':100}}*/);//<a [routerLink]="['home']" [queryParams]="{'myKey':100}" >Home</a>
+                let menuList = data.menuList;
+                let authOperateList = data.authOperateList;
+                window.sessionStorage.setItem('token',token);
+                window.sessionStorage.setItem('user',JSON.stringify(user));
+                window.sessionStorage.setItem('menuList',JSON.stringify(menuList));
+                window.sessionStorage.setItem('authOperateList',JSON.stringify(authOperateList));
+                this.router.navigate(['home']);
+                //this.router.navigate(['home']/*,{queryParams:{'myKey':100}}*/);
+                //<a [routerLink]="['home']" [queryParams]="{'myKey':100}" >Home</a>
             }
         );
     }
