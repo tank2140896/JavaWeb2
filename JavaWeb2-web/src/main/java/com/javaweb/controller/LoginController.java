@@ -1,5 +1,6 @@
 package com.javaweb.controller;
 
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.javaweb.dataobject.eo.TokenData;
 import com.javaweb.dataobject.eo.UserLogin;
 import com.javaweb.dataobject.eo.UserRoleModule;
@@ -28,8 +28,8 @@ import com.javaweb.service.rbac.UserService;
 @RestController
 public class LoginController extends BaseController {
 	
-	@Autowired
-	private DefaultKaptcha defaultKaptcha;
+	//@Autowired
+	//private DefaultKaptcha defaultKaptcha;
 	
 	@Autowired
 	private UserService userService;
@@ -81,6 +81,7 @@ public class LoginController extends BaseController {
 					List<UserRoleModule> list = userService.getUserRoleModule(user.getUserId());
 					//获得菜单列表
 					List<UserRoleModule> menuList = list.stream().filter(i->"1".equals(i.getModuletype())).collect(Collectors.toList());
+					menuList = setTreeList(menuList, null);
 					//获得操作权限列表
 					List<UserRoleModule> authOperateList = list.stream().filter(i->"2".equals(i.getModuletype())).collect(Collectors.toList());
 					TokenData tokenData = new TokenData();
@@ -98,6 +99,20 @@ public class LoginController extends BaseController {
 			responseResult = new ResponseResult(500,e.getMessage(),null);
 		}
 		return new GsonHelp().fromJsonDefault(responseResult);
+	}
+	
+	//封装成树形结构集合
+	private List<UserRoleModule> setTreeList(List<UserRoleModule> originList,UserRoleModule module){
+		List<UserRoleModule> moduleList = new ArrayList<>();
+		for (int i = 0; i < originList.size(); i++) {
+			UserRoleModule currentModule = originList.get(i);
+			if((module!=null&&module.getModuleid().equals(currentModule.getParentid()))
+			 ||(module==null&&currentModule.getParentid()==null)){
+				currentModule.setList(setTreeList(originList, currentModule));
+				moduleList.add(currentModule);
+			}
+		}
+		return moduleList;
 	}
 	
 	@GetMapping("/unauthorized")

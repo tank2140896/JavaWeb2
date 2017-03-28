@@ -25,16 +25,16 @@
 	</select>
 	
 	<select id="getUserRoleModule" parameterType="java.lang.String" resultType="com.javaweb.dataobject.eo.UserRoleModule">
-	SELECT moduleid,modulename,moduleurl,moduletype from module WHERE moduleid
-	in(
-		SELECT rm.moduleid from role_module rm
-		WHERE rm.roleid in(
-		SELECT ur.roleid from role r,user_role ur
-		WHERE ur.userid = #{_parameter} 
-		AND r.roleid = ur.roleid
+		SELECT moduleid,modulename,moduleurl,moduletype,parentid from module WHERE moduleid
+		in(
+			SELECT rm.moduleid from role_module rm
+			WHERE rm.roleid in(
+			SELECT ur.roleid from role r,user_role ur
+			WHERE ur.userid = #{_parameter} 
+			AND r.roleid = ur.roleid
+			)
 		)
-	)
-	ORDER BY level ASC,orders ASC
+		ORDER BY level ASC,orders ASC
 	</select>
 	
 </mapper>

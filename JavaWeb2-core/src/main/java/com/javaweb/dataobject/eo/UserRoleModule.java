@@ -1,5 +1,7 @@
 package com.javaweb.dataobject.eo;
 
+import java.util.List;
+
 public class UserRoleModule {
 	
 	private String moduleid;
@@ -9,6 +11,10 @@ public class UserRoleModule {
 	private String moduleurl;
 	
 	private String moduletype;
+	
+	private String parentid;
+	
+	private List<UserRoleModule> list;
 
 	public String getModuleid() {
 		return moduleid;
@@ -41,5 +47,21 @@ public class UserRoleModule {
 	public void setModuletype(String moduletype) {
 		this.moduletype = moduletype;
 	}
-	
+
+	public String getParentid() {
+		return parentid;
+	}
+
+	public void setParentid(String parentid) {
+		this.parentid = parentid;
+	}
+
+	public List<UserRoleModule> getList() {
+		return list;
+	}
+
+	public void setList(List<UserRoleModule> list) {
+		this.list = list;
+	}
+
 }
