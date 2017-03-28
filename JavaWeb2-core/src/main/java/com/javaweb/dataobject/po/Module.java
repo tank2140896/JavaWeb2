@@ -25,6 +25,8 @@ public class Module extends BaseEntity {
 	private String parentAlias = null;//上级别名
 	
 	private String remark = null;//备注
+	
+	private String icon = null;//图标
 
 	public String getModuleId() {
 		return moduleId;
@@ -112,6 +114,14 @@ public class Module extends BaseEntity {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 
 }

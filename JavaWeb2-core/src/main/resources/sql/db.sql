@@ -16,6 +16,7 @@ CREATE TABLE `module` (
   `alias` varchar(255) DEFAULT NULL,
   `parentalias` varchar(255) DEFAULT NULL,
   `remark` varchar(255) DEFAULT NULL,
+  `icon` varchar(255) DEFAULT NULL,
   `create_date` datetime DEFAULT NULL,
   `creator` varchar(255) DEFAULT NULL,
   `update_date` datetime DEFAULT NULL,
@@ -27,11 +28,13 @@ CREATE TABLE `module` (
 -- ----------------------------
 -- Records of module
 -- ----------------------------
-INSERT INTO `module` VALUES ('0147864d-1227-11e7-9162-00ffaea60ab9', '用户列表', '/sys/user/list', null, null, '3', '3', '2', null, null, null, '2017-03-26 21:21:31', '超级管理员', null, null, '0');
-INSERT INTO `module` VALUES ('619c72fe-1222-11e7-9162-00ffaea60ab9', '系统管理', null, null, null, '1', '1', '1', null, null, null, '2017-03-26 20:48:18', '超级管理员', null, null, '0');
-INSERT INTO `module` VALUES ('8627cbc0-1222-11e7-9162-00ffaea60ab9', '用户管理', '/sys/user/list', null, null, '2', '1', '1', null, null, null, '2017-03-26 20:49:07', '超级管理员', null, null, '0');
-INSERT INTO `module` VALUES ('a0b3ed5a-1222-11e7-9162-00ffaea60ab9', '新增用户', '/sys/user/add', null, null, '3', '1', '2', null, null, null, '2017-03-26 20:49:40', '超级管理员', null, null, '0');
-INSERT INTO `module` VALUES ('c4158250-1222-11e7-9162-00ffaea60ab9', '修改用户', '/sys/user/update', null, null, '3', '2', '2', null, null, null, '2017-03-26 20:50:57', '超级管理员', null, null, '0');
+INSERT INTO `module` VALUES ('0147864d-1227-11e7-9162-00ffaea60ab9', '用户列表', '/sys/user/list', '8627cbc0-1222-11e7-9162-00ffaea60ab9', null, '3', '3', '2', null, null, null, null, '2017-03-26 21:21:31', '超级管理员', null, null, '0');
+INSERT INTO `module` VALUES ('224fd333-136e-11e7-82c0-408d5c777ae8', '角色管理', '/sys/role/list', '619c72fe-1222-11e7-9162-00ffaea60ab9', null, '2', '2', '1', null, null, null, null, '2017-03-28 12:23:21', '超级管理员', null, null, '0');
+INSERT INTO `module` VALUES ('59158e91-136e-11e7-82c0-408d5c777ae8', '角色列表', '/sys/role/list', '224fd333-136e-11e7-82c0-408d5c777ae8', null, '3', '1', '2', null, null, null, null, '2017-03-28 12:24:23', '超级管理员', null, null, '0');
+INSERT INTO `module` VALUES ('619c72fe-1222-11e7-9162-00ffaea60ab9', '系统管理', null, null, null, '1', '1', '1', null, null, null, null, '2017-03-26 20:48:18', '超级管理员', null, null, '0');
+INSERT INTO `module` VALUES ('8627cbc0-1222-11e7-9162-00ffaea60ab9', '用户管理', '/sys/user/list', '619c72fe-1222-11e7-9162-00ffaea60ab9', null, '2', '1', '1', null, null, null, null, '2017-03-26 20:49:07', '超级管理员', null, null, '0');
+INSERT INTO `module` VALUES ('a0b3ed5a-1222-11e7-9162-00ffaea60ab9', '新增用户', '/sys/user/add', '8627cbc0-1222-11e7-9162-00ffaea60ab9', null, '3', '1', '2', null, null, null, null, '2017-03-26 20:49:40', '超级管理员', null, null, '0');
+INSERT INTO `module` VALUES ('c4158250-1222-11e7-9162-00ffaea60ab9', '修改用户', '/sys/user/update', '8627cbc0-1222-11e7-9162-00ffaea60ab9', null, '3', '2', '2', null, null, null, null, '2017-03-26 20:50:57', '超级管理员', null, null, '0');
 
 -- ----------------------------
 -- Table structure for `role`
@@ -71,6 +74,8 @@ CREATE TABLE `role_module` (
 -- ----------------------------
 -- Records of role_module
 -- ----------------------------
+INSERT INTO `role_module` VALUES ('ca0de7f2-136e-11e7-82c0-408d5c777ae8', 'ba39f8b5-1221-11e7-9162-00ffaea60ab9', '224fd333-136e-11e7-82c0-408d5c777ae8');
+INSERT INTO `role_module` VALUES ('e9192931-136e-11e7-82c0-408d5c777ae8', 'ba39f8b5-1221-11e7-9162-00ffaea60ab9', '59158e91-136e-11e7-82c0-408d5c777ae8');
 INSERT INTO `role_module` VALUES ('ea73f860-1222-11e7-9162-00ffaea60ab9', 'ba39f8b5-1221-11e7-9162-00ffaea60ab9', '619c72fe-1222-11e7-9162-00ffaea60ab9');
 INSERT INTO `role_module` VALUES ('ef48666e-1222-11e7-9162-00ffaea60ab9', 'ba39f8b5-1221-11e7-9162-00ffaea60ab9', '8627cbc0-1222-11e7-9162-00ffaea60ab9');
 INSERT INTO `role_module` VALUES ('f3dfe498-1222-11e7-9162-00ffaea60ab9', 'ba39f8b5-1221-11e7-9162-00ffaea60ab9', 'a0b3ed5a-1222-11e7-9162-00ffaea60ab9');

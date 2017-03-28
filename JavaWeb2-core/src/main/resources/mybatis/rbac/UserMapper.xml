@@ -25,7 +25,7 @@
 	</select>
 	
 	<select id="getUserRoleModule" parameterType="java.lang.String" resultType="com.javaweb.dataobject.eo.UserRoleModule">
-		SELECT moduleid,modulename,moduleurl,moduletype,parentid from module WHERE moduleid
+		SELECT moduleid,modulename,moduleurl,moduletype,parentid,icon from module WHERE moduleid
 		in(
 			SELECT rm.moduleid from role_module rm
 			WHERE rm.roleid in(

@@ -14,6 +14,8 @@ public class UserRoleModule {
 	
 	private String parentid;
 	
+	private String icon;
+	
 	private List<UserRoleModule> list;
 
 	public String getModuleid() {
@@ -54,6 +56,14 @@ public class UserRoleModule {
 
 	public void setParentid(String parentid) {
 		this.parentid = parentid;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 
 	public List<UserRoleModule> getList() {
