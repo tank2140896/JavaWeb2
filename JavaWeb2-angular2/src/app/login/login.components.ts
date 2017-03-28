@@ -9,8 +9,8 @@ import {HttpRequestUrl} from "../constant/HttpRequestUrl";
 
 @Component({
     selector: 'web-app',
-    templateUrl: 'app/login/login.html',
-    styleUrls: ['app/login/login.css'],
+    templateUrl: 'login.html',
+    styleUrls: ['login.css'],
     providers: [HttpService]
 })
 

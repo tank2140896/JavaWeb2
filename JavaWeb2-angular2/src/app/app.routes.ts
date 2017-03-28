@@ -1,3 +1,4 @@
+///<reference path="login/login.routes.ts"/>
 import {Routes,RouterModule} from '@angular/router';
 
 import {LoginRoutes} from "./login/login.routes";
