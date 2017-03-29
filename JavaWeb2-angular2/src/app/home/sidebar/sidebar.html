@@ -1,14 +1,4 @@
 <div>
     <div><a [routerLink]="['/home']">返回主页</a></div>
-    <!-- 前端暂做两层结构处理，后端理论上已支持无限层嵌套 -->
-    <div *ngFor="let i of menuList">
-        <div>{{i.modulename}}</div>
-        <div *ngFor="let j of i.list" style="margin-left: 10px;">
-            <a href="#" [routerLink]="[j.moduleurl]">{{j.modulename}}</a>
-        </div>
-    </div>
+    <div [innerHTML]="htmlWrite"></div>
 </div>
-
-<button class="btn btn-default" id="toggle-sidebar" type="button">
-    点我
-</button>

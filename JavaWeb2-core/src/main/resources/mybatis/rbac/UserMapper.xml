@@ -24,17 +24,23 @@
 		<include refid="selectUser"></include> from user where username = #{username} and password = #{password} and del_flag = 0 limit 1
 	</select>
 	
-	<select id="getUserRoleModule" parameterType="java.lang.String" resultType="com.javaweb.dataobject.eo.UserRoleModule">
-		SELECT moduleid,modulename,moduleurl,moduletype,parentid,icon from module WHERE moduleid
-		in(
-			SELECT rm.moduleid from role_module rm
-			WHERE rm.roleid in(
-			SELECT ur.roleid from role r,user_role ur
-			WHERE ur.userid = #{_parameter} 
-			AND r.roleid = ur.roleid
-			)
-		)
-		ORDER BY level ASC,orders ASC
+	<select id="getUserRoleModule" parameterType="Map" resultType="com.javaweb.dataobject.eo.UserRoleModule">
+		<!-- 若test比较的是字符串，①将外层变为单引号，内层变为双引号；②单引号的值.toString() -->
+		<if test="adminFlag==1"><!-- 超级管理员 -->
+			SELECT moduleid,modulename,moduleurl,moduletype,parentid,icon from module WHERE del_flag = 0 ORDER BY level ASC,orders ASC
+		</if>
+		<if test="adminFlag==0"><!-- 非超级管理员 -->
+			SELECT moduleid,modulename,moduleurl,moduletype,parentid,icon from module WHERE moduleid
+			in(
+				SELECT rm.moduleid from role_module rm
+				WHERE rm.roleid in(
+				SELECT ur.roleid from role r,user_role ur
+				WHERE ur.userid = #{userId} 
+				AND r.roleid = ur.roleid
+				)
+			) and del_flag = 0  
+			ORDER BY level ASC,orders ASC
+		</if>
 	</select>
 	
 </mapper>

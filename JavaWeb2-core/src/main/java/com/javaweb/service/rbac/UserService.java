@@ -14,6 +14,6 @@ public interface UserService {
 	
 	public User getUserByUsernameAndPassword(Map<String,String> map);
 	
-	public List<UserRoleModule> getUserRoleModule(String userId);
+	public List<UserRoleModule> getUserRoleModule(Map<String,Object> map);
 
 }

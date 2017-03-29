@@ -30,8 +30,8 @@ public class UserServiceImpl implements UserService {
 		return userDao.getUserByUsernameAndPassword(map);
 	}
 
-	public List<UserRoleModule> getUserRoleModule(String userId) {
-		return userDao.getUserRoleModule(userId);
+	public List<UserRoleModule> getUserRoleModule(Map<String,Object> map) {
+		return userDao.getUserRoleModule(map);
 	}
 
 }
