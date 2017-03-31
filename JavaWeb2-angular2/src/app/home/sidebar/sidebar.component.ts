@@ -12,8 +12,8 @@ export class SidebarComponent {
         this.getMenuList(JSON.parse(window.sessionStorage.getItem('menuList')));
     }
 
-    htmlWrite:string = '';
-
+    htmlWrite:string = '';//TODO @Input()试下
+    
     getMenuList(menuList:any):void{
         for(let i=0;i<menuList.length;i++){
             let each = menuList[i];
