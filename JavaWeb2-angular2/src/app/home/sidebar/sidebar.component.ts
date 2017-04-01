@@ -12,8 +12,8 @@ export class SidebarComponent {
         this.getMenuList(JSON.parse(window.sessionStorage.getItem('menuList')));
     }
 
-    htmlWrite:string = '';//TODO @Input()试下
-    
+    htmlWrite:string = '';
+
     getMenuList(menuList:any):void{
         for(let i=0;i<menuList.length;i++){
             let each = menuList[i];
@@ -21,10 +21,8 @@ export class SidebarComponent {
                 this.htmlWrite += '<div>'+each.modulename+'</div>';
                 this.getMenuList(each.list);
             }else{
-                //TODO 此时routerLink是不起作用的，如果解决，参考：（未完待续）
-                //TODO https://angular.io/docs/ts/latest/cookbook/dynamic-component-loader.html
-                //TODO http://stackoverflow.com/questions/32340641/angular-2-equivalent-of-ng-bind-html-sce-trustashtml-and-compile
-                //TODO http://stackoverflow.com/questions/35556344/angular2-dynamiccomponentloader-with-parameters
+                //http://stackoverflow.com/questions/36325212/angular-2-dynamic-tabs-with-user-click-chosen-components/36325468
+                //NgComponentOutlet
                 this.htmlWrite += '<div><a href="#" [routerLink]="'+each.moduleurl+'">'+each.modulename+'</a></div>';
             }
         }
