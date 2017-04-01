@@ -1,5 +1,5 @@
 <div>
     <div><a [routerLink]="['/home']">返回主页</a></div>
-    <div [innerHTML]="htmlWrite"></div>
-    <!-- <ng-container *ngComponentOutlet="htmlWrite"></ng-container> -->
+    <!-- routerLink在innerHTML下不起作用，找了好多资料，换了好多方法都没有解决，因此这里变通处理了下，直接以href的形式进行跳转了 -->
+    <div [innerHTML]="htmlContent"></div>
  </div>
