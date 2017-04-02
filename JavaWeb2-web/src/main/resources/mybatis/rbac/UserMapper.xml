@@ -4,7 +4,7 @@
 <mapper namespace="com.javaweb.dao.rbac.UserDao">
 
 	<sql id="selectUser" >
-		select userid as userId,username as userName,password,personname as personName,email,phone,
+		userid as userId,username as userName,password,personname as personName,email,phone,
 		portrait,parentid as parentId,fcode,level,remark,status,create_date as createDate,creator,
 		update_date as updateDate,updater,del_flag as delFlag
 	</sql>
@@ -42,11 +42,11 @@
 	</insert>
 	
 	<select id="getUserByUserId" parameterType="java.lang.String" resultType="com.javaweb.dataobject.po.User">
-		<include refid="selectUser"></include> from user where userid = #{_parameter} and del_flag = 0
+		select <include refid="selectUser"></include> from user where userid = #{_parameter} and del_flag = 0
 	</select>
 	
 	<select id="getUserByUsernameAndPassword" parameterType="Map" resultType="com.javaweb.dataobject.po.User">
-		<include refid="selectUser"></include> from user where username = #{username} and password = #{password} and del_flag = 0 limit 1
+		select <include refid="selectUser"></include> from user where username = #{username} and password = #{password} and del_flag = 0 limit 1
 	</select>
 	
 	<select id="getUserRoleModule" parameterType="Map" resultType="com.javaweb.dataobject.eo.UserRoleModule">
@@ -82,7 +82,7 @@
 				and create_date &lt;= #{endDate}
 			</if>
 		</where>
-		limit (${currentPage}-1)*${pageSize}},${pageSize};
+		limit ${currentStart},${currentSize};
       	SELECT FOUND_ROWS() as total;
 	</select>
 	

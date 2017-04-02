@@ -6,8 +6,12 @@ export class HttpRequestUrl{
 
     public static LOGIN_SUFFIX = '/login';
 
+    public static SYS_USER_LSIT_SUFFIX = '/sys/user/list';
+
     //public static GET_KAPTCHA:string = HttpRequestUrl.HTTP_REQUEST_PREFIX+HttpRequestUrl.GET_KAPTCHA_SUFFIX;
 
     public static LOGIN:string = HttpRequestUrl.HTTP_REQUEST_PREFIX+HttpRequestUrl.LOGIN_SUFFIX;
+
+    public static SYS_USER_LSIT:string = HttpRequestUrl.HTTP_REQUEST_PREFIX+HttpRequestUrl.SYS_USER_LSIT_SUFFIX;
 
 }

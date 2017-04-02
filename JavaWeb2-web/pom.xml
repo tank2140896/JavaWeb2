@@ -98,6 +98,7 @@
 					<source>1.8</source>
 					<target>1.8</target>
 					<encoding>utf8</encoding>
+					<skip>true</skip>
 					<!--  
 					<compilerArgs> 
 		            		<arg>-verbose</arg>

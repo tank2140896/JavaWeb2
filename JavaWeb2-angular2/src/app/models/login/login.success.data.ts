@@ -1,4 +1,4 @@
-export class LoginSuccessData{
+export class LoginSuccessData {
 
     private token:string = null;
 

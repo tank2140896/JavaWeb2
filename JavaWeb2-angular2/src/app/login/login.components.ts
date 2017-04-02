@@ -1,10 +1,8 @@
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
-import {Response, Headers, RequestOptions} from "@angular/http";
 
 import {LoginUser} from '../models/login/login.user';
 import {HttpService} from "../service/http/HttpService";
-import {AuthService} from "../service/auth/AuthService";
 import {HttpRequestUrl} from "../constant/HttpRequestUrl";
 import {LoginSuccessData} from "../models/login/login.success.data";
 
@@ -17,7 +15,6 @@ import {LoginSuccessData} from "../models/login/login.success.data";
 
 export class LoginComponent{
 
-    //UserManage_AddUser = this.authService.getSeesion('/system/userManage/addUser');
     constructor(private router:Router,private httpService:HttpService) { }
 
     /*------ 语言切换 start ------*/
