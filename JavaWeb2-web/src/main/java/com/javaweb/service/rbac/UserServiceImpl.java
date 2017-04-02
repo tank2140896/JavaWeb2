@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.javaweb.dao.rbac.UserDao;
 import com.javaweb.dataobject.eo.UserRoleModule;
+import com.javaweb.dataobject.eo.UserSearchCondition;
 import com.javaweb.dataobject.po.User;
 
 @Service("userServiceImpl")
@@ -32,6 +33,12 @@ public class UserServiceImpl implements UserService {
 
 	public List<UserRoleModule> getUserRoleModule(Map<String,Object> map) {
 		return userDao.getUserRoleModule(map);
+	}
+
+	public List<User> listUser(UserSearchCondition UserSearchCondition) {
+		List<List<?>> list = userDao.listUser(UserSearchCondition);
+		return null;
+		//TODO
 	}
 
 }

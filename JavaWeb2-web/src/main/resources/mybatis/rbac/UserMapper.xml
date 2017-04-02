@@ -8,6 +8,31 @@
 		portrait,parentid as parentId,fcode,level,remark,status,create_date as createDate,creator,
 		update_date as updateDate,updater,del_flag as delFlag
 	</sql>
+	
+	<resultMap id="userMap" type="com.javaweb.dataobject.po.User">  
+			<result column="userid" property="userId"/>
+			<result column="userid" property="userId"/>
+			<result column="username" property="userName"/>
+			<result column="password" property="password"/>
+			<result column="personname" property="personName"/>
+			<result column="email" property="email"/>
+			<result column="phone" property="phone"/>
+			<result column="portrait" property="portrait"/>
+			<result column="parentid" property="parentId"/>
+			<result column="fcode" property="fcode"/>
+			<result column="level" property="level"/>
+			<result column="remark" property="remark"/>
+			<result column="status" property="status"/>
+			<result column="create_date" property="createDate"/>
+			<result column="creator" property="creator"/>
+			<result column="update_date" property="updateDate"/>
+			<result column="updater" property="updater"/>
+			<result column="del_flag" property="delFlag"/>
+  	</resultMap> 
+  	
+  	<resultMap id="getTotalCount" type="Long">   
+    		<result column="total" property="total"/>  
+  	</resultMap> 
 
 	<insert id="createUser" parameterType="com.javaweb.dataobject.po.User">
 		insert into user(userid,username,password,personname,email,phone,portrait,
@@ -41,6 +66,24 @@
 			) and del_flag = 0  
 			ORDER BY level ASC,orders ASC
 		</if>
+	</select>
+
+	<select id="listUser" parameterType="com.javaweb.dataobject.eo.UserSearchCondition" resultMap="userMap,getTotalCount">
+		SELECT SQL_CALC_FOUND_ROWS <include refid="selectUser"></include> from user
+		<where>
+			del_flag = 0
+			<if test="userName!=null and userName!=''">
+				and username like CONCAT('%',#{userName},'%')
+			</if>
+			<if test="startDate!=null and startDate!=''">
+				and create_date &gt;= #{startDate}
+			</if>
+			<if test="endDate!=null and endDate!=''">
+				and create_date &lt;= #{endDate}
+			</if>
+		</where>
+		limit (${currentPage}-1)*${pageSize}},${pageSize};
+      	SELECT FOUND_ROWS() as total;
 	</select>
 	
 </mapper>

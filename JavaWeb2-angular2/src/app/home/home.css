@@ -10,7 +10,7 @@
 }
 
 .sideBarZone{
-    width: 12%;
+    width: 10%;
     height: 860px;
     float: left;
     background-color: aquamarine;
@@ -19,7 +19,7 @@
 .centeralZone{
     text-align: center;
     height: 860px;
-    width: 88%;
+    width: 90%;
     float: right;
     background-color: cadetblue;
 }

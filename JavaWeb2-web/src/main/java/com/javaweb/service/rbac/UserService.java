@@ -1,15 +1,13 @@
-package com.javaweb.dao.rbac;
+package com.javaweb.service.rbac;
 
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Mapper;
-
 import com.javaweb.dataobject.eo.UserRoleModule;
+import com.javaweb.dataobject.eo.UserSearchCondition;
 import com.javaweb.dataobject.po.User;
 
-@Mapper
-public interface UserDao {
+public interface UserService {
 	
 	public void createUser(User user);
 
@@ -19,4 +17,6 @@ public interface UserDao {
 	
 	public List<UserRoleModule> getUserRoleModule(Map<String,Object> map);
 	
+	public List<User> listUser(UserSearchCondition UserSearchCondition);
+
 }

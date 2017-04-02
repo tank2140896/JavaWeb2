@@ -3,7 +3,7 @@
   	
   	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.javaweb</groupId>
-	<artifactId>JavaWeb2-web</artifactId>
+	<artifactId>JavaWeb2</artifactId>
 	<version>0.0.1</version>
 	<packaging>jar</packaging>
 	
@@ -19,23 +19,34 @@
     </parent>
 
 	<dependencies>
-		<dependency>
-            <groupId>com.javaweb</groupId>
-            <artifactId>JavaWeb2-core</artifactId>
-            <version>0.0.1</version>
-            <type>jar</type>
-	        <scope>compile</scope>
-        </dependency>
         <dependency>
 	        <groupId>org.springframework.boot</groupId>
 	        <artifactId>spring-boot-starter-web</artifactId>
 	    </dependency>
 	   	<dependency>
 	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-test</artifactId>
+	    </dependency>
+	   	<dependency>
+	        <groupId>org.springframework.boot</groupId>
 	        <artifactId>spring-boot-starter-redis</artifactId>
 	        <version>1.4.2.RELEASE</version>
 	    </dependency>
-	    <dependency>
+		<dependency>
+		    <groupId>com.github.penggle</groupId>
+		    <artifactId>kaptcha</artifactId>
+		    <version>2.3.2</version>
+		</dependency>
+		<dependency>
+		    <groupId>org.mybatis.spring.boot</groupId>
+		    <artifactId>mybatis-spring-boot-starter</artifactId>
+		    <version>1.2.0</version>
+		</dependency>
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>javax.servlet-api</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
@@ -43,11 +54,38 @@
 		    <groupId>com.google.code.gson</groupId>
 		    <artifactId>gson</artifactId>
 		</dependency>
+		<!-- POI操作Excel start -->
 		<dependency>
-		    <groupId>com.github.penggle</groupId>
-		    <artifactId>kaptcha</artifactId>
-		    <version>2.3.2</version>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.15</version>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>3.15</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-scratchpad</artifactId>
+			<version>3.15</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml-schemas</artifactId>
+			<version>3.15</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-excelant</artifactId>
+			<version>3.15</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-contrib</artifactId>
+			<version>3.6</version>
+		</dependency>
+		<!-- POI操作Excel end -->
   	</dependencies>
   	
   	<build>
@@ -60,6 +98,22 @@
 					<source>1.8</source>
 					<target>1.8</target>
 					<encoding>utf8</encoding>
+					<!--  
+					<compilerArgs> 
+		            		<arg>-verbose</arg>
+		            		<arg>-Xlint:unchecked</arg>
+		            		<arg>-Xlint:deprecation</arg>
+		            		<arg>-extdirs</arg> 
+		            		<arg>${project.basedir}/src/main/webapp/WEB-INF/lib</arg>
+		        	</compilerArgs>
+		        	<dependency>  
+					    <groupId>a</groupId>  
+					    <artifactId>b</artifactId>  
+					    <version>0.0.1</version>  
+					    <scope>system</scope> 
+					    <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/util-collections-0.0.1.jar</systemPath>
+					</dependency>
+					-->
 				</configuration>
 			</plugin> 
 			<plugin>
