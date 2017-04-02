@@ -6,6 +6,7 @@ import {LoginUser} from '../models/login/login.user';
 import {HttpService} from "../service/http/HttpService";
 import {AuthService} from "../service/auth/AuthService";
 import {HttpRequestUrl} from "../constant/HttpRequestUrl";
+import {LoginSuccessData} from "../models/login/login.success.data";
 
 @Component({
     selector: 'web-app',
@@ -61,16 +62,18 @@ export class LoginComponent{
     public login():void{
         this.httpService.postJsonData(HttpRequestUrl.LOGIN,JSON.stringify(this.user),null).subscribe(
             result=>{
-                console.log(result);
+                //console.log(result);
                 let data = result.data;
-                let token = data.token;
-                let user = data.user;
-                let menuList = data.menuList;
-                let authOperateList = data.authOperateList;
-                window.sessionStorage.setItem('token',token);
-                window.sessionStorage.setItem('user',JSON.stringify(user));
-                window.sessionStorage.setItem('menuList',JSON.stringify(menuList));
-                window.sessionStorage.setItem('authOperateList',JSON.stringify(authOperateList));
+                //let token = data.token;
+                //let user = data.user;
+                //let menuList = data.menuList;
+                //let authOperateList = data.authOperateList;
+                let loginSuccessData = new LoginSuccessData();
+                loginSuccessData.setToken(data.token);
+                loginSuccessData.setUser(data.user);
+                loginSuccessData.setMenuList(data.menuList);
+                loginSuccessData.setAuthOperateList(data.authOperateList);
+                window.sessionStorage.setItem('loginSuccessData',JSON.stringify(loginSuccessData));
                 this.router.navigate(['home']);
                 //this.router.navigate(['home']/*,{queryParams:{'myKey':100}}*/);
                 //<a [routerLink]="['home']" [queryParams]="{'myKey':100}" >Home</a>

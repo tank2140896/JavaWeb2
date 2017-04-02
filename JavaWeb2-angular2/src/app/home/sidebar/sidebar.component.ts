@@ -9,7 +9,7 @@ import {Component} from '@angular/core';
 export class SidebarComponent {
 
     constructor(/*private domSanitizer:DomSanitizer*/){
-        this.getMenuList(JSON.parse(window.sessionStorage.getItem('menuList')));
+        this.getMenuList(JSON.parse(window.sessionStorage.getItem('loginSuccessData')).menuList);
         //this.htmlWrite=this.domSanitizer.bypassSecurityTrustHtml(this.htmlContent);
     }
 
@@ -27,7 +27,7 @@ export class SidebarComponent {
                 this.getMenuList(each.list);
                 this.level = this.level.substring(0,this.level.length-2);
             }else{
-                this.htmlContent += '<div>'+this.level+'<a href="#/home/'+each.moduleurl+'">'+each.modulename+'</a></div>';
+                this.htmlContent += '<div>'+this.level+'<a href="#/home/'+each.pageurl+'">'+each.modulename+'</a></div>';
             }
         }
     }

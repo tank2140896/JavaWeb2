@@ -8,7 +8,9 @@ public class Module extends BaseEntity {
 	
 	private String moduleName;//模块名称
 	
-	private String moduleUrl = null;//模块URL
+	private String pageUrl = null;//页面URL
+	
+	private String apiUrl = null;//API的URL
 	
 	private String parentId = null;//模块的上级ID
 	
@@ -44,12 +46,20 @@ public class Module extends BaseEntity {
 		this.moduleName = moduleName;
 	}
 
-	public String getModuleUrl() {
-		return moduleUrl;
+	public String getPageUrl() {
+		return pageUrl;
 	}
 
-	public void setModuleUrl(String moduleUrl) {
-		this.moduleUrl = moduleUrl;
+	public void setPageUrl(String pageUrl) {
+		this.pageUrl = pageUrl;
+	}
+
+	public String getApiUrl() {
+		return apiUrl;
+	}
+
+	public void setApiUrl(String apiUrl) {
+		this.apiUrl = apiUrl;
 	}
 
 	public String getParentId() {

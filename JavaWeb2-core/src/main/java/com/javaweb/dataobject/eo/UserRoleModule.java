@@ -8,7 +8,9 @@ public class UserRoleModule {
 	
 	private String modulename;
 	
-	private String moduleurl;
+	private String pageurl;
+	
+	private String apiurl;
 	
 	private String moduletype;
 	
@@ -34,12 +36,20 @@ public class UserRoleModule {
 		this.modulename = modulename;
 	}
 
-	public String getModuleurl() {
-		return moduleurl;
+	public String getPageurl() {
+		return pageurl;
 	}
 
-	public void setModuleurl(String moduleurl) {
-		this.moduleurl = moduleurl;
+	public void setPageurl(String pageurl) {
+		this.pageurl = pageurl;
+	}
+
+	public String getApiurl() {
+		return apiurl;
+	}
+
+	public void setApiurl(String apiurl) {
+		this.apiurl = apiurl;
 	}
 
 	public String getModuletype() {
