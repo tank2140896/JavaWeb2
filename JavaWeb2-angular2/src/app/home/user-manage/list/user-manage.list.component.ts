@@ -14,12 +14,18 @@ export class UserManageListComponent implements OnInit {
 
     private userSearch:UserSearch = new UserSearch();
 
+    private listData:any = null;
+    private currentPage:number;
+    private totalPage:number;
+
     ngOnInit(): void {
         this.httpService.postJsonData(HttpRequestUrl.SYS_USER_LSIT,
                                       JSON.stringify(this.userSearch),
                                       JSON.parse(window.sessionStorage.getItem('loginSuccessData')).token).subscribe(
             result=>{
-                console.log(result);
+                this.listData = result.data.data;
+                this.currentPage = result.data.currentPage;
+                this.totalPage = result.data.totalPage;
             }
         );
     }

@@ -9,8 +9,7 @@ import {LoginSuccessData} from "../models/login/login.success.data";
 @Component({
     selector: 'web-app',
     templateUrl: 'login.html',
-    styleUrls: ['login.css'],
-    providers: [HttpService]
+    styleUrls: ['login.css']
 })
 
 export class LoginComponent{

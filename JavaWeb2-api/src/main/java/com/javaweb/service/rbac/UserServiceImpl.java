@@ -50,6 +50,7 @@ public class UserServiceImpl implements UserService {
 		page.setPageSize(userSearchCondition.getPageSize());
 		page.setData(list.get(0));
 		page.setTotalSize((Long)list.get(1).get(0));
+		page.setTotalPage(page.getTotalSize()%page.getPageSize()==0?page.getTotalSize()/page.getPageSize():page.getTotalSize()/page.getPageSize()+1);
 		return page;
 	}
 
