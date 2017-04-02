@@ -8,20 +8,26 @@ import {Component} from '@angular/core';
 
 export class SidebarComponent {
 
-    constructor(){
+    constructor(/*private domSanitizer:DomSanitizer*/){
         this.getMenuList(JSON.parse(window.sessionStorage.getItem('menuList')));
+        //this.htmlWrite=this.domSanitizer.bypassSecurityTrustHtml(this.htmlContent);
     }
+
+    //htmlWrite:SafeHtml;
 
     htmlContent:string = '';
 
+    level:String='';
     getMenuList(menuList:any):void{
         for(let i=0;i<menuList.length;i++){
             let each = menuList[i];
             if(each.list!=null&&each.list.length>0){
-                this.htmlContent += '<div>'+each.modulename+'</div>';
+                this.htmlContent += '<div>'+this.level+each.modulename+'</div>';
+                this.level+="——";
                 this.getMenuList(each.list);
+                this.level = this.level.substring(0,this.level.length-2);
             }else{
-                this.htmlContent += '<div><a href="#/home/'+each.moduleurl+'">'+each.modulename+'</a></div>';
+                this.htmlContent += '<div>'+this.level+'<a href="#/home/'+each.moduleurl+'">'+each.modulename+'</a></div>';
             }
         }
     }

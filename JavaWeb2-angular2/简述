@@ -3,7 +3,7 @@
 devDependencies在开发中会依赖其一些功能（形如JUnit），但是在部署时不会添加使用进去；
 dependencies是项目开发和部署所依赖的（形如node_modules里的文件）
 2、对于依赖包的查找可以访问：https://www.npmjs.com/
-3、webpack和webpack-dev-server的版本并不是越新越好，到底这两个的版本对应关系如何，本人不大清楚，因此建议网上找个相匹配的
+3、如果使用webpack和webpack-dev-server，那么需要充分考虑到版本兼容
 二、webpack.config.js简要说明
 1、“filename: 'bundle.js'”这个是指定打包后的输出文件名，需要被引入到index.html中去
 2、entry指明了主入口，不可缺少
@@ -48,3 +48,6 @@ activatedRoute.snapshot.params['id']
 1、bootstrap
 ①package.json添加"ng2-bootstrap":"1.4.2"和"bootstrap":"3.3.7"
 ②.angular-cli.json添加"../node_modules/bootstrap/dist/css/bootstrap.min.css"
+五、待解决问题
+1、在sidebar.html界面中，后端返回给前端的是一个理论上具有无限层级的树形结构，但是前端拿到这个嵌套树形结构层级对象时如何展示是个问题
+需要考虑到angular-cli的版本、angular自身的版本、nodejs的版本及package.josn中各版本的兼容关系
