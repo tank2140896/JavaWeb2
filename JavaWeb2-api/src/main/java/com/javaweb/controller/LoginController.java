@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.javaweb.base.BaseController;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.dataobject.eo.TokenData;
 import com.javaweb.dataobject.eo.UserLogin;
@@ -58,32 +59,32 @@ public class LoginController extends BaseController {
 		try{
 			//Object kaptchaValue = ShiroSession.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
 			//String kaptcha = kaptchaValue==null?"":kaptchaValue.toString();
-			String username = userLogin.getUsername();
+			String userName = userLogin.getUserName();
 			String password = userLogin.getPassword();
-			if(SystemConstant.SYSTEM_ADMIN_USERNAME.equals(username)&&SystemConstant.SYSTEM_ADMIN_PASSWORD.equals(password)/*&&kaptcha.equals(kaptcha)*/){//超级管理员
+			if(SystemConstant.SYSTEM_ADMIN_USERNAME.equals(userName)&&SystemConstant.SYSTEM_ADMIN_PASSWORD.equals(password)/*&&kaptcha.equals(kaptcha)*/){//超级管理员
 				User user = new User();
 				user.setLevel(1);
 				user.setUserName(SystemConstant.SYSTEM_ADMIN_USERNAME);
 				user.setPassword(SystemConstant.SYSTEM_ADMIN_PASSWORD);
-				token = Base64.getEncoder().encodeToString((username+password).getBytes());
+				token = Base64.getEncoder().encodeToString((userName+password).getBytes());
 				TokenData tokenData = getUserRoleModule(user, token, 1);
 				setCache(tokenData, valueOperations);
-				responseResult = new ResponseResult(200,"登录成功",tokenData);
+				responseResult = new ResponseResult(SystemConstant.SUCCESS_CODE,"登录成功",tokenData);
 			}else{
 				Map<String,String> map = new HashMap<>();
-				map.put("username", username);
+				map.put("userName", userName);
 				map.put("password", Base64.getEncoder().encodeToString((password).getBytes()));
 				User user = userService.getUserByUsernameAndPassword(map);
 				if(user!=null){
 					TokenData tokenData = getUserRoleModule(user, token, 0);
 					setCache(tokenData, valueOperations);
-					responseResult = new ResponseResult(200,"登录成功",tokenData);
+					responseResult = new ResponseResult(SystemConstant.SUCCESS_CODE,"登录成功",tokenData);
 				}else{
-					responseResult = new ResponseResult(600,"用户名或密码错误",null);
+					responseResult = new ResponseResult(SystemConstant.INTERNAL_ERROR_CODE,"用户名或密码错误",null);
 				}
 			}
 		}catch(Exception e){
-			responseResult = new ResponseResult(500,e.getMessage(),null);
+			responseResult = new ResponseResult(SystemConstant.INTERNAL_ERROR_CODE,e.getMessage(),null);
 		}
 		return new GsonHelp().fromJsonDefault(responseResult);
 	}
@@ -95,10 +96,10 @@ public class LoginController extends BaseController {
 		map.put("userId", user.getUserId());
 		List<UserRoleModule> list = userService.getUserRoleModule(map);
 		//获得菜单列表
-		List<UserRoleModule> menuList = list.stream().filter(i->"1".equals(i.getModuletype())).collect(Collectors.toList());
+		List<UserRoleModule> menuList = list.stream().filter(i->"1".equals(i.getModuleType())).collect(Collectors.toList());
 		menuList = setTreeList(menuList, null);
 		//获得操作权限列表
-		List<UserRoleModule> authOperateList = list.stream().filter(i->"2".equals(i.getModuletype())).collect(Collectors.toList());
+		List<UserRoleModule> authOperateList = list.stream().filter(i->"2".equals(i.getModuleType())).collect(Collectors.toList());
 		TokenData tokenData = new TokenData();
 		tokenData.setToken(token);
 		tokenData.setUser(user);
@@ -112,8 +113,7 @@ public class LoginController extends BaseController {
 		List<UserRoleModule> moduleList = new ArrayList<>();
 		for (int i = 0; i < originList.size(); i++) {
 			UserRoleModule currentModule = originList.get(i);
-			if((module!=null&&module.getModuleid().equals(currentModule.getParentid()))
-			 ||(module==null&&currentModule.getParentid()==null)){
+			if((module!=null&&module.getModuleId().equals(currentModule.getParentId()))||(module==null&&currentModule.getParentId()==null)){
 				currentModule.setList(setTreeList(originList, currentModule));
 				moduleList.add(currentModule);
 			}
@@ -124,7 +124,7 @@ public class LoginController extends BaseController {
 	//没有权限
 	@GetMapping("/unauthorized")
 	public String unauthorized(){
-		ResponseResult responseResult = new ResponseResult(401,"没有权限",null);
+		ResponseResult responseResult = new ResponseResult(SystemConstant.NO_AUTHORY_CODE,"没有权限",null);
 		GsonHelp gsonHelp = new GsonHelp();
 		return gsonHelp.fromJsonDefault(responseResult);
 	}
@@ -132,7 +132,7 @@ public class LoginController extends BaseController {
 	//系统内部错误
 	@GetMapping("/internalServerError")
 	public String internalServerError(){
-		ResponseResult responseResult = new ResponseResult(500,"系统内部错误",null);
+		ResponseResult responseResult = new ResponseResult(SystemConstant.INTERNAL_ERROR_CODE,"系统内部错误",null);
 		GsonHelp gsonHelp = new GsonHelp();
 		return gsonHelp.fromJsonDefault(responseResult);
 	}
@@ -140,7 +140,7 @@ public class LoginController extends BaseController {
 	//接口不存在
 	@GetMapping("/notFound")
 	public String notFound(){
-		ResponseResult responseResult = new ResponseResult(404,"接口不存在",null);
+		ResponseResult responseResult = new ResponseResult(SystemConstant.NOT_FOUND_CODE,"接口不存在",null);
 		GsonHelp gsonHelp = new GsonHelp();
 		return gsonHelp.fromJsonDefault(responseResult);
 	}

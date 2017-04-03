@@ -5,9 +5,9 @@ import com.google.gson.GsonBuilder;
 
 public class GsonHelp {
 	
-	public String fromJsonDefault(Object object){
+	public String fromJsonDefault(ResponseResult responseResult){
 		Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-		return gson.toJson(object);
+		return gson.toJson(responseResult);
 	}
 	
 }

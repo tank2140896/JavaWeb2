@@ -4,68 +4,68 @@ import java.util.List;
 
 public class UserRoleModule {
 	
-	private String moduleid;
+	private String moduleId;
 	
-	private String modulename;
+	private String moduleName;
 	
-	private String pageurl;
+	private String pageUrl;
 	
-	private String apiurl;
+	private String apiUrl;
 	
-	private String moduletype;
+	private String moduleType;
 	
-	private String parentid;
+	private String parentId;
 	
 	private String icon;
 	
 	private List<UserRoleModule> list;
 
-	public String getModuleid() {
-		return moduleid;
+	public String getModuleId() {
+		return moduleId;
 	}
 
-	public void setModuleid(String moduleid) {
-		this.moduleid = moduleid;
+	public void setModuleId(String moduleId) {
+		this.moduleId = moduleId;
 	}
 
-	public String getModulename() {
-		return modulename;
+	public String getModuleName() {
+		return moduleName;
 	}
 
-	public void setModulename(String modulename) {
-		this.modulename = modulename;
+	public void setModuleName(String moduleName) {
+		this.moduleName = moduleName;
 	}
 
-	public String getPageurl() {
-		return pageurl;
+	public String getPageUrl() {
+		return pageUrl;
 	}
 
-	public void setPageurl(String pageurl) {
-		this.pageurl = pageurl;
+	public void setPageUrl(String pageUrl) {
+		this.pageUrl = pageUrl;
 	}
 
-	public String getApiurl() {
-		return apiurl;
+	public String getApiUrl() {
+		return apiUrl;
 	}
 
-	public void setApiurl(String apiurl) {
-		this.apiurl = apiurl;
+	public void setApiUrl(String apiUrl) {
+		this.apiUrl = apiUrl;
 	}
 
-	public String getModuletype() {
-		return moduletype;
+	public String getModuleType() {
+		return moduleType;
 	}
 
-	public void setModuletype(String moduletype) {
-		this.moduletype = moduletype;
+	public void setModuleType(String moduleType) {
+		this.moduleType = moduleType;
 	}
 
-	public String getParentid() {
-		return parentid;
+	public String getParentId() {
+		return parentId;
 	}
 
-	public void setParentid(String parentid) {
-		this.parentid = parentid;
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
 	}
 
 	public String getIcon() {

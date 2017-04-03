@@ -12,8 +12,8 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.javaweb.base.BaseController;
 import com.javaweb.constant.SystemConstant;
-import com.javaweb.controller.BaseController;
 import com.javaweb.controller.LoginController;
 import com.javaweb.dataobject.eo.TokenData;
 
@@ -44,7 +44,7 @@ public class AuthFilter extends BaseController implements Filter {
 			if(tokenData==null){
 				httpServletResponse.sendRedirect("/unauthorized");
 			}else{
-				long count = tokenData.getAuthOperateList().stream().filter(i->i.getApiurl().equals(servletPath)).count();
+				long count = tokenData.getAuthOperateList().stream().filter(i->i.getApiUrl().equals(servletPath)).count();
 				if(count>0){
 					filterChain.doFilter(httpServletRequest, httpServletResponse);
 				}else{

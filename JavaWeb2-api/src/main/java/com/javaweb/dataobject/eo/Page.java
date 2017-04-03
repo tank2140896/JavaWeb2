@@ -41,7 +41,13 @@ public class Page {
 	}
 
 	public void setTotalPage(Long totalPage) {
-		this.totalPage = totalPage;
+		if(pageSize!=0){
+			totalPage = totalSize/pageSize;
+			if(totalSize%pageSize!=0){
+				totalPage += 1;
+			}
+			this.totalPage = totalPage;
+		}
 	}
 
 	public Object getData() {
