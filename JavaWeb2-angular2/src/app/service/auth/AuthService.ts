@@ -20,7 +20,7 @@ export class AuthService implements CanActivate {
             return true;
         }else{
             for(let i of authOperateList){
-                if(url==("/home/"+i.pageurl)){
+                if(url==("/home/"+i.pageUrl)){
                     return true;
                 }
             }

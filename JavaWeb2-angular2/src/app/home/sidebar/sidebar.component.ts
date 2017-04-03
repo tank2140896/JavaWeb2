@@ -22,12 +22,12 @@ export class SidebarComponent {
         for(let i=0;i<menuList.length;i++){
             let each = menuList[i];
             if(each.list!=null&&each.list.length>0){
-                this.htmlContent += '<div>'+this.level+each.modulename+'</div>';
+                this.htmlContent += '<div>'+this.level+each.moduleName+'</div>';
                 this.level+="——";
                 this.getMenuList(each.list);
                 this.level = this.level.substring(0,this.level.length-2);
             }else{
-                this.htmlContent += '<div>'+this.level+'<a href="#/home/'+each.pageurl+'">'+each.modulename+'</a></div>';
+                this.htmlContent += '<div>'+this.level+'<a href="#/home/'+each.pageUrl+'">'+each.moduleName+'</a></div>';
             }
         }
     }
