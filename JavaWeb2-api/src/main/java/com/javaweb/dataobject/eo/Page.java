@@ -42,11 +42,7 @@ public class Page {
 
 	public void setTotalPage(Long totalPage) {
 		if(pageSize!=0){
-			totalPage = totalSize/pageSize;
-			if(totalSize%pageSize!=0){
-				totalPage += 1;
-			}
-			this.totalPage = totalPage;
+			this.totalPage = (long) Math.ceil((double)totalSize/pageSize);
 		}
 	}
 
