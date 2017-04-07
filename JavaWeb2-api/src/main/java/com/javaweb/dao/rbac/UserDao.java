@@ -5,11 +5,12 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.javaweb.base.BaseDao;
 import com.javaweb.dataobject.eo.UserRoleModule;
 import com.javaweb.dataobject.po.User;
 
 @Mapper
-public interface UserDao {
+public interface UserDao extends BaseDao<User> {
 	
 	public void createUser(User user);
 

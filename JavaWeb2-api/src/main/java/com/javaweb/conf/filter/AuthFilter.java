@@ -20,7 +20,7 @@ import com.javaweb.dataobject.eo.TokenData;
 @WebFilter(urlPatterns="/*",filterName="authFilter")
 public class AuthFilter extends BaseController implements Filter {
 	
-	public void init(FilterConfig arg0) throws ServletException {
+	public void init(FilterConfig filterConfig) throws ServletException {
 		
 	}
 
