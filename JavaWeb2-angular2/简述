@@ -44,6 +44,11 @@ activatedRoute.snapshot.params['id']
 页面URL路径及操作按钮任何人都可见、可操作；
 页面URL路径及操作按钮登录后可见、可操作；
 页面URL路径及操作按钮拥有相应权限后可见、可操作；
+11、<input #a/> <input #b/> <button (click)="clickMe(a,b)">click</button>
+clickMe(a:HTMLInputElement,b:HTMLInputElement){
+    console.log(a.value);
+    console.log(`${a.value},${b.value}`);
+}
 四、在angular-cli自动生成范围外的内容
 1、bootstrap
 ①package.json添加"ng2-bootstrap":"1.4.2"和"bootstrap":"3.3.7"

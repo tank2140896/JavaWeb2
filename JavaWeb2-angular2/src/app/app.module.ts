@@ -9,7 +9,6 @@ import {HttpService} from "./service/http/HttpService";
 
 import {HomeModule} from "./home/home.module";
 import {LoginModule} from "./login/login.module";
-import {RouterModule} from "@angular/router";
 
 @NgModule({
     imports: [BrowserModule, AppRoutes, LoginModule, HomeModule],
