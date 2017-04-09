@@ -8,15 +8,18 @@ import {Component} from '@angular/core';
 
 export class SidebarComponent {
 
+    menuList;
+
     constructor(/*private domSanitizer:DomSanitizer*/){
-        this.getMenuList(JSON.parse(window.sessionStorage.getItem('loginSuccessData')).menuList);
+        //获取sidebar菜单列表
+        this.menuList = JSON.parse(window.sessionStorage.getItem('loginSuccessData')).menuList;
         //this.htmlWrite=this.domSanitizer.bypassSecurityTrustHtml(this.htmlContent);
     }
 
     //htmlWrite:SafeHtml;
 
+    /**
     htmlContent:string = '';
-
     level:String='';
     getMenuList(menuList:any):void{
         for(let i=0;i<menuList.length;i++){
@@ -31,5 +34,6 @@ export class SidebarComponent {
             }
         }
     }
+    */
 
 }

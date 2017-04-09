@@ -28,4 +28,22 @@ export class AuthService implements CanActivate {
         return false;
     }
 
+    canShow(apiUrl:string){
+        let loginSuccessData = window.sessionStorage.getItem('loginSuccessData');
+        if(loginSuccessData==null){
+            return false;
+        }
+        let authOperateList = JSON.parse(loginSuccessData).authOperateList;
+        if(authOperateList==null||authOperateList.length==0){
+            return false;
+        }
+        //console.log(apiUrl);
+        for(let i of authOperateList){
+            if(i.apiUrl==apiUrl){
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

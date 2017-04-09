@@ -1,5 +1,8 @@
-<div>
-    <div><a [routerLink]="['/home']">返回主页</a></div>
-    <!-- routerLink在innerHTML下不起作用，找了好多资料，换了好多方法都没有解决，因此这里变通处理了下，直接以href的形式进行跳转了 -->
-    <div [innerHTML]="htmlContent"></div>
- </div>
+<div><a [routerLink]="['/home']">主页</a></div>
+<div *ngFor="let i of menuList">
+    <div *ngIf="i.list.length==0"><a [routerLink]="[i.pageUrl]">{{i.moduleName}}</a></div>
+    <div *ngIf="i.list.length>0">
+        <div>{{i.moduleName}}</div>
+        <sidebar-recursion *ngFor="let j of i.list" [url]="j.pageUrl" [name]="j.moduleName" [list]="j.list"></sidebar-recursion>
+    </div>
+</div>

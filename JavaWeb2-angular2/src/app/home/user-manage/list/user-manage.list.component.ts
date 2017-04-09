@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {HttpService} from "../../../service/http/HttpService";
 import {HttpRequestUrl} from "../../../constant/HttpRequestUrl";
 import {UserSearch} from "../../../models/user/user.search";
+import {AuthService} from "../../../service/auth/AuthService";
 
 @Component({
     selector: 'user-manage-list',
@@ -10,7 +11,10 @@ import {UserSearch} from "../../../models/user/user.search";
 
 export class UserManageListComponent implements OnInit {
 
-    constructor(private httpService:HttpService){ }
+    addUserButton:any;//新增按钮
+    constructor(private httpService:HttpService,private authService:AuthService){
+        this.addUserButton = authService.canShow(HttpRequestUrl.SYS_USER_LSIT_SUFFIX);
+    }
 
     private userSearch:UserSearch = new UserSearch();
 
