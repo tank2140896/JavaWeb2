@@ -53,8 +53,7 @@ clickMe(a:HTMLInputElement,b:HTMLInputElement){
 1、bootstrap
 ①package.json添加"ng2-bootstrap":"1.4.2"和"bootstrap":"3.3.7"
 ②.angular-cli.json添加"../node_modules/bootstrap/dist/css/bootstrap.min.css"
-五、待完善、解决问题
-1、在sidebar.html界面中，后端返回给前端的是一个理论上具有无限层级的树形结构，但是前端拿到这个嵌套树形结构层级对象时如何展示是个问题
-需要考虑到angular-cli的版本、angular自身的版本、nodejs的版本及package.josn中各版本的兼容关系
-2、现在保存后端的用户信息、菜单信息等用的是window.sessionStorage，我想在ng2下应该有更好的处理办法
-3、在ng2中sidebar的伸缩事件该如何处理
+五、待完善、解决、考虑的问题
+1（*）、在ng2中sidebar的层级展示及层级伸缩事件该如何处理
+2、使用第三方npm等考虑到angular-cli的版本、angular自身的版本、nodejs的版本及package.josn中各版本的兼容关系
+3、现在保存后端的用户信息、菜单信息等用的是window.sessionStorage，我想在ng2下应该有更好的处理办法
