@@ -1,0 +1,5 @@
+<div *ngIf="list.length==0"><a [routerLink]="[url]">{{name}}</a></div>
+<div *ngIf="list.length>0">
+    <div>{{name}}</div>
+    <sidebar-recursion *ngFor="let i of list" [url]="i.pageUrl" [name]="i.moduleName" [list]="i.list"></sidebar-recursion>
+</div>

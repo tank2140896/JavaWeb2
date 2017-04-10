@@ -1,8 +1,3 @@
-<div><a [routerLink]="['/home']">主页</a></div>
-<div *ngFor="let i of menuList">
-    <div *ngIf="i.list.length==0"><a [routerLink]="[i.pageUrl]">{{i.moduleName}}</a></div>
-    <div *ngIf="i.list.length>0">
-        <div>{{i.moduleName}}</div>
-        <sidebar-recursion *ngFor="let j of i.list" [url]="j.pageUrl" [name]="j.moduleName" [list]="j.list"></sidebar-recursion>
-    </div>
-</div>
+<div><a [hidden]="false" [routerLink]="['/home']">主页</a></div>
+<!-- 递归调用 -->
+<sidebar-recursion *ngFor="let i of menuList" [url]="i.pageUrl" [name]="i.moduleName" [list]="i.list"></sidebar-recursion>
