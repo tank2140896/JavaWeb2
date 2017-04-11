@@ -8,6 +8,19 @@ import {Component,Input} from "@angular/core";
 
 export class SidebarRecursionComponent {
 
+    @Input('tag') tag:string = '+';
+    @Input('hiddenFlag') hiddenFlag = true;
+
+    tagEvent():void{
+	if(this.hiddenFlag==true){
+		this.tag = '-';
+		this.hiddenFlag = false;
+	}else{
+		this.tag = '+';
+		this.hiddenFlag = true;
+	}
+    }
+
     @Input() url:string;
     @Input() name:string;
     @Input() list:any[];
