@@ -3,6 +3,7 @@ import {HttpService} from "../../../service/http/HttpService";
 import {HttpRequestUrl} from "../../../constant/HttpRequestUrl";
 import {UserSearch} from "../../../models/user/user.search";
 import {AuthService} from "../../../service/auth/AuthService";
+import {HeadToken} from "../../../models/token/head.token";
 
 @Component({
     selector: 'user-manage-list',
@@ -23,9 +24,12 @@ export class UserManageListComponent implements OnInit {
     private totalPage:number;
 
     ngOnInit(): void {
+        let headToken = new HeadToken();
+        headToken.userId = JSON.parse(window.sessionStorage.getItem('loginSuccessData')).user.userId;
+        headToken.token = JSON.parse(window.sessionStorage.getItem('loginSuccessData')).token;
         this.httpService.postJsonData(HttpRequestUrl.SYS_USER_LSIT,
                                       JSON.stringify(this.userSearch),
-                                      JSON.parse(window.sessionStorage.getItem('loginSuccessData')).token).subscribe(
+                                      headToken).subscribe(
             result=>{
                 this.listData = result.data.data;
                 this.currentPage = result.data.currentPage;
