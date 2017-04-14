@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javaweb.base.BaseController;
+import com.javaweb.conf.filter.AuthFilter;
 import com.javaweb.constant.SystemConstant;
+import com.javaweb.dataobject.eo.TokenCheck;
 import com.javaweb.dataobject.eo.TokenData;
 import com.javaweb.dataobject.eo.UserLogin;
 import com.javaweb.dataobject.eo.UserRoleModule;
@@ -63,11 +65,18 @@ public class LoginController extends BaseController {
 			String password = userLogin.getPassword();
 			if(SystemConstant.SYSTEM_ADMIN_USERNAME.equals(userName)&&SystemConstant.SYSTEM_ADMIN_PASSWORD.equals(password)/*&&kaptcha.equals(kaptcha)*/){//超级管理员
 				User user = new User();
+				user.setUserId(SystemConstant.SYSTEM_ADMIN_USERID);
 				user.setLevel(1);
 				user.setUserName(SystemConstant.SYSTEM_ADMIN_USERNAME);
 				user.setPassword(SystemConstant.SYSTEM_ADMIN_PASSWORD);
 				token = Base64.getEncoder().encodeToString((userName+password).getBytes());
+				//tokenData为返回给前后的数据
 				TokenData tokenData = getUserRoleModule(user, token, 1);
+				//tokenCheck是类似session失效校验的处理
+				TokenCheck tokenCheck = new TokenCheck();
+				tokenCheck.setToken(token);
+				tokenCheck.setCurrentTime(System.currentTimeMillis());
+				AuthFilter.tokenMap.put(user.getUserId(),tokenCheck);
 				setCache(tokenData, valueOperations);
 				responseResult = new ResponseResult(SystemConstant.SUCCESS_CODE,"登录成功",tokenData);
 			}else{
@@ -76,7 +85,13 @@ public class LoginController extends BaseController {
 				map.put("password", Base64.getEncoder().encodeToString((password).getBytes()));
 				User user = userService.getUserByUsernameAndPassword(map);
 				if(user!=null){
+					//tokenData为返回给前后的数据
 					TokenData tokenData = getUserRoleModule(user, token, 0);
+					//tokenCheck是类似session失效校验的处理
+					TokenCheck tokenCheck = new TokenCheck();
+					tokenCheck.setToken(token);
+					tokenCheck.setCurrentTime(System.currentTimeMillis());
+					AuthFilter.tokenMap.put(user.getUserId(),tokenCheck);
 					setCache(tokenData, valueOperations);
 					responseResult = new ResponseResult(SystemConstant.SUCCESS_CODE,"登录成功",tokenData);
 				}else{
