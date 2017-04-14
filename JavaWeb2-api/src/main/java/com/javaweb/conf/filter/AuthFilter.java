@@ -1,6 +1,8 @@
 package com.javaweb.conf.filter;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -15,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.javaweb.base.BaseController;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.controller.LoginController;
+import com.javaweb.dataobject.eo.TokenCheck;
 import com.javaweb.dataobject.eo.TokenData;
 
 @WebFilter(urlPatterns="/*",filterName="authFilter")
@@ -27,6 +30,8 @@ public class AuthFilter extends BaseController implements Filter {
 	public void destroy() {
 		
 	}
+	
+	public static Map<String,TokenCheck> tokenMap = new HashMap<>();
 
 	public void doFilter(ServletRequest request,ServletResponse response,FilterChain filterChain) throws IOException, ServletException {
 		HttpServletRequest httpServletRequest = ((HttpServletRequest)request);
