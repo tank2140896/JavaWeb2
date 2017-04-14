@@ -12,7 +12,7 @@ public class Role extends BaseEntity {
 	
 	private String fcode = null;//层级关系
 	
-	private int level = 0;//第几级(0表示未定义层级数;层级数1为最高,即根节点)
+	private Integer level = 0;//第几级(0表示未定义层级数;层级数1为最高,即根节点)
 	
 	private String remark = null;//备注
 
@@ -48,11 +48,11 @@ public class Role extends BaseEntity {
 		this.fcode = fcode;
 	}
 
-	public int getLevel() {
+	public Integer getLevel() {
 		return level;
 	}
 
-	public void setLevel(int level) {
+	public void setLevel(Integer level) {
 		this.level = level;
 	}
 

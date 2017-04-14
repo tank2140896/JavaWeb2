@@ -1,8 +1,6 @@
 package com.javaweb.conf.filter;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -17,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.javaweb.base.BaseController;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.controller.LoginController;
-import com.javaweb.dataobject.eo.TokenCheck;
 import com.javaweb.dataobject.eo.TokenData;
 
 @WebFilter(urlPatterns="/*",filterName="authFilter")
@@ -31,8 +28,6 @@ public class AuthFilter extends BaseController implements Filter {
 		
 	}
 	
-	public static Map<String,TokenCheck> tokenMap = new HashMap<>();
-
 	public void doFilter(ServletRequest request,ServletResponse response,FilterChain filterChain) throws IOException, ServletException {
 		HttpServletRequest httpServletRequest = ((HttpServletRequest)request);
 		HttpServletResponse httpServletResponse = ((HttpServletResponse)response);
@@ -45,17 +40,39 @@ public class AuthFilter extends BaseController implements Filter {
 		if(servletPath.matches(SystemConstant.NO_LOGIN_URL_REGEX)){
 			filterChain.doFilter(httpServletRequest, httpServletResponse);
 		}else{
-			TokenData tokenData = LoginController.getCache(httpServletRequest.getHeader("token"),valueOperations);
-			if(tokenData==null){
-				httpServletResponse.sendRedirect("/unauthorized");
+			String userId = httpServletRequest.getHeader(SystemConstant.HEAD_USERID);
+			String token = httpServletRequest.getHeader(SystemConstant.HEAD_TOKEN);
+			if(check(userId, token, servletPath)){
+				filterChain.doFilter(httpServletRequest, httpServletResponse);
 			}else{
-				long count = tokenData.getAuthOperateList().stream().filter(i->i.getApiUrl().equals(servletPath)).count();
-				if(count>0){
-					filterChain.doFilter(httpServletRequest, httpServletResponse);
-				}else{
-					httpServletResponse.sendRedirect("/unauthorized");
-				}
+				httpServletResponse.sendRedirect("/unauthorized");
 			}
+		}
+	}
+	
+	private boolean check(String userId,String token,String servletPath){
+		try {
+			if(userId==null||token==null){
+				return false;
+			}
+			TokenData tokenData = LoginController.getCache(userId,valueOperations);
+			if(tokenData==null){
+				return false;
+			}
+			if(!tokenData.getUser().getUserId().equals(userId)){
+				return false;
+			}
+			if(!tokenData.getToken().equals(token)){
+				return false;
+			}
+			long count = tokenData.getAuthOperateList().stream().filter(i->i.getApiUrl().equals(servletPath)).count();
+			if(count<=0){
+				return false;
+			}
+			LoginController.setCache(tokenData, valueOperations);
+			return true;
+		} catch (Exception e) {
+			return false;
 		}
 	}
 

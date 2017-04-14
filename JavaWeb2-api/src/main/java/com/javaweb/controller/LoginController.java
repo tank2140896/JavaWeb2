@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javaweb.base.BaseController;
-import com.javaweb.conf.filter.AuthFilter;
 import com.javaweb.constant.SystemConstant;
-import com.javaweb.dataobject.eo.TokenCheck;
 import com.javaweb.dataobject.eo.TokenData;
 import com.javaweb.dataobject.eo.UserLogin;
 import com.javaweb.dataobject.eo.UserRoleModule;
@@ -70,13 +68,7 @@ public class LoginController extends BaseController {
 				user.setUserName(SystemConstant.SYSTEM_ADMIN_USERNAME);
 				user.setPassword(SystemConstant.SYSTEM_ADMIN_PASSWORD);
 				token = Base64.getEncoder().encodeToString((userName+password).getBytes());
-				//tokenData为返回给前后的数据
 				TokenData tokenData = getUserRoleModule(user, token, 1);
-				//tokenCheck是类似session失效校验的处理
-				TokenCheck tokenCheck = new TokenCheck();
-				tokenCheck.setToken(token);
-				tokenCheck.setCurrentTime(System.currentTimeMillis());
-				AuthFilter.tokenMap.put(user.getUserId(),tokenCheck);
 				setCache(tokenData, valueOperations);
 				responseResult = new ResponseResult(SystemConstant.SUCCESS_CODE,"登录成功",tokenData);
 			}else{
@@ -85,13 +77,7 @@ public class LoginController extends BaseController {
 				map.put("password", Base64.getEncoder().encodeToString((password).getBytes()));
 				User user = userService.getUserByUsernameAndPassword(map);
 				if(user!=null){
-					//tokenData为返回给前后的数据
 					TokenData tokenData = getUserRoleModule(user, token, 0);
-					//tokenCheck是类似session失效校验的处理
-					TokenCheck tokenCheck = new TokenCheck();
-					tokenCheck.setToken(token);
-					tokenCheck.setCurrentTime(System.currentTimeMillis());
-					AuthFilter.tokenMap.put(user.getUserId(),tokenCheck);
 					setCache(tokenData, valueOperations);
 					responseResult = new ResponseResult(SystemConstant.SUCCESS_CODE,"登录成功",tokenData);
 				}else{
@@ -164,23 +150,23 @@ public class LoginController extends BaseController {
 	private static Map<Object,Object> tokenDataMap = new HashMap<>();
 	
 	//设置缓存数据
-	private void setCache(TokenData tokenData,ValueOperations<Object,Object> valueOperations){
-		String token = tokenData.getToken();
+	public static void setCache(TokenData tokenData,ValueOperations<Object,Object> valueOperations){
+		String userId = tokenData.getUser().getUserId();
 		try{
-			valueOperations.set(token, tokenData, 30, TimeUnit.MINUTES);
+			valueOperations.set(userId, tokenData, 30, TimeUnit.MINUTES);
 		}catch(Exception e){
 			System.out.println("redis缓存设置失败，失败原因为："+e.getMessage());
-			tokenDataMap.put(token, tokenData);
+			tokenDataMap.put(userId, tokenData);
 		}
 	}
 	
 	//获得缓存数据
-	public static TokenData getCache(String token,ValueOperations<Object,Object> valueOperations){
+	public static TokenData getCache(String userId,ValueOperations<Object,Object> valueOperations){
 		TokenData tokenData = null;
 		try{
-			tokenData = (TokenData)valueOperations.get(token);
+			tokenData = (TokenData)valueOperations.get(userId);
 		}catch(Exception e){
-			tokenData = (TokenData)tokenDataMap.get(token);
+			tokenData = (TokenData)tokenDataMap.get(userId);
 		}
 		return tokenData;
 	}

@@ -16,11 +16,11 @@ public class Module extends BaseEntity {
 	
 	private String fcode = null;//层级关系
 	
-	private int level = 0;//第几级(0表示未定义层级数;层级数1为最高,即根节点)
+	private Integer level = 0;//第几级(0表示未定义层级数;层级数1为最高,即根节点)
 	
-	private int orders = 0;//模块顺序(0表示没有顺序;顺序从1开始)
+	private Integer orders = 0;//模块顺序(0表示没有顺序;顺序从1开始)
 	
-	private int moduleType = 0;//模块类型(0:未定义模块类型；1：菜单；2：操作)
+	private Integer moduleType = 0;//模块类型(0:未定义模块类型；1：菜单；2：操作)
 	
 	private String alias = null;//别名
 	
@@ -78,27 +78,27 @@ public class Module extends BaseEntity {
 		this.fcode = fcode;
 	}
 
-	public int getLevel() {
+	public Integer getLevel() {
 		return level;
 	}
 
-	public void setLevel(int level) {
+	public void setLevel(Integer level) {
 		this.level = level;
 	}
 
-	public int getOrders() {
+	public Integer getOrders() {
 		return orders;
 	}
 
-	public void setOrders(int orders) {
+	public void setOrders(Integer orders) {
 		this.orders = orders;
 	}
 
-	public int getModuleType() {
+	public Integer getModuleType() {
 		return moduleType;
 	}
 
-	public void setModuleType(int moduleType) {
+	public void setModuleType(Integer moduleType) {
 		this.moduleType = moduleType;
 	}
 

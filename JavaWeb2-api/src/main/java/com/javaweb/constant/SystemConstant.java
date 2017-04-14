@@ -2,6 +2,10 @@ package com.javaweb.constant;
 
 public final class SystemConstant {
 	
+	public static final String HEAD_USERID = "userId";
+	
+	public static final String HEAD_TOKEN = "token";
+	
 	public static final String SYSTEM_DEFAULT_CREATOR = "超级管理员";
 	
 	public static final String SYSTEM_DEFAULT_UPDATER = "超级管理员";

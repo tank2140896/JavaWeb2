@@ -8,7 +8,7 @@ public class User extends BaseEntity {
 	
 	private String userName = null;//用户名
 	
-	private String password = null;//用户密码
+	private transient String password = null;//用户密码
 	
 	private String personName = null;//用户姓名
 
@@ -22,11 +22,11 @@ public class User extends BaseEntity {
 	
 	private String fcode = null;//层级关系
 	
-	private int level = 0;//第几级(0表示未定义层级数;层级数1为最高,即根节点)
+	private Integer level = 0;//第几级(0表示未定义层级数;层级数1为最高,即根节点)
 	
 	private String remark = null;//备注
 	
-	private int status = 0;//账号状态(0:正常)
+	private Integer status = 0;//账号状态(0:正常)
 
 	public String getUserId() {
 		return userId;
@@ -100,11 +100,11 @@ public class User extends BaseEntity {
 		this.fcode = fcode;
 	}
 
-	public int getLevel() {
+	public Integer getLevel() {
 		return level;
 	}
 
-	public void setLevel(int level) {
+	public void setLevel(Integer level) {
 		this.level = level;
 	}
 
@@ -116,11 +116,11 @@ public class User extends BaseEntity {
 		this.remark = remark;
 	}
 
-	public int getStatus() {
+	public Integer getStatus() {
 		return status;
 	}
 
-	public void setStatus(int status) {
+	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
