@@ -11,6 +11,8 @@ public class UserSearchCondition {
 	private Long currentPage;
 	
 	private Long pageSize;
+	
+	private String userId;
 
 	public String getUserName() {
 		return userName;
@@ -50,6 +52,14 @@ public class UserSearchCondition {
 
 	public void setPageSize(Long pageSize) {
 		this.pageSize = pageSize;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 }

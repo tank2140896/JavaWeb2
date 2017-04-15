@@ -8,8 +8,6 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -54,7 +52,7 @@ public class LoginController extends BaseController {
 	
 	//用户登录接口
 	@PostMapping("/login")
-	public String login(@RequestBody UserLogin userLogin,HttpServletRequest request){
+	public String login(@RequestBody UserLogin userLogin){
 		ResponseResult responseResult = null;
 		String token = null;
 		try{

@@ -1,5 +1,7 @@
 package com.javaweb.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,9 +25,10 @@ public class UserController extends BaseController {
 	
 	//用户列表接口
 	@PostMapping("/list")
-	public String login(@RequestBody UserSearchCondition UserSearchCondition){
+	public String login(@RequestBody UserSearchCondition UserSearchCondition,HttpServletRequest request){
 		ResponseResult responseResult = null;
 		try{
+			UserSearchCondition.setUserId(request.getHeader(SystemConstant.HEAD_USERID));//只能获取比当前用户等级低的所有用户
 			Page page =  userService.listUser(UserSearchCondition);
 			responseResult = new ResponseResult(SystemConstant.SUCCESS_CODE,"获取用户信息成功",page);
 		}catch(Exception e){

@@ -10,16 +10,26 @@ import {LoginSuccessData} from "../../../models/login/login.success.data";
 
 @Component({
     selector: 'user-manage-list',
-    templateUrl: 'user-manage.list.html'
+    templateUrl: 'user-manage.list.html',
+    styleUrls:['user-manage.list.css']
 })
 
 export class UserManageListComponent implements OnInit {
 
-    addUserButton:any;//新增按钮
+    listUserZone:any;//用户列表
+    addUserZone:any;//用户新增
+    deleteUserZone:any;//用户删除
+    modifyUserZone:any;//用户修改
+    detailUserZone:any;//用户详情
+
     constructor(private httpService:HttpService,
                 private authService:AuthService,
                 private sessionService:SessionService){
-        this.addUserButton = authService.canShow(HttpRequestUrl.SYS_USER_LSIT_SUFFIX);
+        this.listUserZone = authService.canShow(HttpRequestUrl.SYS_USER_LSIT_SUFFIX);
+        this.addUserZone = authService.canShow(HttpRequestUrl.SYS_USER_ADD_SUFFIX);
+        this.deleteUserZone = authService.canShow(HttpRequestUrl.SYS_USER_DELETE_SUFFIX);
+        this.modifyUserZone = authService.canShow(HttpRequestUrl.SYS_USER_MODIFY_SUFFIX);
+        this.detailUserZone = authService.canShow(HttpRequestUrl.SYS_USER_DETAIL_SUFFIX);
     }
 
     private userSearch:UserSearch = new UserSearch();
@@ -28,14 +38,29 @@ export class UserManageListComponent implements OnInit {
     private currentPage:number;
     private totalPage:number;
 
+    //初始化获取用户列表
     ngOnInit(): void {
+        this.userSearch.currentPage = 1;
+        this.userSearch.pageSize = 3;
+        this.userSearchFunction(this.userSearch);
+    }
+
+    //搜索按钮
+    public searchUser(currentPage):void{
+        this.userSearch.currentPage = currentPage;
+        this.userSearch.pageSize = 3;
+        this.userSearchFunction(this.userSearch);
+    }
+
+    //用户搜索共通方法
+    private userSearchFunction(userSearch:UserSearch):void {
         let loginSuccessData:LoginSuccessData = this.sessionService.getLoginSuccessData();
         let headToken = new HeadToken();
         headToken.userId = loginSuccessData.getUser().userId;
         headToken.token = loginSuccessData.getToken();
         this.httpService.postJsonData(HttpRequestUrl.SYS_USER_LSIT,
-                                      JSON.stringify(this.userSearch),
-                                      headToken).subscribe(
+            JSON.stringify(userSearch),
+            headToken).subscribe(
             result=>{
                 this.listData = result.data.data;
                 this.currentPage = result.data.currentPage;

@@ -70,7 +70,8 @@
 	<select id="listUser" parameterType="com.javaweb.dataobject.eo.UserSearchCondition" resultMap="userMap,getTotalCount">
 		SELECT SQL_CALC_FOUND_ROWS <include refid="selectUser"></include> from user
 		<where>
-			del_flag = 0
+			del_flag = 0 
+			and level > (SELECT IFNULL((select level from user where user_id = #{userId}),1))		
 			<if test="userName!=null and userName!=''">
 				and user_name like CONCAT('%',#{userName},'%')
 			</if>

@@ -29,17 +29,13 @@ CREATE TABLE `module` (
 -- ----------------------------
 -- Records of module
 -- ----------------------------
-INSERT INTO `module` VALUES ('0147864d-1227-11e7-9162-00ffaea60ab9', '用户列表', 'userManage/list', '/sys/user/list', '8627cbc0-1222-11e7-9162-00ffaea60ab9', null, '3', '3', '2', null, null, null, null, '2017-03-26 21:21:31', '超级管理员', null, null, '0');
-INSERT INTO `module` VALUES ('619c72fe-1222-11e7-9162-00ffaea60ab9', '系统管理', null, null, null, null, '1', '1', '1', null, null, null, null, '2017-03-26 20:48:18', '超级管理员', null, null, '0');
-INSERT INTO `module` VALUES ('8627cbc0-1222-11e7-9162-00ffaea60ab9', '用户管理', 'userManage/list', null, '619c72fe-1222-11e7-9162-00ffaea60ab9', null, '2', '1', '1', null, null, null, null, '2017-03-26 20:49:07', '超级管理员', null, null, '0');
-INSERT INTO `module` VALUES ('a', '层次1', null, null, null, null, '1', '1', '1', null, null, null, null, '2017-04-11 14:55:36', '超级管理员', null, null, '0');
-INSERT INTO `module` VALUES ('a0b3ed5a-1222-11e7-9162-00ffaea60ab9', '新增用户', null, null, '0147864d-1227-11e7-9162-00ffaea60ab9', null, '3', '1', '2', null, null, null, null, '2017-03-26 20:49:40', '超级管理员', null, null, '0');
-INSERT INTO `module` VALUES ('b', '层次1-1', '/b', null, 'a', null, '2', '1', '1', null, null, null, null, '2017-04-11 14:55:39', '超级管理员', null, null, '0');
-INSERT INTO `module` VALUES ('c', '层次1-2', null, null, 'a', null, '2', '2', '1', null, null, null, null, '2017-04-11 14:55:41', '超级管理员', null, null, '0');
-INSERT INTO `module` VALUES ('c4158250-1222-11e7-9162-00ffaea60ab9', '修改用户', null, null, '0147864d-1227-11e7-9162-00ffaea60ab9', null, '3', '2', '2', null, null, null, null, '2017-03-26 20:50:57', '超级管理员', null, null, '0');
-INSERT INTO `module` VALUES ('d', '层次1-3', '/d', null, 'a', null, '2', '3', '1', null, null, null, null, '2017-04-11 14:55:43', '超级管理员', null, null, '0');
-INSERT INTO `module` VALUES ('e', '层次1-2-1', '/e', null, 'c', null, '3', '1', '1', null, null, null, null, '2017-04-11 14:55:45', '超级管理员', null, null, '0');
-INSERT INTO `module` VALUES ('f', '层次1-2-2', '/f', null, 'c', null, '3', '2', '1', null, null, null, null, '2017-04-11 14:55:47', '超级管理员', null, null, '0');
+INSERT INTO `module` VALUES ('0147864d-1227-11e7-9162-00ffaea60ab9', '用户列表', 'userManage/list', '/sys/user/list', '8627cbc0-1222-11e7-9162-00ffaea60ab9', null, '3', '1', '2', null, null, null, null, '2017-03-26 21:21:31', 'superadmin', null, null, '0');
+INSERT INTO `module` VALUES ('45281978-21e8-11e7-9016-1c1b0d1b66d4', '用户详情', 'userManage/detail', '/sys/user/detail', '8627cbc0-1222-11e7-9162-00ffaea60ab9', null, '3', '5', '2', null, null, null, null, '2017-04-15 22:32:48', 'superadmin', null, null, '0');
+INSERT INTO `module` VALUES ('619c72fe-1222-11e7-9162-00ffaea60ab9', '系统管理', null, null, null, null, '1', '1', '1', null, null, null, null, '2017-03-26 20:48:18', 'superadmin', null, null, '0');
+INSERT INTO `module` VALUES ('8627cbc0-1222-11e7-9162-00ffaea60ab9', '用户管理', 'userManage/list', null, '619c72fe-1222-11e7-9162-00ffaea60ab9', null, '2', '1', '1', null, null, null, null, '2017-03-26 20:49:07', 'superadmin', null, null, '0');
+INSERT INTO `module` VALUES ('a0b3ed5a-1222-11e7-9162-00ffaea60ab9', '新增用户', 'userManage/add', '/sys/user/add', '8627cbc0-1222-11e7-9162-00ffaea60ab9', null, '3', '2', '2', null, null, null, null, '2017-03-26 20:49:40', 'superadmin', null, null, '0');
+INSERT INTO `module` VALUES ('bbaf9acf-21e7-11e7-9016-1c1b0d1b66d4', '删除用户', 'userManage/delete', '/sys/user/delete', '8627cbc0-1222-11e7-9162-00ffaea60ab9', null, '3', '4', '2', null, null, null, null, '2017-04-15 22:31:22', 'superadmin', null, null, '0');
+INSERT INTO `module` VALUES ('c4158250-1222-11e7-9162-00ffaea60ab9', '修改用户', 'userManage/modify', '/sys/user/modify', '8627cbc0-1222-11e7-9162-00ffaea60ab9', null, '3', '3', '2', null, null, null, null, '2017-03-26 20:50:57', 'superadmin', null, null, '0');
 
 -- ----------------------------
 -- Table structure for `role`
