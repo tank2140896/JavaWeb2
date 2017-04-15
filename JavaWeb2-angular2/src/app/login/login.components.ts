@@ -63,12 +63,7 @@ export class LoginComponent{
             result=>{
                if(result.code==200){
                    let data = result.data;
-                   let loginSuccessData = new LoginSuccessData();
-                   loginSuccessData.setToken(data.token);
-                   loginSuccessData.setUser(data.user);
-                   loginSuccessData.setMenuList(data.menuList);
-                   loginSuccessData.setAuthOperateList(data.authOperateList);
-                   this.sessionService.setLoginSuccessData(loginSuccessData);
+                   this.sessionService.setLoginSuccessData(JSON.stringify(data));
                    this.router.navigate(['home']);
                }else{
                    alert('用户名或密码错误');

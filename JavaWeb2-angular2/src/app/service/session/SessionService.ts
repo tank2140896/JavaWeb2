@@ -4,14 +4,19 @@ import {LoginSuccessData} from "../../models/login/login.success.data";
 @Injectable()
 export class SessionService{
 
-    private loginSuccessData:LoginSuccessData;
-
-    public setLoginSuccessData(loginSuccessData:LoginSuccessData):void{
-        this.loginSuccessData = loginSuccessData;
+    public setLoginSuccessData(loginSuccessData:string):void{
+        window.sessionStorage.setItem('sessionData',loginSuccessData);
     }
 
     public getLoginSuccessData():LoginSuccessData{
-        return this.loginSuccessData;
+        let getData:any = window.sessionStorage.getItem('sessionData');
+        let loginSuccessData:LoginSuccessData = new LoginSuccessData();
+        getData = JSON.parse(getData);
+        loginSuccessData.setToken(getData.token);
+        loginSuccessData.setUser(getData.user);
+        loginSuccessData.setMenuList(getData.menuList);
+        loginSuccessData.setAuthOperateList(getData.authOperateList);
+        return loginSuccessData;
     }
 
 }
