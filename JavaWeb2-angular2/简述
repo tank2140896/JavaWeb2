@@ -25,6 +25,9 @@ path->'home/:id'
 import  ActivatedRoute from '@angular/router'
 constructor private activatedRoute:ActivatedRoute
 activatedRoute.snapshot.params['id']
+页面写法：
+this.router.navigate(['home']/*,{queryParams:{'myKey':100}}*/);
+<a [routerLink]="['home']" [queryParams]="{'myKey':100}" >Home</a>
 9、路径
 方式一：
 {path:'sysManager/userManger',component:UserComponent},
@@ -56,4 +59,3 @@ clickMe(a:HTMLInputElement,b:HTMLInputElement){
 五、待完善、解决、考虑的问题
 1（*）、在ng2中sidebar的层级展示及层级伸缩事件该如何处理
 2、使用第三方npm等考虑到angular-cli的版本、angular自身的版本、nodejs的版本及package.josn中各版本的兼容关系
-3、现在保存后端的用户信息、菜单信息等用的是window.sessionStorage，我想在ng2下应该有更好的处理办法

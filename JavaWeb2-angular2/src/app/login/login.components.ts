@@ -5,6 +5,7 @@ import {LoginUser} from '../models/login/login.user';
 import {HttpService} from "../service/http/HttpService";
 import {HttpRequestUrl} from "../constant/HttpRequestUrl";
 import {LoginSuccessData} from "../models/login/login.success.data";
+import {SessionService} from "../service/session/SessionService";
 
 @Component({
     selector: 'web-app',
@@ -14,7 +15,9 @@ import {LoginSuccessData} from "../models/login/login.success.data";
 
 export class LoginComponent{
 
-    constructor(private router:Router,private httpService:HttpService) { }
+    constructor(private router:Router,
+                private httpService:HttpService,
+                private sessionService:SessionService) { }
 
     /*------ 语言切换 start ------*/
     //初始化默认语言
@@ -58,21 +61,18 @@ export class LoginComponent{
     public login():void{
         this.httpService.postJsonData(HttpRequestUrl.LOGIN,JSON.stringify(this.user),null).subscribe(
             result=>{
-                //console.log(result);
-                let data = result.data;
-                //let token = data.token;
-                //let user = data.user;
-                //let menuList = data.menuList;
-                //let authOperateList = data.authOperateList;
-                let loginSuccessData = new LoginSuccessData();
-                loginSuccessData.setToken(data.token);
-                loginSuccessData.setUser(data.user);
-                loginSuccessData.setMenuList(data.menuList);
-                loginSuccessData.setAuthOperateList(data.authOperateList);
-                window.sessionStorage.setItem('loginSuccessData',JSON.stringify(loginSuccessData));
-                this.router.navigate(['home']);
-                //this.router.navigate(['home']/*,{queryParams:{'myKey':100}}*/);
-                //<a [routerLink]="['home']" [queryParams]="{'myKey':100}" >Home</a>
+               if(result.code==200){
+                   let data = result.data;
+                   let loginSuccessData = new LoginSuccessData();
+                   loginSuccessData.setToken(data.token);
+                   loginSuccessData.setUser(data.user);
+                   loginSuccessData.setMenuList(data.menuList);
+                   loginSuccessData.setAuthOperateList(data.authOperateList);
+                   this.sessionService.setLoginSuccessData(loginSuccessData);
+                   this.router.navigate(['home']);
+               }else{
+                   alert('用户名或密码错误');
+               }
             }
         );
     }

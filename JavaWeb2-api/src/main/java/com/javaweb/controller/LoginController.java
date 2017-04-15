@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -77,6 +78,7 @@ public class LoginController extends BaseController {
 				map.put("password", Base64.getEncoder().encodeToString((password).getBytes()));
 				User user = userService.getUserByUsernameAndPassword(map);
 				if(user!=null){
+					token = Base64.getEncoder().encodeToString((userName+password).getBytes());
 					TokenData tokenData = getUserRoleModule(user, token, 0);
 					setCache(tokenData, valueOperations);
 					responseResult = new ResponseResult(SystemConstant.SUCCESS_CODE,"登录成功",tokenData);
@@ -85,6 +87,21 @@ public class LoginController extends BaseController {
 				}
 			}
 		}catch(Exception e){
+			responseResult = new ResponseResult(SystemConstant.INTERNAL_ERROR_CODE,e.getMessage(),null);
+		}
+		return new GsonHelp().fromJsonDefault(responseResult);
+	}
+	
+	//用户退出接口
+	@GetMapping("/logout/{userId}")
+	public String logout(@PathVariable String userId){
+		ResponseResult responseResult = null;
+		try{
+			redisTemplate.delete(userId);
+			responseResult = new ResponseResult(SystemConstant.SUCCESS_CODE,"退出成功",null);
+		}catch(Exception e){
+			System.out.println("redis缓存设置失败，失败原因为："+e.getMessage());
+			tokenDataMap.remove(userId);
 			responseResult = new ResponseResult(SystemConstant.INTERNAL_ERROR_CODE,e.getMessage(),null);
 		}
 		return new GsonHelp().fromJsonDefault(responseResult);

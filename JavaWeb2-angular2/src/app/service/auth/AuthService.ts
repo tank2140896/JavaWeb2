@@ -1,18 +1,21 @@
 import {Injectable} from "@angular/core";
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot} from "@angular/router";
 
+import {SessionService} from "../session/SessionService";
+import {LoginSuccessData} from "../../models/login/login.success.data";
+
 @Injectable()
 export class AuthService implements CanActivate {
 
-    constructor(/*private httpService:HttpService*/){ }
+    constructor(private sessionService:SessionService){ }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        let loginSuccessData = window.sessionStorage.getItem('loginSuccessData');
+        let loginSuccessData:LoginSuccessData = this.sessionService.getLoginSuccessData();
         if(loginSuccessData==null){
             return false;
         }
-        let authOperateList = JSON.parse(loginSuccessData).authOperateList;
-        if(authOperateList==null||authOperateList.length==0){
+        let authOperateList = loginSuccessData.getAuthOperateList();
+        if(authOperateList==null/*||authOperateList.length==0*/){
             return false;
         }
         let url = state.url;//获得页面请求的URL
@@ -29,12 +32,12 @@ export class AuthService implements CanActivate {
     }
 
     canShow(apiUrl:string){
-        let loginSuccessData = window.sessionStorage.getItem('loginSuccessData');
+        let loginSuccessData:LoginSuccessData = this.sessionService.getLoginSuccessData();
         if(loginSuccessData==null){
             return false;
         }
-        let authOperateList = JSON.parse(loginSuccessData).authOperateList;
-        if(authOperateList==null||authOperateList.length==0){
+        let authOperateList = loginSuccessData.getAuthOperateList();
+        if(authOperateList==null/*||authOperateList.length==0*/){
             return false;
         }
         //console.log(apiUrl);

@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {SessionService} from "../../service/session/SessionService";
 
 @Component({
     selector: 'home-sidebar',
@@ -10,9 +11,9 @@ export class SidebarComponent {
 
     menuList;
 
-    constructor(/*private domSanitizer:DomSanitizer*/){
+    constructor(private sessionService:SessionService/*private domSanitizer:DomSanitizer*/){
         //获取sidebar菜单列表
-        this.menuList = JSON.parse(window.sessionStorage.getItem('loginSuccessData')).menuList;
+        this.menuList = sessionService.getLoginSuccessData().getMenuList();
         //this.htmlWrite=this.domSanitizer.bypassSecurityTrustHtml(this.htmlContent);
     }
 
