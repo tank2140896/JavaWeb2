@@ -1,6 +1,6 @@
 ﻿一、重要说明：
 1、本项目采用前后端分离方式（开发分离和部署分离），前端采用Angular新版本，后端采用SpringBoot
-2、由于Angular更新比较快，同时本人又是Java程序员，JavaWeb2这个项目可能要无限期搁置了。。。因此这里仅列出完全前后端分离的个人思路
+2、由于Angular更新比较快，同时本人较为擅长Java且前端只是业余爱好，因此JavaWeb2这个项目可能要无限期搁置了。。。
 二、项目目前结构简述：
 1、JavaWeb2-api——主要为前端提供接口
 2、JavaWeb2-angular2——前端实现（angular-cli=1.0.0；node=7.7.4；angular=4.0.0）
