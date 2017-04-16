@@ -10,6 +10,8 @@ public class TokenData {
 	
 	private User user;
 	
+	private List<UserRoleModule> moduleList;
+	
 	private List<UserRoleModule> menuList;
 	
 	private List<UserRoleModule> authOperateList;
@@ -28,6 +30,14 @@ public class TokenData {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public List<UserRoleModule> getModuleList() {
+		return moduleList;
+	}
+
+	public void setModuleList(List<UserRoleModule> moduleList) {
+		this.moduleList = moduleList;
 	}
 
 	public List<UserRoleModule> getMenuList() {

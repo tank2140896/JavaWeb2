@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {ActivatedRoute} from "@angular/router";
 
 @Component({
     selector: 'user-manage-modify',
@@ -6,5 +7,11 @@ import {Component} from '@angular/core';
 })
 
 export class UserManageModifyComponent {
+
+    private userId:string;
+
+    constructor(private activatedRoute:ActivatedRoute){
+        this.userId = activatedRoute.snapshot.queryParams['userId'];
+    }
 
 }

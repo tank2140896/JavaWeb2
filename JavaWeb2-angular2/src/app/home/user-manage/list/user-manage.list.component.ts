@@ -7,11 +7,11 @@ import {AuthService} from "../../../service/auth/AuthService";
 import {HeadToken} from "../../../models/token/head.token";
 import {SessionService} from "../../../service/session/SessionService";
 import {LoginSuccessData} from "../../../models/login/login.success.data";
+import {Router} from "@angular/router";
 
 @Component({
     selector: 'user-manage-list',
-    templateUrl: 'user-manage.list.html',
-    styleUrls:['user-manage.list.css']
+    templateUrl: 'user-manage.list.html'
 })
 
 export class UserManageListComponent implements OnInit {
@@ -24,6 +24,7 @@ export class UserManageListComponent implements OnInit {
 
     constructor(private httpService:HttpService,
                 private authService:AuthService,
+                private router:Router,
                 private sessionService:SessionService){
         this.listUserZone = authService.canShow(HttpRequestUrl.SYS_USER_LSIT_SUFFIX);
         this.addUserZone = authService.canShow(HttpRequestUrl.SYS_USER_ADD_SUFFIX);
@@ -67,6 +68,16 @@ export class UserManageListComponent implements OnInit {
                 this.totalPage = result.data.totalPage;
             }
         );
+    }
+
+    //新增用户
+    public addUser():void{
+        this.router.navigate(['home/userManage/add']);
+    }
+
+    //修改用户
+    public modifyUser(userId):void{
+        this.router.navigate(['home/userManage/modify'],{queryParams:{'userId':userId}});
     }
 
 }

@@ -18,7 +18,7 @@ export class AuthService implements CanActivate {
         if(authOperateList==null/*||authOperateList.length==0*/){
             return false;
         }
-        let url = state.url;//获得页面请求的URL
+        let url = state.url.split('?')[0];//获得页面请求的URL
         if(url=='/home'){
             return true;
         }else{

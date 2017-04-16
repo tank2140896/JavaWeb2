@@ -14,6 +14,7 @@ export class SessionService{
         getData = JSON.parse(getData);
         loginSuccessData.setToken(getData.token);
         loginSuccessData.setUser(getData.user);
+        loginSuccessData.setModuleList(getData.moduleList);
         loginSuccessData.setMenuList(getData.menuList);
         loginSuccessData.setAuthOperateList(getData.authOperateList);
         return loginSuccessData;

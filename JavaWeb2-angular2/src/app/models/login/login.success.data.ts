@@ -4,6 +4,8 @@ export class LoginSuccessData {
 
     private user:any = null;
 
+    private moduleList:any = null;
+
     private menuList:any = null;
 
     private authOperateList:any = null;
@@ -22,6 +24,14 @@ export class LoginSuccessData {
 
     public setUser(user:any):void{
         this.user = user;
+    }
+
+    public getModuleList():any{
+        return this.moduleList;
+    }
+
+    public setModuleList(moduleList:any):void{
+        this.moduleList = moduleList;
     }
 
     public getMenuList():any{

@@ -119,6 +119,7 @@ public class LoginController extends BaseController {
 		TokenData tokenData = new TokenData();
 		tokenData.setToken(token);
 		tokenData.setUser(user);
+		tokenData.setModuleList(list);
 		tokenData.setMenuList(menuList);
 		tokenData.setAuthOperateList(authOperateList);
 		return tokenData;
