@@ -1,4 +1,4 @@
-一、重要说明：
+﻿一、重要说明：
 1、本项目采用前后端分离方式（开发分离和部署分离），前端采用Angular新版本，后端采用SpringBoot
 2、由于Angular更新比较快，同时本人又是Java程序员，JavaWeb2这个项目可能要无限期搁置了。。。因此这里仅列出前后端分离的关键思路
 二、项目目前结构简述：
@@ -58,3 +58,7 @@ clickMe(a:HTMLInputElement,b:HTMLInputElement){
 4、待完善/解决/考虑的问题
 4.1、使用第三方npm等考虑到angular-cli的版本、angular自身的版本、nodejs的版本及package.josn中各版本的兼容关系
 4.2、多级联动、功能较为丰富的树形层次结构
+4.3、卸载全局安装的npm包
+npm uninstall -g @angular/cli
+npm cache clean
+npm install -g @angular/cli@latest
