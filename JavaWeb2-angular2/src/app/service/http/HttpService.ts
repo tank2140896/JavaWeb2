@@ -16,7 +16,7 @@ export class HttpService{
             headers.append('userId',headToken.userId);
             headers.append('token',headToken.token);
         }
-        let requestOptions = new RequestOptions({headers:headers});
+        let requestOptions = new RequestOptions({headers:headers,withCredentials:true});
         return this.http.get(url,requestOptions).map((response:Response)=>response.json()).catch(this.handleError);
     }
 
@@ -27,7 +27,7 @@ export class HttpService{
             headers.append('userId',headToken.userId);
             headers.append('token',headToken.token);
         }
-        let requestOptions = new RequestOptions({headers:headers});
+        let requestOptions = new RequestOptions({headers:headers,withCredentials:true});
         return this.http.post(url,body,requestOptions).map((response:Response)=>response.json()).catch(this.handleError);
     }
 
