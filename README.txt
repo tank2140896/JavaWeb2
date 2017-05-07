@@ -16,9 +16,14 @@ dependencies是项目开发和部署所依赖的（形如node_modules里的文�
 2.3、<div [title="x"]>123</div>
 import {Input} from '@angular/core';
 @Input() x = 11;
+<ul>
+    <li *ngFor="let name of names">
+        <app-user-item [name]="name"></app-user-item>
+    </li>
+</ul>
 2.4、<img [src]="..."/> <img (click)="..."/> <div [ngClass]="..."></div> <div [ngSubmit]="..."></div>
 2.5、<p #abc>10</p> <span>{{abc.textContent}}</span>
-2.6、<input TYPE="text" #abc/> <button (click)="onLog(abc.value)">Log</button>
+2.6、<input type="text" #abc/> <button (click)="onLog(abc.value)">Log</button>
 2.7、component注入service
 import service
 @Component providers
@@ -50,6 +55,13 @@ this.router.navigate(['home']/*,{queryParams:{'myKey':100}}*/);
 clickMe(a:HTMLInputElement,b:HTMLInputElement){
     console.log(a.value);
     console.log(`${a.value},${b.value}`);
+}
+2.10、@HostBinding
+@HostBinding('disabled') getDisabled(){
+    return true;
+}
+@HostBinding('style.color') getColor(){
+    return 'red';
 }
 3、在angular-cli自动生成范围外的内容
 3.1、bootstrap
