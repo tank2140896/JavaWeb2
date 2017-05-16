@@ -14,6 +14,8 @@ public class Role extends BaseEntity {
 	
 	private Integer level = 0;//第几级(0表示未定义层级数;层级数1为最高,即根节点)
 	
+	private Integer type = 0;//类型(0表示未定义类型)
+	
 	private String remark = null;//备注
 
 	public String getRoleId() {
@@ -54,6 +56,14 @@ public class Role extends BaseEntity {
 
 	public void setLevel(Integer level) {
 		this.level = level;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
 	}
 
 	public String getRemark() {

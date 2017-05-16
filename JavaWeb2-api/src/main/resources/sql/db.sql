@@ -47,6 +47,7 @@ CREATE TABLE `role` (
   `parent_id` varchar(255) DEFAULT NULL,
   `fcode` varchar(255) DEFAULT NULL,
   `level` int(11) DEFAULT '0',
+  `type` int(11) DEFAULT NULL,
   `remark` varchar(255) DEFAULT NULL,
   `create_date` datetime DEFAULT NULL,
   `creator` varchar(255) DEFAULT NULL,
