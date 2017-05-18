@@ -67,6 +67,11 @@ clickMe(a:HTMLInputElement,b:HTMLInputElement){
 3.1、bootstrap
 ①package.json添加"ng2-bootstrap":"1.4.2"和"bootstrap":"3.3.7"
 ②.angular-cli.json添加"../node_modules/bootstrap/dist/css/bootstrap.min.css"
+3.2、其它js文件
+"scripts": [
+	"../node_modules/jquery/dist/jquery.js",
+        "../node_modules/bootstrap/dist/js/bootstrap.js"
+]
 4、待完善/解决/考虑的问题
 4.1、使用第三方npm等考虑到angular-cli的版本、angular自身的版本、nodejs的版本及package.josn中各版本的兼容关系
 4.2、多级联动、功能较为丰富的树形层次结构
