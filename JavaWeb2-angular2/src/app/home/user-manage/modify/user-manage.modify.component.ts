@@ -12,6 +12,7 @@ export class UserManageModifyComponent {
 
     constructor(private activatedRoute:ActivatedRoute){
         this.userId = activatedRoute.snapshot.queryParams['userId'];
+        console.log(this.userId);
     }
 
 }

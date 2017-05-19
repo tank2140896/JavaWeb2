@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {Router} from "@angular/router";
 
 import {HttpService} from "../../../service/http/HttpService";
 import {HttpRequestUrl} from "../../../constant/HttpRequestUrl";
@@ -7,7 +8,7 @@ import {AuthService} from "../../../service/auth/AuthService";
 import {HeadToken} from "../../../models/token/head.token";
 import {SessionService} from "../../../service/session/SessionService";
 import {LoginSuccessData} from "../../../models/login/login.success.data";
-import {Router} from "@angular/router";
+import {RouteFullPath} from "../../../app.routes";
 
 @Component({
     selector: 'user-manage-list',
@@ -59,9 +60,7 @@ export class UserManageListComponent implements OnInit {
         let headToken = new HeadToken();
         headToken.userId = loginSuccessData.getUser().userId;
         headToken.token = loginSuccessData.getToken();
-        this.httpService.postJsonData(HttpRequestUrl.SYS_USER_LSIT,
-            JSON.stringify(userSearch),
-            headToken).subscribe(
+        this.httpService.postJsonData(HttpRequestUrl.SYS_USER_LSIT, JSON.stringify(userSearch), headToken).subscribe(
             result=>{
                 this.listData = result.data.data;
                 this.currentPage = result.data.currentPage;
@@ -72,12 +71,13 @@ export class UserManageListComponent implements OnInit {
 
     //新增用户
     public addUser():void{
-        this.router.navigate(['home/userManage/add']);
+        //this.router.navigate(['add'],{relativeTo: this.activatedRoute});
+        this.router.navigate([RouteFullPath.UserManageAdd]);
     }
 
     //修改用户
     public modifyUser(userId):void{
-        this.router.navigate(['home/userManage/modify'],{queryParams:{'userId':userId}});
+        this.router.navigate([RouteFullPath.UserManageModify],{queryParams:{'userId':userId}});
     }
 
 }

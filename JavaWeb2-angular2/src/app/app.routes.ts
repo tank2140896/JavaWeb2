@@ -16,14 +16,22 @@ const APP_ROUTES = [
     {path: 'home', component: HomeComponent, children: [
         {path: '', component: CenteralComponent},//默认主页面
         {path: 'userManage', component: UserManageComponent, children:[
-            {path: '', component: UserManageListComponent},//默认用户管理页面
-            {path:'list',component:UserManageListComponent},//用户列表页面
-            {path:'add',component:UserManageAddComponent},//用户新增页面
-            {path:'modify',component:UserManageModifyComponent}//用户新修改页面
-        ]}
-    ], /*canActivate: [AuthService]*/},
+            {path: '', component: UserManageListComponent, canActivate: [AuthService]},//默认用户管理页面
+            {path:'list',component:UserManageListComponent, canActivate: [AuthService]},//用户列表页面
+            {path:'add',component:UserManageAddComponent, canActivate: [AuthService]},//用户新增页面
+            {path:'modify',component:UserManageModifyComponent, canActivate: [AuthService]}//用户新修改页面
+        ], canActivate: [AuthService]},
+        {path: '**', redirectTo: '/home', pathMatch: 'full'}
+    ], canActivate: [AuthService]},
     {path: '**', redirectTo: '/', pathMatch: 'full'}//访问任何不存在的URL都将跳回登录页面
 ];
 
 //路由有两种策略，HashLocationStrategy和PathLocationStrategy，我这里用的是HashLocationStrategy
 export const AppRoutes = RouterModule.forRoot(APP_ROUTES,{useHash:true});
+
+export const RouteFullPath = {
+    'Home':'/home',
+    'UserManageList':'/home/userManage/list',
+    'UserManageAdd':'/home/userManage/add',
+    'UserManageModify':'/home/userManage/modify'
+}
