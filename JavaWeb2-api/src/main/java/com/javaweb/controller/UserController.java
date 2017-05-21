@@ -29,7 +29,8 @@ public class UserController extends BaseController {
 	public String login(@RequestBody UserSearchCondition UserSearchCondition,HttpServletRequest request){
 		ResponseResult responseResult = null;
 		try{
-			UserSearchCondition.setUserId(((TokenData)request.getSession().getAttribute("sessionValue")).getUser().getUserId());//只能获取比当前用户等级低的所有用户
+			TokenData tokenData = (TokenData)getSessionAttribute(request, SystemConstant.SESSION_KEY);
+			UserSearchCondition.setUserId(tokenData.getUser().getUserId());//只能获取比当前用户等级低的所有用户
 			Page page =  userService.listUser(UserSearchCondition);
 			responseResult = new ResponseResult(SystemConstant.SUCCESS_CODE,"获取用户信息成功",page);
 		}catch(Exception e){

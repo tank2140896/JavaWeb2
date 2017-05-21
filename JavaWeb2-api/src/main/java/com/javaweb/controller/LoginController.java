@@ -79,7 +79,7 @@ public class LoginController extends BaseController {
 		    	responseResult = new ResponseResult(SystemConstant.INTERNAL_ERROR_CODE,"用户名或密码错误",null);
 		    }else{
 		    	TokenData tokenData = getUserRoleModule(user, adminFlag);
-		    	request.getSession().setAttribute("sessionValue", tokenData);
+		    	setSessionAttribute(request, SystemConstant.SESSION_KEY, tokenData);
 		    	responseResult = new ResponseResult(SystemConstant.SUCCESS_CODE,"登录成功",tokenData);
 		    }
 		}catch(Exception e){
