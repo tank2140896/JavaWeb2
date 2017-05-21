@@ -5,13 +5,12 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -52,38 +51,37 @@ public class LoginController extends BaseController {
 	
 	//用户登录接口
 	@PostMapping("/login")
-	public String login(@RequestBody UserLogin userLogin){
+	public String login(@RequestBody UserLogin userLogin,HttpServletRequest request){
 		ResponseResult responseResult = null;
-		String token = null;
 		try{
 			//Object kaptchaValue = ShiroSession.getSession().getAttribute(Constants.KAPTCHA_SESSION_KEY);
 			//String kaptcha = kaptchaValue==null?"":kaptchaValue.toString();
-			String userName = userLogin.getUserName();
-			String password = userLogin.getPassword();
-			if(SystemConstant.SYSTEM_ADMIN_USERNAME.equals(userName)&&SystemConstant.SYSTEM_ADMIN_PASSWORD.equals(password)/*&&kaptcha.equals(kaptcha)*/){//超级管理员
-				User user = new User();
+			String userName = userLogin.getUserName();//得到用户名 
+		    String password = userLogin.getPassword();//得到密码
+		    User user = null;
+		    Integer adminFlag = 0;
+		    if(SystemConstant.SYSTEM_ADMIN_USERNAME.equals(userName)&&SystemConstant.SYSTEM_ADMIN_PASSWORD.equals(password)){
+		    	user = new User();
 				user.setUserId(SystemConstant.SYSTEM_ADMIN_USERID);
 				user.setLevel(1);
 				user.setUserName(SystemConstant.SYSTEM_ADMIN_USERNAME);
-				user.setPassword(SystemConstant.SYSTEM_ADMIN_PASSWORD);
-				token = Base64.getEncoder().encodeToString((userName+password).getBytes());
-				TokenData tokenData = getUserRoleModule(user, token, 1);
-				setCache(tokenData, valueOperations);
-				responseResult = new ResponseResult(SystemConstant.SUCCESS_CODE,"登录成功",tokenData);
-			}else{
-				Map<String,String> map = new HashMap<>();
-				map.put("userName", userName);
-				map.put("password", Base64.getEncoder().encodeToString((password).getBytes()));
-				User user = userService.getUserByUsernameAndPassword(map);
-				if(user!=null){
-					token = Base64.getEncoder().encodeToString((userName+password).getBytes());
-					TokenData tokenData = getUserRoleModule(user, token, 0);
-					setCache(tokenData, valueOperations);
-					responseResult = new ResponseResult(SystemConstant.SUCCESS_CODE,"登录成功",tokenData);
-				}else{
-					responseResult = new ResponseResult(SystemConstant.INTERNAL_ERROR_CODE,"用户名或密码错误",null);
-				}
-			}
+				user.setPassword(Base64.getEncoder().encodeToString(SystemConstant.SYSTEM_ADMIN_PASSWORD.getBytes()));
+				adminFlag = 1;
+		    }else{
+		    	password = Base64.getEncoder().encodeToString(password.getBytes());
+		    	Map<String,String> map = new HashMap<>();
+		    	map.put("userName", userName);
+		    	map.put("password", password);
+		    	user = userService.getUserByUsernameAndPassword(map);
+		    	adminFlag = 0;
+		    }
+		    if(user == null) {
+		    	responseResult = new ResponseResult(SystemConstant.INTERNAL_ERROR_CODE,"用户名或密码错误",null);
+		    }else{
+		    	TokenData tokenData = getUserRoleModule(user, adminFlag);
+		    	request.getSession().setAttribute("sessionValue", tokenData);
+		    	responseResult = new ResponseResult(SystemConstant.SUCCESS_CODE,"登录成功",tokenData);
+		    }
 		}catch(Exception e){
 			responseResult = new ResponseResult(SystemConstant.INTERNAL_ERROR_CODE,e.getMessage(),null);
 		}
@@ -91,51 +89,16 @@ public class LoginController extends BaseController {
 	}
 	
 	//用户退出接口
-	@GetMapping("/logout/{userId}")
-	public String logout(@PathVariable String userId){
+	@GetMapping("/logout")
+	public String logout(HttpServletRequest request){
 		ResponseResult responseResult = null;
 		try{
-			redisTemplate.delete(userId);
+			//TODO
 			responseResult = new ResponseResult(SystemConstant.SUCCESS_CODE,"退出成功",null);
 		}catch(Exception e){
-			System.out.println("redis缓存设置失败，失败原因为："+e.getMessage());
-			tokenDataMap.remove(userId);
 			responseResult = new ResponseResult(SystemConstant.INTERNAL_ERROR_CODE,e.getMessage(),null);
 		}
 		return new GsonHelp().fromJsonDefault(responseResult);
-	}
-	
-	//获得权限操作列表
-	private TokenData getUserRoleModule(User user,String token,Integer adminFlag){
-		Map<String,Object> map = new HashMap<>();
-		map.put("adminFlag", adminFlag);
-		map.put("userId", user.getUserId());
-		List<UserRoleModule> list = userService.getUserRoleModule(map);
-		//获得菜单列表
-		List<UserRoleModule> menuList = list.stream().filter(i->"1".equals(i.getModuleType())).collect(Collectors.toList());
-		menuList = setTreeList(menuList, null);
-		//获得操作权限列表
-		List<UserRoleModule> authOperateList = list.stream().filter(i->"2".equals(i.getModuleType())).collect(Collectors.toList());
-		TokenData tokenData = new TokenData();
-		tokenData.setToken(token);
-		tokenData.setUser(user);
-		tokenData.setModuleList(list);
-		tokenData.setMenuList(menuList);
-		tokenData.setAuthOperateList(authOperateList);
-		return tokenData;
-	}
-	
-	//封装成树形结构集合
-	private List<UserRoleModule> setTreeList(List<UserRoleModule> originList,UserRoleModule module){
-		List<UserRoleModule> moduleList = new ArrayList<>();
-		for (int i = 0; i < originList.size(); i++) {
-			UserRoleModule currentModule = originList.get(i);
-			if((module!=null&&module.getModuleId().equals(currentModule.getParentId()))||(module==null&&currentModule.getParentId()==null)){
-				currentModule.setList(setTreeList(originList, currentModule));
-				moduleList.add(currentModule);
-			}
-		}
-		return moduleList;
 	}
 	
 	//没有权限
@@ -162,29 +125,36 @@ public class LoginController extends BaseController {
 		return gsonHelp.fromJsonDefault(responseResult);
 	}
 	
-	//tokenDataMap是在没有缓存情况下的临时处理办法（仅仅看看项目演示效果），正式项目绝对不要使用
-	private static Map<Object,Object> tokenDataMap = new HashMap<>();
-	
-	//设置缓存数据
-	public static void setCache(TokenData tokenData,ValueOperations<Object,Object> valueOperations){
-		String userId = tokenData.getUser().getUserId();
-		try{
-			valueOperations.set(userId, tokenData, 30, TimeUnit.MINUTES);
-		}catch(Exception e){
-			System.out.println("redis缓存设置失败，失败原因为："+e.getMessage());
-			tokenDataMap.put(userId, tokenData);
-		}
+	//获得权限操作列表
+	private TokenData getUserRoleModule(User user,Integer adminFlag){
+		Map<String,Object> map = new HashMap<>();
+		map.put("adminFlag", adminFlag);
+		map.put("userId", user.getUserId());
+		List<UserRoleModule> list = userService.getUserRoleModule(map);
+		//获得菜单列表
+		List<UserRoleModule> menuList = list.stream().filter(i->"1".equals(i.getModuleType())).collect(Collectors.toList());
+		menuList = setTreeList(menuList, null);
+		//获得操作权限列表
+		List<UserRoleModule> authOperateList = list.stream().filter(i->"2".equals(i.getModuleType())).collect(Collectors.toList());
+		TokenData tokenData = new TokenData();
+		tokenData.setUser(user);
+		tokenData.setModuleList(list);
+		tokenData.setMenuList(menuList);
+		tokenData.setAuthOperateList(authOperateList);
+		return tokenData;
 	}
 	
-	//获得缓存数据
-	public static TokenData getCache(String userId,ValueOperations<Object,Object> valueOperations){
-		TokenData tokenData = null;
-		try{
-			tokenData = (TokenData)valueOperations.get(userId);
-		}catch(Exception e){
-			tokenData = (TokenData)tokenDataMap.get(userId);
+	//封装成树形结构集合
+	private static List<UserRoleModule> setTreeList(List<UserRoleModule> originList,UserRoleModule module){
+		List<UserRoleModule> moduleList = new ArrayList<>();
+		for (int i = 0; i < originList.size(); i++) {
+			UserRoleModule currentModule = originList.get(i);
+			if((module!=null&&module.getModuleId().equals(currentModule.getParentId()))||(module==null&&currentModule.getParentId()==null)){
+				currentModule.setList(setTreeList(originList, currentModule));
+				moduleList.add(currentModule);
+			}
 		}
-		return tokenData;
+		return moduleList;
 	}
 	
 }
