@@ -5,6 +5,9 @@ import {HttpService} from "../../../service/http/HttpService";
 import {HttpRequestUrl} from "../../../constant/HttpRequestUrl";
 import {UserSearch} from "../../../models/user/user.search";
 import {AuthService} from "../../../service/auth/AuthService";
+import {HeadToken} from "../../../models/token/head.token";
+import {SessionService} from "../../../service/session/SessionService";
+import {LoginSuccessData} from "../../../models/login/login.success.data";
 import {RouteFullPath} from "../../../app.routes";
 
 @Component({
@@ -22,7 +25,8 @@ export class UserManageListComponent implements OnInit {
 
     constructor(private httpService:HttpService,
                 private authService:AuthService,
-                private router:Router){
+                private router:Router,
+                private sessionService:SessionService){
         this.listUserZone = authService.canShow(HttpRequestUrl.SYS_USER_LSIT_SUFFIX);
         this.addUserZone = authService.canShow(HttpRequestUrl.SYS_USER_ADD_SUFFIX);
         this.deleteUserZone = authService.canShow(HttpRequestUrl.SYS_USER_DELETE_SUFFIX);
@@ -52,7 +56,11 @@ export class UserManageListComponent implements OnInit {
 
     //用户搜索共通方法
     private userSearchFunction(userSearch:UserSearch):void {
-        this.httpService.postJsonData(HttpRequestUrl.SYS_USER_LIST, JSON.stringify(userSearch)).subscribe(
+        let loginSuccessData:LoginSuccessData = this.sessionService.getLoginSuccessData();
+        let headToken = new HeadToken();
+        headToken.userId = loginSuccessData.getUser().userId;
+        headToken.token = loginSuccessData.getToken();
+        this.httpService.postJsonData(HttpRequestUrl.SYS_USER_LSIT, JSON.stringify(userSearch), headToken).subscribe(
             result=>{
                 this.listData = result.data.data;
                 this.currentPage = result.data.currentPage;

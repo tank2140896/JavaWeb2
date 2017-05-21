@@ -18,8 +18,8 @@ export class HeaderComponent {
                 private httpService:HttpService){}
 
     logout(){
-        //let userId = this.sessionService.getLoginSuccessData().getUser().userId;
-        this.httpService.getJsonData(HttpRequestUrl.LOGOUT).subscribe(
+        let userId = this.sessionService.getLoginSuccessData().getUser().userId;
+        this.httpService.getJsonData(HttpRequestUrl.LOGOUT+'/'+userId,null).subscribe(
             result=>{
                 this.sessionService.setLoginSuccessData(null);
                 this.router.navigate(['/']);

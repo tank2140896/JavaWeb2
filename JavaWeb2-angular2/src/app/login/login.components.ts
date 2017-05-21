@@ -59,7 +59,7 @@ export class LoginComponent{
     private user:LoginUser = new LoginUser();
 
     public login():void{
-        this.httpService.postJsonData(HttpRequestUrl.LOGIN,JSON.stringify(this.user)).subscribe(
+        this.httpService.postJsonData(HttpRequestUrl.LOGIN,JSON.stringify(this.user),null).subscribe(
             result=>{
                if(result.code==200){
                    let data = result.data;

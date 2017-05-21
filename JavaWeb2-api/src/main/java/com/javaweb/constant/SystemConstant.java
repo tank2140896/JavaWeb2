@@ -2,7 +2,9 @@ package com.javaweb.constant;
 
 public final class SystemConstant {
 	
-	public static final String SESSION_KEY = "sesssionKey";
+	public static final String HEAD_USERID = "userId";
+	
+	public static final String HEAD_TOKEN = "token";
 	
 	public static final String SYSTEM_DEFAULT_CREATOR = "超级管理员";
 	
@@ -14,7 +16,7 @@ public final class SystemConstant {
 	
 	public static final String SYSTEM_ADMIN_USERID = "superadmin";
 	
-	public static final String NO_LOGIN_URL_REGEX = "/login|/logout|/unauthorized|/internalServerError|/notFound"; 
+	public static final String NO_LOGIN_URL_REGEX = "/login|/logout/**|/unauthorized|/internalServerError|/notFound"; 
 	
 	public static final int SUCCESS_CODE = 200;
 	

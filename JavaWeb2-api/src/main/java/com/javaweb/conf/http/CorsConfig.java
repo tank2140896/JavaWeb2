@@ -11,13 +11,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Configuration  
 public class CorsConfig extends WebMvcConfigurerAdapter {  
-	
+
     @Override  
     public void addCorsMappings(CorsRegistry registry) {  
         registry.addMapping("/**")  
                 .allowedOrigins("*")  
                 .allowCredentials(true)  
-                .allowedMethods("GET", "POST", "DELETE", "PUT")
+                .allowedMethods("GET", "POST", "DELETE", "PUT")  
                 .maxAge(1800);  
     }
     
@@ -26,7 +26,6 @@ public class CorsConfig extends WebMvcConfigurerAdapter {
         return new EmbeddedServletContainerCustomizer() {
             public void customize(ConfigurableEmbeddedServletContainer container) {
                 container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/notFound"));//404
-                container.addErrorPages(new ErrorPage(HttpStatus.METHOD_NOT_ALLOWED, "/notFound"));//405
             }
         };
     }

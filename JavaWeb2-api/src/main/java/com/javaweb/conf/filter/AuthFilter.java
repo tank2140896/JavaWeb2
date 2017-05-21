@@ -12,16 +12,14 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.core.annotation.Order;
-
 import com.javaweb.base.BaseController;
 import com.javaweb.constant.SystemConstant;
+import com.javaweb.controller.LoginController;
 import com.javaweb.dataobject.eo.TokenData;
 
-@Order(1)
-@WebFilter(filterName="authFilter", urlPatterns="/*")
+@WebFilter(urlPatterns="/*",filterName="authFilter")
 public class AuthFilter extends BaseController implements Filter {
-
+	
 	public void init(FilterConfig filterConfig) throws ServletException {
 		
 	}
@@ -42,17 +40,39 @@ public class AuthFilter extends BaseController implements Filter {
 		if(servletPath.matches(SystemConstant.NO_LOGIN_URL_REGEX)){
 			filterChain.doFilter(httpServletRequest, httpServletResponse);
 		}else{
-			TokenData tokenData = (TokenData)getSessionAttribute(httpServletRequest, SystemConstant.SESSION_KEY);
-			if(tokenData == null){
-				httpServletResponse.sendRedirect("notFound");
+			String userId = httpServletRequest.getHeader(SystemConstant.HEAD_USERID);
+			String token = httpServletRequest.getHeader(SystemConstant.HEAD_TOKEN);
+			if(check(userId, token, servletPath)){
+				filterChain.doFilter(httpServletRequest, httpServletResponse);
 			}else{
-				long count = tokenData.getAuthOperateList().stream().filter(i->i.getApiUrl().equals(servletPath)).count();
-				if(count>0){
-					filterChain.doFilter(httpServletRequest, httpServletResponse);
-				}else{
-					httpServletResponse.sendRedirect("unauthorized");
-				}
+				httpServletResponse.sendRedirect("/unauthorized");
 			}
+		}
+	}
+	
+	private boolean check(String userId,String token,String servletPath){
+		try {
+			if(userId==null||token==null){
+				return false;
+			}
+			TokenData tokenData = LoginController.getCache(userId,valueOperations);
+			if(tokenData==null){
+				return false;
+			}
+			if(!tokenData.getUser().getUserId().equals(userId)){
+				return false;
+			}
+			if(!tokenData.getToken().equals(token)){
+				return false;
+			}
+			long count = tokenData.getAuthOperateList().stream().filter(i->i.getApiUrl().equals(servletPath)).count();
+			if(count<=0){
+				return false;
+			}
+			LoginController.setCache(tokenData, valueOperations);
+			return true;
+		} catch (Exception e) {
+			return false;
 		}
 	}
 
