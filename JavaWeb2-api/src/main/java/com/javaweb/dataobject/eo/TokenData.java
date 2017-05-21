@@ -6,8 +6,6 @@ import com.javaweb.dataobject.po.User;
 
 public class TokenData {
 	
-	private String token;
-	
 	private User user;
 	
 	private List<UserRoleModule> moduleList;
@@ -15,14 +13,6 @@ public class TokenData {
 	private List<UserRoleModule> menuList;
 	
 	private List<UserRoleModule> authOperateList;
-
-	public String getToken() {
-		return token;
-	}
-
-	public void setToken(String token) {
-		this.token = token;
-	}
 
 	public User getUser() {
 		return user;
