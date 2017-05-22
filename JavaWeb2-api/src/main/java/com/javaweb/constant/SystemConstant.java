@@ -16,7 +16,7 @@ public final class SystemConstant {
 	
 	public static final String SYSTEM_ADMIN_USERID = "superadmin";
 	
-	public static final String NO_LOGIN_URL_REGEX = "/login|/logout/**|/unauthorized|/internalServerError|/notFound"; 
+	public static final String NO_LOGIN_URL_REGEX = "/login|/logout|/unauthorized|/internalServerError|/notFound"; 
 	
 	public static final int SUCCESS_CODE = 200;
 	

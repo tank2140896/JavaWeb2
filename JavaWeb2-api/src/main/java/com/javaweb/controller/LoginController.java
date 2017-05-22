@@ -8,10 +8,11 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -91,9 +92,10 @@ public class LoginController extends BaseController {
 	}
 	
 	//用户退出接口
-	@GetMapping("/logout/{userId}")
-	public String logout(@PathVariable String userId){
+	@PostMapping("/logout")
+	public String logout(HttpServletRequest request){
 		ResponseResult responseResult = null;
+		String userId = request.getHeader(SystemConstant.HEAD_USERID);
 		try{
 			redisTemplate.delete(userId);
 			responseResult = new ResponseResult(SystemConstant.SUCCESS_CODE,"退出成功",null);

@@ -17,7 +17,7 @@ import com.javaweb.help.ResponseResult;
 import com.javaweb.service.rbac.UserService;
 
 @RestController
-@RequestMapping("/sys/user")
+@RequestMapping("/web/sys/user")
 public class UserController extends BaseController {
 	
 	@Autowired
@@ -28,9 +28,15 @@ public class UserController extends BaseController {
 	public String login(@RequestBody UserSearchCondition UserSearchCondition,HttpServletRequest request){
 		ResponseResult responseResult = null;
 		try{
-			UserSearchCondition.setUserId(request.getHeader(SystemConstant.HEAD_USERID));//只能获取比当前用户等级低的所有用户
-			Page page =  userService.listUser(UserSearchCondition);
-			responseResult = new ResponseResult(SystemConstant.SUCCESS_CODE,"获取用户信息成功",page);
+			String userId = request.getHeader(SystemConstant.HEAD_USERID);
+			String token = request.getHeader(SystemConstant.HEAD_TOKEN);
+			if(check(userId, token, request.getServletPath())){
+				UserSearchCondition.setUserId(request.getHeader(SystemConstant.HEAD_USERID));//只能获取比当前用户等级低的所有用户
+				Page page =  userService.listUser(UserSearchCondition);
+				responseResult = new ResponseResult(SystemConstant.SUCCESS_CODE,"获取用户信息成功",page);
+			}else{
+				responseResult = new ResponseResult(SystemConstant.NO_AUTHORY_CODE,"没有权限",null);
+			}
 		}catch(Exception e){
 			responseResult = new ResponseResult(SystemConstant.INTERNAL_ERROR_CODE,e.getMessage(),null);
 		}

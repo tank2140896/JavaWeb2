@@ -4,6 +4,8 @@ import {Router} from "@angular/router";
 import {SessionService} from "../../service/session/SessionService";
 import {HttpService} from "../../service/http/HttpService";
 import {HttpRequestUrl} from "../../constant/HttpRequestUrl";
+import {HeadToken} from "../../models/token/head.token";
+import {LoginSuccessData} from "../../models/login/login.success.data";
 
 @Component({
     selector: 'home-header',
@@ -18,8 +20,11 @@ export class HeaderComponent {
                 private httpService:HttpService){}
 
     logout(){
-        let userId = this.sessionService.getLoginSuccessData().getUser().userId;
-        this.httpService.getJsonData(HttpRequestUrl.LOGOUT+'/'+userId,null).subscribe(
+        let loginSuccessData:LoginSuccessData = this.sessionService.getLoginSuccessData();
+        let headToken = new HeadToken();
+        headToken.userId = loginSuccessData.getUser().userId;
+        headToken.token = loginSuccessData.getToken();
+        this.httpService.postJsonData(HttpRequestUrl.LOGOUT,null,headToken).subscribe(
             result=>{
                 this.sessionService.setLoginSuccessData(null);
                 this.router.navigate(['/']);
