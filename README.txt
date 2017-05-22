@@ -72,6 +72,7 @@ clickMe(a:HTMLInputElement,b:HTMLInputElement){
 	"../node_modules/jquery/dist/jquery.js",
         "../node_modules/bootstrap/dist/js/bootstrap.js"
 ]
+declare var $: any;
 4、待完善/解决/考虑的问题
 4.1、使用第三方npm等考虑到angular-cli的版本、angular自身的版本、nodejs的版本及package.josn中各版本的兼容关系
 4.2、多级联动、功能较为丰富的树形层次结构
