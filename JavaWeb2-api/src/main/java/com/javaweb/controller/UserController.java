@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.javaweb.base.BaseController;
 import com.javaweb.constant.SystemConstant;
+import com.javaweb.dataobject.eo.CheckData;
 import com.javaweb.dataobject.eo.Page;
 import com.javaweb.dataobject.eo.UserSearchCondition;
 import com.javaweb.help.GsonHelp;
@@ -28,14 +29,13 @@ public class UserController extends BaseController {
 	public String login(@RequestBody UserSearchCondition UserSearchCondition,HttpServletRequest request){
 		ResponseResult responseResult = null;
 		try{
-			String userId = request.getHeader(SystemConstant.HEAD_USERID);
-			String token = request.getHeader(SystemConstant.HEAD_TOKEN);
-			if(check(userId, token, request.getServletPath())){
-				UserSearchCondition.setUserId(request.getHeader(SystemConstant.HEAD_USERID));//只能获取比当前用户等级低的所有用户
+			CheckData checkData = check(request);
+			if(checkData.isCheckFlag()){
+				UserSearchCondition.setUserId(checkData.getTokenData().getUser().getUserId());//只能获取比当前用户等级低的所有用户
 				Page page =  userService.listUser(UserSearchCondition);
 				responseResult = new ResponseResult(SystemConstant.SUCCESS_CODE,"获取用户信息成功",page);
 			}else{
-				responseResult = new ResponseResult(SystemConstant.NO_AUTHORY_CODE,"没有权限",null);
+				responseResult = checkData.getResponseResult();
 			}
 		}catch(Exception e){
 			responseResult = new ResponseResult(SystemConstant.INTERNAL_ERROR_CODE,e.getMessage(),null);

@@ -20,10 +20,16 @@ public final class SystemConstant {
 	
 	public static final int SUCCESS_CODE = 200;
 	
-	public static final int INTERNAL_ERROR_CODE = 500;
-	
 	public static final int NO_AUTHORY_CODE = 401;
 	
 	public static final int NOT_FOUND_CODE = 404;
+	
+	public static final int INTERNAL_ERROR_CODE = 500;
+	
+	public static final int INVALID_REQUEST_CODE = 601;
+	
+	public static final int REQUEST_PARAMETER_ERROR = 602;
+	
+	public static final int REQUEST_PARAMETER_LOST = 603;
 	
 }
