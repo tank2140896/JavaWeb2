@@ -67,7 +67,7 @@ public class LoginController extends BaseController {
 				user.setLevel(1);
 				user.setUserName(SystemConstant.SYSTEM_ADMIN_USERNAME);
 				user.setPassword(SystemConstant.SYSTEM_ADMIN_PASSWORD);
-				token = Base64.getEncoder().encodeToString((userName+password).getBytes());
+				token = Base64.getEncoder().encodeToString((userName+password+UUID.randomUUID().toString()).getBytes());
 				TokenData tokenData = getUserRoleModule(user, token, 1);
 				setCache(tokenData, valueOperations);
 				responseResult = new ResponseResult(SystemConstant.SUCCESS_CODE,"登录成功",tokenData);
@@ -77,7 +77,7 @@ public class LoginController extends BaseController {
 				map.put("password", Base64.getEncoder().encodeToString((password).getBytes()));
 				User user = userService.getUserByUsernameAndPassword(map);
 				if(user!=null){
-					token = Base64.getEncoder().encodeToString((userName+password).getBytes());
+					token = Base64.getEncoder().encodeToString((userName+password+UUID.randomUUID().toString()).getBytes());
 					TokenData tokenData = getUserRoleModule(user, token, 0);
 					setCache(tokenData, valueOperations);
 					responseResult = new ResponseResult(SystemConstant.SUCCESS_CODE,"登录成功",tokenData);
