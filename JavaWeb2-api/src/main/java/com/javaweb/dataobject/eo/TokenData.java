@@ -10,6 +10,8 @@ public class TokenData {
 	
 	private User user;
 	
+	private String uniqueValue;
+	
 	private List<UserRoleModule> moduleList;
 	
 	private List<UserRoleModule> menuList;
@@ -30,6 +32,14 @@ public class TokenData {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getUniqueValue() {
+		return uniqueValue;
+	}
+
+	public void setUniqueValue(String uniqueValue) {
+		this.uniqueValue = uniqueValue;
 	}
 
 	public List<UserRoleModule> getModuleList() {

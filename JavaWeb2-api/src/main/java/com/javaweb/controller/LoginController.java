@@ -5,6 +5,7 @@ import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -61,14 +62,17 @@ public class LoginController extends BaseController {
 			//String kaptcha = kaptchaValue==null?"":kaptchaValue.toString();
 			String userName = userLogin.getUserName();
 			String password = userLogin.getPassword();
+			/*
+			 1、如果要求同一用户只能有一个登录（一个登录后把另一个踢掉）：校验时需要判断header里的uniqueValue和缓存中tokenData里的uniqueValue是否一致
+			 2、如果同一用户无法同时登录（一个登录后另一个无法再登录）：登录时需要判断该用户是否在缓存中
+			 当然，更加推荐websocket处理
+			 */
 			if(SystemConstant.SYSTEM_ADMIN_USERNAME.equals(userName)&&SystemConstant.SYSTEM_ADMIN_PASSWORD.equals(password)/*&&kaptcha.equals(kaptcha)*/){//超级管理员
 				User user = new User();
 				user.setUserId(SystemConstant.SYSTEM_ADMIN_USERID);
 				user.setLevel(1);
 				user.setUserName(SystemConstant.SYSTEM_ADMIN_USERNAME);
 				user.setPassword(SystemConstant.SYSTEM_ADMIN_PASSWORD);
-				//TODO UUID.randomUUID().toString() 用于同一用户只能一个人登录
-				//TODO 登录类型，如1：PC端；2：安卓；3：IOS
 				token = Base64.getEncoder().encodeToString((userName+password).getBytes());
 				TokenData tokenData = getUserRoleModule(user, token, 1);
 				setCache(tokenData, valueOperations);
@@ -79,8 +83,6 @@ public class LoginController extends BaseController {
 				map.put("password", Base64.getEncoder().encodeToString((password).getBytes()));
 				User user = userService.getUserByUsernameAndPassword(map);
 				if(user!=null){
-					//TODO UUID.randomUUID().toString() 用于同一用户只能一个人登录
-					//TODO 登录类型，如1：PC端；2：安卓；3：IOS
 					token = Base64.getEncoder().encodeToString((userName+password).getBytes());
 					TokenData tokenData = getUserRoleModule(user, token, 0);
 					setCache(tokenData, valueOperations);
@@ -125,6 +127,7 @@ public class LoginController extends BaseController {
 		TokenData tokenData = new TokenData();
 		tokenData.setToken(token);
 		tokenData.setUser(user);
+		tokenData.setUniqueValue(UUID.randomUUID().toString());
 		tokenData.setModuleList(list);
 		tokenData.setMenuList(menuList);
 		tokenData.setAuthOperateList(authOperateList);
@@ -173,6 +176,7 @@ public class LoginController extends BaseController {
 	
 	//设置缓存数据
 	public static void setCache(TokenData tokenData,ValueOperations<Object,Object> valueOperations){
+		//这里的key值设定就要看情况了，如果业务要求同一账号在页面端和手机端（原生）都能登录，那么key值可能还需要一个type来联合组成
 		String userId = tokenData.getUser().getUserId();
 		try{
 			valueOperations.set(userId, tokenData, 30, TimeUnit.MINUTES);
