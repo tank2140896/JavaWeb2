@@ -95,7 +95,7 @@ public class LoginController extends BaseController {
 	}
 	
 	//用户退出接口
-	@PostMapping("/logout")
+	@PostMapping("/web/logout")
 	public String logout(HttpServletRequest request){
 		ResponseResult responseResult = null;
 		CheckData checkData = check(request);
