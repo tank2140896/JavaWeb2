@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.javaweb.base.BaseController;
 import com.javaweb.constant.SystemConstant;
+import com.javaweb.dataobject.eo.CheckData;
 import com.javaweb.dataobject.eo.TokenData;
 import com.javaweb.dataobject.eo.UserLogin;
 import com.javaweb.dataobject.eo.UserRoleModule;
@@ -53,7 +54,7 @@ public class LoginController extends BaseController {
 	private UserService userService;
 	
 	//用户登录接口
-	@PostMapping("/login")
+	@PostMapping("/web/login")
 	public String login(@RequestBody UserLogin userLogin){
 		ResponseResult responseResult = null;
 		String token = null;
@@ -65,14 +66,10 @@ public class LoginController extends BaseController {
 			/*
 			 1、如果要求同一用户只能有一个登录（一个登录后把另一个踢掉）：校验时需要判断header里的uniqueValue和缓存中tokenData里的uniqueValue是否一致
 			 2、如果同一用户无法同时登录（一个登录后另一个无法再登录）：登录时需要判断该用户是否在缓存中
-			 当然，更加推荐websocket处理
+			 当然，更加推荐websocket处理（后期将补充）
 			 */
 			if(SystemConstant.SYSTEM_ADMIN_USERNAME.equals(userName)&&SystemConstant.SYSTEM_ADMIN_PASSWORD.equals(password)/*&&kaptcha.equals(kaptcha)*/){//超级管理员
-				User user = new User();
-				user.setUserId(SystemConstant.SYSTEM_ADMIN_USERID);
-				user.setLevel(1);
-				user.setUserName(SystemConstant.SYSTEM_ADMIN_USERNAME);
-				user.setPassword(SystemConstant.SYSTEM_ADMIN_PASSWORD);
+				User user = getSystemAdmin();
 				token = Base64.getEncoder().encodeToString((userName+password).getBytes());
 				TokenData tokenData = getUserRoleModule(user, token, 1);
 				setCache(tokenData, valueOperations);
@@ -101,16 +98,30 @@ public class LoginController extends BaseController {
 	@PostMapping("/logout")
 	public String logout(HttpServletRequest request){
 		ResponseResult responseResult = null;
-		String userId = request.getHeader(SystemConstant.HEAD_USERID);
-		try{
-			redisTemplate.delete(userId);
+		CheckData checkData = check(request);
+		if(checkData.isCheckFlag()){
+			String userId = checkData.getTokenData().getUser().getUserId();
+			try{
+				redisTemplate.delete(userId);
+			}catch(Exception e){
+				System.out.println("redis缓存设置失败，失败原因为："+e.getMessage());
+				tokenDataMap.remove(userId);
+			}
 			responseResult = new ResponseResult(SystemConstant.SUCCESS_CODE,"退出成功",null);
-		}catch(Exception e){
-			System.out.println("redis缓存设置失败，失败原因为："+e.getMessage());
-			tokenDataMap.remove(userId);
-			responseResult = new ResponseResult(SystemConstant.INTERNAL_ERROR_CODE,e.getMessage(),null);
+		}else{
+			responseResult = checkData.getResponseResult();
 		}
 		return new GsonHelp().fromJsonDefault(responseResult);
+	}
+	
+	//获得系统管理员信息
+	private User getSystemAdmin(){
+		User user = new User();
+		user.setUserId(SystemConstant.SYSTEM_ADMIN_USERID);
+		user.setLevel(1);
+		user.setUserName(SystemConstant.SYSTEM_ADMIN_USERNAME);
+		user.setPassword(SystemConstant.SYSTEM_ADMIN_PASSWORD);
+		return user;
 	}
 	
 	//获得权限操作列表

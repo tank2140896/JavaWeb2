@@ -4,9 +4,9 @@ export class HttpRequestUrl{
 
     //public static GET_KAPTCHA_SUFFIX = '/kaptcha';
 
-    public static LOGIN_SUFFIX = '/login';
+    public static LOGIN_SUFFIX = '/web/login';
 
-    public static LOGOUT_SUFFIX = '/logout';
+    public static LOGOUT_SUFFIX = '/web/logout';
 
     public static SYS_USER_LSIT_SUFFIX = '/web/sys/user/list';//用户列表
 
