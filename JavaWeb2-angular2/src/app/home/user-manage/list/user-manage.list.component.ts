@@ -56,11 +56,7 @@ export class UserManageListComponent implements OnInit {
 
     //用户搜索共通方法
     private userSearchFunction(userSearch:UserSearch):void {
-        let loginSuccessData:LoginSuccessData = this.sessionService.getLoginSuccessData();
-        let headToken = new HeadToken();
-        headToken.userId = loginSuccessData.getUser().userId;
-        headToken.token = loginSuccessData.getToken();
-        this.httpService.postJsonData(HttpRequestUrl.SYS_USER_LSIT, JSON.stringify(userSearch), headToken).subscribe(
+        this.httpService.postJsonData(HttpRequestUrl.SYS_USER_LSIT, JSON.stringify(userSearch), this.sessionService.getHeadToken()).subscribe(
             result=>{
                 this.listData = result.data.data;
                 this.currentPage = result.data.currentPage;

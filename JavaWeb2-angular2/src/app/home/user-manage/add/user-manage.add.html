@@ -7,26 +7,26 @@
     <table>
         <tr>
             <td>用户名<span style="color: red">*</span></td>
-            <td><input type="text" placeholder="请输入用户名"/></td>
+            <td><input type="text" [(ngModel)]="userAdd.userName" placeholder="请输入用户名"/></td>
         </tr>
         <tr>
             <td>用户密码<span style="color: red">*</span></td>
-            <td><input type="password" placeholder="请输入用户密码"/></td>
+            <td><input type="password" [(ngModel)]="userAdd.password" placeholder="请输入用户密码"/></td>
         </tr>
         <tr>
-            <td>用户昵称</td>
-            <td><input type="password" placeholder="请输入用户昵称"/></td>
+            <td>用户姓名</td>
+            <td><input type="password" [(ngModel)]="userAdd.personName" placeholder="请输入用户昵称"/></td>
         </tr>
         <tr>
             <td>邮箱</td>
-            <td><input type="password" placeholder="请输入邮箱"/></td>
+            <td><input type="password" [(ngModel)]="userAdd.email" placeholder="请输入邮箱"/></td>
         </tr>
         <tr>
             <td>手机号码</td>
-            <td><input type="password" placeholder="请输入手机号码"/></td>
+            <td><input type="password" [(ngModel)]="userAdd.phone" placeholder="请输入手机号码"/></td>
         </tr>
         <tr>
-            <td><button>保存</button></td>
+            <td><button (click)="save()">保存</button></td>
             <td><button (click)="cancel()">取消</button></td>
         </tr>
     </table>

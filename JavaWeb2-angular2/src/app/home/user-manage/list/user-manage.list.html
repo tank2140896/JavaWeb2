@@ -20,6 +20,7 @@
                             <tr>
                                 <td>用户名</td>
                                 <td>用户姓名</td>
+                                <td>用户角色</td>
                                 <td>注册日期</td>
                                 <td>操作</td>
                             </tr>
@@ -31,6 +32,8 @@
                             <tr *ngFor="let eachData of listData">
                                 <td>{{eachData.userName}}</td>
                                 <td>{{eachData.personName}}</td>
+                                <td *ngIf="eachData.roleName==null" style="color:red">未分配角色</td>
+                                <td *ngIf="eachData.roleName!=null">{{eachData.roleName}}</td>
                                 <td>{{eachData.createDate}}</td>
                                 <td>
                                     <button *ngIf="deleteUserZone" class="btn btn-sm btn-danger">删除用户</button>
