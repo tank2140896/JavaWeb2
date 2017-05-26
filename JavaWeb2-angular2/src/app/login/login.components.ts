@@ -4,7 +4,6 @@ import {Router} from '@angular/router';
 import {LoginUser} from '../models/login/login.user';
 import {HttpService} from "../service/http/HttpService";
 import {HttpRequestUrl} from "../constant/HttpRequestUrl";
-import {LoginSuccessData} from "../models/login/login.success.data";
 import {SessionService} from "../service/session/SessionService";
 
 @Component({

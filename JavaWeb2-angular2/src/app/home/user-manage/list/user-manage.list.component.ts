@@ -58,9 +58,10 @@ export class UserManageListComponent implements OnInit {
     private userSearchFunction(userSearch:UserSearch):void {
         this.httpService.postJsonData(HttpRequestUrl.SYS_USER_LSIT, JSON.stringify(userSearch), this.sessionService.getHeadToken()).subscribe(
             result=>{
-                this.listData = result.data.data;
-                this.currentPage = result.data.currentPage;
-                this.totalPage = result.data.totalPage;
+                const ret = result.data;
+                this.listData = ret.data;
+                this.currentPage = ret.currentPage;
+                this.totalPage = ret.totalPage;
             }
         );
     }
@@ -73,6 +74,7 @@ export class UserManageListComponent implements OnInit {
 
     //修改用户
     public modifyUser(userId):void{
+        //this.router.navigate([RouteFullPath.UserManageModify],{queryParams:{'userId':{'a':10,'b':'30'}}});
         this.router.navigate([RouteFullPath.UserManageModify],{queryParams:{'userId':userId}});
     }
 

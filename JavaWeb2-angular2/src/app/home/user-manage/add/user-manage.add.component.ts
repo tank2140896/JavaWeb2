@@ -10,6 +10,8 @@ import {UserAdd} from "../../../models/user/user.add";
 
 export class UserManageAddComponent {
 
+    //校验可以参考：https://github.com/UltimateAngular/ngxerrors
+
     constructor(private router:Router){}
 
     private userAdd:UserAdd = new UserAdd();
