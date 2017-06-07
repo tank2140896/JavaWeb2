@@ -8,6 +8,16 @@ import {Component} from '@angular/core';
 
 export class HomeComponent {
 
-    constructor(){ }
+    constructor(){
+        /**
+        https://www.npmjs.com/package/@types/ws
+        npm install @types/ws
+        import {Server} from 'ws';
+        const websocketServe = new Server({port:8181});
+        websocketServe.on("connection", websocket => {
+            websocket.send('xxx');
+        })
+        */
+    }
 
 }
