@@ -79,4 +79,5 @@ declare var $: any;
 4.3、卸载全局安装的npm包
 npm uninstall -g @angular/cli
 npm cache clean
-npm install -g @angular/cli@latest
+npm install -g @angular/cli@latest   
+4.4、跨域参考：http://blog.csdn.net/qq_38321709/article/details/73867104
