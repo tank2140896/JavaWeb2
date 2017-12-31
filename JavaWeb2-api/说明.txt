@@ -1,0 +1,12 @@
+项目主要知识点：
+1、前后端分离（后端只提供接口）
+	A、完全前后端分离（前后端session跨域/redis替换session）
+	B、伪前后端分离（前后端session跨域/jsp之类）
+2、多数据源（采用mybatis时要注意不同数据源对应的dao接口名称不要一样，比如可以一个叫dao1一个叫dao2）
+3、国际化
+4、接口入参校验
+5、reids
+	A、bind 0.0.0.0 设置允许访问的ip
+	B、requirepass 123456 设置访问密码
+	C、protected-mode no 关闭保护模式
+6、mybatis共通dao（写的不好）

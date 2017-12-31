@@ -1,5 +1,5 @@
 package com.javaweb.base;
 
-public class BaseService extends Base {
+public class BaseService extends BaseTool {
 
 }

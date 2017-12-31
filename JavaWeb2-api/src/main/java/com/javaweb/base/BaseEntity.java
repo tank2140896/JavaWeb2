@@ -2,19 +2,24 @@ package com.javaweb.base;
 
 import java.util.Date;
 
-import com.javaweb.constant.SystemConstant;
+import com.javaweb.interceptor.mybatis.Column;
 
-public class BaseEntity {
+public class BaseEntity extends BaseValidatedGroup {
 	
-	private Date createDate = new Date();//创建时间
+	@Column(name="create_date")
+	private Date createDate;//创建时间
 	
-	private String creator = SystemConstant.SYSTEM_DEFAULT_CREATOR;//创建者
+	@Column(name="creator")
+	private String creator;//创建者
 	
-	private Date updateDate = new Date();//更新时间
+	@Column(name="update_date")
+	private Date updateDate;//更新时间
 	
-	private String updater = SystemConstant.SYSTEM_DEFAULT_UPDATER;//更新者
+	@Column(name="updater")
+	private String updater;//更新者
 	
-	private int delFlag = 0;//删除标记(0:未被删除;1:已被删除)
+	@Column(name="del_flag")
+	private Integer delFlag = 0;//删除标记(0:未被删除;1:已被删除)
 
 	public Date getCreateDate() {
 		return createDate;
@@ -48,11 +53,11 @@ public class BaseEntity {
 		this.updater = updater;
 	}
 
-	public int getDelFlag() {
+	public Integer getDelFlag() {
 		return delFlag;
 	}
 
-	public void setDelFlag(int delFlag) {
+	public void setDelFlag(Integer delFlag) {
 		this.delFlag = delFlag;
 	}
 	

@@ -1,22 +1,31 @@
 package com.javaweb.base;
 
 import java.util.List;
-import java.util.Map;
 
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+
+import com.javaweb.constant.CommonConstant;
+
+@Mapper
 public interface BaseDao<T> {
 	
-	public void save(T t);
+	@Insert(CommonConstant.EMPTY_VALUE)
+	public Integer insert(T t);
 	
-	public void saveBatch(List<T> list);
+	@Update(CommonConstant.EMPTY_VALUE)
+	public Integer update(T t);
 	
-	public int update(T t);
+	@Delete(CommonConstant.EMPTY_VALUE)
+	public Integer delete(T t);
 	
-	public int updateBatch(List<T> list);
+	@Select(CommonConstant.EMPTY_VALUE)
+	public List<T> selectAll(Class<T> c);
 	
-	public int delete(Object id);
-	
-	public int deleteBatch(Object[] id);
-
-	public List<List<?>> list(Map<String,Object> map);
+	@Select(CommonConstant.EMPTY_VALUE)
+	public T selectByPk(T t);
 	
 }

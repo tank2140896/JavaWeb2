@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.javaweb.web.dao.ds1.UserDao">
+
+	<sql id="selectUser" >
+		user_id as userId,user_name as userName,password,person_name as personName,email,phone,
+		portrait,parent_id as parentId,fcode,level,remark,status,create_date as createDate,creator,
+		update_date as updateDate,updater,del_flag as delFlag
+	</sql>
+	
+	<sql id="selectModule" >
+		module_id as moduleId,module_name as moduleName,page_url as pageUrl,api_url as apiUrl,parent_id as parentId,
+		fcode,level,orders,module_type as moduleType,alias,parent_alias as parentAlias,remark,icon
+		create_date as createDate,creator,update_date as updateDate,updater,del_flag as delFlag
+	</sql>
+	
+	<select id="userLogin" parameterType="com.javaweb.web.eo.UserLogin" resultType="com.javaweb.web.po.User">
+		select <include refid="selectUser"></include> from user where user_name = #{userName} and password = #{password} limit 1
+	</select>
+	
+	<select id="getUserRoleModule" parameterType="Map" resultType="com.javaweb.web.po.Module">
+		<!-- 若test比较的是字符串，①将外层变为单引号，内层变为双引号；②单引号的值.toString() -->
+		<if test="adminFlag==true"><!-- 超级管理员 -->
+			SELECT <include refid="selectModule"></include> from module WHERE del_flag = 0 ORDER BY level ASC,orders ASC
+		</if>
+		<if test="adminFlag==false"><!-- 非超级管理员 -->
+			SELECT <include refid="selectModule"></include> from module WHERE module_id
+			in(
+				SELECT rm.module_id from role_module rm
+				WHERE rm.role_id in(
+					SELECT ur.role_id from role r,user_role ur
+					WHERE ur.user_id = #{userId} 
+					AND r.role_id = ur.role_id
+				)
+			) and del_flag = 0  
+			ORDER BY level ASC,orders ASC
+		</if>
+	</select>
+	
+</mapper>
