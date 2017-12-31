@@ -15,8 +15,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
 import com.javaweb.constant.CommonConstant;
+import com.javaweb.constant.SystemConstant;
 
 public class BaseTool {
+	
+	/**
+	@Autowired
+	public MongoTemplate mongoTemplate;
+	
+	@Autowired
+	public Neo4jTemplate neo4jTemplate;
+	*/
 	
 	@Autowired
     public MessageSource messageSource;
@@ -28,7 +37,7 @@ public class BaseTool {
 	public ValueOperations<Object,Object> valueOperations;
 	
 	public void setDefaultDataToRedis(String key,Object value){
-		valueOperations.set(key,value,15,TimeUnit.MINUTES);
+		valueOperations.set(key,value,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
 	}
 	
 	public String getValidateMessage(BindingResult bindingResult){

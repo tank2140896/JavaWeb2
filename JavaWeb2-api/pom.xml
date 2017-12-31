@@ -15,10 +15,11 @@
   	<parent>
     	<groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.0.M7</version>
+        <!-- 若换成2.0需要重点测试redis的缓存和项目路径写法 -->
+        <version>1.5.9.RELEASE</version>
     </parent>
     
-    <!-- 因使用2.0.0.M7而额外需要的配置，后期关注官网更新，可以去掉 -->
+    <!-- 因使用2.0.0.M7而额外需要的配置，后期关注官网更新，可以去掉 
     <repositories>
 	    <repository>
 	        <id>spring-milestones</id>
@@ -29,6 +30,7 @@
 	        </snapshots>
 	    </repository>
     </repositories>
+    -->
     
     <dependencies>
     	<!-- web -->
@@ -50,6 +52,12 @@
 	    <dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+		<!-- test -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-test</artifactId>
+		    <scope>test</scope>
 		</dependency>
 		<!-- 使用热部署 -->
     	<dependency>
@@ -81,8 +89,9 @@
 	    	<plugin>
 	        	<groupId>org.springframework.boot</groupId>
 	            <artifactId>spring-boot-maven-plugin</artifactId>
-	            <!-- 以后注意去掉！！！ -->
+	            <!-- 以后注意去掉！！！ 
 	            <version>1.5.3.RELEASE</version>
+	            -->
 	            <configuration>
 	            	<mainClass>com.javaweb.Application</mainClass>
 	            </configuration>

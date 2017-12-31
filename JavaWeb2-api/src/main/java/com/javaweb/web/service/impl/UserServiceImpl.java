@@ -26,4 +26,6 @@ public class UserServiceImpl implements UserService {
 		return userDao.getUserRoleModule(map);
 	}
 
+	//@Transactional
+
 }

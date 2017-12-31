@@ -1,12 +1,16 @@
 package com.javaweb.web.po;
 
+import java.io.Serializable;
+
 import com.javaweb.interceptor.mybatis.Column;
 import com.javaweb.interceptor.mybatis.Pk;
 import com.javaweb.interceptor.mybatis.Table;
 
 @Table(name="user_role")
-public class UserRole {
-	
+public class UserRole implements Serializable {
+
+	private static final long serialVersionUID = -362334579286862491L;
+
 	@Column(name="id")
 	@Pk(name="id")
 	private String id;//主键ID

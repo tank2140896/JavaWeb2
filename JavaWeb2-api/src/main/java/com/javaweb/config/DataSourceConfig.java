@@ -17,7 +17,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.javaweb.config.datasource.MultipleDataSourceManage;
-import com.javaweb.interceptor.mybatis.MyBatisBaseDaoInterceptor;
+import com.javaweb.interceptor.MyBatisBaseDaoInterceptor;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration

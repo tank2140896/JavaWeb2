@@ -26,50 +26,60 @@ import com.javaweb.web.po.User;
 import com.javaweb.web.service.UserService;
 
 @RestController
+//此Controller中的所有接口不需要登录、不需要权限，向所有访问者开放
 public class AllOpenController extends BaseController {
 	
 	@Autowired
 	private UserService userService;
 	
-	//http://localhost:8888/javaweb-web/abc
-	//http://localhost:4200/#/
 	
-	@GetMapping("/abc")
-	public String a(){
-		//setDefaultDataToRedis("a","12");
-		return "9999";
-	}
-
 	//用户登录接口
-	@PostMapping("/web/login")
+	@PostMapping("/login")
+	//Controller建议加上@Transactional，另外不建议try catch，除非能确保Controller中无数据库相关事务操作
 	public BaseResponseResult login(@RequestBody @Validated/*({BaseValidatedGroup.add.class})*/ UserLogin userLogin,
 							        BindingResult bindingResult){
 		BaseResponseResult baseResponseResult = new BaseResponseResult();
-		try{
-			if(bindingResult.hasErrors()){
-				baseResponseResult = new BaseResponseResult(SystemConstant.VALIDATE_ERROR_CODE,getValidateMessage(bindingResult),CommonConstant.EMPTY_VALUE);
-			}else{
-				//超级管理员(后门)
-				if(SystemConstant.SYSTEM_DEFAULT_USER_NAME.equals(userLogin.getUserName())&&SystemConstant.SYSTEM_DEFAULT_USER_PASSWORD.equals(userLogin.getPassword())){
-					User user = SystemConstant.SYSTEM_DEFAULT_USER;
-					TokenData token = getToken(true,user);
+		if(bindingResult.hasErrors()){
+			baseResponseResult = new BaseResponseResult(SystemConstant.VALIDATE_ERROR,getValidateMessage(bindingResult),CommonConstant.EMPTY_VALUE);
+		}else{
+			//超级管理员(后门)
+			if(SystemConstant.SYSTEM_DEFAULT_USER_NAME.equals(userLogin.getUserName())&&SystemConstant.SYSTEM_DEFAULT_USER_PASSWORD.equals(userLogin.getPassword())){
+				User user = SystemConstant.SYSTEM_DEFAULT_USER;
+				TokenData token = getToken(true,user);
+				setDefaultDataToRedis(user.getUserId(),token);
+				baseResponseResult = new BaseResponseResult(SystemConstant.SUCCESS,getMessage("login.User.loginSuccess"),token);
+			}else{//非超级管理员
+				User user = userService.userLogin(userLogin);
+				if(user==null){
+					baseResponseResult = new BaseResponseResult(SystemConstant.LOGIN_FAIL,getMessage("login.User.userNameOrPassword"),CommonConstant.EMPTY_VALUE);
+				}else{
+					TokenData token = getToken(false,user);
 					setDefaultDataToRedis(user.getUserId(),token);
-					baseResponseResult = new BaseResponseResult(SystemConstant.SUCCESS_CODE,getMessage("login.User.loginSuccess"),token);
-				}else{//非超级管理员
-					User user = userService.userLogin(userLogin);
-					if(user==null){
-						baseResponseResult = new BaseResponseResult(SystemConstant.LOGIN_FAIL_CODE,getMessage("login.User.userNameOrPassword"),CommonConstant.EMPTY_VALUE);
-					}else{
-						TokenData token = getToken(false,user);
-						setDefaultDataToRedis(user.getUserId(),token);
-						baseResponseResult = new BaseResponseResult(SystemConstant.SUCCESS_CODE,getMessage("login.User.loginSuccess"),token);
-					}
+					baseResponseResult = new BaseResponseResult(SystemConstant.SUCCESS,getMessage("login.User.loginSuccess"),token);
 				}
 			}
-		}catch(Exception e){
-			baseResponseResult = new BaseResponseResult(SystemConstant.INTERNAL_ERROR_CODE,getMessage("system.error"),CommonConstant.EMPTY_VALUE);
 		}
 		return baseResponseResult;
+	}
+	
+	@GetMapping("/requestParameterLost")
+	public BaseResponseResult requestParameterLost(){
+		return new BaseResponseResult(SystemConstant.REQUEST_PARAMETER_LOST,getMessage("validated.permission.requestParameterLost"),CommonConstant.EMPTY_VALUE);
+	}
+	
+	@GetMapping("/invalidRequest")
+	public BaseResponseResult invalidRequest(){
+		return new BaseResponseResult(SystemConstant.INVALID_REQUEST,getMessage("validated.permission.invalidRequest"),CommonConstant.EMPTY_VALUE);
+	}
+	
+	@GetMapping("/requestParameterError")
+	public BaseResponseResult requestParameterError(){
+		return new BaseResponseResult(SystemConstant.INVALID_REQUEST,getMessage("validated.permission.requestParameterError"),CommonConstant.EMPTY_VALUE);
+	}
+	
+	@GetMapping("/noAuthory")
+	public BaseResponseResult noAuthory(){
+		return new BaseResponseResult(SystemConstant.NO_AUTHORY,getMessage("validated.permission.noAuthory"),CommonConstant.EMPTY_VALUE);
 	}
 	
 	private TokenData getToken(Boolean adminFlag,User user){

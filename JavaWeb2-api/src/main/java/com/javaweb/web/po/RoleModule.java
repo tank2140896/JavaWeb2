@@ -1,11 +1,15 @@
 package com.javaweb.web.po;
 
+import java.io.Serializable;
+
 import com.javaweb.interceptor.mybatis.Column;
 import com.javaweb.interceptor.mybatis.Pk;
 import com.javaweb.interceptor.mybatis.Table;
 
 @Table(name="role_module")
-public class RoleModule {
+public class RoleModule implements Serializable {
+
+	private static final long serialVersionUID = 6708103631349460475L;
 
 	@Column(name="id")
 	@Pk(name="id")

@@ -4,6 +4,12 @@ import com.javaweb.web.po.User;
 
 public class SystemConstant {
 	
+	public static final Long SYSTEM_DEFAULT_SESSION_OUT = 15L;
+	
+	public static final String HEAD_USERID = "userId";
+	
+	public static final String HEAD_TOKEN = "token";
+	
 	public static final String SYSTEM_DEFAULT_USER_ID = "admin";
 	
 	public static final String SYSTEM_DEFAULT_USER_NAME = "admin";
@@ -22,16 +28,22 @@ public class SystemConstant {
 		SYSTEM_DEFAULT_USER.setStatus(0);
 	}
 	
-	public static final int VALIDATE_ERROR_CODE = 10;
+	public static final int VALIDATE_ERROR = 10;
 	
-	public static final int LOGIN_FAIL_CODE = 11;
+	public static final int LOGIN_FAIL = 11;
 	
-	public static final int SUCCESS_CODE = 200;
+	public static final int SUCCESS = 200;
 	
-	public static final int NO_AUTHORY_CODE = 401;
+	public static final int NO_AUTHORY = 401;
 	
-	public static final int NOT_FOUND_CODE = 404;
+	public static final int NOT_FOUND = 404;
 	
-	public static final int INTERNAL_ERROR_CODE = 500;
+	public static final int INTERNAL_ERROR = 500;
+	
+	public static final int INVALID_REQUEST = 601;
+	
+	public static final int REQUEST_PARAMETER_ERROR = 602;
+	
+	public static final int REQUEST_PARAMETER_LOST = 603;
 	
 }

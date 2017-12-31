@@ -1,4 +1,4 @@
-package com.javaweb.interceptor.mybatis;
+package com.javaweb.interceptor;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -24,6 +24,17 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Component;
 
 import com.javaweb.constant.CommonConstant;
+import com.javaweb.interceptor.mybatis.BoundSqlSqlSource;
+import com.javaweb.interceptor.mybatis.Column;
+import com.javaweb.interceptor.mybatis.HandleDelete;
+import com.javaweb.interceptor.mybatis.HandleInsert;
+import com.javaweb.interceptor.mybatis.HandleSelectAll;
+import com.javaweb.interceptor.mybatis.HandleSelectByPk;
+import com.javaweb.interceptor.mybatis.HandleUpdate;
+import com.javaweb.interceptor.mybatis.Pk;
+import com.javaweb.interceptor.mybatis.SqlBuildInfo;
+import com.javaweb.interceptor.mybatis.SqlHandle;
+import com.javaweb.interceptor.mybatis.Table;
 import com.javaweb.util.core.DateUtil;
 
 /**

@@ -1,5 +1,6 @@
 package com.javaweb.web.po;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.validation.constraints.NotNull;
@@ -10,8 +11,10 @@ import com.javaweb.interceptor.mybatis.Pk;
 import com.javaweb.interceptor.mybatis.Table;
 
 @Table(name="module")
-public class Module extends BaseEntity {
+public class Module extends BaseEntity implements Serializable {
 	
+	private static final long serialVersionUID = 8495542220648641440L;
+
 	private List<Module> list;/**辅助属性*/
 	
 	@NotNull(groups={update.class,delete.class},message="validated.Module.moduleId.NotNull")
