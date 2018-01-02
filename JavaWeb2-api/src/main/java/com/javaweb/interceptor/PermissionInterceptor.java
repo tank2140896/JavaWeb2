@@ -38,32 +38,36 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 		String userId = request.getHeader(SystemConstant.HEAD_USERID);
 		String token = request.getHeader(SystemConstant.HEAD_TOKEN);
 		String servletPath = request.getServletPath();
-		if(userId==null||token==null){
-			response.sendRedirect(basePath+"/requestParameterLost");
-			return false;
-		}
-		TokenData tokenData = (TokenData)valueOperations.get(userId);
-		if(tokenData==null){
-			response.sendRedirect(basePath+"/invalidRequest");
-			return false;
-		}
-		if(!tokenData.getUser().getUserId().equals(userId)){
-			response.sendRedirect(basePath+"/requestParameterError");
-			return false;
-		}
-		if(servletPath.startsWith("/web/login")){
-			return true;
-		}
-		if(!tokenData.getToken().equals(token)){
-			response.sendRedirect(basePath+"/requestParameterError");
-			return false;
-		}
-		long count = tokenData.getAuthOperateList().stream().filter(i->i.getApiUrl().equals(servletPath)).count();
-		if(count<=0){
-			response.sendRedirect(basePath+"/noAuthory");
-			return false;
+		if(servletPath.startsWith("/web")){
+			if(userId==null||token==null){
+				response.sendRedirect(basePath+"/requestParameterLost");
+				return false;
+			}
+			TokenData tokenData = (TokenData)valueOperations.get(userId);
+			if(tokenData==null){
+				response.sendRedirect(basePath+"/invalidRequest");
+				return false;
+			}
+			if(!tokenData.getUser().getUserId().equals(userId)){
+				response.sendRedirect(basePath+"/requestParameterError");
+				return false;
+			}
+			if(servletPath.startsWith("/web/belogin")){
+				return true;
+			}
+			if(!tokenData.getToken().equals(token)){
+				response.sendRedirect(basePath+"/requestParameterError");
+				return false;
+			}
+			long count = tokenData.getAuthOperateList().stream().filter(i->i.getApiUrl().equals(servletPath)).count();
+			if(count<=0){
+				response.sendRedirect(basePath+"/noAuthory");
+				return false;
+			}else{
+				valueOperations.set(userId,tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
+				return true;
+			}
 		}else{
-			valueOperations.set(userId,tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
 			return true;
 		}
 	}

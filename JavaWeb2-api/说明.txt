@@ -20,6 +20,4 @@
 	A、bind 0.0.0.0 设置允许访问的ip
 	B、requirepass 123456 设置访问密码
 	C、protected-mode no 关闭保护模式
-6、mybatis共通dao（还需完善）
-二、持续计划
-1、完善增强mybatis共通dao
+6、mybatis共通dao（还需完善、优化、增强）
