@@ -1,0 +1,29 @@
+<div class="login-page" [@routerTransition]>
+    <div class="row justify-content-md-center">
+        <div class="col-md-4">
+            <img src="assets/images/logo.png" width="150px" class="user-avatar" />
+            <h1>后台管理系统V1.0</h1>
+            <div class="form-content">
+                <div class="form-group">
+                    <input type="text" [(ngModel)]="user.userName" class="form-control input-underline input-lg" placeholder="用户名">
+                </div>
+
+                <div class="form-group">
+                    <input type="password" [(ngModel)]="user.password" class="form-control input-underline input-lg" placeholder="密码">
+                </div>
+                <!--
+                <div>
+                    <span>验证码</span>
+                    <input type="text" [(ngModel)]="user.kaptcha"/>
+                    <img src="{{kaptcha}}" (click)="getKaptcha()"/>
+                </div>
+                -->
+            </div>
+            <a class="btn rounded-btn" (click)="login()">登录</a>
+            &nbsp;
+            <a class="btn rounded-btn">注册</a>
+            &nbsp;
+            <a class="btn rounded-btn">忘记密码</a>
+        </div>
+    </div>
+</div>
