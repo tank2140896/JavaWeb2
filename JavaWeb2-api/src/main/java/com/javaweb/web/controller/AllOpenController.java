@@ -32,12 +32,10 @@ public class AllOpenController extends BaseController {
 	@Autowired
 	private UserService userService;
 	
-	
 	//用户登录接口
 	@PostMapping("/login")
 	//Controller建议加上@Transactional，另外不建议try catch，除非能确保Controller中无数据库相关事务操作
-	public BaseResponseResult login(@RequestBody @Validated/*({BaseValidatedGroup.add.class})*/ UserLogin userLogin,
-							        BindingResult bindingResult){
+	public BaseResponseResult login(@RequestBody @Validated/*({BaseValidatedGroup.add.class})*/ UserLogin userLogin,BindingResult bindingResult){
 		BaseResponseResult baseResponseResult = new BaseResponseResult();
 		if(bindingResult.hasErrors()){
 			baseResponseResult = new BaseResponseResult(SystemConstant.VALIDATE_ERROR,getValidateMessage(bindingResult),CommonConstant.EMPTY_VALUE);
