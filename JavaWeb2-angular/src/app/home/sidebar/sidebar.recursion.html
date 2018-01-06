@@ -1,5 +1,0 @@
-<ul *ngIf="list.length==0"><a [routerLink]="[url]">{{name}}</a></ul>
-<ul *ngIf="list.length>0">
-    <li><button (click)="tagEvent()">{{tag}}</button>{{name}}</li>
-    <sidebar-recursion [hidden]="hiddenFlag" *ngFor="let i of list" [url]="i.pageUrl" [name]="i.moduleName" [list]="i.list"></sidebar-recursion>
-</ul>
