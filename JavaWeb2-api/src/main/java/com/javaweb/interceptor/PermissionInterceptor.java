@@ -2,31 +2,21 @@ package com.javaweb.interceptor;
 
 import java.util.concurrent.TimeUnit;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.javaweb.base.BaseTool;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.web.eo.TokenData;
 
 @Component
 public class PermissionInterceptor extends HandlerInterceptorAdapter {
 	
-	@Autowired
-    public MessageSource messageSource;
-	
-	@Autowired
-	public RedisTemplate<String,String> redisTemplate;
-	
-	@Resource(name="redisTemplate")
-	public ValueOperations<Object,Object> valueOperations;
+	private BaseTool baseTool = new BaseTool();
 	
 	/**
 	httpServletRequest.getRequestURI()             /javaweb/app/html/home.html
@@ -43,7 +33,8 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 				response.sendRedirect(basePath+"/requestParameterLost");
 				return false;
 			}
-			TokenData tokenData = (TokenData)valueOperations.get(userId);
+			
+			TokenData tokenData = (TokenData)baseTool.valueOperations.get(token);
 			if(tokenData==null){
 				response.sendRedirect(basePath+"/invalidRequest");
 				return false;
@@ -52,19 +43,15 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 				response.sendRedirect(basePath+"/requestParameterError");
 				return false;
 			}
-			if(servletPath.startsWith("/web/belogin")){
+			if(servletPath.startsWith("/web/logged")){
 				return true;
-			}
-			if(!tokenData.getToken().equals(token)){
-				response.sendRedirect(basePath+"/requestParameterError");
-				return false;
 			}
 			long count = tokenData.getAuthOperateList().stream().filter(i->i.getApiUrl().equals(servletPath)).count();
 			if(count<=0){
 				response.sendRedirect(basePath+"/noAuthory");
 				return false;
 			}else{
-				valueOperations.set(userId,tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
+				baseTool.valueOperations.set(userId,tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
 				return true;
 			}
 		}else{

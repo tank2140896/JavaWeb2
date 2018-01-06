@@ -7,38 +7,37 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 exports.__esModule = true;
 var core_1 = require("@angular/core");
-var http_1 = require("@angular/http");
+var http_1 = require("@angular/common/http");
 var Rx_1 = require("rxjs/Rx");
 var HttpService = /** @class */ (function () {
-    function HttpService(http) {
-        this.http = http;
+    function HttpService(httpClient) {
+        this.httpClient = httpClient;
     }
     HttpService.prototype.getJsonData = function (url, headToken) {
-        var headers = new http_1.Headers();
-        headers.append('Content-Type', 'application/json');
+        var headers = new http_1.HttpHeaders();
+        headers.set('Content-Type', 'application/json');
         if (headToken != null) {
-            headers.append('userId', headToken.userId);
-            headers.append('token', headToken.token);
+            headers.set('userId', headToken.userId);
+            headers.set('token', headToken.token);
         }
-        var requestOptions = new http_1.RequestOptions({ headers: headers, withCredentials: true });
-        return this.http.get(url, requestOptions).map(function (response) { return response.json(); })["catch"](this.handleError);
+        var options = { headers: headers, withCredentials: true };
+        return this.httpClient.get(url, options).map(function (data) { return data; })["do"](this.handleError);
     };
     HttpService.prototype.postJsonData = function (url, body, headToken) {
-        var headers = new http_1.Headers();
-        headers.append('Content-Type', 'application/json');
+        var headers = new http_1.HttpHeaders();
+        headers.set('Content-Type', 'application/json');
         if (headToken != null) {
-            headers.append('userId', headToken.userId);
-            headers.append('token', headToken.token);
+            headers.set('userId', headToken.userId);
+            headers.set('token', headToken.token);
         }
-        var requestOptions = new http_1.RequestOptions({ headers: headers, withCredentials: true });
-        return this.http.post(url, body, requestOptions).map(function (response) { return response.json(); })["catch"](this.handleError);
+        var options = { headers: headers, withCredentials: true };
+        return this.httpClient.post(url, body, options).map(function (data) { return data; })["do"](this.handleError);
     };
-    HttpService.prototype.getData = function (url) {
-        //this.httpService.getData(url).subscribe((data:Response)=>console.log(data.json()));
-        return this.http.get(url).map(function (response) { return response.json(); })["catch"](this.handleError);
+    HttpService.prototype.getSingleJsonData = function (url) {
+        return this.httpClient.get(url).map(function (data) { return data; })["do"](this.handleError);
     };
-    HttpService.prototype.postData = function (url, body, requestOptions) {
-        return this.http.post(url, body, requestOptions).map(function (response) { return response.json(); })["catch"](this.handleError);
+    HttpService.prototype.postSingleJsonData = function (url, body, options) {
+        return this.httpClient.post(url, body, options).map(function (data) { return data; })["do"](this.handleError);
     };
     HttpService.prototype.handleError = function (error) {
         //console.log(error);

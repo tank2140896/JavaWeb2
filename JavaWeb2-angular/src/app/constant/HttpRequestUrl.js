@@ -5,7 +5,7 @@ var HttpRequestUrl = /** @class */ (function () {
     }
     HttpRequestUrl.HTTP_REQUEST_PREFIX = 'http://localhost:8888/javaweb-web';
     //public static GET_KAPTCHA_SUFFIX = '/kaptcha';
-    HttpRequestUrl.LOGIN_SUFFIX = '/web/login';
+    HttpRequestUrl.LOGIN_SUFFIX = '/login';
     HttpRequestUrl.LOGOUT_SUFFIX = '/web/logout';
     HttpRequestUrl.SYS_USER_LSIT_SUFFIX = '/web/sys/user/list'; //用户列表
     HttpRequestUrl.SYS_USER_ADD_SUFFIX = '/web/sys/user/add'; //新增用户

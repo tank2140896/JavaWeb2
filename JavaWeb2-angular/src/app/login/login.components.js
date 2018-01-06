@@ -15,6 +15,7 @@ var LoginComponent = /** @class */ (function () {
         this.router = router;
         this.httpService = httpService;
         this.sessionService = sessionService;
+        /*------ 语言切换 start ------*/
         /**
         <div>
             <span>语言</span>
@@ -24,7 +25,6 @@ var LoginComponent = /** @class */ (function () {
             </select>
         </div>
         */
-        /*------ 语言切换 start ------*/
         /**
         //初始化默认语言
         defaultLangue = {display:'中文',value:'CN'};
@@ -61,19 +61,19 @@ var LoginComponent = /** @class */ (function () {
         /*------ 验证码获取 end ------*/
         /*------ 用户登录 start ------*/
         //用到[()]双向绑定需要初始化
-        this.user = new login_user_1.LoginUser();
+        this.loginUser = new login_user_1.LoginUser();
     }
     LoginComponent.prototype.ngOnInit = function () { };
     LoginComponent.prototype.login = function () {
-        var _this = this;
-        this.httpService.postJsonData(HttpRequestUrl_1.HttpRequestUrl.LOGIN, JSON.stringify(this.user), null).subscribe(function (result) {
+        this.httpService.postJsonData(HttpRequestUrl_1.HttpRequestUrl.LOGIN, this.loginUser, null).subscribe(function (result) {
             if (result.code == 200) {
                 var data = result.data;
-                _this.sessionService.setLoginSuccessData(JSON.stringify(data));
-                _this.router.navigate(['home']);
+                console.log(data);
+                //this.sessionService.setLoginSuccessData(JSON.stringify(data));
+                //this.router.navigate(['home']);
             }
             else {
-                alert('用户名或密码错误');
+                alert(result.message);
             }
         });
     };

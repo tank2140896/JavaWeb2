@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {}
 
+    /*------ 语言切换 start ------*/
     /**
     <div>
         <span>语言</span>
@@ -32,7 +33,6 @@ export class LoginComponent implements OnInit {
     </div>
     */
 
-    /*------ 语言切换 start ------*/
     /**
     //初始化默认语言
     defaultLangue = {display:'中文',value:'CN'};
@@ -71,17 +71,18 @@ export class LoginComponent implements OnInit {
 
     /*------ 用户登录 start ------*/
     //用到[()]双向绑定需要初始化
-    private user:LoginUser = new LoginUser();
+    private loginUser:LoginUser = new LoginUser();
 
     public login():void{
-        this.httpService.postJsonData(HttpRequestUrl.LOGIN,JSON.stringify(this.user),null).subscribe(
+        this.httpService.postJsonData(HttpRequestUrl.LOGIN,this.loginUser,null).subscribe(
             result=>{
                if(result.code==200){
                    let data = result.data;
-                   this.sessionService.setLoginSuccessData(JSON.stringify(data));
-                   this.router.navigate(['home']);
+                   console.log(data);
+                   //this.sessionService.setLoginSuccessData(JSON.stringify(data));
+                   //this.router.navigate(['home']);
                }else{
-                   alert('用户名或密码错误');
+                   alert(result.message);
                }
             }
         );

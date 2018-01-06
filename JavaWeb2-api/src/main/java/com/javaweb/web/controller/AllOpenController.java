@@ -46,7 +46,7 @@ public class AllOpenController extends BaseController {
 			if(SystemConstant.SYSTEM_DEFAULT_USER_NAME.equals(userLogin.getUserName())&&SystemConstant.SYSTEM_DEFAULT_USER_PASSWORD.equals(userLogin.getPassword())){
 				User user = SystemConstant.SYSTEM_DEFAULT_USER;
 				TokenData token = getToken(true,user);
-				setDefaultDataToRedis(user.getUserId(),token);
+				setDefaultDataToRedis(token.getToken(),token);
 				baseResponseResult = new BaseResponseResult(SystemConstant.SUCCESS,getMessage("login.User.loginSuccess"),token);
 			}else{//非超级管理员
 				User user = userService.userLogin(userLogin);
@@ -54,7 +54,7 @@ public class AllOpenController extends BaseController {
 					baseResponseResult = new BaseResponseResult(SystemConstant.LOGIN_FAIL,getMessage("login.User.userNameOrPassword"),CommonConstant.EMPTY_VALUE);
 				}else{
 					TokenData token = getToken(false,user);
-					setDefaultDataToRedis(user.getUserId(),token);
+					setDefaultDataToRedis(token.getToken(),token);
 					baseResponseResult = new BaseResponseResult(SystemConstant.SUCCESS,getMessage("login.User.loginSuccess"),token);
 				}
 			}

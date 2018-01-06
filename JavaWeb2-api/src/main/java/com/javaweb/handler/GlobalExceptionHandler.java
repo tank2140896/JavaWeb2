@@ -17,10 +17,11 @@ import com.javaweb.constant.SystemConstant;
 public class GlobalExceptionHandler extends BaseTool {
 	
 	@ExceptionHandler(value=Exception.class)  
-    public BaseResponseResult allExceptionHandler(HttpServletRequest request,Exception exception) throws Exception {  
-        if(exception instanceof NoHandlerFoundException){
+    public BaseResponseResult allExceptionHandler(HttpServletRequest request,Exception e) throws Exception {  
+        if(e instanceof NoHandlerFoundException){
         	return new BaseResponseResult(SystemConstant.NOT_FOUND,getMessage("validated.permission.notFound"),CommonConstant.EMPTY_VALUE);
         }else{
+        	e.printStackTrace();
         	return new BaseResponseResult(SystemConstant.INTERNAL_ERROR,getMessage("validated.permission.internalError"),CommonConstant.EMPTY_VALUE);
         }
     }  
