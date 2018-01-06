@@ -29,16 +29,15 @@ CREATE TABLE `module` (
 -- ----------------------------
 -- Records of module
 -- ----------------------------
-INSERT INTO `module` VALUES ('0147864d-1227-11e7-9162-00ffaea60ab9', '用户列表', '/home/userManage/list', '/web/sys/user/list', '8627cbc0-1222-11e7-9162-00ffaea60ab9', null, '3', '1', '2', null, null, null, null, '2017-03-26 21:21:31', 'superadmin', null, null, '0');
-INSERT INTO `module` VALUES ('45281978-21e8-11e7-9016-1c1b0d1b66d4', '用户详情', '/home/userManage/detail', '/web/sys/user/detail', '8627cbc0-1222-11e7-9162-00ffaea60ab9', null, '3', '5', '2', null, null, null, null, '2017-04-15 22:32:48', 'superadmin', null, null, '0');
-INSERT INTO `module` VALUES ('457e44b8-40fc-11e7-aab8-1c1b0d1b66d4', '修改角色', '/home/roleManage/modify', '/web/sys/role/modify', 'a5eb4f0c-40fb-11e7-aab8-1c1b0d1b66d4', null, '3', '2', '2', null, null, null, null, '2017-05-25 11:44:11', 'superadmin', null, null, '0');
-INSERT INTO `module` VALUES ('619c72fe-1222-11e7-9162-00ffaea60ab9', '系统管理', null, null, null, null, '1', '1', '1', null, null, null, null, '2017-03-26 20:48:18', 'superadmin', null, null, '0');
-INSERT INTO `module` VALUES ('8627cbc0-1222-11e7-9162-00ffaea60ab9', '用户管理', '/home/userManage', null, '619c72fe-1222-11e7-9162-00ffaea60ab9', null, '2', '1', '1', null, null, null, null, '2017-03-26 20:49:07', 'superadmin', null, null, '0');
-INSERT INTO `module` VALUES ('a0b3ed5a-1222-11e7-9162-00ffaea60ab9', '新增用户', '/home/userManage/add', '/web/sys/user/add', '8627cbc0-1222-11e7-9162-00ffaea60ab9', null, '3', '2', '2', null, null, null, null, '2017-03-26 20:49:40', 'superadmin', null, null, '0');
-INSERT INTO `module` VALUES ('a5eb4f0c-40fb-11e7-aab8-1c1b0d1b66d4', '角色管理', '/home/roleManage', null, '619c72fe-1222-11e7-9162-00ffaea60ab9', null, '2', '2', '1', null, null, null, null, '2017-05-25 11:40:14', 'superadmin', null, null, '0');
-INSERT INTO `module` VALUES ('bbaf9acf-21e7-11e7-9016-1c1b0d1b66d4', '删除用户', '/home/userManage/delete', '/web/sys/user/delete', '8627cbc0-1222-11e7-9162-00ffaea60ab9', null, '3', '4', '2', null, null, null, null, '2017-04-15 22:31:22', 'superadmin', null, null, '0');
-INSERT INTO `module` VALUES ('c4158250-1222-11e7-9162-00ffaea60ab9', '修改用户', '/home/userManage/modify', '/web/sys/user/modify', '8627cbc0-1222-11e7-9162-00ffaea60ab9', null, '3', '3', '2', null, null, null, null, '2017-03-26 20:50:57', 'superadmin', null, null, '0');
-INSERT INTO `module` VALUES ('f1bcf54d-40fb-11e7-aab8-1c1b0d1b66d4', '新增角色', '/home/roleManage/add', '/web/sys/role/add', 'a5eb4f0c-40fb-11e7-aab8-1c1b0d1b66d4', null, '3', '1', '2', null, null, null, null, '2017-05-25 11:42:17', 'superadmin', null, null, '0');
+INSERT INTO `module` VALUES ('07e7d8be-2b0d-48f8-8376-c1f22c31982c', '用户管理', null, null, 'a39eea77-e28a-44a6-a822-039e2a056b07', null, '2', '1', '1', 'yhgl', null, null, null, '2018-01-06 15:44:48', 'admin', null, null, '0');
+INSERT INTO `module` VALUES ('329c3b64-4aed-4b8c-aa0d-dc7ecf01afec', '角色管理', null, null, 'a39eea77-e28a-44a6-a822-039e2a056b07', null, '2', '2', '1', 'jsgl', null, null, null, '2018-01-06 15:46:04', 'admin', null, null, '0');
+INSERT INTO `module` VALUES ('3dd79417-1df9-4781-844d-90b7c10fb1ff', '查询用户', null, null, '07e7d8be-2b0d-48f8-8376-c1f22c31982c', null, '3', '1', '2', 'cxyh', null, null, null, '2018-01-06 15:49:31', 'admin', null, null, '0');
+INSERT INTO `module` VALUES ('46683b3f-ef74-4952-8ce1-fe4e7ed7ec5a', '模块管理', null, null, 'a39eea77-e28a-44a6-a822-039e2a056b07', null, '2', '3', '1', 'mkgl', null, null, null, '2018-01-06 15:47:11', 'admin', null, null, '0');
+INSERT INTO `module` VALUES ('74b14b3f-f2b6-11e7-818e-00ff676e3062', '菜单测试', null, null, null, null, '1', '2', '1', 'cdcsa', null, null, null, '2018-01-06 15:53:18', 'admin', null, null, '0');
+INSERT INTO `module` VALUES ('a39eea77-e28a-44a6-a822-039e2a056b07', '系统管理', null, null, null, null, '1', '1', '1', 'xtgl', null, null, null, '2018-01-06 15:35:36', 'admin', null, null, '0');
+INSERT INTO `module` VALUES ('ae7144e5-f2b6-11e7-818e-00ff676e3062', '子项A', null, null, '74b14b3f-f2b6-11e7-818e-00ff676e3062', null, '2', '1', '1', 'zxa', null, null, null, '2018-01-06 15:54:27', 'admin', null, null, '0');
+INSERT INTO `module` VALUES ('d269a817-4e99-4011-ac62-fd76d7a06a49', '新增用户', null, null, '07e7d8be-2b0d-48f8-8376-c1f22c31982c', null, '3', '2', '2', 'xzyh', null, null, null, '2018-01-06 15:50:45', 'admin', null, null, '0');
+INSERT INTO `module` VALUES ('d657b637-f2b6-11e7-818e-00ff676e3062', '子项B', null, null, '74b14b3f-f2b6-11e7-818e-00ff676e3062', null, '2', '2', '1', 'zxb', null, null, null, '2018-01-06 15:55:08', 'admin', null, null, '0');
 
 -- ----------------------------
 -- Table structure for `role`
@@ -107,13 +106,6 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('0bad8187-1786-11e7-90a8-00ffaea60ab9', 'admin001', 'YWRtaW4=', 'admin001', null, null, null, '65a85f1b-1209-11e7-9162-00ffaea60ab9', null, '3', null, '0', '2017-04-02 17:42:22', null, null, null, '0');
-INSERT INTO `user` VALUES ('248c7afc-1786-11e7-90a8-00ffaea60ab9', 'admin002', 'YWRtaW4=', 'admin002', null, null, null, '65a85f1b-1209-11e7-9162-00ffaea60ab9', null, '3', null, '0', '2017-04-02 17:42:25', null, null, null, '0');
-INSERT INTO `user` VALUES ('30aa5e16-1786-11e7-90a8-00ffaea60ab9', 'admin003', 'YWRtaW4=', 'admin003', null, null, null, '65a85f1b-1209-11e7-9162-00ffaea60ab9', null, '3', null, '0', '2017-04-02 17:42:27', null, null, null, '0');
-INSERT INTO `user` VALUES ('36f5416e-1786-11e7-90a8-00ffaea60ab9', 'admin004', 'YWRtaW4=', 'admin004', null, null, null, '65a85f1b-1209-11e7-9162-00ffaea60ab9', null, '3', null, '0', '2017-04-02 17:42:29', null, null, null, '0');
-INSERT INTO `user` VALUES ('3d539255-1786-11e7-90a8-00ffaea60ab9', 'admin005', 'YWRtaW4=', 'admin005', null, null, null, '65a85f1b-1209-11e7-9162-00ffaea60ab9', null, '3', null, '0', '2017-04-02 17:42:31', null, null, null, '0');
-INSERT INTO `user` VALUES ('4c48b2f4-1786-11e7-90a8-00ffaea60ab9', 'admin006', 'YWRtaW4=', 'admin006', null, null, null, '65a85f1b-1209-11e7-9162-00ffaea60ab9', null, '3', null, '0', '2017-04-02 17:42:34', null, null, null, '0');
-INSERT INTO `user` VALUES ('65a85f1b-1209-11e7-9162-00ffaea60ab9', 'admin', 'YWRtaW4=', 'admin', null, null, null, null, null, '2', null, '0', '2017-04-02 17:42:36', null, null, null, '0');
 
 -- ----------------------------
 -- Table structure for `user_role`
