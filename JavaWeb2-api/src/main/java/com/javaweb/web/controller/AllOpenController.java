@@ -46,7 +46,7 @@ public class AllOpenController extends BaseController {
 			if(SystemConstant.SYSTEM_DEFAULT_USER_NAME.equals(userLogin.getUserName())&&SystemConstant.SYSTEM_DEFAULT_USER_PASSWORD.equals(userLogin.getPassword())){
 				User user = SystemConstant.SYSTEM_DEFAULT_USER;
 				TokenData token = getToken(true,user);
-				setDefaultDataToRedis(token.getToken(),token);
+				setDefaultDataToRedis(user.getUserId(),token);
 				baseResponseResult = new BaseResponseResult(SystemConstant.SUCCESS,getMessage("login.User.loginSuccess"),token);
 			}else{//非超级管理员
 				User user = userService.userLogin(userLogin);
@@ -54,7 +54,7 @@ public class AllOpenController extends BaseController {
 					baseResponseResult = new BaseResponseResult(SystemConstant.LOGIN_FAIL,getMessage("login.User.userNameOrPassword"),CommonConstant.EMPTY_VALUE);
 				}else{
 					TokenData token = getToken(false,user);
-					setDefaultDataToRedis(token.getToken(),token);
+					setDefaultDataToRedis(user.getUserId(),token);
 					baseResponseResult = new BaseResponseResult(SystemConstant.SUCCESS,getMessage("login.User.loginSuccess"),token);
 				}
 			}
@@ -88,10 +88,10 @@ public class AllOpenController extends BaseController {
 		map.put("userId", user.getUserId());
 		List<Module> list = userService.getUserRoleModule(map);
 		//获得菜单列表
-		List<Module> menuList = list.stream().filter(i->"1".equals(i.getModuleType())).collect(Collectors.toList());
+		List<Module> menuList = list.stream().filter(i->1==i.getModuleType()).collect(Collectors.toList());
 		menuList = setTreeList(menuList, null);
 		//获得操作权限列表
-		List<Module> authOperateList = list.stream().filter(i->"2".equals(i.getModuleType())).collect(Collectors.toList());
+		List<Module> authOperateList = list.stream().filter(i->2==i.getModuleType()).collect(Collectors.toList());
 		TokenData tokenData = new TokenData();
 		tokenData.setToken(UUID.randomUUID().toString());
 		tokenData.setUser(user);

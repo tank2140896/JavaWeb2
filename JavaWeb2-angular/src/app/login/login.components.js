@@ -50,31 +50,25 @@ var LoginComponent = /** @class */ (function () {
         }
         */
         /*------ 语言切换 end ------*/
-        /*------ 验证码获取 start ------*/
-        /**
-        kaptcha = HttpRequestUrl.GET_KAPTCHA;
-    
-        public getKaptcha():void{
-            this.kaptcha = HttpRequestUrl.GET_KAPTCHA+'?data='+new Date().getTime();
-        }
-        */
-        /*------ 验证码获取 end ------*/
         /*------ 用户登录 start ------*/
         //用到[()]双向绑定需要初始化
         this.loginUser = new login_user_1.LoginUser();
     }
     LoginComponent.prototype.ngOnInit = function () { };
     LoginComponent.prototype.login = function () {
+        var _this = this;
         this.httpService.postJsonData(HttpRequestUrl_1.HttpRequestUrl.LOGIN, this.loginUser, null).subscribe(function (result) {
             if (result.code == 200) {
                 var data = result.data;
-                console.log(data);
-                //this.sessionService.setLoginSuccessData(JSON.stringify(data));
-                //this.router.navigate(['home']);
+                //console.log(data);
+                _this.sessionService.setLoginSuccessData(JSON.stringify(data));
+                _this.router.navigate(['home']);
             }
             else {
                 alert(result.message);
             }
+        }, function (error) {
+            alert(error);
         });
     };
     LoginComponent = __decorate([

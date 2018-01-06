@@ -8,10 +8,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 exports.__esModule = true;
 var core_1 = require("@angular/core");
 var SidebarComponent = /** @class */ (function () {
-    function SidebarComponent(sessionService /*private domSanitizer:DomSanitizer*/) {
-        this.sessionService = sessionService; /*private domSanitizer:DomSanitizer*/
+    function SidebarComponent(sessionService /*,private domSanitizer:DomSanitizer*/) {
+        this.sessionService = sessionService; /*,private domSanitizer:DomSanitizer*/
         //获取sidebar菜单列表
         this.menuList = sessionService.getLoginSuccessData().getMenuList();
+        console.log(sessionService.getLoginSuccessData());
         //this.htmlWrite=this.domSanitizer.bypassSecurityTrustHtml(this.htmlContent);
     }
     SidebarComponent = __decorate([

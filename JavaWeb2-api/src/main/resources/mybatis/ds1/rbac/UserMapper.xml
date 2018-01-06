@@ -11,7 +11,7 @@
 	
 	<sql id="selectModule" >
 		module_id as moduleId,module_name as moduleName,page_url as pageUrl,api_url as apiUrl,parent_id as parentId,
-		fcode,level,orders,module_type as moduleType,alias,parent_alias as parentAlias,remark,icon
+		fcode,level,orders,module_type as moduleType,alias,parent_alias as parentAlias,remark,icon,
 		create_date as createDate,creator,update_date as updateDate,updater,del_flag as delFlag
 	</sql>
 	

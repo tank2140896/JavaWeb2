@@ -12,9 +12,9 @@ public class SystemConstant {
 	
 	public static final String SYSTEM_DEFAULT_USER_ID = "admin";
 	
-	public static final String SYSTEM_DEFAULT_USER_NAME = "admin";
+	public static final String SYSTEM_DEFAULT_USER_NAME = "admin123";
 	
-	public static final String SYSTEM_DEFAULT_USER_PASSWORD = "admin";
+	public static final String SYSTEM_DEFAULT_USER_PASSWORD = "admin123";
 	
 	public static final String SYSTEM_DEFAULT_USER_PERSON_NAME = "超级管理员";
 	

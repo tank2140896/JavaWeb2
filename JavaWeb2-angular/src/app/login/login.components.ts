@@ -59,16 +59,6 @@ export class LoginComponent implements OnInit {
     */
     /*------ 语言切换 end ------*/
 
-    /*------ 验证码获取 start ------*/
-    /**
-    kaptcha = HttpRequestUrl.GET_KAPTCHA;
-
-    public getKaptcha():void{
-        this.kaptcha = HttpRequestUrl.GET_KAPTCHA+'?data='+new Date().getTime();
-    }
-    */
-    /*------ 验证码获取 end ------*/
-
     /*------ 用户登录 start ------*/
     //用到[()]双向绑定需要初始化
     private loginUser:LoginUser = new LoginUser();
@@ -78,12 +68,15 @@ export class LoginComponent implements OnInit {
             result=>{
                if(result.code==200){
                    let data = result.data;
-                   console.log(data);
-                   //this.sessionService.setLoginSuccessData(JSON.stringify(data));
-                   //this.router.navigate(['home']);
+                   //console.log(data);
+                   this.sessionService.setLoginSuccessData(JSON.stringify(data));
+                   this.router.navigate(['home']);
                }else{
                    alert(result.message);
                }
+            },
+            error=>{
+                alert(error);
             }
         );
     }

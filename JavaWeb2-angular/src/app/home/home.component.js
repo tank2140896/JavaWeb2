@@ -19,6 +19,7 @@ var HomeComponent = /** @class */ (function () {
         })
         */
     }
+    HomeComponent.prototype.ngOnInit = function () { };
     HomeComponent = __decorate([
         core_1.Component({
             selector: 'app-home',

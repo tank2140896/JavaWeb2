@@ -1,4 +1,5 @@
 import {Injectable} from "@angular/core";
+
 import {LoginSuccessData} from "../../models/login/login.success.data";
 import {HeadToken} from "../../models/token/head.token";
 
@@ -11,6 +12,9 @@ export class SessionService{
 
     public getLoginSuccessData():LoginSuccessData{
         let getData:any = window.sessionStorage.getItem('sessionData');
+        if(getData==null||getData==''){
+            return null;
+        }
         let loginSuccessData:LoginSuccessData = new LoginSuccessData();
         getData = JSON.parse(getData);
         loginSuccessData.setToken(getData.token);

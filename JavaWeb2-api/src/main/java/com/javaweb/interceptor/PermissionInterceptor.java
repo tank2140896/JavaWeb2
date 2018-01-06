@@ -5,7 +5,6 @@ import java.util.concurrent.TimeUnit;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -34,12 +33,16 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 				return false;
 			}
 			
-			TokenData tokenData = (TokenData)baseTool.valueOperations.get(token);
+			TokenData tokenData = (TokenData)baseTool.valueOperations.get(userId);
 			if(tokenData==null){
 				response.sendRedirect(basePath+"/invalidRequest");
 				return false;
 			}
 			if(!tokenData.getUser().getUserId().equals(userId)){
+				response.sendRedirect(basePath+"/requestParameterError");
+				return false;
+			}
+			if(!tokenData.getToken().equals(token)){
 				response.sendRedirect(basePath+"/requestParameterError");
 				return false;
 			}

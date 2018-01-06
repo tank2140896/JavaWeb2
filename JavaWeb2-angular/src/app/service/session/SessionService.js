@@ -17,6 +17,9 @@ var SessionService = /** @class */ (function () {
     };
     SessionService.prototype.getLoginSuccessData = function () {
         var getData = window.sessionStorage.getItem('sessionData');
+        if (getData == null || getData == '') {
+            return null;
+        }
         var loginSuccessData = new login_success_data_1.LoginSuccessData();
         getData = JSON.parse(getData);
         loginSuccessData.setToken(getData.token);
