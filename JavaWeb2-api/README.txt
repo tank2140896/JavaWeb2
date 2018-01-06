@@ -21,3 +21,5 @@
 	B、requirepass 123456 设置访问密码
 	C、protected-mode no 关闭保护模式
 6、mybatis共通dao（还需完善、优化、增强）
+二、项目使用说明：
+1、除了涉及事务的service加上@Transactional，建议涉及事务的Controller也加上@Transactional，另外不建议try catch，除非能确保无数据库相关事务操作

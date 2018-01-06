@@ -26,7 +26,6 @@ import com.javaweb.web.po.User;
 import com.javaweb.web.service.UserService;
 
 @RestController
-//此Controller中的所有接口不需要登录、不需要权限，向所有访问者开放
 public class AllOpenController extends BaseController {
 	
 	@Autowired
@@ -34,7 +33,6 @@ public class AllOpenController extends BaseController {
 	
 	//用户登录接口
 	@PostMapping("/login")
-	//Controller建议加上@Transactional，另外不建议try catch，除非能确保Controller中无数据库相关事务操作
 	public BaseResponseResult login(@RequestBody @Validated/*({BaseValidatedGroup.add.class})*/ UserLogin userLogin,BindingResult bindingResult){
 		BaseResponseResult baseResponseResult = new BaseResponseResult();
 		if(bindingResult.hasErrors()){

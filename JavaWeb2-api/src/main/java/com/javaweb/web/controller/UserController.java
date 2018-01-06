@@ -13,7 +13,6 @@ import com.javaweb.web.service.UserService;
 
 @RequestMapping("/web/permission")
 @RestController
-//此Controller中的所有接口需要登录、需要权限，向有权限者开放
 public class UserController extends BaseController {
 	
 	@Autowired
