@@ -20,9 +20,10 @@ import com.javaweb.base.BaseResponseResult;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.web.eo.TokenData;
-import com.javaweb.web.eo.UserLogin;
+import com.javaweb.web.eo.user.UserLogin;
 import com.javaweb.web.po.Module;
 import com.javaweb.web.po.User;
+import com.javaweb.web.service.ModuleService;
 import com.javaweb.web.service.UserService;
 
 @RestController
@@ -30,6 +31,9 @@ public class AllOpenController extends BaseController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private ModuleService moduleService;
 	
 	//用户登录接口
 	@PostMapping("/login")
@@ -82,7 +86,7 @@ public class AllOpenController extends BaseController {
 		Map<String,Object> map = new HashMap<>();
 		map.put("adminFlag", adminFlag);
 		map.put("userId", user.getUserId());
-		List<Module> list = userService.getUserRoleModule(map);
+		List<Module> list = moduleService.getUserRoleModule(map);
 		//获得菜单列表
 		List<Module> menuList = list.stream().filter(i->1==i.getModuleType()).collect(Collectors.toList());
 		menuList = setTreeList(menuList, null);

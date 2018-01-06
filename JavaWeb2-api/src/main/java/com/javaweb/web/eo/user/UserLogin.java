@@ -1,4 +1,4 @@
-package com.javaweb.web.eo;
+package com.javaweb.web.eo.user;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
