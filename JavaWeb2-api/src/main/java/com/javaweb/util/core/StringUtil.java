@@ -2,7 +2,10 @@ package com.javaweb.util.core;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.Map;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.javaweb.constant.CommonConstant;
 
@@ -33,6 +36,23 @@ public class StringUtil{
 		} catch (UnsupportedEncodingException e) {
 			return null;
 		}
+	}
+	
+	//字符串替换"\\{\\{(.+?)\\}\\}"
+	public static String stringReplace(String template,Map<String,String> data,String regex){
+		StringBuffer stringBuffer = new StringBuffer();
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(template);
+        while(matcher.find()){
+            String name = matcher.group(1);//键名
+            String value = data.get(name);//键值
+            if(value==null){
+            	value = CommonConstant.EMPTY_VALUE;
+            }
+            matcher.appendReplacement(stringBuffer,value);
+        }
+        matcher.appendTail(stringBuffer);
+        return stringBuffer.toString();
 	}
 	
 }
