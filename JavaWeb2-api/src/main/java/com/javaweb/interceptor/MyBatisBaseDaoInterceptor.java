@@ -2,6 +2,8 @@ package com.javaweb.interceptor;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -63,6 +65,18 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 		MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
 		Object parameter = invocation.getArgs()[1];
 		String id = mappedStatement.getId();
+		/**
+		Class<?> c = Class.forName(id.substring(0,id.lastIndexOf(".")));
+		Type type[] = c.getGenericInterfaces(); 
+		for(int i=0;i<type.length;i++){
+			//type[i] instanceof ParameterizedType
+			ParameterizedType pt = (ParameterizedType)type[i];
+			Type newType[] = pt.getActualTypeArguments();
+			for(int j=0;j<newType.length;j++){
+				System.out.println(newType[j].getTypeName());//获得泛型类型
+			}
+		}
+		*/
 		String split[] = id.split("\\.");
 		String lastString = split[split.length-1];
 		SqlHandle sqlHandle = map.get(lastString);

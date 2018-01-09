@@ -19,6 +19,7 @@ import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
+import com.javaweb.web.dao.ds1.UserDao;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.user.UserLogin;
 import com.javaweb.web.po.Module;
@@ -34,6 +35,15 @@ public class AllOpenController extends BaseController {
 	
 	@Autowired
 	private ModuleService moduleService;
+	
+	@Autowired
+	private UserDao userDao;
+	
+	@GetMapping("/a")
+	public String a(){
+		userDao.selectAll(User.class);
+		return "a";
+	}
 	
 	//用户登录接口
 	@PostMapping("/login")

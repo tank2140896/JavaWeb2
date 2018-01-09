@@ -9,7 +9,7 @@
 		update_date as updateDate,updater,del_flag as delFlag
 	</sql>
 	
-	<select id="userLogin" parameterType="com.javaweb.web.eo.UserLogin" resultType="com.javaweb.web.po.User">
+	<select id="userLogin" parameterType="com.javaweb.web.eo.user.UserLogin" resultType="com.javaweb.web.po.User">
 		select <include refid="selectUser"></include> from user where user_name = #{userName} and password = #{password} and del_flag = 0 limit 1
 	</select>
 	
