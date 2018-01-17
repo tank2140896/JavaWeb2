@@ -11,7 +11,7 @@ public class Page {
 	private Long totalPage = 0L;//默认一共0页
 	
 	private Object data;//数据
-	
+
 	public Long getCurrentPage() {
 		return currentPage;
 	}
@@ -37,14 +37,11 @@ public class Page {
 	}
 
 	public Long getTotalPage() {
-		this.setTotalPage();
 		return totalPage;
 	}
 
-	private void setTotalPage(/*Long totalPage*/) {
-		if(pageSize!=0){
-			this.totalPage = (long) Math.ceil((double)totalSize/pageSize);
-		}
+	public void setTotalPage(Long totalPage) {
+		this.totalPage = totalPage;
 	}
 
 	public Object getData() {
@@ -53,30 +50,6 @@ public class Page {
 
 	public void setData(Object data) {
 		this.data = data;
-	}
-
-	//获取数据截取开始位
-	public Long getSubStart() {
-		if(currentPage==1){
-			return 0L;
-		}else{
-			return (currentPage-1)*pageSize;
-		}
-	}
-
-	//获取数据截取结束位
-	public Long getSubEnd() {
-		Long endStart;
-		if(currentPage==1){
-			endStart = pageSize;
-		}else{
-			endStart = currentPage*pageSize;
-		}
-		if(endStart<=totalSize){
-			return endStart;
-		}else{
-			return totalSize;
-		}
 	}
 	
 }
