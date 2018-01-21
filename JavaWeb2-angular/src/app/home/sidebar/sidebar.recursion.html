@@ -1,0 +1,15 @@
+<a *ngIf="list==null||list.length==0" [routerLink]="[url]" class="list-group-item" href="javascript:void(0);">
+    <i class="{{icon}}"></i>&nbsp;{{name}}
+</a>
+<div *ngIf="list.length>0" class="nested-menu">
+    <a class="list-group-item" (click)="addExpandClass()" href="javascript:void(0);">
+        <i class="{{icon}}"></i>&nbsp;{{name}}
+    </a>
+    <li class="nested" [hidden]="showMenu">
+        <ul class="submenu">
+            <li>
+                <home-sidebar-recursion *ngFor="let i of list" [icon]="i.icon" [url]="i.pageUrl" [name]="i.moduleName" [list]="i.list"></home-sidebar-recursion>
+            </li>
+        </ul>
+    </li>
+</div>

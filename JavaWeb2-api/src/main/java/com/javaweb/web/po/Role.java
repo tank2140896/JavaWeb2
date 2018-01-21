@@ -6,7 +6,6 @@ import javax.validation.constraints.NotNull;
 
 import com.javaweb.base.BaseEntity;
 import com.javaweb.interceptor.mybatis.Column;
-import com.javaweb.interceptor.mybatis.Pk;
 import com.javaweb.interceptor.mybatis.Table;
 
 @Table(name="role")
@@ -15,8 +14,7 @@ public class Role extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = 7161573735090231747L;
 
 	@NotNull(groups={update.class,delete.class},message="validated.Role.roleId.NotNull")
-	@Column(name="role_id")
-	@Pk(name="role_id")
+	@Column(name="role_id",pk=true)
 	private String roleId;//角色ID
 	
 	@NotNull(groups={add.class,update.class},message="validated.Role.roleName.NotNull")

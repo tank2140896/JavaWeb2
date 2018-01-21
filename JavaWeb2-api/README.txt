@@ -1,4 +1,4 @@
-一、项目主要知识点：
+﻿一、项目主要知识点：
 1、前后端分离（后端只提供接口）
 	A、完全前后端分离（前后端session跨域/spring-session-redis/session用redis做）
 	B、伪前后端分离（前后端session跨域/jsp之类）
@@ -22,4 +22,4 @@
 	C、protected-mode no 关闭保护模式
 6、mybatis共通dao（还需完善、优化、增强）
 二、项目使用说明：
-1、除了涉及事务的service加上@Transactional，建议涉及事务的Controller也加上@Transactional，另外不建议try catch，除非能确保无数据库相关事务操作
+1、除了涉及事务的service加上@Transactional，建议涉及事务的Controller也加上@Transactional，另外不建议try catch，除非能确保无数据库相关事务操作或确保Controller内的方法不会抛出异常

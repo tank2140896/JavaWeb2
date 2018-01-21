@@ -17,7 +17,7 @@ public class UserServiceImpl implements UserService {
 	public User userLogin(UserLogin userLogin) {
 		return userDao.userLogin(userLogin);
 	}
-
+	
 	//@Transactional
 
 }

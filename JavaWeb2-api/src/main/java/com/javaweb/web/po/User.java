@@ -7,7 +7,6 @@ import javax.validation.constraints.Pattern;
 
 import com.javaweb.base.BaseEntity;
 import com.javaweb.interceptor.mybatis.Column;
-import com.javaweb.interceptor.mybatis.Pk;
 import com.javaweb.interceptor.mybatis.Table;
 
 @Table(name="user")
@@ -16,8 +15,7 @@ public class User extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = -696227785545506331L;
 
 	@NotNull(groups={update.class,delete.class},message="validated.User.userId.NotNull")
-	@Pk(name="user_id")
-	@Column(name="user_id")
+	@Column(name="user_id",pk=true)
 	private String userId;//用户ID
 	
 	@NotNull(groups={add.class,update.class},message="validated.User.userName.NotNull")

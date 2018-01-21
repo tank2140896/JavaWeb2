@@ -19,7 +19,6 @@ import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
-import com.javaweb.web.dao.ds1.UserDao;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.user.UserLogin;
 import com.javaweb.web.po.Module;
@@ -36,15 +35,6 @@ public class AllOpenController extends BaseController {
 	@Autowired
 	private ModuleService moduleService;
 	
-	@Autowired
-	private UserDao userDao;
-	
-	@GetMapping("/a")
-	public String a(){
-		userDao.selectAll(User.class);
-		return "a";
-	}
-	
 	//用户登录接口
 	@PostMapping("/login")
 	public BaseResponseResult login(@RequestBody @Validated/*({BaseValidatedGroup.add.class})*/ UserLogin userLogin,BindingResult bindingResult){
@@ -53,7 +43,7 @@ public class AllOpenController extends BaseController {
 			baseResponseResult = new BaseResponseResult(SystemConstant.VALIDATE_ERROR,getValidateMessage(bindingResult),CommonConstant.EMPTY_VALUE);
 		}else{
 			//超级管理员(后门)
-			if(SystemConstant.SYSTEM_DEFAULT_USER_NAME.equals(userLogin.getUserName())&&SystemConstant.SYSTEM_DEFAULT_USER_PASSWORD.equals(userLogin.getPassword())){
+			if(SystemConstant.SYSTEM_DEFAULT_USER_NAME.equals(userLogin.getUsername())&&SystemConstant.SYSTEM_DEFAULT_USER_PASSWORD.equals(userLogin.getPassword())){
 				User user = SystemConstant.SYSTEM_DEFAULT_USER;
 				TokenData token = getToken(true,user);
 				setDefaultDataToRedis(user.getUserId(),token);
@@ -71,7 +61,7 @@ public class AllOpenController extends BaseController {
 		}
 		return baseResponseResult;
 	}
-	
+				  
 	@GetMapping("/requestParameterLost")
 	public BaseResponseResult requestParameterLost(){
 		return new BaseResponseResult(SystemConstant.REQUEST_PARAMETER_LOST,getMessage("validated.permission.requestParameterLost"),CommonConstant.EMPTY_VALUE);

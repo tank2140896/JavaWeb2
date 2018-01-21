@@ -2,8 +2,6 @@ package com.javaweb.interceptor;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -33,7 +31,6 @@ import com.javaweb.interceptor.mybatis.HandleInsert;
 import com.javaweb.interceptor.mybatis.HandleSelectAll;
 import com.javaweb.interceptor.mybatis.HandleSelectByPk;
 import com.javaweb.interceptor.mybatis.HandleUpdate;
-import com.javaweb.interceptor.mybatis.Pk;
 import com.javaweb.interceptor.mybatis.SqlBuildInfo;
 import com.javaweb.interceptor.mybatis.SqlHandle;
 import com.javaweb.interceptor.mybatis.Table;
@@ -133,12 +130,11 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 				Field eachField = field[i];
 				eachField.setAccessible(true);
 				Column column = eachField.getDeclaredAnnotation(Column.class);
-				Pk pk = eachField.getDeclaredAnnotation(Pk.class);
 				if(column==null||CommonConstant.EMPTY_VALUE.equals(column)){
 					continue;
 				}
-				if(pk!=null){
-					primaryKey = pk.name();//获取主键，暂时只支持单主键
+				if(column.pk()){
+					primaryKey = column.name();//获取主键，暂时只支持单主键
 				}
 				String fieldName = eachField.getName();
 				entityList.add(fieldName);

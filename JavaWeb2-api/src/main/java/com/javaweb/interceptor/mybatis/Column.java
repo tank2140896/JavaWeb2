@@ -11,10 +11,8 @@ public @interface Column {
 
 	String name();
 	
-	/** 近期计划
 	boolean pk() default false;//是否是主键
 	
 	boolean keyGenerate() default false;//是否主键自增
-	*/
 	
 }

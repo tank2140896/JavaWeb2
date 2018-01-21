@@ -26,40 +26,42 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 		BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext()); 
 		RedisTemplate redisTemplate = (RedisTemplate) factory.getBean("redisTemplate"); 
-		String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();  
+		//String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();  
 		String userId = request.getHeader(SystemConstant.HEAD_USERID);
 		String token = request.getHeader(SystemConstant.HEAD_TOKEN);
 		String servletPath = request.getServletPath();
-		if(servletPath.startsWith("/web")){
-			if(userId==null||token==null){
-				response.sendRedirect(basePath+"/requestParameterLost");
-				return false;
-			}
-			TokenData tokenData = (TokenData)redisTemplate.opsForValue().get(userId);
-			if(tokenData==null){
-				response.sendRedirect(basePath+"/invalidRequest");
-				return false;
-			}
-			if(!tokenData.getUser().getUserId().equals(userId)){
-				response.sendRedirect(basePath+"/requestParameterError");
-				return false;
-			}
-			if(!tokenData.getToken().equals(token)){
-				response.sendRedirect(basePath+"/requestParameterError");
-				return false;
-			}
-			if(servletPath.startsWith("/web/logged")){
-				return true;
-			}
-			long count = tokenData.getAuthOperateList().stream().filter(i->i.getApiUrl().equals(servletPath)).count();
-			if(count<=0){
-				response.sendRedirect(basePath+"/noAuthory");
-				return false;
-			}else{
-				redisTemplate.opsForValue().set(userId,tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
-				return true;
-			}
+		if(userId==null||token==null){
+			request.getRequestDispatcher("/requestParameterLost").forward(request,response);
+			//response.sendRedirect(basePath+"/requestParameterLost");
+			return false;
+		}
+		TokenData tokenData = (TokenData)redisTemplate.opsForValue().get(userId);
+		if(tokenData==null){
+			request.getRequestDispatcher("/invalidRequest").forward(request,response);
+			//response.sendRedirect(basePath+"/invalidRequest");
+			return false;
+		}
+		if(!tokenData.getUser().getUserId().equals(userId)){
+			request.getRequestDispatcher("/requestParameterError").forward(request,response);
+			//response.sendRedirect(basePath+"/requestParameterError");
+			return false;
+		}
+		if(!tokenData.getToken().equals(token)){
+			request.getRequestDispatcher("/requestParameterError").forward(request,response);
+			//response.sendRedirect(basePath+"/requestParameterError");
+			return false;
+		}
+		if(servletPath.startsWith("/web/loggedIn")){//该路径下只要登录即可访问，不需要权限
+			redisTemplate.opsForValue().set(userId,tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
+			return true;
+		}
+		long count = tokenData.getAuthOperateList().stream().filter(i->servletPath.equals(i.getApiUrl())).count();
+		if(count<=0){
+			request.getRequestDispatcher("/noAuthory").forward(request,response);
+			//response.sendRedirect(basePath+"/noAuthory");
+			return false;
 		}else{
+			redisTemplate.opsForValue().set(userId,tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
 			return true;
 		}
 	}

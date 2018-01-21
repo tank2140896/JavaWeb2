@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.constant.SystemConstant;
+import com.javaweb.web.eo.TokenData;
 
-@RequestMapping("/web/logged")
+@RequestMapping("/web/loggedIn")
 @RestController
 public class LoginOpenController extends BaseController {
 	
@@ -19,6 +20,13 @@ public class LoginOpenController extends BaseController {
 		String userId = request.getHeader(SystemConstant.HEAD_USERID);
 		redisTemplate.delete(userId);
 		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("login.User.logoutSuccess"),null);
+	}
+	
+	@GetMapping("/getRedisUserInfo")
+	public BaseResponseResult getRedisUserInfo(HttpServletRequest request){
+		String userId = request.getHeader(SystemConstant.HEAD_USERID);
+		TokenData tokenData = (TokenData)valueOperations.get(userId);
+		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("login.User.getTokenDataSuccess"),tokenData);
 	}
 	
 }

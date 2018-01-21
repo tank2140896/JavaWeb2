@@ -10,7 +10,7 @@
 	</sql>
 	
 	<select id="userLogin" parameterType="com.javaweb.web.eo.user.UserLogin" resultType="com.javaweb.web.po.User">
-		select <include refid="selectUser"></include> from user where user_name = #{userName} and password = #{password} and del_flag = 0 limit 1
+		select <include refid="selectUser"></include> from user where user_name = #{username} and password = #{password} and del_flag = 0 limit 1
 	</select>
 	
 </mapper>

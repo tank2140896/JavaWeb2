@@ -7,7 +7,6 @@ import javax.validation.constraints.NotNull;
 
 import com.javaweb.base.BaseEntity;
 import com.javaweb.interceptor.mybatis.Column;
-import com.javaweb.interceptor.mybatis.Pk;
 import com.javaweb.interceptor.mybatis.Table;
 
 @Table(name="module")
@@ -18,8 +17,7 @@ public class Module extends BaseEntity implements Serializable {
 	private List<Module> list;/**辅助属性*/
 	
 	@NotNull(groups={update.class,delete.class},message="validated.Module.moduleId.NotNull")
-	@Column(name="module_id")
-	@Pk(name="module_id")
+	@Column(name="moduleId",pk=true)
 	private String moduleId;//模块ID
 	
 	@NotNull(groups={add.class,update.class},message="validated.Module.moduleName.NotNull")
