@@ -1,6 +1,6 @@
 package com.javaweb.web.eo.user;
 
-public class UserList {
+public class UserListRequest {
 	
 	private String userName;//用户名
 	

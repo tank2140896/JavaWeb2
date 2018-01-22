@@ -6,6 +6,7 @@ import {AuthService} from "../../../service/AuthService";
 import {SessionService} from "../../../service/SessionService";
 import {UserList} from "../../../models/user/user.list";
 import {HttpRequestUrl} from "../../../constant/HttpRequestUrl";
+import {DateUtil} from "../../../util/DateUtil";
 
 @Component({
     selector: 'user-list',
@@ -34,9 +35,11 @@ export class UserListComponent implements OnInit {
 
     private userList:UserList = new UserList();//用户列表搜索条件
 
-    private data:any = null;
+    private data:any = "loading";
     private currentPage:number;
     private totalPage:number;
+    private pageSize:number;
+    private totalSize:number;
 
     //初始化获取用户列表
     ngOnInit(): void {
@@ -50,7 +53,21 @@ export class UserListComponent implements OnInit {
     //搜索按钮
     public userSearch(currentPage):void{
         this.userList.currentPage = currentPage;
+        /** start 这个日期插件用的我很无奈。。。也许我还不知道怎么用这个日期插件吧。。。暂时先将就用用吧。。。 */
+        let createStartDate = this.userList.createStartDate;
+        let createEndDate = this.userList.createEndDate;
+        if(createStartDate!=null&&createStartDate!=''){
+            this.userList.createStartDate = DateUtil.formatDate(createStartDate);
+        }
+        if(createEndDate!=null&&createEndDate!=''){
+            this.userList.createEndDate = DateUtil.formatDate(createEndDate);
+        }
+        /** end 这个日期插件用的我很无奈。。。也许我还不知道怎么用这个日期插件吧。。。暂时先将就用用吧。。。 */
         this.userListFunction(this.userList);
+        /** start 这个日期插件用的我很无奈。。。也许我还不知道怎么用这个日期插件吧。。。暂时先将就用用吧。。。 */
+        this.userList.createStartDate = createStartDate;
+        this.userList.createEndDate = createEndDate;
+        /** end 这个日期插件用的我很无奈。。。也许我还不知道怎么用这个日期插件吧。。。暂时先将就用用吧。。。 */
     }
 
     //用户搜索共通方法
@@ -63,12 +80,16 @@ export class UserListComponent implements OnInit {
                     this.data = ret.data;
                     this.currentPage = ret.currentPage;
                     this.totalPage = ret.totalPage;
+                    this.totalSize = ret.totalSize;
+                    this.pageSize = this.userList.pageSize;
+                }else if(result.code==500){
+                    this.data = null;
                 }else{
-
+                    this.router.navigate(['login']);
                 }
             },
             error=>{
-
+                this.data = null;
             }
         );
     }

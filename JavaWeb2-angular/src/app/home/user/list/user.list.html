@@ -26,7 +26,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">开始日期</span>
             </div>
-            <input class="form-control" placeholder="请选择开始日期" name="dp" [(ngModel)]="userList.createStartDate" ngbDatepicker #d1="ngbDatepicker">
+            <input class="form-control" placeholder="请选择开始日期" [(ngModel)]="userList.createStartDate" ngbDatepicker #d1="ngbDatepicker">
             <button class="input-group-addon" (click)="d1.toggle()" type="button">
                 <span class="fa fa-calendar"></span>
             </button>
@@ -37,16 +37,17 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">结束日期</span>
             </div>
-            <input class="form-control" placeholder="请选择结束日期" name="dp" [(ngModel)]="userList.createEndDate" ngbDatepicker #d2="ngbDatepicker">
+            <input class="form-control" placeholder="请选择结束日期" [(ngModel)]="userList.createEndDate" ngbDatepicker #d2="ngbDatepicker">
             <button class="input-group-addon" (click)="d2.toggle()" type="button">
                 <span class="fa fa-calendar"></span>
             </button>
         </div>
     </div>
-    <div class="col-lg-12">
-        <button class="btn btn-sm">查询</button> <!-- (click)="searchUser(1)" -->
-        <button class="btn btn-sm btn-success">新增</button> <!-- *ngIf="addUserZone" (click)="addUser()" -->
+    <div class="col-lg-3">
+        <button class="btn btn-lg" (click)="userSearch(1)">查询</button>
+        <button class="btn btn-lg btn-success" style="margin-left:10px;">新增</button> <!-- *ngIf="addUserZone" (click)="addUser()" -->
     </div>
+
 </div>
 <hr>
 <div class="row" style="margin-top:30px;">
@@ -55,34 +56,46 @@
             <div class="card-body table-responsive">
                 <table class="table">
                     <thead>
-                    <tr>
-                        <th>序号</th>
-                        <th>用户名</th>
-                        <th>用户姓名</th>
-                        <th>注册日期</th>
-                        <th>操作</th>
-                    </tr>
+                        <tr>
+                            <th>序号</th>
+                            <th>用户名</th>
+                            <th>用户姓名</th>
+                            <th>用户角色</th>
+                            <th>注册日期</th>
+                            <th>操作</th>
+                        </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td *ngIf="data==null||data==''||data.length==0" colspan=4>无数据</td>
-                    </tr>
-                    <tr *ngFor="let eachData of data">
-                        <td>#</td>
-                        <td>{{eachData.userName}}</td>
-                        <td>{{eachData.personName}}</td>
-                        <td>{{eachData.createDate}}</td>
-                        <td>未定义操作</td>
-                    </tr>
+                    <tbody *ngIf="data=='loading'">
+                        <tr>
+                            <td colspan=4>数据获取中...</td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="data==null||data==''||data.length==0">
+                        <tr>
+                            <td colspan=4>无数据</td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="data!='loading'&&data!=null&&data!=''&&data.length!=0">
+                        <tr *ngFor="let eachData of data;let xh=index">
+                            <td>{{(xh+1)+(currentPage-1)*pageSize}}</td>
+                            <td>{{eachData.userName}}</td>
+                            <td>{{eachData.personName}}</td>
+                            <td *ngIf="eachData.roleName==null||eachData.roleName==''"><span style="color:red">未分配角色</span></td>
+                            <td *ngIf="eachData.roleName!=null&&eachData.roleName!=''">{{eachData.roleName}}</td>
+                            <td>{{eachData.createDate}}</td>
+                            <td>未定义操作</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
-            <div>
-                <a *ngIf="currentPage>1" (click)="userSearch(1)" class="btn btn-sm btn-default">首页</a>
-                <a *ngIf="currentPage>1" (click)="userSearch(currentPage-1)" class="btn btn-sm btn-default">上一页</a>
-                <a *ngIf="totalPage>currentPage" (click)="userSearch(currentPage+1)" class="btn btn-sm btn-default">下一页</a>
-                <a *ngIf="totalPage>currentPage" (click)="userSearch(totalPage)" class="btn btn-sm btn-default">末页</a>
-                <span *ngIf="totalPage>=currentPage" class="table">当前第{{currentPage}}页，共{{totalPage}}页</span>
+            <div *ngIf="data!='loading'&&data!=null&&data!=''&&data.length!=0">
+                <div style="float:right;padding:0px 1em 1ex 0em;">
+                    <a *ngIf="currentPage>1" (click)="userSearch(1)" class="btn btn-info">首页</a>
+                    <a *ngIf="currentPage>1" (click)="userSearch(currentPage-1)" class="btn btn-info">上一页</a>
+                    <a *ngIf="totalPage>currentPage" (click)="userSearch(currentPage+1)" class="btn btn-info">下一页</a>
+                    <a *ngIf="totalPage>currentPage" (click)="userSearch(totalPage)" class="btn btn-info">末页</a>
+                    <span *ngIf="totalPage>=currentPage" class="table">当前第{{currentPage}}页，共{{totalPage}}页，共{{totalSize}}条</span>
+                </div>
             </div>
         </div>
     </div>
@@ -96,4 +109,3 @@
 <button *ngIf="detailUserZone" class="btn btn-sm btn-info">用户详情</button>
 <button class="btn btn-sm btn-primary">用户角色分配</button>
 -->
-

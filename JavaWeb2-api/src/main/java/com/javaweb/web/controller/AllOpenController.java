@@ -10,9 +10,10 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javaweb.base.BaseController;
@@ -20,7 +21,7 @@ import com.javaweb.base.BaseResponseResult;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.web.eo.TokenData;
-import com.javaweb.web.eo.user.UserLogin;
+import com.javaweb.web.eo.user.UserLoginRequest;
 import com.javaweb.web.po.Module;
 import com.javaweb.web.po.User;
 import com.javaweb.web.service.ModuleService;
@@ -37,7 +38,7 @@ public class AllOpenController extends BaseController {
 	
 	//用户登录接口
 	@PostMapping("/login")
-	public BaseResponseResult login(@RequestBody @Validated/*({BaseValidatedGroup.add.class})*/ UserLogin userLogin,BindingResult bindingResult){
+	public BaseResponseResult login(@RequestBody @Validated/*({BaseValidatedGroup.add.class})*/ UserLoginRequest userLogin,BindingResult bindingResult){
 		BaseResponseResult baseResponseResult = new BaseResponseResult();
 		if(bindingResult.hasErrors()){
 			baseResponseResult = new BaseResponseResult(SystemConstant.VALIDATE_ERROR,getValidateMessage(bindingResult),CommonConstant.EMPTY_VALUE);
@@ -62,22 +63,22 @@ public class AllOpenController extends BaseController {
 		return baseResponseResult;
 	}
 				  
-	@GetMapping("/requestParameterLost")
+	@RequestMapping(value="/requestParameterLost",method={RequestMethod.GET,RequestMethod.POST})
 	public BaseResponseResult requestParameterLost(){
 		return new BaseResponseResult(SystemConstant.REQUEST_PARAMETER_LOST,getMessage("validated.permission.requestParameterLost"),CommonConstant.EMPTY_VALUE);
 	}
 	
-	@GetMapping("/invalidRequest")
+	@RequestMapping(value="/invalidRequest",method={RequestMethod.GET,RequestMethod.POST})
 	public BaseResponseResult invalidRequest(){
 		return new BaseResponseResult(SystemConstant.INVALID_REQUEST,getMessage("validated.permission.invalidRequest"),CommonConstant.EMPTY_VALUE);
 	}
 	
-	@GetMapping("/requestParameterError")
+	@RequestMapping(value="/requestParameterError",method={RequestMethod.GET,RequestMethod.POST})
 	public BaseResponseResult requestParameterError(){
 		return new BaseResponseResult(SystemConstant.INVALID_REQUEST,getMessage("validated.permission.requestParameterError"),CommonConstant.EMPTY_VALUE);
 	}
 	
-	@GetMapping("/noAuthory")
+	@RequestMapping(value="/noAuthory",method={RequestMethod.GET,RequestMethod.POST})
 	public BaseResponseResult noAuthory(){
 		return new BaseResponseResult(SystemConstant.NO_AUTHORY,getMessage("validated.permission.noAuthory"),CommonConstant.EMPTY_VALUE);
 	}

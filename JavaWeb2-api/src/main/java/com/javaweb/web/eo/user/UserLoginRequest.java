@@ -3,7 +3,7 @@ package com.javaweb.web.eo.user;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-public class UserLogin {
+public class UserLoginRequest {
 
 	@NotNull(message="validated.UserLogin.userName.NotNull")
 	@Pattern(regexp="^(?![^a-zA-Z]+$)(?!\\D+$).{6,20}$",message="validated.User.userName.Pattern")
