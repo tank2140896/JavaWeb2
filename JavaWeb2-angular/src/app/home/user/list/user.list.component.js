@@ -7,9 +7,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 };
 exports.__esModule = true;
 var core_1 = require("@angular/core");
+var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
 var user_list_1 = require("../../../models/user/user.list");
 var HttpRequestUrl_1 = require("../../../constant/HttpRequestUrl");
 var DateUtil_1 = require("../../../util/DateUtil");
+var DatepickerI18nService_1 = require("../../../service/DatepickerI18nService");
 var UserListComponent = /** @class */ (function () {
     //listUserZone:any;//用户列表
     //addUserZone:any;//用户新增
@@ -40,7 +42,7 @@ var UserListComponent = /** @class */ (function () {
     //搜索按钮
     UserListComponent.prototype.userSearch = function (currentPage) {
         this.userList.currentPage = currentPage;
-        /** start 这个日期插件用的我很无奈。。。也许我还不知道怎么用这个日期插件吧。。。暂时先将就用用吧。。。 */
+        /** start 针对日期插件的特殊处理 */
         var createStartDate = this.userList.createStartDate;
         var createEndDate = this.userList.createEndDate;
         if (createStartDate != null && createStartDate != '') {
@@ -49,12 +51,12 @@ var UserListComponent = /** @class */ (function () {
         if (createEndDate != null && createEndDate != '') {
             this.userList.createEndDate = DateUtil_1.DateUtil.formatDate(createEndDate);
         }
-        /** end 这个日期插件用的我很无奈。。。也许我还不知道怎么用这个日期插件吧。。。暂时先将就用用吧。。。 */
+        /** end 针对日期插件的特殊处理 */
         this.userListFunction(this.userList);
-        /** start 这个日期插件用的我很无奈。。。也许我还不知道怎么用这个日期插件吧。。。暂时先将就用用吧。。。 */
+        /** start 针对日期插件的特殊处理 */
         this.userList.createStartDate = createStartDate;
         this.userList.createEndDate = createEndDate;
-        /** end 这个日期插件用的我很无奈。。。也许我还不知道怎么用这个日期插件吧。。。暂时先将就用用吧。。。 */
+        /** end 针对日期插件的特殊处理 */
     };
     //用户搜索共通方法
     UserListComponent.prototype.userListFunction = function (userList) {
@@ -83,7 +85,9 @@ var UserListComponent = /** @class */ (function () {
         core_1.Component({
             selector: 'user-list',
             templateUrl: './user.list.html',
-            styleUrls: ['./user.list.scss']
+            styleUrls: ['./user.list.scss'],
+            providers: [{ provide: ng_bootstrap_1.NgbDatepickerI18n, useClass: DatepickerI18nService_1.DatepickerI18nService }]
+            //providers:[I18n,{provide:NgbDatepickerI18n,useClass:DatepickerI18nService}]
         })
     ], UserListComponent);
     return UserListComponent;

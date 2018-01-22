@@ -26,7 +26,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">开始日期</span>
             </div>
-            <input class="form-control" placeholder="请选择开始日期" [(ngModel)]="userList.createStartDate" ngbDatepicker #d1="ngbDatepicker">
+            <input class="form-control" readonly="readonly" placeholder="请选择开始日期" [(ngModel)]="userList.createStartDate" ngbDatepicker #d1="ngbDatepicker">
             <button class="input-group-addon" (click)="d1.toggle()" type="button">
                 <span class="fa fa-calendar"></span>
             </button>
@@ -37,7 +37,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">结束日期</span>
             </div>
-            <input class="form-control" placeholder="请选择结束日期" [(ngModel)]="userList.createEndDate" ngbDatepicker #d2="ngbDatepicker">
+            <input class="form-control" readonly="readonly" placeholder="请选择结束日期" [(ngModel)]="userList.createEndDate" ngbDatepicker #d2="ngbDatepicker">
             <button class="input-group-addon" (click)="d2.toggle()" type="button">
                 <span class="fa fa-calendar"></span>
             </button>

@@ -1,5 +1,6 @@
 import {Component,OnInit} from '@angular/core';
 import {Router} from "@angular/router";
+import {NgbDatepickerI18n} from "@ng-bootstrap/ng-bootstrap";
 
 import {HttpService} from "../../../service/HttpService";
 import {AuthService} from "../../../service/AuthService";
@@ -7,11 +8,14 @@ import {SessionService} from "../../../service/SessionService";
 import {UserList} from "../../../models/user/user.list";
 import {HttpRequestUrl} from "../../../constant/HttpRequestUrl";
 import {DateUtil} from "../../../util/DateUtil";
+import {DatepickerI18nService} from "../../../service/DatepickerI18nService";
 
 @Component({
     selector: 'user-list',
     templateUrl: './user.list.html',
-    styleUrls: ['./user.list.scss']
+    styleUrls: ['./user.list.scss'],
+    providers:[{provide:NgbDatepickerI18n,useClass:DatepickerI18nService}]
+    //providers:[I18n,{provide:NgbDatepickerI18n,useClass:DatepickerI18nService}]
 })
 
 export class UserListComponent implements OnInit {
@@ -53,7 +57,7 @@ export class UserListComponent implements OnInit {
     //搜索按钮
     public userSearch(currentPage):void{
         this.userList.currentPage = currentPage;
-        /** start 这个日期插件用的我很无奈。。。也许我还不知道怎么用这个日期插件吧。。。暂时先将就用用吧。。。 */
+        /** start 针对日期插件的特殊处理 */
         let createStartDate = this.userList.createStartDate;
         let createEndDate = this.userList.createEndDate;
         if(createStartDate!=null&&createStartDate!=''){
@@ -62,12 +66,12 @@ export class UserListComponent implements OnInit {
         if(createEndDate!=null&&createEndDate!=''){
             this.userList.createEndDate = DateUtil.formatDate(createEndDate);
         }
-        /** end 这个日期插件用的我很无奈。。。也许我还不知道怎么用这个日期插件吧。。。暂时先将就用用吧。。。 */
+        /** end 针对日期插件的特殊处理 */
         this.userListFunction(this.userList);
-        /** start 这个日期插件用的我很无奈。。。也许我还不知道怎么用这个日期插件吧。。。暂时先将就用用吧。。。 */
+        /** start 针对日期插件的特殊处理 */
         this.userList.createStartDate = createStartDate;
         this.userList.createEndDate = createEndDate;
-        /** end 这个日期插件用的我很无奈。。。也许我还不知道怎么用这个日期插件吧。。。暂时先将就用用吧。。。 */
+        /** end 针对日期插件的特殊处理 */
     }
 
     //用户搜索共通方法
