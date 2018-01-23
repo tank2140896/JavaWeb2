@@ -44,6 +44,7 @@ export class UserListComponent implements OnInit {
     private totalPage:number;
     private pageSize:number;
     private totalSize:number;
+    private pageList:number;
 
     //初始化获取用户列表
     ngOnInit(): void {
@@ -56,6 +57,7 @@ export class UserListComponent implements OnInit {
 
     //搜索按钮
     public userSearch(currentPage):void{
+        this.data = "loading";
         this.userList.currentPage = currentPage;
         /** start 针对日期插件的特殊处理 */
         let createStartDate = this.userList.createStartDate;
@@ -74,6 +76,11 @@ export class UserListComponent implements OnInit {
         /** end 针对日期插件的特殊处理 */
     }
 
+    //重置
+    public reset():void{
+        this.userList = new UserList();
+    }
+
     //用户搜索共通方法
     private userListFunction(userList:UserList):void {
         this.httpService.postJsonData(HttpRequestUrl.SYS_USER_LIST,JSON.stringify(userList),this.sessionService.getHeadToken()).subscribe(
@@ -86,6 +93,7 @@ export class UserListComponent implements OnInit {
                     this.totalPage = ret.totalPage;
                     this.totalSize = ret.totalSize;
                     this.pageSize = this.userList.pageSize;
+                    this.pageList = ret.pageList;
                 }else if(result.code==500){
                     this.data = null;
                 }else{

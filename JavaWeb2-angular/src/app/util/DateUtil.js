@@ -4,7 +4,6 @@ var DateUtil = /** @class */ (function () {
     function DateUtil() {
     }
     DateUtil.formatDate = function (date) {
-        console.log(date);
         if (typeof date.month === "number") {
             if (date.month < 10) {
                 date.month = '0' + date.month;

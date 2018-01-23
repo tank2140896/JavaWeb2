@@ -41,6 +41,7 @@ var UserListComponent = /** @class */ (function () {
     };
     //搜索按钮
     UserListComponent.prototype.userSearch = function (currentPage) {
+        this.data = "loading";
         this.userList.currentPage = currentPage;
         /** start 针对日期插件的特殊处理 */
         var createStartDate = this.userList.createStartDate;
@@ -58,6 +59,10 @@ var UserListComponent = /** @class */ (function () {
         this.userList.createEndDate = createEndDate;
         /** end 针对日期插件的特殊处理 */
     };
+    //重置
+    UserListComponent.prototype.reset = function () {
+        this.userList = new user_list_1.UserList();
+    };
     //用户搜索共通方法
     UserListComponent.prototype.userListFunction = function (userList) {
         var _this = this;
@@ -70,6 +75,7 @@ var UserListComponent = /** @class */ (function () {
                 _this.totalPage = ret.totalPage;
                 _this.totalSize = ret.totalSize;
                 _this.pageSize = _this.userList.pageSize;
+                _this.pageList = ret.pageList;
             }
             else if (result.code == 500) {
                 _this.data = null;

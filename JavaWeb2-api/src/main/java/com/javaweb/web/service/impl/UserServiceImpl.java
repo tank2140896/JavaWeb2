@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService {
 		pageData.setPageSize(userListRequest.getPageSize());
 		pageData.setTotalSize(count);
 		pageData.setTotalPage(PageUtil.getTotalPage(pageData.getTotalSize(),pageData.getPageSize()));
+		pageData.setPageList(PageUtil.getShowPages(userListRequest.getCurrentPage(),pageData.getTotalPage(),5L));
 		return pageData;
 	}
 	

@@ -1,5 +1,7 @@
 package com.javaweb.web.eo;
 
+import java.util.List;
+
 public class PageData {
   
 	private Long currentPage = 1L;//默认当前第1页
@@ -11,6 +13,8 @@ public class PageData {
 	private Long totalPage = 0L;//默认一共0页
 	
 	private Object data;//数据
+	
+	private List<Long> pageList;//分页页数
 
 	public Long getCurrentPage() {
 		return currentPage;
@@ -50,6 +54,14 @@ public class PageData {
 
 	public void setData(Object data) {
 		this.data = data;
+	}
+
+	public List<Long> getPageList() {
+		return pageList;
+	}
+
+	public void setPageList(List<Long> pageList) {
+		this.pageList = pageList;
 	}
 	
 }

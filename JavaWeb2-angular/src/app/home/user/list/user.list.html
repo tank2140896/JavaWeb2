@@ -44,8 +44,9 @@
         </div>
     </div>
     <div class="col-lg-3">
-        <button class="btn btn-lg" (click)="userSearch(1)">查询</button>
-        <button class="btn btn-lg btn-success" style="margin-left:10px;">新增</button> <!-- *ngIf="addUserZone" (click)="addUser()" -->
+        <button class="btn" (click)="userSearch(1)">查询</button>
+        <button class="btn" (click)="reset()">重置</button>
+        <button class="btn btn-success">新增</button> <!-- *ngIf="addUserZone" (click)="addUser()" -->
     </div>
 
 </div>
@@ -90,11 +91,12 @@
             </div>
             <div *ngIf="data!='loading'&&data!=null&&data!=''&&data.length!=0">
                 <div style="float:right;padding:0px 1em 1ex 0em;">
-                    <a *ngIf="currentPage>1" (click)="userSearch(1)" class="btn btn-info">首页</a>
-                    <a *ngIf="currentPage>1" (click)="userSearch(currentPage-1)" class="btn btn-info">上一页</a>
-                    <a *ngIf="totalPage>currentPage" (click)="userSearch(currentPage+1)" class="btn btn-info">下一页</a>
-                    <a *ngIf="totalPage>currentPage" (click)="userSearch(totalPage)" class="btn btn-info">末页</a>
-                    <span *ngIf="totalPage>=currentPage" class="table">当前第{{currentPage}}页，共{{totalPage}}页，共{{totalSize}}条</span>
+                    <span><a *ngIf="currentPage>1" (click)="userSearch(1)" class="btn btn-info">首页</a></span>
+                    <span><a *ngIf="currentPage>1" (click)="userSearch(currentPage-1)" class="btn btn-info">上一页</a></span>
+                    <span *ngFor="let eachPage of pageList"> <a (click)="userSearch(eachPage)" class="btn btn-info" [ngClass]="{'active':(currentPage==eachPage)}">{{eachPage}}</a></span>
+                    <span><a *ngIf="totalPage>currentPage" (click)="userSearch(currentPage+1)" class="btn btn-info">下一页</a></span>
+                    <span><a *ngIf="totalPage>currentPage" (click)="userSearch(totalPage)" class="btn btn-info">末页</a></span>
+                    <span *ngIf="totalPage>=currentPage" class="table">&nbsp;当前第{{currentPage}}页，共{{totalPage}}页，共{{totalSize}}条</span>
                 </div>
             </div>
         </div>
