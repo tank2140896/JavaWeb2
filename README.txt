@@ -1,4 +1,7 @@
-﻿前后端开发计划：
+﻿使用前重要说明：
+1、session（共享）用的是redis，但是没用自动挡的spring-session-redis（request.getSession()）（自动挡写法在代码中也有参考），而是采用手动档自己设置session到redis（redisTemplate）
+2、nginx（nginx-1.12.2）用于处理跨域和负载均衡，本项目已经处理了跨域，因此可以不用nginx，此处提及的目的是为今后负载均衡做准备
+前后端开发计划：
 1、前端：用户管理-用户列表
 2、后端：用户管理-用户列表
 参考：https://rawgit.com/start-angular/SB-Admin-BS4-Angular-5/master/dist/components

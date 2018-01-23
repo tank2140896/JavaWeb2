@@ -35,7 +35,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 			//response.sendRedirect(basePath+"/requestParameterLost");
 			return false;
 		}
-		TokenData tokenData = (TokenData)redisTemplate.opsForValue().get(userId);
+		TokenData tokenData = (TokenData)redisTemplate.opsForValue().get(userId);//(TokenData)request.getSession().getAttribute(userId);
 		if(tokenData==null){
 			request.getRequestDispatcher("/invalidRequest").forward(request,response);
 			//response.sendRedirect(basePath+"/invalidRequest");

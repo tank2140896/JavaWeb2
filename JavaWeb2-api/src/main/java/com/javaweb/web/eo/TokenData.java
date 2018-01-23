@@ -1,12 +1,15 @@
 package com.javaweb.web.eo;
 
+import java.io.Serializable;
 import java.util.List;
 
 import com.javaweb.web.po.Module;
 import com.javaweb.web.po.User;
 
-public class TokenData {
+public class TokenData implements Serializable {
 	
+	private static final long serialVersionUID = -6256223897799749383L;
+
 	private String token;
 	
 	private User user;

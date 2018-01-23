@@ -8,7 +8,6 @@ export class HttpRequestUrl{
 
     public static GET_REDIS_USER_INFO = HttpRequestUrl.HTTP_REQUEST_PREFIX+'/web/loggedIn/getRedisUserInfo';//用户退出
 
-
     public static SYS_USER_LIST = HttpRequestUrl.HTTP_REQUEST_PREFIX+'/web/sys/user/list';//用户列表
 
 }

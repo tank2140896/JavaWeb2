@@ -7,6 +7,8 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -38,7 +40,7 @@ public class AllOpenController extends BaseController {
 	
 	//用户登录接口
 	@PostMapping("/login")
-	public BaseResponseResult login(@RequestBody @Validated/*({BaseValidatedGroup.add.class})*/ UserLoginRequest userLogin,BindingResult bindingResult){
+	public BaseResponseResult login(@RequestBody @Validated/*({BaseValidatedGroup.add.class})*/ UserLoginRequest userLogin,BindingResult bindingResult,HttpServletRequest request){
 		BaseResponseResult baseResponseResult = new BaseResponseResult();
 		if(bindingResult.hasErrors()){
 			baseResponseResult = new BaseResponseResult(SystemConstant.VALIDATE_ERROR,getValidateMessage(bindingResult),CommonConstant.EMPTY_VALUE);
@@ -48,6 +50,7 @@ public class AllOpenController extends BaseController {
 				User user = SystemConstant.SYSTEM_DEFAULT_USER;
 				TokenData token = getToken(true,user);
 				setDefaultDataToRedis(user.getUserId(),token);
+				//request.getSession().setAttribute(user.getUserId(),token);
 				baseResponseResult = new BaseResponseResult(SystemConstant.SUCCESS,getMessage("login.User.loginSuccess"),token);
 			}else{//非超级管理员
 				User user = userService.userLogin(userLogin);
@@ -56,6 +59,7 @@ public class AllOpenController extends BaseController {
 				}else{
 					TokenData token = getToken(false,user);
 					setDefaultDataToRedis(user.getUserId(),token);
+					//request.getSession().setAttribute(user.getUserId(),token);
 					baseResponseResult = new BaseResponseResult(SystemConstant.SUCCESS,getMessage("login.User.loginSuccess"),token);
 				}
 			}

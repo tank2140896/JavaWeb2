@@ -48,6 +48,12 @@
 	        <groupId>org.springframework.boot</groupId>
 	        <artifactId>spring-boot-starter-data-redis</artifactId>
 	    </dependency>
+	    <!-- SpringBoot、Redis、Session整合
+		<dependency>  
+	        <groupId>org.springframework.session</groupId>  
+	        <artifactId>spring-session-data-redis</artifactId>  
+    	</dependency> 
+    	-->
 	    <!-- Mysql驱动 -->
 	    <dependency>
 			<groupId>mysql</groupId>
