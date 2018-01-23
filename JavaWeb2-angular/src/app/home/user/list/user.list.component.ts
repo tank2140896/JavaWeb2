@@ -9,6 +9,7 @@ import {UserList} from "../../../models/user/user.list";
 import {HttpRequestUrl} from "../../../constant/HttpRequestUrl";
 import {DateUtil} from "../../../util/DateUtil";
 import {DatepickerI18nService} from "../../../service/DatepickerI18nService";
+import {ResultPage} from "../../../models/page/result.page";
 
 @Component({
     selector: 'user-list',
@@ -39,12 +40,7 @@ export class UserListComponent implements OnInit {
 
     private userList:UserList = new UserList();//用户列表搜索条件
 
-    private data:any = "loading";
-    private currentPage:number;
-    private totalPage:number;
-    private pageSize:number;
-    private totalSize:number;
-    private pageList:number;
+    private resultPage:ResultPage;//分页结果
 
     //初始化获取用户列表
     ngOnInit(): void {
@@ -57,7 +53,7 @@ export class UserListComponent implements OnInit {
 
     //搜索按钮
     public userSearch(currentPage):void{
-        this.data = "loading";
+        this.resultPage.data = "loading";
         this.userList.currentPage = currentPage;
         /** start 针对日期插件的特殊处理 */
         let createStartDate = this.userList.createStartDate;
@@ -88,20 +84,15 @@ export class UserListComponent implements OnInit {
                 if(result.code==200){
                     let ret = result.data;
                     //console.log(ret);
-                    this.data = ret.data;
-                    this.currentPage = ret.currentPage;
-                    this.totalPage = ret.totalPage;
-                    this.totalSize = ret.totalSize;
-                    this.pageSize = this.userList.pageSize;
-                    this.pageList = ret.pageList;
+                    this.resultPage = new ResultPage(ret);
                 }else if(result.code==500){
-                    this.data = null;
+                    this.resultPage.data = null;
                 }else{
                     this.router.navigate(['login']);
                 }
             },
             error=>{
-                this.data = null;
+                this.resultPage.data = null;
             }
         );
     }

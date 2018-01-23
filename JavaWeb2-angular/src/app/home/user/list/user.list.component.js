@@ -12,6 +12,7 @@ var user_list_1 = require("../../../models/user/user.list");
 var HttpRequestUrl_1 = require("../../../constant/HttpRequestUrl");
 var DateUtil_1 = require("../../../util/DateUtil");
 var DatepickerI18nService_1 = require("../../../service/DatepickerI18nService");
+var result_page_1 = require("../../../models/page/result.page");
 var UserListComponent = /** @class */ (function () {
     //listUserZone:any;//用户列表
     //addUserZone:any;//用户新增
@@ -24,7 +25,6 @@ var UserListComponent = /** @class */ (function () {
         this.router = router;
         this.sessionService = sessionService;
         this.userList = new user_list_1.UserList(); //用户列表搜索条件
-        this.data = "loading";
         //this.listUserZone = authService.canShow(HttpRequestUrl.SYS_USER_LSIT_SUFFIX);
         //this.addUserZone = authService.canShow(HttpRequestUrl.SYS_USER_ADD_SUFFIX);
         //this.deleteUserZone = authService.canShow(HttpRequestUrl.SYS_USER_DELETE_SUFFIX);
@@ -41,7 +41,7 @@ var UserListComponent = /** @class */ (function () {
     };
     //搜索按钮
     UserListComponent.prototype.userSearch = function (currentPage) {
-        this.data = "loading";
+        this.resultPage.data = "loading";
         this.userList.currentPage = currentPage;
         /** start 针对日期插件的特殊处理 */
         var createStartDate = this.userList.createStartDate;
@@ -70,21 +70,16 @@ var UserListComponent = /** @class */ (function () {
             if (result.code == 200) {
                 var ret = result.data;
                 //console.log(ret);
-                _this.data = ret.data;
-                _this.currentPage = ret.currentPage;
-                _this.totalPage = ret.totalPage;
-                _this.totalSize = ret.totalSize;
-                _this.pageSize = _this.userList.pageSize;
-                _this.pageList = ret.pageList;
+                _this.resultPage = new result_page_1.ResultPage(ret);
             }
             else if (result.code == 500) {
-                _this.data = null;
+                _this.resultPage.data = null;
             }
             else {
                 _this.router.navigate(['login']);
             }
         }, function (error) {
-            _this.data = null;
+            _this.resultPage.data = null;
         });
     };
     UserListComponent = __decorate([
