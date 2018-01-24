@@ -5,6 +5,7 @@ var CommonConstant = /** @class */ (function () {
     }
     CommonConstant.EMPTY = "";
     CommonConstant.NULL = null;
+    CommonConstant.DATA_LOADING = "loading";
     return CommonConstant;
 }());
 exports.CommonConstant = CommonConstant;

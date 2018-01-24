@@ -9,14 +9,13 @@ import {UserList} from "../../../models/user/user.list";
 import {HttpRequestUrl} from "../../../constant/HttpRequestUrl";
 import {DateUtil} from "../../../util/DateUtil";
 import {DatepickerI18nService} from "../../../service/DatepickerI18nService";
-import {ResultPage} from "../../../models/page/result.page";
+import {ResultPage} from "../../../models/result/result.page";
 
 @Component({
     selector: 'user-list',
     templateUrl: './user.list.html',
     styleUrls: ['./user.list.scss'],
-    providers:[{provide:NgbDatepickerI18n,useClass:DatepickerI18nService}]
-    //providers:[I18n,{provide:NgbDatepickerI18n,useClass:DatepickerI18nService}]
+    providers:[/*I18n,*/{provide:NgbDatepickerI18n,useClass:DatepickerI18nService}]
 })
 
 export class UserListComponent implements OnInit {
@@ -26,24 +25,19 @@ export class UserListComponent implements OnInit {
                 private httpService:HttpService,
                 private authService:AuthService,
                 private sessionService:SessionService){
-        //this.listUserZone = authService.canShow(HttpRequestUrl.SYS_USER_LSIT_SUFFIX);
-        //this.addUserZone = authService.canShow(HttpRequestUrl.SYS_USER_ADD_SUFFIX);
-        //this.deleteUserZone = authService.canShow(HttpRequestUrl.SYS_USER_DELETE_SUFFIX);
-        //this.modifyUserZone = authService.canShow(HttpRequestUrl.SYS_USER_MODIFY_SUFFIX);
-        //this.detailUserZone = authService.canShow(HttpRequestUrl.SYS_USER_DETAIL_SUFFIX);
+        //this.userListZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_LIST,false));
+        this.userDeleteZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_DELETE,false));
     }
 
-    //listUserZone:any;//用户列表
-    //addUserZone:any;//用户新增
-    //deleteUserZone:any;//用户删除
-    //modifyUserZone:any;//用户修改
-    //detailUserZone:any;//用户详情
+    /** 操作权限 start */
+    //userListZone:boolean;//用户列表
+    userDeleteZone:boolean;//用户删除
+    /** 操作权限 end */
 
     private userList:UserList = new UserList();//用户列表搜索条件
+    private resultPage:ResultPage = new ResultPage();//分页结果初始化
 
-    private resultPage:ResultPage = new ResultPage({});//分页结果初始化
-
-    //初始化获取用户列表
+    //初始化
     ngOnInit(): void {
         /** 若需修改分页大小或其它请求参数请注释后自行调整，这里使用默认值
         this.userList.currentPage = 1;
@@ -54,7 +48,7 @@ export class UserListComponent implements OnInit {
 
     //搜索按钮
     public userSearch(currentPage):void{
-        this.resultPage.data = "loading";
+        this.resultPage = new ResultPage();//对每次搜索进行初始化
         this.userList.currentPage = currentPage;
         /** start 针对日期插件的特殊处理 */
         let createStartDate = this.userList.createStartDate;
@@ -80,20 +74,18 @@ export class UserListComponent implements OnInit {
 
     //用户搜索共通方法
     private userListFunction(userList:UserList):void {
-        this.httpService.postJsonData(HttpRequestUrl.SYS_USER_LIST,JSON.stringify(userList),this.sessionService.getHeadToken()).subscribe(
+        this.httpService.postJsonData(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_LIST,true),JSON.stringify(userList),this.sessionService.getHeadToken()).subscribe(
             result=>{
                 if(result.code==200){
                     let ret = result.data;
                     //console.log(ret);
                     this.resultPage = new ResultPage(ret);
-                }else if(result.code==500){
-                    this.resultPage.data = null;
                 }else{
                     this.router.navigate(['login']);
                 }
             },
             error=>{
-                this.resultPage.data = null;
+                this.router.navigate(['login']);
             }
         );
     }
@@ -104,20 +96,8 @@ export class UserListComponent implements OnInit {
             if(result){
                 alert(userId);//TODO 执行删除操作
             }
-            //this.closeResult = `Closed with: ${result}`;
         }, (reason) => {
-            /*
-            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-            private getDismissReason(reason: any): string {
-                if (reason === ModalDismissReasons.ESC) {
-                    return 'by pressing ESC';
-                } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-                    return 'by clicking on a backdrop';
-                } else {
-                    return  `with: ${reason}`;
-                }
-            }
-            */
+            //主要是ModalDismissReasons.ESC和ModalDismissReasons.BACKDROP_CLICK
         });
 
     }

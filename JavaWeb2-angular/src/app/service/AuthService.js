@@ -47,19 +47,21 @@ var AuthService = /** @class */ (function () {
                 }
             }
         }
-        return true;
+        return false;
     };
     /** 操作权限判断 */
     AuthService.prototype.canShow = function (apiUrl) {
         var sessionData = this.sessionService.getSessionData();
-        if (sessionData == null) {
+        /** 为降低服务器压力，去掉没太大必要的校验
+        if(sessionData==null){//防止用户清空缓存
             return false;
         }
-        var headToken = new head_token_1.HeadToken();
+        let headToken:HeadToken = new HeadToken();
         headToken.token = sessionData.token;
         headToken.userId = sessionData.user.userId;
-        this.getRedisUserInfo(headToken); //防止服务器端redis的session失效
+        this.getRedisUserInfo(headToken);//防止服务器端redis的session失效
         sessionData = this.sessionService.getSessionData();
+        */
         if (sessionData == null) {
             return false;
         }
@@ -75,13 +77,13 @@ var AuthService = /** @class */ (function () {
                 }
             }
         }
-        return true;
+        return false;
     };
     AuthService.prototype.getRedisUserInfo = function (headToken) {
         var _this = this;
-        this.httpService.getJsonData(HttpRequestUrl_1.HttpRequestUrl.GET_REDIS_USER_INFO, headToken).subscribe(function (result) {
-            var data = result.data;
-            if (data == null) {
+        this.httpService.getJsonData(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.GET_REDIS_USER_INFO, true), headToken).subscribe(function (result) {
+            var ret = result.data;
+            if (ret == null) {
                 _this.sessionService.clearSessionData();
             }
         });

@@ -24,7 +24,7 @@ var LoginComponent = /** @class */ (function () {
     /*------ 用户登录 start ------*/
     LoginComponent.prototype.login = function () {
         var _this = this;
-        this.httpService.postJsonData(HttpRequestUrl_1.HttpRequestUrl.LOGIN, this.userLogin, null).subscribe(function (result) {
+        this.httpService.postJsonData(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.LOGIN, true), this.userLogin, null).subscribe(function (result) {
             if (result.code == 200) {
                 var ret = result.data;
                 //console.log(ret);

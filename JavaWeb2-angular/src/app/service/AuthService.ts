@@ -1,6 +1,5 @@
 import {Injectable} from "@angular/core";
-import {CanActivate,ActivatedRouteSnapshot,RouterStateSnapshot} from "@angular/router";
-
+import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot} from "@angular/router";
 import {SessionService} from "./SessionService";
 import {HttpService} from "./HttpService";
 import {HttpRequestUrl} from "../constant/HttpRequestUrl";
@@ -44,12 +43,13 @@ export class AuthService implements CanActivate {
                 }
             }
         }
-        return true;
+        return false;
     }
 
     /** 操作权限判断 */
     canShow(apiUrl:string){
         let sessionData:any = this.sessionService.getSessionData();
+        /** 为降低服务器压力，去掉没太大必要的校验
         if(sessionData==null){//防止用户清空缓存
             return false;
         }
@@ -58,6 +58,7 @@ export class AuthService implements CanActivate {
         headToken.userId = sessionData.user.userId;
         this.getRedisUserInfo(headToken);//防止服务器端redis的session失效
         sessionData = this.sessionService.getSessionData();
+        */
         if(sessionData==null){
             return false;
         }else{
@@ -71,14 +72,14 @@ export class AuthService implements CanActivate {
                 }
             }
         }
-        return true;
+        return false;
     }
 
     getRedisUserInfo(headToken:HeadToken):void{
-        this.httpService.getJsonData(HttpRequestUrl.GET_REDIS_USER_INFO,headToken).subscribe(
+        this.httpService.getJsonData(HttpRequestUrl.getPath(HttpRequestUrl.GET_REDIS_USER_INFO,true),headToken).subscribe(
             result => {
-                let data = result.data;
-                if(data==null){
+                let ret = result.data;
+                if(ret==null){
                     this.sessionService.clearSessionData();
                 }
             }

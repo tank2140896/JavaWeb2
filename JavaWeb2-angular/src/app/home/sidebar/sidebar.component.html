@@ -1,5 +1,5 @@
 <nav class="sidebar" [ngClass]="{sidebarPushRight:isActive}">
-    <div class="list-group">
+    <div *ngIf="menuList!=null" class="list-group">
         <home-sidebar-recursion *ngFor="let i of menuList" [icon]="i.icon" [url]="i.pageUrl" [name]="i.moduleName" [list]="i.list"></home-sidebar-recursion>
     </div>
 </nav>

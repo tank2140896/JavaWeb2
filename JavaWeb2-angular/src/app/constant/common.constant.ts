@@ -4,4 +4,6 @@ export class CommonConstant {
 
     public static NULL = null;
 
+    public static DATA_LOADING = "loading";
+
 }

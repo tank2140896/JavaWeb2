@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
 
     /*------ 用户登录 start ------*/
     public login():void{
-        this.httpService.postJsonData(HttpRequestUrl.LOGIN,this.userLogin,null).subscribe(
+        this.httpService.postJsonData(HttpRequestUrl.getPath(HttpRequestUrl.LOGIN,true),this.userLogin,null).subscribe(
             result=>{
                 if(result.code==200){
                     let ret = result.data;
