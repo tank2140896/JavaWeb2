@@ -14,17 +14,19 @@ var DateUtil_1 = require("../../../util/DateUtil");
 var DatepickerI18nService_1 = require("../../../service/DatepickerI18nService");
 var result_page_1 = require("../../../models/page/result.page");
 var UserListComponent = /** @class */ (function () {
-    //listUserZone:any;//用户列表
-    //addUserZone:any;//用户新增
-    //deleteUserZone:any;//用户删除
-    //modifyUserZone:any;//用户修改
-    //detailUserZone:any;//用户详情
-    function UserListComponent(httpService, authService, router, sessionService) {
+    function UserListComponent(router, ngbModal, httpService, authService, sessionService) {
+        this.router = router;
+        this.ngbModal = ngbModal;
         this.httpService = httpService;
         this.authService = authService;
-        this.router = router;
         this.sessionService = sessionService;
+        //listUserZone:any;//用户列表
+        //addUserZone:any;//用户新增
+        //deleteUserZone:any;//用户删除
+        //modifyUserZone:any;//用户修改
+        //detailUserZone:any;//用户详情
         this.userList = new user_list_1.UserList(); //用户列表搜索条件
+        this.resultPage = new result_page_1.ResultPage({}); //分页结果初始化
         //this.listUserZone = authService.canShow(HttpRequestUrl.SYS_USER_LSIT_SUFFIX);
         //this.addUserZone = authService.canShow(HttpRequestUrl.SYS_USER_ADD_SUFFIX);
         //this.deleteUserZone = authService.canShow(HttpRequestUrl.SYS_USER_DELETE_SUFFIX);
@@ -80,6 +82,28 @@ var UserListComponent = /** @class */ (function () {
             }
         }, function (error) {
             _this.resultPage.data = null;
+        });
+    };
+    //删除用户
+    UserListComponent.prototype.deleteUser = function (userId, content) {
+        this.ngbModal.open(content).result.then(function (result) {
+            if (result) {
+                alert(userId); //TODO 执行删除操作
+            }
+            //this.closeResult = `Closed with: ${result}`;
+        }, function (reason) {
+            /*
+            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+            private getDismissReason(reason: any): string {
+                if (reason === ModalDismissReasons.ESC) {
+                    return 'by pressing ESC';
+                } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+                    return 'by clicking on a backdrop';
+                } else {
+                    return  `with: ${reason}`;
+                }
+            }
+            */
         });
     };
     UserListComponent = __decorate([

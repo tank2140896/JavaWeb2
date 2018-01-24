@@ -27,6 +27,7 @@
 			<if test="createStartDate != null and createStartDate != ''">and u.create_date &gt;=#{createStartDate}</if>
 			<if test="createEndDate != null and createEndDate != ''">and u.create_date &lt;=#{createEndDate}</if>
 		</where>
+		and u.level > ${level}
 		order by u.create_date desc
 		limit ${(currentPage-1)*pageSize},${pageSize}
 	</select>
@@ -40,6 +41,7 @@
 			<if test="createStartDate != null and createStartDate != ''">and u.create_date &gt;=#{createStartDate}</if>
 			<if test="createEndDate != null and createEndDate != ''">and u.create_date &lt;=#{createEndDate}</if>
 		</where>
+		and u.level > ${level}
 	</select>
 	
 </mapper>

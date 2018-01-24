@@ -13,6 +13,10 @@ public class UserListRequest {
 	private Long currentPage = 1L;//默认当前第1页
 	
 	private Long pageSize = 10L;//默认每页显示10条
+	
+	/** 下面的参数是额外的 start */
+	private Integer level;//第几级
+	/** 下面的参数是额外的 end */
 
 	public String getUserName() {
 		return userName;
@@ -60,6 +64,14 @@ public class UserListRequest {
 
 	public void setPageSize(Long pageSize) {
 		this.pageSize = pageSize;
+	}
+
+	public Integer getLevel() {
+		return level;
+	}
+
+	public void setLevel(Integer level) {
+		this.level = level;
 	}
 
 }

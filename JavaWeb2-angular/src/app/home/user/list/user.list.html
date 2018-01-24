@@ -85,7 +85,7 @@
                             <td *ngIf="eachData.roleName!=null&&eachData.roleName!=''">{{eachData.roleName}}</td>
                             <td>{{eachData.createDate}}</td>
                             <td>
-                                <button class="btn btn-sm btn-danger">删除用户</button>
+                                <button class="btn btn-sm btn-danger" (click)="deleteUser(eachData.userId,content)">删除用户</button>
                                 <button class="btn btn-sm btn-warning">修改用户</button>
                                 <button class="btn btn-sm btn-info">用户详情</button>
                                 <button class="btn btn-sm btn-primary">角色分配</button>
@@ -107,6 +107,23 @@
         </div>
     </div>
 </div>
+
+<!-- modal对话框组件 -->
+<ng-template #content let-c1="dismiss" let-c2="close">
+    <div class="modal-header">
+        <h4 class="modal-title">删除用户</h4>
+        <button type="button" class="close" aria-label="Close" (click)="c1('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>您确定要删除该用户吗？</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="c2(true)">确定</button>
+        <button type="button" class="btn btn-secondary" (click)="c2(false)">取消</button>
+    </div>
+</ng-template>
 
 <!--
 <button *ngIf="deleteUserZone" class="btn btn-sm btn-danger">删除用户</button>

@@ -1,6 +1,6 @@
 import {Component,OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {NgbDatepickerI18n} from "@ng-bootstrap/ng-bootstrap";
+import {NgbDatepickerI18n,NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 import {HttpService} from "../../../service/HttpService";
 import {AuthService} from "../../../service/AuthService";
@@ -21,15 +21,10 @@ import {ResultPage} from "../../../models/page/result.page";
 
 export class UserListComponent implements OnInit {
 
-    //listUserZone:any;//用户列表
-    //addUserZone:any;//用户新增
-    //deleteUserZone:any;//用户删除
-    //modifyUserZone:any;//用户修改
-    //detailUserZone:any;//用户详情
-
-    constructor(private httpService:HttpService,
+    constructor(private router:Router,
+                private ngbModal:NgbModal,
+                private httpService:HttpService,
                 private authService:AuthService,
-                private router:Router,
                 private sessionService:SessionService){
         //this.listUserZone = authService.canShow(HttpRequestUrl.SYS_USER_LSIT_SUFFIX);
         //this.addUserZone = authService.canShow(HttpRequestUrl.SYS_USER_ADD_SUFFIX);
@@ -38,9 +33,15 @@ export class UserListComponent implements OnInit {
         //this.detailUserZone = authService.canShow(HttpRequestUrl.SYS_USER_DETAIL_SUFFIX);
     }
 
+    //listUserZone:any;//用户列表
+    //addUserZone:any;//用户新增
+    //deleteUserZone:any;//用户删除
+    //modifyUserZone:any;//用户修改
+    //detailUserZone:any;//用户详情
+
     private userList:UserList = new UserList();//用户列表搜索条件
 
-    private resultPage:ResultPage;//分页结果
+    private resultPage:ResultPage = new ResultPage({});//分页结果初始化
 
     //初始化获取用户列表
     ngOnInit(): void {
@@ -96,6 +97,32 @@ export class UserListComponent implements OnInit {
             }
         );
     }
+
+    //删除用户
+    public deleteUser(userId:string,content):void{
+        this.ngbModal.open(content).result.then((result) => {
+            if(result){
+                alert(userId);//TODO 执行删除操作
+            }
+            //this.closeResult = `Closed with: ${result}`;
+        }, (reason) => {
+            /*
+            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+            private getDismissReason(reason: any): string {
+                if (reason === ModalDismissReasons.ESC) {
+                    return 'by pressing ESC';
+                } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+                    return 'by clicking on a backdrop';
+                } else {
+                    return  `with: ${reason}`;
+                }
+            }
+            */
+        });
+
+    }
+
+
 
     /**
     //新增用户
