@@ -23,6 +23,7 @@ var AuthService = /** @class */ (function () {
         var headToken = new head_token_1.HeadToken();
         headToken.token = sessionData.token;
         headToken.userId = sessionData.user.userId;
+        headToken.type = sessionData.type;
         this.getRedisUserInfo(headToken); //防止服务器端redis的session失效
         sessionData = this.sessionService.getSessionData();
         if (sessionData == null) {
@@ -59,6 +60,7 @@ var AuthService = /** @class */ (function () {
         let headToken:HeadToken = new HeadToken();
         headToken.token = sessionData.token;
         headToken.userId = sessionData.user.userId;
+        headToken.type = sessionData.type;
         this.getRedisUserInfo(headToken);//防止服务器端redis的session失效
         sessionData = this.sessionService.getSessionData();
         */

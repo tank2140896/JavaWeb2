@@ -21,12 +21,14 @@ var HttpService = /** @class */ (function () {
             headToken = new head_token_1.HeadToken();
             headToken.userId = '';
             headToken.token = '';
+            headToken.type = '1';
         }
         var headers = new http_1.HttpHeaders({
             'Content-Type': 'application/json',
             'Access-Control-Allow-Headers': 'Authorization',
             'userId': headToken.userId,
-            'token': headToken.token
+            'token': headToken.token,
+            'type': headToken.type
         });
         var options = { 'headers': headers, withCredentials: true };
         return options;
@@ -37,11 +39,23 @@ var HttpService = /** @class */ (function () {
     HttpService.prototype.postJsonData = function (url, body, headToken) {
         return this.httpClient.post(url, body, this.getOptions(headToken)).map(function (data) { return data; })["do"](this.handleError);
     };
+    HttpService.prototype.deleteData = function (url, headToken) {
+        return this.httpClient["delete"](url, this.getOptions(headToken)).map(function (data) { return data; })["do"](this.handleError);
+    };
+    HttpService.prototype.putJsonData = function (url, body, headToken) {
+        return this.httpClient.put(url, body, this.getOptions(headToken)).map(function (data) { return data; })["do"](this.handleError);
+    };
     HttpService.prototype.getSingleJsonData = function (url) {
         return this.httpClient.get(url).map(function (data) { return data; })["do"](this.handleError);
     };
     HttpService.prototype.postSingleJsonData = function (url, body, options) {
         return this.httpClient.post(url, body, options).map(function (data) { return data; })["do"](this.handleError);
+    };
+    HttpService.prototype.deleteSingleData = function (url) {
+        return this.httpClient["delete"](url).map(function (data) { return data; })["do"](this.handleError);
+    };
+    HttpService.prototype.putSingleJsonData = function (url, body, options) {
+        return this.httpClient.put(url, body, options).map(function (data) { return data; })["do"](this.handleError);
     };
     HttpService.prototype.handleError = function (error) {
         //console.log(error);

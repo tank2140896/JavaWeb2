@@ -14,6 +14,8 @@ public class TokenData implements Serializable {
 	
 	private User user;
 	
+	private String type;
+	
 	private List<Module> moduleList;
 	
 	private List<Module> menuList;
@@ -22,9 +24,10 @@ public class TokenData implements Serializable {
 	
 	public TokenData(){	}
 	
-	public TokenData(String token,User user,List<Module> moduleList,List<Module> menuList,List<Module> authOperateList){
+	public TokenData(String token,User user,String type,List<Module> moduleList,List<Module> menuList,List<Module> authOperateList){
 		this.token = token;
 		this.user = user;
+		this.type = type;
 		this.moduleList = moduleList;
 		this.menuList = menuList;
 		this.authOperateList = authOperateList;
@@ -44,6 +47,14 @@ public class TokenData implements Serializable {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	public List<Module> getModuleList() {

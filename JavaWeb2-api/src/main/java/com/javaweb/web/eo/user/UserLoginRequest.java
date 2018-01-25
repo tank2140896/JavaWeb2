@@ -12,6 +12,9 @@ public class UserLoginRequest {
 	@NotNull(message="validated.UserLogin.password.NotNull")
 	@Pattern(regexp="^(?![^a-zA-Z]+$)(?!\\D+$).{6,20}$",message="validated.User.userName.Pattern")
 	private String password;
+	
+	@Pattern(regexp="^[1-9]$",message="validated.User.type.Pattern")
+	private String type;
 
 	public String getUsername() {
 		return username;
@@ -27,6 +30,14 @@ public class UserLoginRequest {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getType() {
+		return type;
+	}
+
+	public void setType(String type) {
+		this.type = type;
 	}
 
 }

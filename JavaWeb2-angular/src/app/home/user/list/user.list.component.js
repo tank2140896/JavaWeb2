@@ -76,9 +76,17 @@ var UserListComponent = /** @class */ (function () {
     };
     //删除用户
     UserListComponent.prototype.deleteUser = function (userId, content) {
+        var _this = this;
         this.ngbModal.open(content).result.then(function (result) {
             if (result) {
-                alert(userId); //TODO 执行删除操作
+                _this.httpService.deleteData(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_USER_DELETE + '/' + userId, true), _this.sessionService.getHeadToken()).subscribe(function (result) {
+                    //删除即使失败这里也暂不做任何处理
+                    /** 删除成功重新刷新列表 */
+                    _this.resultPage = new result_page_1.ResultPage();
+                    _this.userListFunction(_this.userList);
+                }, function (error) {
+                    _this.router.navigate(['login']);
+                });
             }
         }, function (reason) {
             //主要是ModalDismissReasons.ESC和ModalDismissReasons.BACKDROP_CLICK

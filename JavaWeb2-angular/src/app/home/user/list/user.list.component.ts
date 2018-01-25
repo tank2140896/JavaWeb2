@@ -94,12 +94,21 @@ export class UserListComponent implements OnInit {
     public deleteUser(userId:string,content):void{
         this.ngbModal.open(content).result.then((result) => {
             if(result){
-                alert(userId);//TODO 执行删除操作
+                this.httpService.deleteData(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_DELETE+'/'+userId,true),this.sessionService.getHeadToken()).subscribe(
+                    result=>{
+                        //删除即使失败这里也暂不做任何处理
+                        /** 删除成功重新刷新列表 */
+                        this.resultPage = new ResultPage();
+                        this.userListFunction(this.userList);
+                    },
+                    error=>{
+                        this.router.navigate(['login']);
+                    }
+                );
             }
         }, (reason) => {
             //主要是ModalDismissReasons.ESC和ModalDismissReasons.BACKDROP_CLICK
         });
-
     }
 
 

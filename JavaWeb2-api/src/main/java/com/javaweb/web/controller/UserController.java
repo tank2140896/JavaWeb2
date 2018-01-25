@@ -3,6 +3,8 @@ package com.javaweb.web.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +31,12 @@ public class UserController extends BaseController {
 		userListRequest.setLevel(tokenData.getUser().getLevel());
 		PageData pageData = userService.userList(userListRequest);
 		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("user.list.success"),pageData);
+	}
+	
+	@DeleteMapping("/delete/{userId}")
+	public BaseResponseResult userDelete(@PathVariable("userId") String userId){
+		userService.userDelete(userId);
+		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("user.delete.success"),null);
 	}
 	
 }

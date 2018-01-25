@@ -27,6 +27,7 @@ export class SessionService{
         let headToken:HeadToken = new HeadToken();
         headToken.userId = sessionData.user.userId;
         headToken.token = sessionData.token;
+        headToken.type = sessionData.type;
         return headToken;
     }
 

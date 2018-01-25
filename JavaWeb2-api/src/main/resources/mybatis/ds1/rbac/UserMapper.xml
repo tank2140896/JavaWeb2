@@ -44,4 +44,11 @@
 		and u.level > ${level}
 	</select>
 	
+	<delete id="userDelete" parameterType="java.lang.String">
+		<!-- 删除用户角色关联 -->
+		delete from user_role where user_id = #{_parameter};
+		<!-- 删除用户 -->
+		delete from user where user_id = #{_parameter};
+	</delete>
+	
 </mapper>

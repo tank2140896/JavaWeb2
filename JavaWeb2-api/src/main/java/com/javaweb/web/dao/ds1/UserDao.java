@@ -19,4 +19,6 @@ public interface UserDao extends BaseDao<User> {
 	
 	public Long userListCount(UserListRequest userListRequest);
 	
+	public void userDelete(String userId);
+	
 }

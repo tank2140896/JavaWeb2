@@ -2,6 +2,7 @@
 exports.__esModule = true;
 var UserLogin = /** @class */ (function () {
     function UserLogin() {
+        this.type = '1'; //类型
     }
     return UserLogin;
 }());

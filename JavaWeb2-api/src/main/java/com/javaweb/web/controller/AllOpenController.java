@@ -48,8 +48,8 @@ public class AllOpenController extends BaseController {
 			//超级管理员(后门)
 			if(SystemConstant.SYSTEM_DEFAULT_USER_NAME.equals(userLogin.getUsername())&&SystemConstant.SYSTEM_DEFAULT_USER_PASSWORD.equals(userLogin.getPassword())){
 				User user = SystemConstant.SYSTEM_DEFAULT_USER;
-				TokenData token = getToken(true,user);
-				setDefaultDataToRedis(user.getUserId(),token);
+				TokenData token = getToken(true,user,userLogin.getType());
+				setDefaultDataToRedis(user.getUserId()+","+userLogin.getType(),token);
 				//request.getSession().setAttribute(user.getUserId(),token);
 				baseResponseResult = new BaseResponseResult(SystemConstant.SUCCESS,getMessage("login.User.loginSuccess"),token);
 			}else{//非超级管理员
@@ -57,8 +57,8 @@ public class AllOpenController extends BaseController {
 				if(user==null){
 					baseResponseResult = new BaseResponseResult(SystemConstant.LOGIN_FAIL,getMessage("login.User.userNameOrPassword"),CommonConstant.EMPTY_VALUE);
 				}else{
-					TokenData token = getToken(false,user);
-					setDefaultDataToRedis(user.getUserId(),token);
+					TokenData token = getToken(false,user,userLogin.getType());
+					setDefaultDataToRedis(user.getUserId()+","+userLogin.getType(),token);
 					//request.getSession().setAttribute(user.getUserId(),token);
 					baseResponseResult = new BaseResponseResult(SystemConstant.SUCCESS,getMessage("login.User.loginSuccess"),token);
 				}
@@ -87,7 +87,7 @@ public class AllOpenController extends BaseController {
 		return new BaseResponseResult(SystemConstant.NO_AUTHORY,getMessage("validated.permission.noAuthory"),CommonConstant.EMPTY_VALUE);
 	}
 	
-	private TokenData getToken(Boolean adminFlag,User user){
+	private TokenData getToken(Boolean adminFlag,User user,String type){
 		TokenData tokenData = new TokenData();
 		Map<String,Object> map = new HashMap<>();
 		map.put("adminFlag", adminFlag);
@@ -103,6 +103,7 @@ public class AllOpenController extends BaseController {
 		List<Module> authOperateList = list.stream().filter(i->2==i.getModuleType()).collect(Collectors.toList());
 		tokenData.setToken(UUID.randomUUID().toString());
 		tokenData.setUser(user);
+		tokenData.setType(type);
 		tokenData.setModuleList((list==null||list.size()==0)?null:list);
 		tokenData.setMenuList((menuList==null||menuList.size()==0)?null:menuList);
 		tokenData.setAuthOperateList((authOperateList==null||authOperateList.size()==0)?null:authOperateList);

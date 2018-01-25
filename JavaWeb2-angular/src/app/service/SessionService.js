@@ -30,6 +30,7 @@ var SessionService = /** @class */ (function () {
         var headToken = new head_token_1.HeadToken();
         headToken.userId = sessionData.user.userId;
         headToken.token = sessionData.token;
+        headToken.type = sessionData.type;
         return headToken;
     };
     SessionService = __decorate([

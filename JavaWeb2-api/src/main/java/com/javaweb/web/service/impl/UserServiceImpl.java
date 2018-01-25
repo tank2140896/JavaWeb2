@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.javaweb.util.core.PageUtil;
 import com.javaweb.web.dao.ds1.UserDao;
@@ -16,8 +17,6 @@ import com.javaweb.web.service.UserService;
 
 @Service("userServiceImpl")
 public class UserServiceImpl implements UserService {
-	
-	//@Transactional
 	
 	@Autowired
 	private UserDao userDao;
@@ -37,6 +36,11 @@ public class UserServiceImpl implements UserService {
 		pageData.setTotalPage(PageUtil.getTotalPage(pageData.getTotalSize(),pageData.getPageSize()));
 		pageData.setPageList(PageUtil.getShowPages(userListRequest.getCurrentPage(),pageData.getTotalPage(),5L));
 		return pageData;
+	}
+
+	@Transactional
+	public void userDelete(String userId) {
+		userDao.userDelete(userId);
 	}
 	
 }

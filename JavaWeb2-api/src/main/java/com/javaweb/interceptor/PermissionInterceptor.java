@@ -29,13 +29,19 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 		//String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();  
 		String userId = request.getHeader(SystemConstant.HEAD_USERID);
 		String token = request.getHeader(SystemConstant.HEAD_TOKEN);
+		String type = request.getHeader(SystemConstant.HEAD_TYPE);
 		String servletPath = request.getServletPath();
-		if(userId==null||token==null){
+		if(userId==null||token==null||type==null){
 			request.getRequestDispatcher("/requestParameterLost").forward(request,response);
 			//response.sendRedirect(basePath+"/requestParameterLost");
 			return false;
 		}
-		TokenData tokenData = (TokenData)redisTemplate.opsForValue().get(userId);//(TokenData)request.getSession().getAttribute(userId);
+		if(!type.matches("[1-9]")){
+			request.getRequestDispatcher("/requestParameterLost").forward(request,response);
+			//response.sendRedirect(basePath+"/requestParameterLost");
+			return false;
+		}
+		TokenData tokenData = (TokenData)redisTemplate.opsForValue().get(userId+","+type);//(TokenData)request.getSession().getAttribute(userId);
 		if(tokenData==null){
 			request.getRequestDispatcher("/invalidRequest").forward(request,response);
 			//response.sendRedirect(basePath+"/invalidRequest");
@@ -51,17 +57,22 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 			//response.sendRedirect(basePath+"/requestParameterError");
 			return false;
 		}
+		if(!tokenData.getType().equals(type)){
+			request.getRequestDispatcher("/requestParameterError").forward(request,response);
+			//response.sendRedirect(basePath+"/requestParameterError");
+			return false;
+		}
 		if(servletPath.startsWith("/web/loggedIn")){//该路径下只要登录即可访问，不需要权限
 			redisTemplate.opsForValue().set(userId,tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
 			return true;
 		}
-		long count = tokenData.getAuthOperateList().stream().filter(i->servletPath.equals(i.getApiUrl())).count();
+		long count = tokenData.getAuthOperateList().stream().filter(i->servletPath.startsWith(i.getApiUrl())).count();
 		if(count<=0){
 			request.getRequestDispatcher("/noAuthory").forward(request,response);
 			//response.sendRedirect(basePath+"/noAuthory");
 			return false;
 		}else{
-			redisTemplate.opsForValue().set(userId,tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
+			redisTemplate.opsForValue().set(userId+","+type,tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
 			return true;
 		}
 	}
