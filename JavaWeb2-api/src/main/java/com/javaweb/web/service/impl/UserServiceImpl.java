@@ -43,4 +43,9 @@ public class UserServiceImpl implements UserService {
 		userDao.userDelete(userId);
 	}
 	
+	@Transactional
+	public void userAdd(User user) {
+		userDao.insert(user);
+	}
+	
 }

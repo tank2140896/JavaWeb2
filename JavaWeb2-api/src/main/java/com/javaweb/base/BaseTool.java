@@ -5,6 +5,7 @@ import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
@@ -16,6 +17,7 @@ import org.springframework.validation.ObjectError;
 
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
+import com.javaweb.web.eo.TokenData;
 
 public class BaseTool {
 	
@@ -38,6 +40,11 @@ public class BaseTool {
 	
 	public void setDefaultDataToRedis(String key,Object value){
 		valueOperations.set(key,value,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
+	}
+	
+	public TokenData getTokenData(HttpServletRequest request){
+		String key = request.getHeader(SystemConstant.HEAD_USERID)+","+request.getHeader(SystemConstant.HEAD_TYPE);
+		return (TokenData)valueOperations.get(key);
 	}
 	
 	public String getValidateMessage(BindingResult bindingResult){

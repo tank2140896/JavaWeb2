@@ -40,7 +40,7 @@ public class AllOpenController extends BaseController {
 	
 	//用户登录接口
 	@PostMapping("/login")
-	public BaseResponseResult login(@RequestBody @Validated/*({BaseValidatedGroup.add.class})*/ UserLoginRequest userLogin,BindingResult bindingResult,HttpServletRequest request){
+	public BaseResponseResult login(@RequestBody @Validated UserLoginRequest userLogin,BindingResult bindingResult,HttpServletRequest request){
 		BaseResponseResult baseResponseResult = new BaseResponseResult();
 		if(bindingResult.hasErrors()){
 			baseResponseResult = new BaseResponseResult(SystemConstant.VALIDATE_ERROR,getValidateMessage(bindingResult),CommonConstant.EMPTY_VALUE);

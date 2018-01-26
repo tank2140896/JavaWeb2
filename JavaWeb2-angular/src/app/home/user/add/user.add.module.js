@@ -9,20 +9,19 @@ exports.__esModule = true;
 var core_1 = require("@angular/core");
 var common_1 = require("@angular/common");
 var router_1 = require("@angular/router");
-var user_component_1 = require("./user.component");
-var user_list_module_1 = require("./list/user.list.module");
-var user_add_module_1 = require("./add/user.add.module");
-var UserModule = /** @class */ (function () {
-    function UserModule() {
+var forms_1 = require("@angular/forms");
+var user_add_component_1 = require("./user.add.component");
+var UserAddModule = /** @class */ (function () {
+    function UserAddModule() {
     }
-    UserModule = __decorate([
+    UserAddModule = __decorate([
         core_1.NgModule({
-            imports: [common_1.CommonModule, router_1.RouterModule, user_list_module_1.UserListModule, user_add_module_1.UserAddModule],
-            declarations: [user_component_1.UserComponent],
-            exports: [user_component_1.UserComponent]
+            imports: [common_1.CommonModule, router_1.RouterModule, forms_1.FormsModule],
+            declarations: [user_add_component_1.UserAddComponent],
+            exports: [user_add_component_1.UserAddComponent]
         })
-    ], UserModule);
-    return UserModule;
+    ], UserAddModule);
+    return UserAddModule;
 }());
-exports.UserModule = UserModule;
-//# sourceMappingURL=user.module.js.map
+exports.UserAddModule = UserAddModule;
+//# sourceMappingURL=user.add.module.js.map

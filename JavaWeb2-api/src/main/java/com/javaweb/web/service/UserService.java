@@ -12,5 +12,7 @@ public interface UserService {
 	public PageData userList(UserListRequest userListRequest);
 	
 	public void userDelete(String userId);
+
+	public void userAdd(User user);
 	
 }

@@ -14,7 +14,7 @@ public class User extends BaseEntity implements Serializable {
 	
 	private static final long serialVersionUID = -696227785545506331L;
 
-	@NotNull(groups={update.class,delete.class},message="validated.User.userId.NotNull")
+	@NotNull(groups={update.class},message="validated.User.userId.NotNull")
 	@Column(name="user_id",pk=true)
 	private String userId;//用户ID
 	

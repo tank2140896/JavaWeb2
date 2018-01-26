@@ -7,14 +7,15 @@ var home_component_1 = require("./home/home.component");
 var user_component_1 = require("./home/user/user.component");
 var user_list_component_1 = require("./home/user/list/user.list.component");
 var centeral_component_1 = require("./home/centeral/centeral.component");
+var user_add_component_1 = require("./home/user/add/user.add.component");
 var APP_ROUTES = [
     { path: '', component: login_components_1.LoginComponent },
     { path: 'login', component: login_components_1.LoginComponent },
     { path: 'web', component: home_component_1.HomeComponent, children: [
             { path: '', component: centeral_component_1.CenteralComponent, canActivate: [AuthService_1.AuthService] },
             { path: 'sys/user', component: user_component_1.UserComponent, children: [
-                    { path: '', component: user_list_component_1.UserListComponent, canActivate: [AuthService_1.AuthService] },
                     { path: 'list', component: user_list_component_1.UserListComponent, canActivate: [AuthService_1.AuthService] },
+                    { path: 'add', component: user_add_component_1.UserAddComponent, canActivate: [AuthService_1.AuthService] },
                     { path: '**', redirectTo: '/web', pathMatch: 'full' }
                 ], canActivate: [AuthService_1.AuthService] },
             { path: '**', redirectTo: '/web', pathMatch: 'full' }

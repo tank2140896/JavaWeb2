@@ -1,5 +1,5 @@
 import {Component,OnInit} from '@angular/core';
-import {Router} from "@angular/router";
+import {Router, ActivatedRoute} from "@angular/router";
 import {NgbDatepickerI18n,NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 import {HttpService} from "../../../service/HttpService";
@@ -10,6 +10,7 @@ import {HttpRequestUrl} from "../../../constant/HttpRequestUrl";
 import {DateUtil} from "../../../util/DateUtil";
 import {DatepickerI18nService} from "../../../service/DatepickerI18nService";
 import {ResultPage} from "../../../models/result/result.page";
+import {AppRoutes} from "../../../app.routes";
 
 @Component({
     selector: 'user-list',
@@ -21,17 +22,20 @@ import {ResultPage} from "../../../models/result/result.page";
 export class UserListComponent implements OnInit {
 
     constructor(private router:Router,
+                private activatedRoute:ActivatedRoute,
                 private ngbModal:NgbModal,
                 private httpService:HttpService,
                 private authService:AuthService,
                 private sessionService:SessionService){
         //this.userListZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_LIST,false));
         this.userDeleteZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_DELETE,false));
+        this.userAddZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_ADD,false));
     }
 
     /** 操作权限 start */
     //userListZone:boolean;//用户列表
-    userDeleteZone:boolean;//用户删除
+    userDeleteZone:boolean;//删除用户
+    userAddZone:boolean;//新增用户
     /** 操作权限 end */
 
     private userList:UserList = new UserList();//用户列表搜索条件
@@ -111,20 +115,17 @@ export class UserListComponent implements OnInit {
         });
     }
 
-
-
-    /**
     //新增用户
-    public addUser():void{
-        //this.router.navigate(['add'],{relativeTo: this.activatedRoute});
-        this.router.navigate([RouteFullPath.UserManageAdd]);
-    }
+     public addUser():void{
+         this.router.navigate(['../add'],{relativeTo: this.activatedRoute});
+     }
 
-    //修改用户
-    public modifyUser(userId):void{
+     /**
+        //修改用户
+        public modifyUser(userId):void{
         //this.router.navigate([RouteFullPath.UserManageModify],{queryParams:{'userId':{'a':10,'b':'30'}}});
         this.router.navigate([RouteFullPath.UserManageModify],{queryParams:{'userId':userId}});
-    }
-    */
+     }
+     */
 
 }

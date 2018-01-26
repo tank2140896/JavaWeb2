@@ -21,4 +21,6 @@ public interface UserDao extends BaseDao<User> {
 	
 	public void userDelete(String userId);
 	
+	public void userAdd(User user);
+	
 }

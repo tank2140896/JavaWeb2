@@ -14,8 +14,9 @@ var DateUtil_1 = require("../../../util/DateUtil");
 var DatepickerI18nService_1 = require("../../../service/DatepickerI18nService");
 var result_page_1 = require("../../../models/result/result.page");
 var UserListComponent = /** @class */ (function () {
-    function UserListComponent(router, ngbModal, httpService, authService, sessionService) {
+    function UserListComponent(router, activatedRoute, ngbModal, httpService, authService, sessionService) {
         this.router = router;
+        this.activatedRoute = activatedRoute;
         this.ngbModal = ngbModal;
         this.httpService = httpService;
         this.authService = authService;
@@ -25,6 +26,7 @@ var UserListComponent = /** @class */ (function () {
         this.resultPage = new result_page_1.ResultPage(); //分页结果初始化
         //this.userListZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_LIST,false));
         this.userDeleteZone = authService.canShow(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_USER_DELETE, false));
+        this.userAddZone = authService.canShow(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_USER_ADD, false));
     }
     //初始化
     UserListComponent.prototype.ngOnInit = function () {
@@ -91,6 +93,10 @@ var UserListComponent = /** @class */ (function () {
         }, function (reason) {
             //主要是ModalDismissReasons.ESC和ModalDismissReasons.BACKDROP_CLICK
         });
+    };
+    //新增用户
+    UserListComponent.prototype.addUser = function () {
+        this.router.navigate(['../add'], { relativeTo: this.activatedRoute });
     };
     UserListComponent = __decorate([
         core_1.Component({
