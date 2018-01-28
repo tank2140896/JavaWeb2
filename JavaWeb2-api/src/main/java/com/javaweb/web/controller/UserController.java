@@ -1,5 +1,7 @@
 package com.javaweb.web.controller;
 
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import com.javaweb.base.BaseResponseResult;
 import com.javaweb.base.BaseValidatedGroup;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
+import com.javaweb.util.core.DateUtil;
 import com.javaweb.web.eo.PageData;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.user.UserListRequest;
@@ -48,13 +51,16 @@ public class UserController extends BaseController {
 	public BaseResponseResult userAdd(HttpServletRequest request,@RequestBody @Validated({BaseValidatedGroup.add.class}) User user,BindingResult bindingResult){
 		BaseResponseResult baseResponseResult = new BaseResponseResult();
 		if(bindingResult.hasErrors()){
-			TokenData tokenData = getTokenData(request);
-			User currentUser = tokenData.getUser();
-			user.setParentId(currentUser.getUserId());
-			user.setLevel(currentUser.getLevel()+1);
-			userService.userAdd(user);
 			baseResponseResult = new BaseResponseResult(SystemConstant.VALIDATE_ERROR,getValidateMessage(bindingResult),CommonConstant.EMPTY_VALUE);
 		}else{
+			TokenData tokenData = getTokenData(request);
+			User currentUser = tokenData.getUser();
+			user.setUserId(UUID.randomUUID().toString());
+			user.setParentId(currentUser.getUserId());
+			user.setLevel(currentUser.getLevel()+1);
+			user.setCreateDate(DateUtil.getDefaultDate());
+			user.setCreator(currentUser.getUserName());
+			userService.userAdd(user);
 			baseResponseResult = new BaseResponseResult(SystemConstant.SUCCESS,getMessage("user.add.success"),null);
 		}
 		return baseResponseResult;

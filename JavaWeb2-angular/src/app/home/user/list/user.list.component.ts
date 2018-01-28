@@ -116,9 +116,9 @@ export class UserListComponent implements OnInit {
     }
 
     //新增用户
-     public addUser():void{
-         this.router.navigate(['../add'],{relativeTo: this.activatedRoute});
-     }
+    public addUser():void{
+        this.router.navigate(['../add'],{relativeTo: this.activatedRoute});
+    }
 
      /**
         //修改用户
