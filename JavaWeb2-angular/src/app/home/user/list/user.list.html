@@ -86,9 +86,9 @@
                         <td>{{eachData.createDate}}</td>
                         <td>
                             <button *ngIf="userDeleteZone" class="btn btn-sm btn-danger" (click)="deleteUser(eachData.userId,content)">删除用户</button>
-                            <button class="btn btn-sm btn-warning">修改用户</button>
-                            <button class="btn btn-sm btn-info">用户详情</button>
-                            <button class="btn btn-sm btn-primary">角色分配</button>
+                            <button *ngIf="userModifyZone" class="btn btn-sm btn-warning" (click)="modifyUser(eachData.userId)">修改用户</button>
+                            <button *ngIf="userDetailZone" class="btn btn-sm btn-info" (click)="userDetail(eachData.userId)">用户详情</button>
+                            <button *ngIf="userRoleAssignmentZone" class="btn btn-sm btn-primary" (click)="userRoleAssignment(eachData.userId)">角色分配</button>
                         </td>
                     </tr>
                     </tbody>

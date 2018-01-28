@@ -69,8 +69,11 @@ export class AuthService implements CanActivate {
                 return false;
             }
             for(let i of authOperateList){
-                if(apiUrl==i.apiUrl){
-                    return true;
+                let splitApiUrl = i.apiUrl.split(',');
+                for(let j=0;j<splitApiUrl.length;j++){
+                    if(apiUrl==splitApiUrl[j]){
+                        return true;
+                    }
                 }
             }
         }

@@ -74,8 +74,11 @@ var AuthService = /** @class */ (function () {
             }
             for (var _i = 0, authOperateList_1 = authOperateList; _i < authOperateList_1.length; _i++) {
                 var i = authOperateList_1[_i];
-                if (apiUrl == i.apiUrl) {
-                    return true;
+                var splitApiUrl = i.apiUrl.split(',');
+                for (var j = 0; j < splitApiUrl.length; j++) {
+                    if (apiUrl == splitApiUrl[j]) {
+                        return true;
+                    }
                 }
             }
         }

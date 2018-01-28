@@ -27,6 +27,9 @@ var UserListComponent = /** @class */ (function () {
         //this.userListZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_LIST,false));
         this.userDeleteZone = authService.canShow(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_USER_DELETE, false));
         this.userAddZone = authService.canShow(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_USER_ADD, false));
+        this.userModifyZone = authService.canShow(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_USER_MODIFY, false));
+        this.userDetailZone = authService.canShow(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_USER_DETAIL, false));
+        this.userRoleAssignmentZone = authService.canShow(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_USER_ROLE_ASSIGNMENT, false));
     }
     //初始化
     UserListComponent.prototype.ngOnInit = function () {
@@ -97,6 +100,18 @@ var UserListComponent = /** @class */ (function () {
     //新增用户
     UserListComponent.prototype.addUser = function () {
         this.router.navigate(['../add'], { relativeTo: this.activatedRoute });
+    };
+    //修改用户
+    UserListComponent.prototype.modifyUser = function (userId) {
+        this.router.navigate(['../modify'], { relativeTo: this.activatedRoute, queryParams: { 'userId': userId } });
+    };
+    //用户详情
+    UserListComponent.prototype.userDetail = function (userId) {
+        this.router.navigate(['../detail'], { relativeTo: this.activatedRoute, queryParams: { 'userId': userId } });
+    };
+    //用户角色分配
+    UserListComponent.prototype.userRoleAssignment = function (userId) {
+        this.router.navigate(['../roleAssignment'], { relativeTo: this.activatedRoute, queryParams: { 'userId': userId } });
     };
     UserListComponent = __decorate([
         core_1.Component({

@@ -12,12 +12,15 @@ var router_1 = require("@angular/router");
 var user_component_1 = require("./user.component");
 var user_list_module_1 = require("./list/user.list.module");
 var user_add_module_1 = require("./add/user.add.module");
+var user_modify_module_1 = require("./modify/user.modify.module");
+var user_detail_module_1 = require("./detail/user.detail.module");
+var user_role_assignment_module_1 = require("./roleAssignment/user.role.assignment.module");
 var UserModule = /** @class */ (function () {
     function UserModule() {
     }
     UserModule = __decorate([
         core_1.NgModule({
-            imports: [common_1.CommonModule, router_1.RouterModule, user_list_module_1.UserListModule, user_add_module_1.UserAddModule],
+            imports: [common_1.CommonModule, router_1.RouterModule, user_list_module_1.UserListModule, user_add_module_1.UserAddModule, user_modify_module_1.UserModifyModule, user_detail_module_1.UserDetailModule, user_role_assignment_module_1.UserRoleAssignmentModule],
             declarations: [user_component_1.UserComponent],
             exports: [user_component_1.UserComponent]
         })

@@ -61,6 +61,8 @@ clickMe(a:HTMLInputElement,b:HTMLInputElement){
 @HostBinding('style.color') getColor(){
     return 'red';
 }
+2.11、构造方法和初始化方法的执行顺序
+先执行构造方法（constructor）后执行初始化方法（ngOnInit）
 3、在angular-cli自动生成范围外的内容
 3.1、bootstrap
 ①package.json添加"ng2-bootstrap":"1.4.2"和"bootstrap":"3.3.7"
@@ -73,7 +75,7 @@ clickMe(a:HTMLInputElement,b:HTMLInputElement){
 declare var $: any;
 4、待完善/解决/考虑的问题
 4.1、使用第三方npm等考虑到angular-cli的版本、angular自身的版本、nodejs的版本及package.josn中各版本的兼容关系
-4.2、多级联动、功能较为丰富的树形层次结构 
-4.3、table参考：ng-treetable   
-4.4、样式：NG-ZORRO    
+4.2、多级联动、功能较为丰富的树形层次结构
+4.3、table参考：ng-treetable
+4.4、样式：NG-ZORRO
 

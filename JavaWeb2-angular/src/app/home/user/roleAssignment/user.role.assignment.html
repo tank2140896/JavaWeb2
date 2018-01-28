@@ -1,0 +1,32 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h3>系统管理-用户管理-角色分配</h3>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-group">
+            <div class="checkbox">
+                <label *ngFor="let eachData of roleInfo;">
+                    <!--
+                    <div *ngIf="eachData.checkFlag=='check'">
+                        <span>{{eachData.roleName}} </span><input type="checkbox" value="eachData.roleId"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    </div>
+                    <div *ngIf="eachData.checkFlag=='uncheck'">
+                        <span>{{eachData.roleName}} </span><input type="checkbox" value="eachData.roleId"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    </div>
+                    -->
+                    <div>
+                        <span>{{eachData.roleName}} </span><input type="checkbox" [(ngModel)]="eachData.checkFlag" value="eachData.roleId"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    </div>
+                </label>
+            </div>
+        </div>
+        <div style="float:left;">
+            <button class="btn" (click)="cancel()">取消</button>
+            <button class="btn btn-success" (click)="save()">保存</button>
+        </div>
+    </div>
+</div>
+

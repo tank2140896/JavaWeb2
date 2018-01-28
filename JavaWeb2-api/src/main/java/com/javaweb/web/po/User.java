@@ -23,8 +23,8 @@ public class User extends BaseEntity implements Serializable {
 	@Column(name="user_name")
 	private String userName;//用户名
 	
-	@NotNull(groups={add.class,update.class},message="validated.User.password.NotNull")
-	@Pattern(groups={add.class,update.class},regexp="^(?![^a-zA-Z]+$)(?!\\D+$).{6,20}$",message="validated.User.password.Pattern")
+	@NotNull(groups={add.class},message="validated.User.password.NotNull")
+	@Pattern(groups={add.class},regexp="^(?![^a-zA-Z]+$)(?!\\D+$).{6,20}$",message="validated.User.password.Pattern")
 	@Column(name="password")
 	private String password;//用户密码
 	

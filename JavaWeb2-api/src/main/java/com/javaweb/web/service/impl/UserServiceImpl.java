@@ -1,6 +1,7 @@
 package com.javaweb.web.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.javaweb.util.core.PageUtil;
 import com.javaweb.web.dao.ds1.UserDao;
 import com.javaweb.web.eo.PageData;
+import com.javaweb.web.eo.user.RoleInfoResponse;
 import com.javaweb.web.eo.user.UserListRequest;
 import com.javaweb.web.eo.user.UserListResponse;
 import com.javaweb.web.eo.user.UserLoginRequest;
@@ -46,6 +48,24 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public void userAdd(User user) {
 		userDao.insert(user);
+	}
+
+	@Transactional
+	public void userModify(User user) {
+		userDao.update(user);
+	}
+
+	public User userDetail(String userId) {
+		return userDao.userDetail(userId);
+	}
+
+	public List<RoleInfoResponse> userRoleInfo(String userId) {
+		return userDao.userRoleInfo(userId);
+	}
+
+	@Transactional
+	public void roleAssignment(Map<String, Object> map) {
+		userDao.roleAssignment(map);
 	}
 	
 }

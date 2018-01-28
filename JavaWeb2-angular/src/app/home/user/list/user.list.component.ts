@@ -30,12 +30,18 @@ export class UserListComponent implements OnInit {
         //this.userListZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_LIST,false));
         this.userDeleteZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_DELETE,false));
         this.userAddZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_ADD,false));
+        this.userModifyZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_MODIFY,false));
+        this.userDetailZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_DETAIL,false));
+        this.userRoleAssignmentZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_ROLE_ASSIGNMENT,false));
     }
 
     /** 操作权限 start */
     //userListZone:boolean;//用户列表
     userDeleteZone:boolean;//删除用户
     userAddZone:boolean;//新增用户
+    userModifyZone:boolean;//修改用户
+    userDetailZone:boolean;//用户详情
+    userRoleAssignmentZone:boolean;//用户角色分配
     /** 操作权限 end */
 
     private userList:UserList = new UserList();//用户列表搜索条件
@@ -117,15 +123,22 @@ export class UserListComponent implements OnInit {
 
     //新增用户
     public addUser():void{
-        this.router.navigate(['../add'],{relativeTo: this.activatedRoute});
+        this.router.navigate(['../add'],{relativeTo:this.activatedRoute});
     }
 
-     /**
-        //修改用户
-        public modifyUser(userId):void{
-        //this.router.navigate([RouteFullPath.UserManageModify],{queryParams:{'userId':{'a':10,'b':'30'}}});
-        this.router.navigate([RouteFullPath.UserManageModify],{queryParams:{'userId':userId}});
-     }
-     */
+    //修改用户
+    public modifyUser(userId):void{
+        this.router.navigate(['../modify'],{relativeTo:this.activatedRoute,queryParams:{'userId':userId}});
+    }
+
+    //用户详情
+    public userDetail(userId):void{
+        this.router.navigate(['../detail'],{relativeTo:this.activatedRoute,queryParams:{'userId':userId}});
+    }
+
+    //用户角色分配
+    public userRoleAssignment(userId):void{
+        this.router.navigate(['../roleAssignment'],{relativeTo:this.activatedRoute,queryParams:{'userId':userId}});
+    }
 
 }

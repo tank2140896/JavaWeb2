@@ -1,5 +1,8 @@
 package com.javaweb.web.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,8 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,12 +27,13 @@ import com.javaweb.constant.SystemConstant;
 import com.javaweb.util.core.DateUtil;
 import com.javaweb.web.eo.PageData;
 import com.javaweb.web.eo.TokenData;
+import com.javaweb.web.eo.user.RoleInfoResponse;
 import com.javaweb.web.eo.user.UserListRequest;
 import com.javaweb.web.po.User;
 import com.javaweb.web.service.UserService;
 
-@RequestMapping("/web/sys/user")
 @RestController
+@RequestMapping("/web/sys/user")
 public class UserController extends BaseController {
 	
 	@Autowired
@@ -64,6 +70,43 @@ public class UserController extends BaseController {
 			baseResponseResult = new BaseResponseResult(SystemConstant.SUCCESS,getMessage("user.add.success"),null);
 		}
 		return baseResponseResult;
+	}
+	
+	@PutMapping("/modify")
+	public BaseResponseResult userModify(HttpServletRequest request,@RequestBody @Validated({BaseValidatedGroup.update.class}) User user,BindingResult bindingResult){
+		BaseResponseResult baseResponseResult = new BaseResponseResult();
+		if(bindingResult.hasErrors()){
+			baseResponseResult = new BaseResponseResult(SystemConstant.VALIDATE_ERROR,getValidateMessage(bindingResult),CommonConstant.EMPTY_VALUE);
+		}else{
+			TokenData tokenData = getTokenData(request);
+			User currentUser = tokenData.getUser();
+			user.setUpdateDate(DateUtil.getDefaultDate());
+			user.setUpdater(currentUser.getUserName());
+			userService.userModify(user);
+			baseResponseResult = new BaseResponseResult(SystemConstant.SUCCESS,getMessage("user.modify.success"),null);
+		}
+		return baseResponseResult;
+	}
+	
+	@GetMapping("/detail/{userId}")
+	public BaseResponseResult userDetail(@PathVariable("userId") String userId){
+		User user = userService.userDetail(userId);
+		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("user.detail.success"),user);
+	}
+	
+	@GetMapping("/userRoleInfo/{userId}")
+	public BaseResponseResult userRoleInfo(@PathVariable("userId") String userId){
+		List<RoleInfoResponse> list = userService.userRoleInfo(userId);
+		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("user.userRoleInfo.success"),list);
+	}
+	
+	@PostMapping("/roleAssignment/{userId}")
+	public BaseResponseResult roleAssignment(@PathVariable("userId") String userId,@RequestBody List<String> list){
+		Map<String,Object> map = new HashMap<>();
+		map.put("userId",userId);
+		map.put("list",list);
+		userService.roleAssignment(map);
+		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("user.roleAssignment.success"),null);
 	}
 	
 }

@@ -1,0 +1,47 @@
+<div class="row">
+    <div class="col-lg-12">
+        <h3>系统管理-用户管理-修改用户</h3>
+    </div>
+</div>
+<hr>
+<div class="row">
+    <div class="col-lg-6">
+        <div class="form-group input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">用户账号</span>
+            </div>
+            <input [(ngModel)]="userModify.userName" type="text" class="form-control" placeholder="请输入用户账号">
+        </div>
+        <div class="form-group input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">用户姓名</span>
+            </div>
+            <input [(ngModel)]="userModify.personName" type="text" class="form-control" placeholder="请输入用户姓名">
+        </div>
+        <div class="form-group input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">电子邮箱</span>
+            </div>
+            <input [(ngModel)]="userModify.email" type="text" class="form-control" placeholder="请输入电子邮箱">
+        </div>
+        <div class="form-group input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">手机号码</span>
+            </div>
+            <input [(ngModel)]="userModify.phone" type="text" class="form-control" placeholder="请输入手机号码">
+        </div>
+        <div class="form-group input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">备注事项</span>
+            </div>
+            <input [(ngModel)]="userModify.remark" type="text" class="form-control" placeholder="请输入备注事项">
+        </div>
+        <div style="float:right;">
+            <button class="btn" (click)="cancel()">取消</button>
+            <button class="btn btn-success" (click)="modify()">修改</button>
+        </div>
+    </div>
+</div>
+
+
+

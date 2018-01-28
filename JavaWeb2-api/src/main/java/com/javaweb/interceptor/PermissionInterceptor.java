@@ -66,7 +66,15 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 			redisTemplate.opsForValue().set(userId,tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
 			return true;
 		}
-		long count = tokenData.getAuthOperateList().stream().filter(i->servletPath.startsWith(i.getApiUrl())).count();
+		long count = tokenData.getAuthOperateList().stream().filter(i->{
+			String splitApiUrl[] = i.getApiUrl().split(",");
+			for(String str:splitApiUrl){
+				if(servletPath.startsWith(str)){
+					return true;
+				}
+			}
+			return false; 
+		}).count();
 		if(count<=0){
 			request.getRequestDispatcher("/noAuthory").forward(request,response);
 			//response.sendRedirect(basePath+"/noAuthory");

@@ -51,4 +51,26 @@
 		delete from user where user_id = #{_parameter};
 	</delete>
 	
+	<select id="userDetail" parameterType="java.lang.String" resultType="com.javaweb.web.po.User">
+		select <include refid="selectUser"></include> from user where user_id = #{_parameter} and del_flag = 0 limit 1
+	</select>
+	
+	<select id="userRoleInfo" parameterType="java.lang.String" resultType="com.javaweb.web.eo.user.RoleInfoResponse">
+		SELECT r.role_id as roleId,r.role_name as roleName,(CASE WHEN tmp.role_id IS NULL THEN false ELSE true END) as checkFlag
+		from role as r
+		LEFT JOIN
+		(SELECT role_id from user_role where user_id = #{_parameter}) as tmp
+		ON r.role_id = tmp.role_id
+	</select>
+	
+	<update id="roleAssignment" parameterType="java.util.Map">
+		delete from user_role where user_id = #{userId};
+		<if test="list!=null and list.size()>0">
+			insert into user_role(id,user_id,role_id) values
+			<foreach collection="list" index="index" item="item" open="" separator="," close="">   
+		        (UUID(),#{userId},#{item})
+	    	</foreach>
+		</if>
+	</update>
+	
 </mapper>
