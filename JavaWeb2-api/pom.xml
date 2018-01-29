@@ -88,6 +88,11 @@
 		    <artifactId>mybatis-spring-boot-starter</artifactId>
 		    <version>1.3.1</version>
 		</dependency>
+		<!-- 解析json（google的） -->
+		<dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		</dependency>
 	</dependencies>
 	
 	<build>
