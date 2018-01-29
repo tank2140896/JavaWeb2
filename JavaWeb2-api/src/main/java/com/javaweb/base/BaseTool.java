@@ -1,7 +1,6 @@
 package com.javaweb.base;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
@@ -47,13 +46,18 @@ public class BaseTool {
 		return (TokenData)valueOperations.get(key);
 	}
 	
+	public String getMessage(String messageKey){
+		return messageSource.getMessage(messageKey,null,LocaleContextHolder.getLocale());
+	}
+	
 	public String getValidateMessage(BindingResult bindingResult){
 		String message = CommonConstant.EMPTY_VALUE;
 		try{
-			Locale locale = LocaleContextHolder.getLocale();
+			//Locale locale = LocaleContextHolder.getLocale();
 			List<ObjectError> list = bindingResult.getAllErrors();
 			if(list.size()>=1){
-				message = messageSource.getMessage(list.get(0).getDefaultMessage(),null,locale);
+				//message = messageSource.getMessage(list.get(0).getDefaultMessage(),null,locale);
+				message = getMessage(list.get(0).getDefaultMessage());
 			}
 		}catch(Exception e){
 			
@@ -61,8 +65,4 @@ public class BaseTool {
 		return message;
 	}
 	
-	public String getMessage(String messageKey){
-		return messageSource.getMessage(messageKey,null,LocaleContextHolder.getLocale());
-	}
-
 }
