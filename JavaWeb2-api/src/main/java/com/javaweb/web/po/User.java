@@ -47,7 +47,7 @@ public class User extends BaseEntity implements Serializable {
 	private String fcode;//层级关系
 	
 	@Column(name="level")
-	private Integer level = 0;//第几级(0表示未定义层级数;层级数-1为最高,即根节点)
+	private Integer level;//第几级(层级数0为最高,即根节点)
 	
 	@Column(name="remark")
 	private String remark;//备注

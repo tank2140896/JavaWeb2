@@ -12,11 +12,11 @@ public class SystemConstant {
 	
 	public static final String HEAD_TYPE = "type";
 	
-	public static final String SYSTEM_DEFAULT_USER_ID = "admin2018";
+	public static final String SYSTEM_DEFAULT_USER_ID = "admin";
 	
-	public static final String SYSTEM_DEFAULT_USER_NAME = "admin2018";
+	public static final String SYSTEM_DEFAULT_USER_NAME = "admin";
 	
-	public static final String SYSTEM_DEFAULT_USER_PASSWORD = "admin2018";
+	public static final String SYSTEM_DEFAULT_USER_PASSWORD = "admin";
 	
 	public static final String SYSTEM_DEFAULT_USER_PERSON_NAME = "超级管理员";
 	
@@ -26,7 +26,7 @@ public class SystemConstant {
 		SYSTEM_DEFAULT_USER.setUserName(SYSTEM_DEFAULT_USER_NAME);
 		SYSTEM_DEFAULT_USER.setPassword(SYSTEM_DEFAULT_USER_PASSWORD);
 		SYSTEM_DEFAULT_USER.setPersonName(SYSTEM_DEFAULT_USER_PERSON_NAME);
-		SYSTEM_DEFAULT_USER.setLevel(-1);
+		SYSTEM_DEFAULT_USER.setLevel(0);
 		SYSTEM_DEFAULT_USER.setStatus(0);
 	}
 	

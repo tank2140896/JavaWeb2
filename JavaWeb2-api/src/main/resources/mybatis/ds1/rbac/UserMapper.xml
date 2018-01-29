@@ -27,7 +27,7 @@
 			<if test="createStartDate != null and createStartDate != ''">and u.create_date &gt;=#{createStartDate}</if>
 			<if test="createEndDate != null and createEndDate != ''">and u.create_date &lt;=#{createEndDate}</if>
 		</where>
-		and (u.level > ${level} or u.level = 0)
+		and u.level > ${level}
 		order by u.create_date desc
 		limit ${(currentPage-1)*pageSize},${pageSize}
 	</select>
@@ -41,7 +41,7 @@
 			<if test="createStartDate != null and createStartDate != ''">and u.create_date &gt;=#{createStartDate}</if>
 			<if test="createEndDate != null and createEndDate != ''">and u.create_date &lt;=#{createEndDate}</if>
 		</where>
-		and (u.level > ${level} or u.level = 0)
+		and u.level > ${level}
 	</select>
 	
 	<delete id="userDelete" parameterType="java.lang.String">
@@ -64,7 +64,9 @@
 	</select>
 	
 	<update id="roleAssignment" parameterType="java.util.Map">
+		<!-- 删除用户角色关联 -->
 		delete from user_role where user_id = #{userId};
+		<!-- 重新插入新的用户角色关联 -->
 		<if test="list!=null and list.size()>0">
 			insert into user_role(id,user_id,role_id) values
 			<foreach collection="list" index="index" item="item" open="" separator="," close="">   
