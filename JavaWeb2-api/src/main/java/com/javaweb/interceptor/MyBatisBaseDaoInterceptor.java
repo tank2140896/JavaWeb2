@@ -2,6 +2,8 @@ package com.javaweb.interceptor;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,6 +31,8 @@ import com.javaweb.interceptor.mybatis.Column;
 import com.javaweb.interceptor.mybatis.HandleDelete;
 import com.javaweb.interceptor.mybatis.HandleInsert;
 import com.javaweb.interceptor.mybatis.HandleSelectAll;
+import com.javaweb.interceptor.mybatis.HandleSelectAllByPaging;
+import com.javaweb.interceptor.mybatis.HandleSelectAllCount;
 import com.javaweb.interceptor.mybatis.HandleSelectByPk;
 import com.javaweb.interceptor.mybatis.HandleUpdate;
 import com.javaweb.interceptor.mybatis.SqlBuildInfo;
@@ -55,30 +59,22 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 		map.put("update",new HandleUpdate());
 		map.put("delete",new HandleDelete());
 		map.put("selectAll",new HandleSelectAll());
+		map.put("selectAllCount",new HandleSelectAllCount());
+		map.put("selectAllByPaging",new HandleSelectAllByPaging());
 		map.put("selectByPk",new HandleSelectByPk());
 	}
 	
 	public Object intercept(Invocation invocation) throws Throwable {
+		//这里无论是update方法还是query方法，只对前两个参数进行处理
 		MappedStatement mappedStatement = (MappedStatement) invocation.getArgs()[0];
 		Object parameter = invocation.getArgs()[1];
 		String id = mappedStatement.getId();
-		/**
-		Class<?> c = Class.forName(id.substring(0,id.lastIndexOf(".")));
-		Type type[] = c.getGenericInterfaces(); 
-		for(int i=0;i<type.length;i++){
-			//type[i] instanceof ParameterizedType
-			ParameterizedType pt = (ParameterizedType)type[i];
-			Type newType[] = pt.getActualTypeArguments();
-			for(int j=0;j<newType.length;j++){
-				System.out.println(newType[j].getTypeName());//获得泛型类型
-			}
-		}
-		*/
+		Class<?> c = getGenericParadigm(id);//获得泛型类型
 		String split[] = id.split("\\.");
 		String lastString = split[split.length-1];
 		SqlHandle sqlHandle = map.get(lastString);
 		if(sqlHandle!=null){
-			SqlBuildInfo sqlBuildInfo = getSqlBuildInfo(id,parameter);//获取改造SQL所需要的数据
+			SqlBuildInfo sqlBuildInfo = getSqlBuildInfo(c,parameter);//获取改造SQL所需要的数据
 			String sql = sqlHandle.handle(sqlBuildInfo);//改造SQL
 			BoundSql boundSql = mappedStatement.getBoundSql(parameter);
 			BoundSql newBoundSql = new BoundSql(mappedStatement.getConfiguration(),sql,boundSql.getParameterMappings(),boundSql.getParameterObject());  
@@ -98,6 +94,19 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 
 	}
 	
+	private Class<?> getGenericParadigm(String id) throws Exception {
+		Class<?> c = Class.forName(id.substring(0,id.lastIndexOf(".")));//获得子类，目前只处理单层继承
+		Type type[] = c.getGenericInterfaces(); 
+		for(int i=0;i<type.length;i++){
+			ParameterizedType parameterizedType = (ParameterizedType)type[i];//type[i] instanceof ParameterizedType
+			Type newType[] = parameterizedType.getActualTypeArguments();
+			for(int j=0;j<newType.length;j++){
+				c = Class.forName(newType[j].getTypeName());//获得泛型类型，目前只处理单个泛型参数
+			}
+		}
+		return c;
+	}
+	
 	private Builder getBuilder(Builder builder,MappedStatement mappedStatement){
 		builder.resource(mappedStatement.getResource());
 		builder.fetchSize(mappedStatement.getFetchSize());
@@ -111,21 +120,20 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 		return builder;
 	}
 	
-	private SqlBuildInfo getSqlBuildInfo(String id,Object parameter) throws Exception {
+	private SqlBuildInfo getSqlBuildInfo(Class<?> c,Object parameter) throws Exception {
 		List<String> entityList = new ArrayList<>();//获取实体类属性名称的集合
 		List<Object> entityValueList = new ArrayList<>();//获取实体类属性值的集合
 		List<String> columnList = new ArrayList<>();//获取数据库字段名称的集合
-		Class<?> getNeedClass = null;
-		if(parameter instanceof Class){
-			getNeedClass = (Class<?>) parameter;
-		}else{
-			getNeedClass = parameter.getClass();
+		boolean useEntityValueList = true;
+		if((parameter==null)||(parameter instanceof String)||(parameter instanceof Number)||(parameter instanceof Map)){
+			useEntityValueList = false;
 		}
-		Table tabel = getNeedClass.getAnnotation(Table.class);
+		Table tabel = c.getAnnotation(Table.class);
 		String tableName = tabel.name();//获取持久化对象所对应的表名
-		String primaryKey = CommonConstant.EMPTY_VALUE;
-		while(getNeedClass!=null){
-			Field[] field = getNeedClass.getDeclaredFields();
+		String pk = CommonConstant.EMPTY_VALUE;
+		boolean pkGenerate = false;
+		while(c!=null){
+			Field[] field = c.getDeclaredFields();
 			for(int i=0;i<field.length;i++){
 				Field eachField = field[i];
 				eachField.setAccessible(true);
@@ -134,13 +142,17 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 					continue;
 				}
 				if(column.pk()){
-					primaryKey = column.name();//获取主键，暂时只支持单主键
+					pk = column.name();//获取主键，暂时只支持单主键
+				}
+				if(column.keyGenerate()){
+					pkGenerate = true;//获取主键是否自增，暂时只支持单主键
 				}
 				String fieldName = eachField.getName();
 				entityList.add(fieldName);
-				if(!(parameter instanceof Class)){
+				columnList.add(column.name());//数据库字段名称
+				if(useEntityValueList){
 					fieldName = fieldName.substring(0,1).toUpperCase()+fieldName.substring(1,fieldName.length());
-					Method method = getNeedClass.getMethod("get"+fieldName);
+					Method method = c.getMethod("get"+fieldName);
 					Object value = method.invoke(parameter);
 					//目前只考虑到String、Integer、Long和Date类型
 					if(value instanceof Date){
@@ -149,12 +161,18 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 						entityValueList.add(value);
 					}
 				}
-				columnList.add(column.name());//数据库字段名称
 			}
-			getNeedClass = getNeedClass.getSuperclass();
+			c = c.getSuperclass();
 		}
-		return new SqlBuildInfo(tableName,id,entityList,entityValueList,columnList,primaryKey);
+		SqlBuildInfo sqlBuildInfo = new SqlBuildInfo();
+		sqlBuildInfo.setTableName(tableName);
+		sqlBuildInfo.setEntityList(entityList);
+		sqlBuildInfo.setEntityValueList(entityValueList);
+		sqlBuildInfo.setParameterValue(parameter);
+		sqlBuildInfo.setColumnList(columnList);
+		sqlBuildInfo.setPk(pk);
+		sqlBuildInfo.setPkGenerate(pkGenerate);
+		return sqlBuildInfo;
 	}
 	
 }
-

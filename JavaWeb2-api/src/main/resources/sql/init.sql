@@ -66,10 +66,9 @@ CREATE TABLE `role` (
 -- ----------------------------
 -- Records of role
 -- ----------------------------
-INSERT INTO `role` VALUES ('a', '角色A', null, null, '0', '0', null, 'admin', '2018-01-11 11:12:13', null, null, '0');
-INSERT INTO `role` VALUES ('b', '角色B', null, null, '0', '0', null, 'admin', '2018-01-11 11:12:13', null, null, '0');
-INSERT INTO `role` VALUES ('c', '角色C', null, null, '0', '0', null, 'admin', '2018-01-11 11:12:13', null, null, '0');
-INSERT INTO `role` VALUES ('d', '角色D', null, null, '0', '0', null, 'admin', '2018-01-11 11:12:13', null, null, '0');
+INSERT INTO `role` VALUES ('4ca05b93-04d1-11e8-9073-1c1b0d1b66d4', '角色A', null, null, '0', '0', null, '2018-01-11 11:12:13', 'admin', null, null, '0');
+INSERT INTO `role` VALUES ('55f6e415-04d1-11e8-9073-1c1b0d1b66d4', '角色B', null, null, '0', '0', null, '2018-01-11 11:12:13', 'admin', null, null, '0');
+INSERT INTO `role` VALUES ('5d9c7e68-04d1-11e8-9073-1c1b0d1b66d4', '角色C', null, null, '0', '0', null, '2018-01-11 11:12:13', 'admin', null, null, '0');
 
 -- ----------------------------
 -- Table structure for `role_module`
@@ -114,13 +113,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('7c90a994-9a26-4531-89eb-b1523c3ceb7c', 'adsad123', 'asdasd1343', 'a', 'b', 'c', null, 'admin2018', null, '0', 'd', '0', '2018-01-28 10:53:35', 'admin2018', '2018-01-28 14:43:02', 'admin2018', '0');
-INSERT INTO `user` VALUES ('b', 'b', 'b', 'b', null, null, null, null, null, '0', null, '0', '2018-01-21 11:11:22', null, null, null, '0');
-INSERT INTO `user` VALUES ('c', 'c', 'c', 'c', null, null, null, null, null, '0', null, '0', '2018-01-21 09:22:34', null, null, null, '0');
-INSERT INTO `user` VALUES ('h', 'h', 'h', 'h', null, null, null, null, null, '0', null, '0', '2018-01-21 12:11:33', null, null, null, '0');
-INSERT INTO `user` VALUES ('i', 'i', 'i', 'i', null, null, null, null, null, '0', null, '0', '2018-01-21 12:11:33', null, null, null, '0');
-INSERT INTO `user` VALUES ('j', 'j', 'j', 'j', null, null, null, null, null, '0', null, '0', '2018-01-21 12:11:33', null, null, null, '0');
-INSERT INTO `user` VALUES ('k', 'k', 'k', 'k', null, null, null, null, null, '0', null, '0', '2018-01-21 12:11:33', null, null, null, '0');
+INSERT INTO `user` VALUES ('7c90a994-9a26-4531-89eb-b1523c3ceb7c', 'adsad123', 'asdasd1343', 'a', 'b', 'c', null, 'admin2018', null, '1', 'd', '0', '2018-01-28 10:53:35', 'admin', '2018-01-28 14:43:02', 'admin', '0');
 
 -- ----------------------------
 -- Table structure for `user_role`
@@ -136,4 +129,4 @@ CREATE TABLE `user_role` (
 -- ----------------------------
 -- Records of user_role
 -- ----------------------------
-INSERT INTO `user_role` VALUES ('09479d61-040d-11e8-a70c-00ff676e3062', '7c90a994-9a26-4531-89eb-b1523c3ceb7c', 'c');
+INSERT INTO `user_role` VALUES ('09479d61-040d-11e8-a70c-00ff676e3062', '7c90a994-9a26-4531-89eb-b1523c3ceb7c', '6c2b3870-04d1-11e8-9073-1c1b0d1b66d4');

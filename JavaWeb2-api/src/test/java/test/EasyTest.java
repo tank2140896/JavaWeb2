@@ -25,7 +25,7 @@ public class EasyTest {
 	
 	@Test
 	public void test() throws Exception {
-		List<User> list = userDao.selectAll(User.class);
+		List<User> list = userDao.selectAll();
 		list.stream().forEach(i->System.out.println(i.getUserId()));
 	}
 

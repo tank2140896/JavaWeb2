@@ -9,6 +9,15 @@ public class HandleInsert implements SqlHandle {
 		List<Object> entityValueList = sqlBuildInfo.getEntityValueList();
 		List<String> columnList = sqlBuildInfo.getColumnList();
 		StringBuilder stringBuilder = new StringBuilder();
+		if(sqlBuildInfo.getPkGenerate()){//主键自增的处理
+			for(int i=0;i<columnList.size();i++){
+				if(sqlBuildInfo.getPk().equals(columnList.get(i))){
+					columnList.remove(i);
+					entityValueList.remove(i);
+					break;
+				}
+			}
+		}
 		stringBuilder.append("insert into ").append(tableName).append("(");
 		for(int i=0;i<columnList.size();i++){
 			stringBuilder.append(columnList.get(i));

@@ -1,10 +1,16 @@
 package com.javaweb.interceptor.mybatis;
 
 import java.util.List;
+import java.util.Map;
 
-public class HandleSelectByPk implements SqlHandle {
+public class HandleSelectAllByPaging implements SqlHandle {
 
+	@SuppressWarnings("unchecked")
 	public String handle(SqlBuildInfo sqlBuildInfo) {
+		Map<String,Long> map = (Map<String,Long>)sqlBuildInfo.getParameterValue();
+		Long currentPage = map.get("currentPage");
+		Long pageSize = map.get("pageSize");
+		
 		String tableName = sqlBuildInfo.getTableName();
 		List<String> entityList = sqlBuildInfo.getEntityList();
 		List<String> columnList = sqlBuildInfo.getColumnList();
@@ -16,18 +22,9 @@ public class HandleSelectByPk implements SqlHandle {
 				stringBuilder.append(",");
 			}
 		}
-		stringBuilder.append(" from ").append(tableName).append(" where ");
-		for(int i=0;i<columnList.size();i++){
-			if(columnList.get(i).equals(sqlBuildInfo.getPk())){
-				stringBuilder.append(sqlBuildInfo.getPk()).append(" = ");
-				if(sqlBuildInfo.getParameterValue() instanceof String){
-					stringBuilder.append("'"+sqlBuildInfo.getParameterValue()+"'");
-				}else{
-					stringBuilder.append(sqlBuildInfo.getParameterValue());
-				}
-				break;
-			}
-		}
+		stringBuilder.append(" from ").append(tableName)
+		             .append(" limit ").append((currentPage-1)*pageSize)
+		             .append(",").append(pageSize);
 		return stringBuilder.toString();
 	}
 
