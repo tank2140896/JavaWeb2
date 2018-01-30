@@ -18,7 +18,7 @@ public class GlobalExceptionHandler extends BaseTool {
 	
 	@ExceptionHandler(value=Exception.class)  
     public BaseResponseResult allExceptionHandler(HttpServletRequest request,Exception e) {  
-		System.err.println(e.getMessage());
+		//System.out.println(e.getMessage());
 		if(e instanceof NoHandlerFoundException){
 			return new BaseResponseResult(SystemConstant.NOT_FOUND,getMessage("validated.permission.notFound"),CommonConstant.EMPTY_VALUE);
 		}else{

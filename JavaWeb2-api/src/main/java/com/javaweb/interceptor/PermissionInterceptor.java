@@ -36,12 +36,13 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 			//response.sendRedirect(basePath+"/requestParameterLost");
 			return false;
 		}
-		if(!type.matches("[1-9]")){
+		if(!type.matches("[1-9]")){//1：web；2：安卓；3：IOS
 			request.getRequestDispatcher("/requestParameterLost").forward(request,response);
 			//response.sendRedirect(basePath+"/requestParameterLost");
 			return false;
 		}
-		TokenData tokenData = (TokenData)redisTemplate.opsForValue().get(userId+","+type);//(TokenData)request.getSession().getAttribute(userId);
+		//(TokenData)request.getSession().getAttribute(userId);
+		TokenData tokenData = (TokenData)redisTemplate.opsForValue().get(userId+","+type);
 		if(tokenData==null){
 			request.getRequestDispatcher("/invalidRequest").forward(request,response);
 			//response.sendRedirect(basePath+"/invalidRequest");

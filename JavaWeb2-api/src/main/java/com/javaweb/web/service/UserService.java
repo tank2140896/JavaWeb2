@@ -3,7 +3,7 @@ package com.javaweb.web.service;
 import java.util.List;
 import java.util.Map;
 
-import com.javaweb.web.eo.PageData;
+import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.user.RoleInfoResponse;
 import com.javaweb.web.eo.user.UserListRequest;
 import com.javaweb.web.eo.user.UserLoginRequest;
@@ -13,7 +13,7 @@ public interface UserService {
 	
 	public User userLogin(UserLoginRequest userLogin);
 	
-	public PageData userList(UserListRequest userListRequest);
+	public Page userList(UserListRequest userListRequest);
 	
 	public void userDelete(String userId);
 

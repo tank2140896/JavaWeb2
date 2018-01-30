@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.javaweb.util.core.PageUtil;
+import com.javaweb.util.entity.Page;
 import com.javaweb.web.dao.ds1.UserDao;
-import com.javaweb.web.eo.PageData;
 import com.javaweb.web.eo.user.RoleInfoResponse;
 import com.javaweb.web.eo.user.UserListRequest;
 import com.javaweb.web.eo.user.UserListResponse;
@@ -27,17 +27,17 @@ public class UserServiceImpl implements UserService {
 		return userDao.userLogin(userLogin);
 	}
 
-	public PageData userList(UserListRequest userListRequest){
-		PageData pageData = new PageData();
+	public Page userList(UserListRequest userListRequest){
+		Page page = new Page();
 		List<UserListResponse> list = userDao.userList(userListRequest);
 		long count = userDao.userListCount(userListRequest);
-		pageData.setData(list);
-		pageData.setCurrentPage(userListRequest.getCurrentPage());
-		pageData.setPageSize(userListRequest.getPageSize());
-		pageData.setTotalSize(count);
-		pageData.setTotalPage(PageUtil.getTotalPage(pageData.getTotalSize(),pageData.getPageSize()));
-		pageData.setPageList(PageUtil.getShowPages(userListRequest.getCurrentPage(),pageData.getTotalPage(),5L));
-		return pageData;
+		page.setData(list);
+		page.setCurrentPage(userListRequest.getCurrentPage());
+		page.setPageSize(userListRequest.getPageSize());
+		page.setTotalSize(count);
+		page.setTotalPage(PageUtil.getTotalPage(page.getTotalSize(),page.getPageSize()));
+		page.setPageList(PageUtil.getShowPages(userListRequest.getCurrentPage(),page.getTotalPage(),5L));
+		return page;
 	}
 
 	@Transactional

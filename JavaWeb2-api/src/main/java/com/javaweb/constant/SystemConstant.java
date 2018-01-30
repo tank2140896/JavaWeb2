@@ -4,6 +4,10 @@ import com.javaweb.web.po.User;
 
 public class SystemConstant {
 	
+	public static final String DEFAULT_DATA_SOURCE_POINT_CUT = "execution(* com.javaweb.web.dao..*.*(..))";
+	
+	public static final String URL_INTERCEPTOR_PATTERN = "/web/**";
+	
 	public static final Long SYSTEM_DEFAULT_SESSION_OUT = 15L;
 	
 	public static final String HEAD_USERID = "userId";

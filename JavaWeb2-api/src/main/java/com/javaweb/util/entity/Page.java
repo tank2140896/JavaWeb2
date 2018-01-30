@@ -1,7 +1,9 @@
 package com.javaweb.util.entity;
 
+import java.util.List;
+
 public class Page {
-	  
+  
 	private Long currentPage = 1L;//默认当前第1页
 	
 	private Long pageSize = 10L;//默认每页显示10条 
@@ -12,12 +14,14 @@ public class Page {
 	
 	private Object data;//数据
 	
+	private List<Long> pageList;//分页页数
+
 	public Long getCurrentPage() {
 		return currentPage;
 	}
 
 	public void setCurrentPage(Long currentPage) {
-		this.currentPage = currentPage>=1?currentPage:1;
+		this.currentPage = currentPage;
 	}
 
 	public Long getPageSize() {
@@ -25,7 +29,7 @@ public class Page {
 	}
 
 	public void setPageSize(Long pageSize) {
-		this.pageSize = pageSize>0?pageSize:10;
+		this.pageSize = pageSize;
 	}
 
 	public Long getTotalSize() {
@@ -33,7 +37,7 @@ public class Page {
 	}
 
 	public void setTotalSize(Long totalSize) {
-		this.totalSize = totalSize>=0?totalSize:0;
+		this.totalSize = totalSize;
 	}
 
 	public Long getTotalPage() {
@@ -41,13 +45,7 @@ public class Page {
 	}
 
 	public void setTotalPage(Long totalPage) {
-		if(pageSize>0){
-			if(totalSize%pageSize==0){
-				this.totalPage = totalSize/pageSize;
-			}else{
-				this.totalPage = totalSize/pageSize+1;
-			}
-		}
+		this.totalPage = totalPage;
 	}
 
 	public Object getData() {
@@ -58,28 +56,12 @@ public class Page {
 		this.data = data;
 	}
 
-	//获取数据截取开始位
-	public Long getSubStart() {
-		if(currentPage==1){
-			return 0L;
-		}else{
-			return (currentPage-1)*pageSize;
-		}
+	public List<Long> getPageList() {
+		return pageList;
 	}
 
-	//获取数据截取结束位
-	public Long getSubEnd() {
-		Long endStart;
-		if(currentPage==1){
-			endStart = pageSize;
-		}else{
-			endStart = currentPage*pageSize;
-		}
-		if(endStart<=totalSize){
-			return endStart;
-		}else{
-			return totalSize;
-		}
+	public void setPageList(List<Long> pageList) {
+		this.pageList = pageList;
 	}
 	
 }

@@ -5,17 +5,19 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
+import com.javaweb.constant.SystemConstant;
+
 @Aspect
 @Component
 public class DataSourceAspect {
 
+	/**
 	//切入点execution
-	//@Pointcut("execution(* com.javaweb.web..*(..))")  
-	//public void methodCall() {}
-	
-	//@Before(value="methodCall()")
-	//@Before(value="execution(* com.javaweb.web..*(..))")
-	@Before(value="execution(* com.javaweb.web.dao..*.*(..))")
+	@Pointcut("execution(* com.javaweb.web..*(..))")  
+	public void methodCall() {}
+	@Before(value="methodCall()")
+	*/
+	@Before(value=SystemConstant.DEFAULT_DATA_SOURCE_POINT_CUT)
 	//这里写具体的数据源切换逻辑
 	public void beforeMethod(JoinPoint joinPoint) throws Throwable {
 		String packagePathDao = joinPoint.getStaticPart().getSignature().getDeclaringTypeName();

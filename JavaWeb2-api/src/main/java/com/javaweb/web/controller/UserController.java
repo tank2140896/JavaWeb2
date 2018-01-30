@@ -25,7 +25,7 @@ import com.javaweb.base.BaseValidatedGroup;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.util.core.DateUtil;
-import com.javaweb.web.eo.PageData;
+import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.user.RoleInfoResponse;
 import com.javaweb.web.eo.user.UserListRequest;
@@ -43,8 +43,8 @@ public class UserController extends BaseController {
 	public BaseResponseResult userList(HttpServletRequest request,@RequestBody UserListRequest userListRequest){
 		TokenData tokenData = getTokenData(request);
 		userListRequest.setLevel(tokenData.getUser().getLevel());
-		PageData pageData = userService.userList(userListRequest);
-		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("user.list.success"),pageData);
+		Page page = userService.userList(userListRequest);
+		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("user.list.success"),page);
 	}
 	
 	@DeleteMapping("/delete/{userId}")
