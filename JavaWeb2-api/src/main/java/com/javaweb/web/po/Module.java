@@ -16,11 +16,11 @@ public class Module extends BaseEntity implements Serializable {
 
 	private List<Module> list;/**辅助属性*/
 	
-	@NotNull(groups={update.class,delete.class},message="validated.Module.moduleId.NotNull")
+	@NotNull(groups={update.class,delete.class},message="validated.module.moduleId.notNull")
 	@Column(name="moduleId",pk=true)
 	private String moduleId;//模块ID
 	
-	@NotNull(groups={add.class,update.class},message="validated.Module.moduleName.NotNull")
+	@NotNull(groups={add.class,update.class},message="validated.module.moduleName.notNull")
 	@Column(name="module_name")
 	private String moduleName;//模块名称
 	

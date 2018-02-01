@@ -10,10 +10,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import com.javaweb.constant.SystemConstant;
 import com.javaweb.web.dao.ds1.UserDao;
 import com.javaweb.web.po.User;
 
-@ComponentScan(basePackages={"com.javaweb"}) 
+@ComponentScan(basePackages={SystemConstant.BASE_PACKAGE}) 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringBootTest(classes=EasyTest.class)
 @WebAppConfiguration

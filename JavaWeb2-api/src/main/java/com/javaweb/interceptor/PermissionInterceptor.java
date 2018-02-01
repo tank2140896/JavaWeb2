@@ -21,6 +21,8 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 	httpServletRequest.getRequestURI()             /javaweb/app/html/home.html
 	httpServletRequest.getRequestURL().toString()  http://localhost:8080/javaweb/app/html/home.html 
 	httpServletRequest.getServletPath()            /app/html/home.html
+	request.getRequestDispatcher("/test").forward(request,response);//服务端跳转
+	response.sendRedirect(basePath+"/test");//页面端跳转
 	*/
 	@SuppressWarnings({"rawtypes","unchecked"})
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
@@ -33,42 +35,35 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 		String servletPath = request.getServletPath();
 		if(userId==null||token==null||type==null){
 			request.getRequestDispatcher("/requestParameterLost").forward(request,response);
-			//response.sendRedirect(basePath+"/requestParameterLost");
 			return false;
 		}
 		if(!type.matches("[1-9]")){//1：web；2：安卓；3：IOS
 			request.getRequestDispatcher("/requestParameterLost").forward(request,response);
-			//response.sendRedirect(basePath+"/requestParameterLost");
 			return false;
 		}
-		//(TokenData)request.getSession().getAttribute(userId);
-		TokenData tokenData = (TokenData)redisTemplate.opsForValue().get(userId+","+type);
+		TokenData tokenData = (TokenData)redisTemplate.opsForValue().get(userId+","+type);//(TokenData)request.getSession().getAttribute(userId);
 		if(tokenData==null){
 			request.getRequestDispatcher("/invalidRequest").forward(request,response);
-			//response.sendRedirect(basePath+"/invalidRequest");
 			return false;
 		}
 		if(!tokenData.getUser().getUserId().equals(userId)){
 			request.getRequestDispatcher("/requestParameterError").forward(request,response);
-			//response.sendRedirect(basePath+"/requestParameterError");
 			return false;
 		}
 		if(!tokenData.getToken().equals(token)){
 			request.getRequestDispatcher("/requestParameterError").forward(request,response);
-			//response.sendRedirect(basePath+"/requestParameterError");
 			return false;
 		}
 		if(!tokenData.getType().equals(type)){
 			request.getRequestDispatcher("/requestParameterError").forward(request,response);
-			//response.sendRedirect(basePath+"/requestParameterError");
 			return false;
 		}
-		if(servletPath.startsWith("/web/loggedIn")){//该路径下只要登录即可访问，不需要权限
+		if(servletPath.startsWith(SystemConstant.URL_LOGIN_PERMISSION)){//该路径下只要登录即可访问，不需要权限
 			redisTemplate.opsForValue().set(userId,tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
 			return true;
 		}
 		long count = tokenData.getAuthOperateList().stream().filter(i->{
-			String splitApiUrl[] = i.getApiUrl().split(",");
+			String splitApiUrl[] = i.getApiUrl().split(",");//某一操作可能会调用多个操作，多个操作约定用逗号分开
 			for(String str:splitApiUrl){
 				if(servletPath.startsWith(str)){
 					return true;
@@ -78,7 +73,6 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 		}).count();
 		if(count<=0){
 			request.getRequestDispatcher("/noAuthory").forward(request,response);
-			//response.sendRedirect(basePath+"/noAuthory");
 			return false;
 		}else{
 			redisTemplate.opsForValue().set(userId+","+type,tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);

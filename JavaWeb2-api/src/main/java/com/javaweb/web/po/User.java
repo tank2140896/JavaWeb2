@@ -14,17 +14,17 @@ public class User extends BaseEntity implements Serializable {
 	
 	private static final long serialVersionUID = -696227785545506331L;
 
-	@NotNull(groups={update.class},message="validated.User.userId.NotNull")
+	@NotNull(groups={update.class},message="validated.user.userId.notNull")
 	@Column(name="user_id",pk=true)
 	private String userId;//用户ID
 	
-	@NotNull(groups={add.class,update.class},message="validated.User.userName.NotNull")
-	@Pattern(groups={add.class,update.class},regexp="^(?![^a-zA-Z]+$)(?!\\D+$).{6,20}$",message="validated.User.userName.Pattern")
+	@NotNull(groups={add.class,update.class},message="validated.user.userName.notNull")
+	@Pattern(groups={add.class,update.class},regexp="^(?![^a-zA-Z]+$)(?!\\D+$).{6,20}$",message="validated.user.userName.pattern")
 	@Column(name="user_name")
 	private String userName;//用户名
 	
-	@NotNull(groups={add.class},message="validated.User.password.NotNull")
-	@Pattern(groups={add.class},regexp="^(?![^a-zA-Z]+$)(?!\\D+$).{6,20}$",message="validated.User.password.Pattern")
+	@NotNull(groups={add.class},message="validated.user.password.notNull")
+	@Pattern(groups={add.class},regexp="^(?![^a-zA-Z]+$)(?!\\D+$).{6,20}$",message="validated.user.password.pattern")
 	@Column(name="password")
 	private String password;//用户密码
 	

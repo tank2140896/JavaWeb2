@@ -5,15 +5,15 @@ import javax.validation.constraints.Pattern;
 
 public class UserLoginRequest {
 
-	@NotNull(message="validated.UserLogin.userName.NotNull")
-	@Pattern(regexp="^(?![^a-zA-Z]+$)(?!\\D+$).{6,20}$",message="validated.User.userName.Pattern")
+	@NotNull(message="validated.userLogin.userName.notNull")
+	@Pattern(regexp="^(?![^a-zA-Z]+$)(?!\\D+$).{6,20}$",message="validated.user.userName.pattern")
 	private String username;
 	
-	@NotNull(message="validated.UserLogin.password.NotNull")
-	@Pattern(regexp="^(?![^a-zA-Z]+$)(?!\\D+$).{6,20}$",message="validated.User.userName.Pattern")
+	@NotNull(message="validated.userLogin.password.notNull")
+	@Pattern(regexp="^(?![^a-zA-Z]+$)(?!\\D+$).{6,20}$",message="validated.user.userName.pattern")
 	private String password;
 	
-	@Pattern(regexp="^[1-9]$",message="validated.User.type.Pattern")
+	@Pattern(regexp="^[1-9]$",message="validated.user.type.pattern")
 	private String type;
 
 	public String getUsername() {

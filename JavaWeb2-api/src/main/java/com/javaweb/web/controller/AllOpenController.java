@@ -7,8 +7,6 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -40,8 +38,8 @@ public class AllOpenController extends BaseController {
 	
 	//用户登录接口
 	@PostMapping("/login")
-	public BaseResponseResult login(@RequestBody @Validated UserLoginRequest userLogin,BindingResult bindingResult,HttpServletRequest request){
-		BaseResponseResult baseResponseResult = new BaseResponseResult();
+	public BaseResponseResult login(@RequestBody @Validated UserLoginRequest userLogin,BindingResult bindingResult){
+		BaseResponseResult baseResponseResult = null;
 		if(bindingResult.hasErrors()){
 			baseResponseResult = new BaseResponseResult(SystemConstant.VALIDATE_ERROR,getValidateMessage(bindingResult),CommonConstant.EMPTY_VALUE);
 		}else{
@@ -51,16 +49,16 @@ public class AllOpenController extends BaseController {
 				TokenData token = getToken(true,user,userLogin.getType());
 				setDefaultDataToRedis(user.getUserId()+","+userLogin.getType(),token);
 				//request.getSession().setAttribute(user.getUserId(),token);
-				baseResponseResult = new BaseResponseResult(SystemConstant.SUCCESS,getMessage("login.User.loginSuccess"),token);
+				baseResponseResult = new BaseResponseResult(SystemConstant.SUCCESS,getMessage("login.user.loginSuccess"),token);
 			}else{//非超级管理员
 				User user = userService.userLogin(userLogin);
 				if(user==null){
-					baseResponseResult = new BaseResponseResult(SystemConstant.LOGIN_FAIL,getMessage("login.User.userNameOrPassword"),CommonConstant.EMPTY_VALUE);
+					baseResponseResult = new BaseResponseResult(SystemConstant.LOGIN_FAIL,getMessage("login.user.userNameOrPassword"),CommonConstant.EMPTY_VALUE);
 				}else{
 					TokenData token = getToken(false,user,userLogin.getType());
 					setDefaultDataToRedis(user.getUserId()+","+userLogin.getType(),token);
 					//request.getSession().setAttribute(user.getUserId(),token);
-					baseResponseResult = new BaseResponseResult(SystemConstant.SUCCESS,getMessage("login.User.loginSuccess"),token);
+					baseResponseResult = new BaseResponseResult(SystemConstant.SUCCESS,getMessage("login.user.loginSuccess"),token);
 				}
 			}
 		}

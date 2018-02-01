@@ -13,11 +13,11 @@ public class Role extends BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = 7161573735090231747L;
 
-	@NotNull(groups={update.class,delete.class},message="validated.Role.roleId.NotNull")
+	@NotNull(groups={update.class,delete.class},message="validated.role.roleId.notNull")
 	@Column(name="role_id",pk=true)
 	private String roleId;//角色ID
 	
-	@NotNull(groups={add.class,update.class},message="validated.Role.roleName.NotNull")
+	@NotNull(groups={add.class,update.class},message="validated.role.roleName.notNull")
 	@Column(name="role_name")
 	private String roleName;//角色名称
 	
