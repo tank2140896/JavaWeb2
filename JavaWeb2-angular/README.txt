@@ -1,5 +1,5 @@
 ﻿一、重要说明：
-1、本项目采用前后端分离方式（开发分离和部署分离），前端采用Angular
+本项目采用前后端分离方式（开发分离和部署分离），前端采用Angular
 二、项目目前结构简述：
 1、JavaWeb2-api——主要为前端提供接口
 2、JavaWeb2-angular——前端实现（angular-cli、node、angular）

@@ -24,7 +24,7 @@ var AuthService = /** @class */ (function () {
         headToken.token = sessionData.token;
         headToken.userId = sessionData.user.userId;
         headToken.type = sessionData.type;
-        this.getRedisUserInfo(headToken); //防止服务器端redis的session失效
+        //this.getRedisUserInfo(headToken);//防止服务器端redis的session失效
         sessionData = this.sessionService.getSessionData();
         if (sessionData == null) {
             return false;
