@@ -15,6 +15,7 @@ var header_module_1 = require("./header/header.module");
 var sidebar_module_1 = require("./sidebar/sidebar.module");
 var centeral_module_1 = require("./centeral/centeral.module");
 var user_module_1 = require("./user/user.module");
+var role_module_1 = require("./role/role.module");
 var HomeModule = /** @class */ (function () {
     function HomeModule() {
     }
@@ -23,7 +24,7 @@ var HomeModule = /** @class */ (function () {
             imports: [
                 common_1.CommonModule, router_1.RouterModule, ng_bootstrap_1.NgbDropdownModule.forRoot(),
                 header_module_1.HeaderModule, sidebar_module_1.SidebarModule, centeral_module_1.CenteralModule,
-                user_module_1.UserModule
+                user_module_1.UserModule, role_module_1.RoleModule
             ],
             declarations: [home_component_1.HomeComponent],
             exports: [home_component_1.HomeComponent]

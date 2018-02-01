@@ -11,6 +11,8 @@ var user_add_component_1 = require("./home/user/add/user.add.component");
 var user_modify_component_1 = require("./home/user/modify/user.modify.component");
 var user_detail_component_1 = require("./home/user/detail/user.detail.component");
 var user_role_assignment_component_1 = require("./home/user/roleAssignment/user.role.assignment.component");
+var role_component_1 = require("./home/role/role.component");
+var role_list_component_1 = require("./home/role/list/role.list.component");
 var APP_ROUTES = [
     { path: '', component: login_components_1.LoginComponent },
     { path: 'login', component: login_components_1.LoginComponent },
@@ -22,6 +24,10 @@ var APP_ROUTES = [
                     { path: 'modify', component: user_modify_component_1.UserModifyComponent, canActivate: [AuthService_1.AuthService] },
                     { path: 'detail', component: user_detail_component_1.UserDetailComponent, canActivate: [AuthService_1.AuthService] },
                     { path: 'roleAssignment', component: user_role_assignment_component_1.UserRoleAssignmentComponent, canActivate: [AuthService_1.AuthService] },
+                    { path: '**', redirectTo: '/web', pathMatch: 'full' }
+                ], canActivate: [AuthService_1.AuthService] },
+            { path: 'sys/role', component: role_component_1.RoleComponent, children: [
+                    { path: 'list', component: role_list_component_1.RoleListComponent, canActivate: [AuthService_1.AuthService] },
                     { path: '**', redirectTo: '/web', pathMatch: 'full' }
                 ], canActivate: [AuthService_1.AuthService] },
             { path: '**', redirectTo: '/web', pathMatch: 'full' }

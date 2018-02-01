@@ -9,12 +9,13 @@ import {HeaderModule} from "./header/header.module";
 import {SidebarModule} from "./sidebar/sidebar.module";
 import {CenteralModule} from "./centeral/centeral.module";
 import {UserModule} from "./user/user.module";
+import {RoleModule} from "./role/role.module";
 
 @NgModule({
     imports:[
                 CommonModule,RouterModule,NgbDropdownModule.forRoot(),
                 HeaderModule,SidebarModule,CenteralModule,
-                UserModule
+                UserModule,RoleModule
     ],
     declarations:[HomeComponent],
     exports:[HomeComponent]

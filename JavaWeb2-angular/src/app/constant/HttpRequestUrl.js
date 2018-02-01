@@ -27,6 +27,7 @@ var HttpRequestUrl = /** @class */ (function () {
     HttpRequestUrl.SYS_USER_DETAIL = '/web/sys/user/detail'; //用户详情
     HttpRequestUrl.SYS_USER_ROLE_INFO = '/web/sys/user/userRoleInfo'; //用户角色信息
     HttpRequestUrl.SYS_USER_ROLE_ASSIGNMENT = '/web/sys/user/roleAssignment'; //用户角色分配
+    HttpRequestUrl.SYS_ROLE_LIST = '/web/sys/role/list'; //角色列表
     return HttpRequestUrl;
 }());
 exports.HttpRequestUrl = HttpRequestUrl;

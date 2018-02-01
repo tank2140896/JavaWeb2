@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-lg-12">
-        <h3>系统管理-用户管理-用户列表</h3>
+        <h3>系统管理-角色管理-角色列表</h3>
     </div>
 </div>
 <hr>
@@ -8,17 +8,9 @@
     <div class="col-lg-3">
         <div class="form-group input-group">
             <div class="input-group-prepend">
-                <span class="input-group-text">用户名</span>
+                <span class="input-group-text">角色名称</span>
             </div>
-            <input type="text" class="form-control" placeholder="请输入用户名" [(ngModel)]="userList.userName">
-        </div>
-    </div>
-    <div class="col-lg-3">
-        <div class="form-group input-group">
-            <div class="input-group-prepend">
-                <span class="input-group-text">用户姓名</span>
-            </div>
-            <input type="text" class="form-control" placeholder="请输入用户姓名" [(ngModel)]="userList.personName">
+            <input type="text" class="form-control" placeholder="请输入用户名" [(ngModel)]="roleList.roleName">
         </div>
     </div>
     <div class="col-lg-3">
@@ -26,7 +18,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">开始日期</span>
             </div>
-            <input class="form-control" readonly="readonly" placeholder="请选择开始日期" [(ngModel)]="userList.createStartDate" ngbDatepicker #d1="ngbDatepicker">
+            <input class="form-control" readonly="readonly" placeholder="请选择开始日期" [(ngModel)]="roleList.createStartDate" ngbDatepicker #d1="ngbDatepicker">
             <button class="input-group-addon" (click)="d1.toggle()" type="button">
                 <span class="fa fa-calendar"></span>
             </button>
@@ -37,16 +29,18 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">结束日期</span>
             </div>
-            <input class="form-control" readonly="readonly" placeholder="请选择结束日期" [(ngModel)]="userList.createEndDate" ngbDatepicker #d2="ngbDatepicker">
+            <input class="form-control" readonly="readonly" placeholder="请选择结束日期" [(ngModel)]="roleList.createEndDate" ngbDatepicker #d2="ngbDatepicker">
             <button class="input-group-addon" (click)="d2.toggle()" type="button">
                 <span class="fa fa-calendar"></span>
             </button>
         </div>
     </div>
     <div class="col-lg-3">
-        <button class="btn" (click)="userSearch(1)">查询</button>
+        <button class="btn" (click)="roleSearch(1)">查询</button>
         <button class="btn" (click)="reset()">重置</button>
-        <button *ngIf="userAddZone" (click)="addUser()" class="btn btn-success">新增</button>
+        <!--
+        <button *ngIf="userAddZone" (click)="addRole()" class="btn btn-success">新增</button>
+        -->
     </div>
 </div>
 <hr>
@@ -58,9 +52,7 @@
                     <thead>
                     <tr class="text-center">
                         <th>序号</th>
-                        <th>用户名</th>
-                        <th>用户姓名</th>
-                        <th>用户角色</th>
+                        <th>角色名称</th>
                         <th>注册日期</th>
                         <th>操作</th>
                     </tr>
@@ -78,16 +70,16 @@
                     <tbody *ngIf="resultPage.data!=null&&resultPage.data!=resultPage.dataLoading">
                     <tr *ngFor="let eachData of resultPage.data;let xh=index" class="text-center">
                         <td>{{(xh+1)+(resultPage.currentPage-1)*resultPage.pageSize}}</td>
-                        <td>{{eachData.userName}}</td>
-                        <td>{{eachData.personName}}</td>
-                        <td *ngIf="eachData.roleName==null||eachData.roleName==''"><span style="color:red">未分配角色</span></td>
-                        <td *ngIf="eachData.roleName!=null&&eachData.roleName!=''">{{eachData.roleName}}</td>
+                        <td>{{eachData.roleName}}</td>
                         <td>{{eachData.createDate}}</td>
                         <td>
+                            暂无
+                            <!--
                             <button *ngIf="userDeleteZone" class="btn btn-sm btn-danger" (click)="deleteUser(eachData.userId,content)">删除用户</button>
                             <button *ngIf="userModifyZone" class="btn btn-sm btn-warning" (click)="modifyUser(eachData.userId)">修改用户</button>
                             <button *ngIf="userDetailZone" class="btn btn-sm btn-info" (click)="userDetail(eachData.userId)">用户详情</button>
                             <button *ngIf="userRoleAssignmentZone" class="btn btn-sm btn-primary" (click)="userRoleAssignment(eachData.userId)">角色分配</button>
+                            -->
                         </td>
                     </tr>
                     </tbody>
@@ -95,11 +87,11 @@
             </div>
             <div *ngIf="resultPage.data!=null&&resultPage.data!=resultPage.dataLoading">
                 <div style="float:right;padding:0px 1em 1ex 0em;">
-                    <span><a *ngIf="resultPage.currentPage>1" (click)="userSearch(1)" class="btn btn-info">首页</a></span>
-                    <span><a *ngIf="resultPage.currentPage>1" (click)="userSearch(resultPage.currentPage-1)" class="btn btn-info">上一页</a></span>
-                    <span *ngFor="let eachPage of resultPage.pageList"> <a (click)="userSearch(eachPage)" class="btn btn-info" [ngClass]="{'active':(resultPage.currentPage==eachPage)}">{{eachPage}}</a></span>
-                    <span><a *ngIf="resultPage.totalPage>resultPage.currentPage" (click)="userSearch(resultPage.currentPage+1)" class="btn btn-info">下一页</a></span>
-                    <span><a *ngIf="resultPage.totalPage>resultPage.currentPage" (click)="userSearch(resultPage.totalPage)" class="btn btn-info">末页</a></span>
+                    <span><a *ngIf="resultPage.currentPage>1" (click)="roleSearch(1)" class="btn btn-info">首页</a></span>
+                    <span><a *ngIf="resultPage.currentPage>1" (click)="roleSearch(resultPage.currentPage-1)" class="btn btn-info">上一页</a></span>
+                    <span *ngFor="let eachPage of resultPage.pageList"> <a (click)="roleSearch(eachPage)" class="btn btn-info" [ngClass]="{'active':(resultPage.currentPage==eachPage)}">{{eachPage}}</a></span>
+                    <span><a *ngIf="resultPage.totalPage>resultPage.currentPage" (click)="roleSearch(resultPage.currentPage+1)" class="btn btn-info">下一页</a></span>
+                    <span><a *ngIf="resultPage.totalPage>resultPage.currentPage" (click)="roleSearch(resultPage.totalPage)" class="btn btn-info">末页</a></span>
                     <span *ngIf="resultPage.totalPage>=resultPage.currentPage">&nbsp;当前第{{resultPage.currentPage}}/{{resultPage.totalPage}}页，共{{resultPage.totalSize}}条</span>
                 </div>
             </div>
@@ -110,13 +102,13 @@
 <!-- modal对话框组件 -->
 <ng-template #content let-c1="dismiss" let-c2="close">
     <div class="modal-header">
-        <h4 class="modal-title">删除用户</h4>
+        <h4 class="modal-title">删除角色</h4>
         <button type="button" class="close" aria-label="Close" (click)="c1('Cross click')">
             <span aria-hidden="true">&times;</span>
         </button>
     </div>
     <div class="modal-body">
-        <p>您确定要删除该用户吗？</p>
+        <p>您确定要删除该角色吗？</p>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary" (click)="c2(true)">确定</button>

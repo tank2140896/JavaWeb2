@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.javaweb.web.dao.ds1.RoleDao">
+
+	<select id="roleList" parameterType="com.javaweb.web.eo.role.RoleListRequest" resultType="com.javaweb.web.eo.role.RoleListResponse">
+		select r.role_id as roleId,r.role_name as roleName,r.create_date as createDate
+		from role r
+		<where>
+			r.del_flag = 0
+			<if test="roleName != null and roleName != ''">and r.role_name like CONCAT('%',#{roleName},'%')</if>
+			<if test="createStartDate != null and createStartDate != ''">and r.create_date &gt;=#{createStartDate}</if>
+			<if test="createEndDate != null and createEndDate != ''">and r.create_date &lt;=#{createEndDate}</if>
+		</where>
+		order by r.create_date desc
+		limit ${(currentPage-1)*pageSize},${pageSize}
+	</select>
+	
+	<select id="roleListCount" parameterType="com.javaweb.web.eo.role.RoleListRequest" resultType="java.lang.Long">
+		select count(1) from role r
+		<where>
+			r.del_flag = 0
+			<if test="roleName != null and roleName != ''">and r.role_name like CONCAT('%',#{roleName},'%')</if>
+			<if test="createStartDate != null and createStartDate != ''">and r.create_date &gt;=#{createStartDate}</if>
+			<if test="createEndDate != null and createEndDate != ''">and r.create_date &lt;=#{createEndDate}</if>
+		</where>
+	</select>
+	
+</mapper>
