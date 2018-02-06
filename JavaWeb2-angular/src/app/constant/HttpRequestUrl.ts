@@ -29,6 +29,10 @@ export class HttpRequestUrl{
     public static SYS_USER_ROLE_ASSIGNMENT = '/web/sys/user/roleAssignment';//用户角色分配
 
     public static SYS_ROLE_LIST = '/web/sys/role/list';//角色列表
+    public static SYS_ROLE_DELETE = '/web/sys/role/delete';//删除角色
+    public static SYS_ROLE_ADD = '/web/sys/role/add';//新增角色
+    public static SYS_ROLE_MODIFY = '/web/sys/role/modify';//修改角色
+    public static SYS_ROLE_DETAIL = '/web/sys/role/detail';//角色详情
     /** 拥有权限才能访问 end */
 
 }

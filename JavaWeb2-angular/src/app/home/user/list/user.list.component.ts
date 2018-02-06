@@ -10,7 +10,6 @@ import {HttpRequestUrl} from "../../../constant/HttpRequestUrl";
 import {DateUtil} from "../../../util/DateUtil";
 import {DatepickerI18nService} from "../../../service/DatepickerI18nService";
 import {ResultPage} from "../../../models/result/result.page";
-import {AppRoutes} from "../../../app.routes";
 
 @Component({
     selector: 'user-list',

@@ -16,4 +16,8 @@ public interface RoleDao extends MySqlBaseDao<Role> {
 	
 	public Long roleListCount(RoleListRequest roleListRequest);
 	
+	public void roleDelete(String roleId);
+	
+	public Role roleDetail(String roleId);
+	
 }

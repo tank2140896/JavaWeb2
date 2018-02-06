@@ -23,8 +23,6 @@ public interface UserDao extends MySqlBaseDao<User> {
 	
 	public void userDelete(String userId);
 	
-	public void userAdd(User user);
-	
 	public User userDetail(String userId);
 	
 	public List<RoleInfoResponse> userRoleInfo(String userId);

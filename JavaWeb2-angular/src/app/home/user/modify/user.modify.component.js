@@ -10,7 +10,6 @@ var core_1 = require("@angular/core");
 var HttpRequestUrl_1 = require("../../../constant/HttpRequestUrl");
 var user_modify_1 = require("../../../models/user/user.modify");
 var UserModifyComponent = /** @class */ (function () {
-    //详情
     function UserModifyComponent(router, activatedRoute, httpService, sessionService) {
         this.router = router;
         this.activatedRoute = activatedRoute;

@@ -7,14 +7,12 @@ import {HttpRequestUrl} from "../../../constant/HttpRequestUrl";
 import {UserModify} from "../../../models/user/user.modify";
 
 @Component({
-selector: 'user-modify',
-templateUrl: './user.modify.html',
-styleUrls: ['./user.modify.scss']
+    selector: 'user-modify',
+    templateUrl: './user.modify.html',
+    styleUrls: ['./user.modify.scss']
 })
 
 export class UserModifyComponent implements OnInit {
-
-    //详情
 
     constructor(private router:Router,
                 private activatedRoute:ActivatedRoute,
@@ -22,6 +20,7 @@ export class UserModifyComponent implements OnInit {
                 private sessionService:SessionService){
         this.userId = activatedRoute.snapshot.queryParams['userId'];
     }
+
     //初始化
     ngOnInit(): void {
         this.userModify = new UserModify();

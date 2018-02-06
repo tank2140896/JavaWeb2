@@ -21,26 +21,14 @@ var RoleListComponent = /** @class */ (function () {
         this.httpService = httpService;
         this.authService = authService;
         this.sessionService = sessionService;
-        /** 操作权限 start */
-        //userListZone:boolean;//用户列表
-        /**
-        userDeleteZone:boolean;//删除用户
-        userAddZone:boolean;//新增用户
-        userModifyZone:boolean;//修改用户
-        userDetailZone:boolean;//用户详情
-        userRoleAssignmentZone:boolean;//用户角色分配
-        */
         /** 操作权限 end */
         this.roleList = new role_list_1.RoleList(); //用户列表搜索条件
         this.resultPage = new result_page_1.ResultPage(); //分页结果初始化
-        //this.userListZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_LIST,false));
-        /**
-        this.userDeleteZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_DELETE,false));
-        this.userAddZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_ADD,false));
-        this.userModifyZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_MODIFY,false));
-        this.userDetailZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_DETAIL,false));
-        this.userRoleAssignmentZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_ROLE_ASSIGNMENT,false));
-        */
+        //this.roleListZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_ROLE_LIST,false));
+        this.roleDeleteZone = authService.canShow(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_ROLE_DELETE, false));
+        this.roleAddZone = authService.canShow(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_ROLE_ADD, false));
+        this.roleModifyZone = authService.canShow(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_ROLE_MODIFY, false));
+        this.roleDetailZone = authService.canShow(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_ROLE_DETAIL, false));
     }
     //初始化
     RoleListComponent.prototype.ngOnInit = function () {
@@ -91,11 +79,11 @@ var RoleListComponent = /** @class */ (function () {
         });
     };
     //删除用户
-    RoleListComponent.prototype.deleteUser = function (userId, content) {
+    RoleListComponent.prototype.deleteRole = function (roleId, content) {
         var _this = this;
         this.ngbModal.open(content).result.then(function (result) {
             if (result) {
-                _this.httpService.deleteData(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_USER_DELETE + '/' + userId, true), _this.sessionService.getHeadToken()).subscribe(function (result) {
+                _this.httpService.deleteData(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_ROLE_DELETE + '/' + roleId, true), _this.sessionService.getHeadToken()).subscribe(function (result) {
                     //删除即使失败这里也暂不做任何处理
                     /** 删除成功重新刷新列表 */
                     _this.resultPage = new result_page_1.ResultPage();
@@ -108,21 +96,17 @@ var RoleListComponent = /** @class */ (function () {
             //主要是ModalDismissReasons.ESC和ModalDismissReasons.BACKDROP_CLICK
         });
     };
-    //新增用户
-    RoleListComponent.prototype.addUser = function () {
+    //新增角色
+    RoleListComponent.prototype.addRole = function () {
         this.router.navigate(['../add'], { relativeTo: this.activatedRoute });
     };
-    //修改用户
-    RoleListComponent.prototype.modifyUser = function (userId) {
-        this.router.navigate(['../modify'], { relativeTo: this.activatedRoute, queryParams: { 'userId': userId } });
+    //修改角色
+    RoleListComponent.prototype.modifyRole = function (roleId) {
+        this.router.navigate(['../modify'], { relativeTo: this.activatedRoute, queryParams: { 'roleId': roleId } });
     };
-    //用户详情
-    RoleListComponent.prototype.userDetail = function (userId) {
-        this.router.navigate(['../detail'], { relativeTo: this.activatedRoute, queryParams: { 'userId': userId } });
-    };
-    //用户角色分配
-    RoleListComponent.prototype.userRoleAssignment = function (userId) {
-        this.router.navigate(['../roleAssignment'], { relativeTo: this.activatedRoute, queryParams: { 'userId': userId } });
+    //角色详情
+    RoleListComponent.prototype.roleDetail = function (roleId) {
+        this.router.navigate(['../detail'], { relativeTo: this.activatedRoute, queryParams: { 'roleId': roleId } });
     };
     RoleListComponent = __decorate([
         core_1.Component({

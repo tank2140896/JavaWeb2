@@ -5,12 +5,10 @@ import {NgbDatepickerI18n,NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {HttpService} from "../../../service/HttpService";
 import {AuthService} from "../../../service/AuthService";
 import {SessionService} from "../../../service/SessionService";
-import {UserList} from "../../../models/user/user.list";
 import {HttpRequestUrl} from "../../../constant/HttpRequestUrl";
 import {DateUtil} from "../../../util/DateUtil";
 import {DatepickerI18nService} from "../../../service/DatepickerI18nService";
 import {ResultPage} from "../../../models/result/result.page";
-import {AppRoutes} from "../../../app.routes";
 import {RoleList} from "../../../models/role/role.list";
 
 @Component({
@@ -28,25 +26,19 @@ export class RoleListComponent implements OnInit {
                 private httpService:HttpService,
                 private authService:AuthService,
                 private sessionService:SessionService){
-        //this.userListZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_LIST,false));
-        /**
-        this.userDeleteZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_DELETE,false));
-        this.userAddZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_ADD,false));
-        this.userModifyZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_MODIFY,false));
-        this.userDetailZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_DETAIL,false));
-        this.userRoleAssignmentZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_ROLE_ASSIGNMENT,false));
-        */
+        //this.roleListZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_ROLE_LIST,false));
+        this.roleDeleteZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_ROLE_DELETE,false));
+        this.roleAddZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_ROLE_ADD,false));
+        this.roleModifyZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_ROLE_MODIFY,false));
+        this.roleDetailZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_ROLE_DETAIL,false));
     }
 
     /** 操作权限 start */
-    //userListZone:boolean;//用户列表
-    /**
-    userDeleteZone:boolean;//删除用户
-    userAddZone:boolean;//新增用户
-    userModifyZone:boolean;//修改用户
-    userDetailZone:boolean;//用户详情
-    userRoleAssignmentZone:boolean;//用户角色分配
-    */
+    //roleListZone:boolean;//角色列表
+    roleDeleteZone:boolean;//删除角色
+    roleAddZone:boolean;//新增角色
+    roleModifyZone:boolean;//修改角色
+    roleDetailZone:boolean;//角色详情
     /** 操作权限 end */
 
     private roleList:RoleList = new RoleList();//用户列表搜索条件
@@ -106,10 +98,10 @@ export class RoleListComponent implements OnInit {
     }
 
     //删除用户
-    public deleteUser(userId:string,content):void{
+    public deleteRole(roleId:string,content):void{
         this.ngbModal.open(content).result.then((result) => {
             if(result){
-                this.httpService.deleteData(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_DELETE+'/'+userId,true),this.sessionService.getHeadToken()).subscribe(
+                this.httpService.deleteData(HttpRequestUrl.getPath(HttpRequestUrl.SYS_ROLE_DELETE+'/'+roleId,true),this.sessionService.getHeadToken()).subscribe(
                     result=>{
                         //删除即使失败这里也暂不做任何处理
                         /** 删除成功重新刷新列表 */
@@ -126,24 +118,19 @@ export class RoleListComponent implements OnInit {
         });
     }
 
-    //新增用户
-    public addUser():void{
+    //新增角色
+    public addRole():void{
         this.router.navigate(['../add'],{relativeTo:this.activatedRoute});
     }
 
-    //修改用户
-    public modifyUser(userId):void{
-        this.router.navigate(['../modify'],{relativeTo:this.activatedRoute,queryParams:{'userId':userId}});
+    //修改角色
+    public modifyRole(roleId):void{
+        this.router.navigate(['../modify'],{relativeTo:this.activatedRoute,queryParams:{'roleId':roleId}});
     }
 
-    //用户详情
-    public userDetail(userId):void{
-        this.router.navigate(['../detail'],{relativeTo:this.activatedRoute,queryParams:{'userId':userId}});
-    }
-
-    //用户角色分配
-    public userRoleAssignment(userId):void{
-        this.router.navigate(['../roleAssignment'],{relativeTo:this.activatedRoute,queryParams:{'userId':userId}});
+    //角色详情
+    public roleDetail(roleId):void{
+        this.router.navigate(['../detail'],{relativeTo:this.activatedRoute,queryParams:{'roleId':roleId}});
     }
 
 }

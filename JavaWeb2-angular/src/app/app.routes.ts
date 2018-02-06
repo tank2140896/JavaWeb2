@@ -13,6 +13,9 @@ import {UserDetailComponent} from "./home/user/detail/user.detail.component";
 import {UserRoleAssignmentComponent} from "./home/user/roleAssignment/user.role.assignment.component";
 import {RoleComponent} from "./home/role/role.component";
 import {RoleListComponent} from "./home/role/list/role.list.component";
+import {RoleAddComponent} from "./home/role/add/role.add.component";
+import {RoleDetailComponent} from "./home/role/detail/role.detail.component";
+import {RoleModifyComponent} from "./home/role/modify/role.modify.component";
 
 const APP_ROUTES = [
     {path:'',component:LoginComponent},//默认登录页面
@@ -29,6 +32,9 @@ const APP_ROUTES = [
         ],canActivate:[AuthService]},
         {path:'sys/role',component:RoleComponent,children:[
             {path:'list',component:RoleListComponent,canActivate:[AuthService]},//角色列表页面
+            {path:'add',component:RoleAddComponent,canActivate:[AuthService]},//新增角色页面
+            {path:'modify',component:RoleModifyComponent,canActivate:[AuthService]},//修改角色页面
+            {path:'detail',component:RoleDetailComponent,canActivate:[AuthService]},//角色详情页面
             {path:'**',redirectTo:'/web',pathMatch:'full'}
         ],canActivate:[AuthService]},
         {path:'**',redirectTo: '/web', pathMatch: 'full'}

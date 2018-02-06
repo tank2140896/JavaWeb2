@@ -10,7 +10,7 @@
             <div class="input-group-prepend">
                 <span class="input-group-text">角色名称</span>
             </div>
-            <input type="text" class="form-control" placeholder="请输入用户名" [(ngModel)]="roleList.roleName">
+            <input type="text" class="form-control" placeholder="请输入角色名" [(ngModel)]="roleList.roleName">
         </div>
     </div>
     <div class="col-lg-3">
@@ -38,9 +38,7 @@
     <div class="col-lg-3">
         <button class="btn" (click)="roleSearch(1)">查询</button>
         <button class="btn" (click)="reset()">重置</button>
-        <!--
-        <button *ngIf="userAddZone" (click)="addRole()" class="btn btn-success">新增</button>
-        -->
+        <button *ngIf="roleAddZone" (click)="addRole()" class="btn btn-success">新增</button>
     </div>
 </div>
 <hr>
@@ -73,13 +71,9 @@
                         <td>{{eachData.roleName}}</td>
                         <td>{{eachData.createDate}}</td>
                         <td>
-                            暂无
-                            <!--
-                            <button *ngIf="userDeleteZone" class="btn btn-sm btn-danger" (click)="deleteUser(eachData.userId,content)">删除用户</button>
-                            <button *ngIf="userModifyZone" class="btn btn-sm btn-warning" (click)="modifyUser(eachData.userId)">修改用户</button>
-                            <button *ngIf="userDetailZone" class="btn btn-sm btn-info" (click)="userDetail(eachData.userId)">用户详情</button>
-                            <button *ngIf="userRoleAssignmentZone" class="btn btn-sm btn-primary" (click)="userRoleAssignment(eachData.userId)">角色分配</button>
-                            -->
+                            <button *ngIf="roleDeleteZone" class="btn btn-sm btn-danger" (click)="deleteRole(eachData.roleId,content)">删除角色</button>
+                            <button *ngIf="roleModifyZone" class="btn btn-sm btn-warning" (click)="modifyRole(eachData.roleId)">修改角色</button>
+                            <button *ngIf="roleDetailZone" class="btn btn-sm btn-info" (click)="roleDetail(eachData.roleId)">角色详情</button>
                         </td>
                     </tr>
                     </tbody>
