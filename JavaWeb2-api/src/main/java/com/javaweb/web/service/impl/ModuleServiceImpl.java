@@ -6,7 +6,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.javaweb.util.core.PageUtil;
+import com.javaweb.util.entity.Page;
 import com.javaweb.web.dao.ds1.ModuleDao;
+import com.javaweb.web.eo.module.ModuleListRequest;
+import com.javaweb.web.eo.module.ModuleListResponse;
 import com.javaweb.web.po.Module;
 import com.javaweb.web.service.ModuleService;
 
@@ -18,6 +22,19 @@ public class ModuleServiceImpl implements ModuleService {
 
 	public List<Module> getUserRoleModule(Map<String, Object> map) {
 		return moduleDao.getUserRoleModule(map);
+	}
+
+	public Page moduleList(ModuleListRequest moduleListRequest) {
+		Page page = new Page();
+		List<ModuleListResponse> list = moduleDao.moduleList(moduleListRequest);
+		long count = moduleDao.moduleListCount(moduleListRequest);
+		page.setData(list);
+		page.setCurrentPage(moduleListRequest.getCurrentPage());
+		page.setPageSize(moduleListRequest.getPageSize());
+		page.setTotalSize(count);
+		page.setTotalPage(PageUtil.getTotalPage(page.getTotalSize(),page.getPageSize()));
+		page.setPageList(PageUtil.getShowPages(moduleListRequest.getCurrentPage(),page.getTotalPage(),5L));
+		return page;
 	}
 
 }

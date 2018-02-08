@@ -33,8 +33,8 @@ var RoleListComponent = /** @class */ (function () {
     //初始化
     RoleListComponent.prototype.ngOnInit = function () {
         /** 若需修改分页大小或其它请求参数请注释后自行调整，这里使用默认值
-        this.userList.currentPage = 1;
-        this.userList.pageSize = 5;
+        this.roleList.currentPage = 1;
+        this.roleList.pageSize = 5;
         */
         this.roleListFunction(this.roleList); //初始化角色列表
     };

@@ -32,6 +32,7 @@ var HttpRequestUrl = /** @class */ (function () {
     HttpRequestUrl.SYS_ROLE_ADD = '/web/sys/role/add'; //新增角色
     HttpRequestUrl.SYS_ROLE_MODIFY = '/web/sys/role/modify'; //修改角色
     HttpRequestUrl.SYS_ROLE_DETAIL = '/web/sys/role/detail'; //角色详情
+    HttpRequestUrl.SYS_MODULE_LIST = '/web/sys/module/list'; //模块列表
     return HttpRequestUrl;
 }());
 exports.HttpRequestUrl = HttpRequestUrl;

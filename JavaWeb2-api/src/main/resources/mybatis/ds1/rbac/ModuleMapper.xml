@@ -27,4 +27,36 @@
 		</if>
 	</select>
 	
+	<select id="moduleList" parameterType="com.javaweb.web.eo.module.ModuleListRequest" resultType="com.javaweb.web.eo.module.ModuleListResponse">
+		select m.module_id as moduleId,m.module_name as moduleName,m.page_url as pageUrl,
+		m.api_url as apiUrl,m.module_type as moduleType,m.alias,m.create_date as createDate
+		from module m
+		<where>
+			m.del_flag = 0
+			<if test="moduleName != null and moduleName != ''">and m.module_name like CONCAT('%',#{moduleName},'%')</if>
+			<if test="pageUrl != null and pageUrl != ''">and m.page_url like CONCAT('%',#{pageUrl},'%')</if>
+			<if test="apiUrl != null and apiUrl != ''">and m.page_url like CONCAT('%',#{apiUrl},'%')</if>
+			<if test='moduleType == "1" or moduleType == "2"'>and m.module_type = ${moduleType}</if>
+			<if test="alias != null and alias != ''">and m.alias like CONCAT('%',#{alias},'%')</if>
+			<if test="createStartDate != null and createStartDate != ''">and m.create_date &gt;=#{createStartDate}</if>
+			<if test="createEndDate != null and createEndDate != ''">and m.create_date &lt;=#{createEndDate}</if>
+		</where>
+		order by m.level asc,m.orders asc
+		limit ${(currentPage-1)*pageSize},${pageSize}
+	</select>
+	
+	<select id="moduleListCount" parameterType="com.javaweb.web.eo.module.ModuleListRequest" resultType="java.lang.Long">
+		select count(1) from module m
+		<where>
+			m.del_flag = 0
+			<if test="moduleName != null and moduleName != ''">and m.module_name like CONCAT('%',#{moduleName},'%')</if>
+			<if test="pageUrl != null and pageUrl != ''">and m.page_url like CONCAT('%',#{pageUrl},'%')</if>
+			<if test="apiUrl != null and apiUrl != ''">and m.page_url like CONCAT('%',#{apiUrl},'%')</if>
+			<if test='moduleType == "1" or moduleType == "2"'>and m.module_type = ${moduleType}</if>
+			<if test="alias != null and alias != ''">and m.alias like CONCAT('%',#{alias},'%')</if>
+			<if test="createStartDate != null and createStartDate != ''">and m.create_date &gt;=#{createStartDate}</if>
+			<if test="createEndDate != null and createEndDate != ''">and m.create_date &lt;=#{createEndDate}</if>
+		</where>
+	</select>
+	
 </mapper>

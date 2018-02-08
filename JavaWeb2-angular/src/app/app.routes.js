@@ -16,6 +16,8 @@ var role_list_component_1 = require("./home/role/list/role.list.component");
 var role_add_component_1 = require("./home/role/add/role.add.component");
 var role_detail_component_1 = require("./home/role/detail/role.detail.component");
 var role_modify_component_1 = require("./home/role/modify/role.modify.component");
+var menu_component_1 = require("./home/menu/menu.component");
+var menu_list_component_1 = require("./home/menu/list/menu.list.component");
 var APP_ROUTES = [
     { path: '', component: login_components_1.LoginComponent },
     { path: 'login', component: login_components_1.LoginComponent },
@@ -34,6 +36,10 @@ var APP_ROUTES = [
                     { path: 'add', component: role_add_component_1.RoleAddComponent, canActivate: [AuthService_1.AuthService] },
                     { path: 'modify', component: role_modify_component_1.RoleModifyComponent, canActivate: [AuthService_1.AuthService] },
                     { path: 'detail', component: role_detail_component_1.RoleDetailComponent, canActivate: [AuthService_1.AuthService] },
+                    { path: '**', redirectTo: '/web', pathMatch: 'full' }
+                ], canActivate: [AuthService_1.AuthService] },
+            { path: 'sys/module', component: menu_component_1.MenuComponent, children: [
+                    { path: 'list', component: menu_list_component_1.MenuListComponent, canActivate: [AuthService_1.AuthService] },
                     { path: '**', redirectTo: '/web', pathMatch: 'full' }
                 ], canActivate: [AuthService_1.AuthService] },
             { path: '**', redirectTo: '/web', pathMatch: 'full' }
