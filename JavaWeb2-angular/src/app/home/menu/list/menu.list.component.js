@@ -21,6 +21,7 @@ var MenuListComponent = /** @class */ (function () {
         this.httpService = httpService;
         this.authService = authService;
         this.sessionService = sessionService;
+        /** 操作权限 end */
         this.moduleTypeList = [
             { 'moduleTypeKey': '0', 'moduleTypeValue': '所有' },
             { 'moduleTypeKey': '1', 'moduleTypeValue': '菜单' },
@@ -28,6 +29,8 @@ var MenuListComponent = /** @class */ (function () {
         ]; //初始化模块类型下拉列表
         this.menuList = new menu_list_1.MenuList(); //模块列表搜索条件
         this.resultPage = new result_page_1.ResultPage(); //分页结果初始化
+        //this.menuListZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_MODULE_LIST,false));
+        this.menuDeleteZone = authService.canShow(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_MODULE_DELETE, false));
     }
     //初始化
     MenuListComponent.prototype.ngOnInit = function () {
@@ -75,6 +78,24 @@ var MenuListComponent = /** @class */ (function () {
             }
         }, function (error) {
             _this.router.navigate(['login']);
+        });
+    };
+    //删除模块
+    MenuListComponent.prototype.deleteMenu = function (moduleId, content) {
+        var _this = this;
+        this.ngbModal.open(content).result.then(function (result) {
+            if (result) {
+                _this.httpService.deleteData(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_MODULE_DELETE + '/' + moduleId, true), _this.sessionService.getHeadToken()).subscribe(function (result) {
+                    //删除即使失败这里也暂不做任何处理
+                    /** 删除成功重新刷新列表 */
+                    _this.resultPage = new result_page_1.ResultPage();
+                    _this.menuListFunction(_this.menuList);
+                }, function (error) {
+                    _this.router.navigate(['login']);
+                });
+            }
+        }, function (reason) {
+            //主要是ModalDismissReasons.ESC和ModalDismissReasons.BACKDROP_CLICK
         });
     };
     MenuListComponent = __decorate([

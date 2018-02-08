@@ -3,6 +3,8 @@ package com.javaweb.web.controller;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +28,12 @@ public class ModuleController extends BaseController {
 	public BaseResponseResult moduleList(HttpServletRequest request,@RequestBody ModuleListRequest moduleListRequest){
 		Page page = moduleService.moduleList(moduleListRequest);
 		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("module.list.success"),page);
+	}
+	
+	@DeleteMapping("/delete/{moduleId}")
+	public BaseResponseResult moduleDelete(@PathVariable("moduleId") String moduleId){
+		moduleService.moduleDelete(moduleId);
+		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("module.delete.success"),null);
 	}
 
 }

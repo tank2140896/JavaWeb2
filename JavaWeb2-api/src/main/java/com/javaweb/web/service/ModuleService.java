@@ -13,4 +13,6 @@ public interface ModuleService {
 	
 	public Page moduleList(ModuleListRequest moduleListRequest);
 	
+	public void moduleDelete(String moduleId);
+	
 }

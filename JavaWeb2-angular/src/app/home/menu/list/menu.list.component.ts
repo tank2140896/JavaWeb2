@@ -27,8 +27,15 @@ export class MenuListComponent implements OnInit {
                 private httpService:HttpService,
                 private authService:AuthService,
                 private sessionService:SessionService){
+        //this.menuListZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_MODULE_LIST,false));
+        this.menuDeleteZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_MODULE_DELETE,false));
 
     }
+
+    /** 操作权限 start */
+    //menuListZone:boolean;//模块列表
+    menuDeleteZone:boolean;//删除模块
+    /** 操作权限 end */
 
     public moduleTypeList:any = [
         {'moduleTypeKey':'0','moduleTypeValue':'所有'},
@@ -89,6 +96,27 @@ export class MenuListComponent implements OnInit {
                 this.router.navigate(['login']);
             }
         );
+    }
+
+    //删除模块
+    public deleteMenu(moduleId:string,content):void{
+        this.ngbModal.open(content).result.then((result) => {
+            if(result){
+                this.httpService.deleteData(HttpRequestUrl.getPath(HttpRequestUrl.SYS_MODULE_DELETE+'/'+moduleId,true),this.sessionService.getHeadToken()).subscribe(
+                    result=>{
+                        //删除即使失败这里也暂不做任何处理
+                        /** 删除成功重新刷新列表 */
+                        this.resultPage = new ResultPage();
+                        this.menuListFunction(this.menuList);
+                    },
+                    error=>{
+                        this.router.navigate(['login']);
+                    }
+                );
+            }
+        }, (reason) => {
+            //主要是ModalDismissReasons.ESC和ModalDismissReasons.BACKDROP_CLICK
+        });
     }
 
 }

@@ -19,4 +19,6 @@ public interface ModuleDao extends MySqlBaseDao<Module> {
 	
 	public Long moduleListCount(ModuleListRequest moduleListRequest);
 	
+	public void moduleDelete(String moduleId);
+	
 }

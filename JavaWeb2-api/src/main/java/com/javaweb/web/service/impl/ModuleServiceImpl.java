@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.javaweb.util.core.PageUtil;
 import com.javaweb.util.entity.Page;
@@ -35,6 +36,11 @@ public class ModuleServiceImpl implements ModuleService {
 		page.setTotalPage(PageUtil.getTotalPage(page.getTotalSize(),page.getPageSize()));
 		page.setPageList(PageUtil.getShowPages(moduleListRequest.getCurrentPage(),page.getTotalPage(),5L));
 		return page;
+	}
+
+	@Transactional
+	public void moduleDelete(String moduleId) {
+		moduleDao.moduleDelete(moduleId);
 	}
 
 }

@@ -113,7 +113,10 @@
                         <td>{{eachData.pageUrl}}</td>
                         <td>{{eachData.apiUrl}}</td>
                         <td>{{eachData.createDate}}</td>
-                        <td>暂无</td>
+                        <td>
+                            <button *ngIf="menuDeleteZone" class="btn btn-sm btn-danger" (click)="deleteMenu(eachData.moduleId,content)">删除模块</button>
+
+                        </td>
                     </tr>
                     </tbody>
                 </table>
@@ -131,3 +134,20 @@
         </div>
     </div>
 </div>
+
+<!-- modal对话框组件 -->
+<ng-template #content let-c1="dismiss" let-c2="close">
+    <div class="modal-header">
+        <h4 class="modal-title">删除模块</h4>
+        <button type="button" class="close" aria-label="Close" (click)="c1('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+        <p>您确定要删除该模块吗？</p>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="c2(true)">确定</button>
+        <button type="button" class="btn btn-secondary" (click)="c2(false)">取消</button>
+    </div>
+</ng-template>

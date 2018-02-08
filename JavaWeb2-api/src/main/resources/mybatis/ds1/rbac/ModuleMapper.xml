@@ -59,4 +59,11 @@
 		</where>
 	</select>
 	
+	<delete id="moduleDelete" parameterType="java.lang.String">
+		<!-- 删除角色模块关联 -->
+		delete from role_module where module_id = #{_parameter};
+		<!-- 删除模块 -->
+		delete from module where module_id = #{_parameter};
+	</delete>
+	
 </mapper>
