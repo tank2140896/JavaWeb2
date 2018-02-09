@@ -15,4 +15,6 @@ public interface ModuleService {
 	
 	public void moduleDelete(String moduleId);
 	
+	public void moduleAdd(Module module);
+	
 }

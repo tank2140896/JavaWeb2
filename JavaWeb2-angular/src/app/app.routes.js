@@ -18,6 +18,7 @@ var role_detail_component_1 = require("./home/role/detail/role.detail.component"
 var role_modify_component_1 = require("./home/role/modify/role.modify.component");
 var menu_component_1 = require("./home/menu/menu.component");
 var menu_list_component_1 = require("./home/menu/list/menu.list.component");
+var menu_add_component_1 = require("./home/menu/add/menu.add.component");
 var APP_ROUTES = [
     { path: '', component: login_components_1.LoginComponent },
     { path: 'login', component: login_components_1.LoginComponent },
@@ -40,6 +41,7 @@ var APP_ROUTES = [
                 ], canActivate: [AuthService_1.AuthService] },
             { path: 'sys/module', component: menu_component_1.MenuComponent, children: [
                     { path: 'list', component: menu_list_component_1.MenuListComponent, canActivate: [AuthService_1.AuthService] },
+                    { path: 'add', component: menu_add_component_1.MenuAddComponent, canActivate: [AuthService_1.AuthService] },
                     { path: '**', redirectTo: '/web', pathMatch: 'full' }
                 ], canActivate: [AuthService_1.AuthService] },
             { path: '**', redirectTo: '/web', pathMatch: 'full' }

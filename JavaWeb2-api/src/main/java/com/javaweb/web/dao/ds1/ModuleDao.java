@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.javaweb.base.MySqlBaseDao;
+import com.javaweb.web.eo.module.ModuleLevelAndOrdersResponse;
 import com.javaweb.web.eo.module.ModuleListRequest;
 import com.javaweb.web.eo.module.ModuleListResponse;
 import com.javaweb.web.po.Module;
@@ -20,5 +21,7 @@ public interface ModuleDao extends MySqlBaseDao<Module> {
 	public Long moduleListCount(ModuleListRequest moduleListRequest);
 	
 	public void moduleDelete(String moduleId);
+	
+	public ModuleLevelAndOrdersResponse getModuleLevelAndOrdersByParentId(String parentId);
 	
 }

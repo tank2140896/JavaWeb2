@@ -18,6 +18,7 @@ import {RoleDetailComponent} from "./home/role/detail/role.detail.component";
 import {RoleModifyComponent} from "./home/role/modify/role.modify.component";
 import {MenuComponent} from "./home/menu/menu.component";
 import {MenuListComponent} from "./home/menu/list/menu.list.component";
+import {MenuAddComponent} from "./home/menu/add/menu.add.component";
 
 const APP_ROUTES = [
     {path:'',component:LoginComponent},//默认登录页面
@@ -41,6 +42,7 @@ const APP_ROUTES = [
         ],canActivate:[AuthService]},
         {path:'sys/module',component:MenuComponent,children:[
             {path:'list',component:MenuListComponent,canActivate:[AuthService]},//模块列表页面
+            {path:'add',component:MenuAddComponent,canActivate:[AuthService]},//新增模块页面
             {path:'**',redirectTo:'/web',pathMatch:'full'}
         ],canActivate:[AuthService]},
         {path:'**',redirectTo: '/web', pathMatch: 'full'}

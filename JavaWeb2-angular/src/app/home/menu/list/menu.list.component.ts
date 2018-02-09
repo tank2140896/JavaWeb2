@@ -29,12 +29,14 @@ export class MenuListComponent implements OnInit {
                 private sessionService:SessionService){
         //this.menuListZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_MODULE_LIST,false));
         this.menuDeleteZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_MODULE_DELETE,false));
+        this.menuAddZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_MODULE_ADD,false));
 
     }
 
     /** 操作权限 start */
     //menuListZone:boolean;//模块列表
     menuDeleteZone:boolean;//删除模块
+    menuAddZone:boolean;//新增模块
     /** 操作权限 end */
 
     public moduleTypeList:any = [
@@ -117,6 +119,11 @@ export class MenuListComponent implements OnInit {
         }, (reason) => {
             //主要是ModalDismissReasons.ESC和ModalDismissReasons.BACKDROP_CLICK
         });
+    }
+
+    //新增模块
+    public addMenu():void{
+        this.router.navigate(['../add'],{relativeTo:this.activatedRoute});
     }
 
 }

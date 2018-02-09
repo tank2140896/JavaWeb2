@@ -66,4 +66,8 @@
 		delete from module where module_id = #{_parameter};
 	</delete>
 	
+	<select id="getModuleLevelAndOrdersByParentId" parameterType="java.lang.String" resultType="com.javaweb.web.eo.module.ModuleLevelAndOrdersResponse">
+		SELECT level,orders from module where parent_id = #{_parameter} ORDER BY orders desc LIMIT 1 
+	</select>
+	
 </mapper>

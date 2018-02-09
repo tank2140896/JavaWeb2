@@ -17,7 +17,7 @@ public class Module extends BaseEntity implements Serializable {
 	private List<Module> list;/**辅助属性*/
 	
 	@NotNull(groups={update.class,delete.class},message="validated.module.moduleId.notNull")
-	@Column(name="moduleId",pk=true)
+	@Column(name="module_id",pk=true)
 	private String moduleId;//模块ID
 	
 	@NotNull(groups={add.class,update.class},message="validated.module.moduleName.notNull")

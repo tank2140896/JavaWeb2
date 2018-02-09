@@ -72,6 +72,7 @@
     <div class="col-lg-3">
         <button class="btn" (click)="menuSearch(1)">查询</button>
         <button class="btn" (click)="reset()">重置</button>
+        <button *ngIf="menuAddZone" (click)="addMenu()" class="btn btn-success">新增</button>
     </div>
 </div>
 <hr>

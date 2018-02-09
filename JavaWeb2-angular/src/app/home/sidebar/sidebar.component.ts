@@ -11,7 +11,7 @@ export class SidebarComponent implements OnInit {
 
     pushRightClass: string = 'push-right';
 
-    menuList:any;
+    menuListForTree:any;
 
     constructor(public router: Router,
                 public sessionService:SessionService) {
@@ -28,7 +28,7 @@ export class SidebarComponent implements OnInit {
 
     ngOnInit(): void {
         let sessionData:any = this.sessionService.getSessionData();
-        this.menuList = sessionData.menuList;
+        this.menuListForTree = sessionData.menuListForTree;
         //console.log(this.menuList);
     }
 

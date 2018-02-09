@@ -31,6 +31,7 @@ var MenuListComponent = /** @class */ (function () {
         this.resultPage = new result_page_1.ResultPage(); //分页结果初始化
         //this.menuListZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_MODULE_LIST,false));
         this.menuDeleteZone = authService.canShow(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_MODULE_DELETE, false));
+        this.menuAddZone = authService.canShow(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_MODULE_ADD, false));
     }
     //初始化
     MenuListComponent.prototype.ngOnInit = function () {
@@ -97,6 +98,10 @@ var MenuListComponent = /** @class */ (function () {
         }, function (reason) {
             //主要是ModalDismissReasons.ESC和ModalDismissReasons.BACKDROP_CLICK
         });
+    };
+    //新增模块
+    MenuListComponent.prototype.addMenu = function () {
+        this.router.navigate(['../add'], { relativeTo: this.activatedRoute });
     };
     MenuListComponent = __decorate([
         core_1.Component({

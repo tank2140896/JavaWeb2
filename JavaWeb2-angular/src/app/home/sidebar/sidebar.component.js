@@ -24,7 +24,7 @@ var SidebarComponent = /** @class */ (function () {
     }
     SidebarComponent.prototype.ngOnInit = function () {
         var sessionData = this.sessionService.getSessionData();
-        this.menuList = sessionData.menuList;
+        this.menuListForTree = sessionData.menuListForTree;
         //console.log(this.menuList);
     };
     SidebarComponent.prototype.isToggled = function () {

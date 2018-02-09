@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.javaweb.util.core.PageUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.dao.ds1.ModuleDao;
+import com.javaweb.web.eo.module.ModuleLevelAndOrdersResponse;
 import com.javaweb.web.eo.module.ModuleListRequest;
 import com.javaweb.web.eo.module.ModuleListResponse;
 import com.javaweb.web.po.Module;
@@ -41,6 +42,20 @@ public class ModuleServiceImpl implements ModuleService {
 	@Transactional
 	public void moduleDelete(String moduleId) {
 		moduleDao.moduleDelete(moduleId);
+	}
+
+	@Transactional
+	public void moduleAdd(Module module) {
+		ModuleLevelAndOrdersResponse moduleLevelAndOrdersResponse = moduleDao.getModuleLevelAndOrdersByParentId(module.getParentId());
+		if(moduleLevelAndOrdersResponse!=null){
+			Integer level = moduleLevelAndOrdersResponse.getLevel();
+			Integer orders = moduleLevelAndOrdersResponse.getOrders();
+			module.setOrders(orders+1);
+			module.setLevel(level);
+		}else{
+			module.setOrders(1);
+		}
+		moduleDao.insert(module);
 	}
 
 }

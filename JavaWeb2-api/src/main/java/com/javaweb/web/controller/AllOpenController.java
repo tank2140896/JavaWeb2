@@ -96,14 +96,15 @@ public class AllOpenController extends BaseController {
 		}
 		//获得菜单列表
 		List<Module> menuList = list.stream().filter(i->1==i.getModuleType()).collect(Collectors.toList());
-		menuList = setTreeList(menuList, null);
+		tokenData.setMenuList((menuList==null||menuList.size()==0)?null:menuList);
+		menuList = setTreeList(menuList,null);
+		tokenData.setMenuListForTree((menuList==null||menuList.size()==0)?null:menuList);
 		//获得操作权限列表
 		List<Module> authOperateList = list.stream().filter(i->2==i.getModuleType()).collect(Collectors.toList());
 		tokenData.setToken(UUID.randomUUID().toString());
 		tokenData.setUser(user);
 		tokenData.setType(type);
 		tokenData.setModuleList((list==null||list.size()==0)?null:list);
-		tokenData.setMenuList((menuList==null||menuList.size()==0)?null:menuList);
 		tokenData.setAuthOperateList((authOperateList==null||authOperateList.size()==0)?null:authOperateList);
 		return tokenData;
 	}

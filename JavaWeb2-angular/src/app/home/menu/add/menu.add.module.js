@@ -9,20 +9,19 @@ exports.__esModule = true;
 var core_1 = require("@angular/core");
 var common_1 = require("@angular/common");
 var router_1 = require("@angular/router");
-var menu_component_1 = require("./menu.component");
-var menu_list_module_1 = require("./list/menu.list.module");
-var menu_add_module_1 = require("./add/menu.add.module");
-var MenuModule = /** @class */ (function () {
-    function MenuModule() {
+var forms_1 = require("@angular/forms");
+var menu_add_component_1 = require("./menu.add.component");
+var MenuAddModule = /** @class */ (function () {
+    function MenuAddModule() {
     }
-    MenuModule = __decorate([
+    MenuAddModule = __decorate([
         core_1.NgModule({
-            imports: [common_1.CommonModule, router_1.RouterModule, menu_list_module_1.MenuListModule, menu_add_module_1.MenuAddModule],
-            declarations: [menu_component_1.MenuComponent],
-            exports: [menu_component_1.MenuComponent]
+            imports: [common_1.CommonModule, router_1.RouterModule, forms_1.FormsModule],
+            declarations: [menu_add_component_1.MenuAddComponent],
+            exports: [menu_add_component_1.MenuAddComponent]
         })
-    ], MenuModule);
-    return MenuModule;
+    ], MenuAddModule);
+    return MenuAddModule;
 }());
-exports.MenuModule = MenuModule;
-//# sourceMappingURL=menu.module.js.map
+exports.MenuAddModule = MenuAddModule;
+//# sourceMappingURL=menu.add.module.js.map
