@@ -7,9 +7,10 @@ import {RoleComponent} from "./role.component";
 import {RoleAddModule} from "./add/role.add.module";
 import {RoleDetailModule} from "./detail/role.detail.module";
 import {RoleModifyModule} from "./modify/role.modify.module";
+import {RoleMenuAssignmentModule} from "./menuAssignment/role.menu.assignment.module";
 
 @NgModule({
-    imports:[CommonModule,RouterModule,RoleListModule,RoleAddModule,RoleDetailModule,RoleModifyModule],
+    imports:[CommonModule,RouterModule,RoleListModule,RoleAddModule,RoleDetailModule,RoleModifyModule,RoleMenuAssignmentModule],
     declarations:[RoleComponent],
     exports:[RoleComponent]
 })

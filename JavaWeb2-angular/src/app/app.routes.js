@@ -16,6 +16,7 @@ var role_list_component_1 = require("./home/role/list/role.list.component");
 var role_add_component_1 = require("./home/role/add/role.add.component");
 var role_detail_component_1 = require("./home/role/detail/role.detail.component");
 var role_modify_component_1 = require("./home/role/modify/role.modify.component");
+var role_menu_assignment_component_1 = require("./home/role/menuAssignment/role.menu.assignment.component");
 var menu_component_1 = require("./home/menu/menu.component");
 var menu_list_component_1 = require("./home/menu/list/menu.list.component");
 var menu_add_component_1 = require("./home/menu/add/menu.add.component");
@@ -39,6 +40,7 @@ var APP_ROUTES = [
                     { path: 'add', component: role_add_component_1.RoleAddComponent, canActivate: [AuthService_1.AuthService] },
                     { path: 'modify', component: role_modify_component_1.RoleModifyComponent, canActivate: [AuthService_1.AuthService] },
                     { path: 'detail', component: role_detail_component_1.RoleDetailComponent, canActivate: [AuthService_1.AuthService] },
+                    { path: 'menuAssignment', component: role_menu_assignment_component_1.RoleMenuAssignmentComponent, canActivate: [AuthService_1.AuthService] },
                     { path: '**', redirectTo: '/web', pathMatch: 'full' }
                 ], canActivate: [AuthService_1.AuthService] },
             { path: 'sys/module', component: menu_component_1.MenuComponent, children: [
@@ -50,7 +52,7 @@ var APP_ROUTES = [
                 ], canActivate: [AuthService_1.AuthService] },
             { path: '**', redirectTo: '/web', pathMatch: 'full' }
         ], canActivate: [AuthService_1.AuthService] },
-    { path: '**', redirectTo: '/', pathMatch: 'full' } //访问任何不存在的URL都将跳回登录页面
+    { path: '**', redirectTo: '/login', pathMatch: 'full' } //访问任何不存在的URL都将跳回登录页面
 ];
 //路由有两种策略，HashLocationStrategy和PathLocationStrategy，我这里用的是HashLocationStrategy
 exports.AppRoutes = router_1.RouterModule.forRoot(APP_ROUTES, { useHash: true });

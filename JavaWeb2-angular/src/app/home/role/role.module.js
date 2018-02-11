@@ -14,12 +14,13 @@ var role_component_1 = require("./role.component");
 var role_add_module_1 = require("./add/role.add.module");
 var role_detail_module_1 = require("./detail/role.detail.module");
 var role_modify_module_1 = require("./modify/role.modify.module");
+var role_menu_assignment_module_1 = require("./menuAssignment/role.menu.assignment.module");
 var RoleModule = /** @class */ (function () {
     function RoleModule() {
     }
     RoleModule = __decorate([
         core_1.NgModule({
-            imports: [common_1.CommonModule, router_1.RouterModule, role_list_module_1.RoleListModule, role_add_module_1.RoleAddModule, role_detail_module_1.RoleDetailModule, role_modify_module_1.RoleModifyModule],
+            imports: [common_1.CommonModule, router_1.RouterModule, role_list_module_1.RoleListModule, role_add_module_1.RoleAddModule, role_detail_module_1.RoleDetailModule, role_modify_module_1.RoleModifyModule, role_menu_assignment_module_1.RoleMenuAssignmentModule],
             declarations: [role_component_1.RoleComponent],
             exports: [role_component_1.RoleComponent]
         })

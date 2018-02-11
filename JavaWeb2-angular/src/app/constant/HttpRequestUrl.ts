@@ -33,6 +33,8 @@ export class HttpRequestUrl{
     public static SYS_ROLE_ADD = '/web/sys/role/add';//新增角色
     public static SYS_ROLE_MODIFY = '/web/sys/role/modify';//修改角色
     public static SYS_ROLE_DETAIL = '/web/sys/role/detail';//角色详情
+    public static SYS_ROLE_MODULE_INFO = '/web/sys/role/roleModuleInfo';//角色模块信息
+    public static SYS_ROLE_MODULE_ASSIGNMENT = '/web/sys/role/moduleAssignment';//角色模块分配
 
     public static SYS_MODULE_LIST = '/web/sys/module/list';//模块列表
     public static SYS_MODULE_DELETE = '/web/sys/module/delete';//删除模块

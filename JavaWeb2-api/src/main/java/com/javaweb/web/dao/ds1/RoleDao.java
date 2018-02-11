@@ -1,10 +1,12 @@
 package com.javaweb.web.dao.ds1;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import com.javaweb.base.MySqlBaseDao;
+import com.javaweb.web.eo.role.ModuleInfoResponse;
 import com.javaweb.web.eo.role.RoleListRequest;
 import com.javaweb.web.eo.role.RoleListResponse;
 import com.javaweb.web.po.Role;
@@ -18,6 +20,8 @@ public interface RoleDao extends MySqlBaseDao<Role> {
 	
 	public void roleDelete(String roleId);
 	
-	public Role roleDetail(String roleId);
+	public List<ModuleInfoResponse> roleModuleInfo(String roleId);
+	
+	public void moduleAssignment(Map<String, Object> map);
 	
 }

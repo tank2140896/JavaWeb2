@@ -133,4 +133,9 @@ export class RoleListComponent implements OnInit {
         this.router.navigate(['../detail'],{relativeTo:this.activatedRoute,queryParams:{'roleId':roleId}});
     }
 
+    //角色模块分配
+    public roleMenuAssignment(roleId):void{
+        this.router.navigate(['../menuAssignment'],{relativeTo:this.activatedRoute,queryParams:{'roleId':roleId}});
+    }
+
 }

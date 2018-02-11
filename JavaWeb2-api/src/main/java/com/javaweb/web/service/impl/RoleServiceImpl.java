@@ -1,6 +1,9 @@
 package com.javaweb.web.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.javaweb.util.core.PageUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.dao.ds1.RoleDao;
+import com.javaweb.web.eo.role.ModuleInfoResponse;
 import com.javaweb.web.eo.role.RoleListRequest;
 import com.javaweb.web.eo.role.RoleListResponse;
 import com.javaweb.web.po.Role;
@@ -49,7 +53,35 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	public Role roleDetail(String roleId) {
-		return roleDao.roleDetail(roleId);
+		return roleDao.selectByPk(roleId);
+	}
+
+	public Map<String,Object> roleModuleInfo(String roleId) {
+		Map<String,Object> map = new HashMap<>();
+		Role role = roleDao.selectByPk(roleId);
+		List<ModuleInfoResponse> list = roleDao.roleModuleInfo(roleId);
+		list = setTreeList(list,null);
+		map.put("role",role);
+		map.put("list",list);
+		return map;
+	}
+	
+	//封装成树形结构集合
+	private List<ModuleInfoResponse> setTreeList(List<ModuleInfoResponse> originList,ModuleInfoResponse moduleInfoResponse){
+		List<ModuleInfoResponse> moduleList = new ArrayList<>();
+		for (int i = 0; i < originList.size(); i++) {
+			ModuleInfoResponse currentModule = originList.get(i);
+			if((moduleInfoResponse!=null&&moduleInfoResponse.getModuleId().equals(currentModule.getParentId()))||(moduleInfoResponse==null&&currentModule.getParentId()==null)){
+				currentModule.setList(setTreeList(originList, currentModule));
+				moduleList.add(currentModule);
+			}
+		}
+		return moduleList;
+	}
+
+	@Transactional
+	public void moduleAssignment(Map<String, Object> map) {
+		roleDao.moduleAssignment(map);
 	}
 
 }

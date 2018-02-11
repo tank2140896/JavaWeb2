@@ -9,14 +9,6 @@
         <div class="form-group">
             <div class="checkbox">
                 <label *ngFor="let eachData of roleInfo;">
-                    <!--
-                    <div *ngIf="eachData.checkFlag=='check'">
-                        <span>{{eachData.roleName}} </span><input type="checkbox" value="eachData.roleId"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    </div>
-                    <div *ngIf="eachData.checkFlag=='uncheck'">
-                        <span>{{eachData.roleName}} </span><input type="checkbox" value="eachData.roleId"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                    </div>
-                    -->
                     <div>
                         <span>{{eachData.roleName}} </span><input type="checkbox" [(ngModel)]="eachData.checkFlag" value="eachData.roleId"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
                     </div>

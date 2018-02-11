@@ -16,6 +16,7 @@ import {RoleListComponent} from "./home/role/list/role.list.component";
 import {RoleAddComponent} from "./home/role/add/role.add.component";
 import {RoleDetailComponent} from "./home/role/detail/role.detail.component";
 import {RoleModifyComponent} from "./home/role/modify/role.modify.component";
+import {RoleMenuAssignmentComponent} from "./home/role/menuAssignment/role.menu.assignment.component";
 import {MenuComponent} from "./home/menu/menu.component";
 import {MenuListComponent} from "./home/menu/list/menu.list.component";
 import {MenuAddComponent} from "./home/menu/add/menu.add.component";
@@ -40,6 +41,7 @@ const APP_ROUTES = [
             {path:'add',component:RoleAddComponent,canActivate:[AuthService]},//新增角色页面
             {path:'modify',component:RoleModifyComponent,canActivate:[AuthService]},//修改角色页面
             {path:'detail',component:RoleDetailComponent,canActivate:[AuthService]},//角色详情页面
+            {path:'menuAssignment',component:RoleMenuAssignmentComponent,canActivate:[AuthService]},//角色模块分配页面
             {path:'**',redirectTo:'/web',pathMatch:'full'}
         ],canActivate:[AuthService]},
         {path:'sys/module',component:MenuComponent,children:[
@@ -51,7 +53,7 @@ const APP_ROUTES = [
         ],canActivate:[AuthService]},
         {path:'**',redirectTo: '/web', pathMatch: 'full'}
     ],canActivate:[AuthService]},//home页面
-    {path:'**',redirectTo: '/', pathMatch: 'full'}//访问任何不存在的URL都将跳回登录页面
+    {path:'**',redirectTo: '/login', pathMatch: 'full'}//访问任何不存在的URL都将跳回登录页面
 ];
 
 //路由有两种策略，HashLocationStrategy和PathLocationStrategy，我这里用的是HashLocationStrategy

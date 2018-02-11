@@ -65,7 +65,7 @@ public class ModuleServiceImpl implements ModuleService {
 	}
 
 	public Module moduleDetail(String moduleId) {
-		return moduleDao.moduleDetail(moduleId);
+		return moduleDao.selectByPk(moduleId);
 	}
 
 }

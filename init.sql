@@ -48,6 +48,7 @@ INSERT INTO `module` VALUES ('872f4af0-0718-11e8-abf2-1c1b0d1b66d4', '角色列�
 INSERT INTO `module` VALUES ('a39eea77-e28a-44a6-a822-039e2a056b07', '系统管理', null, null, null, null, '1', '1', '1', 'xtgl', null, null, 'fa fa-fw fa-dashboard', '2018-02-08 17:02:21', 'admin2018', null, null, '0');
 INSERT INTO `module` VALUES ('cf3b7a97-0afd-11e8-8934-1c1b0d1b66d4', '角色详情', '/web/sys/role/detail', '/web/sys/role/detail', '329c3b64-4aed-4b8c-aa0d-dc7ecf01afec', null, '3', '4', '2', 'jsxq', null, null, null, '2018-02-08 17:02:21', 'admin2018', null, null, '0');
 INSERT INTO `module` VALUES ('e3dd5e08-0ecb-11e8-9a31-1c1b0d1b66d4', '修改模块', '/web/sys/module/modify', '/web/sys/module/modify,/web/sys/module/detail', '46683b3f-ef74-4952-8ce1-fe4e7ed7ec5a', null, '3', '4', '2', 'xgmk', null, null, null, '2018-02-08 17:02:21', 'admin2018', null, null, '0');
+INSERT INTO `module` VALUES ('ed44a661-0f07-11e8-9a31-1c1b0d1b66d4', '角色模块分配', '/web/sys/role/menuAssignment', '/web/sys/role/moduleAssignment,/web/sys/role/roleModuleInfo', '329c3b64-4aed-4b8c-aa0d-dc7ecf01afec', null, '3', '6', '2', 'jsmkfp', null, null, null, '2018-02-08 17:02:21', 'admin2018', null, null, '0');
 INSERT INTO `module` VALUES ('f94ed30f-0afc-11e8-8934-1c1b0d1b66d4', '删除角色', null, '/web/sys/role/delete', '329c3b64-4aed-4b8c-aa0d-dc7ecf01afec', null, '3', '2', '2', 'scjs', null, null, null, '2018-02-08 17:02:21', 'admin2018', null, null, '0');
 
 -- ----------------------------

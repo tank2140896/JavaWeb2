@@ -1,5 +1,8 @@
 package com.javaweb.web.controller;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -85,6 +88,21 @@ public class RoleController extends BaseController {
 	public BaseResponseResult roleDetail(@PathVariable("roleId") String roleId){
 		Role role = roleService.roleDetail(roleId);
 		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("role.detail.success"),role);
+	}
+	
+	@GetMapping("/roleModuleInfo/{roleId}")
+	public BaseResponseResult roleModuleInfo(@PathVariable("roleId") String roleId){
+		Map<String,Object> map = roleService.roleModuleInfo(roleId);
+		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("role.roleModuleInfo.success"),map);
+	}
+	
+	@PostMapping("/moduleAssignment/{roleId}")
+	public BaseResponseResult moduleAssignment(@PathVariable("roleId") String roleId,@RequestBody List<String> list){
+		Map<String,Object> map = new HashMap<>();
+		map.put("roleId",roleId);
+		map.put("list",list);
+		roleService.moduleAssignment(map);
+		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("role.moduleAssignment.success"),null);
 	}
 	
 }

@@ -1,0 +1,7 @@
+<div *ngIf="list==null||list.length==0">
+    <span style="visibility:hidden;">占位占位</span><input type="checkbox" [(ngModel)]="checkFlag"/><span>{{moduleName}}</span>
+</div>
+<div *ngIf="list.length>0">
+    <span style="visibility:hidden;">占位</span><input type="checkbox" [(ngModel)]="checkFlag"/><span>{{moduleName}}</span>
+    <role-menuAssignmentRecursion *ngFor="let i of list" [checkFlag]="i.checkFlag" [moduleName]="i.moduleName" [moduleId]="i.moduleId" [list]="i.list"></role-menuAssignmentRecursion>
+</div>

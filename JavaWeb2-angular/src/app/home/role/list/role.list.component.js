@@ -108,6 +108,10 @@ var RoleListComponent = /** @class */ (function () {
     RoleListComponent.prototype.roleDetail = function (roleId) {
         this.router.navigate(['../detail'], { relativeTo: this.activatedRoute, queryParams: { 'roleId': roleId } });
     };
+    //角色模块分配
+    RoleListComponent.prototype.roleMenuAssignment = function (roleId) {
+        this.router.navigate(['../menuAssignment'], { relativeTo: this.activatedRoute, queryParams: { 'roleId': roleId } });
+    };
     RoleListComponent = __decorate([
         core_1.Component({
             selector: 'role-list',
