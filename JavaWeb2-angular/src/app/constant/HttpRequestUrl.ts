@@ -37,6 +37,8 @@ export class HttpRequestUrl{
     public static SYS_MODULE_LIST = '/web/sys/module/list';//模块列表
     public static SYS_MODULE_DELETE = '/web/sys/module/delete';//删除模块
     public static SYS_MODULE_ADD = '/web/sys/module/add';//新增模块
+    public static SYS_MODULE_MODIFY = '/web/sys/module/modify';//修改模块
+    public static SYS_MODULE_DETAIL = '/web/sys/module/detail';//模块详情
     /** 拥有权限才能访问 end */
 
 }

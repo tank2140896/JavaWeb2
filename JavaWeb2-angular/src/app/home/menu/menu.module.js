@@ -12,12 +12,14 @@ var router_1 = require("@angular/router");
 var menu_component_1 = require("./menu.component");
 var menu_list_module_1 = require("./list/menu.list.module");
 var menu_add_module_1 = require("./add/menu.add.module");
+var menu_modify_module_1 = require("./modify/menu.modify.module");
+var menu_detail_module_1 = require("./detail/menu.detail.module");
 var MenuModule = /** @class */ (function () {
     function MenuModule() {
     }
     MenuModule = __decorate([
         core_1.NgModule({
-            imports: [common_1.CommonModule, router_1.RouterModule, menu_list_module_1.MenuListModule, menu_add_module_1.MenuAddModule],
+            imports: [common_1.CommonModule, router_1.RouterModule, menu_list_module_1.MenuListModule, menu_add_module_1.MenuAddModule, menu_modify_module_1.MenuModifyModule, menu_detail_module_1.MenuDetailModule],
             declarations: [menu_component_1.MenuComponent],
             exports: [menu_component_1.MenuComponent]
         })

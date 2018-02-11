@@ -30,6 +30,8 @@ export class MenuListComponent implements OnInit {
         //this.menuListZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_MODULE_LIST,false));
         this.menuDeleteZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_MODULE_DELETE,false));
         this.menuAddZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_MODULE_ADD,false));
+        this.menuModifyZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_MODULE_MODIFY,false));
+        this.menuDetailZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_MODULE_DETAIL,false));
 
     }
 
@@ -37,6 +39,8 @@ export class MenuListComponent implements OnInit {
     //menuListZone:boolean;//模块列表
     menuDeleteZone:boolean;//删除模块
     menuAddZone:boolean;//新增模块
+    menuModifyZone:boolean;//修改模块
+    menuDetailZone:boolean;//模块详情
     /** 操作权限 end */
 
     public moduleTypeList:any = [
@@ -124,6 +128,16 @@ export class MenuListComponent implements OnInit {
     //新增模块
     public addMenu():void{
         this.router.navigate(['../add'],{relativeTo:this.activatedRoute});
+    }
+
+    //修改模块
+    public modifyMenu(moduleId):void{
+        this.router.navigate(['../modify'],{relativeTo:this.activatedRoute,queryParams:{'moduleId':moduleId}});
+    }
+
+    //模块详情
+    public menuDetail(moduleId):void{
+        this.router.navigate(['../detail'],{relativeTo:this.activatedRoute,queryParams:{'moduleId':moduleId}});
     }
 
 }

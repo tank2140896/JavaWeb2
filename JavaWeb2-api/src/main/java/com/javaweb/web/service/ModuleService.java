@@ -17,4 +17,8 @@ public interface ModuleService {
 	
 	public void moduleAdd(Module module);
 	
+	public void moduleModify(Module module);
+	
+	public Module moduleDetail(String moduleId);
+	
 }

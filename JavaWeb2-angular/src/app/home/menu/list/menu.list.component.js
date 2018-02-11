@@ -32,6 +32,8 @@ var MenuListComponent = /** @class */ (function () {
         //this.menuListZone = authService.canShow(HttpRequestUrl.getPath(HttpRequestUrl.SYS_MODULE_LIST,false));
         this.menuDeleteZone = authService.canShow(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_MODULE_DELETE, false));
         this.menuAddZone = authService.canShow(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_MODULE_ADD, false));
+        this.menuModifyZone = authService.canShow(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_MODULE_MODIFY, false));
+        this.menuDetailZone = authService.canShow(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_MODULE_DETAIL, false));
     }
     //初始化
     MenuListComponent.prototype.ngOnInit = function () {
@@ -102,6 +104,14 @@ var MenuListComponent = /** @class */ (function () {
     //新增模块
     MenuListComponent.prototype.addMenu = function () {
         this.router.navigate(['../add'], { relativeTo: this.activatedRoute });
+    };
+    //修改模块
+    MenuListComponent.prototype.modifyMenu = function (moduleId) {
+        this.router.navigate(['../modify'], { relativeTo: this.activatedRoute, queryParams: { 'moduleId': moduleId } });
+    };
+    //模块详情
+    MenuListComponent.prototype.menuDetail = function (moduleId) {
+        this.router.navigate(['../detail'], { relativeTo: this.activatedRoute, queryParams: { 'moduleId': moduleId } });
     };
     MenuListComponent = __decorate([
         core_1.Component({

@@ -54,8 +54,18 @@ public class ModuleServiceImpl implements ModuleService {
 			module.setLevel(level);
 		}else{
 			module.setOrders(1);
+			module.setLevel(1);
 		}
 		moduleDao.insert(module);
+	}
+	
+	@Transactional
+	public void moduleModify(Module module) {
+		moduleDao.update(module);
+	}
+
+	public Module moduleDetail(String moduleId) {
+		return moduleDao.moduleDetail(moduleId);
 	}
 
 }

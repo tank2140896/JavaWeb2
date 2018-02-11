@@ -116,7 +116,8 @@
                         <td>{{eachData.createDate}}</td>
                         <td>
                             <button *ngIf="menuDeleteZone" class="btn btn-sm btn-danger" (click)="deleteMenu(eachData.moduleId,content)">删除模块</button>
-
+                            <button *ngIf="menuModifyZone" class="btn btn-sm btn-warning" (click)="modifyMenu(eachData.moduleId)">修改模块</button>
+                            <button *ngIf="menuDetailZone" class="btn btn-sm btn-info" (click)="menuDetail(eachData.moduleId)">模块详情</button>
                         </td>
                     </tr>
                     </tbody>
