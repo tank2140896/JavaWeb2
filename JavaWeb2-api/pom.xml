@@ -48,6 +48,11 @@
 	        <groupId>org.springframework.boot</groupId>
 	        <artifactId>spring-boot-starter-data-redis</artifactId>
 	    </dependency>
+	    <!-- kafka -->
+	    <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
 	    <!-- SpringBoot、Redis、Session整合
 		<dependency>  
 	        <groupId>org.springframework.session</groupId>  

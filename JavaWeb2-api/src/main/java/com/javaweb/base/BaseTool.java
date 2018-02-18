@@ -11,6 +11,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
@@ -27,6 +28,9 @@ public class BaseTool {
 	@Autowired
 	public Neo4jTemplate neo4jTemplate;
 	*/
+	
+	@Autowired
+    private KafkaTemplate<String,String> kafkaTemplate;
 	
 	@Autowired
     public MessageSource messageSource;
