@@ -1,5 +1,6 @@
 package com.javaweb.web.controller;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,15 +8,21 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.constant.CommonConstant;
@@ -35,6 +42,9 @@ public class AllOpenController extends BaseController {
 	
 	@Autowired
 	private ModuleService moduleService;
+	
+	@Autowired
+	private DefaultKaptcha defaultKaptcha;
 	
 	//用户登录接口
 	@PostMapping("/login")
@@ -63,6 +73,17 @@ public class AllOpenController extends BaseController {
 			}
 		}
 		return baseResponseResult;
+	}
+	
+	//验证码
+	@GetMapping("/kaptcha")
+	public void kaptcha(HttpServletResponse response) throws Exception {
+	    response.setHeader("Cache-Control", "no-store, no-cache");
+	    response.setContentType("image/jpeg");
+	    String text = defaultKaptcha.createText();
+	    BufferedImage image = defaultKaptcha.createImage(text);
+	    ServletOutputStream out = response.getOutputStream();
+	    ImageIO.write(image,"jpg",out);
 	}
 				  
 	@RequestMapping(value="/requestParameterLost",method={RequestMethod.GET,RequestMethod.POST})

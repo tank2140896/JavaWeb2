@@ -18,19 +18,4 @@ spring-session-redis配置：
 kafka生产者（producer）一般可以使用kafkaTemplate；kafka消费者（consumer）一般可以使用@KafkaListener；实际项目中生产者和消费者一般都是分开的
 二、项目使用说明：
 1、除了涉及事务的service加上@Transactional，建议涉及事务的Controller也加上@Transactional，另外不建议try catch，除非能确保无数据库相关事务操作或确保Controller内的方法不会抛出异常
-2、验证码可以使用kaptcha
-<dependency>
-	<groupId>com.github.penggle</groupId>
-	<artifactId>kaptcha</artifactId>
-</dependency>
-@Autowired
-private DefaultKaptcha defaultKaptcha;	
-@GetMapping("/kaptcha")
-public void captcha(HttpServletResponse response)throws Exception {
-    response.setHeader("Cache-Control", "no-store, no-cache");
-    response.setContentType("image/jpeg");
-    String text = defaultKaptcha.createText();//生成文字验证码
-    BufferedImage image = defaultKaptcha.createImage(text);//生成图片验证码
-    ServletOutputStream out = response.getOutputStream();
-    ImageIO.write(image,"jpg",out);
-}
+2、关于@Configuration的类，配置代码常用的有两种写法，一是通过常量类配置，二是通过配置文件配置
