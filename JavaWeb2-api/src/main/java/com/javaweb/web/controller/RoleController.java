@@ -7,7 +7,6 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -30,14 +29,10 @@ import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.role.RoleListRequest;
 import com.javaweb.web.po.Role;
 import com.javaweb.web.po.User;
-import com.javaweb.web.service.RoleService;
 
 @RestController
 @RequestMapping("/web/sys/role")
 public class RoleController extends BaseController {
-	
-	@Autowired
-	private RoleService roleService;
 	
 	@PostMapping("/list")
 	public BaseResponseResult roleList(HttpServletRequest request,@RequestBody RoleListRequest roleListRequest){

@@ -4,7 +4,6 @@ import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -27,14 +26,10 @@ import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.module.ModuleListRequest;
 import com.javaweb.web.po.Module;
 import com.javaweb.web.po.User;
-import com.javaweb.web.service.ModuleService;
 
 @RestController
 @RequestMapping("/web/sys/module")
 public class ModuleController extends BaseController {
-	
-	@Autowired
-	private ModuleService moduleService;
 	
 	@PostMapping("/list")
 	public BaseResponseResult moduleList(HttpServletRequest request,@RequestBody ModuleListRequest moduleListRequest){

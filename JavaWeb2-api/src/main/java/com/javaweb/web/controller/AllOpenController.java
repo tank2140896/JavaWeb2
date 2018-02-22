@@ -12,7 +12,6 @@ import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.constant.CommonConstant;
@@ -31,20 +29,9 @@ import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.user.UserLoginRequest;
 import com.javaweb.web.po.Module;
 import com.javaweb.web.po.User;
-import com.javaweb.web.service.ModuleService;
-import com.javaweb.web.service.UserService;
 
 @RestController
 public class AllOpenController extends BaseController {
-	
-	@Autowired
-	private UserService userService;
-	
-	@Autowired
-	private ModuleService moduleService;
-	
-	@Autowired
-	private DefaultKaptcha defaultKaptcha;
 	
 	//用户登录接口
 	@PostMapping("/login")
