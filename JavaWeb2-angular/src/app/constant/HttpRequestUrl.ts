@@ -12,6 +12,7 @@ export class HttpRequestUrl{
 
     /** 任何人都能访问 start */
     public static LOGIN = '/login';//用户登录
+    public static KAPTCHA = '/kaptcha';//获取验证码
     /** 任何人都能访问 end */
 
     /** 登录才能访问 start */

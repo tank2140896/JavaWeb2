@@ -13,6 +13,10 @@
                 <div class="form-group">
                     <input type="password" [(ngModel)]="userLogin.password" class="form-control input-underline input-lg" placeholder="请输入密码">
                 </div>
+                <div class="form-group">
+                    <input type="text" [(ngModel)]="userLogin.kaptcha" class="form-control input-underline input-lg" placeholder="请输入验证码">
+                    <img style="float:right;margin-top:-45px;" [src]="imageUrl" (click)="getKaptcha()">
+                </div>
             </div>
             <a class="btn rounded-btn" (click)="login()">登录</a>
             &nbsp;

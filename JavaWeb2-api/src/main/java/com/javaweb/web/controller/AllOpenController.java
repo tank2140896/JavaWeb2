@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -63,11 +64,12 @@ public class AllOpenController extends BaseController {
 	}
 	
 	//验证码
-	@GetMapping("/kaptcha")
-	public void kaptcha(HttpServletResponse response) throws Exception {
-	    response.setHeader("Cache-Control", "no-store, no-cache");
+	@GetMapping("/kaptcha/{uuid}")
+	public void kaptcha(HttpServletResponse response,@PathVariable("uuid") String uuid) throws Exception {
+		response.setHeader("Cache-Control", "no-store, no-cache");
 	    response.setContentType("image/jpeg");
 	    String text = defaultKaptcha.createText();
+	    //TODO valueOperations.set(uuid, text);
 	    BufferedImage image = defaultKaptcha.createImage(text);
 	    ServletOutputStream out = response.getOutputStream();
 	    ImageIO.write(image,"jpg",out);

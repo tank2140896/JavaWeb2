@@ -15,6 +15,10 @@ public class UserLoginRequest {
 	
 	@Pattern(regexp="^[1-9]$",message="validated.user.type.pattern")
 	private String type;
+	
+	private String kaptcha;
+	
+	private String uuid;
 
 	public String getUsername() {
 		return username;
@@ -38,6 +42,22 @@ public class UserLoginRequest {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public String getKaptcha() {
+		return kaptcha;
+	}
+
+	public void setKaptcha(String kaptcha) {
+		this.kaptcha = kaptcha;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 
 }

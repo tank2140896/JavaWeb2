@@ -11,15 +11,31 @@ var router_animations_1 = require("../router.animations");
 var common_constant_1 = require("../constant/common.constant");
 var user_login_1 = require("../models/user/user.login");
 var HttpRequestUrl_1 = require("../constant/HttpRequestUrl");
+var StringUtil_1 = require("../util/StringUtil");
 var LoginComponent = /** @class */ (function () {
     function LoginComponent(router, httpService, sessionService) {
         this.router = router;
         this.httpService = httpService;
         this.sessionService = sessionService;
+        this.uuid = null; //uuid
         this.userLogin = new user_login_1.UserLogin(); //用户登录参数封装，用到[()]双向绑定需要初始化
         this.userLoginErrorMessage = common_constant_1.CommonConstant.EMPTY;
     }
     LoginComponent.prototype.ngOnInit = function () {
+        this.getKaptcha();
+    };
+    //获取验证码
+    LoginComponent.prototype.getKaptcha = function () {
+        if (this.uuid == null) {
+            var getUuid = window.sessionStorage.getItem('kaptcha');
+            if (getUuid == null || getUuid == '') {
+                var generateUuid = StringUtil_1.StringUtil.getUuid();
+                this.userLogin.uuid = generateUuid;
+                window.sessionStorage.setItem('kaptcha', generateUuid);
+            }
+        }
+        this.uuid = window.sessionStorage.getItem('kaptcha');
+        this.imageUrl = HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.KAPTCHA, true) + '/' + this.uuid + '?time=' + new Date();
     };
     /*------ 用户登录 start ------*/
     LoginComponent.prototype.login = function () {

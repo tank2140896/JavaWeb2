@@ -14,6 +14,7 @@ var HttpRequestUrl = /** @class */ (function () {
     HttpRequestUrl.HTTP_REQUEST_PREFIX = 'http://localhost:8888/javaweb-web';
     /** 任何人都能访问 start */
     HttpRequestUrl.LOGIN = '/login'; //用户登录
+    HttpRequestUrl.KAPTCHA = '/kaptcha'; //获取验证码
     /** 任何人都能访问 end */
     /** 登录才能访问 start */
     HttpRequestUrl.LOGOUT = '/web/loggedIn/logout'; //用户退出
