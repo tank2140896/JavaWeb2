@@ -1,4 +1,4 @@
-package com.javaweb.util.help.sorthelp;
+package com.javaweb.util.help.sort;
 
 //冒泡排序(一句话攻略:abcde,拿a出来和bcde比,拿b出来和cde比,拿c出来和de比,拿d出来和e比)
 public class BubbleSort implements BaseSort<Integer> {

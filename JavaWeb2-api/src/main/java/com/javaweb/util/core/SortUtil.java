@@ -4,11 +4,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import com.javaweb.util.help.sorthelp.BubbleSort;
-import com.javaweb.util.help.sorthelp.BucketSort;
-import com.javaweb.util.help.sorthelp.MergeSort;
-import com.javaweb.util.help.sorthelp.BaseSort;
-import com.javaweb.util.help.sorthelp.InsertSort;
+import com.javaweb.util.help.sort.BaseSort;
+import com.javaweb.util.help.sort.BubbleSort;
+import com.javaweb.util.help.sort.BucketSort;
+import com.javaweb.util.help.sort.InsertSort;
+import com.javaweb.util.help.sort.MergeSort;
 
 public class SortUtil {
 	

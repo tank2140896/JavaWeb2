@@ -1,4 +1,4 @@
-package com.javaweb.util.help.sorthelp;
+package com.javaweb.util.help.sort;
 
 //桶排序
 public class BucketSort implements BaseSort<Integer> {

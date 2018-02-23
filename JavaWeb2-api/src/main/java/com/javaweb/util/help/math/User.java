@@ -1,4 +1,4 @@
-package com.javaweb.util.help.mathhelp;
+package com.javaweb.util.help.math;
 
 import java.util.List;
 

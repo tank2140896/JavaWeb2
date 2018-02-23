@@ -1,15 +1,27 @@
 package com.javaweb.util.core;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.Period;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoField;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
+import com.javaweb.util.entity.DateTimeInfo;
+
+/**
+ * LocalDate         LocalTime         ZoneId
+ * LocalDateTime..............
+ * ZonedDateTime.............................
+ * 日期时间加减的链式处理：LocalDate localDate = LocalDate.of(2017,3,24).with(ChronoField.YEAR,2020).plusYears(3).minusDays(2);//2023-03-22
+ */
 public class DateUtil {
 	
 	//默认每月第一天是1号
@@ -24,9 +36,48 @@ public class DateUtil {
 	//日期格式(时分秒)
 	public static final String DEFAULT_TIME_PATTERN = "HH:mm:ss";
 	
+	//获取年月日信息
+	public static DateTimeInfo getDateInfo(LocalDate localDate){
+		DateTimeInfo dateTimeInfo = new DateTimeInfo();
+		dateTimeInfo.setYear(localDate.get(ChronoField.YEAR));//年
+		dateTimeInfo.setYearOfMonth(localDate.get(ChronoField.MONTH_OF_YEAR));//月
+		dateTimeInfo.setDayOfMonth(localDate.get(ChronoField.DAY_OF_MONTH));//日
+		dateTimeInfo.setDayOfWeek(localDate.get(ChronoField.DAY_OF_WEEK));//星期几
+		dateTimeInfo.setTotalDayOfMonth(localDate.lengthOfMonth());//所在月总共天数
+		dateTimeInfo.setIsLeapYear(localDate.isLeapYear());//是否是闰年
+		return dateTimeInfo;
+	}
+	
+	//获取时分秒信息
+	public static DateTimeInfo getTimeInfo(LocalTime localTime){
+		DateTimeInfo dateTimeInfo = new DateTimeInfo();
+		dateTimeInfo.setHourOfDay(localTime.get(ChronoField.HOUR_OF_DAY));//时
+		dateTimeInfo.setMinuteOfHour(localTime.get(ChronoField.MINUTE_OF_HOUR));//分
+		dateTimeInfo.setSecondOfMinute(localTime.get(ChronoField.SECOND_OF_MINUTE));//秒
+		return dateTimeInfo;
+	}
+	
+	//获取年月日时分秒信息
+	public static DateTimeInfo getDateTimeInfo(LocalDateTime localDateTime){
+		LocalDate localDate = localDateTime.toLocalDate();
+		LocalTime localTime = localDateTime.toLocalTime();
+		DateTimeInfo dateTimeInfo = new DateTimeInfo();
+		dateTimeInfo.setYear(localDate.get(ChronoField.YEAR));//年
+		dateTimeInfo.setYearOfMonth(localDate.get(ChronoField.MONTH_OF_YEAR));//月
+		dateTimeInfo.setDayOfMonth(localDate.get(ChronoField.DAY_OF_MONTH));//日
+		dateTimeInfo.setDayOfWeek(localDate.get(ChronoField.DAY_OF_WEEK));//星期几
+		dateTimeInfo.setTotalDayOfMonth(localDate.lengthOfMonth());//所在月总共天数
+		dateTimeInfo.setIsLeapYear(localDate.isLeapYear());//是否是闰年
+		dateTimeInfo.setHourOfDay(localTime.get(ChronoField.HOUR_OF_DAY));//时
+		dateTimeInfo.setMinuteOfHour(localTime.get(ChronoField.MINUTE_OF_HOUR));//分
+		dateTimeInfo.setSecondOfMinute(localTime.get(ChronoField.SECOND_OF_MINUTE));//秒
+		return dateTimeInfo;
+	}
+	
 	//获得本月最后一天
 	public static int getLastDayOfMonth(int year,int month){
 		LocalDate localDate = LocalDate.of(year, month, FIRST_DAY_OF_MONTH);
+		//LocalDate.of(year, month, FIRST_DAY_OF_MONTH).with(TemporalAdjusters.lastDayOfMonth())
 		return localDate.lengthOfMonth();
 	}
 	
@@ -162,6 +213,21 @@ public class DateUtil {
 		return localDateTime.plusSeconds(second).format(DateTimeFormatter.ofPattern(pattern));
 	}
 	
+	//获取两个时间(年月日)间的间隔
+	public static Period getPeriod(LocalDate startDate,LocalDate endDate){
+		return Period.between(startDate,endDate);
+	}
+	
+	//获取两个时间(时分秒)间的间隔
+	public static Duration getDuration(LocalTime startDate,LocalTime endDate){
+		return Duration.between(startDate,endDate);
+	}
+	
+	//获取两个时间(年月日时分秒)间的间隔
+	public static Duration getDuration(LocalDateTime startDate,LocalDateTime endDate){
+		return Duration.between(startDate,endDate);
+	}
+	
 	//LocalDateTime转Date
 	public static Date LocalDateTimeToDate(LocalDateTime localDateTime){
 		ZoneId zoneId = ZoneId.systemDefault();
@@ -174,6 +240,11 @@ public class DateUtil {
 		ZoneId zoneId = ZoneId.systemDefault();
 		Instant instant = date.toInstant();
 		return LocalDateTime.ofInstant(instant,zoneId);
+	}
+	
+	public static ZoneId getCurrentJvmDefaultZoneId(){
+		//ZoneId zoneId = ZoneId.of("Europe/Rome");
+		return TimeZone.getDefault().toZoneId();
 	}
 
 }

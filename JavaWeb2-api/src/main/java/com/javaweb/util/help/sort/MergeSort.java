@@ -1,4 +1,4 @@
-package com.javaweb.util.help.sorthelp;
+package com.javaweb.util.help.sort;
 
 import java.util.Arrays;
 

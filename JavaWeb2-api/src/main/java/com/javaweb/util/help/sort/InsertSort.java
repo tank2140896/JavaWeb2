@@ -1,4 +1,4 @@
-package com.javaweb.util.help.sorthelp;
+package com.javaweb.util.help.sort;
 
 //插入排序(一句话攻略:如果说冒泡排序是正向处理的,那么插入排序就是反向处理的)
 public class InsertSort implements BaseSort<Integer> {

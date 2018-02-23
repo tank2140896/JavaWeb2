@@ -1,4 +1,4 @@
-package com.javaweb.util.help.sqlhelp;
+package com.javaweb.util.help.sql;
 
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;

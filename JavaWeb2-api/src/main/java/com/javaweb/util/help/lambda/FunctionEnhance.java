@@ -1,4 +1,4 @@
-package com.javaweb.util.function;
+package com.javaweb.util.help.lambda;
 
 import java.util.function.Function;
 
