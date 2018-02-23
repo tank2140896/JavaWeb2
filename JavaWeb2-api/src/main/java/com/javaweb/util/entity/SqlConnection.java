@@ -1,6 +1,6 @@
-package com.javaweb.util.help.sql;
+package com.javaweb.util.entity;
 
-public class SqlConnectionBean {
+public class SqlConnection {
 	
 	private int port = 3306;
 	

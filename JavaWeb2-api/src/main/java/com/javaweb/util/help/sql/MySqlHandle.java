@@ -3,9 +3,11 @@ package com.javaweb.util.help.sql;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 
+import com.javaweb.util.entity.SqlConnection;
+
 public class MySqlHandle implements BaseSql {
 
-	public synchronized boolean executeExport(SqlConnectionBean jdbcBean,String filePath) throws Exception {
+	public synchronized boolean executeExport(SqlConnection jdbcBean,String filePath) throws Exception {
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append("mysqldump -P ").append(jdbcBean.getPort()).append(" -h ").append(jdbcBean.getIp())
 		            .append(" -u ").append(jdbcBean.getUsername()).append(" -p").append(jdbcBean.getPassword())
@@ -18,7 +20,7 @@ public class MySqlHandle implements BaseSql {
 		return false;
 	}
 
-	public synchronized boolean executeImport(SqlConnectionBean jdbcBean,String filePath) throws Exception {
+	public synchronized boolean executeImport(SqlConnection jdbcBean,String filePath) throws Exception {
 		StringBuffer stringBuffer = new StringBuffer();
 		stringBuffer.append("mysql -P ").append(jdbcBean.getPort()).append(" -h ").append(jdbcBean.getIp()).append(" -u ")
 		            .append(jdbcBean.getUsername()).append(" -p").append(jdbcBean.getPassword()).append(" --default-character-set=utf8");
