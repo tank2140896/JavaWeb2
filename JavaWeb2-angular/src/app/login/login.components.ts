@@ -28,26 +28,24 @@ export class LoginComponent implements OnInit {
         this.getKaptcha();
     }
 
-    uuid:string = null;//uuid
     imageUrl:string;//验证码图片请求URL
     userLogin:UserLogin = new UserLogin();//用户登录参数封装，用到[()]双向绑定需要初始化
     userLoginErrorMessage:string = CommonConstant.EMPTY;
 
     //获取验证码
     public getKaptcha():void{
-        if(this.uuid==null){
-            let getUuid:string = window.sessionStorage.getItem('kaptcha');
-            if(getUuid==null||getUuid==''){
-                let generateUuid = StringUtil.getUuid();
-                this.userLogin.uuid = generateUuid;
-                window.sessionStorage.setItem('kaptcha',generateUuid);
-            }
+        let getUuid:string = this.sessionService.getSessionValueByKey('kaptcha');
+        if(getUuid==null||getUuid==''){
+            let generateUuid = StringUtil.getUuid();
+            this.userLogin.uuid = generateUuid;
+            this.sessionService.setSessionValueBykey('kaptcha',generateUuid);
+        }else{
+            this.userLogin.uuid = getUuid;
         }
-        this.uuid = window.sessionStorage.getItem('kaptcha');
-        this.imageUrl = HttpRequestUrl.getPath(HttpRequestUrl.KAPTCHA,true)+'/'+this.uuid+'?time='+new Date();
+        this.imageUrl = HttpRequestUrl.getPath(HttpRequestUrl.KAPTCHA,true)+'/'+this.userLogin.uuid+'?time='+new Date();
     }
 
-    /*------ 用户登录 start ------*/
+    //用户登录
     public login():void{
         this.httpService.postJsonData(HttpRequestUrl.getPath(HttpRequestUrl.LOGIN,true),this.userLogin,null).subscribe(
             result=>{
@@ -65,6 +63,5 @@ export class LoginComponent implements OnInit {
             }
         );
     }
-    /*------ 用户登录 end ------*/
 
 }

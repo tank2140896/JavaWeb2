@@ -41,8 +41,16 @@ public class BaseTool {
 	@Resource(name="redisTemplate")
 	public ValueOperations<Object,Object> valueOperations;
 	
+	public void setDataToRedis(String key,Object value,long timeOut,TimeUnit timeUnit){
+		valueOperations.set(key,value,timeOut,timeUnit);
+	}
+	
 	public void setDefaultDataToRedis(String key,Object value){
 		valueOperations.set(key,value,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
+	}
+	
+	public Object getDateFromRedis(String key){
+		return valueOperations.get(key);
 	}
 	
 	public TokenData getTokenData(HttpServletRequest request){

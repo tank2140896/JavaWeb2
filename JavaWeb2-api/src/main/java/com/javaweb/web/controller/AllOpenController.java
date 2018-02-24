@@ -6,10 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.validation.BindingResult;
@@ -36,40 +38,37 @@ public class AllOpenController extends BaseController {
 	
 	//用户登录接口
 	@PostMapping("/login")
-	public BaseResponseResult login(@RequestBody @Validated UserLoginRequest userLogin,BindingResult bindingResult){
-		BaseResponseResult baseResponseResult = null;
+	public BaseResponseResult login(@RequestBody @Validated UserLoginRequest userLogin,BindingResult bindingResult,HttpServletRequest request){
 		if(bindingResult.hasErrors()){
-			baseResponseResult = new BaseResponseResult(SystemConstant.VALIDATE_ERROR,getValidateMessage(bindingResult),CommonConstant.EMPTY_VALUE);
-		}else{
-			//超级管理员(后门)
-			if(SystemConstant.SYSTEM_DEFAULT_USER_NAME.equals(userLogin.getUsername())&&SystemConstant.SYSTEM_DEFAULT_USER_PASSWORD.equals(userLogin.getPassword())){
-				User user = SystemConstant.SYSTEM_DEFAULT_USER;
-				TokenData token = getToken(true,user,userLogin.getType());
-				setDefaultDataToRedis(user.getUserId()+","+userLogin.getType(),token);
-				//request.getSession().setAttribute(user.getUserId(),token);
-				baseResponseResult = new BaseResponseResult(SystemConstant.SUCCESS,getMessage("login.user.loginSuccess"),token);
-			}else{//非超级管理员
-				User user = userService.userLogin(userLogin);
-				if(user==null){
-					baseResponseResult = new BaseResponseResult(SystemConstant.LOGIN_FAIL,getMessage("login.user.userNameOrPassword"),CommonConstant.EMPTY_VALUE);
-				}else{
-					TokenData token = getToken(false,user,userLogin.getType());
-					setDefaultDataToRedis(user.getUserId()+","+userLogin.getType(),token);
-					//request.getSession().setAttribute(user.getUserId(),token);
-					baseResponseResult = new BaseResponseResult(SystemConstant.SUCCESS,getMessage("login.user.loginSuccess"),token);
-				}
-			}
+			return new BaseResponseResult(SystemConstant.VALIDATE_ERROR,getValidateMessage(bindingResult),CommonConstant.EMPTY_VALUE);
 		}
-		return baseResponseResult;
+		if(kaptchaCheck(userLogin,request)){
+			return new BaseResponseResult(SystemConstant.VALIDATE_ERROR,getMessage("login.user.kaptcha"),CommonConstant.EMPTY_VALUE);
+		}
+		if(SystemConstant.SYSTEM_DEFAULT_USER_NAME.equals(userLogin.getUsername())&&SystemConstant.SYSTEM_DEFAULT_USER_PASSWORD.equals(userLogin.getPassword())){
+			User user = SystemConstant.SYSTEM_DEFAULT_USER;
+			TokenData token = getToken(true,user,userLogin.getType());
+			setDefaultDataToRedis(user.getUserId()+","+userLogin.getType(),token);
+			//request.getSession().setAttribute(user.getUserId(),token);
+			return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("login.user.loginSuccess"),token);
+		}
+		User user = userService.userLogin(userLogin);
+		if(user==null){
+			return new BaseResponseResult(SystemConstant.LOGIN_FAIL,getMessage("login.user.userNameOrPassword"),CommonConstant.EMPTY_VALUE);
+		}
+		TokenData token = getToken(false,user,userLogin.getType());
+		setDefaultDataToRedis(user.getUserId()+","+userLogin.getType(),token);
+		//request.getSession().setAttribute(user.getUserId(),token);
+		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("login.user.loginSuccess"),token);
 	}
 	
 	//验证码
 	@GetMapping("/kaptcha/{uuid}")
-	public void kaptcha(HttpServletResponse response,@PathVariable("uuid") String uuid) throws Exception {
+	public void kaptcha(HttpServletRequest request,HttpServletResponse response,@PathVariable("uuid") String uuid) throws Exception {
 		response.setHeader("Cache-Control", "no-store, no-cache");
 	    response.setContentType("image/jpeg");
 	    String text = defaultKaptcha.createText();
-	    //TODO valueOperations.set(uuid, text);
+	    setDataToRedis(String.join(",",request.getSession().getId(),uuid),text,SystemConstant.SYSTEM_DEFAULT_KAPTCHA_TIME_OUT,TimeUnit.MINUTES);
 	    BufferedImage image = defaultKaptcha.createImage(text);
 	    ServletOutputStream out = response.getOutputStream();
 	    ImageIO.write(image,"jpg",out);
@@ -95,6 +94,7 @@ public class AllOpenController extends BaseController {
 		return new BaseResponseResult(SystemConstant.NO_AUTHORY,getMessage("validated.permission.noAuthory"),CommonConstant.EMPTY_VALUE);
 	}
 	
+	//token数据封装
 	private TokenData getToken(Boolean adminFlag,User user,String type){
 		TokenData tokenData = new TokenData();
 		Map<String,Object> map = new HashMap<>();
@@ -130,6 +130,18 @@ public class AllOpenController extends BaseController {
 			}
 		}
 		return moduleList;
+	}
+	
+	//验证码单独校验
+	private boolean kaptchaCheck(UserLoginRequest userLogin,HttpServletRequest request){
+		boolean result = true;
+		String kaptcha = (String)getDateFromRedis(String.join(",",request.getSession().getId(),userLogin.getUuid()));
+		if(kaptcha!=null){
+			if(kaptcha.equals(userLogin.getKaptcha())){
+				result = false;
+			}
+		}
+		return result;
 	}
 	
 }

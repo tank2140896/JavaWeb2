@@ -5,6 +5,19 @@ import {HeadToken} from "../models/token/head.token";
 @Injectable()
 export class SessionService{
 
+    public setSessionValueBykey(key:string,value:string):void{
+        window.sessionStorage.setItem(key,value);
+    }
+
+    public getSessionValueByKey(key:string):string{
+        return window.sessionStorage.getItem(key);
+    }
+
+    public clearSessionValueByKey(key:string):void{
+        window.sessionStorage.removeItem(key);
+    }
+
+
     public setSessionData(sessionData:string):void{
         window.sessionStorage.setItem('sessionData',sessionData);
     }

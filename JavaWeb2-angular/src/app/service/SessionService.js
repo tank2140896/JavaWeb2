@@ -11,6 +11,15 @@ var head_token_1 = require("../models/token/head.token");
 var SessionService = /** @class */ (function () {
     function SessionService() {
     }
+    SessionService.prototype.setSessionValueBykey = function (key, value) {
+        window.sessionStorage.setItem(key, value);
+    };
+    SessionService.prototype.getSessionValueByKey = function (key) {
+        return window.sessionStorage.getItem(key);
+    };
+    SessionService.prototype.clearSessionValueByKey = function (key) {
+        window.sessionStorage.removeItem(key);
+    };
     SessionService.prototype.setSessionData = function (sessionData) {
         window.sessionStorage.setItem('sessionData', sessionData);
     };
