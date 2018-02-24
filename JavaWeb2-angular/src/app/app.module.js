@@ -15,6 +15,7 @@ var app_routes_1 = require("./app.routes");
 var app_component_1 = require("./app.component");
 var login_module_1 = require("./login/login.module");
 var home_module_1 = require("./home/home.module");
+var demo_module_1 = require("./demo/demo.module");
 var HttpService_1 = require("./service/HttpService");
 var SessionService_1 = require("./service/SessionService");
 var AuthService_1 = require("./service/AuthService");
@@ -30,7 +31,8 @@ var AppModule = /** @class */ (function () {
                 http_1.HttpClientModule,
                 app_routes_1.AppRoutes,
                 login_module_1.LoginModule,
-                home_module_1.HomeModule
+                home_module_1.HomeModule,
+                demo_module_1.DemoModule
             ],
             declarations: [app_component_1.AppComponent],
             bootstrap: [app_component_1.AppComponent],

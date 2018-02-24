@@ -20,9 +20,7 @@ import {Input} from '@angular/core';
     </li>
 </ul>
 2.4、<img [src]="..."/> <img (click)="..."/> <div [ngClass]="..."></div> <div [ngSubmit]="..."></div>
-2.5、<p #abc>10</p> <span>{{abc.textContent}}</span>
-2.6、<input type="text" #abc/> <button (click)="onLog(abc.value)">Log</button>
-2.7、component注入service
+2.5、component注入service
 import service
 @Component providers
 constructor private service

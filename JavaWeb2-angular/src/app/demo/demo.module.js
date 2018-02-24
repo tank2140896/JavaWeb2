@@ -6,20 +6,21 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
 exports.__esModule = true;
+var common_1 = require("@angular/common");
+var forms_1 = require("@angular/forms");
 var core_1 = require("@angular/core");
-var AppComponent = /** @class */ (function () {
-    function AppComponent() {
+var demo_components_1 = require("./demo.components");
+var DemoModule = /** @class */ (function () {
+    function DemoModule() {
     }
-    AppComponent.prototype.ngOnInit = function () {
-    };
-    AppComponent = __decorate([
-        core_1.Component({
-            selector: 'web-app',
-            //templateUrl: 'app/app.component.html'
-            template: '<router-outlet></router-outlet>' //``可适用于多行
+    DemoModule = __decorate([
+        core_1.NgModule({
+            imports: [common_1.CommonModule, forms_1.FormsModule],
+            declarations: [demo_components_1.DemoComponent],
+            exports: [demo_components_1.DemoComponent]
         })
-    ], AppComponent);
-    return AppComponent;
+    ], DemoModule);
+    return DemoModule;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.DemoModule = DemoModule;
+//# sourceMappingURL=demo.module.js.map

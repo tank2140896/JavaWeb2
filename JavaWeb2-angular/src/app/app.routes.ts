@@ -4,6 +4,7 @@ import {AuthService} from "./service/AuthService";
 
 import {LoginComponent} from "./login/login.components";
 import {HomeComponent} from "./home/home.component";
+import {DemoComponent} from "./demo/demo.components";
 import {UserComponent} from "./home/user/user.component";
 import {UserListComponent} from "./home/user/list/user.list.component";
 import {CenteralComponent} from "./home/centeral/centeral.component";
@@ -53,6 +54,7 @@ const APP_ROUTES = [
         ],canActivate:[AuthService]},
         {path:'**',redirectTo: '/web', pathMatch: 'full'}
     ],canActivate:[AuthService]},//home页面
+    {path:'demo',component:DemoComponent},//示例页面
     {path:'**',redirectTo: '/login', pathMatch: 'full'}//访问任何不存在的URL都将跳回登录页面
 ];
 

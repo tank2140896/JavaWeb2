@@ -4,6 +4,7 @@ var router_1 = require("@angular/router");
 var AuthService_1 = require("./service/AuthService");
 var login_components_1 = require("./login/login.components");
 var home_component_1 = require("./home/home.component");
+var demo_components_1 = require("./demo/demo.components");
 var user_component_1 = require("./home/user/user.component");
 var user_list_component_1 = require("./home/user/list/user.list.component");
 var centeral_component_1 = require("./home/centeral/centeral.component");
@@ -52,6 +53,7 @@ var APP_ROUTES = [
                 ], canActivate: [AuthService_1.AuthService] },
             { path: '**', redirectTo: '/web', pathMatch: 'full' }
         ], canActivate: [AuthService_1.AuthService] },
+    { path: 'demo', component: demo_components_1.DemoComponent },
     { path: '**', redirectTo: '/login', pathMatch: 'full' } //访问任何不存在的URL都将跳回登录页面
 ];
 //路由有两种策略，HashLocationStrategy和PathLocationStrategy，我这里用的是HashLocationStrategy

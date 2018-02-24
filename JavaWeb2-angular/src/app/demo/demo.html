@@ -1,0 +1,15 @@
+<hr>
+<!-- 示例1 -->
+<div>
+    <span class="demoTitle" #demo1_title>示例1：</span>
+    <input type="text" placeholder="请输入值" #demo1_inputValue/>
+    <button (click)="demo1_showInputValue(demo1_inputValue)">点我显示输入框的值</button>
+    <span>{{demo1_title.textContent}}</span>的联动值为：<span class="demoValue">{{demo1_inputValueShow}}</span>
+</div>
+<hr>
+<!-- 示例2 -->
+<div>
+    <span class="demoTitle">示例2：</span>数组[11,12,13]采用forEach求和为：<span class="demoValue">{{demo2_forEachRet}}</span>
+</div>
+<hr>
+<h1>待续：pdf-100</h1>

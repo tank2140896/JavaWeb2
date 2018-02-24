@@ -8,6 +8,7 @@ import {AppRoutes} from './app.routes';
 import {AppComponent} from './app.component';
 import {LoginModule} from "./login/login.module";
 import {HomeModule} from "./home/home.module";
+import {DemoModule} from "./demo/demo.module";
 import {HttpService} from "./service/HttpService";
 import {SessionService} from "./service/SessionService";
 import {AuthService} from "./service/AuthService";
@@ -20,7 +21,8 @@ import {AuthService} from "./service/AuthService";
         HttpClientModule,
         AppRoutes,
         LoginModule,
-        HomeModule
+        HomeModule,
+        DemoModule
     ],
     declarations: [AppComponent],
     bootstrap: [AppComponent],

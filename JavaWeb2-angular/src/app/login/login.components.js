@@ -53,6 +53,10 @@ var LoginComponent = /** @class */ (function () {
             _this.userLoginErrorMessage = error;
         });
     };
+    //示例页面跳转
+    LoginComponent.prototype.demo = function () {
+        this.router.navigate(['demo']);
+    };
     LoginComponent = __decorate([
         core_1.Component({
             selector: 'app-login',
