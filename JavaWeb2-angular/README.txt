@@ -47,11 +47,6 @@ this.router.navigate(['home']/*,{queryParams:{'myKey':100}}*/);
 }
 方式四：
 {path:'home',loadChildren:'app/home/home.module#HomeModule',canActivate:[AuthService]}
-2.10、<input #a/> <input #b/> <button (click)="clickMe(a,b)">click</button>
-clickMe(a:HTMLInputElement,b:HTMLInputElement){
-    console.log(a.value);
-    console.log(`${a.value},${b.value}`);
-}
 2.10、@HostBinding
 @HostBinding('disabled') getDisabled(){
     return true;

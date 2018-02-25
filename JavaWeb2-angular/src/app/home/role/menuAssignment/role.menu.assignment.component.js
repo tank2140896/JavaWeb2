@@ -64,7 +64,6 @@ var RoleMenuAssignmentComponent = /** @class */ (function () {
                     this.emptyArray.push(each.moduleId);
                 }
                 if (each.list != null && each.list.length > 0) {
-                    console.log(each.list);
                     this.deepSearch(each.list);
                 }
             }
