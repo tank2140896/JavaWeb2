@@ -12,6 +12,15 @@ var RoleMenuAssignmentRecursionComponent = /** @class */ (function () {
     }
     __decorate([
         core_1.Input()
+    ], RoleMenuAssignmentRecursionComponent.prototype, "checkFlag");
+    __decorate([
+        core_1.Input()
+    ], RoleMenuAssignmentRecursionComponent.prototype, "moduleName");
+    __decorate([
+        core_1.Input()
+    ], RoleMenuAssignmentRecursionComponent.prototype, "moduleId");
+    __decorate([
+        core_1.Input()
     ], RoleMenuAssignmentRecursionComponent.prototype, "list");
     RoleMenuAssignmentRecursionComponent = __decorate([
         core_1.Component({

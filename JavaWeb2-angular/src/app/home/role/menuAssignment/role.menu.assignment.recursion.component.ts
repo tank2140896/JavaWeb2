@@ -10,25 +10,9 @@ import {Component,Input,Output,ViewEncapsulation,EventEmitter} from "@angular/co
 
 export class RoleMenuAssignmentRecursionComponent {
 
-    // @Input() checkFlag:boolean;
-    // @Input() moduleName:string;
-    // @Input() moduleId:string;
+    @Input() checkFlag:boolean;
+    @Input() moduleName:string;
+    @Input() moduleId:string;
     @Input() list:any[];
-
-    /**
-    @Output() onCheckBoxChecked:EventEmitter<Boolean>;
-    public childClick(checkFlag):void{
-        console.log(checkFlag);
-        if(checkFlag){
-            this.checkFlag = false;
-        }else{
-            this.checkFlag = true;
-        }
-        this.onCheckBoxChecked.emit(this.checkFlag);
-    }
-    public checkBoxChecked($event):void{
-        console.log("父组件写上类似<my></my (onCheckBoxChecked)='checkBoxChecked($event)'><my>，然后从checkBoxChecked方法可以获得子组件的值，但是在递归下还是有难度的");
-    }
-    */
 
 }
