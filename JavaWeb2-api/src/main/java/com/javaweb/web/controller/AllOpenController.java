@@ -137,7 +137,7 @@ public class AllOpenController extends BaseController {
 		boolean result = true;
 		String kaptcha = (String)getDateFromRedis(String.join(",",request.getSession().getId(),userLogin.getUuid()));
 		if(kaptcha!=null){
-			if(kaptcha.equals(userLogin.getKaptcha())){
+			if(kaptcha.equalsIgnoreCase(userLogin.getKaptcha())){//忽略大小写
 				result = false;
 			}
 		}
