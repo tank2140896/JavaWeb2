@@ -3,16 +3,16 @@ package com.javaweb.util.help.sort;
 //桶排序
 public class BucketSort implements BaseSort<Integer> {
 	
-	public int numMinZone = 0;
+	private int numMinZone = 0;
 	
-	public int numMaxZone = 100;
+	private int numMaxZone = 100;
 
 	/**
 	 * 桶排序有点特殊,需要设置待排序所有数字的最小值和最大值,简单用法如下:
 	 * Integer array[] = new Integer[]{3,7,1,3,6};
 	 * BucketSort bucketSort = new BucketSort();
-	 * bucketSort.numMinZone = -3;
-	 * bucketSort.numMaxZone = 10;
+	 * bucketSort.setNumMinZone(-3);
+	 * bucketSort.setNumMaxZone(10);
 	 * array = SortUtil.getSort(array,bucketSort);
 	 * System.out.println(Arrays.toString(array));
 	 */
@@ -38,6 +38,22 @@ public class BucketSort implements BaseSort<Integer> {
 			}
 		}
 		return array;
+	}
+
+	public int getNumMinZone() {
+		return numMinZone;
+	}
+
+	public void setNumMinZone(int numMinZone) {
+		this.numMinZone = numMinZone;
+	}
+
+	public int getNumMaxZone() {
+		return numMaxZone;
+	}
+
+	public void setNumMaxZone(int numMaxZone) {
+		this.numMaxZone = numMaxZone;
 	}
 	
 }
