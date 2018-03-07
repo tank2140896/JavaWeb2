@@ -1,6 +1,10 @@
 package com.javaweb.base;
 
-public class BaseResponseResult {
+import java.io.Serializable;
+
+public class BaseResponseResult implements Serializable {
+
+	private static final long serialVersionUID = -3883891531784970360L;
 
 	private Object code;
 	

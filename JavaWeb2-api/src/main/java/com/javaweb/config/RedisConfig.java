@@ -50,12 +50,13 @@ public class RedisConfig extends CachingConfigurerSupport {
         };  
     }
     
-    //@Cacheable(value="a") http://blog.csdn.net/sanjay_f/article/details/47372967
-    //#redis缓存10分钟
-    //spring.cache.redis.time-to-live=600000
     /**
+    //1、新版本不需要这个Bean了
+    //2、使用：@Cacheable(value="a")
+    //3、要缓存的Java对象必须实现Serializable接口
     @Bean  
-    public CacheManager cacheManager(@SuppressWarnings("rawtypes") RedisTemplate redisTemplate) {  
+    public CacheManager cacheManager(@SuppressWarnings("rawtypes") RedisTemplate redisTemplate) { 
+     	//RedisCacheManager redisCacheManager = RedisCacheManager.create(redisTemplate.getRequiredConnectionFactory());
     	RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);  
     	Map<String,Long> expires = new HashMap<>();
 		cacheManager.setExpires(expires);
