@@ -1,16 +1,12 @@
 package com.javaweb.config;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
 
-import org.springframework.cache.CacheManager;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
@@ -55,6 +51,9 @@ public class RedisConfig extends CachingConfigurerSupport {
     }
     
     //@Cacheable(value="a") http://blog.csdn.net/sanjay_f/article/details/47372967
+    //#redis缓存10分钟
+    //spring.cache.redis.time-to-live=600000
+    /**
     @Bean  
     public CacheManager cacheManager(@SuppressWarnings("rawtypes") RedisTemplate redisTemplate) {  
     	RedisCacheManager cacheManager = new RedisCacheManager(redisTemplate);  
@@ -63,5 +62,6 @@ public class RedisConfig extends CachingConfigurerSupport {
 		cacheManager.setDefaultExpiration(15*60);//默认缓存15分钟  
         return cacheManager;  
     }  
+    */
 	
 }
