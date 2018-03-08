@@ -14,6 +14,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.client.RestTemplate;
 
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
@@ -23,23 +24,25 @@ public class BaseTool {
 	
 	/**
 	@Autowired
-	public MongoTemplate mongoTemplate;
+	protected MongoTemplate mongoTemplate;
 	
 	@Autowired
-	public Neo4jTemplate neo4jTemplate;
+	protected Neo4jTemplate neo4jTemplate;
 	*/
 	
-	@Autowired
-    private KafkaTemplate<String,String> kafkaTemplate;
+	protected RestTemplate restTemplate;
 	
 	@Autowired
-    public MessageSource messageSource;
+	protected KafkaTemplate<String,String> kafkaTemplate;
 	
 	@Autowired
-	public RedisTemplate<String,String> redisTemplate;
+    protected MessageSource messageSource;
+	
+	@Autowired
+	protected RedisTemplate<String,String> redisTemplate;
 	
 	@Resource(name="redisTemplate")
-	public ValueOperations<Object,Object> valueOperations;
+	protected ValueOperations<Object,Object> valueOperations;
 	
 	public void setDataToRedis(String key,Object value,long timeOut,TimeUnit timeUnit){
 		valueOperations.set(key,value,timeOut,timeUnit);

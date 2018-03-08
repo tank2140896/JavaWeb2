@@ -3,13 +3,12 @@ package com.javaweb.web.service.impl;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.javaweb.base.BaseService;
 import com.javaweb.util.core.PageUtil;
 import com.javaweb.util.entity.Page;
-import com.javaweb.web.dao.ds1.UserDao;
 import com.javaweb.web.eo.user.RoleInfoResponse;
 import com.javaweb.web.eo.user.UserListRequest;
 import com.javaweb.web.eo.user.UserListResponse;
@@ -18,11 +17,8 @@ import com.javaweb.web.po.User;
 import com.javaweb.web.service.UserService;
 
 @Service("userServiceImpl")
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl extends BaseService implements UserService {
 	
-	@Autowired
-	private UserDao userDao;
-
 	public User userLogin(UserLoginRequest userLogin) {
 		return userDao.userLogin(userLogin);
 	}

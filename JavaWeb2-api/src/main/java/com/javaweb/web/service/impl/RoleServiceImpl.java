@@ -5,13 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.javaweb.base.BaseService;
 import com.javaweb.util.core.PageUtil;
 import com.javaweb.util.entity.Page;
-import com.javaweb.web.dao.ds1.RoleDao;
 import com.javaweb.web.eo.role.ModuleInfoResponse;
 import com.javaweb.web.eo.role.RoleListRequest;
 import com.javaweb.web.eo.role.RoleListResponse;
@@ -19,11 +18,8 @@ import com.javaweb.web.po.Role;
 import com.javaweb.web.service.RoleService;
 
 @Service("roleServiceImpl")
-public class RoleServiceImpl implements RoleService {
+public class RoleServiceImpl extends BaseService implements RoleService {
 	
-	@Autowired
-	private RoleDao roleDao;
-
 	public Page roleList(RoleListRequest roleListRequest){
 		Page page = new Page();
 		List<RoleListResponse> list = roleDao.roleList(roleListRequest);

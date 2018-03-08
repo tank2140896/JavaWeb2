@@ -3,13 +3,12 @@ package com.javaweb.web.service.impl;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.javaweb.base.BaseService;
 import com.javaweb.util.core.PageUtil;
 import com.javaweb.util.entity.Page;
-import com.javaweb.web.dao.ds1.ModuleDao;
 import com.javaweb.web.eo.module.ModuleLevelAndOrdersResponse;
 import com.javaweb.web.eo.module.ModuleListRequest;
 import com.javaweb.web.eo.module.ModuleListResponse;
@@ -17,11 +16,8 @@ import com.javaweb.web.po.Module;
 import com.javaweb.web.service.ModuleService;
 
 @Service("moduleServiceImpl")
-public class ModuleServiceImpl implements ModuleService {
+public class ModuleServiceImpl extends BaseService implements ModuleService {
 	
-	@Autowired
-	private ModuleDao moduleDao;
-
 	public List<Module> getUserRoleModule(Map<String, Object> map) {
 		return moduleDao.getUserRoleModule(map);
 	}

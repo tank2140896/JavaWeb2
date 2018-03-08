@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 public class Application {
 	
     public static void main(String[] args) {
+    	//System.setProperty("spring.devtools.restart.enabled","false");//取消热部署
     	//SpringApplication.run(Application.class,args);
 		SpringApplication springApplication = new SpringApplication(Application.class);
 		springApplication.setBannerMode(Mode.OFF);
