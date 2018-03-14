@@ -10,9 +10,6 @@ spring-session-redis配置：
 3、国际化
 4、接口入参校验
 5、reids
-	bind 0.0.0.0 设置允许访问的ip
-	requirepass 123456 设置访问密码
-	protected-mode no 关闭保护模式
 6、mybatis共通dao
 7、kafka
 kafka生产者（producer）一般可以使用kafkaTemplate；kafka消费者（consumer）一般可以使用@KafkaListener；实际项目中生产者和消费者一般都是分开的
