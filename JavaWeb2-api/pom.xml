@@ -39,7 +39,7 @@
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
         </dependency>
-	    <!-- SpringBoot、Redis、Session整合
+	    <!-- spring-session-redis配置
 		<dependency>  
 	        <groupId>org.springframework.session</groupId>  
 	        <artifactId>spring-session-data-redis</artifactId>  
