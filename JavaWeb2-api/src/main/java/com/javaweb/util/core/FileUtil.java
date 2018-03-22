@@ -207,13 +207,29 @@ public class FileUtil {
 	}
 	
 	//深克隆
-	public Object deepClone(Object object) throws IOException,ClassNotFoundException {
+	public static Object deepClone(Object object) throws IOException,ClassNotFoundException {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		ObjectOutputStream oos = new ObjectOutputStream(baos);
 		oos.writeObject(object);
 		ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
 		ObjectInputStream ois = new ObjectInputStream(bais);
 		return ois.readObject();
+	}
+	
+	//文件转字节流
+	public static byte[] fileToBytes(String filePath,byte[] buffer) throws IOException{
+		//final byte b[] = new byte[1024];
+		Path path = Paths.get(filePath);
+		try(ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			FileInputStream fis = new FileInputStream(path.toFile());){
+			int n = 0;
+			while((n=fis.read(buffer))!=-1){
+				baos.write(buffer,0,n);
+			}
+			return baos.toByteArray();
+		}catch (IOException e) {
+			return null;
+		}
 	}
 	
 }

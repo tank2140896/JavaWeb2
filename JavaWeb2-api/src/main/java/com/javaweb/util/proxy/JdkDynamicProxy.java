@@ -16,7 +16,7 @@ public class JdkDynamicProxy implements InvocationHandler {
     }
 
 	public Object invoke(Object proxy,Method method,Object[] args) throws Throwable {
-		System.out.println(method.getName());
+		//System.out.println(method.getName());
 		return null;
 	}
 

@@ -30,7 +30,7 @@ public interface MySqlBaseDao<T> {
 	public Long selectAllCount();//统计所有
 	
 	@Select(CommonConstant.EMPTY_VALUE)
-	public List<T> selectAllByPaging(Map<String,Long> map);//分页查询
+	public List<T> selectAllByPaging(Map<String,Long> map);//分页查询（currentPage/pageSize）
 	
 	@Select(CommonConstant.EMPTY_VALUE)
 	public T selectByPk(Object id);//根据主键查询

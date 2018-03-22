@@ -1,5 +1,6 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   	
   	<modelVersion>4.0.0</modelVersion>
   	<groupId>com.javaweb</groupId>
@@ -39,22 +40,29 @@
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
         </dependency>
-	    <!-- spring-session-redis配置
+	    <!-- spring-session-redis配置 -->
 		<dependency>  
 	        <groupId>org.springframework.session</groupId>  
 	        <artifactId>spring-session-data-redis</artifactId>  
     	</dependency> 
-    	-->
+    	<dependency>  
+	        <groupId>org.springframework.session</groupId>  
+	        <artifactId>spring-session-data-redis</artifactId>  
+    	</dependency> 
 	    <!-- Mysql驱动 -->
 	    <dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
-		<!-- test -->
+    	<!-- 解析json（google的） -->
 		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-test</artifactId>
-		    <scope>test</scope>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		</dependency>
+    	<!-- 数据库连接池HikariCP -->
+    	<dependency>
+		    <groupId>com.zaxxer</groupId>
+		    <artifactId>HikariCP</artifactId>
 		</dependency>
 		<!-- 使用热部署 -->
     	<dependency>
@@ -62,10 +70,11 @@
 	        <artifactId>spring-boot-devtools</artifactId>
 	        <optional>true</optional>
     	</dependency>
-    	<!-- 数据库连接池HikariCP -->
-    	<dependency>
-		    <groupId>com.zaxxer</groupId>
-		    <artifactId>HikariCP</artifactId>
+		<!-- test -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-test</artifactId>
+		    <scope>test</scope>
 		</dependency>
 		<!-- 数据库连接池Druid -->
 		<dependency>
@@ -79,21 +88,37 @@
 		    <artifactId>mybatis-spring-boot-starter</artifactId>
 		    <version>1.3.1</version>
 		</dependency>
-		<!-- 解析json（google的） -->
-		<dependency>
-		    <groupId>com.google.code.gson</groupId>
-		    <artifactId>gson</artifactId>
-		</dependency>
 		<!-- 验证码 -->
 		<dependency>
 			<groupId>com.github.penggle</groupId>
 			<artifactId>kaptcha</artifactId>
 			<version>2.3.2</version>
 		</dependency>
+		<!-- Hadoop 
+    	<dependency>
+		    <groupId>org.springframework.data</groupId>
+		    <artifactId>spring-data-hadoop</artifactId>
+		    <version>2.5.0.RELEASE</version>
+		</dependency>
+		-->
+		<!-- Spark 
+		<dependency>
+		    <groupId>org.apache.spark</groupId>
+		    <artifactId>spark-core_2.11</artifactId>
+		    <version>2.3.0</version>
+		</dependency>
+		-->
 	</dependencies>
 	
 	<build>
 		<plugins>
+		   <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-surefire-plugin</artifactId>
+		        <configuration>
+		        	<skip>true</skip>
+		        </configuration>
+		    </plugin>
 	    	<plugin>
 	        	<groupId>org.springframework.boot</groupId>
 	            <artifactId>spring-boot-maven-plugin</artifactId>
