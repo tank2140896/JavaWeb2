@@ -23,6 +23,8 @@ import {MenuListComponent} from "./home/menu/list/menu.list.component";
 import {MenuAddComponent} from "./home/menu/add/menu.add.component";
 import {MenuModifyComponent} from "./home/menu/modify/menu.modify.component";
 import {MenuDetailComponent} from "./home/menu/detail/menu.detail.component";
+import {OnlineChatComponent} from "./home/onlineChat/onlineChat.component";
+import {ChatComponent} from "./home/onlineChat/chat/chat.component";
 
 const APP_ROUTES = [
     {path:'',component:LoginComponent},//默认登录页面
@@ -50,6 +52,10 @@ const APP_ROUTES = [
             {path:'add',component:MenuAddComponent,canActivate:[AuthService]},//新增模块页面
             {path:'modify',component:MenuModifyComponent,canActivate:[AuthService]},//修改模块页面
             {path:'detail',component:MenuDetailComponent,canActivate:[AuthService]},//模块详情页面
+            {path:'**',redirectTo:'/web',pathMatch:'full'}
+        ],canActivate:[AuthService]},
+        {path:'other/onlineChat',component:OnlineChatComponent,children:[
+            {path:'chat',component:ChatComponent,canActivate:[AuthService]},//在线聊天室页面
             {path:'**',redirectTo:'/web',pathMatch:'full'}
         ],canActivate:[AuthService]},
         {path:'**',redirectTo: '/web', pathMatch: 'full'}

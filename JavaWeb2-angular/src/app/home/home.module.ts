@@ -11,12 +11,14 @@ import {CenteralModule} from "./centeral/centeral.module";
 import {UserModule} from "./user/user.module";
 import {RoleModule} from "./role/role.module";
 import {MenuModule} from "./menu/menu.module";
+import {OnlineChatModule} from "./onlineChat/onlineChat.module";
 
 @NgModule({
     imports:[
                 CommonModule,RouterModule,NgbDropdownModule.forRoot(),
                 HeaderModule,SidebarModule,CenteralModule,
-                UserModule,RoleModule,MenuModule
+                UserModule,RoleModule,MenuModule,
+                OnlineChatModule
     ],
     declarations:[HomeComponent],
     exports:[HomeComponent]

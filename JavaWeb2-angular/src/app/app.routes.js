@@ -23,6 +23,8 @@ var menu_list_component_1 = require("./home/menu/list/menu.list.component");
 var menu_add_component_1 = require("./home/menu/add/menu.add.component");
 var menu_modify_component_1 = require("./home/menu/modify/menu.modify.component");
 var menu_detail_component_1 = require("./home/menu/detail/menu.detail.component");
+var onlineChat_component_1 = require("./home/onlineChat/onlineChat.component");
+var chat_component_1 = require("./home/onlineChat/chat/chat.component");
 var APP_ROUTES = [
     { path: '', component: login_components_1.LoginComponent },
     { path: 'login', component: login_components_1.LoginComponent },
@@ -49,6 +51,10 @@ var APP_ROUTES = [
                     { path: 'add', component: menu_add_component_1.MenuAddComponent, canActivate: [AuthService_1.AuthService] },
                     { path: 'modify', component: menu_modify_component_1.MenuModifyComponent, canActivate: [AuthService_1.AuthService] },
                     { path: 'detail', component: menu_detail_component_1.MenuDetailComponent, canActivate: [AuthService_1.AuthService] },
+                    { path: '**', redirectTo: '/web', pathMatch: 'full' }
+                ], canActivate: [AuthService_1.AuthService] },
+            { path: 'other/onlineChat', component: onlineChat_component_1.OnlineChatComponent, children: [
+                    { path: 'chat', component: chat_component_1.ChatComponent, canActivate: [AuthService_1.AuthService] },
                     { path: '**', redirectTo: '/web', pathMatch: 'full' }
                 ], canActivate: [AuthService_1.AuthService] },
             { path: '**', redirectTo: '/web', pathMatch: 'full' }
