@@ -42,7 +42,9 @@ http {
 8、优化登录界面验证码样式
 前后端近期开发计划：
 1、表单重复提交处理
-2、后端将采用函数式编程改造部分代码
+2、优化websocket
 3、用户管理、角色管理、模块管理细节优化
 4、HTTP2.0
-5、完善与Angular结合的websocket（试试将其作为@Component调用，参考：https://blog.csdn.net/zhangdehua678/article/details/78913839）
+5、后端将采用JAVA9及函数式编程改造部分代码
+
+

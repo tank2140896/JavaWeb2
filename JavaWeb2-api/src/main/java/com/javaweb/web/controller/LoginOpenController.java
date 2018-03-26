@@ -18,14 +18,14 @@ public class LoginOpenController extends BaseController {
 	@GetMapping("/logout")
 	public BaseResponseResult logout(HttpServletRequest request){
 		String userId = request.getHeader(SystemConstant.HEAD_USERID);
-		redisTemplate.delete(userId);
+		String type = request.getHeader(SystemConstant.HEAD_TYPE);
+		redisTemplate.delete(userId+","+type);
 		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("login.user.logoutSuccess"),null);
 	}
 	
 	@GetMapping("/getRedisUserInfo")
 	public BaseResponseResult getRedisUserInfo(HttpServletRequest request){
-		String userId = request.getHeader(SystemConstant.HEAD_USERID);
-		TokenData tokenData = (TokenData)valueOperations.get(userId);//(TokenData)request.getSession().getAttribute(userId);
+		TokenData tokenData = getTokenData(request);//(TokenData)request.getSession().getAttribute(userId);
 		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("login.user.getTokenDataSuccess"),tokenData);
 	}
 	

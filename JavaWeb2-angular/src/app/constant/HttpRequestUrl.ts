@@ -43,7 +43,7 @@ export class HttpRequestUrl{
     public static SYS_MODULE_MODIFY = '/web/sys/module/modify';//修改模块
     public static SYS_MODULE_DETAIL = '/web/sys/module/detail';//模块详情
 
-    public static OTHER_ONLINE_CHAT = '/web/other/onlineChat/chat';//在线聊天室
+    public static OTHER_ONLINE_CHAT = '/web/other/onlineChat/sendChatMessage';//发送聊天信息
     /** 拥有权限才能访问 end */
 
 }

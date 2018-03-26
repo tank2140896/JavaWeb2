@@ -1,4 +1,4 @@
-package com.javaweb.config;
+package com.javaweb.config.websocket;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,5 +11,5 @@ public class WebSocketConfig {
 	public ServerEndpointExporter serverEndpointExporter() {
     	return new ServerEndpointExporter();
 	}
-
+	
 }

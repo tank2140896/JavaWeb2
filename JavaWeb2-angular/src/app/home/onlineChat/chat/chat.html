@@ -6,9 +6,9 @@
 <hr>
 <div class="row">
     <div class="col-lg-12">
-        <textarea id="areaMessage" class="chatArea" readonly disabled></textarea>
+        <textarea [(ngModel)]="messageShow" class="chatArea" readonly disabled></textarea>
         <div class="form-group input-group">
-            <input [(ngModel)]="message" type="text" class="form-control" placeholder="请输入聊天内容">
+            <input [(ngModel)]="onlineChat.message" type="text" class="form-control" placeholder="请输入聊天内容">
             <button class="btn btn-success" (click)="send()">发送</button>
         </div>
     </div>

@@ -1,77 +1,29 @@
 package com.javaweb.web.controller;
 
-import java.util.LinkedList;
+import javax.servlet.http.HttpServletRequest;
 
-import javax.websocket.OnClose;
-import javax.websocket.OnError;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
-import javax.websocket.server.ServerEndpoint;
-
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.javaweb.base.BaseController;
+import com.javaweb.base.BaseResponseResult;
+import com.javaweb.constant.SystemConstant;
+import com.javaweb.web.eo.TokenData;
+import com.javaweb.web.eo.chat.ChatRequest;
+import com.javaweb.web.po.User;
+
 @RestController
-//@RequestMapping("/web/other/onlineChat")
-@ServerEndpoint(value="/web/other/onlineChat/chat")
-public class OnlineChatController {
+@RequestMapping("/web/other/onlineChat")
+public class OnlineChatController extends BaseController {
 	
-	public static LinkedList<Session> client = new LinkedList<Session>();
-	//public static Map<String,String> user = new HashMap<String,String>(); 
-
-	@OnMessage
-	public void onMessage(String message,Session session/*,@PathParam("username") String username*/) {
-		try{
-			/**
-			JSONObject jo = new JSONObject();
-			JSONObject inner = new JSONObject();
-			inner.put("message", message);
-			inner.put("username", username);
-			jo.put("onlineMessage", inner);
-			*/
-			for (Session c : client) {
-				c.getBasicRemote().sendText(message/*jo.toString()*/);
-			}
-		}catch(Exception e){
-			//do nothing
-		}
-	}
-
-	@OnOpen
-	public void onOpen(Session session/*,@PathParam("username") String username*/) {
-		try{
-			client.add(session);
-			/**
-			user.put(URLEncoder.encode(username,"UTF-8"),URLEncoder.encode(username,"UTF-8"));
-			JSONObject jo = new JSONObject();
-			JSONArray ja = new JSONArray();
-			//获得在线用户列表
-			Set<String> key = user.keySet();
-			for (String u : key) {
-				ja.add(u);
-			}
-			jo.put("onlineUser", ja);
-			session.getBasicRemote().sendText(jo.toString());
-			*/
-		}catch(Exception e){
-			//do nothing
-		}
-	}
-
-	@OnClose
-	public void onClose(Session session/*,@PathParam("username") String username*/) {
-		try{
-			client.remove(session);
-			//user.remove(URLEncoder.encode(username, "UTF-8"));
-			session.close();
-		}catch(Exception e){
-			//do nothing
-		}
+	@PostMapping("/sendChatMessage")
+	public BaseResponseResult sendChatMessage(HttpServletRequest request,@RequestBody ChatRequest chatRequest){
+		TokenData tokenData = getTokenData(request);
+		User user = tokenData.getUser();
+		webSocketHandleService.onMessage(chatRequest.getMessage(),user);
+		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("onlineChat.chat.success"),null);
 	}
 	
-	@OnError
-	public void onError(Throwable throwable){
-		//do nothing
-	}
-
 }
