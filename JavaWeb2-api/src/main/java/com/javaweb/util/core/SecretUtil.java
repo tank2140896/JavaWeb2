@@ -1,11 +1,14 @@
 package com.javaweb.util.core;
 
+import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.function.IntSupplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import org.apache.commons.codec.binary.Hex;
 
 public class SecretUtil {
 	
@@ -116,5 +119,12 @@ public class SecretUtil {
 		}
 		return String.valueOf(ret);  
    	}
+	
+	//sha256加密
+	public static String getSha256(String string) throws Exception {
+		 MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
+		 byte[] hash = messageDigest.digest(string.getBytes("UTF-8"));
+		 return Hex.encodeHexString(hash);
+	}
     	
 }
