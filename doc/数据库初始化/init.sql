@@ -29,6 +29,7 @@ CREATE TABLE `module` (
 -- ----------------------------
 -- Records of module
 -- ----------------------------
+INSERT INTO `module` VALUES ('011bb51a-2ff1-11e8-8f30-1c1b0d1b66d4', '在线聊天室', '/web/other/onlineChat/chat', null, 'c0543953-2ff0-11e8-8f30-1c1b0d1b66d4', null, '2', '1', '1', 'zxlts', null, null, 'fa fa-camera-retro', '2018-02-08 17:02:21', 'admin2018', null, null, '0');
 INSERT INTO `module` VALUES ('063d7c24-03f9-11e8-a70c-00ff676e3062', '用户角色分配', '/web/sys/user/roleAssignment', '/web/sys/user/roleAssignment,/web/sys/user/userRoleInfo', '07e7d8be-2b0d-48f8-8376-c1f22c31982c', null, '3', '6', '2', 'yhjsfp', null, null, null, '2018-02-08 17:02:21', 'admin2018', null, null, '0');
 INSERT INTO `module` VALUES ('07e7d8be-2b0d-48f8-8376-c1f22c31982c', '用户管理', '/web/sys/user/list', null, 'a39eea77-e28a-44a6-a822-039e2a056b07', null, '2', '1', '1', 'yhgl', null, null, 'fa fa-camera-retro', '2018-02-08 17:02:21', 'admin2018', null, null, '0');
 INSERT INTO `module` VALUES ('2582ad16-0c9a-11e8-a8e8-1c1b0d1b66d4', '模块列表', '/web/sys/module/list', '/web/sys/module/list', '46683b3f-ef74-4952-8ce1-fe4e7ed7ec5a', null, '3', '1', '2', 'mklb', null, null, null, '2018-02-08 17:02:21', 'admin2018', null, null, '0');
@@ -46,7 +47,9 @@ INSERT INTO `module` VALUES ('7c2d216d-03ea-11e8-a70c-00ff676e3062', '用户详�
 INSERT INTO `module` VALUES ('840538ac-0cae-11e8-a8e8-1c1b0d1b66d4', '删除模块', null, '/web/sys/module/delete', '46683b3f-ef74-4952-8ce1-fe4e7ed7ec5a', null, '3', '2', '2', 'scmk', null, null, null, '2018-02-08 17:02:21', 'admin2018', null, null, '0');
 INSERT INTO `module` VALUES ('872f4af0-0718-11e8-abf2-1c1b0d1b66d4', '角色列表', '/web/sys/role/list', '/web/sys/role/list', '329c3b64-4aed-4b8c-aa0d-dc7ecf01afec', null, '3', '1', '2', 'jslb', null, null, null, '2018-02-08 17:02:21', 'admin2018', null, null, '0');
 INSERT INTO `module` VALUES ('a39eea77-e28a-44a6-a822-039e2a056b07', '系统管理', null, null, null, null, '1', '1', '1', 'xtgl', null, null, 'fa fa-fw fa-dashboard', '2018-02-08 17:02:21', 'admin2018', null, null, '0');
+INSERT INTO `module` VALUES ('c0543953-2ff0-11e8-8f30-1c1b0d1b66d4', '其它', null, null, null, null, '1', '2', '1', 'qt', null, null, 'fa fa-camera-retro', '2018-02-08 17:02:21', 'admin2018', null, null, '0');
 INSERT INTO `module` VALUES ('cf3b7a97-0afd-11e8-8934-1c1b0d1b66d4', '角色详情', '/web/sys/role/detail', '/web/sys/role/detail', '329c3b64-4aed-4b8c-aa0d-dc7ecf01afec', null, '3', '4', '2', 'jsxq', null, null, null, '2018-02-08 17:02:21', 'admin2018', null, null, '0');
+INSERT INTO `module` VALUES ('d6f5c04e-30c8-11e8-8f30-1c1b0d1b66d4', '发送聊天信息', null, '/web/other/onlineChat/sendChatMessage', '011bb51a-2ff1-11e8-8f30-1c1b0d1b66d4', null, '3', '1', '2', 'fsltxx', null, null, null, '2018-02-08 17:02:21', 'admin2018', null, null, '0');
 INSERT INTO `module` VALUES ('e3dd5e08-0ecb-11e8-9a31-1c1b0d1b66d4', '修改模块', '/web/sys/module/modify', '/web/sys/module/modify,/web/sys/module/detail', '46683b3f-ef74-4952-8ce1-fe4e7ed7ec5a', null, '3', '4', '2', 'xgmk', null, null, null, '2018-02-08 17:02:21', 'admin2018', null, null, '0');
 INSERT INTO `module` VALUES ('ed44a661-0f07-11e8-9a31-1c1b0d1b66d4', '角色模块分配', '/web/sys/role/menuAssignment', '/web/sys/role/moduleAssignment,/web/sys/role/roleModuleInfo', '329c3b64-4aed-4b8c-aa0d-dc7ecf01afec', null, '3', '6', '2', 'jsmkfp', null, null, null, '2018-02-08 17:02:21', 'admin2018', null, null, '0');
 INSERT INTO `module` VALUES ('f94ed30f-0afc-11e8-8934-1c1b0d1b66d4', '删除角色', null, '/web/sys/role/delete', '329c3b64-4aed-4b8c-aa0d-dc7ecf01afec', null, '3', '2', '2', 'scjs', null, null, null, '2018-02-08 17:02:21', 'admin2018', null, null, '0');
@@ -92,6 +95,9 @@ CREATE TABLE `role_module` (
 -- ----------------------------
 -- Records of role_module
 -- ----------------------------
+INSERT INTO `role_module` VALUES ('add19326-30ed-11e8-8f30-1c1b0d1b66d4', '4ca05b93-04d1-11e8-9073-1c1b0d1b66d4', 'c0543953-2ff0-11e8-8f30-1c1b0d1b66d4');
+INSERT INTO `role_module` VALUES ('add19417-30ed-11e8-8f30-1c1b0d1b66d4', '4ca05b93-04d1-11e8-9073-1c1b0d1b66d4', '011bb51a-2ff1-11e8-8f30-1c1b0d1b66d4');
+INSERT INTO `role_module` VALUES ('add19474-30ed-11e8-8f30-1c1b0d1b66d4', '4ca05b93-04d1-11e8-9073-1c1b0d1b66d4', 'd6f5c04e-30c8-11e8-8f30-1c1b0d1b66d4');
 
 -- ----------------------------
 -- Table structure for `user`
@@ -121,7 +127,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('7c90a994-9a26-4531-89eb-b1523c3ceb7c', 'adsad123', 'asdasd1343', 'a', 'b', 'c', null, 'admin2018', null, '1', 'd', '0', '2018-01-28 10:53:35', 'admin2018', '2018-01-28 14:43:02', 'admin2018', '0');
+INSERT INTO `user` VALUES ('7c90a994-9a26-4531-89eb-b1523c3ceb7c', 'qqq123', 'asdasd1343', 'a', 'b', 'c', null, 'admin2018', null, '1', 'd', '0', '2018-01-28 10:53:35', 'admin2018', '2018-01-28 14:43:02', 'admin2018', '0');
 
 -- ----------------------------
 -- Table structure for `user_role`
@@ -137,4 +143,4 @@ CREATE TABLE `user_role` (
 -- ----------------------------
 -- Records of user_role
 -- ----------------------------
-INSERT INTO `user_role` VALUES ('09479d61-040d-11e8-a70c-00ff676e3062', '7c90a994-9a26-4531-89eb-b1523c3ceb7c', '6c2b3870-04d1-11e8-9073-1c1b0d1b66d4');
+INSERT INTO `user_role` VALUES ('a912e085-30ed-11e8-8f30-1c1b0d1b66d4', '7c90a994-9a26-4531-89eb-b1523c3ceb7c', '4ca05b93-04d1-11e8-9073-1c1b0d1b66d4');

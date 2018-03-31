@@ -71,4 +71,5 @@ declare var $: any;
 4.2、多级联动、功能较为丰富的树形层次结构
 4.3、table参考：ng-treetable
 4.4、样式：NG-ZORRO
+4.5、插件：ngxDatePicker
 
