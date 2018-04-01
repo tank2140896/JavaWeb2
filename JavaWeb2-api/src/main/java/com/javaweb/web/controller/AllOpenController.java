@@ -75,7 +75,7 @@ public class AllOpenController extends BaseController {
 	}
 				  
 	@RequestMapping(value="/requestParameterLost",method={RequestMethod.GET,RequestMethod.POST})
-	public BaseResponseResult requestParameterLost(){
+	public BaseResponseResult requestParameterLost() {
 		return new BaseResponseResult(SystemConstant.REQUEST_PARAMETER_LOST,getMessage("validated.permission.requestParameterLost"),CommonConstant.EMPTY_VALUE);
 	}
 	

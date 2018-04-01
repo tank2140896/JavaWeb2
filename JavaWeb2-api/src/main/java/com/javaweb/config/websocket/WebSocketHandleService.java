@@ -23,7 +23,7 @@ import com.javaweb.web.po.User;
 
 @Component
 @ServerEndpoint(value="/websocket/{key}")  
-public class WebSocketHandle {
+public class WebSocketHandleService {
 	
 	public static LinkedList<Session> CLIENT = new LinkedList<Session>();
 	public static Map<String,User> USER = new HashMap<String,User>(); 
