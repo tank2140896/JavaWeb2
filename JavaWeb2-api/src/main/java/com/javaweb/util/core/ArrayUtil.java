@@ -25,34 +25,47 @@ public class ArrayUtil {
 		return IntStream.concat(Arrays.stream(a),Arrays.stream(b)).distinct().toArray();
 	}
 	
+	/**
+	<<算法导论>>的伪代码如下:
+	n=A.rows
+	let C be a new n*n matrix
+	for i=1 to n
+		for j=1 to n
+			c[i,j] = 0
+			for k=1 to n
+				c[i,j]=c[i,j]+a[i,k]+b[k,j]
+	return C
+	*/
 	//矩阵相乘(行乘以列)  
-    public static int[] matrixMultiplication(int a[][],int b[][]) throws MatrixException {
+    public static int[][] matrixMultiplication(int a[][],int b[][]) throws MatrixException {
+        final int aLength = a.length;
+        final int bLength = b[0].length;
         //a的列数要与b的行数相同  
-        if(a[0].length!=b.length){  
+        if(aLength!=bLength){  
             throw new MatrixException("第一个矩阵的列数与第二个矩阵的行数不同"); 
         } 
-        int aLength = a.length;
-        int bLength = b[0].length;
-        //返回相乘后的数组  
-        int newArray[] = new int[aLength*bLength];  
-        int m = 0,k = 0;  
-        //最外层循环用于生成矩阵  
-        for (int i = 0; i < newArray.length; i++) {  
-            //一共计算a*b次结果,每次计算后都要将其结果清零  
-            int result = 0;  
-            //矩阵相乘核心计算方式  
-            for (int n = 0; n < b.length; n++) {  
-                result += a[m][n] * b[n][k];  
-            }  
-            k++;  
-            if((i+1)%bLength==0){  
-                m++;  
-                k=0;  
-            }  
-            newArray[i] = result;  
-        }  
+        int newArray[][] = new int[aLength][aLength];
+        for(int i=0;i<aLength;i++){
+        	for(int j=0;j<aLength;j++){
+        		newArray[i][j] = 0;
+        		for(int k=0;k<b.length;k++){
+        			newArray[i][j] += a[i][k]*b[k][j];
+        		}
+        	}
+        }
         return newArray;
     }
+    
+    /**
+    public static void main(String[] args) throws Exception {
+		int x[][] = matrixMultiplication(new int[][]{{2,1,6},{4,3,2}},new int[][]{{4,5},{1,2},{4,2}});
+		for(int i=0;i<x.length;i++){
+			for(int j=0;j<x[i].length;j++){
+				System.err.print(x[i][j]+" ");//33 24 27 30
+			}
+		}
+	}
+	*/
     
     //矩阵置换(行列置换)  
     public static int[][] maxtrixPermutation(int beforeArray[][]){  
