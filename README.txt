@@ -1,8 +1,12 @@
-﻿使用前重要说明：
+﻿项目启动前置条件：
+1、安装redis
+2、安装jdk8
+3、最低tomcat8.0
+4、最低mysql5.6
+使用前重要说明：
 1、本项目前端样式借鉴：https://rawgit.com/start-angular/SB-Admin-BS4-Angular-5/master/dist/components
-2、本项目全程采用redis，因此必须保证redis的高可用性
-3、session（共享）用的是redis，但是没用自动挡的spring-session-redis（request.getSession()）（自动挡写法在代码中也有参考），而是采用手动档自己设置session到redis（redisTemplate）
-4、nginx用于处理跨域和负载均衡，本项目已经处理了跨域，因此可以不用nginx，此处提及的目的是为今后负载均衡做准备
+3、本项目使用redis存储session，但是没用spring-session-redis（写法在代码中也有参考），而是采用自己设置session到redis
+3、nginx用于处理跨域和负载均衡，本项目已经处理了跨域，因此可以不用nginx，此处提及的目的是为今后负载均衡做准备
 http {
     include       mime.types;
     default_type  application/octet-stream;
@@ -22,10 +26,10 @@ http {
 	}
     }
 }
-5、前端并未将单条数据的详情、新增、修改合为一个页面显示，不是说不能，只是个人喜欢将其分开来而已
-6、后端几乎所有的增删改查删除操作都是物理操作（忽略数据库表中的del_flag字段），如果想做逻辑操作（使用数据库表中的del_flag字段）需要重写相关SQL语句（目前虽然保留了逻辑删除字段，但是形同虚设）
-7、前端将用到TypeScripe，参考：https://www.tslang.cn/index.html
-8、个人临时租用的服务器（47.96.157.130）装了redis（密码：123456）和mysql（root/root）
+4、前端并未将单条数据的详情、新增、修改合为一个页面显示，不是说不能，只是个人喜欢将其分开来而已
+5、后端几乎所有的增删改查删除操作都是物理操作（忽略数据库表中的del_flag字段），如果想做逻辑操作（使用数据库表中的del_flag字段）需要重写相关SQL语句（目前虽然保留了逻辑删除字段，但是形同虚设）
+6、前端需要有一定的TypeScripe知识基础，参考：https://www.tslang.cn/index.html
+7、个人临时租用的服务器（47.96.157.130）装了redis（密码：123456）和mysql（root/root）
 前端后期改进：
 1、更换日期插件（优先）或深入研究现在的日期插件
 2、更换弹出框插件（优先）或深入研究现在的弹出框插件

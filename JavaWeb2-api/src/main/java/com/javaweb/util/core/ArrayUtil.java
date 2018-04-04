@@ -56,17 +56,6 @@ public class ArrayUtil {
         return newArray;
     }
     
-    /**
-    public static void main(String[] args) throws Exception {
-		int x[][] = matrixMultiplication(new int[][]{{2,1,6},{4,3,2}},new int[][]{{4,5},{1,2},{4,2}});
-		for(int i=0;i<x.length;i++){
-			for(int j=0;j<x[i].length;j++){
-				System.err.print(x[i][j]+" ");//33 24 27 30
-			}
-		}
-	}
-	*/
-    
     //矩阵置换(行列置换)  
     public static int[][] maxtrixPermutation(int beforeArray[][]){  
         int newArray[][] = new int[beforeArray[0].length][beforeArray.length];  

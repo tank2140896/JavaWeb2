@@ -1,0 +1,25 @@
+一、将ISO镜像作为yum源
+1、将ISO镜像文件放到一个目录，如/media
+2、创建挂载路径：mkdir -p /mnt/iso
+3、将ISO镜像挂载到/mnt/iso下
+mount -o loop /media/xxx.iso /mnt/iso
+注：可以输入df -h（硬盘容量查看）或mount查看是否挂载成功
+4、进入/etc/yum.repos.d/，若其下面还有其它*.repo文件，则建个文件夹，将*.repo文件都放进去；
+自己新建一个文件如：my.repo，然后vim my.repo，写入以下内容：
+[base]
+name=centos
+baseurl=file:///mnt/iso
+enabled=1
+gpgcheck=0
+gpgkey=file:///mnt/iso/RPM-GPG-KEY-CentOS-6
+注：gpgkey填什么？可以进入/mnt/iso查看
+5、清除缓存：yum clean all
+6、验证是否成功：yum -y install tree，然后输入tree
+二、不同服务器间远程文件传输
+scp xxx.iso root@192.168.1.1:/media
+传输好后可以输入：ll -alh查看当前目录下文件的大小
+三、端口添加信任
+vim /etc/sysconfig/iptables
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 22122 -j ACCEPT
+重启防火墙：service iptables restart
+彻底关闭防火墙：chkconfig iptables off
