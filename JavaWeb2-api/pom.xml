@@ -44,7 +44,12 @@
 		<dependency>  
 	        <groupId>org.springframework.session</groupId>  
 	        <artifactId>spring-session-data-redis</artifactId>  
-    	</dependency> 
+    	</dependency>
+    	<!-- solr -->
+    	<dependency>  
+		    <groupId>org.springframework.data</groupId>
+		    <artifactId>spring-data-solr</artifactId> 
+		</dependency>  
 	    <!-- Mysql驱动 -->
 	    <dependency>
 			<groupId>mysql</groupId>

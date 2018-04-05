@@ -6,6 +6,7 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.solr.client.solrj.SolrClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -30,6 +31,10 @@ public class BaseTool {
 	protected Neo4jTemplate neo4jTemplate;
 	*/
 	
+	@Autowired  
+	protected SolrClient solrClient;
+	
+	@Autowired
 	protected RestTemplate restTemplate;
 	
 	@Autowired
