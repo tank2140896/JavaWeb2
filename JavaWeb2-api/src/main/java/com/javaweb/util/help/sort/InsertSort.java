@@ -4,14 +4,14 @@ package com.javaweb.util.help.sort;
 public class InsertSort implements BaseSort<Integer> {
 
 	/**
-		<<算法导论>>的伪代码如下:
-		for j=2 to A.length
-	  		key = A[j]
-	  		i = j-1
-	  		while i>0 and A[i]>key
-	  			A[i+1] = A[i]
-	  			i = i-1
-	  		A[i+1] = key
+	<<算法导论>>的伪代码如下:
+	for j=2 to A.length
+  		key = A[j]
+  		i = j-1
+  		while i>0 and A[i]>key
+  			A[i+1] = A[i]
+  			i = i-1
+  		A[i+1] = key
 	*/
 	public Integer[] sort(Integer[] array) {
 		final int sortLength = array.length;
