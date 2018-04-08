@@ -4,12 +4,12 @@ package com.javaweb.util.help.sort;
 public class BubbleSort implements BaseSort<Integer> {
 
 	/**
-		<<算法导论>>的伪代码如下:
-		for i=1 to A.length-1
-			for j=A.length downto i+1
-				if A[j]<A[j-1]
-					exchange A[j] with A[j-1]
-	 */
+	<<算法导论>>的伪代码如下:
+	for i=1 to A.length-1
+		for j=A.length downto i+1
+			if A[j]<A[j-1]
+				exchange A[j] with A[j-1]
+	*/
 	public Integer[] sort(Integer[] array) {
 		final int toSortLength = array.length;
 		for (int i = 0; i < toSortLength; i++) {

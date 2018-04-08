@@ -1,12 +1,30 @@
 package com.javaweb.util.help.sort;
 
+import java.util.Arrays;
 
-//堆排序
+
+//堆排序(一句话攻略:先建最大堆,然后取堆顶值,接着堆顶值和堆末值交换,移除堆末值,最后重新建最大堆,如此反复直至堆空)
 public class HeapSort implements BaseSort<Integer> {
 
+	/**
+	<<算法导论>>的伪代码如下:
+	BUILD-MAX-HEAP(A)
+	for i=A.length downto 2
+		exchange A[1] with A[i]
+		A.heap-size=A.heap-size-1
+		MAX-HEAPIFY(A,1)
+	*/
 	public Integer[] sort(Integer[] array) {
-		//TODO
-		return null;
+		array = buildMaxHeap(array);//构造得到最大堆
+		Integer[] newArray = new Integer[array.length];
+		for(int i=0;i<newArray.length;i++){
+			newArray[i] = array[0];
+			array[0] = array[0]^array[array.length-1];
+			array[array.length-1] = array[0]^array[array.length-1];
+			array[0] = array[0]^array[array.length-1];
+			array = maxHeapify(Arrays.copyOfRange(array,0,newArray.length-(i+1)),0);
+		}
+		return newArray;
 	}
 	
 	/**
@@ -14,10 +32,12 @@ public class HeapSort implements BaseSort<Integer> {
 	PARENT(i)
 	1 return [i/2]
 	*/
+	/**
 	//根据某一节点下标计算其父节点下标
 	private Integer getParentIndexByCurrentIndex(Integer currentIndex){
 		return (currentIndex-1)>>1;//(currentIndex-1)/2
 	}
+	*/
 	
 	/**
 	<<算法导论>>的伪代码如下:
@@ -39,11 +59,13 @@ public class HeapSort implements BaseSort<Integer> {
 		return (currentIndex<<1)+2;//currentIndex*2+2;
 	}
 	
+	/**
 	//计算堆的高度(不算根节点所在的那一层)
 	private Integer getHeapHight(Integer heapLength){
 		double tmp = Math.log(heapLength)/Math.log(2);//采用换底公式
 		return Integer.parseInt(String.valueOf(tmp).split("\\.")[0]);
 	}
+	*/
 	
 	/**
 	<<算法导论>>的伪代码如下:
@@ -94,6 +116,5 @@ public class HeapSort implements BaseSort<Integer> {
 		}
 		return array;
 	}
-	
 
 }
