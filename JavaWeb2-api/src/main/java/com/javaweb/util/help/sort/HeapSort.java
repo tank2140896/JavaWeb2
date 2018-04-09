@@ -108,7 +108,7 @@ public class HeapSort implements BaseSort<Integer> {
 	for i=[A.length/2] downto 1
 		MAX-HEAPIFY(A,i)
 	*/
-	//建堆
+	//建最大堆
 	private Integer[] buildMaxHeap(Integer[] array){
 		final int end = array.length/2-1;
 		for(int i=end;i>=0;i--){//关键:自底向上
