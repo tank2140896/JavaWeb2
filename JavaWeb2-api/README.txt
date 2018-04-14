@@ -11,3 +11,7 @@
 二、项目使用说明：
 1、除了涉及事务的service加上@Transactional，建议涉及事务的Controller也加上@Transactional，另外不建议try catch，除非能确保无数据库相关事务操作或确保Controller内的方法不会抛出异常
 2、关于@Configuration的类，配置代码常用的有两种写法，一是通过常量类配置，二是通过配置文件配置
+3、原始JDBC
+Class.forName(driveClassName);
+Connection connection = DriverManager.getConnection(url,userName,password);
+PreparedStatement preparedStatement = connection.prepareStatement(sql);

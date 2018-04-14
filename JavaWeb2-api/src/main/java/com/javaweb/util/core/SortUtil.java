@@ -7,8 +7,10 @@ import java.util.function.Supplier;
 import com.javaweb.util.help.sort.BaseSort;
 import com.javaweb.util.help.sort.BubbleSort;
 import com.javaweb.util.help.sort.BucketSort;
+import com.javaweb.util.help.sort.HeapSort;
 import com.javaweb.util.help.sort.InsertSort;
 import com.javaweb.util.help.sort.MergeSort;
+import com.javaweb.util.help.sort.QuickSort;
 
 public class SortUtil {
 	
@@ -20,13 +22,19 @@ public class SortUtil {
 	
 	private static final String BUCKET_SORT = BucketSort.class.getSimpleName();//桶排序
 	
+	private static final String HEAP_SORT = HeapSort.class.getSimpleName();//堆排序
+	
+	private static final String QUICK_SORT = QuickSort.class.getSimpleName();//快速排序
+	
 	private static final Map<String,Supplier<BaseSort<Integer>>> SORT_MAP = new HashMap<>();
 	
 	static {
-		SORT_MAP.put(BUBBLE_SORT, BubbleSort::new);
-		SORT_MAP.put(INSERT_SORT, InsertSort::new);
-		SORT_MAP.put(MERGE_SORT, MergeSort::new);
-		SORT_MAP.put(BUCKET_SORT, BucketSort::new);
+		SORT_MAP.put(BUBBLE_SORT,BubbleSort::new);
+		SORT_MAP.put(INSERT_SORT,InsertSort::new);
+		SORT_MAP.put(MERGE_SORT,MergeSort::new);
+		SORT_MAP.put(BUCKET_SORT,BucketSort::new);
+		SORT_MAP.put(HEAP_SORT,HeapSort::new);
+		SORT_MAP.put(QUICK_SORT,QuickSort::new);
 	}
 	
 	public enum SortType{
@@ -34,7 +42,9 @@ public class SortUtil {
 		BUBBLE_SORT(SortUtil.BUBBLE_SORT),
 		INSERT_SORT(SortUtil.INSERT_SORT),
 		MERGE_SORT(SortUtil.MERGE_SORT),
-		BUCKET_SORT(SortUtil.BUCKET_SORT);
+		BUCKET_SORT(SortUtil.BUCKET_SORT),
+		HEAP_SORT(SortUtil.HEAP_SORT),
+		QUICK_SORT(SortUtil.QUICK_SORT);
 		
 		private SortType(String sortType){
 			this.sortType = sortType;
