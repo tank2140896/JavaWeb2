@@ -1,5 +1,8 @@
 package com.javaweb.constant;
 
+import java.time.LocalDate;
+
+import com.javaweb.util.core.DateUtil;
 import com.javaweb.web.po.User;
 
 public class SystemConstant {
@@ -7,6 +10,8 @@ public class SystemConstant {
 	public static final String BASE_PACKAGE = "com.javaweb";
 	
 	public static final String DEFAULT_DATA_SOURCE_POINT_CUT = "execution(* com.javaweb.web.dao..*.*(..))";
+	
+	public static final String HEAD_TYPE_PATTERN = "[1-9]";
 	
 	public static final String URL_INTERCEPTOR_PATTERN = "/web/**";
 	
@@ -16,17 +21,19 @@ public class SystemConstant {
 	
 	public static final Long SYSTEM_DEFAULT_KAPTCHA_TIME_OUT = 5L;
 	
+	public static final String ADMIN = "admin"+DateUtil.getDateInfo(LocalDate.now()).getYear();
+	
 	public static final String HEAD_USERID = "userId";
 	
 	public static final String HEAD_TOKEN = "token";
 	
 	public static final String HEAD_TYPE = "type";
 	
-	public static final String SYSTEM_DEFAULT_USER_ID = "admin2018";
+	public static final String SYSTEM_DEFAULT_USER_ID = ADMIN;
 	
-	public static final String SYSTEM_DEFAULT_USER_NAME = "admin2018";
+	public static final String SYSTEM_DEFAULT_USER_NAME = ADMIN;
 	
-	public static final String SYSTEM_DEFAULT_USER_PASSWORD = "admin2018";
+	public static final String SYSTEM_DEFAULT_USER_PASSWORD = ADMIN;
 	
 	public static final String SYSTEM_DEFAULT_USER_PERSON_NAME = "超级管理员";
 	

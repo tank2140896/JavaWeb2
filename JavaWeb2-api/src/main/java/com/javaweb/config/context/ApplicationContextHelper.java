@@ -6,18 +6,18 @@ import org.springframework.context.ApplicationContextAware;
 
 public class ApplicationContextHelper implements ApplicationContextAware { 
 	
-    private static ApplicationContext ac;    
+    private static ApplicationContext applicationContext;    
 
-    public void setApplicationContext( ApplicationContext applicationContext ) throws BeansException {    
-    	ac = applicationContext;    
+    public void setApplicationContext(ApplicationContext ac) throws BeansException {    
+    	applicationContext = ac;    
     }  
         
     public static ApplicationContext getApplicationContext(){  
-        return ac;  
+        return applicationContext;  
     }  
    
     public static Object getBean(String beanName) {    
-        return ac.getBean(beanName);    
+        return applicationContext.getBean(beanName);    
     }  
     
 }   

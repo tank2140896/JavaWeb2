@@ -25,8 +25,9 @@ import com.javaweb.web.po.User;
 @ServerEndpoint(value="/websocket/{key}")  
 public class WebSocketHandleService {
 	
-	public static LinkedList<Session> CLIENT = new LinkedList<Session>();
-	public static Map<String,User> USER = new HashMap<String,User>(); 
+	private LinkedList<Session> client = new LinkedList<Session>();
+	
+	private Map<String,User> userMap = new HashMap<String,User>(); 
 
 	@OnMessage
 	public void onMessage(String message,User user) {
@@ -36,8 +37,8 @@ public class WebSocketHandleService {
 			chatResponse.setUserId(user.getUserId());
 			chatResponse.setUserName(user.getUserName());
 			ObjectMapper objectMapper = new ObjectMapper();
-			for (Session c : CLIENT) {
-				c.getBasicRemote().sendText(objectMapper.writeValueAsString(chatResponse));
+			for (Session session:client) {
+				session.getBasicRemote().sendText(objectMapper.writeValueAsString(chatResponse));
 			}
 		}catch(Exception e){
 			//do nothing
@@ -53,8 +54,10 @@ public class WebSocketHandleService {
 			if(tokenData!=null){
 				User user = tokenData.getUser();
 				if(user!=null){
-					CLIENT.add(session);
-					USER.put(key,user);
+					if(userMap.get(key)==null){
+						client.add(session);
+						userMap.put(key,user);
+					}
 				}
 			}
 		}catch(Exception e){
@@ -65,8 +68,8 @@ public class WebSocketHandleService {
 	@OnClose
 	public void onClose(Session session,@PathParam("key") String key) {
 		try{
-			CLIENT.remove(session);
-			USER.remove(key);
+			client.remove(session);
+			userMap.remove(key);
 			session.close();
 		}catch(Exception e){
 			//do nothing

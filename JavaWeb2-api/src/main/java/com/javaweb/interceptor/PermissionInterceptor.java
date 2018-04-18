@@ -37,7 +37,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 			request.getRequestDispatcher("/requestParameterLost").forward(request,response);
 			return false;
 		}
-		if(!type.matches("[1-9]")){//1：web；2：安卓；3：IOS
+		if(!type.matches(SystemConstant.HEAD_TYPE_PATTERN)){//1：web；2：安卓；3：IOS
 			request.getRequestDispatcher("/requestParameterLost").forward(request,response);
 			return false;
 		}
@@ -63,7 +63,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 			return true;
 		}
 		long count = tokenData.getAuthOperateList().stream().filter(i->{
-			String splitApiUrl[] = i.getApiUrl().split(",");//某一操作可能会调用多个操作，多个操作约定用逗号分开
+			String splitApiUrl[] = i.getApiUrl().split(",");//某一操作可能会调用多个附属操作，多个附属操作约定用逗号分开
 			for(String str:splitApiUrl){
 				if(servletPath.startsWith(str)){
 					return true;

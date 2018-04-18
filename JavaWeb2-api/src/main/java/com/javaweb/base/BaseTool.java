@@ -10,6 +10,7 @@ import org.apache.solr.client.solrj.SolrClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -30,6 +31,9 @@ public class BaseTool {
 	@Autowired
 	protected Neo4jTemplate neo4jTemplate;
 	*/
+	
+	@Autowired
+	private Environment environment;
 	
 	@Autowired  
 	protected SolrClient solrClient;
