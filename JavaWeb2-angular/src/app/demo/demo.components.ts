@@ -54,4 +54,7 @@ export class DemoComponent implements OnInit {
         return true;
     }
 
+    /** demo4 */
+    demo4_switchValue:string='A';
+
 }

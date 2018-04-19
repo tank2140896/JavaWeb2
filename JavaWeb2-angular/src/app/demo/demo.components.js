@@ -14,6 +14,8 @@ var DemoComponent = /** @class */ (function () {
         this.demo2_forMap = [];
         this.demo2_forOutput = '';
         this.demo2_forEachRet = 0;
+        /** demo4 */
+        this.demo4_switchValue = 'A';
     }
     DemoComponent.prototype.ngOnInit = function () {
         this.demo2_forEachShow();

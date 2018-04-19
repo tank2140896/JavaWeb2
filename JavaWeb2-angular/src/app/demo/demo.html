@@ -23,4 +23,14 @@
     <span *ngIf="demo3_ngIf()"></span>
 </div>
 <hr>
-<h1>待续：159/683[pdf]</h1>
+<!-- 示例4 -->
+<div>
+    <span class="demoTitle">示例4：</span>
+    ngSwitch:
+    <span [ngSwitch]="demo4_switchValue">
+        <span *ngSwitchCase="'A'">值是A</span>
+        <span *ngSwitchCase="'B'">值是B</span>
+        <span *ngSwitchDefault>值是其它</span>
+    </span>
+</div>
+<hr>

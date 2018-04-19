@@ -68,7 +68,11 @@ public class AllOpenController extends BaseController {
 		response.setHeader("Cache-Control", "no-store, no-cache");
 	    response.setContentType("image/jpeg");
 	    String text = defaultKaptcha.createText();
-	    setDataToRedis(String.join(",",request.getSession().getId(),uuid),text,SystemConstant.SYSTEM_DEFAULT_KAPTCHA_TIME_OUT,TimeUnit.MINUTES);
+	    String sessionId = request.getSession().getId();
+	    if(sessionId==null){
+	    	sessionId = uuid;
+	    }
+	    setDataToRedis(sessionId,text,SystemConstant.SYSTEM_DEFAULT_KAPTCHA_TIME_OUT,TimeUnit.MINUTES);
 	    BufferedImage image = defaultKaptcha.createImage(text);
 	    ServletOutputStream out = response.getOutputStream();
 	    ImageIO.write(image,"jpg",out);
@@ -135,7 +139,11 @@ public class AllOpenController extends BaseController {
 	//验证码单独校验
 	private boolean kaptchaCheck(UserLoginRequest userLogin,HttpServletRequest request){
 		boolean result = true;
-		String kaptcha = (String)getDateFromRedis(String.join(",",request.getSession().getId(),userLogin.getUuid()));
+		String sessionId = request.getSession().getId();
+	    if(sessionId==null){
+	    	sessionId = userLogin.getUuid();
+	    }
+		String kaptcha = (String)getDateFromRedis(sessionId);
 		if(kaptcha!=null){
 			if(kaptcha.equalsIgnoreCase(userLogin.getKaptcha())){//忽略大小写
 				result = false;

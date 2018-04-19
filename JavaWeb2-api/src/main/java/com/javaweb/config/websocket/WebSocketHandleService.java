@@ -25,9 +25,9 @@ import com.javaweb.web.po.User;
 @ServerEndpoint(value="/websocket/{key}")  
 public class WebSocketHandleService {
 	
-	private LinkedList<Session> client = new LinkedList<Session>();
+	public static LinkedList<Session> client = new LinkedList<Session>();
 	
-	private Map<String,User> userMap = new HashMap<String,User>(); 
+	public static Map<String,User> userMap = new HashMap<String,User>(); 
 
 	@OnMessage
 	public void onMessage(String message,User user) {
