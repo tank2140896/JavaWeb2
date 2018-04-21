@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import com.javaweb.exception.MatrixException;
+import com.javaweb.util.help.sort.QuickSort;
 
 public class ArrayUtil {
 	
@@ -91,22 +92,22 @@ public class ArrayUtil {
 			return (cross-low,cross-high,cross-sum)
 	*/
 	/**
-	 [1,2,3,4,5]的情况:
-	   左:[0,0,1],中:[0,1,3],右:[1,1,2]
-	   左:[0,1,3],中:[0,2,6],右:[2,2,3]
-	   左:[3,3,4],中:[3,4,9],右:[4,4,5]
-	   左:[0,2,6],中:[0,4,15],右:[3,4,9]
-	 [6,-7,3,15,1,-2]的情况:
-	   左:[0,0,6],中:[0,1,-1],右:[1,1,-7]
-             左:[0,0,6],中:[0,2,2],右:[2,2,3]
-	   左:[3,3,15],中:[3,4,16],右:[4,4,1]
-             左:[3,4,16],中:[3,5,14],右:[5,5,-2]
-             左:[0,0,6],中:[2,4,19],右:[3,4,16]
-             这里稍微不大好理解的是[2,4,19],出现这个结果是根据[6,-7,3,15,1,-2]整个数组(low:0,mid:2,high:5)调用方法findMaxCrossingSubarray得出来的,
-             在<<算法导论>>中其原理解释理解为:一个数组的最大子数据基本可认为只有三种情况,把整个数组一分二,最大子数组要么在分界线的左侧;要么在分界线右侧;要么横跨分界线
-     [6,-7,3,15,1,-2]
-          ←左|右→         
-	*/
+	 * [1,2,3,4,5]的情况:
+	 * 左:[0,0,1],中:[0,1,3],右:[1,1,2]
+	 * 左:[0,1,3],中:[0,2,6],右:[2,2,3]
+	 * 左:[3,3,4],中:[3,4,9],右:[4,4,5]
+	 * 左:[0,2,6],中:[0,4,15],右:[3,4,9]
+	 * [6,-7,3,15,1,-2]的情况:
+	 * 左:[0,0,6],中:[0,1,-1],右:[1,1,-7]
+     * 左:[0,0,6],中:[0,2,2],右:[2,2,3]
+	 * 左:[3,3,15],中:[3,4,16],右:[4,4,1]
+     * 左:[3,4,16],中:[3,5,14],右:[5,5,-2]
+     * 左:[0,0,6],中:[2,4,19],右:[3,4,16]
+     * 这里稍微不大好理解的是[2,4,19],出现这个结果是根据[6,-7,3,15,1,-2]整个数组(low:0,mid:2,high:5)调用方法findMaxCrossingSubarray得出来的,
+     * 在<<算法导论>>中其原理解释理解为:一个数组的最大子数据基本可认为只有三种情况,把整个数组一分二,最大子数组要么在分界线的左侧;要么在分界线右侧;要么横跨分界线
+     * [6,-7,3,15,1,-2]
+     *     ←左|右→         
+	 */
 	//获得数组的最大子数组(一句话攻略:从上到下将数组不断对半分直致数组长度为最小1,对半分后一左一右,合起就是中,左中右比较取最大的,中计算稍特殊)
 	public static int[] findMaximumSubarray(int[] array,int low,int high){
 		if(low==high){
@@ -163,6 +164,40 @@ public class ArrayUtil {
 			}
 		}
 		return new int[]{leftFlag,rightFlag,leftSum+rightSum};
+	}
+	
+	//获取数组中第i小的元素
+	public static int getTheElementOfTheArrayI(Integer array[],int i){
+		//return new QuickSort().sort(array)[i-1];
+		return randomizedSelect(array,0,array.length-1,i);
+	}
+	
+	/**
+	<<算法导论>>的伪代码如下:
+	RANDOMIZED-SELECT(A,p,r,i)
+	if p==r
+		return A[p]
+	q=RANDOMIZED-PARTITION(A,p,r)
+	k=q-p+1
+	if i==k
+		return A[q]
+	else if i<k
+		return RANDOMIZED-SELECT(A,p,q-1,i)
+	else return RANDOMIZED-SELECT(A,q+1,r,i-k)
+	*/
+	public static int randomizedSelect(Integer array[],int startIndex,int endIndex,int i){
+		if(startIndex==endIndex){
+			return array[startIndex];
+		}
+		int partition = new QuickSort().partition(array,startIndex,endIndex);
+		int k = partition-startIndex+1;
+		if(i==k){
+			return array[partition];
+		}else if(i<k){
+			return randomizedSelect(array,startIndex,partition-1,i);
+		}else{
+			return randomizedSelect(array,partition+1,endIndex,i-k);
+		}
 	}
 
 }

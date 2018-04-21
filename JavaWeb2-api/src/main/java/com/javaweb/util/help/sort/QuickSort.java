@@ -37,7 +37,7 @@ public class QuickSort implements BaseSort<Integer> {
 	return i+1
 	*/
 	//此处实现与算法导论中的实现有差异
-	private int partition(Integer[] array,int startIndex,int endIndex){
+	public int partition(Integer[] array,int startIndex,int endIndex){
 		//final int fixedValue = array[endIndex];//固定选取数组最靠右的一个元素
 		/** 随机化版本 start */
 		int fixedValue = array[endIndex];

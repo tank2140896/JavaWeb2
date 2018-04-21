@@ -67,7 +67,7 @@ public class MergeSort implements BaseSort<Integer> {
 	 * 第六次:R0 VS R1 (哨兵为102) -> L[95,99,100]  R[101,102,103]
 	 */
 	//对两个排好序的数组进行再排序
-	private static Integer[] merge(Integer array[]){
+	public static Integer[] merge(Integer array[]){
 		final int arrayLength = array.length;
 		int mid = arrayLength/2;//mid:2个数,则mid=1;3个数则mid=3/2=1
 		int sentry = 0,leftPoint = 0,rightPoint = mid;//sentry:哨兵元素;leftPoint:左指针;rightPoint:右指针

@@ -32,12 +32,10 @@ public class HeapSort implements BaseSort<Integer> {
 	PARENT(i)
 	1 return [i/2]
 	*/
-	/**
 	//根据某一节点下标计算其父节点下标
-	private Integer getParentIndexByCurrentIndex(Integer currentIndex){
+	public Integer getParentIndexByCurrentIndex(Integer currentIndex){
 		return (currentIndex-1)>>1;//(currentIndex-1)/2
 	}
-	*/
 	
 	/**
 	<<算法导论>>的伪代码如下:
@@ -45,7 +43,7 @@ public class HeapSort implements BaseSort<Integer> {
 	1 return 2i
 	*/
 	//根据某一节点下标计算其左节点下标
-	private Integer getLeftIndexByCurrentIndex(Integer currentIndex){
+	public Integer getLeftIndexByCurrentIndex(Integer currentIndex){
 		return (currentIndex<<1)+1;//currentIndex*2+1
 	}
 	
@@ -55,17 +53,15 @@ public class HeapSort implements BaseSort<Integer> {
 	1 return 2i+1
 	*/
 	//根据某一节点下标计算其右节点下标
-	private Integer getRightIndexByCurrentIndex(Integer currentIndex){
+	public Integer getRightIndexByCurrentIndex(Integer currentIndex){
 		return (currentIndex<<1)+2;//currentIndex*2+2;
 	}
 	
-	/**
 	//计算堆的高度(不算根节点所在的那一层)
-	private Integer getHeapHight(Integer heapLength){
+	public Integer getHeapHight(Integer heapLength){
 		double tmp = Math.log(heapLength)/Math.log(2);//采用换底公式
 		return Integer.parseInt(String.valueOf(tmp).split("\\.")[0]);
 	}
-	*/
 	
 	/**
 	<<算法导论>>的伪代码如下:
@@ -82,7 +78,7 @@ public class HeapSort implements BaseSort<Integer> {
 		MAX-HEAPIFY(A,largest)
 	*/
 	//维护最大堆的性质(使当前节点的左右节点的值不大于(不小于)当前节点)
-	private Integer[] maxHeapify(Integer[] array,Integer currentIndex){
+	public Integer[] maxHeapify(Integer[] array,Integer currentIndex){
 		Integer currentIndexTmp = currentIndex;//当前节点的下标
 		Integer leftIndex = getLeftIndexByCurrentIndex(currentIndexTmp);//当前节点的左节点的下标
 		Integer rightIndex = getRightIndexByCurrentIndex(currentIndexTmp);//当前节点的右节点的下标
@@ -109,7 +105,7 @@ public class HeapSort implements BaseSort<Integer> {
 		MAX-HEAPIFY(A,i)
 	*/
 	//建最大堆
-	private Integer[] buildMaxHeap(Integer[] array){
+	public Integer[] buildMaxHeap(Integer[] array){
 		final int end = array.length/2-1;
 		for(int i=end;i>=0;i--){//关键:自底向上
 			array = maxHeapify(array,i);
