@@ -90,9 +90,9 @@ public class FileUtil {
     //写文件
     public static void writeFile(InputStream inputStream,byte[] buffer,File file) throws IOException {
 		try(OutputStream outputStream = new FileOutputStream(file)) {
-			//byte[] buffer = new byte[1024];//1KB
-			while (inputStream.read(buffer) != -1) {
-				outputStream.write(buffer);
+			int n = 0;
+			while ((n=inputStream.read(buffer)) != -1) {
+				outputStream.write(buffer,0,n);
 			}
 		} catch (IOException e) {
 			throw new IOException(e);
@@ -102,9 +102,9 @@ public class FileUtil {
   	//写文件
   	public static void writeFile(InputStream inputStream,byte[] buffer,Path path) throws IOException {
 		try(OutputStream outputStream = Files.newOutputStream(path)) {
-			//byte[] buffer = new byte[1024];//1KB
-			while (inputStream.read(buffer) != -1) {
-				outputStream.write(buffer);
+			int n= 0;
+			while ((n=inputStream.read(buffer)) != -1) {
+				outputStream.write(buffer,0,n);
 			}
 		} catch (IOException e) {
 			throw new IOException(e);
@@ -114,9 +114,9 @@ public class FileUtil {
 	//下文件
 	public static void downloadFile(OutputStream outputStream,byte[] buffer,File file) throws IOException{
 		try(InputStream inputStream = new FileInputStream(file)) {
-			//byte[] buffer = new byte[1024];//1KB
-			while (inputStream.read(buffer) != -1) {
-				outputStream.write(buffer);
+			int n=0;
+			while ((n=inputStream.read(buffer)) != -1) {
+				outputStream.write(buffer,0,n);
 			}
 		} catch (IOException e) {
 			throw new IOException(e);
@@ -126,9 +126,9 @@ public class FileUtil {
 	//下文件
 	public static void downloadFile(OutputStream outputStream,byte[] buffer,Path path) throws IOException{
 		try(InputStream inputStream = Files.newInputStream(path)) {
-			//byte[] buffer = new byte[1024];//1KB
-			while (inputStream.read(buffer) != -1) {
-				outputStream.write(buffer);
+			int n=0;
+			while ((n=inputStream.read(buffer)) != -1) {
+				outputStream.write(buffer,0,n);
 			}
 		} catch (IOException e) {
 			throw new IOException(e);
