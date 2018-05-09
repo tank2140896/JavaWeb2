@@ -19,6 +19,11 @@ public class BubbleSort implements BaseSort<Integer> {
 					array[i] = array[i]^array[j];
 					array[j] = array[i]^array[j];
 					array[i] = array[i]^array[j];
+					/** 两数交换还能这么做
+					x = x+y;
+					y = x-y;
+					x = x-y;
+					*/
 				}
 			}
 		}
