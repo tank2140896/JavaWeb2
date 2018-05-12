@@ -40,7 +40,8 @@ export class UserModifyComponent implements OnInit {
     public modify():void{
         this.httpService.putJsonData(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_MODIFY,true),JSON.stringify(this.userModify),this.sessionService.getHeadToken()).subscribe(
             result=>{
-                if(result.code==200){
+                let getResult = (<any>result);
+                if(getResult.code==200){
                     this.cancel();
                 }else{
                     this.router.navigate(['login']);
@@ -54,8 +55,9 @@ export class UserModifyComponent implements OnInit {
     public detail():void{
         this.httpService.getJsonData(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_DETAIL+'/'+this.userId,true),this.sessionService.getHeadToken()).subscribe(
         result=>{
-                if(result.code==200){
-                    let data = result.data;
+                let getResult = (<any>result);
+                if(getResult.code==200){
+                    let data = getResult.data;
                     if(data!=null){
                         this.userModify.userId = data.userId;
                         this.userModify.userName = data.userName;

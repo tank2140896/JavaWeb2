@@ -30,8 +30,9 @@ var RoleDetailComponent = /** @class */ (function () {
     RoleDetailComponent.prototype.detail = function () {
         var _this = this;
         this.httpService.getJsonData(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_ROLE_DETAIL + '/' + this.roleId, true), this.sessionService.getHeadToken()).subscribe(function (result) {
-            if (result.code == 200) {
-                var data = result.data;
+            var getResult = result;
+            if (getResult.code == 200) {
+                var data = getResult.data;
                 if (data != null) {
                     _this.roleDetail.roleName = data.roleName;
                     _this.roleDetail.remark = data.remark;

@@ -53,7 +53,8 @@ export class MenuModifyComponent implements OnInit {
     public modify():void{
         this.httpService.putJsonData(HttpRequestUrl.getPath(HttpRequestUrl.SYS_MODULE_MODIFY,true),JSON.stringify(this.menuModify),this.sessionService.getHeadToken()).subscribe(
             result=>{
-                if(result.code==200){
+                let getResult = (<any>result);
+                if(getResult.code==200){
                     this.cancel();
                 }else{
                     this.router.navigate(['login']);
@@ -67,8 +68,9 @@ export class MenuModifyComponent implements OnInit {
     public detail():void{
         this.httpService.getJsonData(HttpRequestUrl.getPath(HttpRequestUrl.SYS_MODULE_DETAIL+'/'+this.moduleId,true),this.sessionService.getHeadToken()).subscribe(
         result=>{
-                if(result.code==200){
-                    let data = result.data;
+                let getResult = (<any>result);
+                if(getResult.code==200){
+                    let data = getResult.data;
                     if(data!=null){
                         this.menuModify = data;
                     }

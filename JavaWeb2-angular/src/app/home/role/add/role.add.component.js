@@ -32,7 +32,8 @@ var RoleAddComponent = /** @class */ (function () {
     RoleAddComponent.prototype.save = function () {
         var _this = this;
         this.httpService.postJsonData(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_ROLE_ADD, true), JSON.stringify(this.roleAdd), this.sessionService.getHeadToken()).subscribe(function (result) {
-            if (result.code == 200) {
+            var getResult = result;
+            if (getResult.code == 200) {
                 _this.cancel();
             }
             else {

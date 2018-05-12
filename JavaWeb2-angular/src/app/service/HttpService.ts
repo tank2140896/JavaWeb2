@@ -1,6 +1,5 @@
 import {Injectable, OnInit} from '@angular/core';
 import {HttpClient,HttpHeaders} from "@angular/common/http";
-import {Observable} from "rxjs/Rx";
 
 import {HeadToken} from "../models/token/head.token";
 
@@ -34,41 +33,36 @@ export class HttpService implements OnInit {
     }
 
     getJsonData(url:string,headToken:HeadToken){
-        return this.httpClient.get(url,this.getOptions(headToken)).map(data=>data).do(this.handleError);
+        return this.httpClient.get(url,this.getOptions(headToken));
     }
 
     postJsonData(url:string,body:any,headToken:HeadToken){
-        return this.httpClient.post(url,body,this.getOptions(headToken)).map(data=>data).do(this.handleError);
+        return this.httpClient.post(url,body,this.getOptions(headToken));
     }
 
     deleteData(url:string,headToken:HeadToken){
-        return this.httpClient.delete(url,this.getOptions(headToken)).map(data=>data).do(this.handleError);
+        return this.httpClient.delete(url,this.getOptions(headToken));
     }
 
     putJsonData(url:string,body:any,headToken:HeadToken){
-        return this.httpClient.put(url,body,this.getOptions(headToken)).map(data=>data).do(this.handleError);
+        return this.httpClient.put(url,body,this.getOptions(headToken));
     }
 
 
     getSingleJsonData(url:string){
-        return this.httpClient.get(url).map(data=>data).do(this.handleError);
+        return this.httpClient.get(url);
     }
 
     postSingleJsonData(url:string,body:any,options:any){
-        return this.httpClient.post(url,body,options).map(data=>data).do(this.handleError);
+        return this.httpClient.post(url,body,options);
     }
 
     deleteSingleData(url:string){
-        return this.httpClient.delete(url).map(data=>data).do(this.handleError);
+        return this.httpClient.delete(url);
     }
 
     putSingleJsonData(url:string,body:any,options:any){
-        return this.httpClient.put(url,body,options).map(data=>data).do(this.handleError);
-    }
-
-    private handleError(error:any) {
-        //console.log(error);
-        return Observable.throw(error);
+        return this.httpClient.put(url,body,options);
     }
 
 }

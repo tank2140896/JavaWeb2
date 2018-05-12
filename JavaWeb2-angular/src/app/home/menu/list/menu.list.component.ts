@@ -90,8 +90,9 @@ export class MenuListComponent implements OnInit {
     private menuListFunction(menuList:MenuList):void {
         this.httpService.postJsonData(HttpRequestUrl.getPath(HttpRequestUrl.SYS_MODULE_LIST,true),JSON.stringify(menuList),this.sessionService.getHeadToken()).subscribe(
             result=>{
-                if(result.code==200){
-                    let ret = result.data;
+                let getResult = (<any>result);
+                if(getResult.code==200){
+                    let ret = getResult.data;
                     //console.log(ret);
                     this.resultPage = new ResultPage(ret);
                 }else{

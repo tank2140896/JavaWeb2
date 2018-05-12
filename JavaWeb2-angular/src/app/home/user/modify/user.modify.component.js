@@ -30,7 +30,8 @@ var UserModifyComponent = /** @class */ (function () {
     UserModifyComponent.prototype.modify = function () {
         var _this = this;
         this.httpService.putJsonData(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_USER_MODIFY, true), JSON.stringify(this.userModify), this.sessionService.getHeadToken()).subscribe(function (result) {
-            if (result.code == 200) {
+            var getResult = result;
+            if (getResult.code == 200) {
                 _this.cancel();
             }
             else {
@@ -43,8 +44,9 @@ var UserModifyComponent = /** @class */ (function () {
     UserModifyComponent.prototype.detail = function () {
         var _this = this;
         this.httpService.getJsonData(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_USER_DETAIL + '/' + this.userId, true), this.sessionService.getHeadToken()).subscribe(function (result) {
-            if (result.code == 200) {
-                var data = result.data;
+            var getResult = result;
+            if (getResult.code == 200) {
+                var data = getResult.data;
                 if (data != null) {
                     _this.userModify.userId = data.userId;
                     _this.userModify.userName = data.userName;

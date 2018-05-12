@@ -30,8 +30,9 @@ var UserDetailComponent = /** @class */ (function () {
     UserDetailComponent.prototype.detail = function () {
         var _this = this;
         this.httpService.getJsonData(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_USER_DETAIL + '/' + this.userId, true), this.sessionService.getHeadToken()).subscribe(function (result) {
-            if (result.code == 200) {
-                var data = result.data;
+            var getResult = result;
+            if (getResult.code == 200) {
+                var data = getResult.data;
                 if (data != null) {
                     _this.userDetail.userName = data.userName;
                     _this.userDetail.personName = data.personName;

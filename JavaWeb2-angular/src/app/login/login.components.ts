@@ -49,16 +49,17 @@ export class LoginComponent implements OnInit {
     public login():void{
         this.httpService.postJsonData(HttpRequestUrl.getPath(HttpRequestUrl.LOGIN,true),this.userLogin,null).subscribe(
             result=>{
-                if(result.code==200){
-                    let ret = result.data;
+                let getResult = (<any>result);
+                if(getResult.code==200){
+                    let ret = getResult.data;
                     //console.log(ret);
                     this.sessionService.setSessionData(JSON.stringify(ret));
                     this.router.navigate(['web']);
                 }else{
-                    this.userLoginErrorMessage = result.message;
+                    this.userLoginErrorMessage = getResult.message;
                 }
             },
-        error=>{
+            error=>{
                 this.userLoginErrorMessage = error;
             }
         );

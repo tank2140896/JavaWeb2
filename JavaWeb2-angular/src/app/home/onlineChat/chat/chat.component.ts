@@ -36,7 +36,8 @@ export class ChatComponent implements OnInit {
     public send():void{
         this.httpService.postJsonData(HttpRequestUrl.getPath(HttpRequestUrl.OTHER_ONLINE_CHAT,true),JSON.stringify(this.onlineChat),this.sessionService.getHeadToken()).subscribe(
             result=>{
-                if(result.code==200){
+                let getResult = (<any>result);
+                if(getResult.code==200){
                     this.onlineChat.message = CommonConstant.EMPTY;
                 }else{
                     this.router.navigate(['login']);

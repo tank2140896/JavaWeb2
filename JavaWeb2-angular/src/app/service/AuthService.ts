@@ -83,7 +83,8 @@ export class AuthService implements CanActivate {
     getRedisUserInfo(headToken:HeadToken):void{
         this.httpService.getJsonData(HttpRequestUrl.getPath(HttpRequestUrl.GET_REDIS_USER_INFO,true),headToken).subscribe(
             result => {
-                let ret = result.data;
+                let getResult = (<any>result);
+                let ret = getResult.data;
                 if(ret==null){
                     this.sessionService.clearSessionData();
                 }

@@ -41,7 +41,8 @@ var MenuModifyComponent = /** @class */ (function () {
     MenuModifyComponent.prototype.modify = function () {
         var _this = this;
         this.httpService.putJsonData(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_MODULE_MODIFY, true), JSON.stringify(this.menuModify), this.sessionService.getHeadToken()).subscribe(function (result) {
-            if (result.code == 200) {
+            var getResult = result;
+            if (getResult.code == 200) {
                 _this.cancel();
             }
             else {
@@ -54,8 +55,9 @@ var MenuModifyComponent = /** @class */ (function () {
     MenuModifyComponent.prototype.detail = function () {
         var _this = this;
         this.httpService.getJsonData(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_MODULE_DETAIL + '/' + this.moduleId, true), this.sessionService.getHeadToken()).subscribe(function (result) {
-            if (result.code == 200) {
-                var data = result.data;
+            var getResult = result;
+            if (getResult.code == 200) {
+                var data = getResult.data;
                 if (data != null) {
                     _this.menuModify = data;
                 }
@@ -70,17 +72,17 @@ var MenuModifyComponent = /** @class */ (function () {
     //模块类型切换
     MenuModifyComponent.prototype.moduleTypeChange = function () {
         var getModuleType = this.menuModify.moduleType; //模块类型(0:未定义模块类型；1：菜单；2：操作)
-        if (getModuleType == '0') {
+        if (getModuleType == '0') { //未定义模块类型
             this.menuModify.icon = '';
             this.disableStyle = true;
             this.showList = this.moduleList;
             this.menuModify.parentId = undefined;
         }
-        else if (getModuleType == '1') {
+        else if (getModuleType == '1') { //菜单
             this.disableStyle = false;
             this.showList = this.menuList;
         }
-        else if (getModuleType == '2') {
+        else if (getModuleType == '2') { //操作
             this.menuModify.icon = '';
             this.disableStyle = true;
             this.showList = this.authOperateList;

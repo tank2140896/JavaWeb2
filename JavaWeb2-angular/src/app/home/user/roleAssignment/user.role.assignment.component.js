@@ -24,8 +24,9 @@ var UserRoleAssignmentComponent = /** @class */ (function () {
     UserRoleAssignmentComponent.prototype.userRoleInfo = function () {
         var _this = this;
         this.httpService.getJsonData(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_USER_ROLE_INFO + '/' + this.userId, true), this.sessionService.getHeadToken()).subscribe(function (result) {
-            if (result.code == 200) {
-                _this.roleInfo = result.data;
+            var getResult = result;
+            if (getResult.code == 200) {
+                _this.roleInfo = getResult.data;
             }
             else {
                 _this.router.navigate(['login']);
@@ -50,7 +51,8 @@ var UserRoleAssignmentComponent = /** @class */ (function () {
             }
         }
         this.httpService.postJsonData(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_USER_ROLE_ASSIGNMENT + '/' + this.userId, true), JSON.stringify(emptyArray), this.sessionService.getHeadToken()).subscribe(function (result) {
-            if (result.code == 200) {
+            var getResult = result;
+            if (getResult.code == 200) {
                 _this.cancel();
             }
             else {

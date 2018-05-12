@@ -38,6 +38,9 @@ var DatepickerI18nService = /** @class */ (function (_super) {
     DatepickerI18nService.prototype.getMonthFullName = function (month) {
         return this.getMonthShortName(month);
     };
+    DatepickerI18nService.prototype.getDayAriaLabel = function (date) {
+        return this.getDayAriaLabel(date);
+    };
     DatepickerI18nService = __decorate([
         core_1.Injectable()
     ], DatepickerI18nService);

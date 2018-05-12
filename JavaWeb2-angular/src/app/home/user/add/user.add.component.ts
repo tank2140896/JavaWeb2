@@ -42,7 +42,8 @@ export class UserAddComponent implements OnInit {
     public save():void{
         this.httpService.postJsonData(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_ADD,true),JSON.stringify(this.userAdd),this.sessionService.getHeadToken()).subscribe(
             result=>{
-                if(result.code==200){
+                let getResult = (<any>result);
+                if(getResult.code==200){
                     this.cancel();
                 }else{
                     this.router.navigate(['login']);

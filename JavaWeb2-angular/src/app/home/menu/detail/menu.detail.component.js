@@ -37,8 +37,9 @@ var MenuDetailComponent = /** @class */ (function () {
     MenuDetailComponent.prototype.detail = function () {
         var _this = this;
         this.httpService.getJsonData(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_MODULE_DETAIL + '/' + this.moduleId, true), this.sessionService.getHeadToken()).subscribe(function (result) {
-            if (result.code == 200) {
-                var data = result.data;
+            var getResult = result;
+            if (getResult.code == 200) {
+                var data = getResult.data;
                 if (data != null) {
                     _this.menuDetail = data;
                 }

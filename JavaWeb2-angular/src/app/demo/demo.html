@@ -1,9 +1,10 @@
 <hr>
+<div><h1 style="text-align:center">Angular示例</h1></div>
 <!-- 示例1 -->
 <div>
     <span class="demoTitle" #demo1_title>示例1：</span>
     <input type="text" placeholder="请输入值" #demo1_inputValue/>
-    <button (click)="demo1_showInputValue(demo1_inputValue)">点我显示输入框的值</button>
+    <button (click)="angular_demo1_showInputValue(demo1_inputValue)">点我显示输入框的值</button>
     <span>{{demo1_title.textContent}}</span>的联动值为：<span class="demoValue">{{demo1_inputValueShow}}</span>
 </div>
 <hr>
@@ -20,17 +21,18 @@
 <div>
     <span class="demoTitle">示例3：</span>
     *ngIf最好不要调用方法，不然该方法会被调用2次
-    <span *ngIf="demo3_ngIf()"></span>
+    <span *ngIf="angular_demo3_ngIf()"></span>
 </div>
 <hr>
 <!-- 示例4 -->
 <div>
     <span class="demoTitle">示例4：</span>
     ngSwitch:
-    <span [ngSwitch]="demo4_switchValue">
+    <span [ngSwitch]="angular_demo4_switchValue">
         <span *ngSwitchCase="'A'">值是A</span>
         <span *ngSwitchCase="'B'">值是B</span>
         <span *ngSwitchDefault>值是其它</span>
     </span>
 </div>
 <hr>
+<div><h1 style="text-align:center">RxJS示例</h1></div>

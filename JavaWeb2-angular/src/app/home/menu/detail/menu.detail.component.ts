@@ -49,8 +49,9 @@ export class MenuDetailComponent implements OnInit {
     public detail():void{
         this.httpService.getJsonData(HttpRequestUrl.getPath(HttpRequestUrl.SYS_MODULE_DETAIL+'/'+this.moduleId,true),this.sessionService.getHeadToken()).subscribe(
         result=>{
-                if(result.code==200){
-                    let data = result.data;
+                let getResult = (<any>result);
+                if(getResult.code==200){
+                    let data = getResult.data;
                     if(data!=null){
                         this.menuDetail = data;
                     }

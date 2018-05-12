@@ -27,7 +27,8 @@ var ChatComponent = /** @class */ (function () {
     ChatComponent.prototype.send = function () {
         var _this = this;
         this.httpService.postJsonData(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.OTHER_ONLINE_CHAT, true), JSON.stringify(this.onlineChat), this.sessionService.getHeadToken()).subscribe(function (result) {
-            if (result.code == 200) {
+            var getResult = result;
+            if (getResult.code == 200) {
                 _this.onlineChat.message = common_constant_1.CommonConstant.EMPTY;
             }
             else {

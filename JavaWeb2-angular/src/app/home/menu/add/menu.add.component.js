@@ -44,7 +44,8 @@ var MenuAddComponent = /** @class */ (function () {
     MenuAddComponent.prototype.save = function () {
         var _this = this;
         this.httpService.postJsonData(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_MODULE_ADD, true), JSON.stringify(this.menuAdd), this.sessionService.getHeadToken()).subscribe(function (result) {
-            if (result.code == 200) {
+            var getResult = result;
+            if (getResult.code == 200) {
                 _this.cancel();
             }
             else {
@@ -57,17 +58,17 @@ var MenuAddComponent = /** @class */ (function () {
     //模块类型切换
     MenuAddComponent.prototype.moduleTypeChange = function () {
         var getModuleType = this.menuAdd.moduleType; //模块类型(0:未定义模块类型；1：菜单；2：操作)
-        if (getModuleType == '0') {
+        if (getModuleType == '0') { //未定义模块类型
             this.menuAdd.icon = '';
             this.disableStyle = true;
             this.showList = this.moduleList;
             this.menuAdd.parentId = undefined;
         }
-        else if (getModuleType == '1') {
+        else if (getModuleType == '1') { //菜单
             this.disableStyle = false;
             this.showList = this.menuList;
         }
-        else if (getModuleType == '2') {
+        else if (getModuleType == '2') { //操作
             this.menuAdd.icon = '';
             this.disableStyle = true;
             this.showList = this.authOperateList;

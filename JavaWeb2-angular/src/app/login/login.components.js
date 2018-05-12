@@ -11,6 +11,7 @@ var router_animations_1 = require("../router.animations");
 var common_constant_1 = require("../constant/common.constant");
 var user_login_1 = require("../models/user/user.login");
 var HttpRequestUrl_1 = require("../constant/HttpRequestUrl");
+var StringUtil_1 = require("../util/StringUtil");
 var LoginComponent = /** @class */ (function () {
     function LoginComponent(router, httpService, sessionService) {
         this.router = router;
@@ -24,30 +25,30 @@ var LoginComponent = /** @class */ (function () {
     };
     //获取验证码
     LoginComponent.prototype.getKaptcha = function () {
-        /**
-        let getUuid:string = this.sessionService.getSessionValueByKey('kaptcha');
-        if(getUuid==null||getUuid==''){
-            let generateUuid = StringUtil.getUuid();
+        var getUuid = this.sessionService.getSessionValueByKey('kaptcha');
+        if (getUuid == null || getUuid == '') {
+            var generateUuid = StringUtil_1.StringUtil.getUuid();
             this.userLogin.uuid = generateUuid;
-            this.sessionService.setSessionValueBykey('kaptcha',generateUuid);
-        }else{
+            this.sessionService.setSessionValueBykey('kaptcha', generateUuid);
+        }
+        else {
             this.userLogin.uuid = getUuid;
         }
-        this.imageUrl = HttpRequestUrl.getPath(HttpRequestUrl.KAPTCHA,true)+'/'+this.userLogin.uuid+'?time='+new Date();
-        */
+        this.imageUrl = HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.KAPTCHA, true) + '/' + this.userLogin.uuid + '?time=' + new Date();
     };
     //用户登录
     LoginComponent.prototype.login = function () {
         var _this = this;
         this.httpService.postJsonData(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.LOGIN, true), this.userLogin, null).subscribe(function (result) {
-            if (result.code == 200) {
-                var ret = result.data;
+            var getResult = result;
+            if (getResult.code == 200) {
+                var ret = getResult.data;
                 //console.log(ret);
                 _this.sessionService.setSessionData(JSON.stringify(ret));
                 _this.router.navigate(['web']);
             }
             else {
-                _this.userLoginErrorMessage = result.message;
+                _this.userLoginErrorMessage = getResult.message;
             }
         }, function (error) {
             _this.userLoginErrorMessage = error;

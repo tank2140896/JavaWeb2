@@ -17,7 +17,7 @@ var AuthService = /** @class */ (function () {
     /** URL路径权限判断 */
     AuthService.prototype.canActivate = function (route, state) {
         var sessionData = this.sessionService.getSessionData();
-        if (sessionData == null) {
+        if (sessionData == null) { //防止用户清空缓存
             return false;
         }
         var headToken = new head_token_1.HeadToken();
@@ -87,7 +87,8 @@ var AuthService = /** @class */ (function () {
     AuthService.prototype.getRedisUserInfo = function (headToken) {
         var _this = this;
         this.httpService.getJsonData(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.GET_REDIS_USER_INFO, true), headToken).subscribe(function (result) {
-            var ret = result.data;
+            var getResult = result;
+            var ret = getResult.data;
             if (ret == null) {
                 _this.sessionService.clearSessionData();
             }

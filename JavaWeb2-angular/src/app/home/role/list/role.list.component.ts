@@ -83,8 +83,9 @@ export class RoleListComponent implements OnInit {
     private roleListFunction(roleList:RoleList):void {
         this.httpService.postJsonData(HttpRequestUrl.getPath(HttpRequestUrl.SYS_ROLE_LIST,true),JSON.stringify(roleList),this.sessionService.getHeadToken()).subscribe(
             result=>{
-                if(result.code==200){
-                    let ret = result.data;
+                let getResult = (<any>result);
+                if(getResult.code==200){
+                    let ret = getResult.data;
                     //console.log(ret);
                     this.resultPage = new ResultPage(ret);
                 }else{

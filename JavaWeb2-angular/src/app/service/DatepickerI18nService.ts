@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {NgbDatepickerI18n} from "@ng-bootstrap/ng-bootstrap";
+import {NgbDatepickerI18n, NgbDateStruct} from "@ng-bootstrap/ng-bootstrap";
 
 //参考：https://ng-bootstrap.github.io/#/components/datepicker/examples
 @Injectable()
@@ -21,6 +21,10 @@ export class DatepickerI18nService extends NgbDatepickerI18n {
 
     getMonthFullName(month: number): string {
         return this.getMonthShortName(month);
+    }
+
+    getDayAriaLabel(date: NgbDateStruct): string{
+        return this.getDayAriaLabel(date);
     }
 
 }

@@ -25,8 +25,9 @@ var RoleMenuAssignmentComponent = /** @class */ (function () {
     RoleMenuAssignmentComponent.prototype.roleModuleInfo = function () {
         var _this = this;
         this.httpService.getJsonData(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_ROLE_MODULE_INFO + '/' + this.roleId, true), this.sessionService.getHeadToken()).subscribe(function (result) {
-            if (result.code == 200) {
-                var ret = result.data;
+            var getResult = result;
+            if (getResult.code == 200) {
+                var ret = getResult.data;
                 _this.roleName = ret.role.roleName;
                 _this.roleModuleList = ret.list;
             }
@@ -46,7 +47,8 @@ var RoleMenuAssignmentComponent = /** @class */ (function () {
         //console.log(this.roleModuleList);
         this.deepSearch(this.roleModuleList);
         this.httpService.postJsonData(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_ROLE_MODULE_ASSIGNMENT + '/' + this.roleId, true), JSON.stringify(this.emptyArray), this.sessionService.getHeadToken()).subscribe(function (result) {
-            if (result.code == 200) {
+            var getResult = result;
+            if (getResult.code == 200) {
                 _this.cancel();
             }
             else {

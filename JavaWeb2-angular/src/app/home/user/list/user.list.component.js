@@ -67,8 +67,9 @@ var UserListComponent = /** @class */ (function () {
     UserListComponent.prototype.userListFunction = function (userList) {
         var _this = this;
         this.httpService.postJsonData(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_USER_LIST, true), JSON.stringify(userList), this.sessionService.getHeadToken()).subscribe(function (result) {
-            if (result.code == 200) {
-                var ret = result.data;
+            var getResult = result;
+            if (getResult.code == 200) {
+                var ret = getResult.data;
                 //console.log(ret);
                 _this.resultPage = new result_page_1.ResultPage(ret);
             }

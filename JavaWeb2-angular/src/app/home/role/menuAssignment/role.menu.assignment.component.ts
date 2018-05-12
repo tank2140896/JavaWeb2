@@ -33,8 +33,9 @@ export class RoleMenuAssignmentComponent implements OnInit {
     public roleModuleInfo():void{
         this.httpService.getJsonData(HttpRequestUrl.getPath(HttpRequestUrl.SYS_ROLE_MODULE_INFO+'/'+this.roleId,true),this.sessionService.getHeadToken()).subscribe(
             result=>{
-                if(result.code==200){
-                    let ret = result.data;
+                let getResult = (<any>result);
+                if(getResult.code==200){
+                    let ret = getResult.data;
                     this.roleName = ret.role.roleName;
                     this.roleModuleList = ret.list;
                 }else{
@@ -59,7 +60,8 @@ export class RoleMenuAssignmentComponent implements OnInit {
         this.deepSearch(this.roleModuleList);
         this.httpService.postJsonData(HttpRequestUrl.getPath(HttpRequestUrl.SYS_ROLE_MODULE_ASSIGNMENT+'/'+this.roleId,true),JSON.stringify(this.emptyArray),this.sessionService.getHeadToken()).subscribe(
             result=>{
-                if(result.code==200){
+                let getResult = (<any>result);
+                if(getResult.code==200){
                     this.cancel();
                 }else{
                     this.router.navigate(['login']);

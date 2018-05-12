@@ -8,7 +8,6 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 exports.__esModule = true;
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/common/http");
-var Rx_1 = require("rxjs/Rx");
 var head_token_1 = require("../models/token/head.token");
 var HttpService = /** @class */ (function () {
     function HttpService(httpClient) {
@@ -34,32 +33,28 @@ var HttpService = /** @class */ (function () {
         return options;
     };
     HttpService.prototype.getJsonData = function (url, headToken) {
-        return this.httpClient.get(url, this.getOptions(headToken)).map(function (data) { return data; })["do"](this.handleError);
+        return this.httpClient.get(url, this.getOptions(headToken));
     };
     HttpService.prototype.postJsonData = function (url, body, headToken) {
-        return this.httpClient.post(url, body, this.getOptions(headToken)).map(function (data) { return data; })["do"](this.handleError);
+        return this.httpClient.post(url, body, this.getOptions(headToken));
     };
     HttpService.prototype.deleteData = function (url, headToken) {
-        return this.httpClient["delete"](url, this.getOptions(headToken)).map(function (data) { return data; })["do"](this.handleError);
+        return this.httpClient["delete"](url, this.getOptions(headToken));
     };
     HttpService.prototype.putJsonData = function (url, body, headToken) {
-        return this.httpClient.put(url, body, this.getOptions(headToken)).map(function (data) { return data; })["do"](this.handleError);
+        return this.httpClient.put(url, body, this.getOptions(headToken));
     };
     HttpService.prototype.getSingleJsonData = function (url) {
-        return this.httpClient.get(url).map(function (data) { return data; })["do"](this.handleError);
+        return this.httpClient.get(url);
     };
     HttpService.prototype.postSingleJsonData = function (url, body, options) {
-        return this.httpClient.post(url, body, options).map(function (data) { return data; })["do"](this.handleError);
+        return this.httpClient.post(url, body, options);
     };
     HttpService.prototype.deleteSingleData = function (url) {
-        return this.httpClient["delete"](url).map(function (data) { return data; })["do"](this.handleError);
+        return this.httpClient["delete"](url);
     };
     HttpService.prototype.putSingleJsonData = function (url, body, options) {
-        return this.httpClient.put(url, body, options).map(function (data) { return data; })["do"](this.handleError);
-    };
-    HttpService.prototype.handleError = function (error) {
-        //console.log(error);
-        return Rx_1.Observable["throw"](error);
+        return this.httpClient.put(url, body, options);
     };
     HttpService = __decorate([
         core_1.Injectable()

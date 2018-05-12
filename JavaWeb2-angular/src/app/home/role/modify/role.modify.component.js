@@ -30,7 +30,8 @@ var RoleModifyComponent = /** @class */ (function () {
     RoleModifyComponent.prototype.modify = function () {
         var _this = this;
         this.httpService.putJsonData(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_ROLE_MODIFY, true), JSON.stringify(this.roleModify), this.sessionService.getHeadToken()).subscribe(function (result) {
-            if (result.code == 200) {
+            var getResult = result;
+            if (getResult.code == 200) {
                 _this.cancel();
             }
             else {
@@ -43,8 +44,9 @@ var RoleModifyComponent = /** @class */ (function () {
     RoleModifyComponent.prototype.detail = function () {
         var _this = this;
         this.httpService.getJsonData(HttpRequestUrl_1.HttpRequestUrl.getPath(HttpRequestUrl_1.HttpRequestUrl.SYS_ROLE_DETAIL + '/' + this.roleId, true), this.sessionService.getHeadToken()).subscribe(function (result) {
-            if (result.code == 200) {
-                var data = result.data;
+            var getResult = result;
+            if (getResult.code == 200) {
+                var data = getResult.data;
                 if (data != null) {
                     _this.roleModify.roleId = data.roleId;
                     _this.roleModify.roleName = data.roleName;

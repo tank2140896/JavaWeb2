@@ -85,8 +85,9 @@ export class UserListComponent implements OnInit {
     private userListFunction(userList:UserList):void {
         this.httpService.postJsonData(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_LIST,true),JSON.stringify(userList),this.sessionService.getHeadToken()).subscribe(
             result=>{
-                if(result.code==200){
-                    let ret = result.data;
+                let getResult = (<any>result);
+                if(getResult.code==200){
+                    let ret = getResult.data;
                     //console.log(ret);
                     this.resultPage = new ResultPage(ret);
                 }else{

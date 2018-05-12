@@ -39,8 +39,9 @@ export class UserDetailComponent implements OnInit {
     public detail():void{
         this.httpService.getJsonData(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_DETAIL+'/'+this.userId,true),this.sessionService.getHeadToken()).subscribe(
             result=>{
-                if(result.code==200){
-                    let data = result.data;
+                let getResult = (<any>result);
+                if(getResult.code==200){
+                    let data = getResult.data;
                     if(data!=null){
                         this.userDetail.userName = data.userName;
                         this.userDetail.personName = data.personName;

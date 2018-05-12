@@ -31,8 +31,9 @@ export class UserRoleAssignmentComponent implements OnInit {
     public userRoleInfo():void{
         this.httpService.getJsonData(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_ROLE_INFO+'/'+this.userId,true),this.sessionService.getHeadToken()).subscribe(
             result=>{
-                if(result.code==200){
-                    this.roleInfo = result.data;
+                let getResult = (<any>result);
+                if(getResult.code==200){
+                    this.roleInfo = getResult.data;
                 }else{
                     this.router.navigate(['login']);
                 }
@@ -60,7 +61,8 @@ export class UserRoleAssignmentComponent implements OnInit {
         }
         this.httpService.postJsonData(HttpRequestUrl.getPath(HttpRequestUrl.SYS_USER_ROLE_ASSIGNMENT+'/'+this.userId,true),JSON.stringify(emptyArray),this.sessionService.getHeadToken()).subscribe(
             result=>{
-                if(result.code==200){
+                let getResult = (<any>result);
+                if(getResult.code==200){
                     this.cancel();
                 }else{
                     this.router.navigate(['login']);
