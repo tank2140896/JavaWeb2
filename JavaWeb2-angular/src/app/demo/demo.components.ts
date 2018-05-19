@@ -1,6 +1,7 @@
 import {Component,OnInit} from '@angular/core';
 
-import {of} from 'rxjs';
+import {of,Observable} from 'rxjs';
+import {map} from "rxjs/internal/operators";
 
 @Component({
     selector: 'app-demo',
@@ -13,12 +14,12 @@ export class DemoComponent implements OnInit {
     constructor() {
 
     }
-
     ngOnInit() {
+        /** demo for angular */
         this.angular_demo2_forEachShow();
         this.angular_demo2_forMapShow();
         this.angular_demo2_forOutputShow();
-
+        /** demo for rxjs */
         this.rxjs_demo1();
     }
 
@@ -65,8 +66,56 @@ export class DemoComponent implements OnInit {
 
     /** rxjs_demo1 */
     public rxjs_demo1():void{
-        const source$ = of(1,2,3);
+        const source$ = of(11,22,33);
         source$.subscribe(console.log);
+        source$.subscribe(each=>{
+            console.log(each*10);
+        });
+    }
+
+    /** rxjs_demo2 */
+    public rxjs_demo2():void{
+        const source$ = Observable.create(o=>{
+            o.next(10);
+            o.next(20);
+            o.next(30);
+        });
+        source$.pipe(map(each=>(<number>each)*10)).subscribe(i=>console.log(i));
+    }
+
+    /** rxjs_demo3 */
+    public rxjs_demo3():void{
+        const onSubscribe = x =>{
+            /**
+            x.next(11);
+            x.next(22);
+            x.next(33);
+            */
+            let num = 11;
+            const handle = setInterval(()=>{
+                x.next(num++);
+                if(num>13){
+                    clearInterval(handle);
+                    //注：error和complete只会有一种状态
+                    x.error('error');
+                    x.complete();
+                }
+            },1000);
+            return {
+                unsubscribe:()=>{
+                    clearInterval(handle);
+                }
+            };
+        };
+        const source$ = new Observable(onSubscribe);
+        const theObserver = {
+            next: item => console.log(item),
+            error: err=> console.log(err),
+            complete: ()=> console.log('all over')
+        };
+        source$.subscribe(theObserver);
+        //const subscription = source$.subscribe(theObserver);
+        //setTimeout(()=>{subscription.unsubscribe();},2000);
     }
 
 }

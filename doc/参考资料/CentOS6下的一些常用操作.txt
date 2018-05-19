@@ -1,25 +1,29 @@
-Ò»¡¢½«ISO¾µÏñ×÷ÎªyumÔ´
-1¡¢½«ISO¾µÏñÎÄ¼ş·Åµ½Ò»¸öÄ¿Â¼£¬Èç/media
-2¡¢´´½¨¹ÒÔØÂ·¾¶£ºmkdir -p /mnt/iso
-3¡¢½«ISO¾µÏñ¹ÒÔØµ½/mnt/isoÏÂ
+ä¸€ã€å°†ISOé•œåƒä½œä¸ºyumæº
+1ã€å°†ISOé•œåƒæ–‡ä»¶æ”¾åˆ°ä¸€ä¸ªç›®å½•ï¼Œå¦‚/media
+2ã€åˆ›å»ºæŒ‚è½½è·¯å¾„ï¼šmkdir -p /mnt/iso
+3ã€å°†ISOé•œåƒæŒ‚è½½åˆ°/mnt/isoä¸‹
 mount -o loop /media/xxx.iso /mnt/iso
-×¢£º¿ÉÒÔÊäÈëdf -h£¨Ó²ÅÌÈİÁ¿²é¿´£©»òmount²é¿´ÊÇ·ñ¹ÒÔØ³É¹¦
-4¡¢½øÈë/etc/yum.repos.d/£¬ÈôÆäÏÂÃæ»¹ÓĞÆäËü*.repoÎÄ¼ş£¬Ôò½¨¸öÎÄ¼ş¼Ğ£¬½«*.repoÎÄ¼ş¶¼·Å½øÈ¥£»
-×Ô¼ºĞÂ½¨Ò»¸öÎÄ¼şÈç£ºmy.repo£¬È»ºóvim my.repo£¬Ğ´ÈëÒÔÏÂÄÚÈİ£º
+æ³¨ï¼šå¯ä»¥è¾“å…¥df -hï¼ˆç¡¬ç›˜å®¹é‡æŸ¥çœ‹ï¼‰æˆ–mountæŸ¥çœ‹æ˜¯å¦æŒ‚è½½æˆåŠŸ
+4ã€è¿›å…¥/etc/yum.repos.d/ï¼Œè‹¥å…¶ä¸‹é¢è¿˜æœ‰å…¶å®ƒ*.repoæ–‡ä»¶ï¼Œåˆ™å»ºä¸ªæ–‡ä»¶å¤¹ï¼Œå°†*.repoæ–‡ä»¶éƒ½æ”¾è¿›å»ï¼›
+è‡ªå·±æ–°å»ºä¸€ä¸ªæ–‡ä»¶å¦‚ï¼šmy.repoï¼Œç„¶åvim my.repoï¼Œå†™å…¥ä»¥ä¸‹å†…å®¹ï¼š
 [base]
 name=centos
 baseurl=file:///mnt/iso
 enabled=1
 gpgcheck=0
 gpgkey=file:///mnt/iso/RPM-GPG-KEY-CentOS-6
-×¢£ºgpgkeyÌîÊ²Ã´£¿¿ÉÒÔ½øÈë/mnt/iso²é¿´
-5¡¢Çå³ı»º´æ£ºyum clean all
-6¡¢ÑéÖ¤ÊÇ·ñ³É¹¦£ºyum -y install tree£¬È»ºóÊäÈëtree
-¶ş¡¢²»Í¬·şÎñÆ÷¼äÔ¶³ÌÎÄ¼ş´«Êä
+æ³¨ï¼šgpgkeyå¡«ä»€ä¹ˆï¼Ÿå¯ä»¥è¿›å…¥/mnt/isoæŸ¥çœ‹
+5ã€æ¸…é™¤ç¼“å­˜ï¼šyum clean all
+6ã€éªŒè¯æ˜¯å¦æˆåŠŸï¼šyum -y install treeï¼Œç„¶åè¾“å…¥tree
+äºŒã€ä¸åŒæœåŠ¡å™¨é—´è¿œç¨‹æ–‡ä»¶ä¼ è¾“
 scp xxx.iso root@192.168.1.1:/media
-´«ÊäºÃºó¿ÉÒÔÊäÈë£ºll -alh²é¿´µ±Ç°Ä¿Â¼ÏÂÎÄ¼şµÄ´óĞ¡
-Èı¡¢¶Ë¿ÚÌí¼ÓĞÅÈÎ
+ä¼ è¾“å¥½åå¯ä»¥è¾“å…¥ï¼šll -alhæŸ¥çœ‹å½“å‰ç›®å½•ä¸‹æ–‡ä»¶çš„å¤§å°
+ä¸‰ã€ç«¯å£æ·»åŠ ä¿¡ä»»
 vim /etc/sysconfig/iptables
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 22122 -j ACCEPT
-ÖØÆô·À»ğÇ½£ºservice iptables restart
-³¹µ×¹Ø±Õ·À»ğÇ½£ºchkconfig iptables off
+é‡å¯é˜²ç«å¢™ï¼šservice iptables restart
+å½»åº•å…³é—­é˜²ç«å¢™ï¼šchkconfig iptables off
+å››ã€åˆ é™¤å¤§é‡æ–‡ä»¶ã€ç›®å½•çš„æ–¹æ³•
+1ã€rm -rf /tmp *
+2ã€find /tmp -name "*" | xargs rm -rf "*"
+3ã€rsync -a --delete /tmp/empty/ /opt/test/
