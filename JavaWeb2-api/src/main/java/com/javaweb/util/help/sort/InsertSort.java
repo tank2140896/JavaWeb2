@@ -2,6 +2,28 @@ package com.javaweb.util.help.sort;
 
 //插入排序(一句话攻略:如果说冒泡排序是正向处理的,那么插入排序就是反向处理的)
 public class InsertSort implements BaseSort<Integer> {
+	
+	public Integer[] sort(Integer[] array) {
+		if(array!=null&&array.length>1){
+			for(int i=1;i<array.length;i++){
+				final int key = array[i];//待插入的数
+				int startIndex = i;//待插入的数的下标
+				int compareStartIndex = i-1;//需要比较的数的下标
+				while((compareStartIndex>=0)&&(key<array[compareStartIndex])){
+					//if(key<array[compareStartIndex]){
+						array[startIndex] = array[startIndex]^array[compareStartIndex];
+						array[compareStartIndex] = array[startIndex]^array[compareStartIndex];
+						array[startIndex] = array[startIndex]^array[compareStartIndex];
+						compareStartIndex--;
+						startIndex--;
+					//}else{
+					//	break;
+					//}
+				}
+			}
+		}
+		return array;
+	}
 
 	/**
 	<<算法导论>>的伪代码如下:
@@ -13,9 +35,8 @@ public class InsertSort implements BaseSort<Integer> {
   			i = i-1
   		A[i+1] = key
 	*/
-	public Integer[] sort(Integer[] array) {
-		final int sortLength = array.length;
-		for (int i = 1; i < sortLength; i++) {
+	public Integer[] sort2(Integer[] array) {
+		for (int i = 1; i < array.length; i++) {
 			int key = array[i];//从第二个数开始作为key
 			int j = i - 1;//从第i个前面一个开始,即[从后往前推],为什么这么做,是有道理的
 			while(j>-1&&array[j]>key){//array[j]>key定义了从小到大的顺序
@@ -47,9 +68,8 @@ public class InsertSort implements BaseSort<Integer> {
 	 * 1和5比较,1<5,不作处理,此时为[1,6,6,8],下标是1
 	 * 最后将key=5给下标1,此时为[1,5,6,8]
 	 */
-	public Integer[] sort2(Integer[] array) {
-		final int sortLength = array.length;
-		for (int i = 1; i < sortLength; i++) {
+	public Integer[] sort3(Integer[] array) {
+		for (int i = 1; i < array.length; i++) {
 			int key = array[i];//从第二个数开始作为key
 			boolean change = false;
 			int changeIndex = 0;
@@ -68,7 +88,7 @@ public class InsertSort implements BaseSort<Integer> {
 		return array;
 	}
 	
-	public Integer[] sort3(Integer[] array) {
+	public Integer[] sort4(Integer[] array) {
 		/**
 	 	 * 为什么i不从0开始,因为要称为比较至少要两个数,如果从i=0(即第一个数开始)
 		 * 那么第一个数和谁比较呢?(也不是不能比较,但一般我们都是按常理出牌的)
