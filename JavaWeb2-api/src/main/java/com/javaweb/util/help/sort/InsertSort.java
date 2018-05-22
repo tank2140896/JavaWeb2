@@ -1,6 +1,6 @@
 package com.javaweb.util.help.sort;
 
-//插入排序(一句话攻略:如果说冒泡排序是正向处理的,那么插入排序就是反向处理的)
+//插入排序
 public class InsertSort implements BaseSort<Integer> {
 	
 	/**
@@ -18,10 +18,10 @@ public class InsertSort implements BaseSort<Integer> {
 			final int key = array[i];//待插入的数
 			int compareStartIndex = i-1;//需要比较的数的下标
 			while(compareStartIndex>=0&&key<array[compareStartIndex]){
-				array[compareStartIndex+1] = array[compareStartIndex];
-				compareStartIndex--;
+				array[compareStartIndex+1] = array[compareStartIndex];/*<隐式交换>*/
+				compareStartIndex--;/*<隐式交换>*/
 			}
-			array[compareStartIndex+1] = key;
+			array[compareStartIndex+1] = key;/*<隐式交换>*/
 		}
 		return array;
 	}
