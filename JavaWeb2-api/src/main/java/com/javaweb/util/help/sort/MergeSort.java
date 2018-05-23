@@ -2,7 +2,7 @@ package com.javaweb.util.help.sort;
 
 import java.util.Arrays;
 
-//归并排序(一句话攻略:从上到下将数组不断对半分直致数组长度为最小1,从下到上将两两有序数组排序)
+//归并排序
 public class MergeSort implements BaseSort<Integer> {
 
 	/**
@@ -54,74 +54,34 @@ public class MergeSort implements BaseSort<Integer> {
 			A[k]=R[j]
 			j=j+1(j++)
 	*/
-	/**
-	 * 关于两个排好序的数组再排序是这样的:
-	 * A[95,100,102,99,101,103]
-	 * L[95,100,102];R[99,101,103]
-	 * 比较规则:若L大于R(>)则置换;左边的数比右边最小的还要小,则终止比较;最多比较两数组的大小乘积,最少比较左数组的大小
-	 * 第一次:L0 VS R0 (哨兵为95)  -> L[95,100,102] R[99,101,103] 
-	 * 第二次:L1 VS R0 (哨兵为100) -> L[95,99,102]  R[100,101,103]
-	 * 第三次:R0 VS R1 (哨兵为100) -> L[95,99,102]  R[100,101,103]
-	 * 第四次:L2 VS R0 (哨兵为99)  -> L[95,99,102]  R[100,101,103]
-	 * 第五次:L3 VS R0 (哨兵为102) -> L[95,99,100]  R[102,101,103]
-	 * 第六次:R0 VS R1 (哨兵为102) -> L[95,99,100]  R[101,102,103]
-	 */
-	//对两个排好序的数组进行再排序
+	//对两个排好序的数组进行再排序(这是一种耗空间的算法)
 	public static Integer[] merge(Integer array[]){
 		final int arrayLength = array.length;
-		int mid = arrayLength/2;//mid:2个数,则mid=1;3个数则mid=3/2=1
-		int sentry = 0,leftPoint = 0,rightPoint = mid;//sentry:哨兵元素;leftPoint:左指针;rightPoint:右指针
-		for(int i=0;i<mid;i++){
-			sentry = array[i];
-			for(int j=mid;j<arrayLength;j++){
-				if(sentry>array[j]){//从小到大
-					array[leftPoint] = array[leftPoint]^array[rightPoint];
-					array[rightPoint] = array[leftPoint]^array[rightPoint];
-					array[leftPoint] = array[leftPoint]^array[rightPoint];
-					leftPoint = j;
-					rightPoint++;
+		Integer tempArray[] = new Integer[arrayLength];
+		final int mid = arrayLength/2;//对半位置计算
+		int leftIndex = 0;//左半边起始位置
+		int rightIndex = mid;//右半边起始位置
+		int count = 0;
+		for(int i=0;i<arrayLength;i++){
+			if(leftIndex==mid){
+				tempArray[count++] = array[rightIndex];
+				rightIndex++;
+			}else if(rightIndex==arrayLength){
+				tempArray[count++] = array[leftIndex];
+				leftIndex++;
+			}else{
+				int leftValue = array[leftIndex];
+				int rightValue = array[rightIndex];
+				if(leftValue>rightValue){
+					tempArray[count++] = rightValue;
+					rightIndex++;
 				}else{
-					break;
+					tempArray[count++] = leftValue;
+					leftIndex++;
 				}
 			}
-			leftPoint = i+1;
-			rightPoint = mid;
 		}
-		return array;
+		return tempArray;
 	}
 	
-	/**
-	 * 对两个有序数组进行排序
-	 * 思路:[3,5]和[2,4],建一空数组[0,0,0,0]
-	 * 第一次:3>2 [2,0,0,0] =>[3,5] [4]
-	 * 第二次:3<4 [2,3,0,0] =>[5] [4]
-	 * 第三次:5>4 [2,3,4,5] =>[] []
-	 */
-	/**
-	private static int[] merge(int left[],int right[]){
-		int leftLength = left.length,rightLength = right.length;
-		int leftStart = 0,rightStart = 0;
-		int temp[] = new int[leftLength+rightLength];
-		int tempLength = temp.length;
-		for (int i = 0; i < tempLength; i++) {
-			if(leftStart>leftLength-1){
-				temp[i] = right[rightStart];
-				rightStart++;
-			}else if(rightStart>rightLength-1){
-				temp[i] = left[leftStart];
-				leftStart++;
-			}else{
-				if(left[leftStart]>right[rightStart]){
-					temp[i] = right[rightStart];
-					rightStart++;
-				}else{
-					temp[i] = left[leftStart];
-					leftStart++;
-				}
-			}
-		}
-		return temp;
-	} 
-	*/
-
 }
