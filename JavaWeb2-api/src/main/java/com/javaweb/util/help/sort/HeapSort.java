@@ -2,8 +2,7 @@ package com.javaweb.util.help.sort;
 
 import java.util.Arrays;
 
-
-//堆排序(一句话攻略:先建最大堆,然后取堆顶值,接着堆顶值和堆末值交换,移除堆末值,最后重新建最大堆,如此反复直至堆空)
+//堆排序
 public class HeapSort implements BaseSort<Integer> {
 
 	/**
@@ -106,7 +105,7 @@ public class HeapSort implements BaseSort<Integer> {
 	*/
 	//建最大堆
 	public Integer[] buildMaxHeap(Integer[] array){
-		final int end = array.length/2-1;
+		final int end = array.length/2-1;//不包含最底层节点
 		for(int i=end;i>=0;i--){//关键:自底向上
 			array = maxHeapify(array,i);
 		}

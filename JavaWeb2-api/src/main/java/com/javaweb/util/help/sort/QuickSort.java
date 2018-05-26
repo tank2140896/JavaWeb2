@@ -1,6 +1,6 @@
 package com.javaweb.util.help.sort;
 
-
+//快速排序
 public class QuickSort implements BaseSort<Integer> {
 
 	public Integer[] sort(Integer[] array) {
@@ -36,11 +36,11 @@ public class QuickSort implements BaseSort<Integer> {
 	exchange A[i+1] with A[j]
 	return i+1
 	*/
-	//此处实现与算法导论中的实现有差异
+	//此处实现与算法导论中的实现有差异(所要实现的就是针对一个选取的数,所有比选取的数小的都在该选取数的左侧,所有比选取的数大的都在该选取数的右侧)
 	public int partition(Integer[] array,int startIndex,int endIndex){
 		//final int fixedValue = array[endIndex];//固定选取数组最靠右的一个元素
 		/** 随机化版本 start */
-		int fixedValue = array[endIndex];
+		int fixedValue = array[endIndex];//选择的还是最后一位,但是最后一位的值已经不是原来的最后一位的值
 	    if((endIndex-startIndex)/2>2){//忽略就2个数的情况
 	    	int mid = startIndex+(int)(Math.random()*(endIndex-startIndex));//(endIndex-startIndex)/2;
 	    	array[mid] = array[mid]^array[endIndex];
