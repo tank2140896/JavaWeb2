@@ -7,12 +7,83 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import com.javaweb.exception.MatrixException;
+import com.javaweb.util.entity.MaxMin;
 import com.javaweb.util.help.sort.QuickSort;
 
 public class ArrayUtil {
 	
+	public enum ValueResult {
+		MAX_NUM,MIN_NUM
+	}
+	
+	//获取数组中的最大值或最小值
+	public static Integer getMaxOrMinNumInArray(Integer array[],ValueResult valueResult){
+		if(array==null||array.length==0){
+			return null;
+		}
+		int maxMinNum = array[0];
+		if(valueResult==ValueResult.MAX_NUM){
+			for(int i=1;i<array.length;i++){
+				if(maxMinNum<array[i]){
+					maxMinNum = array[i];
+				}
+			}
+		}else{
+			for(int i=1;i<array.length;i++){
+				if(maxMinNum>array[i]){
+					maxMinNum = array[i];
+				}
+			}
+		}
+		return maxMinNum;
+	}
+	
+	//获取数组中的最大值和最小值
+	public static MaxMin<Integer> getMaxAndMinNumInArray(Integer array[]){
+		if(array==null||array.length==0){
+			return null;
+		}
+		if(array.length==1){
+			return new MaxMin<Integer>(array[0],array[0]);
+		}
+		int minNum = array[0];
+		int maxNum = array[1];
+		if(minNum>maxNum){
+			maxNum=minNum^maxNum;
+			minNum=minNum^maxNum;
+			maxNum=minNum^maxNum;
+		}
+		for(int i=2;i<array.length;){
+			if(i+1<array.length){//表示还剩2个数
+				int insideMinNum = array[i];
+				int insideMaxNum = array[i+1];
+				if(insideMinNum>insideMaxNum){
+					insideMaxNum=insideMinNum^insideMaxNum;
+					insideMinNum=insideMinNum^insideMaxNum;
+					insideMaxNum=insideMinNum^insideMaxNum;
+				}
+				if(minNum>insideMinNum){
+					minNum = insideMinNum;
+				}
+				if(maxNum<insideMaxNum){
+					maxNum = insideMaxNum;
+				}
+				i+=2;
+			}else{//表示只剩一个数
+				if(array[i]<minNum){
+					minNum = array[i];
+				}
+				if(array[i]>maxNum){
+					maxNum = array[i];
+				}
+				i+=1;
+			}
+		}
+		return new MaxMin<Integer>(minNum,maxNum);
+	}
+	
 	//从集合中随机抽取N个数
-	public List<Object> getRandomNum(List<Object> list,long size){
+	public static List<Object> getRandomNum(List<Object> list,long size){
 		return new Random().ints(size,0,list.size()).mapToObj(list::get/*remove*/)/*.distinct()*/.collect(Collectors.toList());
 	}
 	
