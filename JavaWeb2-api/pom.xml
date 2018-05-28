@@ -2,6 +2,7 @@
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   	
+  	<!-- maven私有仓库搭建可以使用nexus -->
   	<modelVersion>4.0.0</modelVersion>
   	<groupId>com.javaweb</groupId>
   	<artifactId>JavaWeb2-api</artifactId>
@@ -157,6 +158,14 @@
 		    <version>2.3.0</version>
 		 </dependency>
 		 -->
+		 <!-- 引入本地jar包 -->
+		 <dependency>
+	         <groupId>com.mybatis</groupId>
+	         <artifactId>test</artifactId>
+	         <version>0.0.1-SNAPSHOT</version>
+	         <scope>system</scope>
+	         <systemPath>${project.basedir}/src/main/resources/lib/test.jar</systemPath>
+      	 </dependency>
 	</dependencies>
 	
 	<build>
@@ -173,6 +182,7 @@
 	            <artifactId>spring-boot-maven-plugin</artifactId>
 	            <configuration>
 	            	<mainClass>com.javaweb.Application</mainClass>
+                    <includeSystemScope>true</includeSystemScope><!-- 引入本地jar包 -->
 	            </configuration>
 	            <executions>
 	                <execution>
