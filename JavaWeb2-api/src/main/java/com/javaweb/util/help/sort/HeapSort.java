@@ -2,6 +2,8 @@ package com.javaweb.util.help.sort;
 
 import java.util.Arrays;
 
+import com.javaweb.util.core.TreeUtil;
+
 //堆排序
 public class HeapSort implements BaseSort<Integer> {
 
@@ -28,42 +30,6 @@ public class HeapSort implements BaseSort<Integer> {
 	
 	/**
 	<<算法导论>>的伪代码如下:
-	PARENT(i)
-	1 return [i/2]
-	*/
-	//根据某一节点下标计算其父节点下标
-	public Integer getParentIndexByCurrentIndex(Integer currentIndex){
-		return (currentIndex-1)>>1;//(currentIndex-1)/2
-	}
-	
-	/**
-	<<算法导论>>的伪代码如下:
-	LEFT(i)
-	1 return 2i
-	*/
-	//根据某一节点下标计算其左节点下标
-	public Integer getLeftIndexByCurrentIndex(Integer currentIndex){
-		return (currentIndex<<1)+1;//currentIndex*2+1
-	}
-	
-	/**
-	<<算法导论>>的伪代码如下:
-	RIGHT(i)
-	1 return 2i+1
-	*/
-	//根据某一节点下标计算其右节点下标
-	public Integer getRightIndexByCurrentIndex(Integer currentIndex){
-		return (currentIndex<<1)+2;//currentIndex*2+2;
-	}
-	
-	//计算堆的高度(不算根节点所在的那一层)
-	public Integer getHeapHight(Integer heapLength){
-		double tmp = Math.log(heapLength)/Math.log(2);//采用换底公式
-		return Integer.parseInt(String.valueOf(tmp).split("\\.")[0]);
-	}
-	
-	/**
-	<<算法导论>>的伪代码如下:
 	MAX-HEAPIFY(A,i)
 	l=LEFT(i)
 	r=RIGHT(i)
@@ -79,8 +45,8 @@ public class HeapSort implements BaseSort<Integer> {
 	//维护最大堆的性质(使当前节点的左右节点的值不大于(不小于)当前节点)
 	public Integer[] maxHeapify(Integer[] array,Integer currentIndex){
 		Integer currentIndexTmp = currentIndex;//当前节点的下标
-		Integer leftIndex = getLeftIndexByCurrentIndex(currentIndexTmp);//当前节点的左节点的下标
-		Integer rightIndex = getRightIndexByCurrentIndex(currentIndexTmp);//当前节点的右节点的下标
+		Integer leftIndex = TreeUtil.getLeftIndexByCurrentIndex(currentIndexTmp.longValue()).intValue();//当前节点的左节点的下标
+		Integer rightIndex = TreeUtil.getRightIndexByCurrentIndex(currentIndexTmp.longValue()).intValue();//当前节点的右节点的下标
 		if(leftIndex<array.length&&array[leftIndex]>array[currentIndexTmp]){
 			currentIndexTmp = leftIndex;
 		}

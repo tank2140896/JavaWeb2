@@ -3,6 +3,54 @@ package com.javaweb.util.core;
 import java.util.stream.LongStream;
 
 public class MathUtil {
+	
+	//获取随机数(范围为[0,seed))(L:Left;C:close;R:right;O:open)
+	public static int getRandomNumForLCRO(int seed){
+		int num = (int)(Math.random()*seed);
+		return num;
+	}
+	
+	//获取随机数(范围为[min,max))(L:Left;C:close;R:right;O:open)
+	public static int getRandomNumForLCRO(int min,int max){
+		int num = getRandomNumForLCRO(max-min)+min;
+		return num;
+	}
+	
+	//获取随机数(范围为(0,seed])(L:Left;C:close;R:right;O:open)
+	public static int getRandomNumForLORC(int seed){
+		int num = (int)(Math.random()*seed+1);
+		return num;
+	}
+	
+	//获取随机数(范围为(min,max])(L:Left;C:close;R:right;O:open)
+	public static int getRandomNumForLORC(int min,int max){
+		int num = getRandomNumForLORC(max-min)+min;
+		return num;
+	}
+	
+	//获取随机数(范围为[0,seed])(L:Left;C:close;R:right;O:open)
+	public static int getRandomNumForLCRC(int seed){
+		int num = (int)(Math.random()*(seed+1));
+		return num;
+	}
+	
+	//获取随机数(范围为[min,max])(L:Left;C:close;R:right;O:open)
+	public static int getRandomNumForLCRC(int min,int max){
+		int num = getRandomNumForLCRC(max-min)+min;
+		return num;
+	}
+	
+	//获取随机数(范围为(0,seed))(L:Left;C:close;R:right;O:open)
+	public static int getRandomNumForLORO(int seed){
+		int num = (int)(Math.random()*(seed-1))+1;
+		return num;
+	}
+	
+	//获取随机数(范围为(min,max))(L:Left;C:close;R:right;O:open)
+	public static int getRandomNumForLORO(int min,int max){
+		int num = getRandomNumForLORO(max-min)+min;
+		return num;
+	}
 
 	//判断是否是偶数(true:是;false:不是)
 	public static boolean odevity(Number number) {
