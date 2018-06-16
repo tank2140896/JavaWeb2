@@ -31,7 +31,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
     
     /** 自定义静态资源加载路径
     public void addResourceHandlers(ResourceHandlerRegistry registry) {  
-        registry.addResourceHandler("/**").addResourceLocations("classpath:/");  
+        registry.addResourceHandler("/**").addResourceLocations("classpath:/test/");  
     } 
     */ 
     

@@ -64,7 +64,7 @@ public class AllOpenController extends BaseController {
 	
 	//验证码
 	@GetMapping("/kaptcha/{uuid}")
-	public void kaptcha(HttpServletRequest request,HttpServletResponse response,@PathVariable("uuid") String uuid) throws Exception {
+	public void kaptcha(HttpServletRequest request,HttpServletResponse response,@PathVariable(name="uuid",required=true) String uuid) throws Exception {
 		response.setHeader("Cache-Control", "no-store, no-cache");
 	    response.setContentType("image/jpeg");
 	    String text = defaultKaptcha.createText();

@@ -1,11 +1,14 @@
-﻿项目启动前置条件：
-1、安装redis
-2、安装jdk8
-3、最低tomcat8.0
-4、最低mysql5.6
-使用前重要说明：
-1、本项目前端样式借鉴：https://rawgit.com/start-angular/SB-Admin-BS4-Angular-5/master/dist/components
-3、本项目使用redis存储session，但是没用spring-session-redis（写法在代码中也有参考），而是采用自己设置session到redis
+﻿一、环境依赖说明
+1、必要依赖条件：
+A、安装jdk8
+2、项目启动必要条件：
+A、安装redis
+B、mysql5.6+
+3、开发环境必要条件：
+A、maven3.3+
+二、使用前重要说明：
+1、本项目前端样式借鉴：https://github.com/RogerDeng/SB-Admin-BS4-Angular-5
+2、本项目使用redis存储session，但是没用spring-session-redis（写法在代码中也有参考），而是采用自己设置session到redis
 3、nginx用于处理跨域和负载均衡，本项目已经处理了跨域，因此可以不用nginx，此处提及的目的是为今后负载均衡做准备
 http {
     include       mime.types;
@@ -31,7 +34,7 @@ http {
 6、前端需要有一定的TypeScripe知识基础，参考：https://www.tslang.cn/index.html
 7、个人临时租用的服务器（47.96.157.130）装了redis（密码：123456）和mysql（root/root）
 8、前端Angular和RxJS知识点，项目部署后参考：http://localhost:4200/#/demo
-前端后期改进：
+三、前端后期改进：
 1、更换日期插件（优先）或深入研究现在的日期插件
 2、更换弹出框插件（优先）或深入研究现在的弹出框插件
 3、优化或改进表格在“数据获取中”、“无数据”、“有数据”这三种状态下的界面表现形式及其相关代码，且
@@ -40,7 +43,7 @@ http {
 6、加入消息提示框
 7、优化角色模块分配样式
 8、优化登录界面验证码样式
-前后端近期开发计划：
+四、前后端近期开发计划：
 1、各功能细节优化
 2、接口测试管理
 3、文件上传下载管理
