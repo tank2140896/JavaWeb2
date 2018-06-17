@@ -1,11 +1,8 @@
-﻿一、环境依赖说明
-1、必要依赖条件：
-A、安装jdk8
-2、项目启动必要条件：
-A、安装redis
-B、mysql5.6+
-3、开发环境必要条件：
-A、maven3.3+
+﻿一、环境依赖
+1、jdk8
+2、maven3.3+
+3、redis最新版本
+4、mysql5.6+
 二、使用前重要说明：
 1、本项目前端样式借鉴：https://github.com/RogerDeng/SB-Admin-BS4-Angular-5
 2、本项目使用redis存储session，但是没用spring-session-redis（写法在代码中也有参考），而是采用自己设置session到redis
