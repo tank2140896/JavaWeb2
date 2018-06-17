@@ -12,12 +12,6 @@ import com.javaweb.web.service.UserService;
 public class BaseController extends BaseTool {
 	
 	@Autowired
-	protected WebSocketHandleService webSocketHandleService;
-	
-	@Autowired  
-	protected AsyncTaskService asyncTaskService;
-	
-	@Autowired
 	protected UserService userService;
 	
 	@Autowired
@@ -25,6 +19,12 @@ public class BaseController extends BaseTool {
 	
 	@Autowired
 	protected ModuleService moduleService;
+	
+	@Autowired
+	protected WebSocketHandleService webSocketHandleService;
+	
+	@Autowired  
+	protected AsyncTaskService asyncTaskService;
 	
 	@Autowired
 	protected DefaultKaptcha defaultKaptcha;

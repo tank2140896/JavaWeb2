@@ -38,7 +38,7 @@ public class ModuleController extends BaseController {
 	}
 	
 	@DeleteMapping("/delete/{moduleId}")
-	public BaseResponseResult moduleDelete(@PathVariable("moduleId") String moduleId){
+	public BaseResponseResult moduleDelete(@PathVariable(name="moduleId",required=true) String moduleId){
 		moduleService.moduleDelete(moduleId);
 		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("module.delete.success"),null);
 	}
@@ -77,7 +77,7 @@ public class ModuleController extends BaseController {
 	}
 	
 	@GetMapping("/detail/{moduleId}")
-	public BaseResponseResult moduleDetail(@PathVariable("moduleId") String moduleId){
+	public BaseResponseResult moduleDetail(@PathVariable(name="moduleId",required=true) String moduleId){
 		Module module = moduleService.moduleDetail(moduleId);
 		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("module.detail.success"),module);
 	}

@@ -34,7 +34,7 @@ public class RedisConfig extends CachingConfigurerSupport {
 		return stringRedisTemplate;
 	}
 	
-    //定义缓存数据key生成策略（包名+类名+方法名+所有参数） 
+    //定义缓存数据key生成策略(包名+类名+方法名+所有参数) 
     @Bean  
     public KeyGenerator keyGenerator(){  
         return new KeyGenerator() {  

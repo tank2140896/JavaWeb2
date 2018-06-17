@@ -43,7 +43,7 @@ public class UserController extends BaseController {
 	}
 	
 	@DeleteMapping("/delete/{userId}")
-	public BaseResponseResult userDelete(@PathVariable("userId") String userId){
+	public BaseResponseResult userDelete(@PathVariable(name="userId",required=true) String userId){
 		userService.userDelete(userId);
 		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("user.delete.success"),null);
 	}
@@ -84,19 +84,19 @@ public class UserController extends BaseController {
 	}
 	
 	@GetMapping("/detail/{userId}")
-	public BaseResponseResult userDetail(@PathVariable("userId") String userId){
+	public BaseResponseResult userDetail(@PathVariable(name="userId",required=true) String userId){
 		User user = userService.userDetail(userId);
 		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("user.detail.success"),user);
 	}
 	
 	@GetMapping("/userRoleInfo/{userId}")
-	public BaseResponseResult userRoleInfo(@PathVariable("userId") String userId){
+	public BaseResponseResult userRoleInfo(@PathVariable(name="userId",required=true) String userId){
 		List<RoleInfoResponse> list = userService.userRoleInfo(userId);
 		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("user.userRoleInfo.success"),list);
 	}
 	
 	@PostMapping("/roleAssignment/{userId}")
-	public BaseResponseResult roleAssignment(@PathVariable("userId") String userId,@RequestBody List<String> list){
+	public BaseResponseResult roleAssignment(@PathVariable(name="userId",required=true) String userId,@RequestBody List<String> list){
 		Map<String,Object> map = new HashMap<>();
 		map.put("userId",userId);
 		map.put("list",list);

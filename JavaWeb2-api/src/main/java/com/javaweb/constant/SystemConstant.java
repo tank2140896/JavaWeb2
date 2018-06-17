@@ -28,6 +28,8 @@ public class SystemConstant {
 	public static final String HEAD_TOKEN = "token";
 	
 	public static final String HEAD_TYPE = "type";
+
+	public static final String REDIS_TEMPLATE = "redisTemplate";
 	
 	public static final String SYSTEM_DEFAULT_USER_ID = ADMIN;
 	

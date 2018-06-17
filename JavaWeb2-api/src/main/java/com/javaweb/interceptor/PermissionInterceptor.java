@@ -5,12 +5,11 @@ import java.util.concurrent.TimeUnit;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.BeanFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.javaweb.config.context.ApplicationContextHelper;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.web.eo.TokenData;
 
@@ -18,16 +17,17 @@ import com.javaweb.web.eo.TokenData;
 public class PermissionInterceptor extends HandlerInterceptorAdapter {
 	
 	/**
-	httpServletRequest.getRequestURI()             /javaweb/app/html/home.html
-	httpServletRequest.getRequestURL().toString()  http://localhost:8080/javaweb/app/html/home.html 
-	httpServletRequest.getServletPath()            /app/html/home.html
-	request.getRequestDispatcher("/test").forward(request,response);//服务端跳转
-	response.sendRedirect(basePath+"/test");//页面端跳转
-	*/
-	@SuppressWarnings({"rawtypes","unchecked"})
+	 * httpServletRequest.getRequestURI()            -------------------- /javaweb/app/html/home.html
+	 * httpServletRequest.getRequestURL().toString() -------------------- http://localhost:8080/javaweb/app/html/home.html 
+	 * httpServletRequest.getServletPath()           -------------------- /app/html/home.html
+	 * request.getRequestDispatcher("/test").forward(request,response);//服务端跳转
+	 * response.sendRedirect(basePath+"/test");//页面端跳转
+	 */
+	@SuppressWarnings("unchecked")
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
-		BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext()); 
-		RedisTemplate redisTemplate = (RedisTemplate) factory.getBean("redisTemplate"); 
+		//BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext()); 
+		//RedisTemplate redisTemplate = (RedisTemplate) factory.getBean("redisTemplate"); 
+		RedisTemplate<String,Object> redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
 		//String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();  
 		String userId = request.getHeader(SystemConstant.HEAD_USERID);
 		String token = request.getHeader(SystemConstant.HEAD_TOKEN);
@@ -41,7 +41,8 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 			request.getRequestDispatcher("/requestParameterLost").forward(request,response);
 			return false;
 		}
-		TokenData tokenData = (TokenData)redisTemplate.opsForValue().get(userId+","+type);//(TokenData)request.getSession().getAttribute(userId);
+		//(TokenData)request.getSession().getAttribute(userId);
+		TokenData tokenData = (TokenData)redisTemplate.opsForValue().get(userId+","+type);
 		if(tokenData==null){
 			request.getRequestDispatcher("/invalidRequest").forward(request,response);
 			return false;

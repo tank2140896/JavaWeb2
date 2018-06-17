@@ -25,7 +25,8 @@ public class LoginOpenController extends BaseController {
 	
 	@GetMapping("/getRedisUserInfo")
 	public BaseResponseResult getRedisUserInfo(HttpServletRequest request){
-		TokenData tokenData = getTokenData(request);//(TokenData)request.getSession().getAttribute(userId);
+		//(TokenData)request.getSession().getAttribute(userId);
+		TokenData tokenData = getTokenData(request);
 		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("login.user.getTokenDataSuccess"),tokenData);
 	}
 	

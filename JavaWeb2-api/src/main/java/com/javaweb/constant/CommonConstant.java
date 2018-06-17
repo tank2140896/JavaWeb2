@@ -8,5 +8,7 @@ public class CommonConstant {
 	//null值
 	public static final String NULL_VALUE = null;
 	
+	//逗号
+	public static final String COMMA = ",";
 	
 }

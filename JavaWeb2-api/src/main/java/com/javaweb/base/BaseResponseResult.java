@@ -6,17 +6,22 @@ public class BaseResponseResult implements Serializable {
 
 	private static final long serialVersionUID = -3883891531784970360L;
 
-	private Object code;
+	private Object code;//返回码
 	
-	private String message;
+	private Object message;//返回信息
 	
-	private Object data;
+	private Object data;//返回数据
 	
 	public BaseResponseResult(){
 		
 	}
 	
-	public BaseResponseResult(Object code,String message,Object data){
+	public BaseResponseResult(Object code,Object message){
+		this.code = code;
+		this.message = message;
+	}
+	
+	public BaseResponseResult(Object code,Object message,Object data){
 		this.code = code;
 		this.message = message;
 		this.data = data;
@@ -30,11 +35,11 @@ public class BaseResponseResult implements Serializable {
 		this.code = code;
 	}
 
-	public String getMessage() {
+	public Object getMessage() {
 		return message;
 	}
 
-	public void setMessage(String message) {
+	public void setMessage(Object message) {
 		this.message = message;
 	}
 
@@ -45,5 +50,5 @@ public class BaseResponseResult implements Serializable {
 	public void setData(Object data) {
 		this.data = data;
 	}
-	
+
 }

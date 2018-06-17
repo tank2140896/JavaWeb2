@@ -26,7 +26,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Component;
 
 import com.javaweb.constant.CommonConstant;
-import com.javaweb.interceptor.mybatis.BoundSqlSqlSource;
+import com.javaweb.interceptor.mybatis.BoundSqlSource;
 import com.javaweb.interceptor.mybatis.Column;
 import com.javaweb.interceptor.mybatis.HandleDelete;
 import com.javaweb.interceptor.mybatis.HandleInsert;
@@ -41,11 +41,11 @@ import com.javaweb.interceptor.mybatis.Table;
 import com.javaweb.util.core.DateUtil;
 
 /**
-Executor           作用是执行SQL语句（所有的sql），并且对事务、缓存等提供统一接口。（在这一层上做拦截的权限会更大）
-StatementHandler   作用是对 statement 进行预处理，并且提供统一的原子的增、删、改、查接口。（如果要在SQL执行前进行拦截的话，拦截这里就可以了）
-ResultSetHandler   作用是对返回结果ResultSet进行处理。
-ParameterHandler   作用是对参数进行赋值
-*/
+ * Executor           作用是执行SQL语句（所有的sql），并且对事务、缓存等提供统一接口（在这一层上做拦截的权限会更大）
+ * StatementHandler   作用是对 statement 进行预处理，并且提供统一的原子的增、删、改、查接口（如果要在SQL执行前进行拦截的话，拦截这里就可以了）
+ * ResultSetHandler   作用是对返回结果ResultSet进行处理
+ * ParameterHandler   作用是对参数进行赋值
+ */
 @Component
 @Intercepts({
 	@Signature(type=Executor.class,method="update",args={MappedStatement.class,Object.class}),
@@ -78,7 +78,7 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 			String sql = sqlHandle.handle(sqlBuildInfo);//改造SQL
 			BoundSql boundSql = mappedStatement.getBoundSql(parameter);
 			BoundSql newBoundSql = new BoundSql(mappedStatement.getConfiguration(),sql,boundSql.getParameterMappings(),boundSql.getParameterObject());  
-			Builder builder = new MappedStatement.Builder(mappedStatement.getConfiguration(),mappedStatement.getId(),new BoundSqlSqlSource(newBoundSql),mappedStatement.getSqlCommandType());
+			Builder builder = new MappedStatement.Builder(mappedStatement.getConfiguration(),mappedStatement.getId(),new BoundSqlSource(newBoundSql),mappedStatement.getSqlCommandType());
 			builder = getBuilder(builder, mappedStatement);
 			MappedStatement newMappedStatement = builder.build();
 			invocation.getArgs()[0] = newMappedStatement;

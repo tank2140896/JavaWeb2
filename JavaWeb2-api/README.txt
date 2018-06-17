@@ -16,3 +16,5 @@ Class.forName(driveClassName);
 Connection connection = DriverManager.getConnection(url,userName,password);
 PreparedStatement preparedStatement = connection.prepareStatement(sql);
 4、src/main/resources下的静态资源文件在SpringBoot中的默认(未添加拦截器等情况下)查找顺序为:META/resources->resources->static->public
+三、其它
+1、https://start.spring.io

@@ -12,11 +12,11 @@ import com.javaweb.constant.SystemConstant;
 public class DataSourceAspect {
 
 	/**
-	//切入点execution
-	@Pointcut("execution(* com.javaweb.web..*(..))")  
-	public void methodCall() {}
-	@Before(value="methodCall()")
-	*/
+	 * 还可以这么写:
+	 * @Pointcut("execution(* com.javaweb.web.dao..*.*(..))")  
+	 * public void methodCall() {}
+	 * @Before(value="methodCall()")
+	 */
 	@Before(value=SystemConstant.DEFAULT_DATA_SOURCE_POINT_CUT)
 	//这里写具体的数据源切换逻辑
 	public void beforeMethod(JoinPoint joinPoint) throws Throwable {

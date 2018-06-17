@@ -13,13 +13,14 @@ import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 
+/**
+ * 使用请解注
+ * import org.springframework.context.annotation.Configuration;
+ * import org.springframework.kafka.annotation.EnableKafka;
+ * @Configuration
+ * @EnableKafka
+ */
 //消费者
-/** 使用请解注
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.kafka.annotation.EnableKafka;
-@Configuration
-@EnableKafka
-*/
 public class KafkaConsumerConfig {
 	
     @Value("${kafka.consumer.bootstrap-servers}")
@@ -37,6 +38,7 @@ public class KafkaConsumerConfig {
         return new DefaultKafkaConsumerFactory<>(consumerConfigs());
     }
 
+    //这里仅设置了必选属性
     public Map<String, Object> consumerConfigs() {
         Map<String, Object> propsMap = new HashMap<>();
         propsMap.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,consumerServers);

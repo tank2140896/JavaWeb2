@@ -6,49 +6,16 @@ import java.util.concurrent.TimeUnit;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.solr.client.solrj.SolrClient;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.core.env.Environment;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.client.RestTemplate;
 
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.web.eo.TokenData;
 
-public class BaseTool {
-	
-	/**
-	@Autowired
-	protected MongoTemplate mongoTemplate;
-	
-	@Autowired
-	protected Neo4jTemplate neo4jTemplate;
-	*/
-	
-	@Autowired
-	private Environment environment;
-	
-	@Autowired  
-	protected SolrClient solrClient;
-	
-	@Autowired
-	protected RestTemplate restTemplate;
-	
-	@Autowired
-	protected KafkaTemplate<String,String> kafkaTemplate;
-	
-	@Autowired
-    protected MessageSource messageSource;
-	
-	@Autowired
-	protected RedisTemplate<String,String> redisTemplate;
+public class BaseTool extends BaseInject {
 	
 	@Resource(name="redisTemplate")
 	protected ValueOperations<Object,Object> valueOperations;
@@ -66,7 +33,7 @@ public class BaseTool {
 	}
 	
 	public TokenData getTokenData(HttpServletRequest request){
-		String key = request.getHeader(SystemConstant.HEAD_USERID)+","+request.getHeader(SystemConstant.HEAD_TYPE);
+		String key = String.join(CommonConstant.COMMA,request.getHeader(SystemConstant.HEAD_USERID),request.getHeader(SystemConstant.HEAD_TYPE));
 		return (TokenData)valueOperations.get(key);
 	}
 	
@@ -76,15 +43,9 @@ public class BaseTool {
 	
 	public String getValidateMessage(BindingResult bindingResult){
 		String message = CommonConstant.EMPTY_VALUE;
-		try{
-			//Locale locale = LocaleContextHolder.getLocale();
-			List<ObjectError> list = bindingResult.getAllErrors();
-			if(list.size()>=1){
-				//message = messageSource.getMessage(list.get(0).getDefaultMessage(),null,locale);
-				message = getMessage(list.get(0).getDefaultMessage());
-			}
-		}catch(Exception e){
-			
+		List<ObjectError> list = bindingResult.getAllErrors();
+		if(list!=null&&list.size()!=0){
+			message = getMessage(list.get(0).getDefaultMessage());
 		}
 		return message;
 	}

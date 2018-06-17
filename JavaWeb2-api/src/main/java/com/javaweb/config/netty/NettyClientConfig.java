@@ -19,10 +19,11 @@ public class NettyClientConfig {
 	@Autowired
 	private NettyClientHandle nettyClientHandle;
 	
-	/** 使用请解注
-	import javax.annotation.PostConstruct;
-	@PostConstruct
-	*/
+	/**
+	 * 使用请解注
+	 * import javax.annotation.PostConstruct;
+	 * @PostConstruct
+	 */
 	public void init(){
 		Runnable runnable = ()->{
 			try {
