@@ -1,6 +1,10 @@
 package com.javaweb.util.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.javaweb.util.help.tree.BinaryTree;
+import com.javaweb.util.help.tree.PositionEnum;
 
 public class TreeUtil {
 	
@@ -70,6 +74,7 @@ public class TreeUtil {
 			tree.setIndex(0L);
 			tree.setUniqueIndex(SecretUtil.getRandomUUID());
 			tree.setValue(value);
+			tree.setPostion(PositionEnum.ROOT);
 		}else{
 			if(tree.getValue()>value){//相当于父节点的值大于输入值
 				if(tree.getLeftNode()==null){
@@ -77,6 +82,7 @@ public class TreeUtil {
 					leftNode.setIndex(getLeftIndexByCurrentIndex(tree.getIndex()));
 					leftNode.setUniqueIndex(SecretUtil.getRandomUUID());
 					leftNode.setValue(value);
+					leftNode.setPostion(PositionEnum.LEFT);
 					tree.setLeftNode(leftNode);
 				}else{
 					buildBinaryTree(tree.getLeftNode(),value);
@@ -87,6 +93,7 @@ public class TreeUtil {
 					rightNode.setIndex(getRightIndexByCurrentIndex(tree.getIndex()));
 					rightNode.setUniqueIndex(SecretUtil.getRandomUUID());
 					rightNode.setValue(value);
+					rightNode.setPostion(PositionEnum.RIGHT);
 					tree.setRightNode(rightNode);
 				}else{
 					buildBinaryTree(tree.getRightNode(),value);
@@ -104,12 +111,33 @@ public class TreeUtil {
 		INORDER-TREE-WALK(x.right)
 	*/
 	//中序遍历二叉树
-	public static void middleOrderBinaryTree(BinaryTree<Integer> binaryTree){
+	public static List<Integer> middleOrderBinaryTree(BinaryTree<Integer> binaryTree,List<Integer> list){
 		if(binaryTree!=null){
-			middleOrderBinaryTree(binaryTree.getLeftNode());
-			System.out.println(binaryTree.getValue());
-			middleOrderBinaryTree(binaryTree.getRightNode());
+			middleOrderBinaryTree(binaryTree.getLeftNode(),list);
+			list.add(binaryTree.getValue());
+			middleOrderBinaryTree(binaryTree.getRightNode(),list);
 		}
+		return list;
+	}
+	
+	//先序遍历二叉树
+	public static List<Integer> firstOrderBinaryTree(BinaryTree<Integer> binaryTree,List<Integer> list){
+		if(binaryTree!=null){
+			list.add(binaryTree.getValue());
+			middleOrderBinaryTree(binaryTree.getLeftNode(),list);
+			middleOrderBinaryTree(binaryTree.getRightNode(),list);
+		}
+		return list;
+	}
+	
+	//后序遍历二叉树
+	public static List<Integer> lastOrderBinaryTree(BinaryTree<Integer> binaryTree,List<Integer> list){
+		if(binaryTree!=null){
+			middleOrderBinaryTree(binaryTree.getLeftNode(),list);
+			middleOrderBinaryTree(binaryTree.getRightNode(),list);
+			list.add(binaryTree.getValue());
+		}
+		return list;
 	}
 	
 	/**
@@ -134,9 +162,31 @@ public class TreeUtil {
 		}
 	}
 	
-	//删除节点值(分为三种情况:1.无左右节点;2.只有某一节点;3.两个节点都有[较复杂])
-	public void BinaryTreeDelete(BinaryTree<Integer> binaryTree,Integer value){
-		//TODO
+	//TODO 删除节点值(分为三种情况:1.无左右节点;2.只有某一节点;3.两个节点都有[较复杂])
+	public static BinaryTree<Integer> BinaryTreeDelete(BinaryTree<Integer> binaryTree,BinaryTree<Integer> currentBinaryTree,Integer value){
+		if(currentBinaryTree==null||currentBinaryTree.getValue()==value){
+			if(currentBinaryTree!=null){//查找到了要删除的节点
+				List<Integer> list = firstOrderBinaryTree(currentBinaryTree,new ArrayList<Integer>());//先序遍历二叉树
+				list.remove(0);//移除第一位
+				if(binaryTree.getPostion()==PositionEnum.LEFT){
+					binaryTree.setLeftNode(null);
+				}else if(binaryTree.getPostion()==PositionEnum.RIGHT){
+					binaryTree.setRightNode(null);
+				}else{
+					binaryTree = new BinaryTree<Integer>();
+				}
+				for(int i=0;i<list.size();i++){
+					buildBinaryTree(binaryTree,list.get(i));
+				}
+			}
+			return binaryTree;
+		}else{
+			if(currentBinaryTree.getValue()>value){
+				return BinaryTreeDelete(binaryTree,binaryTree.getLeftNode(),value);
+			}else{
+				return BinaryTreeDelete(binaryTree,binaryTree.getRightNode(),value);
+			}
+		}
 	}
 	
 	//TODO 红黑树

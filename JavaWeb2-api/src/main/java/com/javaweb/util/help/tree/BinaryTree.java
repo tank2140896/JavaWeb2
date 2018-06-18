@@ -12,6 +12,8 @@ public class BinaryTree<T extends Number> implements Serializable {
 	
 	private T value;//节点值
 	
+	private PositionEnum postion;//位置(相对于父节点来说)
+	
 	private BinaryTree<T> leftNode;//左节点
 
 	private BinaryTree<T> rightNode;//右节点
@@ -38,6 +40,14 @@ public class BinaryTree<T extends Number> implements Serializable {
 
 	public void setValue(T value) {
 		this.value = value;
+	}
+
+	public PositionEnum getPostion() {
+		return postion;
+	}
+
+	public void setPostion(PositionEnum postion) {
+		this.postion = postion;
 	}
 
 	public BinaryTree<T> getLeftNode() {
