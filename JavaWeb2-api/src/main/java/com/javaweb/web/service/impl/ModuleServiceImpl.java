@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.javaweb.base.BaseService;
-import com.javaweb.util.core.PageUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.module.ModuleLevelAndOrdersResponse;
 import com.javaweb.web.eo.module.ModuleListRequest;
@@ -23,15 +22,9 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
 	}
 
 	public Page moduleList(ModuleListRequest moduleListRequest) {
-		Page page = new Page();
 		List<ModuleListResponse> list = moduleDao.moduleList(moduleListRequest);
 		long count = moduleDao.moduleListCount(moduleListRequest);
-		page.setData(list);
-		page.setCurrentPage(moduleListRequest.getCurrentPage());
-		page.setPageSize(moduleListRequest.getPageSize());
-		page.setTotalSize(count);
-		page.setTotalPage(PageUtil.getTotalPage(page.getTotalSize(),page.getPageSize()));
-		page.setPageList(PageUtil.getShowPages(moduleListRequest.getCurrentPage(),page.getTotalPage(),5L));
+		Page page = new Page(moduleListRequest,list,count);
 		return page;
 	}
 

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.javaweb.base.BaseService;
-import com.javaweb.util.core.PageUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.user.RoleInfoResponse;
 import com.javaweb.web.eo.user.UserListRequest;
@@ -24,15 +23,9 @@ public class UserServiceImpl extends BaseService implements UserService {
 	}
 
 	public Page userList(UserListRequest userListRequest){
-		Page page = new Page();
 		List<UserListResponse> list = userDao.userList(userListRequest);
 		long count = userDao.userListCount(userListRequest);
-		page.setData(list);
-		page.setCurrentPage(userListRequest.getCurrentPage());
-		page.setPageSize(userListRequest.getPageSize());
-		page.setTotalSize(count);
-		page.setTotalPage(PageUtil.getTotalPage(page.getTotalSize(),page.getPageSize()));
-		page.setPageList(PageUtil.getShowPages(userListRequest.getCurrentPage(),page.getTotalPage(),5L));
+		Page page = new Page(userListRequest,list,count);
 		return page;
 	}
 

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.javaweb.base.BaseService;
-import com.javaweb.util.core.PageUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.role.ModuleInfoResponse;
 import com.javaweb.web.eo.role.RoleListRequest;
@@ -21,15 +20,9 @@ import com.javaweb.web.service.RoleService;
 public class RoleServiceImpl extends BaseService implements RoleService {
 	
 	public Page roleList(RoleListRequest roleListRequest){
-		Page page = new Page();
 		List<RoleListResponse> list = roleDao.roleList(roleListRequest);
 		long count = roleDao.roleListCount(roleListRequest);
-		page.setData(list);
-		page.setCurrentPage(roleListRequest.getCurrentPage());
-		page.setPageSize(roleListRequest.getPageSize());
-		page.setTotalSize(count);
-		page.setTotalPage(PageUtil.getTotalPage(page.getTotalSize(),page.getPageSize()));
-		page.setPageList(PageUtil.getShowPages(roleListRequest.getCurrentPage(),page.getTotalPage(),5L));
+		Page page = new Page(roleListRequest,list,count);
 		return page;
 	}
 
