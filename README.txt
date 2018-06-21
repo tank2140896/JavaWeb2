@@ -48,5 +48,6 @@ http {
 5、websoket完善并优化
 6、优化后端验证码的代码
 7、后端将采用JAVA10及函数式编程（WebFlux/RxJava）改造部分代码
+8、将JAVA算法改用C语言实现，JAVA本地调用C语言的实现方法
 
 

@@ -2,6 +2,7 @@ package com.javaweb.util.help.tree;
 
 import java.io.Serializable;
 
+//二叉树
 public class BinaryTree<T extends Number> implements Serializable {
 
 	private static final long serialVersionUID = 510645529723567194L;
@@ -17,7 +18,7 @@ public class BinaryTree<T extends Number> implements Serializable {
 	private BinaryTree<T> leftNode;//左节点
 
 	private BinaryTree<T> rightNode;//右节点
-
+	
 	public Long getIndex() {
 		return index;
 	}
