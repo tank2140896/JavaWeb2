@@ -13,21 +13,22 @@ import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javaweb.config.context.ApplicationContextHelper;
+import com.javaweb.constant.SystemConstant;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.chat.ChatResponse;
 import com.javaweb.web.po.User;
 
-@Component
+@Service
 @ServerEndpoint(value="/websocket/{key}")  
 public class WebSocketHandleService {
 	
-	public static LinkedList<Session> client = new LinkedList<Session>();
+	public static LinkedList<Session> client = new LinkedList<Session>();//如果是分布式部署的话,这里推荐采用redis进行存储替代
 	
-	public static Map<String,User> userMap = new HashMap<String,User>(); 
+	public static Map<String,User> userMap = new HashMap<String,User>();//如果是分布式部署的话,这里推荐采用redis进行存储替代 
 
 	@OnMessage
 	public void onMessage(String message,User user) {
@@ -49,7 +50,7 @@ public class WebSocketHandleService {
 	@SuppressWarnings("unchecked")
 	public void onOpen(Session session,@PathParam("key") String key) {
 		try{
-			RedisTemplate<String,Object> redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean("redisTemplate");
+			RedisTemplate<String,Object> redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
 			TokenData tokenData = (TokenData)redisTemplate.opsForValue().get(key);
 			if(tokenData!=null){
 				User user = tokenData.getUser();
