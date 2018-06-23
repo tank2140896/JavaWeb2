@@ -22,6 +22,11 @@
     </parent>
     
     <dependencies>
+    	<!-- RxJava响应式编程 -->
+    	<dependency>
+		    <groupId>io.reactivex.rxjava2</groupId>
+		    <artifactId>rxjava</artifactId>
+		</dependency>
     	<!-- web -->
 	    <dependency>
 	        <groupId>org.springframework.boot</groupId>
