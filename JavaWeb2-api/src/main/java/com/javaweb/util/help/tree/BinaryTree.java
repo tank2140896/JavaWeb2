@@ -2,13 +2,13 @@ package com.javaweb.util.help.tree;
 
 import java.io.Serializable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 //二叉树
 public class BinaryTree<T extends Number> implements Serializable {
 
 	private static final long serialVersionUID = 510645529723567194L;
 
-	private Long index;//用于计算根节点、叶子节点等的序号
-	
 	private String uniqueIndex;//唯一索引
 	
 	private T value;//节点值
@@ -19,13 +19,8 @@ public class BinaryTree<T extends Number> implements Serializable {
 
 	private BinaryTree<T> rightNode;//右节点
 	
-	public Long getIndex() {
-		return index;
-	}
-
-	public void setIndex(Long index) {
-		this.index = index;
-	}
+	@JsonIgnore
+	private transient BinaryTree<T> parentNode;//父节点
 
 	public String getUniqueIndex() {
 		return uniqueIndex;
@@ -67,4 +62,12 @@ public class BinaryTree<T extends Number> implements Serializable {
 		this.rightNode = rightNode;
 	}
 
+	public BinaryTree<T> getParentNode() {
+		return parentNode;
+	}
+
+	public void setParentNode(BinaryTree<T> parentNode) {
+		this.parentNode = parentNode;
+	}
+	
 }
