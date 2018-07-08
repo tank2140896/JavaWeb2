@@ -278,10 +278,6 @@ public class TreeUtil {
 		TRANSPLANT(T,z,y)
 		y.left = z.left
 		y.left.p = y
-	本人的简单思路(代码实现的难点在节点的交换):
-	1.若删除节点无左右节点则直接删除
-	2.若删除节点只有左节点或右节点,则将其左或右节点及其下面的所有节点(如果有)替换删除的节点
-	3.若删除节点既有左节点又有右节点,则查找该节点的后继节点并与要删除的节点交换,然后继续递归调用二叉树删除的步骤
 	*/
 	//二叉树节点删除
 	public static BinaryTree<Integer> deleteBinaryTreeNode(BinaryTree<Integer> binaryTree,BinaryTree<Integer> currentNode){
@@ -296,7 +292,7 @@ public class TreeUtil {
 			currentNode = array[1];
 			currentNode.setLeftNode(array[2]);
 		}else{
-			BinaryTree<Integer> node = getMinNode(currentNode.getRightNode());
+			BinaryTree<Integer> node = getMinNode(currentNode.getRightNode());//可以理解为就是后继
 			if(!node.getParentNode().getUniqueIndex().equals(currentNode.getUniqueIndex())){
 				BinaryTree<Integer> array[] = transplant(binaryTree,node,node.getRightNode());
 				binaryTree = array[0];
@@ -326,7 +322,7 @@ public class TreeUtil {
 	if v != NIL
 		v.p = u.p
 	*/
-	//删除树时移动子树的过程
+	//删除树时移动子树的过程(只负责要删除的节点和其左右节点的链接关系)
 	@SuppressWarnings("unchecked")
 	private static BinaryTree<Integer>[] transplant(BinaryTree<Integer> binaryTree,BinaryTree<Integer> u,BinaryTree<Integer> v){
 		if(u.getParentNode()==null){
@@ -341,7 +337,7 @@ public class TreeUtil {
 		}
 		return new BinaryTree[]{binaryTree,u,v};
 	}
-	
+
 	//TODO 红黑树
 
 }

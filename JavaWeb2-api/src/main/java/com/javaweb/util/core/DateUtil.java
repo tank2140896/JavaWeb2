@@ -21,6 +21,9 @@ import com.javaweb.util.entity.DateTimeInfo;
  * LocalDateTime..............
  * ZonedDateTime.............................
  * 日期时间加减的链式处理：LocalDate localDate = LocalDate.of(2017,3,24).with(ChronoField.YEAR,2020).plusYears(3).minusDays(2);//2023-03-22
+ * 设置时间用with方法即可，但是用完要替换原值，如：
+ * LocalDateTime localDateTime = LocalDateTime.now();
+ * localDateTime = localDateTime.with(ChronoField.YEAR,2020);
  */
 public class DateUtil {
 	
