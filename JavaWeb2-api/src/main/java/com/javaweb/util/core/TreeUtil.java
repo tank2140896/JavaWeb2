@@ -2,9 +2,11 @@ package com.javaweb.util.core;
 
 import java.util.List;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javaweb.util.help.tree.BinaryTree;
 import com.javaweb.util.help.tree.BinaryTreeOrderEnum;
-import com.javaweb.util.help.tree.PositionEnum;
+import com.javaweb.util.help.tree.RedBlackEnum;
+import com.javaweb.util.help.tree.RedBlackTree;
 
 public class TreeUtil {
 	
@@ -68,36 +70,49 @@ public class TreeUtil {
 		return tree;
 	}
 	
-	//构建二叉树(新增节点值也是调用该方法)
+	//构建二叉树(新增节点值也是调用该方法[这是用的是while的方式,也可以采用递归调用buildBinaryTree的方式])
+	/**
+	<<算法导论>>的伪代码如下:
+	TREE-INSERT(T,z)
+	y=NIL
+	x=T.root
+	while x!=NIL
+		y=x
+		if z.key<x.key
+			x=x.left
+		else x=x.right
+	z.p=y
+	if y==NIL
+		T.root=z
+	elseif z.key<y.key
+		y.left=z
+	else y.right=z
+	*/
 	public static void buildBinaryTree(BinaryTree<Integer> tree,Integer value){
 		if(tree.getUniqueIndex()==null){//表示根节点
 			tree.setUniqueIndex(SecretUtil.getRandomUUID());
 			tree.setValue(value);
-			tree.setPostion(PositionEnum.ROOT);
 		}else{
-			if(tree.getValue()>value){//相当于父节点的值大于输入值
-				if(tree.getLeftNode()==null){
-					BinaryTree<Integer> leftNode = new BinaryTree<>();
-					leftNode.setUniqueIndex(SecretUtil.getRandomUUID());
-					leftNode.setValue(value);
-					leftNode.setPostion(PositionEnum.LEFT);
-					leftNode.setParentNode(tree);
-					tree.setLeftNode(leftNode);
-				}else{
-					buildBinaryTree(tree.getLeftNode(),value);
-				}
-			}else{//相当于父节点的值小于等于输入值
-				if(tree.getRightNode()==null){
-					BinaryTree<Integer> rightNode = new BinaryTree<>();
-					rightNode.setUniqueIndex(SecretUtil.getRandomUUID());
-					rightNode.setValue(value);
-					rightNode.setPostion(PositionEnum.RIGHT);
-					rightNode.setParentNode(tree);
-					tree.setRightNode(rightNode);
-				}else{
-					buildBinaryTree(tree.getRightNode(),value);
+			BinaryTree<Integer> node = new BinaryTree<>();
+			node.setUniqueIndex(SecretUtil.getRandomUUID());
+			node.setValue(value);
+			BinaryTree<Integer> tmp = tree;
+			while(true){
+				if(tmp.getValue()>value){//相当于父节点的值大于输入值
+					if(tmp.getLeftNode()==null){
+						tmp.setLeftNode(node);
+						break;
+					}
+					tmp = tmp.getLeftNode();
+				}else{//相当于父节点的值小于等于输入值
+					if(tmp.getRightNode()==null){
+						tmp.setRightNode(node);
+						break;
+					}
+					tmp = tmp.getRightNode();
 				}
 			}
+			node.setParentNode(tmp);
 		}
 	}
 	
@@ -233,7 +248,7 @@ public class TreeUtil {
 			return getMinNode(currentNode.getRightNode());
 		}
 		BinaryTree<Integer> parentNode = currentNode.getParentNode();//获得当前节点的父节点
-		while(parentNode!=null&&currentNode.getPostion()==PositionEnum.RIGHT){//如果当前结点无右结点,且它是父节点的右儿子,则所在子树遍历完了.向上寻找一个作为左儿子的祖先结点,那么下一遍历的就是该祖先结点的父节点(一直找到根节点为止)
+		while(parentNode!=null&&parentNode.getRightNode().getUniqueIndex().equals(currentNode.getUniqueIndex())){//如果当前结点无右结点,且它是父节点的右儿子,则所在子树遍历完了.向上寻找一个作为左儿子的祖先结点,那么下一遍历的就是该祖先结点的父节点(一直找到根节点为止)
 			currentNode = parentNode;
 			parentNode = currentNode.getParentNode();
 		}//如果当前结点无右结点,若它是父节点的左儿子,则下一遍历的是父节点
@@ -256,7 +271,7 @@ public class TreeUtil {
 			return getMaxNode(currentNode.getLeftNode());
 		}
 		BinaryTree<Integer> parentNode = currentNode.getParentNode();
-		while(parentNode!=null&&currentNode.getPostion()==PositionEnum.LEFT){//如果当前结点无左结点,且它是父节点的左儿子,则所在子树遍历完了.向上寻找一个作为右儿子的祖先结点,那么下一遍历的就是该祖先结点的父节点(一直找到根节点为止)
+		while(parentNode!=null&&parentNode.getLeftNode().getUniqueIndex().equals(currentNode.getUniqueIndex())){//如果当前结点无左结点,且它是父节点的左儿子,则所在子树遍历完了.向上寻找一个作为右儿子的祖先结点,那么下一遍历的就是该祖先结点的父节点(一直找到根节点为止)
 			currentNode = parentNode;
 			parentNode = currentNode.getParentNode();
 		}//如果当前结点无左结点,若它是父节点的右儿子,则下一遍历的是父节点
@@ -337,7 +352,180 @@ public class TreeUtil {
 		}
 		return new BinaryTree[]{binaryTree,u,v};
 	}
-
-	//TODO 红黑树
+	
+	/**
+	<<算法导论>>的伪代码如下:
+	LEFT-ROTATE(T,x)
+	y=x.right
+	x.right=y.left
+	if y.left!=T.nil
+		y.left.p=x
+	y.p=x.p
+	if x.p==T.nil
+		T.root=y
+	elseif x==x.p.left
+		x.p.left=y
+	else x.p.right=y
+	y.left=x
+	x.p=y
+	*/
+	//红黑树左旋操作
+	public static RedBlackTree<Integer> redBlackTreeLeftRotate(RedBlackTree<Integer> redBlackTree,RedBlackTree<Integer> rotateNode){
+		RedBlackTree<Integer> rightNode = rotateNode.getRightNode();//获得左旋基准旋转节点的右节点
+		if(rightNode!=null){
+			rotateNode.setRightNode(rightNode.getLeftNode());
+			if(rightNode.getLeftNode()!=null) {
+				rightNode.getLeftNode().setParentNode(rotateNode);
+			}
+			rightNode.setParentNode(rotateNode.getParentNode());
+			if(rotateNode.getParentNode()==null) {//左旋基准旋转节点就是根节点
+				redBlackTree = rightNode;
+				//下面两个else的意思是:左旋基准旋转节点对于父节点来说的位置判断,即子节点指向了父节点,父节点也需要引用子节点
+			}else if(rotateNode.getUniqueIndex().equals(rotateNode.getParentNode().getLeftNode()==null?null:rotateNode.getParentNode().getLeftNode().getUniqueIndex())) {
+				rotateNode.getParentNode().setLeftNode(rightNode);
+			}else {
+				rotateNode.getParentNode().setRightNode(rightNode);
+			}
+			rightNode.setLeftNode(rotateNode);
+			rotateNode.setParentNode(rightNode);
+		}
+		return redBlackTree;
+	}
+	
+	//红黑树右旋操作(和红黑树左旋操作左右相反)
+	public static RedBlackTree<Integer> redBlackTreeRightRotate(RedBlackTree<Integer> redBlackTree,RedBlackTree<Integer> rotateNode){
+		RedBlackTree<Integer> leftNode = rotateNode.getLeftNode();
+		if(leftNode!=null){
+			rotateNode.setLeftNode(leftNode.getRightNode());
+			if(leftNode.getRightNode()!=null) {
+				leftNode.getRightNode().setParentNode(rotateNode);
+			}
+			leftNode.setParentNode(rotateNode.getParentNode());
+			if(rotateNode.getParentNode()==null) {
+				redBlackTree = leftNode;
+			}else if(rotateNode.getUniqueIndex().equals(rotateNode.getParentNode().getRightNode()==null?null:rotateNode.getParentNode().getRightNode().getUniqueIndex())) {
+				rotateNode.getParentNode().setRightNode(leftNode);
+			}else {
+				rotateNode.getParentNode().setLeftNode(leftNode);
+			}
+			leftNode.setRightNode(rotateNode);
+			rotateNode.setParentNode(leftNode);
+		}
+		return redBlackTree;
+	}
+	
+	//构建红黑树(新增节点值也是调用该方法)-该方法与二叉树的新增只是略微不同
+	public static RedBlackTree<Integer> buildRedBlackTree(RedBlackTree<Integer> redBlackTree,Integer value){
+		if(redBlackTree.getUniqueIndex()==null){//表示根节点
+			redBlackTree.setUniqueIndex(SecretUtil.getRandomUUID());
+			redBlackTree.setValue(value);
+			redBlackTree.setRedBlackEnum(RedBlackEnum.RED);//此处无论设置为红色还是黑色都没关系,因为根节点最终都会设置为黑色
+		}else{
+			RedBlackTree<Integer> node = new RedBlackTree<>();
+			node.setUniqueIndex(SecretUtil.getRandomUUID());
+			node.setValue(value);
+			node.setRedBlackEnum(RedBlackEnum.RED);
+			RedBlackTree<Integer> tmp = redBlackTree;
+			while(true){
+				if(tmp.getValue()>value){//相当于父节点的值大于输入值
+					if(tmp.getLeftNode()==null){
+						tmp.setLeftNode(node);
+						node.setParentNode(tmp);
+						redBlackTree = redBlackTreeFixup(redBlackTree,tmp.getLeftNode());//维持红黑性
+						break;
+					}
+					tmp = tmp.getLeftNode();
+				}else{//相当于父节点的值小于等于输入值
+					if(tmp.getRightNode()==null){
+						tmp.setRightNode(node);
+						node.setParentNode(tmp);
+						redBlackTree = redBlackTreeFixup(redBlackTree,tmp.getRightNode());//维持红黑性
+						break;
+					}
+					tmp = tmp.getRightNode();
+				}
+			}
+			//node.setParentNode(tmp);
+		}
+		return redBlackTree;
+	}
+	
+	/**
+	<<算法导论>>的伪代码如下:
+	RB-INSERT-FIXUP(T,z)
+	while z.p.color==RED
+		if z.p==z.p.p.left
+			y=z.p.p.right
+			if y.color==RED
+				z.p.color==BLACK
+				y.color==BLACK
+				z.p.p.color=RED
+				z=z.p.p
+			else if z==z.p.right
+				z==z.p
+				LEFT-ROTATE(T,z)
+			z.p.color=BLACK
+			z.p.p.color=RED
+			RIGHT-ROTATE(T,z.p.p)
+		else(same as then clause with "right" and "left" exchanged)
+	T.root.color=BLACK
+	*/
+	//对节点重新着色并旋转以此来维持红黑性
+	public static RedBlackTree<Integer> redBlackTreeFixup(RedBlackTree<Integer> redBlackTree,RedBlackTree<Integer> currentNode){
+		while((currentNode.getParentNode()==null?null:currentNode.getParentNode().getRedBlackEnum())==RedBlackEnum.RED){//由于已经把所有节点设置为红色,因此当前节点的父节点不应该为红色,若为红色则进行调整
+			RedBlackTree<Integer> cp = currentNode.getParentNode();//当前节点的父节点
+			RedBlackTree<Integer> cpp = currentNode.getParentNode().getParentNode()==null?null:currentNode.getParentNode().getParentNode();//当前节点的父节点的父节点(有可能没有)
+			if(cpp!=null){//前提是当前节点的父节点的父节点存在
+				if(cp.getUniqueIndex().equals(cpp.getLeftNode()==null?null:cpp.getLeftNode().getUniqueIndex())){
+					RedBlackTree<Integer> node = currentNode.getParentNode().getParentNode().getRightNode();
+					if(node!=null&&node.getRedBlackEnum()==RedBlackEnum.RED){
+						currentNode.getParentNode().setRedBlackEnum(RedBlackEnum.BLACK);
+						node.setRedBlackEnum(RedBlackEnum.BLACK);
+						currentNode.getParentNode().getParentNode().setRedBlackEnum(RedBlackEnum.RED);
+						currentNode = currentNode.getParentNode().getParentNode();
+					}else if(currentNode.getUniqueIndex().equals(currentNode.getParentNode().getRightNode()==null?null:currentNode.getParentNode().getRightNode().getUniqueIndex())){
+						currentNode = currentNode.getParentNode();
+						redBlackTree = redBlackTreeLeftRotate(redBlackTree,currentNode);
+					}else{
+						currentNode.getParentNode().setRedBlackEnum(RedBlackEnum.BLACK);
+						currentNode.getParentNode().getParentNode().setRedBlackEnum(RedBlackEnum.RED);
+						redBlackTree = redBlackTreeRightRotate(redBlackTree,currentNode.getParentNode().getParentNode());
+					}
+				}else if(cp.getUniqueIndex().equals(cpp.getRightNode()==null?null:cpp.getRightNode().getUniqueIndex())){
+					RedBlackTree<Integer> node = currentNode.getParentNode().getParentNode().getLeftNode();
+					if(node!=null&&node.getRedBlackEnum()==RedBlackEnum.RED){
+						currentNode.getParentNode().setRedBlackEnum(RedBlackEnum.BLACK);
+						node.setRedBlackEnum(RedBlackEnum.BLACK);
+						currentNode.getParentNode().getParentNode().setRedBlackEnum(RedBlackEnum.RED);
+						currentNode = currentNode.getParentNode().getParentNode();
+					}else if(currentNode.getUniqueIndex().equals(currentNode.getParentNode().getLeftNode()==null?null:currentNode.getParentNode().getLeftNode().getUniqueIndex())){
+						currentNode = currentNode.getParentNode();
+						redBlackTree = redBlackTreeRightRotate(redBlackTree,currentNode);
+					}else{
+						currentNode.getParentNode().setRedBlackEnum(RedBlackEnum.BLACK);
+						currentNode.getParentNode().getParentNode().setRedBlackEnum(RedBlackEnum.RED);
+						redBlackTree = redBlackTreeLeftRotate(redBlackTree,currentNode.getParentNode().getParentNode());
+					}
+				}else{
+					break;
+				}
+			}else{
+				break;
+			}
+		}
+		redBlackTree.setRedBlackEnum(RedBlackEnum.BLACK);
+		return redBlackTree;
+	}
+	
+	//TODO 红黑树的插入(需理解)和删除(未完成)
+	public static void main(String[] args) throws Exception {
+		RedBlackTree<Integer> redBlackTree = new RedBlackTree<>();
+		Integer x[] = new Integer[]{5,2,1,8,7,3,6};
+		for(int i=0;i<x.length;i++){
+			redBlackTree = buildRedBlackTree(redBlackTree,x[i]);
+		}
+		ObjectMapper om = new ObjectMapper();
+		System.out.println(om.writeValueAsString(redBlackTree));
+	}
 
 }

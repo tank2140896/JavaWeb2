@@ -5,15 +5,13 @@ import java.io.Serializable;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 //二叉树
-public class BinaryTree<T extends Number> implements Serializable {
+public class BinaryTree<T> implements Serializable {
 
 	private static final long serialVersionUID = 510645529723567194L;
 
 	private String uniqueIndex;//唯一索引
 	
 	private T value;//节点值
-	
-	private PositionEnum postion;//位置(相对于父节点来说)
 	
 	private BinaryTree<T> leftNode;//左节点
 
@@ -36,14 +34,6 @@ public class BinaryTree<T extends Number> implements Serializable {
 
 	public void setValue(T value) {
 		this.value = value;
-	}
-
-	public PositionEnum getPostion() {
-		return postion;
-	}
-
-	public void setPostion(PositionEnum postion) {
-		this.postion = postion;
 	}
 
 	public BinaryTree<T> getLeftNode() {
