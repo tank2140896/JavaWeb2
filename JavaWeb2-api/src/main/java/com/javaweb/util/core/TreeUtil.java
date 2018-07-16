@@ -472,13 +472,14 @@ public class TreeUtil {
 	*/
 	//对节点重新着色并旋转以此来维持红黑性
 	public static RedBlackTree<Integer> redBlackTreeFixup(RedBlackTree<Integer> redBlackTree,RedBlackTree<Integer> currentNode){
-		while((currentNode.getParentNode()==null?null:currentNode.getParentNode().getRedBlackEnum())==RedBlackEnum.RED){//由于已经把所有节点设置为红色,因此当前节点的父节点不应该为红色,若为红色则进行调整
+		//由于已经把所有节点设置为红色,因此当前节点的父节点不应该为红色(参考条件4:如果一个节点是红色的那么它的两个子节点都是黑色),所以若为红色则进行调整
+		while((currentNode.getParentNode()==null?null:currentNode.getParentNode().getRedBlackEnum())==RedBlackEnum.RED){
 			RedBlackTree<Integer> cp = currentNode.getParentNode();//当前节点的父节点
 			RedBlackTree<Integer> cpp = currentNode.getParentNode().getParentNode()==null?null:currentNode.getParentNode().getParentNode();//当前节点的父节点的父节点(有可能没有)
 			if(cpp!=null){//前提是当前节点的父节点的父节点存在
-				if(cp.getUniqueIndex().equals(cpp.getLeftNode()==null?null:cpp.getLeftNode().getUniqueIndex())){
+				if(cp.getUniqueIndex().equals(cpp.getLeftNode()==null?null:cpp.getLeftNode().getUniqueIndex())){//分支1:当前节点的父节点位于当前节点的父节点的父节点的左分支
 					RedBlackTree<Integer> node = currentNode.getParentNode().getParentNode().getRightNode();
-					if(node!=null&&node.getRedBlackEnum()==RedBlackEnum.RED){
+					if(node!=null&&node.getRedBlackEnum()==RedBlackEnum.RED){//分支1.1位于右侧且为红节点
 						currentNode.getParentNode().setRedBlackEnum(RedBlackEnum.BLACK);
 						node.setRedBlackEnum(RedBlackEnum.BLACK);
 						currentNode.getParentNode().getParentNode().setRedBlackEnum(RedBlackEnum.RED);
@@ -491,7 +492,7 @@ public class TreeUtil {
 						currentNode.getParentNode().getParentNode().setRedBlackEnum(RedBlackEnum.RED);
 						redBlackTree = redBlackTreeRightRotate(redBlackTree,currentNode.getParentNode().getParentNode());
 					}
-				}else if(cp.getUniqueIndex().equals(cpp.getRightNode()==null?null:cpp.getRightNode().getUniqueIndex())){
+				}else if(cp.getUniqueIndex().equals(cpp.getRightNode()==null?null:cpp.getRightNode().getUniqueIndex())){//分支2:当前节点的父节点位于当前节点的父节点的父节点的右分支
 					RedBlackTree<Integer> node = currentNode.getParentNode().getParentNode().getLeftNode();
 					if(node!=null&&node.getRedBlackEnum()==RedBlackEnum.RED){
 						currentNode.getParentNode().setRedBlackEnum(RedBlackEnum.BLACK);
@@ -517,7 +518,33 @@ public class TreeUtil {
 		return redBlackTree;
 	}
 	
-	//TODO 红黑树的插入(需理解)和删除(未完成)
+	/**
+	<<算法导论>>的伪代码如下:
+	RB-TRANSPLANT(T,u,v)
+	if u.p == NIL
+		T.root = v
+	elseif u == u.p.left
+		u.p.left = v
+	else u.p.right = v
+	v.p = u.p
+	*/
+	//删除树时移动子树的过程(只负责要删除的节点和其左右节点的链接关系)
+	@SuppressWarnings("unchecked")
+	private static RedBlackTree<Integer>[] transplant(RedBlackTree<Integer> binaryTree,RedBlackTree<Integer> u,RedBlackTree<Integer> v){
+		if(u.getParentNode()==null){
+			binaryTree = v;
+		}else if(u.getUniqueIndex().equals(u.getParentNode().getLeftNode()==null?null:u.getParentNode().getLeftNode().getUniqueIndex())){
+			u.getParentNode().setLeftNode(v);
+		}else{
+			u.getParentNode().setRightNode(v);
+		}
+		if(v!=null){
+			v.setParentNode(u.getParentNode());
+		}
+		return new RedBlackTree[]{binaryTree,u,v};
+	}
+	
+	//TODO 红黑树的删除(未完成)
 	public static void main(String[] args) throws Exception {
 		RedBlackTree<Integer> redBlackTree = new RedBlackTree<>();
 		Integer x[] = new Integer[]{5,2,1,8,7,3,6};
