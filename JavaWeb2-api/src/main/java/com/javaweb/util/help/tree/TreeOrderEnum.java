@@ -1,6 +1,6 @@
 package com.javaweb.util.help.tree;
 
-public enum BinaryTreeOrderEnum {
+public enum TreeOrderEnum {
 	
 	FIRST,MIDDLE,LAST
 
