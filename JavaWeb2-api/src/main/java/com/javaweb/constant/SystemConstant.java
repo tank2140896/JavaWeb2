@@ -1,8 +1,5 @@
 package com.javaweb.constant;
 
-import java.time.LocalDate;
-
-import com.javaweb.util.core.DateUtil;
 import com.javaweb.web.po.User;
 
 public class SystemConstant {
@@ -21,7 +18,7 @@ public class SystemConstant {
 	
 	public static final Long SYSTEM_DEFAULT_KAPTCHA_TIME_OUT = 5L;
 	
-	public static final String ADMIN = "admin"+DateUtil.getDateInfo(LocalDate.now()).getYear();
+	public static final String ADMIN = "admin";
 	
 	public static final String HEAD_USERID = "userId";
 	

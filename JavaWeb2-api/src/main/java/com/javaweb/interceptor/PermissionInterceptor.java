@@ -1,6 +1,7 @@
 package com.javaweb.interceptor;
 
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,11 +11,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.javaweb.config.context.ApplicationContextHelper;
+import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.web.eo.TokenData;
 
 @Component
 public class PermissionInterceptor extends HandlerInterceptorAdapter {
+	
+	@SuppressWarnings("unchecked")
+	private RedisTemplate<String,Object> redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
 	
 	/**
 	 * httpServletRequest.getRequestURI()            -------------------- /javaweb/app/html/home.html
@@ -23,17 +28,17 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 	 * request.getRequestDispatcher("/test").forward(request,response);//服务端跳转
 	 * response.sendRedirect(basePath+"/test");//页面端跳转
 	 */
-	@SuppressWarnings("unchecked")
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 		//BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext()); 
 		//RedisTemplate redisTemplate = (RedisTemplate) factory.getBean("redisTemplate"); 
-		RedisTemplate<String,Object> redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
+		//RedisTemplate<String,Object> redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
 		//String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();  
 		String userId = request.getHeader(SystemConstant.HEAD_USERID);
 		String token = request.getHeader(SystemConstant.HEAD_TOKEN);
 		String type = request.getHeader(SystemConstant.HEAD_TYPE);
 		String servletPath = request.getServletPath();
-		if(userId==null||token==null||type==null){
+		boolean nullOrEmptyHead = Stream.of(userId,token,type).anyMatch(i->i==null||i.trim().equals(CommonConstant.EMPTY_VALUE));
+		if(nullOrEmptyHead){
 			request.getRequestDispatcher("/requestParameterLost").forward(request,response);
 			return false;
 		}
@@ -42,20 +47,12 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 			return false;
 		}
 		//(TokenData)request.getSession().getAttribute(userId);
-		TokenData tokenData = (TokenData)redisTemplate.opsForValue().get(userId+","+type);
+		TokenData tokenData = (TokenData)redisTemplate.opsForValue().get(userId+CommonConstant.COMMA+type);
 		if(tokenData==null){
 			request.getRequestDispatcher("/invalidRequest").forward(request,response);
 			return false;
 		}
-		if(!tokenData.getUser().getUserId().equals(userId)){
-			request.getRequestDispatcher("/requestParameterError").forward(request,response);
-			return false;
-		}
-		if(!tokenData.getToken().equals(token)){
-			request.getRequestDispatcher("/requestParameterError").forward(request,response);
-			return false;
-		}
-		if(!tokenData.getType().equals(type)){
+		if(!(String.join(tokenData.getUser().getUserId(),tokenData.getToken(),tokenData.getType()).equals(String.join(userId,token,type)))){
 			request.getRequestDispatcher("/requestParameterError").forward(request,response);
 			return false;
 		}
