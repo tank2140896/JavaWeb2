@@ -12,8 +12,8 @@ import com.javaweb.constant.SystemConstant;
 import com.javaweb.web.eo.TokenData;
 
 @RestController
-@RequestMapping("/web/loggedIn")
-public class LoginOpenController extends BaseController {
+@RequestMapping("/web/pc/loginAccess")
+public class LoginAccess extends BaseController {
 	
 	@GetMapping("/logout")
 	public BaseResponseResult logout(HttpServletRequest request){

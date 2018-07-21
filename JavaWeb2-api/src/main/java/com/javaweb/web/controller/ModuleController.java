@@ -28,7 +28,7 @@ import com.javaweb.web.po.Module;
 import com.javaweb.web.po.User;
 
 @RestController
-@RequestMapping("/web/sys/module")
+@RequestMapping("/web/pc/sys/module")
 public class ModuleController extends BaseController {
 	
 	@PostMapping("/list")

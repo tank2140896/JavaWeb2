@@ -56,6 +56,9 @@ public class Module extends BaseEntity implements Serializable {
 	
 	@Column(name="icon")
 	private String icon = null;//图标
+	
+	@Column(name="type")
+	private Integer type = 0;//类型(0:未定义类型，作为纯接口使用；1：PC端；2：安卓端；3：IOS端) 
 
 	public String getModuleId() {
 		return moduleId;

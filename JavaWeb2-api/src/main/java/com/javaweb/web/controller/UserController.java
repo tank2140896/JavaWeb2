@@ -31,7 +31,7 @@ import com.javaweb.web.eo.user.UserListRequest;
 import com.javaweb.web.po.User;
 
 @RestController
-@RequestMapping("/web/sys/user")
+@RequestMapping("/web/pc/sys/user")
 public class UserController extends BaseController {
 	
 	@PostMapping("/list")

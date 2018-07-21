@@ -18,8 +18,7 @@ import com.javaweb.web.eo.TokenData;
 @Component
 public class PermissionInterceptor extends HandlerInterceptorAdapter {
 	
-	@SuppressWarnings("unchecked")
-	private RedisTemplate<String,Object> redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
+	private RedisTemplate<String,Object> redisTemplate = null;
 	
 	/**
 	 * httpServletRequest.getRequestURI()            -------------------- /javaweb/app/html/home.html
@@ -28,11 +27,15 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 	 * request.getRequestDispatcher("/test").forward(request,response);//服务端跳转
 	 * response.sendRedirect(basePath+"/test");//页面端跳转
 	 */
+	@SuppressWarnings("unchecked")
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
 		//BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext()); 
 		//RedisTemplate redisTemplate = (RedisTemplate) factory.getBean("redisTemplate"); 
 		//RedisTemplate<String,Object> redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
 		//String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();  
+		if(redisTemplate==null){
+			redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
+		}
 		String userId = request.getHeader(SystemConstant.HEAD_USERID);
 		String token = request.getHeader(SystemConstant.HEAD_TOKEN);
 		String type = request.getHeader(SystemConstant.HEAD_TYPE);
@@ -56,7 +59,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 			request.getRequestDispatcher("/requestParameterError").forward(request,response);
 			return false;
 		}
-		if(servletPath.startsWith(SystemConstant.URL_LOGIN_PERMISSION)){//该路径下只要登录即可访问，不需要权限
+		if(servletPath.startsWith(SystemConstant.URL_LOGIN_PC_PERMISSION)){//该路径下只要登录即可访问，不需要权限
 			redisTemplate.opsForValue().set(userId,tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
 			return true;
 		}

@@ -15,7 +15,7 @@ import com.javaweb.web.eo.chat.ChatRequest;
 import com.javaweb.web.po.User;
 
 @RestController
-@RequestMapping("/web/other/onlineChat")
+@RequestMapping("/web/pc/other/onlineChat")
 public class OnlineChatController extends BaseController {
 	
 	@PostMapping("/sendChatMessage")

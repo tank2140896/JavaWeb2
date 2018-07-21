@@ -31,7 +31,7 @@ import com.javaweb.web.po.Role;
 import com.javaweb.web.po.User;
 
 @RestController
-@RequestMapping("/web/sys/role")
+@RequestMapping("/web/pc/sys/role")
 public class RoleController extends BaseController {
 	
 	@PostMapping("/list")

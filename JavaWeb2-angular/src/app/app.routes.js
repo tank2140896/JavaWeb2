@@ -30,7 +30,7 @@ var APP_ROUTES = [
     { path: 'login', component: login_components_1.LoginComponent },
     { path: 'web', component: home_component_1.HomeComponent, children: [
             { path: '', component: centeral_component_1.CenteralComponent, canActivate: [AuthService_1.AuthService] },
-            { path: 'sys/user', component: user_component_1.UserComponent, children: [
+            { path: 'pc/sys/user', component: user_component_1.UserComponent, children: [
                     { path: 'list', component: user_list_component_1.UserListComponent, canActivate: [AuthService_1.AuthService] },
                     { path: 'add', component: user_add_component_1.UserAddComponent, canActivate: [AuthService_1.AuthService] },
                     { path: 'modify', component: user_modify_component_1.UserModifyComponent, canActivate: [AuthService_1.AuthService] },
@@ -38,7 +38,7 @@ var APP_ROUTES = [
                     { path: 'roleAssignment', component: user_role_assignment_component_1.UserRoleAssignmentComponent, canActivate: [AuthService_1.AuthService] },
                     { path: '**', redirectTo: '/web', pathMatch: 'full' }
                 ], canActivate: [AuthService_1.AuthService] },
-            { path: 'sys/role', component: role_component_1.RoleComponent, children: [
+            { path: 'pc/sys/role', component: role_component_1.RoleComponent, children: [
                     { path: 'list', component: role_list_component_1.RoleListComponent, canActivate: [AuthService_1.AuthService] },
                     { path: 'add', component: role_add_component_1.RoleAddComponent, canActivate: [AuthService_1.AuthService] },
                     { path: 'modify', component: role_modify_component_1.RoleModifyComponent, canActivate: [AuthService_1.AuthService] },
@@ -46,14 +46,14 @@ var APP_ROUTES = [
                     { path: 'menuAssignment', component: role_menu_assignment_component_1.RoleMenuAssignmentComponent, canActivate: [AuthService_1.AuthService] },
                     { path: '**', redirectTo: '/web', pathMatch: 'full' }
                 ], canActivate: [AuthService_1.AuthService] },
-            { path: 'sys/module', component: menu_component_1.MenuComponent, children: [
+            { path: 'pc/sys/module', component: menu_component_1.MenuComponent, children: [
                     { path: 'list', component: menu_list_component_1.MenuListComponent, canActivate: [AuthService_1.AuthService] },
                     { path: 'add', component: menu_add_component_1.MenuAddComponent, canActivate: [AuthService_1.AuthService] },
                     { path: 'modify', component: menu_modify_component_1.MenuModifyComponent, canActivate: [AuthService_1.AuthService] },
                     { path: 'detail', component: menu_detail_component_1.MenuDetailComponent, canActivate: [AuthService_1.AuthService] },
                     { path: '**', redirectTo: '/web', pathMatch: 'full' }
                 ], canActivate: [AuthService_1.AuthService] },
-            { path: 'other/onlineChat', component: onlineChat_component_1.OnlineChatComponent, children: [
+            { path: 'pc/other/onlineChat', component: onlineChat_component_1.OnlineChatComponent, children: [
                     { path: 'chat', component: chat_component_1.ChatComponent, canActivate: [AuthService_1.AuthService] },
                     { path: '**', redirectTo: '/web', pathMatch: 'full' }
                 ], canActivate: [AuthService_1.AuthService] },

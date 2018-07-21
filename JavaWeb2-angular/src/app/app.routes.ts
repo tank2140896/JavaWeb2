@@ -31,7 +31,7 @@ const APP_ROUTES = [
     {path:'login',component:LoginComponent},//登录页面
     {path:'web',component:HomeComponent,children:[
         {path:'',component:CenteralComponent,canActivate:[AuthService]},
-        {path:'sys/user',component:UserComponent,children:[
+        {path:'pc/sys/user',component:UserComponent,children:[
             {path:'list',component:UserListComponent,canActivate:[AuthService]},//用户列表页面
             {path:'add',component:UserAddComponent,canActivate:[AuthService]},//新增用户页面
             {path:'modify',component:UserModifyComponent,canActivate:[AuthService]},//修改用户页面
@@ -39,7 +39,7 @@ const APP_ROUTES = [
             {path:'roleAssignment',component:UserRoleAssignmentComponent,canActivate:[AuthService]},//用户角色分配页面
             {path:'**',redirectTo:'/web',pathMatch:'full'}
         ],canActivate:[AuthService]},
-        {path:'sys/role',component:RoleComponent,children:[
+        {path:'pc/sys/role',component:RoleComponent,children:[
             {path:'list',component:RoleListComponent,canActivate:[AuthService]},//角色列表页面
             {path:'add',component:RoleAddComponent,canActivate:[AuthService]},//新增角色页面
             {path:'modify',component:RoleModifyComponent,canActivate:[AuthService]},//修改角色页面
@@ -47,14 +47,14 @@ const APP_ROUTES = [
             {path:'menuAssignment',component:RoleMenuAssignmentComponent,canActivate:[AuthService]},//角色模块分配页面
             {path:'**',redirectTo:'/web',pathMatch:'full'}
         ],canActivate:[AuthService]},
-        {path:'sys/module',component:MenuComponent,children:[
+        {path:'pc/sys/module',component:MenuComponent,children:[
             {path:'list',component:MenuListComponent,canActivate:[AuthService]},//模块列表页面
             {path:'add',component:MenuAddComponent,canActivate:[AuthService]},//新增模块页面
             {path:'modify',component:MenuModifyComponent,canActivate:[AuthService]},//修改模块页面
             {path:'detail',component:MenuDetailComponent,canActivate:[AuthService]},//模块详情页面
             {path:'**',redirectTo:'/web',pathMatch:'full'}
         ],canActivate:[AuthService]},
-        {path:'other/onlineChat',component:OnlineChatComponent,children:[
+        {path:'pc/other/onlineChat',component:OnlineChatComponent,children:[
             {path:'chat',component:ChatComponent,canActivate:[AuthService]},//在线聊天室页面
             {path:'**',redirectTo:'/web',pathMatch:'full'}
         ],canActivate:[AuthService]},

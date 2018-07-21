@@ -12,13 +12,13 @@ public class SystemConstant {
 	
 	public static final String URL_INTERCEPTOR_PATTERN = "/web/**";
 	
-	public static final String URL_LOGIN_PERMISSION = "/web/loggedIn";
+	public static final String URL_LOGIN_PC_PERMISSION = "/web/pc/loginAccess";
 	
 	public static final Long SYSTEM_DEFAULT_SESSION_OUT = 15L;
 	
 	public static final Long SYSTEM_DEFAULT_KAPTCHA_TIME_OUT = 5L;
 	
-	public static final String ADMIN = "admin";
+	public static final String ADMIN = "admin2018";
 	
 	public static final String HEAD_USERID = "userId";
 	
