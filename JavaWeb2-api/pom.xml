@@ -27,17 +27,17 @@
 		    <groupId>io.reactivex.rxjava2</groupId>
 		    <artifactId>rxjava</artifactId>
 		</dependency>
-    	<!-- web -->
+    	<!-- web(用了webflux就不要spring-boot-starter-web了) 
 	    <dependency>
 	        <groupId>org.springframework.boot</groupId>
 	        <artifactId>spring-boot-starter-web</artifactId>
 	    </dependency>
-	    <!-- webflux(用了webflux就不要spring-boot-starter-web了) 
+	    -->
+	    <!-- webflux -->
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
-		-->
     	<!-- AOP -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
