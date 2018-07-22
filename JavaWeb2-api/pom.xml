@@ -22,22 +22,21 @@
     </parent>
     
     <dependencies>
-    	<!-- RxJava响应式编程 -->
+    	<!-- RxJava2响应式编程 -->
     	<dependency>
 		    <groupId>io.reactivex.rxjava2</groupId>
 		    <artifactId>rxjava</artifactId>
 		</dependency>
-    	<!-- web(用了webflux就不要spring-boot-starter-web了) 
 	    <dependency>
 	        <groupId>org.springframework.boot</groupId>
 	        <artifactId>spring-boot-starter-web</artifactId>
 	    </dependency>
-	    -->
-	    <!-- webflux -->
+	    <!-- webflux(用了webflux就不要spring-boot-starter-web了,若要将webflux替换web改动较大) 
 		<dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
+		-->
     	<!-- AOP -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
