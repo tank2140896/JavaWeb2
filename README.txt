@@ -48,7 +48,7 @@ http {
 5、websoket完善并优化
 6、多数据源通过类似注解@DS在service或dao层完成
 7、优化后端验证码的代码
-8、后端将采用JAVA10及函数式编程（WebFlux/RxJava）改造部分代码
+8、后端将采用JAVA10及函数式编程（WebFlux/RxJava2）改造（此技术较新同时改动也较大）
 9、将JAVA算法改用C语言实现，JAVA本地调用C语言的实现方法
 
 
