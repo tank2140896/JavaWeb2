@@ -14,7 +14,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class Application {
 	
     public static void main(String[] args) {
-    	//System.setProperty("spring.devtools.restart.enabled","false");//取消热部署
+    	//new MyCommandLineRunner();
     	//SpringApplication.run(Application.class,args);//最简单的启动写法
 		SpringApplication springApplication = new SpringApplication(Application.class);
 		springApplication.setBannerMode(Mode.OFF);
@@ -22,3 +22,13 @@ public class Application {
     }
 
 }
+
+/**
+//也可以有多个类实现CommandLineRunner，多个类都写上@Component即可，若要定义顺序，加上@Order(value=1)即可，value值越高越优先执行
+@Component
+class MyCommandLineRunner implements CommandLineRunner {
+	public void run(String... args) {
+		System.setProperty("spring.devtools.restart.enabled","false");//取消热部署
+	}
+}
+*/
