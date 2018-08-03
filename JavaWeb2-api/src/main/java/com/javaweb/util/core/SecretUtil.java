@@ -4,6 +4,7 @@ import java.security.MessageDigest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import java.util.function.IntSupplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -29,12 +30,6 @@ public class SecretUtil {
 	private static final char[] CHINESE_USED_CHARACTERSET = new char[KEYBORD_USERD_LENGTH+CHINESE_USERD_LENGTH];//中文常用字符数组
 	
 	private static final Map<Character,Integer> CHARACTE_KV = new HashMap<>();//字符数字键值对
-	
-	/** defaultGenUniqueStr方法 start */
-	private static int defaultGenUniqueStr_count = 1;//defaultGenUniqueStr方法用到的额外变量
-	
-	private static String defaultGenUniqueStr_cacheDate = null;//defaultGenUniqueStr方法用到的额外变量
-	/** defaultGenUniqueStr方法 end */
 
 	static{
 		/** 初始化键盘常用字符数组和中文常用字符数组 start */
@@ -79,22 +74,18 @@ public class SecretUtil {
 					public int getAsInt() {
 						return (int)(Math.random()*KEYBORD_USERD_LENGTH);
 					}
-				})
-				.mapToObj(each->Character.toString(KEYBORD_USED_CHARACTERSET[each]))
-				.limit(passLen)
-				.collect(Collectors.joining());
+				}).mapToObj(each->Character.toString(KEYBORD_USED_CHARACTERSET[each])).limit(passLen).collect(Collectors.joining());
 	}
 	
 	//默认根据当前时间生成唯一字符串
-	@Deprecated
 	public static String defaultGenUniqueStr(){
-		String currentGet = DateUtil.getStringDate("yyyyMMddHHmmss");
-		if(!currentGet.equals(defaultGenUniqueStr_cacheDate)){
-			defaultGenUniqueStr_cacheDate = currentGet;
-			defaultGenUniqueStr_count = 1;
-			return currentGet+(defaultGenUniqueStr_count++);
-		}else{
-			return currentGet+(defaultGenUniqueStr_count++);
+		synchronized ("defaultGenUniqueStr") {
+			try {
+				TimeUnit.MILLISECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				
+			}
+			return  DateUtil.getStringDate(DateUtil.DATETIME_PATTERN_TYPE2);
 		}
 	}
 	

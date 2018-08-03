@@ -55,10 +55,10 @@ public class StringUtil{
         return stringBuffer.toString();
 	}
 	
-	//字符串SQL替换
-	public static String stringReplaceForSql(String sql,Object eachValue[]){
+	//字符串SQL替换(如\\?)
+	public static String stringReplaceForSql(String placeHolderRegex,String sql,Object eachValue[]){
 		StringBuffer stringBuffer = new StringBuffer();
-        Pattern pattern = Pattern.compile("\\?");
+        Pattern pattern = Pattern.compile(placeHolderRegex);
         Matcher matcher = pattern.matcher(sql);
         int count = 0;
         Object get = null;
@@ -69,7 +69,7 @@ public class StringUtil{
             	continue;
             }
             if(get instanceof String){
-            	matcher.appendReplacement(stringBuffer,"'"+get.toString()+"'");
+            	matcher.appendReplacement(stringBuffer,String.join(get.toString(),"'","'"));
             	continue;
             }
         }

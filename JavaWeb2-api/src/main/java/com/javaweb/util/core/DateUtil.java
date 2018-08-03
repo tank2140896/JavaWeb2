@@ -32,12 +32,17 @@ public class DateUtil {
 	
 	//日期格式(年月日时分秒)
 	public static final String DEFAULT_DATETIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
+	public static final String DATETIME_PATTERN_TYPE1 = "yyyyMMddHHmmss";
+	public static final String DATETIME_PATTERN_TYPE2 = "yyyyMMddHHmmssSSS";
 	
 	//日期格式(年月日)
 	public static final String DEFAULT_DATE_PATTERN = "yyyy-MM-dd";
+	public static final String DATE_PATTERN_TYPE1 = "yyyyMMdd";
 	
 	//日期格式(时分秒)
 	public static final String DEFAULT_TIME_PATTERN = "HH:mm:ss";
+	public static final String TIME_PATTERN_TYPE1 = "HHmmss";
+	public static final String TIME_PATTERN_TYPE2 = "HHmmssSSS";
 	
 	//获取年月日信息
 	public static DateTimeInfo getDateInfo(LocalDate localDate){
