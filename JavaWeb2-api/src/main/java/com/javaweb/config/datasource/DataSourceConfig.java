@@ -9,11 +9,13 @@ import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.javaweb.interceptor.MyBatisBaseDaoInterceptor;
@@ -73,6 +75,16 @@ public class DataSourceConfig {
 		druidDataSource.setMaxWait(mysqlDateSource2.getMaxWait());
 		return druidDataSource;
 	}
+	
+	@Bean("mysql_d1_JdbcTemplate")
+    public JdbcTemplate mysql_d1_JdbcTemplate(@Qualifier("mysql_d1") DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
+    }
+
+    @Bean("mysql_d2_JdbcTemplate")
+    public JdbcTemplate mysql_d2_JdbcTemplate(@Qualifier("mysql_d2") DataSource dataSource) {
+        return new JdbcTemplate(dataSource);
+    }
 	
 	@Primary
 	@Bean("multipleDataSourceManage")
