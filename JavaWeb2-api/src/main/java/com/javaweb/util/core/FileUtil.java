@@ -23,9 +23,9 @@ import java.util.List;
 
 public class FileUtil {
 	
-	private static final String FILE = "file";
+	public static final String FILE = "file";
 	
-	private static final String FOLDER = "folder";
+	public static final String FOLDER = "folder";
 	
 	public enum FileType{
 		

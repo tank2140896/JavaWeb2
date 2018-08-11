@@ -117,5 +117,23 @@ public class SecretUtil {
 		 byte[] hash = messageDigest.digest(string.getBytes("UTF-8"));
 		 return Hex.encodeHexString(hash);
 	}
+	
+	//int转byte
+	public static byte[] intToByte(int num){
+		byte[] bytes = new byte[4];
+		bytes[0] = (byte)((num>>24)&0xFF);
+		bytes[1] = (byte)((num>>16)&0xFF);
+		bytes[2] = (byte)((num>>8)&0xFF);
+		bytes[3] = (byte)(num&0xFF);
+		return bytes;
+	}
+	
+	//byte转int
+	public static int byteToInt(byte[] bytes) {
+		return (bytes[0]&0xFF)<<24
+			 | (bytes[1]&0xFF)<<16
+			 | (bytes[2]&0xFF)<<8
+			 | (bytes[3]&0xFF);
+	}
     	
 }
