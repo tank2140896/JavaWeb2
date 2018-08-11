@@ -46,22 +46,28 @@ public class SystemConstant {
 		SYSTEM_DEFAULT_USER.setStatus(0);
 	}
 	
+	/** 基本与HTTP状态码匹配 start */
 	public static final int SUCCESS = 200;
 	
+	public static final int INVALID_REQUEST = 400;
+
 	public static final int NO_AUTHORY = 401;
+	
+	public static final int FORBIDDEN = 403;
 	
 	public static final int NOT_FOUND = 404;
 	
 	public static final int INTERNAL_ERROR = 500;
+	/** 基本与HTTP状态码匹配 end */
 	
+	/** 自定义的HTTP状态码 start */
 	public static final int LOGIN_FAIL = 600;
 	
 	public static final int VALIDATE_ERROR = 601;
 	
-	public static final int INVALID_REQUEST = 602;
+	public static final int REQUEST_PARAMETER_ERROR = 602;
 	
-	public static final int REQUEST_PARAMETER_ERROR = 603;
-	
-	public static final int REQUEST_PARAMETER_LOST = 604;
+	public static final int REQUEST_PARAMETER_LOST = 603;
+	/** 自定义的HTTP状态码 end */
 	
 }
