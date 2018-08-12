@@ -14,6 +14,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class Application {
 	
     public static void main(String[] args) {
+    	//System.setProperty("es.set.netty.runtime.available.processors","false");//为了避免elasticsearch依赖的netty与netty冲突 
     	//new MyCommandLineRunner();
     	//SpringApplication.run(Application.class,args);//最简单的启动写法
 		SpringApplication springApplication = new SpringApplication(Application.class);
