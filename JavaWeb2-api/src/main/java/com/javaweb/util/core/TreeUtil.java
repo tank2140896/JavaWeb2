@@ -835,5 +835,41 @@ public class TreeUtil {
 		}
 		return redBlackTree;
 	}
+	
+	/** 数据结构的扩张
+	//红黑树获取第i小的节点
+	public static RedBlackTree<Integer> osSelect(RedBlackTree<Integer> redBlackTree,Long i){
+		Long r = 1L;
+		try{
+			r = redBlackTree.getLeftNode().getSize()+1L;
+		}catch(Exception e){ }
+		if(r==i){
+			return redBlackTree;
+		}else if(i<r){
+			return osSelect(redBlackTree.getLeftNode(),i);
+		}else{
+			return osSelect(redBlackTree.getRightNode(),i-r);
+		}
+	}
+	
+	//红黑树获取当前节点的秩
+	public static Long osRank(RedBlackTree<Integer> currentNode){
+		RedBlackTree<Integer> temp = currentNode;
+		Long r = 1L;
+		try{
+			r = currentNode.getLeftNode().getSize()+1L;
+		}catch(Exception e){
+		}
+		while(temp!=null&&temp.getParentNode()!=null){
+			try{
+				if(temp.getUniqueIndex().equals(temp.getParentNode().getRightNode().getUniqueIndex())){
+					r = r+temp.getParentNode().getLeftNode().getSize()+1;
+				}
+			}catch(Exception e){ }
+			temp = temp.getParentNode();
+		}
+		return r;
+	}
+	*/
 
 }

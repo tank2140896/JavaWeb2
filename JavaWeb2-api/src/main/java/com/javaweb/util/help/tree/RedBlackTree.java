@@ -28,6 +28,8 @@ public class RedBlackTree<T> implements Serializable {
 	private transient RedBlackTree<T> parentNode;//父节点
 	
 	private RedBlackEnum redBlackEnum;//红黑性
+	
+	private Long size;//扩展属性size
 
 	public String getUniqueIndex() {
 		return uniqueIndex;
@@ -75,6 +77,14 @@ public class RedBlackTree<T> implements Serializable {
 
 	public void setRedBlackEnum(RedBlackEnum redBlackEnum) {
 		this.redBlackEnum = redBlackEnum;
+	}
+
+	public Long getSize() {
+		return size;
+	}
+
+	public void setSize(Long size) {
+		this.size = size;
 	}
 
 }
