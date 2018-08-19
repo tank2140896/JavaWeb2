@@ -16,5 +16,14 @@ Class.forName(driveClassName);
 Connection connection = DriverManager.getConnection(url,userName,password);
 PreparedStatement preparedStatement = connection.prepareStatement(sql);
 4、src/main/resources下的静态资源文件在SpringBoot中的默认(未添加拦截器等情况下)查找顺序为:META/resources->resources->static->public
+5、读取配置文件一般有以下三种常用写法
+A、@Autowired private Environment environment
+B、@Value("${server.port}") private String port
+C、@ConfigurationProperties(prefix="com.demo")
+   @Component
+   public class Test{
+      ......
+   }
+   @Autowired private Test test
 三、其它
 1、https://start.spring.io

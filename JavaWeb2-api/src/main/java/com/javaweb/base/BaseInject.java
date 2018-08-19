@@ -18,6 +18,9 @@ public class BaseInject {
 	
 	@Autowired
 	protected Neo4jTemplate neo4jTemplate;
+	
+	@Autowired
+	protected TransportClient transportClient;
 	*/
 	
 	@Autowired
