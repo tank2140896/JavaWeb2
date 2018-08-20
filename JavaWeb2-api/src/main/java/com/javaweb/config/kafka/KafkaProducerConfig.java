@@ -11,14 +11,12 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 
-/**
- * 使用请解注
- * import org.springframework.context.annotation.Configuration;
- * import org.springframework.kafka.annotation.EnableKafka;
- * @Configuration
- * @EnableKafka
- */
+//import org.springframework.context.annotation.Configuration;
+//import org.springframework.kafka.annotation.EnableKafka;
+
 //生产者
+//@Configuration
+//@EnableKafka
 public class KafkaProducerConfig {
 
 	@Value("${kafka.producer.bootstrap-servers}")

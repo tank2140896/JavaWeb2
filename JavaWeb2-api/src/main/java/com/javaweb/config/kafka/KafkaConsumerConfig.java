@@ -4,23 +4,21 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+//import org.springframework.context.annotation.Configuration;
+//import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
 import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
 
-/**
- * 使用请解注
- * import org.springframework.context.annotation.Configuration;
- * import org.springframework.kafka.annotation.EnableKafka;
- * @Configuration
- * @EnableKafka
- */
 //消费者
+//@Configuration
+//@EnableKafka
 public class KafkaConsumerConfig {
 	
     @Value("${kafka.consumer.bootstrap-servers}")
@@ -50,6 +48,14 @@ public class KafkaConsumerConfig {
     @Bean
     public KafkaConsumerListener kafkaConsumerListener() {
         return new KafkaConsumerListener();
+    }
+    
+    @Bean
+    public KafkaConsumer<String,String> kafkaConsumer() {
+    	KafkaConsumer<String,String> kafkaConsumer = new KafkaConsumer<String,String>(consumerConfigs());
+    	//kafkaConsumer.subscribe(Arrays.asList("a"));
+    	//ConsumerRecords<String, String> list = kafkaConsumer.poll(1000);
+        return kafkaConsumer;
     }
     
 }

@@ -5,11 +5,11 @@ import org.springframework.kafka.annotation.KafkaListener;
 
 public class KafkaConsumerListener {
 	
-	@KafkaListener(topics="a")
+	@KafkaListener(groupId="x",topics="a")
 	public void listen_A(ConsumerRecord<String,String> record) {
-		
+		System.out.println("得到数据:"+record.value());
 	}
-
+	
 	@KafkaListener(topics={"b"})
 	public void listen_B(ConsumerRecord<?,?> record) {
 		

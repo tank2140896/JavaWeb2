@@ -1,5 +1,6 @@
 package com.javaweb.base;
 
+import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.solr.client.solrj.SolrClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -45,6 +46,9 @@ public class BaseInject {
 	
 	@Autowired
 	protected KafkaTemplate<String,String> kafkaTemplate;
+	
+	@Autowired
+	protected KafkaConsumer<String,String> kafkaConsumer;
 	
 	@Autowired
 	protected RedisTemplate<String,String> redisTemplate;
