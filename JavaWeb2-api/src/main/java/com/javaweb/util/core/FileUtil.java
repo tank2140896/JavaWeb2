@@ -232,4 +232,21 @@ public class FileUtil {
 		}
 	}
 	
+	//获取文件MD5值
+	public static String getFileMD5(String filePath) throws Exception {
+		MessageDigest md = MessageDigest.getInstance("MD5");
+		Path path = Paths.get(filePath);
+		byte[] buffer = new byte[1024];
+		try(InputStream inputStream = Files.newInputStream(path)){
+			int n = 0;
+			while((n=inputStream.read(buffer))!=-1){
+				md.update(buffer,0,n);
+			}
+			BigInteger bigInt = new BigInteger(1, md.digest());
+			return bigInt.toString(16);
+		 }catch(Exception e){
+			throw new Exception();
+		 }
+	}
+	
 }
