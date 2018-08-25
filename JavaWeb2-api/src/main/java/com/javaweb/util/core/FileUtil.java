@@ -16,9 +16,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
 import java.util.List;
 
 public class FileUtil {
@@ -232,17 +234,16 @@ public class FileUtil {
 		}
 	}
 	
-	//获取文件MD5值
-	//最简单的方法:DigestUtils.md5Hex(new FileInputStream(path))
+	//获取文件MD5值[最简单的方法:DigestUtils.md5Hex(new FileInputStream(path))]
 	public static String getFileMD5(String filePath,byte[] buffer) throws Exception {
-		MessageDigest md = MessageDigest.getInstance("MD5");
+		MessageDigest messageDigest = MessageDigest.getInstance("MD5");
 		Path path = Paths.get(filePath);
 		try(InputStream inputStream = Files.newInputStream(path)){
 			int n = 0;
 			while((n=inputStream.read(buffer))!=-1){
-				md.update(buffer,0,n);
+				messageDigest.update(buffer,0,n);
 			}
-			BigInteger bigInt = new BigInteger(1, md.digest());
+			BigInteger bigInt = new BigInteger(1,messageDigest.digest());
 			return bigInt.toString(16);
 		 }catch(Exception e){
 			throw new Exception();
