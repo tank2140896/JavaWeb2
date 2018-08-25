@@ -18,6 +18,9 @@ import com.javaweb.web.eo.TokenData;
 @Component
 public class PermissionInterceptor extends HandlerInterceptorAdapter {
 	
+	//private Logger logger = LoggerFactory.getLogger(PermissionInterceptor.class);//本类日志
+	//private Logger urlLog = LoggerFactory.getLogger("urlLog");//自定义输出日志
+	
 	private RedisTemplate<String,Object> redisTemplate = null;
 	
 	/**
