@@ -20,6 +20,8 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.ssl.TrustStrategy;
 
+import com.javaweb.constant.CommonConstant;
+
 public class HttpUtil {
 	
 	private static SSLContext sslContext = null;
@@ -84,6 +86,17 @@ public class HttpUtil {
 		String response = IOUtils.toString(httpEntity.getContent(),StandardCharsets.UTF_8);
 		httpClient.close();
 		return response;
+	}
+	
+	//随机生成IP地址
+	public static String getRadmonIp(){
+		StringBuilder stringBuilder = new StringBuilder();
+		for(int i=0;i<4;i++){
+			stringBuilder.append(MathUtil.getRandomNumForLCRC(0,255)).append(CommonConstant.DOT);
+		}
+		String out = stringBuilder.toString();
+		out = out.substring(0,out.length()-1);
+		return out;
 	}
 
 }
