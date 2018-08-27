@@ -50,20 +50,13 @@ public class FileUtil {
 		
 	}
 	
-	//递归获得所有文件名称
-	public static List<File> getAllFilesName(File file,List<File> fileList,boolean recursion){
+	//递归获得某个文件夹下的所有文件夹和文件名称
+	public static List<File> getAllFilesName(File file,List<File> fileList){
 		if(file.isDirectory()){
-			//listFiles只列出文件;list列出所有(文件和目录)
 			File files[] = file.listFiles();
 			for (int i = 0; i < files.length; i++) {
-				if(recursion){
-					getAllFilesName(files[i],fileList,recursion);
-				}
 				fileList.add(files[i]);
-			}
-		}else{
-			if(file.exists()){
-				fileList.add(file);
+				getAllFilesName(files[i],fileList);
 			}
 		}
 		return fileList;
