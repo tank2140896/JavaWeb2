@@ -29,6 +29,8 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 	 * httpServletRequest.getServletPath()           -------------------- /app/html/home.html
 	 * request.getRequestDispatcher("/test").forward(request,response);//服务端跳转
 	 * response.sendRedirect(basePath+"/test");//页面端跳转
+	 * System.getProperty("catalina.home")+File.separator+"webapps\\项目名称\\WEB-INF\\classes"
+	 * request.getSession().getServletContext().getRealPath("/")//位于WebRoot下
 	 */
 	@SuppressWarnings("unchecked")
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response, Object handler) throws Exception {
