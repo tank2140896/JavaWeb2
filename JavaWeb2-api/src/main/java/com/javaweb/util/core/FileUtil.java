@@ -84,6 +84,14 @@ public class FileUtil {
     
     //写文件
     public static void writeFile(InputStream inputStream,byte[] buffer,File file) throws IOException {
+    	/**
+    	 * 多文件合并写入
+    	 * FileOutputStream fos = new FileOutputStream(new File("test.zip"));
+    	 * fos.write(new byte[1]);
+    	 * fos.write(new byte[2]);
+    	 * fos.write(new byte[3]);
+    	 * fos.close();
+    	 */
 		try(OutputStream outputStream = new FileOutputStream(file)) {
 			int n = 0;
 			while ((n=inputStream.read(buffer)) != -1) {
@@ -108,6 +116,14 @@ public class FileUtil {
   	
 	//下文件
 	public static void downloadFile(OutputStream outputStream,byte[] buffer,File file) throws IOException{
+		/**
+    	 * 多文件内容读取
+    	 * FileInputStream fis = new FileInputStream(new File("test.zip"));
+    	 * fis.read(new byte[1]);
+    	 * fis.read(new byte[2]);
+    	 * fis.read(new byte[3]);
+    	 * fis.close();
+    	 */
 		try(InputStream inputStream = new FileInputStream(file)) {
 			int n=0;
 			while ((n=inputStream.read(buffer)) != -1) {

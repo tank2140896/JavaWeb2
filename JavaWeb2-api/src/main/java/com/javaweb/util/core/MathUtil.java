@@ -4,6 +4,16 @@ import java.util.stream.LongStream;
 
 public class MathUtil {
 	
+	//获取两数的较大者
+	public static int getTheTwoNumOfMax(int x,int y){
+		return x>y?x:y;
+	}
+	
+	//获取两数的较小者
+	public static int getTheTwoNumOfMin(int x,int y){
+		return x>y?y:x;
+	}
+	
 	//获取随机数(范围为[0,seed))(L:Left;C:close;R:right;O:open)
 	public static int getRandomNumForLCRO(int seed){
 		int num = (int)(Math.random()*seed);
