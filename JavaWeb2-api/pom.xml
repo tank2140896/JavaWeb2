@@ -2,7 +2,20 @@
 		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   	
-  	<!-- maven私有仓库搭建可以使用nexus -->
+  	<!--
+	一、maven私有仓库搭建可以使用nexus 
+	二、maven&eclipse离线模式
+	1、maven->conf->settings.xml
+	<localRepository>C:\Users\szgaadmin\.m2\repository</localRepository>
+	2、mirror配置
+	<mirror>
+    		<id>central</id>
+    		<mirrorOf>*</mirrorOf>
+    		<name>central</name>
+    		<url>file://C:\Users\szgaadmin\.m2\repository</url>
+	</mirror>
+	3、eclipse->window->Preferences->Maven->Installations和User Settings配置为本地maven路径
+	-->
   	<modelVersion>4.0.0</modelVersion>
   	<groupId>com.javaweb</groupId>
   	<artifactId>JavaWeb2-api</artifactId>
