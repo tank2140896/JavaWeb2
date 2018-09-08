@@ -22,6 +22,9 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.util.List;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
 public class FileUtil {
 	
@@ -257,6 +260,66 @@ public class FileUtil {
 		 }catch(Exception e){
 			throw new Exception();
 		 }
+	}
+	
+	/**
+	 * try(ZipOutputStream zos = new ZipOutputStream(new FileOutputStream("F:\\1.zip"))){
+	 *     File file = new File("F:\\1");
+	 *	   toZip(file,file.getName(),zos,new byte[1024]);//文件目录可以写成F:/1或F:\\1
+	 * }catch(IOException e){
+	 *	   throw new IOException(e);
+	 * }
+	 */
+	//压缩文件或目录
+	public static void toZip(File file,String name,ZipOutputStream zos,byte buffer[]) throws IOException {
+		if(file.isFile()){//文件
+			zos.putNextEntry(new ZipEntry(name));
+			int n=0;
+			InputStream inputStream = Files.newInputStream(Paths.get(file.getPath()));
+			while((n=inputStream.read(buffer))!=-1){
+				zos.write(buffer,0,n);
+			}
+			inputStream.close();
+		}else{//目录
+			 File files[] = file.listFiles();
+			 if(files==null||files.length==0){//空文件夹
+				 zos.putNextEntry(new ZipEntry(name+File.separator));
+				 zos.closeEntry();
+			 }else{//非空
+				 for(File f:files){
+					 toZip(f,name+File.separator+f.getName(),zos,buffer);
+				 }
+			 }
+		}
+	}
+	
+	/**
+	 * try(ZipInputStream zis = new ZipInputStream(new FileInputStream("F:\\1.zip"))){
+	 *     unZip("F:\\1",zis,new byte[1024]);
+	 * }catch(IOException e){
+	 *	   throw new IOException(e);
+	 * }
+	 */
+	//解压文件
+	public static void unZip(String unZipRootFilePath,ZipInputStream zis,byte buffer[]) throws IOException {
+		ZipEntry zipEntry = null;
+		int n=0;
+		while((zipEntry=zis.getNextEntry())!=null){
+			String filePath = unZipRootFilePath+File.separator+zipEntry.getName();
+			String fileFolder = filePath.substring(0,filePath.lastIndexOf(File.separator));
+			File file = new File(fileFolder);
+			if(!file.exists()){
+				file.mkdirs();
+			}
+			file = new File(filePath);
+			if(!file.isDirectory()){
+				OutputStream outputStream = Files.newOutputStream(file.toPath());
+				while((n=zis.read(buffer))!=-1){
+					outputStream.write(buffer,0,n);
+				}
+				outputStream.close();
+			}
+		}
 	}
 	
 }
