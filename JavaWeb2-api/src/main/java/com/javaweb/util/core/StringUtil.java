@@ -2,10 +2,13 @@ package com.javaweb.util.core;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import net.sf.json.JSONObject;
 
 import com.javaweb.constant.CommonConstant;
 
@@ -75,6 +78,50 @@ public class StringUtil{
         }
         matcher.appendTail(stringBuffer);
         return stringBuffer.toString();
+	}
+	
+	//设置敏感词(极简易实现)
+	public static JSONObject setSensitiveWord(List<String> keyWordList) throws Exception {
+		JSONObject jo = new JSONObject();
+		for(String each:keyWordList){
+			JSONObject tmp = jo;
+			for(int i=0;i<each.length();i++){
+				String s = String.valueOf(each.charAt(i));
+				Object obj = tmp.get(s);
+				if(obj==null){
+					JSONObject joo = new JSONObject();
+					joo.put("isEnd",i==each.length()-1?true:false);
+					tmp.put(s,joo);
+					/**tmp = (JSONObject)tmp.get(s);
+				}else{
+					tmp = (JSONObject)tmp.get(s);*/
+				}
+				tmp = (JSONObject)tmp.get(s);//对象引用精髓所在
+			}
+		}
+		return jo;
+	}
+	
+	//敏感词检查(极简易实现)
+	public static boolean isContainSensitiveWord(String text,JSONObject sensitiveWordRule){
+		for(int i=0;i<text.length();i++){
+			String each = String.valueOf(text.charAt(i));
+			JSONObject jo = sensitiveWordRule;
+			while(true){
+				jo = (JSONObject)jo.get(each);
+				if(jo!=null){
+					if(true==(boolean)jo.get("isEnd")){
+						return true;
+					}else{
+						i++;
+						each = String.valueOf(text.charAt(i));
+					}
+				}else{
+					break;
+				}
+			}
+		}
+		return false;
 	}
 	
 }
