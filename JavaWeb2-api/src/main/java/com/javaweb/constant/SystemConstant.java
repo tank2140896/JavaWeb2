@@ -36,14 +36,18 @@ public class SystemConstant {
 	
 	public static final String SYSTEM_DEFAULT_USER_PERSON_NAME = "超级管理员";
 	
+	public static final Integer SYSTEM_DEFAULT_USER_LEVEL = 0;
+	
+	public static final Integer SYSTEM_DEFAULT_USER_STATUS = 0;
+	
 	public static final User SYSTEM_DEFAULT_USER = new User();
 	static{
 		SYSTEM_DEFAULT_USER.setUserId(SYSTEM_DEFAULT_USER_ID);
 		SYSTEM_DEFAULT_USER.setUserName(SYSTEM_DEFAULT_USER_NAME);
 		SYSTEM_DEFAULT_USER.setPassword(SYSTEM_DEFAULT_USER_PASSWORD);
 		SYSTEM_DEFAULT_USER.setPersonName(SYSTEM_DEFAULT_USER_PERSON_NAME);
-		SYSTEM_DEFAULT_USER.setLevel(0);
-		SYSTEM_DEFAULT_USER.setStatus(0);
+		SYSTEM_DEFAULT_USER.setLevel(SYSTEM_DEFAULT_USER_LEVEL);
+		SYSTEM_DEFAULT_USER.setStatus(SYSTEM_DEFAULT_USER_STATUS);
 	}
 	
 	/** 基本与HTTP状态码匹配 start */
