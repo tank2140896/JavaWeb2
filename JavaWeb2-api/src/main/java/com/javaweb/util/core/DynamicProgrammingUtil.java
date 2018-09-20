@@ -1,6 +1,5 @@
 package com.javaweb.util.core;
 
-
 public class DynamicProgrammingUtil {
 	
 	/**
@@ -16,6 +15,7 @@ public class DynamicProgrammingUtil {
 	   q = max(q,p[i]+CUT-ROD(p,n-i))
 	return q
 	*/
+	//{1,5,8,9,10,17,17,20,24,30}
 	public static int cutRod(int array[],int len){
 		if(len==0){//切成0段就是无价值
 			return 0;
@@ -38,6 +38,7 @@ public class DynamicProgrammingUtil {
 	    r[i] = 负无穷(-∞)
 	return MEMOIZED-CUT-ROD-AUX(p,n,r)
 	*/
+	//{1,5,8,9,10,17,17,20,24,30}
 	public static int memoizedCutRod(int array[],int len){
 		int newArray[] = new int[len];
 		for(int i=0;i<newArray.length;i++){
@@ -59,6 +60,7 @@ public class DynamicProgrammingUtil {
 	r[n]=q
 	return q
 	*/
+	//{1,5,8,9,10,17,17,20,24,30}
 	public static int memoizedCutRodAux(int array[],int len,int newArray[]){
 		if(len==0){
 			return 0;
@@ -89,6 +91,7 @@ public class DynamicProgrammingUtil {
 		r[j]=q
 	return r[n]
 	*/
+	//{1,5,8,9,10,17,17,20,24,30}
 	public static int bottomUpCutRod(int array[],int len){
 		int newArray[] = new int[len+1];
 		newArray[0] = 0;
@@ -100,6 +103,58 @@ public class DynamicProgrammingUtil {
 			newArray[j]=q;
 		}
 		return newArray[len];
+	}
+	
+	/**
+	<<算法导论>>的伪代码如下:
+	EXTENDED-BOTTOM-UP-CUT-ROD(p,n)
+	let r[0..n] and s[0..n] be new arrays
+	r[0]=0
+	for j=1 to n
+		q = 负无穷(-∞)
+		for i=1 to j
+			if q<p[i]+r[j-i]
+				q = p[i]+r[j-i]
+				s[j] = i
+		r[j]=q
+	return r and s
+	*/
+	//{0,1,5,8,9,10,17,17,20,24,30}
+	public static Object[] extendedBottomUpCutRod(int array[],int len){
+		int r[] = new int[len+1];
+		int s[] = new int[len+1];
+		r[0]=0;
+		s[0]=0;
+		for(int j=1;j<=len;j++){
+			int q = 0;
+			for(int i=1;i<=j;i++){
+				if(q<array[i]+r[j-i]){
+					q = array[i]+r[j-i];
+					s[j] = i;
+				}
+			}
+			r[j]=q;
+		}
+		return new Object[]{r,s};
+	}
+	
+	/**
+	<<算法导论>>的伪代码如下:
+	PRINT-CUT-ROD-SOLUTION(p,n)
+	(r,s) = EXTENDED-BOTTOM-UP-CUT-ROD(p,n)
+	while n>0
+		print s[n]
+		n = n-s[n]
+	*/
+	//{0,1,5,8,9,10,17,17,20,24,30}
+	public static void printCutRodSolution(int array[],int len){
+		Object obj[] = extendedBottomUpCutRod(array,len);
+		//int r[] = (int[])obj[0];
+		int s[] = (int[])obj[1];
+		while(len>0){
+			System.out.println(s[len]);
+			len = len-s[len];
+		}
 	}
 
 }
