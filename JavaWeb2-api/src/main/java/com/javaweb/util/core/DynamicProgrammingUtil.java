@@ -47,6 +47,7 @@ public class DynamicProgrammingUtil {
 	}
 	
 	/**
+	<<算法导论>>的伪代码如下:
 	MEMOIZED-CUT-ROD-AUX(p,n,r)
 	if r[n]>=0
 	    return r[n]
