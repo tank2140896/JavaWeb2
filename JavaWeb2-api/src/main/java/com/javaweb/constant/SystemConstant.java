@@ -4,6 +4,10 @@ import com.javaweb.web.po.User;
 
 public class SystemConstant {
 	
+	public static final String PROJECT_NAME = "JavaWeb";
+
+	public static final String DEFAULT_SECURITY_KEY = "the key of JavaWeb";
+	
 	public static final String BASE_PACKAGE = "com.javaweb";
 	
 	public static final String DEFAULT_DATA_SOURCE_POINT_CUT = "execution(* com.javaweb.web.dao..*.*(..))";

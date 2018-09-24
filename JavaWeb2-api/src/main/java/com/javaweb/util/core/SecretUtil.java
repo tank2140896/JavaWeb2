@@ -1,6 +1,11 @@
 package com.javaweb.util.core;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+
 import java.security.MessageDigest;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -10,6 +15,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import org.apache.commons.codec.binary.Hex;
+
+import com.javaweb.constant.SystemConstant;
 
 public class SecretUtil {
 	
@@ -30,7 +37,7 @@ public class SecretUtil {
 	private static final char[] CHINESE_USED_CHARACTERSET = new char[KEYBORD_USERD_LENGTH+CHINESE_USERD_LENGTH];//中文常用字符数组
 	
 	private static final Map<Character,Integer> CHARACTE_KV = new HashMap<>();//字符数字键值对
-
+	
 	static{
 		/** 初始化键盘常用字符数组和中文常用字符数组 start */
 		int count = 0;
@@ -111,7 +118,7 @@ public class SecretUtil {
 		return String.valueOf(ret);  
    	}
 	
-	//sha256加密
+	//SHA256加密
 	public static String getSha256(String string) throws Exception {
 		 MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
 		 byte[] hash = messageDigest.digest(string.getBytes("UTF-8"));
@@ -130,10 +137,24 @@ public class SecretUtil {
 	
 	//byte转int
 	public static int byteToInt(byte[] bytes) {
-		return (bytes[0]&0xFF)<<24
-			 | (bytes[1]&0xFF)<<16
-			 | (bytes[2]&0xFF)<<8
-			 | (bytes[3]&0xFF);
+		return (bytes[0]&0xFF)<<24 | (bytes[1]&0xFF)<<16 | (bytes[2]&0xFF)<<8 | (bytes[3]&0xFF);
+	}
+	
+	//生成JWT示例
+	public static String getDemoJwt(){
+		return Jwts.builder().setSubject(SystemConstant.PROJECT_NAME)
+		              	     .claim("key","value")
+		              	     .setIssuedAt(new Date())
+		              	     .setExpiration(new Date(System.currentTimeMillis()+10*60*1000))//10分钟过期
+		              	     .signWith(SignatureAlgorithm.HS256,SystemConstant.DEFAULT_SECURITY_KEY)
+		              	     .compact();
+	}
+	
+	//解析JWT示例
+	public static Claims getDemoToken(String token){
+		return Jwts.parser().setSigningKey(SystemConstant.DEFAULT_SECURITY_KEY)
+				            .parseClaimsJws(token)
+				            .getBody();
 	}
     	
 }
