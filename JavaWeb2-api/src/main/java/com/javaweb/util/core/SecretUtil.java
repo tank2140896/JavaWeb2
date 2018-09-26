@@ -141,17 +141,17 @@ public class SecretUtil {
 	}
 	
 	//生成JWT示例
-	public static String getDemoJwt(){
+	public static String getDemoJwt(Map<String,Object> map){
 		return Jwts.builder().setSubject(SystemConstant.PROJECT_NAME)
-		              	     .claim("key","value")
-		              	     .setIssuedAt(new Date())
-		              	     .setExpiration(new Date(System.currentTimeMillis()+10*60*1000))//10分钟过期
+							 .setClaims(map)
+							 .setIssuedAt(new Date())
+		              	     .setExpiration(new Date(System.currentTimeMillis()+SystemConstant.SYSTEM_DEFAULT_SESSION_OUT*60*1000))//15分钟过期
 		              	     .signWith(SignatureAlgorithm.HS256,SystemConstant.DEFAULT_SECURITY_KEY)
 		              	     .compact();
 	}
 	
 	//解析JWT示例
-	public static Claims getDemoToken(String token){
+	public static Claims getDemoJwtToken(String token){
 		return Jwts.parser().setSigningKey(SystemConstant.DEFAULT_SECURITY_KEY)
 				            .parseClaimsJws(token)
 				            .getBody();
