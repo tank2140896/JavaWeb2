@@ -270,5 +270,86 @@ public class ArrayUtil {
 			return randomizedSelect(array,partition+1,endIndex,i-k);
 		}
 	}
+	
+	/**
+	<<算法导论>>的伪代码如下:
+	MATRIX-CHAIN-ORDER(p)
+	n=p.length-1
+	let m[1..n,1..n] and s[1..n-1,2..n] be new tables
+	for i=1 to n
+		m[i,i] = 0
+	for l=2 to n
+		for i=1 to n-l+1
+			j=i+l-1
+			m[i,j]=正无穷(+∞)
+			for k=i to j-1
+				q = m[i,k]+m[k+1,j]+p[i-1]*p[k]*p[j]
+				if q<m[i,j]
+					m[i,j] = q;
+					s[i,j] = k;
+	*/
+	//int p[] = {30,35,15,5,10,20,25};
+	//Object obj[] = matrixChainOrder(p);
+	public static Object[] matrixChainOrder(int p[]){
+		int n = p.length-1;
+		int m[][] = new int[p.length][p.length];
+		int s[][] = new int[p.length][p.length];
+		for(int i=1;i<=n;i++){
+			m[i][i] = 0;
+		}
+		for(int u=2;u<=n;u++){
+			for(int i=1;i<=n-u+1;i++){
+				int j = i+u-1;
+				m[i][j] = Integer.MAX_VALUE;
+				for(int k=i;k<=j-1;k++){
+					int q = m[i][k]+m[k+1][j]+p[i-1]*p[k]*p[j];
+					if(q<m[i][j]){
+						m[i][j] = q;
+						s[i][j] = k;
+					}
+				}
+			}
+		}
+		/**
+		for(int i=0;i<m.length;i++){
+			for(int j=0;j<m[i].length;j++){
+				System.out.print(m[i][j]+" ");
+			}
+			System.out.println();
+		}
+		for(int i=0;i<s.length;i++){
+			for(int j=0;j<s[i].length;j++){
+				System.out.print(s[i][j]+" ");
+			}
+			System.out.println();
+		}
+		*/
+		//System.out.println(m[1][n]);//输出最优值
+		return new Object[]{m,s};
+	}
+	
+	/**
+	<<算法导论>>的伪代码如下:
+	PRINT-OPTIMAL-PARENS(s,i,j)
+	if i==j
+		print "A"i
+	else print "("
+		PRINT-OPTIMAL-PARENS(s,i,s[i,j])
+		PRINT-OPTIMAL-PARENS(s,s[i,j]+1,j)
+		print ")"
+	*/
+	//printOptimalParens((int[][])obj[1],0,p.length-1);
+	public static void printOptimalParens(int s[][],int i,int j){
+		if(i!=0||j!=0){
+			if(i==j){
+				System.out.print("A"+i);
+			}else{
+				System.out.print("(");
+				printOptimalParens(s,i,s[i][j]);
+				printOptimalParens(s,s[i][j]+1,j);
+				System.out.print(")");
+			}
+		}
+	}
 
 }

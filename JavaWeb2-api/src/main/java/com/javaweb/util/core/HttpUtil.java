@@ -56,7 +56,7 @@ public class HttpUtil {
 		HttpGet get = new HttpGet(url);
 		get.setHeader("Content-Type", "application/json;charset=UTF-8");
 		//RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(5000).setSocketTimeout(5000).build();
-		//post.setConfig(requestConfig);
+		//get.setConfig(requestConfig);
 		HttpResponse httpResponse = httpClient.execute(get);
 		HttpEntity httpEntity = httpResponse.getEntity();
 		//String response = new ObjectMapper().readValue(httpEntity.getContent(),String.class);
