@@ -88,6 +88,29 @@ public class HttpUtil {
 		return response;
 	}
 	
+	//XML格式的POST请求
+	public static String xmlPostRequest(String url,String body) throws Exception {
+		CloseableHttpClient httpClient = null;
+		if(url.contains("https")){
+			SSLConnectionSocketFactory sslcsf = new SSLConnectionSocketFactory(sslContext);
+			httpClient = HttpClients.custom().setSSLSocketFactory(sslcsf).build();
+		}else{
+			httpClient = HttpClientBuilder.create().build(); 
+		}
+		HttpPost post = new HttpPost(url);
+		post.setHeader("Content-Type", "text/xml;charset=UTF-8");
+		//RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(5000).setSocketTimeout(5000).build();
+		//post.setConfig(requestConfig);
+		StringEntity stringEntity = new StringEntity(body,StandardCharsets.UTF_8);
+		post.setEntity(stringEntity);
+		HttpResponse httpResponse = httpClient.execute(post);
+		HttpEntity httpEntity = httpResponse.getEntity();
+		//String response = new ObjectMapper().readValue(httpEntity.getContent(),String.class);
+		String response = IOUtils.toString(httpEntity.getContent(),StandardCharsets.UTF_8);
+		httpClient.close();
+		return response;
+	}
+	
 	//随机生成IP地址
 	public static String getRadmonIp(){
 		StringBuilder stringBuilder = new StringBuilder();

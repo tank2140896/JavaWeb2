@@ -5,6 +5,9 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class WeixinConfig {
+	
+	@Value("${wx.appid}")
+	private String wxAppid;
 
 	@Value("${wxopen.appid}")
 	private String wxopenAppid;
@@ -24,6 +27,26 @@ public class WeixinConfig {
 	@Value("${wxopen.user_info}")
 	private String wxopenUserInfo;
 	
+	@Value("${wxpay.mer_id}")
+	private String wxpayMerId;
+	
+	@Value("${wxpay.key}")
+	private String wxpayKey;
+	
+	@Value("${wxpay.callback_url}")
+	private String wxpayCallbackUrl;
+	
+	@Value("${wxpay.unifiedorder_url}")
+	private String wxpayUnifiedorderUrl;
+	
+	public String getWxAppid() {
+		return wxAppid;
+	}
+
+	public void setWxAppid(String wxAppid) {
+		this.wxAppid = wxAppid;
+	}
+
 	public String getWxopenAppid() {
 		return wxopenAppid;
 	}
@@ -71,5 +94,37 @@ public class WeixinConfig {
 	public void setWxopenUserInfo(String wxopenUserInfo) {
 		this.wxopenUserInfo = wxopenUserInfo;
 	}
-	
+
+	public String getWxpayMerId() {
+		return wxpayMerId;
+	}
+
+	public void setWxpayMerId(String wxpayMerId) {
+		this.wxpayMerId = wxpayMerId;
+	}
+
+	public String getWxpayKey() {
+		return wxpayKey;
+	}
+
+	public void setWxpayKey(String wxpayKey) {
+		this.wxpayKey = wxpayKey;
+	}
+
+	public String getWxpayCallbackUrl() {
+		return wxpayCallbackUrl;
+	}
+
+	public void setWxpayCallbackUrl(String wxpayCallbackUrl) {
+		this.wxpayCallbackUrl = wxpayCallbackUrl;
+	}
+
+	public String getWxpayUnifiedorderUrl() {
+		return wxpayUnifiedorderUrl;
+	}
+
+	public void setWxpayUnifiedorderUrl(String wxpayUnifiedorderUrl) {
+		this.wxpayUnifiedorderUrl = wxpayUnifiedorderUrl;
+	}
+
 }

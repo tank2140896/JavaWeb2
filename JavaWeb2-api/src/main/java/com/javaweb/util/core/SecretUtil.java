@@ -125,6 +125,13 @@ public class SecretUtil {
 		 return Hex.encodeHexString(hash);
 	}
 	
+	//MD5加密
+	public static String getMD5(String string) throws Exception {
+		 MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+		 byte[] hash = messageDigest.digest(string.getBytes("UTF-8"));
+		 return Hex.encodeHexString(hash);
+	}
+	
 	//int转byte
 	public static byte[] intToByte(int num){
 		byte[] bytes = new byte[4];
