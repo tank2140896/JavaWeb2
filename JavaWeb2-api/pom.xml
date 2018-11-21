@@ -6,13 +6,13 @@
 	一、maven私有仓库搭建可以使用nexus 
 	二、maven&eclipse离线模式
 	1、maven->conf->settings.xml
-	<localRepository>C:\Users\szgaadmin\.m2\repository</localRepository>
+	<localRepository>C:\Users\he\.m2\repository</localRepository>
 	2、mirror配置
 	<mirror>
     		<id>central</id>
     		<mirrorOf>*</mirrorOf>
     		<name>central</name>
-    		<url>file://C:\Users\szgaadmin\.m2\repository</url>
+    		<url>file://C:\Users\he\.m2\repository</url>
 	</mirror>
 	3、eclipse->window->Preferences->Maven->Installations和User Settings配置为本地maven路径
 	-->
@@ -31,7 +31,7 @@
   	<parent>
     	<groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.3.RELEASE</version>
+        <version>2.1.0.RELEASE</version>
     </parent>
     
     <dependencies>
@@ -161,6 +161,12 @@
 			<groupId>com.github.penggle</groupId>
 			<artifactId>kaptcha</artifactId>
 			<version>2.3.2</version>
+		 </dependency>
+		 <!-- hbase -->
+		 <dependency>
+		    <groupId>org.apache.hbase</groupId>
+		    <artifactId>hbase-client</artifactId>
+		    <version>2.1.1</version>
 		 </dependency>
 		 <!-- lucene 
 		 <dependency>  

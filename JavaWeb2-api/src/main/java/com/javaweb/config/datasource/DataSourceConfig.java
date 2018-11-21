@@ -18,6 +18,7 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.javaweb.constant.SystemConstant;
 import com.javaweb.interceptor.MyBatisBaseDaoInterceptor;
 import com.zaxxer.hikari.HikariDataSource;
 
@@ -40,7 +41,7 @@ public class DataSourceConfig {
 	private MyBatisBaseDaoInterceptor myBatisBaseDaoInterceptor;
 
 	/**
-	 * 还可以这么写:
+	  *   还可以这么写:
 	 * @Bean("mysql_d1")  
 	 * @ConfigurationProperties(prefix="application.server.db.slave")
 	 * public DataSource mysql_d1(){
@@ -91,12 +92,12 @@ public class DataSourceConfig {
     public MultipleDataSourceManage multipleDataSourceManage() {
 		MultipleDataSourceManage multipleDataSourceManage = new MultipleDataSourceManage();
         Map<Object,Object> dataSourceMap = new HashMap<>();
-        dataSourceMap.put("mysql_d1",mysql_d1());
-        dataSourceMap.put("mysql_d2",mysql_d2());
+        dataSourceMap.put(SystemConstant.DATA_SOURCE_KEY_1,mysql_d1());
+        dataSourceMap.put(SystemConstant.DATA_SOURCE_KEY_2,mysql_d2());
         //将mysql_d1数据源作为默认指定的数据源
         multipleDataSourceManage.setDefaultTargetDataSource(mysql_d1());
         multipleDataSourceManage.setTargetDataSources(dataSourceMap);
-        //将数据源的 key放到数据源上下文的key集合中,用于切换时判断数据源是否有效
+        //将数据源的key放到数据源上下文的key集合中,用于切换时判断数据源是否有效
         return multipleDataSourceManage;
     }
 	
@@ -105,7 +106,7 @@ public class DataSourceConfig {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(multipleDataSourceManage);
         /**
-         * 还可以这么写:
+                  *   还可以这么写:
          * @Autowired
          * private Environment environment;
          * sqlSessionFactoryBean.setTypeAliasesPackage(environment.getProperty("mybatis.typeAliasesPackage"));

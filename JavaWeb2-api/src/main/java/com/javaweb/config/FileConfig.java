@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.util.unit.DataSize;
 
 @Configuration
 public class FileConfig {
@@ -19,8 +20,8 @@ public class FileConfig {
 	@Bean
     public MultipartConfigElement multipartConfigElement() {
 		MultipartConfigFactory multipartConfigFactory = new MultipartConfigFactory();
-		multipartConfigFactory.setMaxFileSize(maxFileSize);//设置单个文件上传大小
-		multipartConfigFactory.setMaxRequestSize(maxRequestSize);//总上传大小
+		multipartConfigFactory.setMaxFileSize(DataSize.parse(maxFileSize));//设置单个文件上传大小
+		multipartConfigFactory.setMaxRequestSize(DataSize.parse(maxFileSize));//总上传大小
 		return multipartConfigFactory.createMultipartConfig();
     }
 

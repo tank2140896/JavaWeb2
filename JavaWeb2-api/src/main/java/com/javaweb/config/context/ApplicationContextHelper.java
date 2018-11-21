@@ -8,8 +8,8 @@ public class ApplicationContextHelper implements ApplicationContextAware {
 	
     private static ApplicationContext applicationContext;    
 
-    public void setApplicationContext(ApplicationContext ac) throws BeansException {    
-    	applicationContext = ac;    
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {    
+    	ApplicationContextHelper.applicationContext = applicationContext;    
     }  
         
     public static ApplicationContext getApplicationContext(){  

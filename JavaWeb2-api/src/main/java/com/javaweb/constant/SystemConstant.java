@@ -12,6 +12,14 @@ public class SystemConstant {
 	
 	public static final String DEFAULT_DATA_SOURCE_POINT_CUT = "execution(* com.javaweb.web.dao..*.*(..))";
 	
+	public static final String DATA_SOURCE_PACKAGE_NAME_1 = "ds1";
+	
+	public static final String DATA_SOURCE_PACKAGE_NAME_2 = "ds2";
+	
+	public static final String DATA_SOURCE_KEY_1 = "mysql_d1";
+	
+	public static final String DATA_SOURCE_KEY_2 = "mysql_d2";
+	
 	public static final String HEAD_TYPE_PATTERN = "[1-9]";
 	
 	public static final String URL_INTERCEPTOR_PATTERN = "/web/**";
