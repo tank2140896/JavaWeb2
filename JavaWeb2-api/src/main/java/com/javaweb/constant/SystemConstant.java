@@ -20,7 +20,7 @@ public class SystemConstant {
 	
 	public static final String DATA_SOURCE_KEY_2 = "mysql_d2";
 	
-	public static final String HEAD_TYPE_PATTERN = "[1-9]";
+	public static final String HEAD_TYPE_PATTERN = "[123]";
 	
 	public static final String URL_INTERCEPTOR_PATTERN = "/web/**";
 	

@@ -13,7 +13,7 @@ import com.javaweb.web.eo.TokenData;
 
 @RestController
 @RequestMapping("/web/pc/loginAccess")
-public class LoginAccess extends BaseController {
+public class LoginAccessController extends BaseController {
 	
 	@GetMapping("/logout")
 	public BaseResponseResult logout(HttpServletRequest request){

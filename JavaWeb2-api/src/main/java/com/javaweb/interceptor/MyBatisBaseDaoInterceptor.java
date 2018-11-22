@@ -138,7 +138,7 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 				Field eachField = field[i];
 				eachField.setAccessible(true);
 				Column column = eachField.getDeclaredAnnotation(Column.class);
-				if(column==null||CommonConstant.EMPTY_VALUE.equals(column)){
+				if(column==null){
 					continue;
 				}
 				if(column.pk()){
