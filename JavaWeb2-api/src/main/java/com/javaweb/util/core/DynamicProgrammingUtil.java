@@ -17,11 +17,11 @@ public class DynamicProgrammingUtil {
 	*/
 	//{1,5,8,9,10,17,17,20,24,30}
 	public static int cutRod(int array[],int len){
-		if(len==0){//切成0段就是无价值
+		if(len==0){
 			return 0;
 		}
 		int q = 0;
-		for(int i=1;i<=len;i++){//切成几段
+		for(int i=1;i<=len;i++){//for(int i=len;i>=1;i--)
 			q = MathUtil.getTheTwoNumOfMax(q,array[i-1]+cutRod(array,len-i));
 		}
 		return q;
