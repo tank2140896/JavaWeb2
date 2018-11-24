@@ -105,21 +105,17 @@ public class AllOpenController extends BaseController {
 		map.put("adminFlag", adminFlag);
 		map.put("userId", user.getUserId());
 		List<Module> list = moduleService.getUserRoleModule(map);
-		if(list==null){//防止意外
-			list = new ArrayList<>();
-		}
-		//获得菜单列表
-		List<Module> menuList = list.stream().filter(i->1==i.getModuleType()).collect(Collectors.toList());
-		tokenData.setMenuList((menuList==null||menuList.size()==0)?null:menuList);
-		menuList = setTreeList(menuList,null);
-		tokenData.setMenuListForTree((menuList==null||menuList.size()==0)?null:menuList);
-		//获得操作权限列表
-		List<Module> authOperateList = list.stream().filter(i->2==i.getModuleType()).collect(Collectors.toList());
+		list=(list==null?new ArrayList<>():list);
+		List<Module> menuList = list.stream().filter(i->1==i.getModuleType()).collect(Collectors.toList());//获得菜单列表
+		List<Module> authOperateList = list.stream().filter(i->2==i.getModuleType()).collect(Collectors.toList());//获得操作权限列表
 		tokenData.setToken(UUID.randomUUID().toString());
 		tokenData.setUser(user);
 		tokenData.setType(type);
+		tokenData.setMenuList((menuList==null||menuList.size()==0)?null:menuList);
 		tokenData.setModuleList((list==null||list.size()==0)?null:list);
 		tokenData.setAuthOperateList((authOperateList==null||authOperateList.size()==0)?null:authOperateList);
+		menuList = setTreeList(menuList,null);
+		tokenData.setMenuListForTree((menuList==null||menuList.size()==0)?null:menuList);
 		return tokenData;
 	}
 	
