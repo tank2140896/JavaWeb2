@@ -44,7 +44,9 @@ public class DynamicProgrammingUtil {
 		for(int i=0;i<newArray.length;i++){
 			newArray[i] = 0;
 		}
-		return memoizedCutRodAux(array,len,newArray);
+		int out = memoizedCutRodAux(array,len,newArray);
+		//System.out.println(Arrays.toString(newArray));
+		return out;
 	}
 	
 	/**
@@ -62,18 +64,19 @@ public class DynamicProgrammingUtil {
 	*/
 	//{1,5,8,9,10,17,17,20,24,30}
 	public static int memoizedCutRodAux(int array[],int len,int newArray[]){
+		if(len!=0&&newArray[len-1]>0){
+			return newArray[len-1];
+		}
+		int q = 0;
 		if(len==0){
-			return 0;
+			newArray[len] = array[0];
 		}else{
-			int q = 0;
-			if(len!=0){
-				for(int i=1;i<=len;i++){
-					q = MathUtil.getTheTwoNumOfMax(q,array[i-1]+memoizedCutRodAux(array,len-i,newArray));
-				}
+			for(int i=1;i<=len;i++){
+				q = getTheTwoNumOfMax(q,array[i-1]+memoizedCutRodAux(array,len-i,newArray));
 			}
 			newArray[len-1] = q;
-			return q;
 		}
+		return q;
 	}
 	
 	/**
@@ -94,14 +97,15 @@ public class DynamicProgrammingUtil {
 	//{1,5,8,9,10,17,17,20,24,30}
 	public static int bottomUpCutRod(int array[],int len){
 		int newArray[] = new int[len+1];
-		newArray[0] = 0;
+		newArray[0] = 0;//长度为0的钢条没有收益
 		for(int j=1;j<=len;j++){
 			int q = 0;
 			for(int i=1;i<=j;i++){
-				q = MathUtil.getTheTwoNumOfMax(q,array[i-1]+newArray[j-i]);
+				q = getTheTwoNumOfMax(q,array[i-1]+newArray[j-i]);
 			}
 			newArray[j]=q;
 		}
+		//System.out.println(Arrays.toString(Arrays.copyOfRange(newArray,1,newArray.length)));
 		return newArray[len];
 	}
 	
@@ -128,8 +132,8 @@ public class DynamicProgrammingUtil {
 		for(int j=1;j<=len;j++){
 			int q = 0;
 			for(int i=1;i<=j;i++){
-				if(q<array[i]+r[j-i]){
-					q = array[i]+r[j-i];
+				if(q<array[i-1]+r[j-i]){
+					q = array[i-1]+r[j-i];
 					s[j] = i;
 				}
 			}
@@ -152,9 +156,10 @@ public class DynamicProgrammingUtil {
 		//int r[] = (int[])obj[0];
 		int s[] = (int[])obj[1];
 		while(len>0){
-			System.out.println(s[len]);
+			System.out.print(s[len]+" ");
 			len = len-s[len];
 		}
+		System.out.println();
 	}
 
 }
