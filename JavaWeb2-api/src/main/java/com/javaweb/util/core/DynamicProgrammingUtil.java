@@ -72,7 +72,7 @@ public class DynamicProgrammingUtil {
 			newArray[len] = array[0];
 		}else{
 			for(int i=1;i<=len;i++){
-				q = getTheTwoNumOfMax(q,array[i-1]+memoizedCutRodAux(array,len-i,newArray));
+				q = MathUtil.getTheTwoNumOfMax(q,array[i-1]+memoizedCutRodAux(array,len-i,newArray));
 			}
 			newArray[len-1] = q;
 		}
@@ -101,7 +101,7 @@ public class DynamicProgrammingUtil {
 		for(int j=1;j<=len;j++){
 			int q = 0;
 			for(int i=1;i<=j;i++){
-				q = getTheTwoNumOfMax(q,array[i-1]+newArray[j-i]);
+				q = MathUtil.getTheTwoNumOfMax(q,array[i-1]+newArray[j-i]);
 			}
 			newArray[j]=q;
 		}
