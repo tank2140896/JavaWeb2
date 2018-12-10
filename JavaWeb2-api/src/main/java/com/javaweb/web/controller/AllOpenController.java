@@ -78,22 +78,22 @@ public class AllOpenController extends BaseController {
 	    ImageIO.write(image,"jpg",out);
 	}
 				  
-	@RequestMapping(value="/requestParameterLost",method={RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value="/requestParameterLost",method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 	public BaseResponseResult requestParameterLost() {
 		return new BaseResponseResult(SystemConstant.REQUEST_PARAMETER_LOST,getMessage("validated.permission.requestParameterLost"),CommonConstant.EMPTY_VALUE);
 	}
 	
-	@RequestMapping(value="/invalidRequest",method={RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value="/invalidRequest",method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 	public BaseResponseResult invalidRequest(){
 		return new BaseResponseResult(SystemConstant.INVALID_REQUEST,getMessage("validated.permission.invalidRequest"),CommonConstant.EMPTY_VALUE);
 	}
 	
-	@RequestMapping(value="/requestParameterError",method={RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value="/requestParameterError",method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 	public BaseResponseResult requestParameterError(){
 		return new BaseResponseResult(SystemConstant.INVALID_REQUEST,getMessage("validated.permission.requestParameterError"),CommonConstant.EMPTY_VALUE);
 	}
 	
-	@RequestMapping(value="/noAuthory",method={RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value="/noAuthory",method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 	public BaseResponseResult noAuthory(){
 		return new BaseResponseResult(SystemConstant.NO_AUTHORY,getMessage("validated.permission.noAuthory"),CommonConstant.EMPTY_VALUE);
 	}
