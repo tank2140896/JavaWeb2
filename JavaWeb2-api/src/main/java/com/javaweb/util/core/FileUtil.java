@@ -21,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
+import java.util.Base64;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
@@ -320,6 +321,48 @@ public class FileUtil {
 				outputStream.close();
 			}
 		}
+	}
+	
+	//图片转Base64字符串
+	public static String imageSrcToBase64String(String src) {
+	    byte[] data = null;
+	    try(InputStream inputStream = new FileInputStream(new File(src))) {
+	        data = new byte[inputStream.available()];
+	        inputStream.read(data);
+	    } catch (IOException e) {
+	        //do nothing
+	    }
+	    if(data==null){
+	    	return null;
+	    }else{
+	    	data = Base64.getEncoder().encode(data);
+	    	return new String(data);
+	    }
+	}
+	
+	//Base64字符串解码
+	public static byte[] getBase64Byte(String imageBase64String) {
+		try{
+			//为了去除data:image/png;base64,
+			imageBase64String = imageBase64String.split(",")[1];
+		}catch(Exception e){
+			//do nothing
+		}
+		byte[] data = null;
+		try{
+			data = Base64.getDecoder().decode(imageBase64String.getBytes());
+			for(int i=0;i<data.length;++i) {
+				if(data[i]<0){
+					data[i] += 256;
+				}
+			}
+			//OutputStream out = new FileOutputStream(path);
+			//out.write(data);
+			//out.close();
+		} catch (Exception e){
+			//do nothing
+		}
+		return data;
 	}
 	
 }
