@@ -65,10 +65,15 @@ public class HttpUtil {
 	}
 	
 	//默认GET请求
-	public static String defaultGetRequest(String url) throws Exception {
+	public static String defaultGetRequest(String url/*,List<Header> list*/) throws Exception {
 		CloseableHttpClient httpClient = getCloseableHttpClient(url);
 		HttpGet httpGet = new HttpGet(url);
 		httpGet.setHeader("Content-Type", "application/json;charset=UTF-8");
+		/**
+		if(list!=null&&list.size()!=0) {
+			list.stream().forEach(i->httpGet.addHeader(i));
+		}
+		*/
 		httpGet.setConfig(getDefaultRequestConfig());
 		HttpResponse httpResponse = httpClient.execute(httpGet);
 		String response = null;
