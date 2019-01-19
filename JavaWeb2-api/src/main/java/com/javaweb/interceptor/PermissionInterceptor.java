@@ -12,6 +12,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.javaweb.config.context.ApplicationContextHelper;
 import com.javaweb.constant.CommonConstant;
+import com.javaweb.constant.PatternConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.web.eo.TokenData;
 
@@ -50,7 +51,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 			request.getRequestDispatcher("/requestParameterLost").forward(request,response);
 			return false;
 		}
-		if(!type.matches(SystemConstant.HEAD_TYPE_PATTERN)){//1：web；2：安卓；3：IOS
+		if(!PatternConstant.isHeadTypePattern(type)){//1：web；2：安卓；3：IOS
 			request.getRequestDispatcher("/requestParameterLost").forward(request,response);
 			return false;
 		}
