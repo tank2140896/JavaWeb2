@@ -6,7 +6,7 @@
 5、reids
 6、mybatis共通dao
 7、kafka【kafka生产者（producer）一般可以使用kafkaTemplate；kafka消费者（consumer）一般可以使用@KafkaListener；实际项目中生产者和消费者一般都是分开的】
-8、Netty客户端和服务端示例
+8、Netty客户端和服务端示例（IO模型、数据协议、线程模型）
 9、websocket
 二、项目使用说明
 1、除了涉及事务的service加上@Transactional，建议涉及事务的Controller也加上@Transactional，另外不建议try catch，除非能确保无数据库相关事务操作或确保Controller内的方法不会抛出异常
