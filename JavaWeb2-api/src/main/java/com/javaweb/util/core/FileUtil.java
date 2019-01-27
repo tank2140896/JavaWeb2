@@ -16,11 +16,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.io.RandomAccessFile;
 import java.math.BigInteger;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -363,6 +365,34 @@ public class FileUtil {
 			//do nothing
 		}
 		return data;
+	}
+	
+	//按字节读取
+	public static List<String> readFileByByte(String fileName,byte number) throws Exception {
+		List<String> out = new ArrayList<>();
+		RandomAccessFile randomAccessFile = new RandomAccessFile(fileName,"r");
+		long position = 0;
+		List<Byte> list = new ArrayList<>();
+		while(true){
+			try{
+				randomAccessFile.seek(position++);
+				byte[] bytes = new byte[1];
+				bytes[0] = randomAccessFile.readByte();
+				list.add(bytes[0]);
+				if(bytes[0]==number){//例如125=}
+					byte b[] = new byte[list.size()];
+					for(int i=0;i<list.size();i++){
+						b[i] = list.get(i);
+					}
+					out.add(new String(b,"utf-8"));
+					list = new ArrayList<>();
+				}
+			}catch(Exception e){
+				break;
+			}
+		}
+		randomAccessFile.close();
+		return out;
 	}
 	
 }

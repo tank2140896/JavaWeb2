@@ -216,11 +216,18 @@
 		 -->
 		 <!-- 引入本地jar包 -->
 		 <dependency>
-	         <groupId>com.mybatis</groupId>
+	         <groupId>com.demo1</groupId>
 	         <artifactId>test</artifactId>
 	         <version>0.0.1-SNAPSHOT</version>
 	         <scope>system</scope>
 	         <systemPath>${project.basedir}/src/main/resources/lib/test.jar</systemPath>
+      	 </dependency>
+      	 <dependency>
+	         <groupId>com.demo2</groupId>
+	         <artifactId>ganymed-ssh2-build210</artifactId>
+	         <version>0.0.1-SNAPSHOT</version>
+	         <scope>system</scope>
+	         <systemPath>${project.basedir}/src/main/resources/lib/ganymed-ssh2-build210.jar</systemPath>
       	 </dependency>
 	</dependencies>
 	

@@ -1,5 +1,7 @@
 package com.javaweb.util.core;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
@@ -23,6 +25,9 @@ import org.apache.http.ssl.TrustStrategy;
 import org.apache.http.util.EntityUtils;
 
 import com.javaweb.constant.CommonConstant;
+
+import ch.ethz.ssh2.Connection;
+import ch.ethz.ssh2.SCPClient;
 
 public class HttpUtil {
 	
@@ -196,6 +201,22 @@ public class HttpUtil {
 		String out = stringBuilder.toString();
 		out = out.substring(0,out.length()-1);
 		return out;
+	}
+	
+	//获得linux的ssh连接
+	public static ByteArrayInputStream getLinuxSsh(String ip,int port,String userName,String passWord,String fileName) throws Exception {
+		ByteArrayInputStream bais = null;
+		Connection c = new Connection(ip,port);
+		c.connect();
+		boolean isAuthed = c.authenticateWithPassword(userName,passWord);
+		if(isAuthed) {
+			SCPClient scpClient = c.createSCPClient();
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			scpClient.get(fileName,baos);
+			bais = new ByteArrayInputStream(baos.toByteArray());
+			//LineNumberReader lnr = new LineNumberReader(new InputStreamReader(bais,"UTF-8"));
+		}
+		return bais;
 	}
 
 }
