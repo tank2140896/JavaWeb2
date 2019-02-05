@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
-import com.javaweb.constant.SystemConstant;
+import com.javaweb.constant.HttpCodeEnum;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.chat.ChatRequest;
 import com.javaweb.web.po.User;
@@ -23,7 +23,7 @@ public class OnlineChatController extends BaseController {
 		TokenData tokenData = getTokenData(request);
 		User user = tokenData.getUser();
 		webSocketHandleService.onMessage(chatRequest.getMessage(),user);
-		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("onlineChat.chat.success"),null);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"onlineChat.chat.success",null);
 	}
 	
 }

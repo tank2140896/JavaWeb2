@@ -14,7 +14,10 @@ public class CommonConstant {
 	//点
 	public static final String DOT = ".";
 	
-	//回车
-	public static final String ENTER = "\r\n";
+	//回车(windows)
+	public static final String ENTER_WINDOWS = "\r\n";
+	
+	//回车(linux)
+	public static final String ENTER_LINUX = "\n";
 	
 }

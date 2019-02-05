@@ -19,7 +19,7 @@ import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.base.BaseValidatedGroup;
 import com.javaweb.constant.CommonConstant;
-import com.javaweb.constant.SystemConstant;
+import com.javaweb.constant.HttpCodeEnum;
 import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.TokenData;
@@ -34,20 +34,19 @@ public class ModuleController extends BaseController {
 	@PostMapping("/list")
 	public BaseResponseResult moduleList(HttpServletRequest request,@RequestBody ModuleListRequest moduleListRequest){
 		Page page = moduleService.moduleList(moduleListRequest);
-		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("module.list.success"),page);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.list.success",page);
 	}
 	
 	@DeleteMapping("/delete/{moduleId}")
 	public BaseResponseResult moduleDelete(@PathVariable(name="moduleId",required=true) String moduleId){
 		moduleService.moduleDelete(moduleId);
-		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("module.delete.success"),null);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.delete.success",null);
 	}
 	
 	@PostMapping("/add")
 	public BaseResponseResult moduleAdd(HttpServletRequest request,@RequestBody @Validated({BaseValidatedGroup.add.class}) Module module,BindingResult bindingResult){
-		BaseResponseResult baseResponseResult = new BaseResponseResult();
 		if(bindingResult.hasErrors()){
-			baseResponseResult = new BaseResponseResult(SystemConstant.VALIDATE_ERROR,getValidateMessage(bindingResult),CommonConstant.EMPTY_VALUE);
+			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult,CommonConstant.EMPTY_VALUE);
 		}else{
 			TokenData tokenData = getTokenData(request);
 			User currentUser = tokenData.getUser();
@@ -55,31 +54,28 @@ public class ModuleController extends BaseController {
 			module.setCreateDate(DateUtil.getDefaultDate());
 			module.setCreator(currentUser.getUserName());
 			moduleService.moduleAdd(module);
-			baseResponseResult = new BaseResponseResult(SystemConstant.SUCCESS,getMessage("module.add.success"),null);
+			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.add.success",null);
 		}
-		return baseResponseResult;
 	}
 	
 	@PutMapping("/modify")
 	public BaseResponseResult moduleModify(HttpServletRequest request,@RequestBody @Validated({BaseValidatedGroup.update.class}) Module module,BindingResult bindingResult){
-		BaseResponseResult baseResponseResult = new BaseResponseResult();
 		if(bindingResult.hasErrors()){
-			baseResponseResult = new BaseResponseResult(SystemConstant.VALIDATE_ERROR,getValidateMessage(bindingResult),CommonConstant.EMPTY_VALUE);
+			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult,CommonConstant.EMPTY_VALUE);
 		}else{
 			TokenData tokenData = getTokenData(request);
 			User currentUser = tokenData.getUser();
 			module.setUpdateDate(DateUtil.getDefaultDate());
 			module.setUpdater(currentUser.getUserName());
 			moduleService.moduleModify(module);
-			baseResponseResult = new BaseResponseResult(SystemConstant.SUCCESS,getMessage("module.modify.success"),null);
+			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.modify.success",null);
 		}
-		return baseResponseResult;
 	}
 	
 	@GetMapping("/detail/{moduleId}")
 	public BaseResponseResult moduleDetail(@PathVariable(name="moduleId",required=true) String moduleId){
 		Module module = moduleService.moduleDetail(moduleId);
-		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("module.detail.success"),module);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.detail.success",module);
 	}
 
 }

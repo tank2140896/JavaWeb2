@@ -1,8 +1,7 @@
 ﻿一、重要说明：
 本项目采用前后端分离方式（开发分离和部署分离），前端采用Angular
 二、项目目前结构简述：
-1、JavaWeb2-api——主要为前端提供接口
-2、JavaWeb2-angular——前端实现（angular、angular-cli、node、typescript）
+JavaWeb2-angular——前端实现（angular、angular-cli、node、typescript）
 三、Angular一些知识点个人简记：
 1、package.json简要说明
 1.1、devDependencies和dependencies的区别
@@ -72,4 +71,15 @@ declare var $: any;
 4.3、table参考：ng-treetable
 4.4、样式：NG-ZORRO
 4.5、插件：ngxDatePicker
-
+5、后期改进计划
+5.1、更换日期插件（优先）或深入研究现在的日期插件
+5.2、更换弹出框插件（优先）或深入研究现在的弹出框插件
+5.3、优化或改进表格在“数据获取中”、“无数据”、“有数据”这三种状态下的界面表现形式及其相关代码，且
+5.4、前端校验
+5.5、前端国际化
+5.6、加入消息提示框
+5.7、优化角色模块分配样式
+5.8、优化登录界面验证码样式
+6、参考
+6.1、前端需要有一定的TypeScripe知识基础，参考：https://www.tslang.cn/index.html
+6.2、前端Angular和RxJS知识点，项目部署后参考：http://localhost:4200/#/demo

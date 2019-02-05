@@ -22,7 +22,7 @@ import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.base.BaseValidatedGroup;
 import com.javaweb.constant.CommonConstant;
-import com.javaweb.constant.SystemConstant;
+import com.javaweb.constant.HttpCodeEnum;
 import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.TokenData;
@@ -39,20 +39,19 @@ public class UserController extends BaseController {
 		TokenData tokenData = getTokenData(request);
 		userListRequest.setLevel(tokenData.getUser().getLevel());
 		Page page = userService.userList(userListRequest);
-		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("user.list.success"),page);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.list.success",page);
 	}
 	
 	@DeleteMapping("/delete/{userId}")
 	public BaseResponseResult userDelete(@PathVariable(name="userId",required=true) String userId){
 		userService.userDelete(userId);
-		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("user.delete.success"),null);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.delete.success",null);
 	}
 	
 	@PostMapping("/add")
 	public BaseResponseResult userAdd(HttpServletRequest request,@RequestBody @Validated({BaseValidatedGroup.add.class}) User user,BindingResult bindingResult){
-		BaseResponseResult baseResponseResult = new BaseResponseResult();
 		if(bindingResult.hasErrors()){
-			baseResponseResult = new BaseResponseResult(SystemConstant.VALIDATE_ERROR,getValidateMessage(bindingResult),CommonConstant.EMPTY_VALUE);
+			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult,CommonConstant.EMPTY_VALUE);
 		}else{
 			TokenData tokenData = getTokenData(request);
 			User currentUser = tokenData.getUser();
@@ -62,37 +61,34 @@ public class UserController extends BaseController {
 			user.setCreateDate(DateUtil.getDefaultDate());
 			user.setCreator(currentUser.getUserName());
 			userService.userAdd(user);
-			baseResponseResult = new BaseResponseResult(SystemConstant.SUCCESS,getMessage("user.add.success"),null);
+			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.add.success",null);
 		}
-		return baseResponseResult;
 	}
 	
 	@PutMapping("/modify")
 	public BaseResponseResult userModify(HttpServletRequest request,@RequestBody @Validated({BaseValidatedGroup.update.class}) User user,BindingResult bindingResult){
-		BaseResponseResult baseResponseResult = new BaseResponseResult();
 		if(bindingResult.hasErrors()){
-			baseResponseResult = new BaseResponseResult(SystemConstant.VALIDATE_ERROR,getValidateMessage(bindingResult),CommonConstant.EMPTY_VALUE);
+			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,getValidateMessage(bindingResult),CommonConstant.EMPTY_VALUE);
 		}else{
 			TokenData tokenData = getTokenData(request);
 			User currentUser = tokenData.getUser();
 			user.setUpdateDate(DateUtil.getDefaultDate());
 			user.setUpdater(currentUser.getUserName());
 			userService.userModify(user);
-			baseResponseResult = new BaseResponseResult(SystemConstant.SUCCESS,getMessage("user.modify.success"),null);
+			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.modify.success",null);
 		}
-		return baseResponseResult;
 	}
 	
 	@GetMapping("/detail/{userId}")
 	public BaseResponseResult userDetail(@PathVariable(name="userId",required=true) String userId){
 		User user = userService.userDetail(userId);
-		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("user.detail.success"),user);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.detail.success",user);
 	}
 	
 	@GetMapping("/userRoleInfo/{userId}")
 	public BaseResponseResult userRoleInfo(@PathVariable(name="userId",required=true) String userId){
 		List<RoleInfoResponse> list = userService.userRoleInfo(userId);
-		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("user.userRoleInfo.success"),list);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.userRoleInfo.success",list);
 	}
 	
 	@PostMapping("/roleAssignment/{userId}")
@@ -101,7 +97,7 @@ public class UserController extends BaseController {
 		map.put("userId",userId);
 		map.put("list",list);
 		userService.roleAssignment(map);
-		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("user.roleAssignment.success"),null);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.roleAssignment.success",null);
 	}
 	
 }

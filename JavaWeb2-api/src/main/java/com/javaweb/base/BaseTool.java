@@ -12,6 +12,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 
 import com.javaweb.constant.CommonConstant;
+import com.javaweb.constant.HttpCodeEnum;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.web.eo.TokenData;
 
@@ -48,6 +49,14 @@ public class BaseTool extends BaseInject {
 			message = getMessage(list.get(0).getDefaultMessage());
 		}
 		return message;
+	}
+	
+	public BaseResponseResult getBaseResponseResult(HttpCodeEnum httpCodeEnum,String messageKey,Object data) {
+		return new BaseResponseResult(httpCodeEnum.getCode(),getMessage(messageKey),data);
+	}
+	
+	public BaseResponseResult getBaseResponseResult(HttpCodeEnum httpCodeEnum,BindingResult bindingResult,Object data) {
+		return new BaseResponseResult(httpCodeEnum.getCode(),getValidateMessage(bindingResult),data);
 	}
 	
 }

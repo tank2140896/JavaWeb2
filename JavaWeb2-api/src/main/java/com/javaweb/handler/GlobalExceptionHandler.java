@@ -9,7 +9,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.base.BaseTool;
 import com.javaweb.constant.CommonConstant;
-import com.javaweb.constant.SystemConstant;
+import com.javaweb.constant.HttpCodeEnum;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler extends BaseTool {
@@ -21,9 +21,9 @@ public class GlobalExceptionHandler extends BaseTool {
 		//e.printStackTrace();
 		//logger.error(e.getMessage());
 		if(e instanceof NoHandlerFoundException){
-			return new BaseResponseResult(SystemConstant.NOT_FOUND,getMessage("validated.permission.notFound"),CommonConstant.EMPTY_VALUE);
+			return getBaseResponseResult(HttpCodeEnum.NOT_FOUND,"validated.permission.notFound",CommonConstant.EMPTY_VALUE);
 		}else{
-			return new BaseResponseResult(SystemConstant.INTERNAL_ERROR,getMessage("validated.permission.internalError"),CommonConstant.EMPTY_VALUE);
+			return getBaseResponseResult(HttpCodeEnum.INTERNAL_ERROR,"validated.permission.internalError",CommonConstant.EMPTY_VALUE);
 		}
     }  
 

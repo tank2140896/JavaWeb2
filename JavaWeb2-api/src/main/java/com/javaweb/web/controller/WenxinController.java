@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.config.WeixinConfig;
-import com.javaweb.constant.SystemConstant;
+import com.javaweb.constant.HttpCodeEnum;
 import com.javaweb.util.core.HttpUtil;
 import com.javaweb.util.core.SecretUtil;
 import com.javaweb.util.core.StringUtil;
@@ -72,9 +72,9 @@ public class WenxinController extends BaseController {
 		String openQrcodeUrl = null;
 		try{
 			openQrcodeUrl = String.format(weixinConfig.getWxopenQrcodeUrl(),weixinConfig.getWxopenAppid(),URLEncoder.encode(weixinConfig.getWxopenRedirectUrl(),"UTF-8"),currentPageUrl);
-			return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("weixin.getLoginUrlSuccess"),openQrcodeUrl);
+			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"weixin.getLoginUrlSuccess",openQrcodeUrl);
 		}catch(Exception e){
-			return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("weixin.getLoginUrlFail"),openQrcodeUrl);
+			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"weixin.getLoginUrlFail",openQrcodeUrl);
 		}
 	}
 	
@@ -89,9 +89,9 @@ public class WenxinController extends BaseController {
 			AccessTokenResponse accessTokenResponse = new ObjectMapper().readValue(HttpUtil.defaultGetRequest(url),AccessTokenResponse.class);
 			url = String.format(weixinConfig.getWxopenUserInfo(),accessTokenResponse.getAccess_token(),accessTokenResponse.getOpenid());
 			UserInfoResponse userInfoResponse = new ObjectMapper().readValue(HttpUtil.defaultGetRequest(url),UserInfoResponse.class);
-			return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("weixin.userLoginCallBackSuccess"),userInfoResponse);
+			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"weixin.userLoginCallBackSuccess",userInfoResponse);
 		}catch(Exception e){
-			return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("weixin.userLoginCallBackFail"),null);
+			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"weixin.userLoginCallBackFail",null);
 		}
 	}
 	

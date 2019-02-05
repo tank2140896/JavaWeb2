@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.constant.CommonConstant;
+import com.javaweb.constant.HttpCodeEnum;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.user.UserLoginRequest;
@@ -40,26 +41,26 @@ public class AllOpenController extends BaseController {
 	@PostMapping("/login")
 	public BaseResponseResult login(@RequestBody @Validated UserLoginRequest userLogin,BindingResult bindingResult,HttpServletRequest request){
 		if(bindingResult.hasErrors()){
-			return new BaseResponseResult(SystemConstant.VALIDATE_ERROR,getValidateMessage(bindingResult),CommonConstant.EMPTY_VALUE);
+			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult,CommonConstant.EMPTY_VALUE);
 		}
 		if(kaptchaCheck(userLogin,request)){
-			return new BaseResponseResult(SystemConstant.VALIDATE_ERROR,getMessage("login.user.kaptcha"),CommonConstant.EMPTY_VALUE);
+			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"login.user.kaptcha",CommonConstant.EMPTY_VALUE);
 		}
 		if(SystemConstant.SYSTEM_DEFAULT_USER_NAME.equals(userLogin.getUsername())&&SystemConstant.SYSTEM_DEFAULT_USER_PASSWORD.equals(userLogin.getPassword())){
 			User user = SystemConstant.SYSTEM_DEFAULT_USER;
 			TokenData token = getToken(true,user,userLogin.getType());
 			setDefaultDataToRedis(user.getUserId()+","+userLogin.getType(),token);
 			//request.getSession().setAttribute(user.getUserId(),token);
-			return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("login.user.loginSuccess"),token);
+			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.loginSuccess",token);
 		}
 		User user = userService.userLogin(userLogin);
 		if(user==null){
-			return new BaseResponseResult(SystemConstant.LOGIN_FAIL,getMessage("login.user.userNameOrPassword"),CommonConstant.EMPTY_VALUE);
+			return getBaseResponseResult(HttpCodeEnum.LOGIN_FAIL,"login.user.userNameOrPassword",CommonConstant.EMPTY_VALUE);
 		}
 		TokenData token = getToken(false,user,userLogin.getType());
 		setDefaultDataToRedis(user.getUserId()+","+userLogin.getType(),token);
 		//request.getSession().setAttribute(user.getUserId(),token);
-		return new BaseResponseResult(SystemConstant.SUCCESS,getMessage("login.user.loginSuccess"),token);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.loginSuccess",token);
 	}
 	
 	//验证码
@@ -80,22 +81,22 @@ public class AllOpenController extends BaseController {
 				  
 	@RequestMapping(value="/requestParameterLost",method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 	public BaseResponseResult requestParameterLost() {
-		return new BaseResponseResult(SystemConstant.REQUEST_PARAMETER_LOST,getMessage("validated.permission.requestParameterLost"),CommonConstant.EMPTY_VALUE);
+		return getBaseResponseResult(HttpCodeEnum.REQUEST_PARAMETER_LOST,"validated.permission.requestParameterLost",CommonConstant.EMPTY_VALUE);
 	}
 	
 	@RequestMapping(value="/invalidRequest",method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 	public BaseResponseResult invalidRequest(){
-		return new BaseResponseResult(SystemConstant.INVALID_REQUEST,getMessage("validated.permission.invalidRequest"),CommonConstant.EMPTY_VALUE);
+		return getBaseResponseResult(HttpCodeEnum.INVALID_REQUEST,"validated.permission.invalidRequest",CommonConstant.EMPTY_VALUE);
 	}
 	
 	@RequestMapping(value="/requestParameterError",method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 	public BaseResponseResult requestParameterError(){
-		return new BaseResponseResult(SystemConstant.INVALID_REQUEST,getMessage("validated.permission.requestParameterError"),CommonConstant.EMPTY_VALUE);
+		return getBaseResponseResult(HttpCodeEnum.INVALID_REQUEST,"validated.permission.requestParameterError",CommonConstant.EMPTY_VALUE);
 	}
 	
 	@RequestMapping(value="/noAuthory",method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 	public BaseResponseResult noAuthory(){
-		return new BaseResponseResult(SystemConstant.NO_AUTHORY,getMessage("validated.permission.noAuthory"),CommonConstant.EMPTY_VALUE);
+		return getBaseResponseResult(HttpCodeEnum.NO_AUTHORY,"validated.permission.noAuthory",CommonConstant.EMPTY_VALUE);
 	}
 	
 	//token数据封装
