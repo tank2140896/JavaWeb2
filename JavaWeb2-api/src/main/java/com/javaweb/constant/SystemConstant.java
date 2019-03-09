@@ -30,7 +30,7 @@ public class SystemConstant {
 	
 	public static final Long SYSTEM_DEFAULT_KAPTCHA_TIME_OUT = 5L;
 	
-	public static final String ADMIN = "admin2018";
+	public static final String ADMIN = "admin123456";
 	
 	public static final String HEAD_USERID = "userId";
 	

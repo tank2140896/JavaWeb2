@@ -43,9 +43,11 @@ public class AllOpenController extends BaseController {
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult,CommonConstant.EMPTY_VALUE);
 		}
+		/** 验证码处理
 		if(kaptchaCheck(userLogin,request)){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"login.user.kaptcha",CommonConstant.EMPTY_VALUE);
 		}
+		*/
 		if(SystemConstant.SYSTEM_DEFAULT_USER_NAME.equals(userLogin.getUsername())&&SystemConstant.SYSTEM_DEFAULT_USER_PASSWORD.equals(userLogin.getPassword())){
 			User user = SystemConstant.SYSTEM_DEFAULT_USER;
 			TokenData token = getToken(true,user,userLogin.getType());
@@ -100,7 +102,7 @@ public class AllOpenController extends BaseController {
 	}
 	
 	//token数据封装
-	private TokenData getToken(Boolean adminFlag,User user,String type){
+	protected TokenData getToken(Boolean adminFlag,User user,String type){
 		TokenData tokenData = new TokenData();
 		Map<String,Object> map = new HashMap<>();
 		map.put("adminFlag", adminFlag);
@@ -121,7 +123,7 @@ public class AllOpenController extends BaseController {
 	}
 	
 	//封装成树形结构集合
-	private List<Module> setTreeList(List<Module> originList,Module module){
+	protected List<Module> setTreeList(List<Module> originList,Module module){
 		List<Module> moduleList = new ArrayList<>();
 		for (int i = 0; i < originList.size(); i++) {
 			Module currentModule = originList.get(i);
@@ -134,7 +136,7 @@ public class AllOpenController extends BaseController {
 	}
 	
 	//验证码单独校验
-	private boolean kaptchaCheck(UserLoginRequest userLogin,HttpServletRequest request){
+	protected boolean kaptchaCheck(UserLoginRequest userLogin,HttpServletRequest request){
 		boolean result = true;
 		String sessionId = request.getSession().getId();
 	    if(sessionId==null){

@@ -1,4 +1,0 @@
-<div *ngFor="let i of list">
-    <input type="checkbox" name="{{i.moduleId}}" [(ngModel)]="i.checkFlag"/><span>{{i.moduleName}}</span>
-    <role-menuAssignmentRecursion [list]="i.list"></role-menuAssignmentRecursion>
-</div>

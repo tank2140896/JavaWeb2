@@ -128,7 +128,7 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
-INSERT INTO `user` VALUES ('7c90a994-9a26-4531-89eb-b1523c3ceb7c', 'qqq123', 'asdasd1343', 'a', 'b', 'c', null, 'admin2018', null, '1', 'd', '0', '2018-01-28 10:53:35', 'admin2018', '2018-01-28 14:43:02', 'admin2018', '0');
+INSERT INTO `user` VALUES ('7c90a994-9a26-4531-89eb-b1523c3ceb7c', '123qqq', 'asdasd1343', 'a', 'b', 'c', null, 'admin2018', null, '1', 'd', '0', '2018-01-28 10:53:35', 'admin2018', '2018-01-28 14:43:02', 'admin2018', '0');
 
 -- ----------------------------
 -- Table structure for `user_role`

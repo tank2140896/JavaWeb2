@@ -8,11 +8,14 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.javaweb.constant.CommonConstant;
+import com.javaweb.constant.JsonTypeEnum;
+
 import net.sf.json.JSONObject;
 
-import com.javaweb.constant.CommonConstant;
-
 public class StringUtil{
+	
+	public static final Pattern NUMBER_PATTERN = Pattern.compile("[\\d]+[.]?[\\d]*");//数字的正则
 	
 	//处理字符串的null值,如果为null返回空
 	public static String handleNullString(String str) {
@@ -92,9 +95,6 @@ public class StringUtil{
 					JSONObject joo = new JSONObject();
 					joo.put("isEnd",i==each.length()-1?true:false);
 					tmp.put(s,joo);
-					/**tmp = (JSONObject)tmp.get(s);
-				}else{
-					tmp = (JSONObject)tmp.get(s);*/
 				}
 				tmp = (JSONObject)tmp.get(s);//对象引用精髓所在
 			}
@@ -122,6 +122,28 @@ public class StringUtil{
 			}
 		}
 		return false;
+	}
+	
+	//获取JSON类型
+	public static JsonTypeEnum getJsonType(Object obj){
+		JsonTypeEnum jsonTypeEnum = null;
+		if(obj==null){
+			jsonTypeEnum = JsonTypeEnum.NULL;
+		}else{
+			String str = obj.toString();
+			if(str.startsWith("[")){
+				jsonTypeEnum = JsonTypeEnum.ARRAY;
+			}else if(str.startsWith("{")){
+				jsonTypeEnum = JsonTypeEnum.OBJECT;
+			}else if("true".equals(str)||"false".equals(str)){
+				jsonTypeEnum = JsonTypeEnum.BOOLEAN;
+			}else if(NUMBER_PATTERN.matcher(str).matches()){
+				jsonTypeEnum = JsonTypeEnum.NUMBER;
+			}else{
+				jsonTypeEnum = JsonTypeEnum.STRING;
+			}
+		}
+		return jsonTypeEnum;
 	}
 	
 }

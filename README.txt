@@ -1,7 +1,7 @@
 ﻿一、环境依赖
 1、jdk8
 2、maven3.3+
-3、redis最新版本
+3、redis4.0.8+
 4、mysql5.6+
 二、使用前重要说明：
 1、本项目使用redis存储session，但是没用spring-session-redis（写法在代码中也有参考），而是采用自己设置session到redis
@@ -37,3 +37,4 @@ http {
 7、优化后端验证码的代码
 8、后端将采用JAVA10及函数式编程（WebFlux/RxJava2）改造（此技术较新同时改动也较大）
 9、将JAVA算法改用C语言实现，JAVA本地调用C语言的实现方法
+10、根据JSON字符串可以自动生成实体类代码
