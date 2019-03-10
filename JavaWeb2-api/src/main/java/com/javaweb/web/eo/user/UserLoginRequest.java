@@ -3,6 +3,8 @@ package com.javaweb.web.eo.user;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import com.javaweb.validate.UserNameValidate;
+
 public class UserLoginRequest {
 
 	@NotNull(message="validated.userLogin.userName.notNull")
@@ -13,12 +15,15 @@ public class UserLoginRequest {
 	@Pattern(regexp="^(?![^a-zA-Z]+$)(?!\\D+$).{6,20}$",message="validated.user.userName.pattern")
 	private String password;
 	
-	@Pattern(regexp="^[1-9]$",message="validated.user.type.pattern")
+	@UserNameValidate(easyWayCheck=false,message="validated.user.type.pattern")//自定义校验
 	private String type;
 	
+	
+	/** ↓↓↓↓↓↓↓↓↓↓kaptcha和uuid仅在需要验证码时才会有用,此处没有用,可以不传↓↓↓↓↓↓↓↓↓↓ */
 	private String kaptcha;
 	
 	private String uuid;
+	/** ↑↑↑↑↑↑↑↑↑↑kaptcha和uuid仅在需要验证码时才会有用,此处没有用,可以不传↑↑↑↑↑↑↑↑↑↑ */
 
 	public String getUsername() {
 		return username;

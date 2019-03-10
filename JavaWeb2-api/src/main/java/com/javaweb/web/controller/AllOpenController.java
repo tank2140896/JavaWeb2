@@ -43,7 +43,7 @@ public class AllOpenController extends BaseController {
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult,CommonConstant.EMPTY_VALUE);
 		}
-		/** 验证码处理
+		/** 验证码校验
 		if(kaptchaCheck(userLogin,request)){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"login.user.kaptcha",CommonConstant.EMPTY_VALUE);
 		}
@@ -51,8 +51,8 @@ public class AllOpenController extends BaseController {
 		if(SystemConstant.SYSTEM_DEFAULT_USER_NAME.equals(userLogin.getUsername())&&SystemConstant.SYSTEM_DEFAULT_USER_PASSWORD.equals(userLogin.getPassword())){
 			User user = SystemConstant.SYSTEM_DEFAULT_USER;
 			TokenData token = getToken(true,user,userLogin.getType());
-			setDefaultDataToRedis(user.getUserId()+","+userLogin.getType(),token);
 			//request.getSession().setAttribute(user.getUserId(),token);
+			setDefaultDataToRedis(user.getUserId()+","+userLogin.getType(),token);
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.loginSuccess",token);
 		}
 		User user = userService.userLogin(userLogin);
@@ -60,27 +60,11 @@ public class AllOpenController extends BaseController {
 			return getBaseResponseResult(HttpCodeEnum.LOGIN_FAIL,"login.user.userNameOrPassword",CommonConstant.EMPTY_VALUE);
 		}
 		TokenData token = getToken(false,user,userLogin.getType());
-		setDefaultDataToRedis(user.getUserId()+","+userLogin.getType(),token);
 		//request.getSession().setAttribute(user.getUserId(),token);
+		setDefaultDataToRedis(user.getUserId()+","+userLogin.getType(),token);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.loginSuccess",token);
 	}
 	
-	//验证码
-	@GetMapping("/kaptcha/{uuid}")
-	public void kaptcha(HttpServletRequest request,HttpServletResponse response,@PathVariable(name="uuid",required=true) String uuid) throws Exception {
-		response.setHeader("Cache-Control", "no-store, no-cache");
-	    response.setContentType("image/jpeg");
-	    String text = defaultKaptcha.createText();
-	    String sessionId = request.getSession().getId();
-	    if(sessionId==null){
-	    	sessionId = uuid;
-	    }
-	    setDataToRedis(sessionId,text,SystemConstant.SYSTEM_DEFAULT_KAPTCHA_TIME_OUT,TimeUnit.MINUTES);
-	    BufferedImage image = defaultKaptcha.createImage(text);
-	    ServletOutputStream out = response.getOutputStream();
-	    ImageIO.write(image,"jpg",out);
-	}
-				  
 	@RequestMapping(value="/requestParameterLost",method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 	public BaseResponseResult requestParameterLost() {
 		return getBaseResponseResult(HttpCodeEnum.REQUEST_PARAMETER_LOST,"validated.permission.requestParameterLost",CommonConstant.EMPTY_VALUE);
@@ -135,7 +119,23 @@ public class AllOpenController extends BaseController {
 		return moduleList;
 	}
 	
-	//验证码单独校验
+	//验证码
+	@GetMapping("/kaptcha/{uuid}")
+	public void kaptcha(HttpServletRequest request,HttpServletResponse response,@PathVariable(name="uuid",required=true) String uuid) throws Exception {
+		response.setHeader("Cache-Control", "no-store, no-cache");
+	    response.setContentType("image/jpeg");
+	    String text = defaultKaptcha.createText();
+	    String sessionId = request.getSession().getId();
+	    if(sessionId==null){
+	    	sessionId = uuid;
+	    }
+	    setDataToRedis(sessionId,text,SystemConstant.SYSTEM_DEFAULT_KAPTCHA_TIME_OUT,TimeUnit.MINUTES);
+	    BufferedImage image = defaultKaptcha.createImage(text);
+	    ServletOutputStream out = response.getOutputStream();
+	    ImageIO.write(image,"jpg",out);
+	}
+	
+	//验证码校验
 	protected boolean kaptchaCheck(UserLoginRequest userLogin,HttpServletRequest request){
 		boolean result = true;
 		String sessionId = request.getSession().getId();
