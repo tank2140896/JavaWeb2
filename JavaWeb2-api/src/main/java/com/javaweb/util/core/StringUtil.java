@@ -1,5 +1,10 @@
 package com.javaweb.util.core;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.LineNumberReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
@@ -144,6 +149,38 @@ public class StringUtil{
 			}
 		}
 		return jsonTypeEnum;
+	}
+	
+	//将JOSN格式化文本转化为一行字符串
+	/**
+	原文本
+	{
+		"usernmae":"aaaaa",
+		"list":[1,2,3],
+		"p":{
+			"a":"我b c",
+			"b":["x","y","z"]
+		},
+		"age":17
+
+	}
+	转化后
+	{"usernmae":"aaaaa","list":[1,2,3],"p":{"a":"我b c","b":["x","y","z"]},"age":17}
+	*/
+	public static String jsonFormatFileToJosnString(File file,String charsetName) throws IOException {
+		StringBuilder stringBuilder = new StringBuilder();
+		try(LineNumberReader lineNumberReader = new LineNumberReader(new InputStreamReader(new FileInputStream(file),charsetName))){
+			String eachLine = null;
+			while((eachLine=lineNumberReader.readLine())!=null){
+				if(CommonConstant.EMPTY_VALUE.equals(eachLine)) {
+					continue;
+				}
+				stringBuilder.append(eachLine.trim());
+			}
+		}catch (IOException e) {
+			throw new IOException(e);
+		}
+		return stringBuilder.toString();
 	}
 	
 }
