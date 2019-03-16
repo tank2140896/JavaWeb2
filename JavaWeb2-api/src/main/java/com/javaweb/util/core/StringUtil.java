@@ -155,17 +155,16 @@ public class StringUtil{
 	/**
 	原文本
 	{
-		"usernmae":"aaaaa",
-		"list":[1,2,3],
-		"p":{
-			"a":"我b c",
-			"b":["x","y","z"]
+		"userName":"张三",
+		"score":[1,2,3],
+		"face":{
+			"positionCount":"我b c",
+			"image":["x","y","z"]
 		},
 		"age":17
-
 	}
 	转化后
-	{"usernmae":"aaaaa","list":[1,2,3],"p":{"a":"我b c","b":["x","y","z"]},"age":17}
+	{"userName":"张三","score":[1,2,3],"face":{"positionCount":"我b c","image":["x","y","z"]},"age":17}
 	*/
 	public static String jsonFormatFileToJosnString(File file,String charsetName) throws IOException {
 		StringBuilder stringBuilder = new StringBuilder();
