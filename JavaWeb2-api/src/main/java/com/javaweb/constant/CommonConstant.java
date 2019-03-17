@@ -14,6 +14,9 @@ public class CommonConstant {
 	//点
 	public static final String DOT = ".";
 	
+	//杠
+	public static final String BAR = "-";
+	
 	//回车(windows)
 	public static final String ENTER_WINDOWS = "\r\n";
 	

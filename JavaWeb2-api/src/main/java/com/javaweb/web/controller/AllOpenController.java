@@ -29,6 +29,7 @@ import com.javaweb.base.BaseResponseResult;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.HttpCodeEnum;
 import com.javaweb.constant.SystemConstant;
+import com.javaweb.util.core.DateUtil;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.user.UserLoginRequest;
 import com.javaweb.web.po.Module;
@@ -43,16 +44,15 @@ public class AllOpenController extends BaseController {
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult,CommonConstant.EMPTY_VALUE);
 		}
-		/** 验证码校验
-		if(kaptchaCheck(userLogin,request)){
-			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"login.user.kaptcha",CommonConstant.EMPTY_VALUE);
-		}
-		*/
-		if(SystemConstant.SYSTEM_DEFAULT_USER_NAME.equals(userLogin.getUsername())&&SystemConstant.SYSTEM_DEFAULT_USER_PASSWORD.equals(userLogin.getPassword())){
+		//验证码校验
+		//if(kaptchaCheck(userLogin,request)){
+		//	return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"login.user.kaptcha",CommonConstant.EMPTY_VALUE);
+		//}
+		if((SystemConstant.SYSTEM_DEFAULT_USER_NAME+SystemConstant.SYSTEM_DEFAULT_USER_PASSWORD).equals(userLogin.getUsername()+userLogin.getPassword())){
 			User user = SystemConstant.SYSTEM_DEFAULT_USER;
 			TokenData token = getToken(true,user,userLogin.getType());
-			//request.getSession().setAttribute(user.getUserId(),token);
-			setDefaultDataToRedis(user.getUserId()+","+userLogin.getType(),token);
+			String key = String.join(CommonConstant.COMMA,user.getUserId(),userLogin.getType(),secretToken(token.getToken()));
+			setDefaultDataToRedis(key,token);//request.getSession().setAttribute(user.getUserId(),token);
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.loginSuccess",token);
 		}
 		User user = userService.userLogin(userLogin);
@@ -60,8 +60,8 @@ public class AllOpenController extends BaseController {
 			return getBaseResponseResult(HttpCodeEnum.LOGIN_FAIL,"login.user.userNameOrPassword",CommonConstant.EMPTY_VALUE);
 		}
 		TokenData token = getToken(false,user,userLogin.getType());
-		//request.getSession().setAttribute(user.getUserId(),token);
-		setDefaultDataToRedis(user.getUserId()+","+userLogin.getType(),token);
+		String key = String.join(CommonConstant.COMMA,user.getUserId(),userLogin.getType(),secretToken(token.getToken()));
+		setDefaultDataToRedis(key,token);//request.getSession().setAttribute(user.getUserId(),token);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.loginSuccess",token);
 	}
 	
@@ -85,8 +85,24 @@ public class AllOpenController extends BaseController {
 		return getBaseResponseResult(HttpCodeEnum.NO_AUTHORY,"validated.permission.noAuthory",CommonConstant.EMPTY_VALUE);
 	}
 	
+	//验证码
+	@GetMapping("/kaptcha/{uuid}")
+	public void kaptcha(HttpServletRequest request,HttpServletResponse response,@PathVariable(name="uuid",required=true) String uuid) throws Exception {
+		response.setHeader("Cache-Control", "no-store, no-cache");
+	    response.setContentType("image/jpeg");
+	    String text = defaultKaptcha.createText();
+	    String sessionId = request.getSession().getId();
+	    if(sessionId==null){
+	    	sessionId = uuid;
+	    }
+	    setDataToRedis(sessionId,text,SystemConstant.SYSTEM_DEFAULT_KAPTCHA_TIME_OUT,TimeUnit.MINUTES);
+	    BufferedImage image = defaultKaptcha.createImage(text);
+	    ServletOutputStream out = response.getOutputStream();
+	    ImageIO.write(image,"jpg",out);
+	}
+	
 	//token数据封装
-	protected TokenData getToken(Boolean adminFlag,User user,String type){
+	protected TokenData getToken(boolean adminFlag,User user,String type){
 		TokenData tokenData = new TokenData();
 		Map<String,Object> map = new HashMap<>();
 		map.put("adminFlag", adminFlag);
@@ -106,6 +122,31 @@ public class AllOpenController extends BaseController {
 		return tokenData;
 	}
 	
+	//对token进行加密
+	protected String secretToken(String token) {
+		String date = DateUtil.getStringDate(DateUtil.DATETIME_PATTERN_TYPE2);
+		String tempArray[] = new String[token.length()];
+		for(int i=0;i<tempArray.length;i++){
+			tempArray[i] = String.valueOf(token.charAt(i));
+		}
+		for(int i=0;i<date.length();i++){
+			String str = String.valueOf(date.charAt(i));//获得日期字符串的每位数字
+			int m = i;
+			int n = Integer.parseInt(str);
+			str = tempArray[m];
+			tempArray[m] = tempArray[n];
+			tempArray[n] = str;
+		}
+		StringBuilder sb = new StringBuilder();
+		for(int i=0;i<tempArray.length;i++){
+			sb.append(tempArray[i]);
+		}
+		String out = sb.toString();
+		out = out.replaceAll(CommonConstant.BAR,CommonConstant.EMPTY_VALUE);
+		out = out.toUpperCase();
+		return out;
+	}
+	
 	//封装成树形结构集合
 	protected List<Module> setTreeList(List<Module> originList,Module module){
 		List<Module> moduleList = new ArrayList<>();
@@ -117,22 +158,6 @@ public class AllOpenController extends BaseController {
 			}
 		}
 		return moduleList;
-	}
-	
-	//验证码
-	@GetMapping("/kaptcha/{uuid}")
-	public void kaptcha(HttpServletRequest request,HttpServletResponse response,@PathVariable(name="uuid",required=true) String uuid) throws Exception {
-		response.setHeader("Cache-Control", "no-store, no-cache");
-	    response.setContentType("image/jpeg");
-	    String text = defaultKaptcha.createText();
-	    String sessionId = request.getSession().getId();
-	    if(sessionId==null){
-	    	sessionId = uuid;
-	    }
-	    setDataToRedis(sessionId,text,SystemConstant.SYSTEM_DEFAULT_KAPTCHA_TIME_OUT,TimeUnit.MINUTES);
-	    BufferedImage image = defaultKaptcha.createImage(text);
-	    ServletOutputStream out = response.getOutputStream();
-	    ImageIO.write(image,"jpg",out);
 	}
 	
 	//验证码校验
