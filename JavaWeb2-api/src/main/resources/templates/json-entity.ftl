@@ -4,9 +4,14 @@ ${importOut}
 </#list>
 
 </#if>
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class ${className} {
 
 <#list jsonList as jl>
+	@JsonProperty(value="${jl.attribute}")
     private ${jl.javaType} ${jl.attributeLowerCase};
     
 </#list>
