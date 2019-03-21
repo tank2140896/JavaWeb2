@@ -17,6 +17,7 @@ import com.javaweb.util.entity.JavaJsonFtl;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapper;
 import freemarker.template.Template;
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 public class FreemarkerUtil {
@@ -81,12 +82,12 @@ public class FreemarkerUtil {
 		}
 		map.put("jsonList",list);
 		map.put("fileName",fileName);
-		String importString = "";
+		String importString = CommonConstant.EMPTY_VALUE;
 		Set<String> set = importMap.keySet();
 		for(String str:set) {
 			importString+=(str+",");
 		}
-		map.put("imports",importString.equals("")?"":importString.substring(0,importString.length()-1));
+		map.put("imports",importString.equals(CommonConstant.EMPTY_VALUE)?CommonConstant.EMPTY_VALUE:importString.substring(0,importString.length()-1));
 		freemarkerGenerate(map,outputFilePath);
 	}
 	

@@ -14,8 +14,6 @@ import com.javaweb.config.context.ApplicationContextHelper;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.PatternConstant;
 import com.javaweb.constant.SystemConstant;
-import com.javaweb.interceptor.except.ExceptUrl;
-import com.javaweb.interceptor.except.ExceptUrlImpl;
 import com.javaweb.web.eo.TokenData;
 
 @Component
@@ -25,8 +23,6 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 	//private Logger urlLog = LoggerFactory.getLogger("urlLog");//自定义输出日志
 	
 	private RedisTemplate<String,Object> redisTemplate = null;
-	
-	private ExceptUrl exceptUrl = new ExceptUrlImpl();
 	
 	/**
 	 * httpServletRequest.getRequestURI()            -------------------- /javaweb/app/html/home.html
@@ -43,10 +39,6 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 		//RedisTemplate redisTemplate = (RedisTemplate) factory.getBean("redisTemplate"); 
 		//RedisTemplate<String,Object> redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
 		//String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();  
-		if(exceptUrl.active()) {
-			return exceptUrl.pass(request);
-		}
-		System.err.println(1);
 		if(redisTemplate==null){
 			redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
 		}
