@@ -22,9 +22,11 @@ import net.sf.json.JSONObject;
 public class FreemarkerUtil {
 	
 	//outputFilePath的格式形如C:\\Users\\admin\\Desktop\\test\\
+	//String jsonString = StringUtil.jsonFormatFileToJosnString(new File("C:\\Users\\admin\\Desktop\\test.txt"),"UTF-8");
+	//FreemarkerUtil.freemarkerForJsonGenerate(jsonString,"json-entity.ftl",null,"C:\\Users\\admin\\Desktop\\test\\");
 	@SuppressWarnings("unchecked")
 	public static void freemarkerForJsonGenerate(String jsonString,String templateFileName,String fileName,final String outputFilePath) throws Exception {
-		if(fileName==null||CommonConstant.EMPTY_VALUE.equals(fileName)) {
+		if(fileName==null||"".equals(fileName)) {
 			fileName = "RootJson.java";
 		}
 		Map<String,String> importMap = new HashMap<>();
@@ -39,7 +41,8 @@ public class FreemarkerUtil {
 			String key = it.next();
 			String value = jo.get(key).toString();
 			/** ↓↓↓↓↓↓↓↓↓↓未做更加细致的处理,JSON类型的key值请保持驼峰法命名规则↓↓↓↓↓↓↓↓↓↓ */
-			jjf.setAttributeLowerCase(key);
+			jjf.setAttribute(key);
+			jjf.setAttributeLowerCase(key.substring(0,1).toLowerCase()+key.substring(1,key.length()));
 			jjf.setAttributeUpperCase(key.substring(0,1).toUpperCase()+key.substring(1,key.length()));
 			/** ↑↑↑↑↑↑↑↑↑↑未做更加细致的处理,JSON类型的key值请保持驼峰法命名规则↑↑↑↑↑↑↑↑↑↑ */
 			JsonTypeEnum jte = StringUtil.getJsonType(jo.get(key));
@@ -59,10 +62,10 @@ public class FreemarkerUtil {
 				//importMap.put("import "+jjf.getAttributeUpperCase()+";","import "+jjf.getAttributeUpperCase()+";");//同包中的类不需要引用
 				freemarkerForJsonGenerate(value,templateFileName,jjf.getAttributeUpperCase()+".java",outputFilePath);
 			}else {//数组类型
-				if(value.startsWith("{")) {
+				if(value.startsWith("[{")) {
 					jjf.setJavaType("List<"+jjf.getAttributeUpperCase()+">");
 					//importMap.put("import "+jjf.getAttributeUpperCase()+";","import "+jjf.getAttributeUpperCase()+";");//同包中的类不需要引用
-					freemarkerForJsonGenerate(value,templateFileName,jjf.getAttributeUpperCase()+".java",outputFilePath);
+					freemarkerForJsonGenerate(JSONArray.fromObject(value).getString(0),templateFileName,jjf.getAttributeUpperCase()+".java",outputFilePath);
 				}else if(value.startsWith("[\"")) {
 					jjf.setJavaType("List<String>");
 				}else {
@@ -78,12 +81,12 @@ public class FreemarkerUtil {
 		}
 		map.put("jsonList",list);
 		map.put("fileName",fileName);
-		String importString = CommonConstant.EMPTY_VALUE;
+		String importString = "";
 		Set<String> set = importMap.keySet();
 		for(String str:set) {
 			importString+=(str+",");
 		}
-		map.put("imports",importString.equals(CommonConstant.EMPTY_VALUE)?CommonConstant.EMPTY_VALUE:importString.substring(0,importString.length()-1));
+		map.put("imports",importString.equals("")?"":importString.substring(0,importString.length()-1));
 		freemarkerGenerate(map,outputFilePath);
 	}
 	
