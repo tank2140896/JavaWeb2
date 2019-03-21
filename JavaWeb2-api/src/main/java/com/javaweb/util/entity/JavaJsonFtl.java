@@ -3,6 +3,8 @@ package com.javaweb.util.entity;
 public class JavaJsonFtl {
 	
 	private String javaType;
+	
+	private String attribute;
 
 	private String attributeLowerCase;
 	
@@ -14,6 +16,14 @@ public class JavaJsonFtl {
 
 	public void setJavaType(String javaType) {
 		this.javaType = javaType;
+	}
+
+	public String getAttribute() {
+		return attribute;
+	}
+
+	public void setAttribute(String attribute) {
+		this.attribute = attribute;
 	}
 
 	public String getAttributeLowerCase() {
