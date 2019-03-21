@@ -135,17 +135,19 @@ public class StringUtil{
 		if(obj==null){
 			jsonTypeEnum = JsonTypeEnum.NULL;
 		}else{
-			String str = obj.toString();
-			if(str.startsWith("[")){
-				jsonTypeEnum = JsonTypeEnum.ARRAY;
-			}else if(str.startsWith("{")){
-				jsonTypeEnum = JsonTypeEnum.OBJECT;
-			}else if("true".equals(str)||"false".equals(str)){
-				jsonTypeEnum = JsonTypeEnum.BOOLEAN;
-			}else if(NUMBER_PATTERN.matcher(str).matches()){
-				jsonTypeEnum = JsonTypeEnum.NUMBER;
-			}else{
+			if(obj instanceof String){
 				jsonTypeEnum = JsonTypeEnum.STRING;
+			}else{
+				String str = obj.toString();
+				if(str.startsWith("[")){
+					jsonTypeEnum = JsonTypeEnum.ARRAY;
+				}else if(str.startsWith("{")){
+					jsonTypeEnum = JsonTypeEnum.OBJECT;
+				}else if("true".equals(str)||"false".equals(str)){
+					jsonTypeEnum = JsonTypeEnum.BOOLEAN;
+				}else if(NUMBER_PATTERN.matcher(str).matches()){
+					jsonTypeEnum = JsonTypeEnum.NUMBER;
+				}
 			}
 		}
 		return jsonTypeEnum;
