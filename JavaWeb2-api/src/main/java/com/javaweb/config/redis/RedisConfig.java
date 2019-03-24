@@ -20,6 +20,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+//集群模式建议采用此配置
 @Configuration
 @EnableCaching
 public class RedisConfig {
@@ -59,7 +60,7 @@ public class RedisConfig {
 }
 
 /**
- * redis单一配置示例
+ * 单一模式建议采用此配置
  * spring.redis.host=192.168.0.103
  * spring.redis.password=
  * spring.redis.port=6379
