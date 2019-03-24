@@ -47,7 +47,6 @@ public class FreemarkerUtil {
 			jjf.setAttributeUpperCase(key.substring(0,1).toUpperCase()+key.substring(1,key.length()));
 			/** ↑↑↑↑↑↑↑↑↑↑未做更加细致的处理,JSON类型的key值请保持驼峰法命名规则↑↑↑↑↑↑↑↑↑↑ */
 			JsonTypeEnum jte = StringUtil.getJsonType(jo.get(key));
-			//System.out.println(key+","+jte);
 			if(JsonTypeEnum.STRING==jte||JsonTypeEnum.NULL==jte) {//字符串类型
 				jjf.setJavaType("String");
 			}else if(JsonTypeEnum.BOOLEAN==jte) {//布尔类型

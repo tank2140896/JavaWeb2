@@ -20,7 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @EnableCaching
 //@EnableRedisHttpSession(maxInactiveIntervalInSeconds=900)//900秒
 public class RedisConfig extends CachingConfigurerSupport {
-
+	
 	@Bean
 	public RedisTemplate<String,String> redisTemplate(RedisConnectionFactory redisConnectionFactory){
 		StringRedisTemplate stringRedisTemplate = new StringRedisTemplate(redisConnectionFactory);
