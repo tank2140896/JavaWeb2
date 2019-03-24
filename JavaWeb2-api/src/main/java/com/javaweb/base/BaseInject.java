@@ -38,6 +38,10 @@ public class BaseInject {
 	protected JdbcTemplate mysql_d2_JdbcTemplate;
 	
 	@Autowired
+	@Qualifier("redisTemplate1")
+	protected RedisTemplate<String,String> redisTemplate1;
+	
+	@Autowired
 	protected Environment environment;
 	
 	@Autowired  
@@ -52,7 +56,4 @@ public class BaseInject {
 	@Autowired
 	protected KafkaTemplate<String,String> kafkaTemplate;
 	
-	@Autowired
-	protected RedisTemplate<String,String> redisTemplate;
-
 }

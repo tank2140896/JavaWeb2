@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
+import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.HttpCodeEnum;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.web.eo.TokenData;
@@ -19,15 +20,20 @@ public class LoginAccessController extends BaseController {
 	@GetMapping("/logout")
 	public BaseResponseResult logout(HttpServletRequest request){
 		String userId = request.getHeader(SystemConstant.HEAD_USERID);
+		String token = request.getHeader(SystemConstant.HEAD_TOKEN);
 		String type = request.getHeader(SystemConstant.HEAD_TYPE);
-		redisTemplate.delete(userId+","+type);
-		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.logoutSuccess",null);
+		String key = String.join(CommonConstant.COMMA,userId,type,token);
+		boolean success = deleteFromRedisByKey(key);
+		if(success) {
+			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.logoutSuccess",null);
+		}else {
+			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.logoutFail",null);
+		}
 	}
 	
 	@GetMapping("/getRedisUserInfo")
 	public BaseResponseResult getRedisUserInfo(HttpServletRequest request){
-		//(TokenData)request.getSession().getAttribute(userId);
-		TokenData tokenData = getTokenData(request);
+		TokenData tokenData = getTokenData(request);//(TokenData)request.getSession().getAttribute(userId);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.getTokenDataSuccess",tokenData);
 	}
 	

@@ -38,5 +38,3 @@ http {
 8、后端将采用JAVA10及函数式编程（WebFlux/RxJava2）改造（此技术较新同时改动也较大）
 9、将JAVA算法改用C语言实现，JAVA本地调用C语言的实现方法
 10、整合logback
-11、redis多连接配置（RedisStandaloneConfiguration、JedisConnectionFactory、commons-pool2）
-12、@ConditionalOnProperty(value={"redis.use"},matchIfMissing=false)的应用（使用SpringBoot原生应用会导致注解无效）

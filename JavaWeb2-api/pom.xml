@@ -99,11 +99,20 @@
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
-    	<!-- 解析json（google的） -->
+    	<!-- 解析json(google的) -->
 		<dependency>
 		    <groupId>com.google.code.gson</groupId>
 		    <artifactId>gson</artifactId>
 		</dependency>
+		<!-- lettuce pool -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+        <dependency>
+	      	<groupId>io.lettuce</groupId>
+	      	<artifactId>lettuce-core</artifactId>
+	    </dependency>
 		<!-- Json-lib -->
 		<dependency>
 		    <groupId>net.sf.json-lib</groupId>
