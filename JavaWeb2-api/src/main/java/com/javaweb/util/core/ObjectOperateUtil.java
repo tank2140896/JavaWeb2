@@ -46,5 +46,15 @@ public class ObjectOperateUtil {
 		}
 		return targetList;
 	}
+	
+	//获取简单类名
+	public static String getSimpleClassName(Class<?> c,boolean firstWordLowerCase){
+		String simpleName = c.getSimpleName(); 
+		if(firstWordLowerCase){
+			return simpleName.substring(0,1).toLowerCase()+simpleName.substring(1,simpleName.length());
+		}else{
+			return simpleName;
+		}
+	}
 
 }

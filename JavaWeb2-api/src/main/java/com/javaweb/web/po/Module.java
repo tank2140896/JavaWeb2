@@ -43,22 +43,22 @@ public class Module extends BaseEntity implements Serializable {
 	private Integer orders = 0;//模块顺序(0表示没有顺序;顺序从1开始)
 	
 	@Column(name="module_type")
-	private Integer moduleType = 0;//模块类型(0:未定义模块类型；1：菜单；2：操作)
+	private Integer moduleType = 0;//模块类型(0:未定义模块类型;1:菜单;2:操作)
 	
 	@Column(name="alias")
-	private String alias = null;//别名
+	private String alias;//别名
 	
 	@Column(name="parent_alias")
-	private String parentAlias = null;//上级别名
+	private String parentAlias;//上级别名
 	
 	@Column(name="remark")
-	private String remark = null;//备注
+	private String remark;//备注
 	
 	@Column(name="icon")
-	private String icon = null;//图标
+	private String icon;//图标
 	
 	@Column(name="type")
-	private Integer type = 0;//类型(0:未定义类型，作为纯接口使用；1：PC端；2：安卓端；3：IOS端) 
+	private Integer type = 0;//类型(0:未定义类型,作为全端通用接口使用;1:PC端;2:安卓端;3:IOS端) 
 
 	public String getModuleId() {
 		return moduleId;

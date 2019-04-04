@@ -4,7 +4,6 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
-import java.util.regex.Pattern;
 
 import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;
@@ -12,11 +11,12 @@ import javax.validation.ConstraintValidatorContext;
 import javax.validation.Payload;
 
 import com.javaweb.constant.CommonConstant;
+import com.javaweb.constant.PatternConstant;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-@Constraint(validatedBy=UserNameValidateClass.class)
-public @interface UserNameValidate {
+@Constraint(validatedBy=UserLoginRequestTypeClass.class)
+public @interface UserLoginRequestTypeValidate {
 
 	boolean easyWayCheck() default false;//是否是简单方式的校验
 	
@@ -28,14 +28,12 @@ public @interface UserNameValidate {
 	
 }
 
-class UserNameValidateClass implements ConstraintValidator<UserNameValidate,Object> {
+class UserLoginRequestTypeClass implements ConstraintValidator<UserLoginRequestTypeValidate,Object> {
 	
-	private final Pattern userNameValidatePattern = Pattern.compile("^[1-9]$");
+	protected UserLoginRequestTypeValidate userLoginRequestTypeValidate;
 	
-	protected UserNameValidate constraintAnnotation;
-	
-	public void initialize(UserNameValidate constraintAnnotation) {
-		this.constraintAnnotation = constraintAnnotation;
+	public void initialize(UserLoginRequestTypeValidate userLoginRequestTypeValidate) {
+		this.userLoginRequestTypeValidate = userLoginRequestTypeValidate;
 	}
 
 	public boolean isValid(Object value,ConstraintValidatorContext context) {
@@ -43,8 +41,8 @@ class UserNameValidateClass implements ConstraintValidator<UserNameValidate,Obje
 		if((value!=null)&&(!CommonConstant.EMPTY_VALUE.equals(value.toString().trim()))) {
 			result = true;
 		}
-		if(!constraintAnnotation.easyWayCheck()) {
-			result = userNameValidatePattern.matcher(value.toString()).matches();
+		if(!userLoginRequestTypeValidate.easyWayCheck()) {
+			result = PatternConstant.isHeadTypePattern(value.toString());
 		}
 		return result;
 	}

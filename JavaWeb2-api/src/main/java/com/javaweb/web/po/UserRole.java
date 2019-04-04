@@ -18,6 +18,9 @@ public class UserRole implements Serializable {
 
 	@Column(name="role_id")
 	private String roleId;//角色ID
+	
+	@Column(name="strategy")
+	private Integer strategy = 1;//权限获取策略(0:自定义;1:并集;2:交集;3:以用户权限为准;4:以角色权限为准;其它:默认为未定义,作为并集处理)
 
 	public String getId() {
 		return id;
@@ -41,6 +44,14 @@ public class UserRole implements Serializable {
 
 	public void setRoleId(String roleId) {
 		this.roleId = roleId;
+	}
+
+	public Integer getStrategy() {
+		return strategy;
+	}
+
+	public void setStrategy(Integer strategy) {
+		this.strategy = strategy;
 	}
 	
 }

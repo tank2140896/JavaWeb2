@@ -22,7 +22,7 @@ import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.base.BaseValidatedGroup;
 import com.javaweb.constant.CommonConstant;
-import com.javaweb.constant.HttpCodeEnum;
+import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.TokenData;

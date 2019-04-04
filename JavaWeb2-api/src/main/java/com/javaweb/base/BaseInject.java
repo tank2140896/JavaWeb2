@@ -7,7 +7,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.client.RestTemplate;
 
 public class BaseInject {
@@ -27,6 +26,9 @@ public class BaseInject {
 	
 	@Autowired
 	protected KafkaProducer<String,String> kafkaProduct;
+	
+	@Autowired
+	protected KafkaTemplate<String,String> kafkaTemplate;
 	*/
 	
 	@Autowired
@@ -44,16 +46,13 @@ public class BaseInject {
 	@Autowired
 	protected Environment environment;
 	
-	@Autowired  
-	protected SolrClient solrClient;
-	
 	@Autowired
 	protected RestTemplate restTemplate;
 	
 	@Autowired
     protected MessageSource messageSource;
 	
-	@Autowired
-	protected KafkaTemplate<String,String> kafkaTemplate;
+	@Autowired  
+	protected SolrClient solrClient;
 	
 }

@@ -26,6 +26,13 @@ public class TokenData implements Serializable {
 	
 	public TokenData(){	}
 	
+	public TokenData(String token,User user,String type,List<Module> moduleList){
+		this.token = token;
+		this.user = user;
+		this.type = type;
+		this.moduleList = moduleList;
+	}
+	
 	public TokenData(String token,User user,String type,List<Module> moduleList,List<Module> menuList,List<Module> menuListForTree,List<Module> authOperateList){
 		this.token = token;
 		this.user = user;

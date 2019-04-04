@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.javaweb.constant.SystemConstant;
@@ -28,11 +29,12 @@ public class WebMvcConfig implements WebMvcConfigurer {
         	        .allowedMethods("*")
         	        .allowCredentials(true);
     }
-    
-    /** 自定义静态资源加载路径
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {  
-        registry.addResourceHandler("/**").addResourceLocations("classpath:/test/");  
-    } 
-    */ 
+
+    //这里主要是添加了swagger访问例外
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+    	registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
+        registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+    }
     
 }

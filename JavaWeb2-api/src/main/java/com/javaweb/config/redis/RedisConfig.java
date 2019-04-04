@@ -41,6 +41,7 @@ public class RedisConfig {
 		genericObjectPoolConfig.setMaxWaitMillis(redisParameter1.getMaxWaitMillis());
 		LettuceClientConfiguration lettuceClientConfiguration = LettucePoolingClientConfiguration.builder().commandTimeout(Duration.ofMillis(redisParameter1.getCommandTimeout())).poolConfig(genericObjectPoolConfig).build();
         LettuceConnectionFactory factory = new LettuceConnectionFactory(redisStandaloneConfiguration,lettuceClientConfiguration);
+        factory.afterPropertiesSet();//必须初始化实例
         return factory;
 	}
 	

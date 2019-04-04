@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
+<!-- 若test比较的是字符串，①将外层变为单引号，内层变为双引号；②单引号的值.toString() -->
 <mapper namespace="com.javaweb.web.dao.ds1.CommonDao">
 
 	<select id="sqlSelect" parameterType="String" resultType="java.util.LinkedHashMap"> 

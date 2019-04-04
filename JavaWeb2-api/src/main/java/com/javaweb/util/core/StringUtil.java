@@ -14,7 +14,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import com.javaweb.constant.CommonConstant;
-import com.javaweb.constant.JsonTypeEnum;
+import com.javaweb.enums.JsonTypeEnum;
 
 import net.sf.json.JSONObject;
 

@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.constant.CommonConstant;
-import com.javaweb.constant.HttpCodeEnum;
 import com.javaweb.constant.SystemConstant;
+import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.web.eo.TokenData;
 
 @RestController
@@ -20,14 +20,13 @@ public class LoginAccessController extends BaseController {
 	@GetMapping("/logout")
 	public BaseResponseResult logout(HttpServletRequest request){
 		String userId = request.getHeader(SystemConstant.HEAD_USERID);
-		String token = request.getHeader(SystemConstant.HEAD_TOKEN);
+		//String token = request.getHeader(SystemConstant.HEAD_TOKEN);
 		String type = request.getHeader(SystemConstant.HEAD_TYPE);
-		String key = String.join(CommonConstant.COMMA,userId,type,token);
-		boolean success = deleteFromRedisByKey(key);
-		if(success) {
-			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.logoutSuccess",null);
+		String key = String.join(CommonConstant.COMMA,userId,type);
+		if(deleteFromRedisByKey(key)) {
+			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.logoutSuccess");
 		}else {
-			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.logoutFail",null);
+			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.logoutFail");
 		}
 	}
 	

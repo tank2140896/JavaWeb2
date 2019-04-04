@@ -5,6 +5,10 @@ import com.javaweb.web.po.User;
 public class SystemConstant {
 	
 	public static final String PROJECT_NAME = "JavaWeb";
+	
+	public static final String PROJECT_VERSION = "1.0";
+
+	public static final String PROJECT_GITHUB_URL = "https://github.com/tank2140896/JavaWeb2";
 
 	public static final String DEFAULT_SECURITY_KEY = "the key of JavaWeb";
 	
@@ -20,7 +24,7 @@ public class SystemConstant {
 	
 	public static final String DATA_SOURCE_KEY_2 = "mysql_d2";
 	
-	public static final String HEAD_TYPE_PATTERN = "[123]";
+	public static final String HEAD_TYPE_PATTERN = "[0-3]";
 	
 	public static final String URL_INTERCEPTOR_PATTERN = "/web/**";
 	
@@ -46,7 +50,7 @@ public class SystemConstant {
 	
 	public static final String SYSTEM_DEFAULT_USER_PASSWORD = ADMIN;
 	
-	public static final String SYSTEM_DEFAULT_USER_PERSON_NAME = "超级管理员";
+	public static final String SYSTEM_DEFAULT_USER_PERSON_NAME = "管理员";
 	
 	public static final Integer SYSTEM_DEFAULT_USER_LEVEL = 0;
 	

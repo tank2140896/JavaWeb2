@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
-import com.javaweb.constant.HttpCodeEnum;
+import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.chat.ChatRequest;
 import com.javaweb.web.po.User;

@@ -4,7 +4,7 @@
 <mapper namespace="com.javaweb.web.dao.ds1.UserDao">
 
 	<sql id="selectUser" >
-		user_id as userId,user_name as userName,password,person_name as personName,email,phone,
+		user_id as userId,user_name as userName,'******' as password,person_name as personName,email,phone,
 		portrait,parent_id as parentId,fcode,level,remark,status,create_date as createDate,creator,
 		update_date as updateDate,updater,del_flag as delFlag
 	</sql>

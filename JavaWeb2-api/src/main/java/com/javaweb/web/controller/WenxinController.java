@@ -24,7 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.config.WeixinConfig;
-import com.javaweb.constant.HttpCodeEnum;
+import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.util.core.HttpUtil;
 import com.javaweb.util.core.SecretUtil;
 import com.javaweb.util.core.StringUtil;

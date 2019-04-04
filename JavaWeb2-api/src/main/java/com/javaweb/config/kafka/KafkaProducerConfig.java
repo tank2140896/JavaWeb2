@@ -1,5 +1,6 @@
 package com.javaweb.config.kafka;
 
+/**
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,12 +12,12 @@ import org.springframework.kafka.core.DefaultKafkaProducerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.core.ProducerFactory;
 
-//import org.springframework.context.annotation.Configuration;
-//import org.springframework.kafka.annotation.EnableKafka;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.annotation.EnableKafka;
 
 //生产者
-//@Configuration
-//@EnableKafka
+@Configuration
+@EnableKafka
 public class KafkaProducerConfig {
 
 	@Value("${kafka.producer.bootstrap-servers}")
@@ -41,3 +42,4 @@ public class KafkaProducerConfig {
 	}
 
 }
+*/

@@ -1,5 +1,6 @@
 package com.javaweb.config.hbase;
 
+/**
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import org.apache.hadoop.hbase.client.Admin;
 import org.apache.hadoop.hbase.client.ColumnFamilyDescriptor;
 import org.apache.hadoop.hbase.client.ColumnFamilyDescriptorBuilder;
 import org.apache.hadoop.hbase.client.Connection;
+import org.apache.hadoop.hbase.client.ConnectionFactory;
 import org.apache.hadoop.hbase.client.Delete;
 import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.Put;
@@ -24,13 +26,11 @@ public class HbaseHandleService {
 	private Connection connection;
 	
 	public HbaseHandleService(Configuration configuration) {
-		/** 使用请解注
 		try {
 			this.connection = ConnectionFactory.createConnection(configuration);
 		} catch (IOException e) {
 			//do nothing
 		}
-		*/
 	}
 	
 	//创建表
@@ -229,3 +229,4 @@ public class HbaseHandleService {
     }
 	
 }
+*/

@@ -7,6 +7,9 @@ import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
+@EnableSwagger2//开启Swagger
 @EnableAsync//开启异步任务
 @EnableScheduling//开启定时任务
 @SpringBootApplication(exclude={DataSourceAutoConfiguration.class})//采用多数据源时需要加上

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration debug="true">
+<configuration>
 
 	<property name="DEFAULT_LOG_FILE_HOME" value="D:/javaweb"/>  
 	<property name="URL_LOG_FILE_HOME" value="D:/url_log"/>

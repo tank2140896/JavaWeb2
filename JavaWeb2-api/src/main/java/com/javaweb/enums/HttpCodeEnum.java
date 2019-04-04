@@ -1,4 +1,4 @@
-package com.javaweb.constant;
+package com.javaweb.enums;
 
 public enum HttpCodeEnum {
 	

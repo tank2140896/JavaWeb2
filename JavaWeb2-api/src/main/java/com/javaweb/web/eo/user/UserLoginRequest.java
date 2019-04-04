@@ -3,21 +3,20 @@ package com.javaweb.web.eo.user;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import com.javaweb.validate.UserNameValidate;
+import com.javaweb.validate.UserLoginRequestTypeValidate;
 
 public class UserLoginRequest {
 
-	@NotNull(message="validated.userLogin.userName.notNull")
+	@NotNull(message="validated.user.userName.notNull")
 	@Pattern(regexp="^(?![^a-zA-Z]+$)(?!\\D+$).{6,20}$",message="validated.user.userName.pattern")
 	private String username;
 	
-	@NotNull(message="validated.userLogin.password.notNull")
+	@NotNull(message="validated.user.password.notNull")
 	@Pattern(regexp="^(?![^a-zA-Z]+$)(?!\\D+$).{6,20}$",message="validated.user.userName.pattern")
 	private String password;
 	
-	@UserNameValidate(easyWayCheck=false,message="validated.user.type.pattern")//自定义校验
+	@UserLoginRequestTypeValidate(easyWayCheck=false,message="validated.user.type.pattern")//自定义校验
 	private String type;
-	
 	
 	/** ↓↓↓↓↓↓↓↓↓↓kaptcha和uuid仅在需要验证码时才会有用,此处没有用,可以不传↓↓↓↓↓↓↓↓↓↓ */
 	private String kaptcha;

@@ -3,7 +3,7 @@ package com.javaweb.base;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
-import com.javaweb.config.hbase.HbaseHandleService;
+//import com.javaweb.config.hbase.HbaseHandleService;
 import com.javaweb.config.websocket.WebSocketHandleService;
 import com.javaweb.task.AsyncTaskService;
 import com.javaweb.web.service.ModuleService;
@@ -30,7 +30,7 @@ public class BaseController extends BaseTool {
 	@Autowired
 	protected DefaultKaptcha defaultKaptcha;
 	
-	@Autowired
-	protected HbaseHandleService hbaseHandleService;
+	//@Autowired
+	//protected HbaseHandleService hbaseHandleService;
 	
 }

@@ -1,5 +1,6 @@
 package com.javaweb.config.hbase;
 
+/**
 import org.apache.hadoop.hbase.HBaseConfiguration;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -27,3 +28,4 @@ public class HbaseConfig {
     }
 
 }
+*/

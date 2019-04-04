@@ -51,22 +51,21 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 			request.getRequestDispatcher("/requestParameterLost").forward(request,response);
 			return false;
 		}
-		if(!PatternConstant.isHeadTypePattern(type)){//1：web；2：安卓；3：IOS
+		if(!PatternConstant.isHeadTypePattern(type)){//0:admin;1:web;2:Android;3:IOS
 			request.getRequestDispatcher("/requestParameterLost").forward(request,response);
 			return false;
 		}
-		String key = String.join(CommonConstant.COMMA,userId,type,token);
-		TokenData tokenData = (TokenData)redisTemplate.opsForValue().get(key);//(TokenData)request.getSession().getAttribute(userId);
+		TokenData tokenData = (TokenData)redisTemplate.opsForValue().get(String.join(CommonConstant.COMMA,userId,type));//(TokenData)request.getSession().getAttribute(userId);
 		if(tokenData==null){
 			request.getRequestDispatcher("/invalidRequest").forward(request,response);
 			return false;
 		}
-		if(!(String.join(tokenData.getUser().getUserId(),tokenData.getType(),tokenData.getToken()).equals(key))){
+		if(!(String.join(tokenData.getUser().getUserId(),tokenData.getType(),tokenData.getToken()).equals(String.join(CommonConstant.COMMA,userId,type,token)))){
 			request.getRequestDispatcher("/requestParameterError").forward(request,response);
 			return false;
 		}
 		if(servletPath.startsWith(SystemConstant.URL_LOGIN_PC_PERMISSION)){//该路径下只要登录即可访问，不需要权限
-			redisTemplate.opsForValue().set(key,tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
+			redisTemplate.opsForValue().set(String.join(CommonConstant.COMMA,userId,type),tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
 			return true;
 		}
 		long count = tokenData.getAuthOperateList().stream().filter(i->{
@@ -82,7 +81,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 			request.getRequestDispatcher("/noAuthory").forward(request,response);
 			return false;
 		}else{
-			redisTemplate.opsForValue().set(key,tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
+			redisTemplate.opsForValue().set(String.join(CommonConstant.COMMA,userId,type),tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
 			return true;
 		}
 	}

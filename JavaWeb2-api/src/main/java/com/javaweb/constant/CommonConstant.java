@@ -23,4 +23,10 @@ public class CommonConstant {
 	//回车(linux)
 	public static final String ENTER_LINUX = "\n";
 	
+	//true
+	public static final boolean TRUE = true;
+	
+	//false
+	public static final boolean FALSE = false;
+	
 }

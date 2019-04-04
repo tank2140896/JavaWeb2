@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.javaweb.constant.CommonConstant;
-import com.javaweb.constant.JsonTypeEnum;
+import com.javaweb.enums.JsonTypeEnum;
 import com.javaweb.util.entity.JavaJsonFtl;
 
 import freemarker.template.Configuration;

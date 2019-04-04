@@ -40,20 +40,23 @@
 		    <groupId>io.reactivex.rxjava2</groupId>
 		    <artifactId>rxjava</artifactId>
 		</dependency>
+		<!-- web -->
 	    <dependency>
 	        <groupId>org.springframework.boot</groupId>
 	        <artifactId>spring-boot-starter-web</artifactId>
+	        <!-- webflux(用了webflux就不要spring-boot-starter-web了) -->
+	        <!-- <artifactId>spring-boot-starter-webflux</artifactId> -->
 	    </dependency>
-	    <!-- webflux(用了webflux就不要spring-boot-starter-web了) 
-		<dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-webflux</artifactId>
-		</dependency>
-		-->
     	<!-- AOP -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+	    <!-- test -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-test</artifactId>
+		    <scope>test</scope>
 		</dependency>
 		<!-- redis -->
 		<dependency>
@@ -79,21 +82,17 @@
         	<artifactId>transport-netty4-client</artifactId>
     	</dependency>
     	-->
-	    <!-- kafka -->
+	    <!-- kafka 
 	    <dependency>
             <groupId>org.springframework.kafka</groupId>
             <artifactId>spring-kafka</artifactId>
         </dependency>
-	    <!-- spring-session-redis配置 -->
-		<dependency>  
-	        <groupId>org.springframework.session</groupId>  
-	        <artifactId>spring-session-data-redis</artifactId>  
-    	</dependency>
-    	<!-- solr -->
+        -->
+    	<!-- solr --> 
     	<dependency>  
 		    <groupId>org.springframework.data</groupId>
 		    <artifactId>spring-data-solr</artifactId> 
-		</dependency>  
+		</dependency> 
 	    <!-- mysql驱动 -->
 	    <dependency>
 			<groupId>mysql</groupId>
@@ -113,7 +112,7 @@
 	      	<groupId>io.lettuce</groupId>
 	      	<artifactId>lettuce-core</artifactId>
 	    </dependency>
-		<!-- Json-lib -->
+		<!-- json-lib -->
 		<dependency>
 		    <groupId>net.sf.json-lib</groupId>
 		    <artifactId>json-lib</artifactId>
@@ -141,13 +140,18 @@
 	        <artifactId>spring-boot-devtools</artifactId>
 	        <!-- <optional>true</optional> -->
     	 </dependency>
-		 <!-- test -->
+		 <!-- swagger -->
 		 <dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-test</artifactId>
-		    <scope>test</scope>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-swagger-ui</artifactId>
+		    <version>2.9.2</version>
 		 </dependency>
-		 <!-- JWT -->
+		 <dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-swagger2</artifactId>
+		    <version>2.9.2</version>
+		 </dependency>
+		 <!-- jwt -->
 		 <dependency>
 		    <groupId>io.jsonwebtoken</groupId>
 		    <artifactId>jjwt</artifactId>
@@ -176,12 +180,13 @@
 			<artifactId>kaptcha</artifactId>
 			<version>2.3.2</version>
 		 </dependency>
-		 <!-- hbase -->
+		 <!-- hbase 
 		 <dependency>
 		    <groupId>org.apache.hbase</groupId>
 		    <artifactId>hbase-client</artifactId>
 		    <version>2.1.1</version>
 		 </dependency>
+		 -->
 		 <!-- lucene 
 		 <dependency>  
 	        <groupId>org.apache.lucene</groupId>  
