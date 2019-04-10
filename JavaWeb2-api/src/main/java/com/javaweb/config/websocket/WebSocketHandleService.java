@@ -50,7 +50,7 @@ public class WebSocketHandleService {
 	@SuppressWarnings("unchecked")
 	public void onOpen(Session session,@PathParam("key") String key) {
 		try{
-			RedisTemplate<String,Object> redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
+			RedisTemplate<String,Object> redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE_1);
 			TokenData tokenData = (TokenData)redisTemplate.opsForValue().get(key);
 			if(tokenData!=null){
 				User user = tokenData.getUser();

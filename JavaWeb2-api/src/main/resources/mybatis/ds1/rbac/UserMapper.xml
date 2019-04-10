@@ -4,7 +4,7 @@
 <mapper namespace="com.javaweb.web.dao.ds1.UserDao">
 
 	<sql id="selectUser" >
-		user_id as userId,user_name as userName,'******' as password,person_name as personName,email,phone,
+		user_id as userId,user_name as userName,password,person_name as personName,email,phone,
 		portrait,parent_id as parentId,fcode,level,remark,status,create_date as createDate,creator,
 		update_date as updateDate,updater,del_flag as delFlag
 	</sql>
@@ -15,10 +15,7 @@
 	
 	<select id="userList" parameterType="com.javaweb.web.eo.user.UserListRequest" resultType="com.javaweb.web.eo.user.UserListResponse">
 		select u.user_id as userId,u.user_name as userName,person_name as personName,u.create_date as createDate,
-		(
-		select GROUP_CONCAT(r.role_name)
-		from role r where r.role_id in(select ur.role_id from user_role ur where u.user_id = ur.user_id)
-		) as roleName 
+		(select GROUP_CONCAT(r.role_name) from role r where r.role_id in(select ur.role_id from user_role ur where u.user_id = ur.user_id)) as roleName 
 		from user u
 		<where>
 			u.del_flag = 0
@@ -33,7 +30,8 @@
 	</select>
 	
 	<select id="userListCount" parameterType="com.javaweb.web.eo.user.UserListRequest" resultType="java.lang.Long">
-		select count(1) from user u
+		select count(1) 
+		from user u
 		<where>
 			u.del_flag = 0
 			<if test="userName != null and userName != ''">and u.user_name like CONCAT('%',#{userName},'%')</if>
@@ -47,6 +45,8 @@
 	<delete id="userDelete" parameterType="java.lang.String">
 		<!-- 删除用户角色关联 -->
 		delete from user_role where user_id = #{_parameter};
+		<!-- 删除用户模块关联 -->
+		delete from user_module where user_id = #{_parameter};
 		<!-- 删除用户 -->
 		delete from user where user_id = #{_parameter};
 	</delete>

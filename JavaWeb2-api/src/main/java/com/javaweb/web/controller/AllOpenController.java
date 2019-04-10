@@ -6,6 +6,7 @@ import io.swagger.annotations.ApiOperation;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,11 +20,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
+import com.javaweb.constant.ApiConstant;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SwaggerConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.util.core.DateUtil;
+import com.javaweb.util.core.SecretUtil;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.user.UserLoginRequest;
 import com.javaweb.web.po.Module;
@@ -35,65 +38,65 @@ public class AllOpenController extends BaseController {
 
 	@ApiOperation(value=SwaggerConstant.SWAGGER_LOGIN_VALUE,notes=SwaggerConstant.SWAGGER_LOGIN_NOTES)
     @ApiImplicitParam(name="userLoginRequest",value=SwaggerConstant.SWAGGER_LOGIN_PARAM_VALUE,required=true,dataType="UserLoginRequest")
-	@PostMapping("/login")
+	@PostMapping(ApiConstant.LOGIN)
 	public BaseResponseResult login(@RequestBody @Validated UserLoginRequest userLoginRequest,BindingResult bindingResult,HttpServletRequest request){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}
-		/* 
-		if(kaptchaCheck(userLoginRequest,request)){//验证码校验
-			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"login.user.kaptcha");
-		}
-		*/
-		if(systemAdminCheck(userLoginRequest)){
+		//if(kaptchaCheck(userLoginRequest,request)){//验证码校验
+		//	return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"login.user.kaptcha");
+		//}
+		if(systemAdminCheck(userLoginRequest)){//管理员判断
 			User user = SystemConstant.SYSTEM_DEFAULT_USER;
 			TokenData token = getToken(true,user,userLoginRequest.getType());
 			String key = String.join(CommonConstant.COMMA,user.getUserId(),userLoginRequest.getType());
-			setDefaultDataToRedis(key,token);//request.getSession().setAttribute(user.getUserId(),token);
+			setDefaultDataToRedis(key,token);
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.loginSuccess",token);
 		}
+		try{userLoginRequest.setPassword(SecretUtil.getSha256(userLoginRequest.getPassword()));}catch(Exception e){}
 		User user = userService.userLogin(userLoginRequest);
 		if(user==null){
 			return getBaseResponseResult(HttpCodeEnum.LOGIN_FAIL,"login.user.userNameOrPassword");
 		}
+		user.setPassword(null);
 		TokenData token = getToken(false,user,userLoginRequest.getType());
 		String key = String.join(CommonConstant.COMMA,user.getUserId(),userLoginRequest.getType());
-		setDefaultDataToRedis(key,token);//request.getSession().setAttribute(user.getUserId(),token);
+		setDefaultDataToRedis(key,token);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.loginSuccess",token);
 	}
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_REQUEST_PARAMETER_LOST_VALUE)
-	@RequestMapping(value="/requestParameterLost",method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
+	@RequestMapping(value=ApiConstant.REQUEST_PARAMETER_LOST,method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 	public BaseResponseResult requestParameterLost() {
 		return getBaseResponseResult(HttpCodeEnum.REQUEST_PARAMETER_LOST,"validated.permission.requestParameterLost");
 	}
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_INVALID_REQUEST_VALUE)
-	@RequestMapping(value="/invalidRequest",method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
+	@RequestMapping(value=ApiConstant.INVALID_REQUEST,method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 	public BaseResponseResult invalidRequest(){
 		return getBaseResponseResult(HttpCodeEnum.INVALID_REQUEST,"validated.permission.invalidRequest");
 	}
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_REQUEST_PARAMETER_ERROR_VALUE)
-	@RequestMapping(value="/requestParameterError",method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
+	@RequestMapping(value=ApiConstant.REQUEST_PARAMETER_ERROR,method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 	public BaseResponseResult requestParameterError(){
-		return getBaseResponseResult(HttpCodeEnum.INVALID_REQUEST,"validated.permission.requestParameterError");
+		return getBaseResponseResult(HttpCodeEnum.REQUEST_PARAMETER_ERROR,"validated.permission.requestParameterError");
 	}
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_NO_AUTHORY_VALUE)
-	@RequestMapping(value="/noAuthory",method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
+	@RequestMapping(value=ApiConstant.NO_AUTHORY,method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 	public BaseResponseResult noAuthory(){
 		return getBaseResponseResult(HttpCodeEnum.NO_AUTHORY,"validated.permission.noAuthory");
 	}
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_NOT_FOUND_VALUE)
-	@RequestMapping(value="/notFound",method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
+	@RequestMapping(value=ApiConstant.NOT_FOUND,method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 	public BaseResponseResult notFound(){
 		return getBaseResponseResult(HttpCodeEnum.NOT_FOUND,"validated.permission.notFound");
 	}
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_INTERNAL_ERROR_VALUE)
-	@RequestMapping(value="/internalError",method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
+	@RequestMapping(value=ApiConstant.INTERNAL_ERROR,method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 	public BaseResponseResult internalError(){
 		return getBaseResponseResult(HttpCodeEnum.INTERNAL_ERROR,"validated.permission.internalError");
 	}
@@ -116,7 +119,7 @@ public class AllOpenController extends BaseController {
 	}
 	*/
 	
-	//对token进行加密
+	//对token进行简单加密
 	private String secretToken(String token) {
 		String date = DateUtil.getStringDate(DateUtil.DATETIME_PATTERN_TYPE2);
 		String tempArray[] = new String[token.length()];
@@ -150,9 +153,14 @@ public class AllOpenController extends BaseController {
 	
 	//token数据封装
 	private TokenData getToken(boolean adminFlag,User user,String type){
-		List<Module> list = moduleService.getModule(adminFlag,user.getUserId());
-		TokenData tokenData = new TokenData(secretToken(UUID.randomUUID().toString()),user,type,list);
-		/*
+		List<Module> moduleList = moduleService.getModule(adminFlag,user.getUserId());
+		TokenData tokenData = new TokenData();
+		tokenData.setToken(secretToken(UUID.randomUUID().toString()));
+		tokenData.setUser(user);
+		tokenData.setType(type);
+		List<Module> authOperateList = moduleList.stream().filter(i->2==i.getModuleType()).collect(Collectors.toList());//获得操作权限列表
+		tokenData.setAuthOperateList(authOperateList);
+		/** 有选择的选取
 		List<Module> menuList = list.stream().filter(i->1==i.getModuleType()).collect(Collectors.toList());//获得菜单列表
 		List<Module> authOperateList = list.stream().filter(i->2==i.getModuleType()).collect(Collectors.toList());//获得操作权限列表
 		tokenData.setToken(UUID.randomUUID().toString());

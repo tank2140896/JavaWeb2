@@ -3,7 +3,6 @@ package com.javaweb.web.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,6 +23,7 @@ import com.javaweb.base.BaseValidatedGroup;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.util.core.DateUtil;
+import com.javaweb.util.core.SecretUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.user.RoleInfoResponse;
@@ -55,7 +55,8 @@ public class UserController extends BaseController {
 		}else{
 			TokenData tokenData = getTokenData(request);
 			User currentUser = tokenData.getUser();
-			user.setUserId(UUID.randomUUID().toString());
+			user.setUserId(SecretUtil.defaultGenUniqueStr());
+			try{user.setPassword(SecretUtil.getSha256(user.getPassword()));}catch(Exception e){}
 			user.setParentId(currentUser.getUserId());
 			user.setLevel(currentUser.getLevel()+1);
 			user.setCreateDate(DateUtil.getDefaultDate());
@@ -82,9 +83,13 @@ public class UserController extends BaseController {
 	@GetMapping("/detail/{userId}")
 	public BaseResponseResult userDetail(@PathVariable(name="userId",required=true) String userId){
 		User user = userService.userDetail(userId);
+		if(user!=null){
+			user.setPassword(null);
+		}
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.detail.success",user);
 	}
 	
+	//TODO 下面的未验证
 	@GetMapping("/userRoleInfo/{userId}")
 	public BaseResponseResult userRoleInfo(@PathVariable(name="userId",required=true) String userId){
 		List<RoleInfoResponse> list = userService.userRoleInfo(userId);

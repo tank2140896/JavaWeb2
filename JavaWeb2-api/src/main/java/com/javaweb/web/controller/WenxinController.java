@@ -86,9 +86,9 @@ public class WenxinController extends BaseController {
 		try{
 			//这里跳过了校验access_token、刷新access_token等步骤
 			String url = String.format(weixinConfig.getWxopenAccessTokenUrl(),weixinConfig.getWxopenAppid(),weixinConfig.getWxopenAppsecret(),code);
-			AccessTokenResponse accessTokenResponse = new ObjectMapper().readValue(HttpUtil.defaultGetRequest(url),AccessTokenResponse.class);
+			AccessTokenResponse accessTokenResponse = new ObjectMapper().readValue(HttpUtil.defaultGetRequest(url,null),AccessTokenResponse.class);
 			url = String.format(weixinConfig.getWxopenUserInfo(),accessTokenResponse.getAccess_token(),accessTokenResponse.getOpenid());
-			UserInfoResponse userInfoResponse = new ObjectMapper().readValue(HttpUtil.defaultGetRequest(url),UserInfoResponse.class);
+			UserInfoResponse userInfoResponse = new ObjectMapper().readValue(HttpUtil.defaultGetRequest(url,null),UserInfoResponse.class);
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"weixin.userLoginCallBackSuccess",userInfoResponse);
 		}catch(Exception e){
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"weixin.userLoginCallBackFail",null);

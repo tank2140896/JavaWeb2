@@ -42,7 +42,7 @@ public class SystemConstant {
 	
 	public static final String HEAD_TYPE = "type";
 
-	public static final String REDIS_TEMPLATE = "redisTemplate";
+	public static final String REDIS_TEMPLATE_1 = "redisTemplate1";
 	
 	public static final String SYSTEM_DEFAULT_USER_ID = ADMIN;
 	
@@ -60,7 +60,6 @@ public class SystemConstant {
 	static{
 		SYSTEM_DEFAULT_USER.setUserId(SYSTEM_DEFAULT_USER_ID);
 		SYSTEM_DEFAULT_USER.setUserName(SYSTEM_DEFAULT_USER_NAME);
-		SYSTEM_DEFAULT_USER.setPassword(SYSTEM_DEFAULT_USER_PASSWORD);
 		SYSTEM_DEFAULT_USER.setPersonName(SYSTEM_DEFAULT_USER_PERSON_NAME);
 		SYSTEM_DEFAULT_USER.setLevel(SYSTEM_DEFAULT_USER_LEVEL);
 		SYSTEM_DEFAULT_USER.setStatus(SYSTEM_DEFAULT_USER_STATUS);

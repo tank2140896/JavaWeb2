@@ -22,7 +22,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 	//private Logger logger = LoggerFactory.getLogger(PermissionInterceptor.class);//本类日志
 	//private Logger urlLog = LoggerFactory.getLogger("urlLog");//自定义输出日志
 	
-	private RedisTemplate<String,Object> redisTemplate = null;
+	private RedisTemplate<String,Object> redisTemplate1 = null;
 	
 	/**
 	 * httpServletRequest.getRequestURI()            -------------------- /javaweb/app/html/home.html
@@ -39,8 +39,8 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 		//RedisTemplate redisTemplate = (RedisTemplate) factory.getBean("redisTemplate"); 
 		//RedisTemplate<String,Object> redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
 		//String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();  
-		if(redisTemplate==null){
-			redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
+		if(redisTemplate1==null){
+			redisTemplate1 = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE_1);
 		}
 		String userId = request.getHeader(SystemConstant.HEAD_USERID);
 		String token = request.getHeader(SystemConstant.HEAD_TOKEN);
@@ -55,23 +55,24 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 			request.getRequestDispatcher("/requestParameterLost").forward(request,response);
 			return false;
 		}
-		TokenData tokenData = (TokenData)redisTemplate.opsForValue().get(String.join(CommonConstant.COMMA,userId,type));//(TokenData)request.getSession().getAttribute(userId);
+		TokenData tokenData = (TokenData)(redisTemplate1.opsForValue().get(String.join(CommonConstant.COMMA,userId,type)));
 		if(tokenData==null){
 			request.getRequestDispatcher("/invalidRequest").forward(request,response);
 			return false;
 		}
-		if(!(String.join(tokenData.getUser().getUserId(),tokenData.getType(),tokenData.getToken()).equals(String.join(CommonConstant.COMMA,userId,type,token)))){
+		if(!(String.join(CommonConstant.COMMA,tokenData.getUser().getUserId(),tokenData.getType(),tokenData.getToken()).equals(String.join(CommonConstant.COMMA,userId,type,token)))){
 			request.getRequestDispatcher("/requestParameterError").forward(request,response);
 			return false;
 		}
 		if(servletPath.startsWith(SystemConstant.URL_LOGIN_PC_PERMISSION)){//该路径下只要登录即可访问，不需要权限
-			redisTemplate.opsForValue().set(String.join(CommonConstant.COMMA,userId,type),tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
+			redisTemplate1.opsForValue().set(String.join(CommonConstant.COMMA,userId,type),tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
 			return true;
 		}
 		long count = tokenData.getAuthOperateList().stream().filter(i->{
-			String splitApiUrl[] = i.getApiUrl().split(",");//某一操作可能会调用多个附属操作，多个附属操作约定用逗号分开
+			String splitApiUrl[] = i.getApiUrl().split(CommonConstant.COMMA);//某一操作可能会调用多个附属操作，多个附属操作约定用逗号分开
 			for(String str:splitApiUrl){
 				if(servletPath.startsWith(str)){
+					redisTemplate1.opsForValue().set(String.join(CommonConstant.COMMA,userId,type),tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
 					return true;
 				}
 			}
@@ -81,7 +82,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 			request.getRequestDispatcher("/noAuthory").forward(request,response);
 			return false;
 		}else{
-			redisTemplate.opsForValue().set(String.join(CommonConstant.COMMA,userId,type),tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
+			redisTemplate1.opsForValue().set(String.join(CommonConstant.COMMA,userId,type),tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
 			return true;
 		}
 	}

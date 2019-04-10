@@ -7,14 +7,17 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.security.cert.X509Certificate;
+import java.util.List;
 
 import javax.net.ssl.SSLContext;
 
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -70,15 +73,13 @@ public class HttpUtil {
 	}
 	
 	//默认GET请求
-	public static String defaultGetRequest(String url/*,List<Header> list*/) throws Exception {
+	public static String defaultGetRequest(String url,List<Header> list) throws Exception {
 		CloseableHttpClient httpClient = getCloseableHttpClient(url);
 		HttpGet httpGet = new HttpGet(url);
-		httpGet.setHeader("Content-Type", "application/json;charset=UTF-8");
-		/**
+		httpGet.setHeader("Content-Type","application/json;charset=UTF-8");
 		if(list!=null&&list.size()!=0) {
-			list.stream().forEach(i->httpGet.addHeader(i));
+			list.stream().forEach(i->httpGet.setHeader(i));
 		}
-		*/
 		httpGet.setConfig(getDefaultRequestConfig());
 		HttpResponse httpResponse = httpClient.execute(httpGet);
 		String response = null;
@@ -93,10 +94,13 @@ public class HttpUtil {
 	}
 	
 	//默认POST请求
-	public static String defaultPostRequest(String url,String body) throws Exception {
+	public static String defaultPostRequest(String url,String body,List<Header> list) throws Exception {
 		CloseableHttpClient httpClient = getCloseableHttpClient(url);
 		HttpPost httpPost = new HttpPost(url);
-		httpPost.setHeader("Content-Type", "application/json;charset=UTF-8");
+		httpPost.setHeader("Content-Type","application/json;charset=UTF-8");
+		if(list!=null&&list.size()!=0) {
+			list.stream().forEach(i->httpPost.setHeader(i));
+		}
 		httpPost.setConfig(getDefaultRequestConfig());
 		if((body!=null)&&(!(body.trim().equals(CommonConstant.EMPTY_VALUE)))) {
 			StringEntity stringEntity = new StringEntity(body,StandardCharsets.UTF_8);
@@ -115,10 +119,13 @@ public class HttpUtil {
 	}
 	
 	//默认PUT请求
-	public static String defaultPutRequest(String url,String body) throws Exception {
+	public static String defaultPutRequest(String url,String body,List<Header> list) throws Exception {
 		CloseableHttpClient httpClient = getCloseableHttpClient(url);
-		HttpPost httpPut = new HttpPost(url);
-		httpPut.setHeader("Content-Type", "application/json;charset=UTF-8");
+		HttpPut httpPut = new HttpPut(url);
+		httpPut.setHeader("Content-Type","application/json;charset=UTF-8");
+		if(list!=null&&list.size()!=0) {
+			list.stream().forEach(i->httpPut.setHeader(i));
+		}
 		httpPut.setConfig(getDefaultRequestConfig());
 		if((body!=null)&&(!(body.trim().equals(CommonConstant.EMPTY_VALUE)))) {
 			StringEntity stringEntity = new StringEntity(body,StandardCharsets.UTF_8);
@@ -137,10 +144,13 @@ public class HttpUtil {
 	}
 	
 	//默认DELETE请求
-	public static String defaultDeleteRequest(String url,String body) throws Exception {
+	public static String defaultDeleteRequest(String url,String body,List<Header> list) throws Exception {
 		CloseableHttpClient httpClient = getCloseableHttpClient(url);
 		HttpDelete httpDelete = new HttpDelete(url);
-		httpDelete.setHeader("Content-Type", "application/json;charset=UTF-8");
+		httpDelete.setHeader("Content-Type","application/json;charset=UTF-8");
+		if(list!=null&&list.size()!=0) {
+			list.stream().forEach(i->httpDelete.setHeader(i));
+		}
 		httpDelete.setConfig(getDefaultRequestConfig());
 		HttpResponse httpResponse = httpClient.execute(httpDelete);
 		String response = null;
