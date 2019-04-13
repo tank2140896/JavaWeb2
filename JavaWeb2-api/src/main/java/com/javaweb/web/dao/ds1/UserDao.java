@@ -6,6 +6,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.javaweb.base.MySqlBaseDao;
+import com.javaweb.web.eo.role.ModuleInfoResponse;
 import com.javaweb.web.eo.user.RoleInfoResponse;
 import com.javaweb.web.eo.user.UserListRequest;
 import com.javaweb.web.eo.user.UserListResponse;
@@ -27,6 +28,10 @@ public interface UserDao extends MySqlBaseDao<User> {
 	
 	public List<RoleInfoResponse> userRoleInfo(String userId);
 	
-	public void roleAssignment(Map<String,Object> map);
+	public void userRoleAssignment(Map<String,Object> map);
+	
+	public List<ModuleInfoResponse> userModuleInfo(String userId);
+	
+	public void userModuleAssignment(Map<String,Object> map);
 	
 }

@@ -20,8 +20,10 @@ public interface RoleDao extends MySqlBaseDao<Role> {
 	
 	public void roleDelete(String roleId);
 	
+	public Role roleDetail(String roleId);
+	
 	public List<ModuleInfoResponse> roleModuleInfo(String roleId);
 	
-	public void moduleAssignment(Map<String, Object> map);
+	public void roleModuleAssignment(Map<String,Object> map);
 	
 }

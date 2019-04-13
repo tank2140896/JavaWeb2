@@ -30,7 +30,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         	        .allowCredentials(true);
     }
 
-    //这里主要是添加了swagger访问例外
+    //这里主要是添加了swagger访问例外(http://IP:端口/项目名称/swagger-ui.html)
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
     	registry.addResourceHandler("/**").addResourceLocations("classpath:/static/");
         registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");

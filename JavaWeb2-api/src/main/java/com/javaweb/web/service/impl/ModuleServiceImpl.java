@@ -69,15 +69,12 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
 	@Transactional
 	public void moduleAdd(Module module) {
 		ModuleLevelAndOrdersResponse moduleLevelAndOrdersResponse = moduleDao.getModuleLevelAndOrdersByParentId(module.getParentId());
-		if(moduleLevelAndOrdersResponse!=null){
-			Integer level = moduleLevelAndOrdersResponse.getLevel();
-			Integer orders = moduleLevelAndOrdersResponse.getOrders();
-			module.setOrders(orders+1);
-			module.setLevel(level);
-		}else{
-			module.setOrders(1);
-			module.setLevel(1);
+		if(moduleLevelAndOrdersResponse==null) {
+			moduleLevelAndOrdersResponse = moduleDao.getModuleLevelAndOrdersWithoutParentId();
+			
 		}
+		module.setOrders(moduleLevelAndOrdersResponse.getOrders()+1);
+		module.setLevel(moduleLevelAndOrdersResponse.getLevel());
 		moduleDao.insert(module);
 	}
 	
@@ -87,7 +84,7 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
 	}
 
 	public Module moduleDetail(String moduleId) {
-		return moduleDao.selectByPk(moduleId);
+		return moduleDao.moduleDetail(moduleId);
 	}
 
 }

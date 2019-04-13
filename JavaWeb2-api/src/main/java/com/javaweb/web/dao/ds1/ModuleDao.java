@@ -21,6 +21,10 @@ public interface ModuleDao extends MySqlBaseDao<Module> {
 	
 	public void moduleDelete(String moduleId);
 	
+	public Module moduleDetail(String moduleId);
+	
 	public ModuleLevelAndOrdersResponse getModuleLevelAndOrdersByParentId(String parentId);
+	
+	public ModuleLevelAndOrdersResponse getModuleLevelAndOrdersWithoutParentId();
 	
 }

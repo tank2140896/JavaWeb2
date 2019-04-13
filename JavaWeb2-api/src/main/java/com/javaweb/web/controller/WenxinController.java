@@ -15,10 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javaweb.base.BaseController;
@@ -38,7 +35,7 @@ import com.javaweb.web.eo.weixin.UserInfoResponse;
  * 微信付款:https://pay.weixin.qq.com/wiki/doc/api/index.html
  * 扫码支付接入指引:https://pay.weixin.qq.com/guide/qrcode_payment.shtml
  */
-@RestController
+//@RestController
 public class WenxinController extends BaseController {
 	
 	@Autowired
@@ -67,7 +64,7 @@ public class WenxinController extends BaseController {
 	}
 	
 	//微信扫码登录URL获取(currentPageUrl用于扫码登录后跳转到自己网站的主页)
-	@GetMapping("/weixin/getLoginUrl")
+	//@GetMapping("/weixin/getLoginUrl")
 	public BaseResponseResult getLoginUrl(@RequestParam(name="currentPageUrl",required=true) String currentPageUrl) {
 		String openQrcodeUrl = null;
 		try{
@@ -79,7 +76,7 @@ public class WenxinController extends BaseController {
 	}
 	
 	//微信扫码登录成功后的回调处理,用来获得access_token
-	@GetMapping("/weixin/userLoginCallBack")
+	//@GetMapping("/weixin/userLoginCallBack")
 	public BaseResponseResult userLoginCallBack(HttpServletRequest request,HttpServletResponse response,
 			                        @RequestParam(name="code",required=true) String code,
 			                        @RequestParam(name="state",required=true) String state/*state可以用于页面跳转,一般需要带上http://前缀*/){
@@ -96,7 +93,7 @@ public class WenxinController extends BaseController {
 	}
 	
 	//生成微信扫码付款二维码
-	@GetMapping("/weixin/getPayQrCode")
+	//@GetMapping("/weixin/getPayQrCode")
 	public void getPayQrCode() throws Exception {
 		//仅展示几个重要的必填字段,更多参考:https://pay.weixin.qq.com/wiki/doc/api/native.php?chapter=9_1
 		SortedMap<String,String> sortedMap = new TreeMap<>();
@@ -114,7 +111,7 @@ public class WenxinController extends BaseController {
 	}
 	
 	//微信扫码付款成功后的回调处理
-	@PostMapping("/weixin/payCallBack")
+	//@PostMapping("/weixin/payCallBack")
 	public void payCallBack(HttpServletRequest request,HttpServletResponse response) throws Exception {
 		InputStream is = request.getInputStream();
 		BufferedReader br = new BufferedReader(new InputStreamReader(is,"UTF-8"));

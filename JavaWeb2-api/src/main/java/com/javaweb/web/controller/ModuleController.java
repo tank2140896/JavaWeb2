@@ -1,7 +1,5 @@
 package com.javaweb.web.controller;
 
-import java.util.UUID;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.validation.BindingResult;
@@ -18,50 +16,54 @@ import org.springframework.web.bind.annotation.RestController;
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.base.BaseValidatedGroup;
-import com.javaweb.constant.CommonConstant;
+import com.javaweb.constant.ApiConstant;
+import com.javaweb.constant.SwaggerConstant;
 import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.util.core.DateUtil;
+import com.javaweb.util.core.SecretUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.module.ModuleListRequest;
 import com.javaweb.web.po.Module;
 import com.javaweb.web.po.User;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(tags=SwaggerConstant.SWAGGER_MODULE_CONTROLLER_TAGS)
 @RestController
-@RequestMapping("/web/pc/sys/module")
+@RequestMapping(ApiConstant.MODULE_PREFIX)
 public class ModuleController extends BaseController {
 	
-	@PostMapping("/list")
-	public BaseResponseResult moduleList(HttpServletRequest request,@RequestBody ModuleListRequest moduleListRequest){
-		Page page = moduleService.moduleList(moduleListRequest);
-		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.list.success",page);
-	}
-	
-	@DeleteMapping("/delete/{moduleId}")
-	public BaseResponseResult moduleDelete(@PathVariable(name="moduleId",required=true) String moduleId){
-		moduleService.moduleDelete(moduleId);
-		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.delete.success",null);
-	}
-	
-	@PostMapping("/add")
+	@ApiOperation(value=SwaggerConstant.SWAGGER_MODULE_ADD)
+	@PostMapping(ApiConstant.MODULE_ADD)
 	public BaseResponseResult moduleAdd(HttpServletRequest request,@RequestBody @Validated({BaseValidatedGroup.add.class}) Module module,BindingResult bindingResult){
 		if(bindingResult.hasErrors()){
-			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult,CommonConstant.EMPTY_VALUE);
+			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}else{
 			TokenData tokenData = getTokenData(request);
 			User currentUser = tokenData.getUser();
-			module.setModuleId(UUID.randomUUID().toString());
+			module.setModuleId(SecretUtil.defaultGenUniqueStr());
 			module.setCreateDate(DateUtil.getDefaultDate());
 			module.setCreator(currentUser.getUserName());
+			module.setDelFlag(0);
 			moduleService.moduleAdd(module);
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.add.success",null);
 		}
 	}
 	
-	@PutMapping("/modify")
+	@ApiOperation(value=SwaggerConstant.SWAGGER_MODULE_LIST)
+	@PostMapping(ApiConstant.MODULE_LIST)
+	public BaseResponseResult moduleList(HttpServletRequest request,@RequestBody ModuleListRequest moduleListRequest){
+		Page page = moduleService.moduleList(moduleListRequest);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.list.success",page);
+	}
+	
+	@ApiOperation(value=SwaggerConstant.SWAGGER_MODULE_MODIFY)
+	@PutMapping(ApiConstant.MODULE_MODIFY)
 	public BaseResponseResult moduleModify(HttpServletRequest request,@RequestBody @Validated({BaseValidatedGroup.update.class}) Module module,BindingResult bindingResult){
 		if(bindingResult.hasErrors()){
-			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult,CommonConstant.EMPTY_VALUE);
+			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}else{
 			TokenData tokenData = getTokenData(request);
 			User currentUser = tokenData.getUser();
@@ -72,10 +74,18 @@ public class ModuleController extends BaseController {
 		}
 	}
 	
-	@GetMapping("/detail/{moduleId}")
+	@ApiOperation(value=SwaggerConstant.SWAGGER_MODULE_DETAIL)
+	@GetMapping(ApiConstant.MODULE_DETAIL)
 	public BaseResponseResult moduleDetail(@PathVariable(name="moduleId",required=true) String moduleId){
 		Module module = moduleService.moduleDetail(moduleId);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.detail.success",module);
 	}
-
+	
+	@ApiOperation(value=SwaggerConstant.SWAGGER_MODULE_DELETE)
+	@DeleteMapping(ApiConstant.MODULE_DELETE)
+	public BaseResponseResult moduleDelete(@PathVariable(name="moduleId",required=true) String moduleId){
+		moduleService.moduleDelete(moduleId);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.delete.success",null);
+	}
+	
 }

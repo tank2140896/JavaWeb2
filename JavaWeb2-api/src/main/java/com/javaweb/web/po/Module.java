@@ -163,6 +163,14 @@ public class Module extends BaseEntity implements Serializable {
 	public void setIcon(String icon) {
 		this.icon = icon;
 	}
+	
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
+	}
 
 	public List<Module> getList() {
 		return list;

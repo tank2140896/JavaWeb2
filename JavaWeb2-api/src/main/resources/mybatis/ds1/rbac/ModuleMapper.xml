@@ -56,14 +56,24 @@
 	</select>
 	
 	<delete id="moduleDelete" parameterType="java.lang.String">
+		<!-- 删除用户模块关联 -->
+		delete from user_module where module_id = #{_parameter};
 		<!-- 删除角色模块关联 -->
 		delete from role_module where module_id = #{_parameter};
 		<!-- 删除模块 -->
 		delete from module where module_id = #{_parameter};
 	</delete>
 	
+	<select id="moduleDetail" parameterType="java.lang.String" resultType="com.javaweb.web.po.Module">
+		select <include refid="selectModule"></include> from module where module_id = #{_parameter} and del_flag = 0 limit 1
+	</select>
+	
 	<select id="getModuleLevelAndOrdersByParentId" parameterType="java.lang.String" resultType="com.javaweb.web.eo.module.ModuleLevelAndOrdersResponse">
-		SELECT level,orders from module where parent_id = #{_parameter} ORDER BY orders desc LIMIT 1 
+		SELECT level,orders from module where parent_id = #{_parameter} ORDER BY level desc,orders desc LIMIT 1 
+	</select>
+	
+	<select id="getModuleLevelAndOrdersWithoutParentId" resultType="com.javaweb.web.eo.module.ModuleLevelAndOrdersResponse">
+		SELECT level,orders from module where parent_id is null ORDER BY level desc,orders desc LIMIT 1 
 	</select>
 	
 </mapper>

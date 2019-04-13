@@ -12,7 +12,7 @@ public class UserLoginRequest {
 	private String username;
 	
 	@NotNull(message="validated.user.password.notNull")
-	@Pattern(regexp="^(?![^a-zA-Z]+$)(?!\\D+$).{6,20}$",message="validated.user.userName.pattern")
+	@Pattern(regexp="^(?![^a-zA-Z]+$)(?!\\D+$).{6,20}$",message="validated.user.password.pattern")
 	private String password;
 	
 	@UserLoginRequestTypeValidate(easyWayCheck=false,message="validated.user.type.pattern")//自定义校验

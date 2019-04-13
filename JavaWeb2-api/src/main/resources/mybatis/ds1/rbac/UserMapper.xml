@@ -63,14 +63,34 @@
 		ON r.role_id = tmp.role_id
 	</select>
 	
-	<update id="roleAssignment" parameterType="java.util.Map">
+	<update id="userRoleAssignment" parameterType="java.util.Map">
 		<!-- 删除用户角色关联 -->
 		delete from user_role where user_id = #{userId};
 		<!-- 重新插入新的用户角色关联 -->
 		<if test="list!=null and list.size()>0">
-			insert into user_role(id,user_id,role_id) values
+			insert into user_role(id,user_id,role_id,strategy) values
 			<foreach collection="list" index="index" item="item" open="" separator="," close="">   
-		        (UUID(),#{userId},#{item})
+		        (#{item.id},#{item.userId},#{item.roleId},#{item.strategy})
+	    	</foreach>
+		</if>
+	</update>
+	
+	<select id="userModuleInfo" parameterType="java.lang.String" resultType="com.javaweb.web.eo.role.ModuleInfoResponse">
+		SELECT (CASE WHEN tmp.module_id is NULL THEN false ELSE true END) as checkFlag,
+	            m.module_name as moduleName,m.module_id as moduleId,m.parent_id as parentId from module as m 
+		LEFT JOIN (SELECT module_id from user_module where user_id = #{_parameter}) as tmp
+		on m.module_id = tmp.module_id 
+		ORDER BY level asc,module_type asc,orders asc
+	</select>
+	
+	<update id="userModuleAssignment" parameterType="java.util.Map">
+		<!-- 删除用户模块关联 -->
+		delete from user_module where user_id = #{userId};
+		<!-- 重新插入新的用户模块关联 -->
+		<if test="list!=null and list.size()>0">
+			insert into user_module(id,user_id,module_id) values
+			<foreach collection="list" index="index" item="item" open="" separator="," close="">   
+		        (#{item.id},#{item.userId},#{item.moduleId})
 	    	</foreach>
 		</if>
 	</update>

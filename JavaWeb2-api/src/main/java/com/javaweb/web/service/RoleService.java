@@ -1,8 +1,9 @@
 package com.javaweb.web.service;
 
-import java.util.Map;
+import java.util.List;
 
 import com.javaweb.util.entity.Page;
+import com.javaweb.web.eo.role.ModuleInfoResponse;
 import com.javaweb.web.eo.role.RoleListRequest;
 import com.javaweb.web.po.Role;
 
@@ -18,8 +19,8 @@ public interface RoleService {
 	
 	public Role roleDetail(String roleId);
 	
-	public Map<String,Object> roleModuleInfo(String roleId);
+	public List<ModuleInfoResponse> roleModuleInfo(String roleId);
 	
-	public void moduleAssignment(Map<String,Object> map);
+	public void roleModuleAssignment(String roleId,List<String> list);
 	
 }

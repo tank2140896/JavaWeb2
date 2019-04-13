@@ -1,9 +1,5 @@
 package com.javaweb.web.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
-
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -26,11 +22,16 @@ import com.javaweb.constant.SwaggerConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.util.core.DateUtil;
+import com.javaweb.util.core.MathUtil;
 import com.javaweb.util.core.SecretUtil;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.user.UserLoginRequest;
 import com.javaweb.web.po.Module;
 import com.javaweb.web.po.User;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 
 @Api(tags=SwaggerConstant.SWAGGER_ALL_OPEN_CONTROLLER_TAGS)
 @RestController
@@ -139,8 +140,12 @@ public class AllOpenController extends BaseController {
 			sb.append(tempArray[i]);
 		}
 		String out = sb.toString();
-		out = out.replaceAll(CommonConstant.BAR,CommonConstant.EMPTY_VALUE).toUpperCase();
+		out = out.replaceAll(CommonConstant.BAR,CommonConstant.EMPTY_VALUE).toUpperCase()+MathUtil.getRandomNumForLCRC(token.length()*date.length());
 		return out;
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(new AllOpenController().secretToken(UUID.randomUUID().toString()));
 	}
 	
 	//管理员判断

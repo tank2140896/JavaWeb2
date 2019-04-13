@@ -1,9 +1,9 @@
 package com.javaweb.web.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.javaweb.util.entity.Page;
+import com.javaweb.web.eo.role.ModuleInfoResponse;
 import com.javaweb.web.eo.user.RoleInfoResponse;
 import com.javaweb.web.eo.user.UserListRequest;
 import com.javaweb.web.eo.user.UserLoginRequest;
@@ -25,6 +25,10 @@ public interface UserService {
 	
 	public List<RoleInfoResponse> userRoleInfo(String userId);
 	
-	public void roleAssignment(Map<String,Object> map);
+	public void userRoleAssignment(String userId,List<String> list);
+	
+	public List<ModuleInfoResponse> userModuleInfo(String userId);
+	
+	public void userModuleAssignment(String userId,List<String> list);
 	
 }
