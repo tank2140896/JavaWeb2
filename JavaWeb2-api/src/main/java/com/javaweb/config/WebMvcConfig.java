@@ -1,5 +1,6 @@
 package com.javaweb.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -13,12 +14,17 @@ import com.javaweb.interceptor.PermissionInterceptor;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 	
+	@Value("${test.model.open}")
+	private boolean testModelOpen;
+	
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
         configurer.favorPathExtension(false);
     }
 
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new PermissionInterceptor()).addPathPatterns(SystemConstant.URL_INTERCEPTOR_PATTERN);//拦截/web下面的所有请求
+    	if(!testModelOpen) {
+    		registry.addInterceptor(new PermissionInterceptor()).addPathPatterns(SystemConstant.URL_INTERCEPTOR_PATTERN);//拦截/web下面的所有请求
+    	}
     }
     
     //更加细化的可以在Controller中写为:@CrossOrigin(origins="http://192.168.1.100:8080",maxAge=3600)
