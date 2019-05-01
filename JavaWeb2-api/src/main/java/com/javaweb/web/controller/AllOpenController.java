@@ -144,10 +144,6 @@ public class AllOpenController extends BaseController {
 		return out;
 	}
 	
-	public static void main(String[] args) {
-		System.out.println(new AllOpenController().secretToken(UUID.randomUUID().toString()));
-	}
-	
 	//管理员判断
 	private boolean systemAdminCheck(UserLoginRequest userLoginRequest){
 		final String systemAdminUsernameAndPassword = SystemConstant.SYSTEM_DEFAULT_USER_NAME+SystemConstant.SYSTEM_DEFAULT_USER_PASSWORD;

@@ -4,14 +4,14 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.javaweb.base.MySqlBaseDao;
+import com.javaweb.base.BaseDaoForMySql;
 import com.javaweb.web.eo.module.ModuleLevelAndOrdersResponse;
 import com.javaweb.web.eo.module.ModuleListRequest;
 import com.javaweb.web.eo.module.ModuleListResponse;
 import com.javaweb.web.po.Module;
 
 @Mapper
-public interface ModuleDao extends MySqlBaseDao<Module> {
+public interface ModuleDao extends BaseDaoForMySql<Module> {
 	
 	public List<Module> getModuleByModuleId(List<String> list);
 	

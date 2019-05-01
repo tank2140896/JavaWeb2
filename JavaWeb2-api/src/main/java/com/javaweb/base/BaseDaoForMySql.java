@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Update;
 import com.javaweb.constant.CommonConstant;
 
 @Mapper
-public interface MySqlBaseDao<T> {
+public interface BaseDaoForMySql<T> {
 	
 	@Insert(CommonConstant.EMPTY_VALUE)
 	public Integer insert(T t);//插入实体类

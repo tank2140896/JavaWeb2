@@ -40,7 +40,7 @@ public class Page {
 				this.pageSize = (Long)fieldPageSize.get(pageParam);
 			}
 		}catch(Exception e){
-			
+			//do nothing
 		}
 		this.totalPage = PageUtil.getTotalPage(totalSize,pageSize);
 		this.pageList = PageUtil.getShowPages(currentPage,totalPage,5L);
