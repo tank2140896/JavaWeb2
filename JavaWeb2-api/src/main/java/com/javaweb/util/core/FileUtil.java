@@ -15,12 +15,13 @@ import java.io.LineNumberReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.RandomAccessFile;
 import java.math.BigInteger;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Base64;
@@ -157,7 +158,8 @@ public class FileUtil {
 		//字符流
 		//Writer out = new FileWriter(f,true);//加true的话,不会替换原来文件的内容,直接追加
  	   	//Reader in = new FileReader(f);
-		try(BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,true),"UTF-8"))) {
+		//try(BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file,true),"UTF-8"))) {
+		try(BufferedWriter bufferedWriter = Files.newBufferedWriter(file.toPath(),StandardCharsets.UTF_8,StandardOpenOption.APPEND)) {
 			bufferedWriter.write(context);
 		} catch (IOException e) {
 			throw new IOException(e);
@@ -169,7 +171,8 @@ public class FileUtil {
 		//字符流
 		//Writer out = new FileWriter(f,true);//加true的话,不会替换原来文件的内容,直接追加
  	   	//Reader in = new FileReader(f);
-		try(BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path.toFile(),true),"UTF-8"))) {
+		//try(BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(path.toFile(),true),"UTF-8"))) {
+		try(BufferedWriter bufferedWriter = Files.newBufferedWriter(path,StandardCharsets.UTF_8,StandardOpenOption.APPEND)) {
 			bufferedWriter.write(context);
 		} catch (IOException e) {
 			throw new IOException(e);
