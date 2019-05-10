@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<Appenders>
+		<RollingFile name="baidu_ref" fileName="/szgz_dtlrk_wsdata/baidu/baidu.txt" filePattern="/szgz_dtlrk_wsdata/baidu/%d{yyyyMMdd}.txt" append="true">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n" />
+			<TimeBasedTriggeringPolicy modulate="true" interval="1" />
+		</RollingFile>
+		<RollingFile name="face_ref" fileName="/szgz_dtlrk_wsdata/face/face.txt" filePattern="/szgz_dtlrk_wsdata/face/%d{yyyyMMdd}.txt" append="true">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n" />
+			<TimeBasedTriggeringPolicy modulate="true" interval="1" />
+		</RollingFile>
+		<RollingFile name="face1_ref" fileName="/szgz_dtlrk_wsdata/face1/face.txt" filePattern="/szgz_dtlrk_wsdata/face1/%d{yyyyMMdd}.txt" append="true">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n" />
+			<TimeBasedTriggeringPolicy modulate="true" interval="1" />
+		</RollingFile>
+		<RollingFile name="face2_ref" fileName="/szgz_dtlrk_wsdata/face2/face.txt" filePattern="/szgz_dtlrk_wsdata/face2/%d{yyyyMMdd}.txt" append="true">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n" />
+			<TimeBasedTriggeringPolicy modulate="true" interval="1" />
+		</RollingFile>
+		<RollingFile name="device_ref" fileName="/szgz_dtlrk_wsdata/device/device.txt" filePattern="/szgz_dtlrk_wsdata/device/%d{yyyyMMdd}.txt" append="true">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n" />
+			<TimeBasedTriggeringPolicy modulate="true" interval="1" />
+		</RollingFile>
+		<RollingFile name="person_ref" fileName="/szgz_dtlrk_wsdata/person/person.txt" filePattern="/szgz_dtlrk_wsdata/person/%d{yyyyMMdd}.txt" append="true">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n" />
+			<TimeBasedTriggeringPolicy modulate="true" interval="1" />
+		</RollingFile>
+		<RollingFile name="huawei_ref" fileName="/szgz_dtlrk_wsdata/huawei/huawei.txt" filePattern="/szgz_dtlrk_wsdata/huawei/%d{yyyyMMdd}.txt" append="true">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n" />
+			<TimeBasedTriggeringPolicy modulate="true" interval="1" />
+		</RollingFile>
+		
+		<RollingFile name="insert_ref" fileName="/szgz_dtlrk_wsdata/db/insert/insert.txt" filePattern="/szgz_dtlrk_wsdata/db/insert/%d{yyyyMMdd}.txt" append="true">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n" />
+			<TimeBasedTriggeringPolicy modulate="true" interval="1" />
+		</RollingFile>
+		<RollingFile name="update_ref" fileName="/szgz_dtlrk_wsdata/db/update/update.txt" filePattern="/szgz_dtlrk_wsdata/db/update/%d{yyyyMMdd}.txt" append="true">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n" />
+			<TimeBasedTriggeringPolicy modulate="true" interval="1" />
+		</RollingFile>
+		<RollingFile name="id_ref" fileName="/szgz_dtlrk_wsdata/db/id/id.txt" filePattern="/szgz_dtlrk_wsdata/db/id/%d{yyyyMMdd}.txt" append="true">
+			<PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss z} %-5level %class{36} %L %M - %msg%xEx%n" />
+			<TimeBasedTriggeringPolicy modulate="true" interval="1" />
+		</RollingFile>
+	</Appenders>
+	
+	<Loggers >
+		<Logger name="baidu" level="INFO" additivity="false">
+			<appender-ref ref="baidu_ref" />
+		</Logger>
+		<Logger name="face" level="INFO" additivity="false">
+			<appender-ref ref="face_ref" />
+		</Logger>
+		<Logger name="face1" level="INFO" additivity="false">
+			<appender-ref ref="face1_ref" />
+		</Logger>
+		<Logger name="face2" level="INFO" additivity="false">
+			<appender-ref ref="face2_ref" />
+		</Logger>
+		<Logger name="device" level="INFO" additivity="false">
+			<appender-ref ref="device_ref" />
+		</Logger>
+		<Logger name="person" level="INFO" additivity="false">
+			<appender-ref ref="person_ref" />
+		</Logger>
+		<Logger name="huawei" level="INFO" additivity="false">
+			<appender-ref ref="huawei_ref" />
+		</Logger>
+		<Logger name="insert" level="INFO" additivity="false">
+			<appender-ref ref="insert_ref" />
+		</Logger>
+		<Logger name="update" level="INFO" additivity="false">
+			<appender-ref ref="update_ref" />
+		</Logger>
+		<Logger name="id" level="INFO" additivity="false">
+			<appender-ref ref="id_ref" />
+		</Logger>
+	</Loggers>
+	
+</configuration>
