@@ -10,7 +10,9 @@ import java.security.cert.X509Certificate;
 import java.util.List;
 
 import javax.net.ssl.SSLContext;
+import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.RequestConfig;
@@ -211,6 +213,35 @@ public class HttpUtil {
 		String out = stringBuilder.toString();
 		out = out.substring(0,out.length()-1);
 		return out;
+	}
+	
+	//获取用户真实IP
+	public static String getIpAddress(HttpServletRequest request) {
+		String ip = null;
+		if(request==null){
+			return ip;
+		}
+		try{
+			ip=request.getHeader("x-forwarded-for");
+			if(StringUtils.isEmpty(ip)||"unknown".equalsIgnoreCase(ip)){
+				ip=request.getHeader("Proxy-Client-IP");
+			}
+			if(StringUtils.isEmpty(ip)||ip.length()==0||"unknown".equalsIgnoreCase(ip)){
+				ip=request.getHeader("WL-Proxy-Client-IP");
+			}
+			if(StringUtils.isEmpty(ip)||"unknown".equalsIgnoreCase(ip)){
+				ip=request.getHeader("HTTP_CLIENT_IP");
+			}
+			if(StringUtils.isEmpty(ip)||"unknown".equalsIgnoreCase(ip)){
+				ip=request.getHeader("HTTP_X_FORWARDED_FOR");
+			}
+			if(StringUtils.isEmpty(ip)||"unknown".equalsIgnoreCase(ip)) {
+				ip=request.getRemoteAddr();
+			}
+		} catch (Exception e) {
+			//do nothing
+		}
+		return "0:0:0:0:0:0:0:1".equals(ip)?"127.0.0.1":ip;
 	}
 	
 	//获得linux的ssh连接
