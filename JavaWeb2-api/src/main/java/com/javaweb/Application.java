@@ -10,8 +10,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @EnableSwagger2//开启Swagger
-@EnableAsync//开启异步任务
 @EnableScheduling//开启定时任务
+@EnableAsync//开启异步任务
 @SpringBootApplication(exclude={DataSourceAutoConfiguration.class})//采用多数据源时需要加上
 //@MapperScan("com.javaweb.web.dao")//这样写就不必在所有的dao接口上加@Mapper
 public class Application {
