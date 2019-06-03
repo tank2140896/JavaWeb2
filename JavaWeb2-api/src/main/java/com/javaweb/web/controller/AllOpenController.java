@@ -1,5 +1,6 @@
 package com.javaweb.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -159,24 +160,13 @@ public class AllOpenController extends BaseController {
 		tokenData.setToken(secretToken(UUID.randomUUID().toString()));
 		tokenData.setUser(user);
 		tokenData.setType(type);
+		List<Module> menuList = moduleList.stream().filter(i->1==i.getModuleType()).collect(Collectors.toList());//获得菜单列表
 		List<Module> authOperateList = moduleList.stream().filter(i->2==i.getModuleType()).collect(Collectors.toList());//获得操作权限列表
+		tokenData.setMenuListForTree(setTreeList(menuList,null));
 		tokenData.setAuthOperateList(authOperateList);
-		/** 有选择的选取
-		List<Module> menuList = list.stream().filter(i->1==i.getModuleType()).collect(Collectors.toList());//获得菜单列表
-		List<Module> authOperateList = list.stream().filter(i->2==i.getModuleType()).collect(Collectors.toList());//获得操作权限列表
-		tokenData.setToken(UUID.randomUUID().toString());
-		tokenData.setUser(user);
-		tokenData.setType(type);
-		tokenData.setModuleList((list==null||list.size()==0)?null:list);
-		tokenData.setMenuList((menuList==null||menuList.size()==0)?null:menuList);
-		tokenData.setAuthOperateList((authOperateList==null||authOperateList.size()==0)?null:authOperateList);
-		menuList = setTreeList(menuList,null);
-		tokenData.setMenuListForTree((menuList==null||menuList.size()==0)?null:menuList);
-		*/
 		return tokenData;
 	}
 	
-	/*
 	//封装成树形结构集合
 	private List<Module> setTreeList(List<Module> originList,Module module){
 		List<Module> moduleList = new ArrayList<>();
@@ -189,7 +179,6 @@ public class AllOpenController extends BaseController {
 		}
 		return moduleList;
 	}
-	*/
 	
 	/*
 	//验证码校验
