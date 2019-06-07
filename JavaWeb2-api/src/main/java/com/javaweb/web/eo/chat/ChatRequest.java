@@ -1,15 +1,16 @@
 package com.javaweb.web.eo.chat;
 
-public class ChatRequest {
+import java.io.Serializable;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class ChatRequest implements Serializable {
+	
+	private static final long serialVersionUID = 2869748071041867629L;
 	
 	private String message;
 
-	public String getMessage() {
-		return message;
-	}
-
-	public void setMessage(String message) {
-		this.message = message;
-	}
-	
 }

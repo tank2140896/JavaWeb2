@@ -47,6 +47,11 @@
 	        <!-- webflux(用了webflux就不要spring-boot-starter-web了) -->
 	        <!-- <artifactId>spring-boot-starter-webflux</artifactId> -->
 	    </dependency>
+	    <!-- 邮件发送 -->
+	    <dependency>  
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
     	<!-- AOP -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -179,6 +184,15 @@
 			<groupId>com.github.penggle</groupId>
 			<artifactId>kaptcha</artifactId>
 			<version>2.3.2</version>
+		 </dependency>
+		 <!-- lombok(eclipse.ini添加) 
+			-Xbootclaspath/C:/Users/he/.m2/repository/org/projectlombok/lombok/1.18.2/lombok-1.18.2.jar
+			-javaagent:C:/Users/he/.m2/repository/org/projectlombok/lombok/1.18.2/lombok-1.18.2.jar
+		 -->
+		 <dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
 		 </dependency>
 		 <!-- hbase 
 		 <dependency>

@@ -5,6 +5,11 @@ import java.io.Serializable;
 import com.javaweb.interceptor.mybatis.Column;
 import com.javaweb.interceptor.mybatis.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Table(name="user_role")
 public class UserRole implements Serializable {
 
@@ -22,36 +27,4 @@ public class UserRole implements Serializable {
 	@Column(name="strategy")
 	private Integer strategy = 1;//权限获取策略(0:自定义;1:并集;2:交集;3:以用户权限为准;4:以角色权限为准;其它:默认为未定义,作为并集处理)
 
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	public String getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(String roleId) {
-		this.roleId = roleId;
-	}
-
-	public Integer getStrategy() {
-		return strategy;
-	}
-
-	public void setStrategy(Integer strategy) {
-		this.strategy = strategy;
-	}
-	
 }

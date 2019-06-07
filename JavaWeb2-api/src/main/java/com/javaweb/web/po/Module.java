@@ -9,6 +9,11 @@ import com.javaweb.base.BaseEntity;
 import com.javaweb.interceptor.mybatis.Column;
 import com.javaweb.interceptor.mybatis.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Table(name="module")
 public class Module extends BaseEntity implements Serializable {
 	
@@ -59,125 +64,5 @@ public class Module extends BaseEntity implements Serializable {
 	
 	@Column(name="type")
 	private Integer type = 0;//类型(0:未定义类型,作为全端通用接口使用;1:PC端;2:安卓端;3:IOS端) 
-
-	public String getModuleId() {
-		return moduleId;
-	}
-
-	public void setModuleId(String moduleId) {
-		this.moduleId = moduleId;
-	}
-
-	public String getModuleName() {
-		return moduleName;
-	}
-
-	public void setModuleName(String moduleName) {
-		this.moduleName = moduleName;
-	}
-
-	public String getPageUrl() {
-		return pageUrl;
-	}
-
-	public void setPageUrl(String pageUrl) {
-		this.pageUrl = pageUrl;
-	}
-
-	public String getApiUrl() {
-		return apiUrl;
-	}
-
-	public void setApiUrl(String apiUrl) {
-		this.apiUrl = apiUrl;
-	}
-
-	public String getParentId() {
-		return parentId;
-	}
-
-	public void setParentId(String parentId) {
-		this.parentId = parentId;
-	}
-
-	public String getFcode() {
-		return fcode;
-	}
-
-	public void setFcode(String fcode) {
-		this.fcode = fcode;
-	}
-
-	public Integer getLevel() {
-		return level;
-	}
-
-	public void setLevel(Integer level) {
-		this.level = level;
-	}
-
-	public Integer getOrders() {
-		return orders;
-	}
-
-	public void setOrders(Integer orders) {
-		this.orders = orders;
-	}
-
-	public Integer getModuleType() {
-		return moduleType;
-	}
-
-	public void setModuleType(Integer moduleType) {
-		this.moduleType = moduleType;
-	}
-
-	public String getAlias() {
-		return alias;
-	}
-
-	public void setAlias(String alias) {
-		this.alias = alias;
-	}
-
-	public String getParentAlias() {
-		return parentAlias;
-	}
-
-	public void setParentAlias(String parentAlias) {
-		this.parentAlias = parentAlias;
-	}
-
-	public String getRemark() {
-		return remark;
-	}
-
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
-
-	public String getIcon() {
-		return icon;
-	}
-
-	public void setIcon(String icon) {
-		this.icon = icon;
-	}
-	
-	public Integer getType() {
-		return type;
-	}
-
-	public void setType(Integer type) {
-		this.type = type;
-	}
-
-	public List<Module> getList() {
-		return list;
-	}
-
-	public void setList(List<Module> list) {
-		this.list = list;
-	}
 
 }

@@ -1,10 +1,18 @@
 package com.javaweb.web.eo.role;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ModuleInfoResponse {
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class ModuleInfoResponse implements Serializable {
 	
-	private boolean checkFlag;
+	private static final long serialVersionUID = 2026162447864735033L;
+
+	private Boolean checkFlag;
 	
 	private String moduleName;
 	
@@ -13,45 +21,5 @@ public class ModuleInfoResponse {
 	private String parentId;
 	
 	private List<ModuleInfoResponse> list;
-
-	public boolean isCheckFlag() {
-		return checkFlag;
-	}
-
-	public void setCheckFlag(boolean checkFlag) {
-		this.checkFlag = checkFlag;
-	}
-
-	public String getModuleName() {
-		return moduleName;
-	}
-
-	public void setModuleName(String moduleName) {
-		this.moduleName = moduleName;
-	}
-
-	public String getModuleId() {
-		return moduleId;
-	}
-
-	public void setModuleId(String moduleId) {
-		this.moduleId = moduleId;
-	}
-
-	public String getParentId() {
-		return parentId;
-	}
-
-	public void setParentId(String parentId) {
-		this.parentId = parentId;
-	}
-
-	public List<ModuleInfoResponse> getList() {
-		return list;
-	}
-
-	public void setList(List<ModuleInfoResponse> list) {
-		this.list = list;
-	}
 
 }

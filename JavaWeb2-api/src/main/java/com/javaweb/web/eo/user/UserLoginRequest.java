@@ -1,11 +1,20 @@
 package com.javaweb.web.eo.user;
 
+import java.io.Serializable;
+
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import com.javaweb.validate.UserLoginRequestTypeValidate;
 
-public class UserLoginRequest {
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class UserLoginRequest implements Serializable {
+
+	private static final long serialVersionUID = 8226342751622290262L;
 
 	@NotNull(message="validated.user.userName.notNull")
 	@Pattern(regexp="^(?![^a-zA-Z]+$)(?!\\D+$).{6,20}$",message="validated.user.userName.pattern")
@@ -23,45 +32,5 @@ public class UserLoginRequest {
 	
 	private String uuid;
 	/** ↑↑↑↑↑↑↑↑↑↑kaptcha和uuid仅在需要验证码时才会有用,此处没有用,可以不传↑↑↑↑↑↑↑↑↑↑ */
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
-	public String getKaptcha() {
-		return kaptcha;
-	}
-
-	public void setKaptcha(String kaptcha) {
-		this.kaptcha = kaptcha;
-	}
-
-	public String getUuid() {
-		return uuid;
-	}
-
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
-	}
 
 }

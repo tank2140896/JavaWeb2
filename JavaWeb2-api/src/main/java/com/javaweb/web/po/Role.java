@@ -8,6 +8,11 @@ import com.javaweb.base.BaseEntity;
 import com.javaweb.interceptor.mybatis.Column;
 import com.javaweb.interceptor.mybatis.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Table(name="role")
 public class Role extends BaseEntity implements Serializable {
 
@@ -35,61 +40,5 @@ public class Role extends BaseEntity implements Serializable {
 	
 	@Column(name="remark")
 	private String remark;//备注
-
-	public String getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(String roleId) {
-		this.roleId = roleId;
-	}
-
-	public String getRoleName() {
-		return roleName;
-	}
-
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
-
-	public String getParentId() {
-		return parentId;
-	}
-
-	public void setParentId(String parentId) {
-		this.parentId = parentId;
-	}
-
-	public String getFcode() {
-		return fcode;
-	}
-
-	public void setFcode(String fcode) {
-		this.fcode = fcode;
-	}
-
-	public Integer getLevel() {
-		return level;
-	}
-
-	public void setLevel(Integer level) {
-		this.level = level;
-	}
-
-	public Integer getType() {
-		return type;
-	}
-
-	public void setType(Integer type) {
-		this.type = type;
-	}
-
-	public String getRemark() {
-		return remark;
-	}
-
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
 
 }

@@ -34,7 +34,7 @@ public class BaseTool extends BaseInject {
 	}
 	
 	public boolean deleteFromRedisByKey(String key) {
-		return redisTemplate1.delete(key);
+		return stringRedisTemplate.delete(key);
 	}
 	
 	public TokenData getTokenData(HttpServletRequest request){

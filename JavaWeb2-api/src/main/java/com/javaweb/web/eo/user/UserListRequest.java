@@ -1,7 +1,16 @@
 package com.javaweb.web.eo.user;
 
-public class UserListRequest {
+import java.io.Serializable;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class UserListRequest implements Serializable {
 	
+	private static final long serialVersionUID = -3616575788300683386L;
+
 	private String userName;//用户名
 	
 	private String personName;//用户姓名
@@ -17,61 +26,5 @@ public class UserListRequest {
 	/** 下面的参数是额外的 start */
 	private Integer level;//第几级
 	/** 下面的参数是额外的 end */
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getPersonName() {
-		return personName;
-	}
-
-	public void setPersonName(String personName) {
-		this.personName = personName;
-	}
-
-	public String getCreateStartDate() {
-		return createStartDate;
-	}
-
-	public void setCreateStartDate(String createStartDate) {
-		this.createStartDate = createStartDate;
-	}
-
-	public String getCreateEndDate() {
-		return createEndDate;
-	}
-
-	public void setCreateEndDate(String createEndDate) {
-		this.createEndDate = createEndDate;
-	}
-
-	public Long getCurrentPage() {
-		return currentPage;
-	}
-
-	public void setCurrentPage(Long currentPage) {
-		this.currentPage = currentPage;
-	}
-
-	public Long getPageSize() {
-		return pageSize;
-	}
-
-	public void setPageSize(Long pageSize) {
-		this.pageSize = pageSize;
-	}
-
-	public Integer getLevel() {
-		return level;
-	}
-
-	public void setLevel(Integer level) {
-		this.level = level;
-	}
 
 }

@@ -4,6 +4,7 @@ import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 
+//JDK动态代理（基于接口）
 public class JdkDynamicProxy implements InvocationHandler {
 	
 	private static final JdkDynamicProxy JDK_DYNAMIC_PROXY = new JdkDynamicProxy();

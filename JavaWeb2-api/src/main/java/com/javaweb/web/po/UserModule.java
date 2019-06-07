@@ -5,6 +5,11 @@ import java.io.Serializable;
 import com.javaweb.interceptor.mybatis.Column;
 import com.javaweb.interceptor.mybatis.Table;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Table(name="user_module")
 public class UserModule implements Serializable {
 
@@ -18,29 +23,5 @@ public class UserModule implements Serializable {
 	
 	@Column(name="module_id")
 	private String moduleId;//模块ID
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	public String getModuleId() {
-		return moduleId;
-	}
-
-	public void setModuleId(String moduleId) {
-		this.moduleId = moduleId;
-	}
 
 }

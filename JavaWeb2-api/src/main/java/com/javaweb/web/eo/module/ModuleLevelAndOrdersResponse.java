@@ -1,25 +1,18 @@
 package com.javaweb.web.eo.module;
 
-public class ModuleLevelAndOrdersResponse {
+import java.io.Serializable;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class ModuleLevelAndOrdersResponse implements Serializable {
 	
+	private static final long serialVersionUID = -4595018633238807903L;
+
 	private Integer level;
 	
 	private Integer orders;
-
-	public Integer getLevel() {
-		return level;
-	}
-
-	public void setLevel(Integer level) {
-		this.level = level;
-	}
-
-	public Integer getOrders() {
-		return orders;
-	}
-
-	public void setOrders(Integer orders) {
-		this.orders = orders;
-	}
 	
 }
