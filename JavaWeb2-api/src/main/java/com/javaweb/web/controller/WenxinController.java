@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URLEncoder;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -15,7 +18,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javaweb.base.BaseController;
@@ -31,15 +38,70 @@ import com.javaweb.web.eo.weixin.UserInfoResponse;
 
 /**
  * 更多参考:
+ * 微信公众平台:https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1445241432
  * 扫码登录:https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&lang=zh_CN
  * 微信付款:https://pay.weixin.qq.com/wiki/doc/api/index.html
  * 扫码支付接入指引:https://pay.weixin.qq.com/guide/qrcode_payment.shtml
  */
-//@RestController
+@RestController
 public class WenxinController extends BaseController {
 	
 	@Autowired
 	private WeixinConfig weixinConfig;
+	
+	//微信公众平台服务器配置(初始化)
+	@GetMapping("/wxgzptServerConfig")
+	public String wxgzptServerConfigForGet(HttpServletRequest request) {
+		String echostr = null;
+		try {
+			final String token = "WeixinServerConfigToken";
+			String signature = request.getParameter("signature");
+			String timestamp = request.getParameter("timestamp");
+			String nonce = request.getParameter("nonce");
+			echostr = request.getParameter("echostr");
+			String array[] = new String[]{token,timestamp,nonce};
+			Arrays.sort(array);
+			StringBuilder stringBuilder = new StringBuilder();
+			for(int i=0;i<array.length;i++) {
+				stringBuilder.append(array[i]);
+			}
+			boolean ret = signature.equals(SecretUtil.getSecret(stringBuilder.toString(),"SHA-1"));
+			if(!ret) {
+				echostr = null;
+			}
+		}catch (Exception e) {
+			echostr = null;
+		}
+		return echostr;
+	}
+	
+	//微信公众平台消息处理
+	@PostMapping("/wxgzptServerConfig")
+	public String wxgzptServerConfigForPost(@RequestBody String body) {
+		String out = null;
+		try {
+			//{Content=1, CreateTime=1560003360, ToUserName=gh_4b54a6836ccf, FromUserName=o8hKM1IHWwSYOtjjRG15bkOYaJF4, MsgType=text, MsgId=22333880939653582}
+			Map<String,String> map = XmlUtil.xmlToMap(body);
+			String msgType = map.get("MsgType");
+			String content = map.get("Content");
+			//String createTime = map.get("CreateTime");
+			String fromUserName = map.get("FromUserName");
+			String toUserName = map.get("ToUserName");
+			//String msgId = map.get("MsgId");
+			if("text".equals(msgType)) {
+				Map<String,String> outMap = new HashMap<>();
+				outMap.put("ToUserName",fromUserName);
+				outMap.put("FromUserName",toUserName);
+				outMap.put("CreateTime",String.valueOf(new Date().getTime()));
+				outMap.put("MsgType","text");
+				outMap.put("Content","您刚才输入的消息为："+content);
+				out = XmlUtil.mapToXml(outMap);
+			}
+		} catch (Exception e) {
+			out = e.getMessage();
+		}
+		return out;
+	}
 	
 	private String createSign(SortedMap<String,String> sortedMap,String key) throws Exception {
 		StringBuilder sb = new StringBuilder();
@@ -54,7 +116,7 @@ public class WenxinController extends BaseController {
 			}
 		}
 		sb.append("key="+key);
-		return SecretUtil.getMD5(sb.toString()).toUpperCase();
+		return SecretUtil.getSecret(sb.toString(),"MD5").toUpperCase();
 	}
 	
 	private boolean checkSign(SortedMap<String,String> sortedMap,String key) throws Exception {

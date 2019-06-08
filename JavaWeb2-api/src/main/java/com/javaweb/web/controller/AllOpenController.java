@@ -55,7 +55,7 @@ public class AllOpenController extends BaseController {
 			setDefaultDataToRedis(key,token);
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.loginSuccess",token);
 		}
-		try{userLoginRequest.setPassword(SecretUtil.getSha256(userLoginRequest.getPassword()));}catch(Exception e){}
+		try{userLoginRequest.setPassword(SecretUtil.getSecret(userLoginRequest.getPassword(),"SHA-256"));}catch(Exception e){}
 		User user = userService.userLogin(userLoginRequest);
 		if(user==null){
 			return getBaseResponseResult(HttpCodeEnum.LOGIN_FAIL,"login.user.userNameOrPassword");

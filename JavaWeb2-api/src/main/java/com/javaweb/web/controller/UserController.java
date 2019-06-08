@@ -47,7 +47,7 @@ public class UserController extends BaseController {
 			TokenData tokenData = getTokenData(request);
 			User currentUser = tokenData.getUser();
 			user.setUserId(SecretUtil.defaultGenUniqueStr());
-			try{user.setPassword(SecretUtil.getSha256(user.getPassword()));}catch(Exception e){}
+			try{user.setPassword(SecretUtil.getSecret(user.getPassword(),"SHA-256"));}catch(Exception e){}
 			user.setParentId(currentUser.getUserId());
 			user.setLevel(currentUser.getLevel()+1);
 			user.setCreateDate(DateUtil.getDefaultDate());

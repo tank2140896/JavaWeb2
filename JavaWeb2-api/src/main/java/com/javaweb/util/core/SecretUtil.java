@@ -118,17 +118,10 @@ public class SecretUtil {
 		return String.valueOf(ret);  
    	}
 	
-	//SHA256加密
-	public static String getSha256(String string) throws Exception {
-		 MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");
-		 byte[] hash = messageDigest.digest(string.getBytes("UTF-8"));
-		 return Hex.encodeHexString(hash);
-	}
-	
-	//MD5加密
-	public static String getMD5(String string) throws Exception {
-		 MessageDigest messageDigest = MessageDigest.getInstance("MD5");
-		 byte[] hash = messageDigest.digest(string.getBytes("UTF-8"));
+	//加密(SHA1(SHA-1)、SHA256(SHA-256)、MD5(MD5)等加密)
+	public static String getSecret(String data,String algorithm) throws Exception {
+		 MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
+		 byte[] hash = messageDigest.digest(data.getBytes("UTF-8"));
 		 return Hex.encodeHexString(hash);
 	}
 	
