@@ -11,8 +11,11 @@ import lombok.Setter;
 @Configuration
 public class WeixinConfig {
 	
-	@Value("${wx.appid}")
-	private String wxAppid;
+	@Value("${wxopen.public.platform.token}")
+	private String wxopenPublicPlatformToken;
+	
+	@Value("${wxopen.access_token}")
+	private String wxopenAccessToken;
 
 	@Value("${wxopen.appid}")
 	private String wxopenAppid;
@@ -20,17 +23,23 @@ public class WeixinConfig {
 	@Value("${wxopen.appsecret}")
 	private String wxopenAppsecret;
 	
+	@Value("${wxopen.authorize_url}")
+	private String wxopenAuthorizeUrl;
+	
 	@Value("${wxopen.redirect_url}")
 	private String wxopenRedirectUrl;
-	
-	@Value("${wxopen.qrcode_url}")
-	private String wxopenQrcodeUrl; 
 	
 	@Value("${wxopen.access_token_url}")
 	private String wxopenAccessTokenUrl;
 	
 	@Value("${wxopen.user_info}")
 	private String wxopenUserInfo;
+	
+	@Value("${wxopen.message_templete}")
+	private String wxopenMessageTemplete;
+	
+	@Value("${wxopen.qrcode_url}")
+	private String wxopenQrcodeUrl;
 	
 	@Value("${wxpay.mer_id}")
 	private String wxpayMerId;

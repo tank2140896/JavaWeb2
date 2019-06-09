@@ -21,6 +21,4 @@ public class AccessTokenResponse implements Serializable {
 	
 	private String scope;
 
-	private String unionid;
-
 }

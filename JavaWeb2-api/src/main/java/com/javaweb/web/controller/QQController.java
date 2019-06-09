@@ -5,6 +5,8 @@ import java.net.URLEncoder;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javaweb.base.BaseController;
@@ -24,28 +26,28 @@ import com.javaweb.web.eo.qq.UserInfoResponse;
  * 3.使用assessToken换取openid:https://graph.qq.com/oauth2.0/me?access_token=CF8775A510EA68ED8576C9F675B42862
  * 4.使用openid和assessToken获取用户信息:https://graph.qq.com/user/get_user_info?access_token=CF8775A510EA68ED8576C9F675B42862&oauth_consumer_key=12345&openid=537F314752DA3A491B4F66C04D6AD9FF
  */
-//@RestController
+@RestController
 public class QQController extends BaseController {
 	
 	@Autowired
 	private QQConfig qqConfig;
 	
-	//生成授权连接,需要配置回调地址
-	//@GetMapping("/qq/getAuthorizationCode")
-	public BaseResponseResult getAuthorizationCode() {
+	//QQ获取用户信息回调地址
+	@GetMapping("/qq/getUserInfoCallBack")
+	public BaseResponseResult getUserInfoCallBack() {
 		String qqForwardUrl = null;
 		try{
 			qqForwardUrl = String.format(qqConfig.getQqAuthorizeUrl(),qqConfig.getQqAppid(),qqConfig.getQqRedirectUrl(),"1001");
 			qqForwardUrl = URLEncoder.encode(qqForwardUrl,"UTF-8");
-			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"qq.getAuthorizationCodeSuccess",qqForwardUrl);
+			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"qq.userInfoCallBackSuccess",qqForwardUrl);
 		}catch(Exception e){
-			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"qq.getAuthorizationCodeFail",qqForwardUrl);
+			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"qq.userInfoCallBackFail",qqForwardUrl);
 		}
 	}
 	
-	//通过授权码换取assessToken
-	//@GetMapping("/qq/userLoginCallBack")
-	public BaseResponseResult userLoginCallBack(HttpServletRequest request) {
+	//QQ获取用户信息
+	@GetMapping("/qq/getUserInfo")
+	public BaseResponseResult getUserInfo(HttpServletRequest request) {
 		UserInfoResponse userInfoResponse = null;
 		try {
 			String code = request.getParameter("code");
@@ -65,9 +67,9 @@ public class QQController extends BaseController {
 			url = URLEncoder.encode(url,"UTF-8");
 			out = HttpUtil.defaultGetRequest(url,null);
 			userInfoResponse = new ObjectMapper().readValue(out,UserInfoResponse.class);
-			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"qq.userLoginCallBackSuccess",userInfoResponse);
+			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"qq.userInfoSuccess",userInfoResponse);
 		}catch (Exception e) {
-			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"qq.userLoginCallBackFail",userInfoResponse);
+			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"qq.userInfoFail",userInfoResponse);
 		}
 	}
 

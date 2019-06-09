@@ -17,6 +17,8 @@ public class UserInfoResponse implements Serializable {
 	
 	private String sex;
 	
+	private String language;
+	
 	private String province;
 	
 	private String city;
