@@ -149,8 +149,8 @@ public class AllOpenController extends BaseController {
 	private boolean systemAdminCheck(UserLoginRequest userLoginRequest){
 		final String systemAdminUsernameAndPassword = SystemConstant.SYSTEM_DEFAULT_USER_NAME+SystemConstant.SYSTEM_DEFAULT_USER_PASSWORD;
 		final String requestUsernameAndPassword = userLoginRequest.getUsername()+userLoginRequest.getPassword();
-		final String requestType = userLoginRequest.getType();
-		return (systemAdminUsernameAndPassword.equals(requestUsernameAndPassword))&&("0".equals(requestType));
+		//final String requestType = userLoginRequest.getType();
+		return (systemAdminUsernameAndPassword.equals(requestUsernameAndPassword))/*&&("0".equals(requestType))*/;
 	}
 	
 	//token数据封装
