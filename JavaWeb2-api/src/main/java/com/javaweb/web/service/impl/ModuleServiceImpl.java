@@ -39,7 +39,10 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
 				}else if(strategy==2){
 					list = list1.stream().filter(item->list2.contains(item)).distinct().collect(Collectors.toList());
 				}else if(strategy==3){
-					list = list1.stream().filter(item->!list2.contains(item)).distinct().collect(Collectors.toList());
+					List<String> list3 = list1.stream().filter(item->list2.contains(item)).distinct().collect(Collectors.toList());//交集
+					List<String> list4 = Stream.concat(list1.stream(),list2.stream()).distinct().collect(Collectors.toList());//并集
+					list3.stream().forEach(item->list4.remove(item));
+					list = list4;
 				}else if(strategy==4){
 					list = list1;
 				}else if(strategy==5){

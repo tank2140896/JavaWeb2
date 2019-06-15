@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.javaweb.config.context.ApplicationContextHelper;
+import com.javaweb.constant.ApiConstant;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.PatternConstant;
 import com.javaweb.constant.SystemConstant;
@@ -23,7 +24,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 	//private Logger urlLog = LoggerFactory.getLogger("urlLog");//自定义输出日志
 	
 	private RedisTemplate<String,Object> redisTemplate1 = null;
-	
+
 	/**
 	 * httpServletRequest.getRequestURI()            -------------------- /javaweb/app/html/home.html
 	 * httpServletRequest.getRequestURL().toString() -------------------- http://localhost:8080/javaweb/app/html/home.html 
@@ -48,20 +49,20 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 		String servletPath = request.getServletPath();
 		boolean nullOrEmptyHead = Stream.of(userId,token,type).anyMatch(i->i==null||i.trim().equals(CommonConstant.EMPTY_VALUE));
 		if(nullOrEmptyHead){
-			request.getRequestDispatcher("/requestParameterLost").forward(request,response);
+			request.getRequestDispatcher(ApiConstant.REQUEST_PARAMETER_LOST).forward(request,response);
 			return false;
 		}
-		if(!PatternConstant.isHeadTypePattern(type)){//0:admin;1:web;2:Android;3:IOS
-			request.getRequestDispatcher("/requestParameterLost").forward(request,response);
+		if(!PatternConstant.isPattern(type,PatternConstant.HEAD_TYPE_PATTERN)){//0:admin;1:web;2:Android;3:IOS
+			request.getRequestDispatcher(ApiConstant.REQUEST_PARAMETER_LOST).forward(request,response);
 			return false;
 		}
 		TokenData tokenData = (TokenData)(redisTemplate1.opsForValue().get(String.join(CommonConstant.COMMA,userId,type)));
 		if(tokenData==null){
-			request.getRequestDispatcher("/invalidRequest").forward(request,response);
+			request.getRequestDispatcher(ApiConstant.INVALID_REQUEST).forward(request,response);
 			return false;
 		}
 		if(!(String.join(CommonConstant.COMMA,tokenData.getUser().getUserId(),tokenData.getType(),tokenData.getToken()).equals(String.join(CommonConstant.COMMA,userId,type,token)))){
-			request.getRequestDispatcher("/requestParameterError").forward(request,response);
+			request.getRequestDispatcher(ApiConstant.REQUEST_PARAMETER_ERROR).forward(request,response);
 			return false;
 		}
 		if(servletPath.startsWith(SystemConstant.URL_LOGIN_PC_PERMISSION)){//该路径下只要登录即可访问，不需要权限
@@ -79,7 +80,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 			return false; 
 		}).count();
 		if(count<=0){
-			request.getRequestDispatcher("/noAuthory").forward(request,response);
+			request.getRequestDispatcher(ApiConstant.NO_AUTHORY).forward(request,response);
 			return false;
 		}else{
 			redisTemplate1.opsForValue().set(String.join(CommonConstant.COMMA,userId,type),tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);

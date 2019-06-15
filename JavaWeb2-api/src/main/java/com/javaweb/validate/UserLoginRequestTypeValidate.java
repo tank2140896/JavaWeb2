@@ -42,7 +42,7 @@ class UserLoginRequestTypeClass implements ConstraintValidator<UserLoginRequestT
 			result = true;
 		}
 		if(!userLoginRequestTypeValidate.easyWayCheck()) {
-			result = PatternConstant.isHeadTypePattern(value.toString());
+			result = PatternConstant.isPattern(value.toString(),PatternConstant.HEAD_TYPE_PATTERN);
 		}
 		return result;
 	}

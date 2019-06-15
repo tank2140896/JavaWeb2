@@ -27,10 +27,8 @@ public class UserLoginRequest implements Serializable {
 	@UserLoginRequestTypeValidate(easyWayCheck=false,message="validated.user.type.pattern")//自定义校验
 	private String type;
 	
-	/** ↓↓↓↓↓↓↓↓↓↓kaptcha和uuid仅在需要验证码时才会有用,此处没有用,可以不传↓↓↓↓↓↓↓↓↓↓ */
 	private String kaptcha;
 	
-	private String uuid;
-	/** ↑↑↑↑↑↑↑↑↑↑kaptcha和uuid仅在需要验证码时才会有用,此处没有用,可以不传↑↑↑↑↑↑↑↑↑↑ */
-
+	private String requestId;
+	
 }
