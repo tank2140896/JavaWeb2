@@ -93,7 +93,7 @@ public class FreemarkerUtil {
 	//非通用方法
 	private static void freemarkerGenerate(Map<String,Object> map,String outputFilePath) throws Exception {
 		Configuration configuration = new Configuration(Configuration.VERSION_2_3_28);
-		configuration.setDirectoryForTemplateLoading(new File(Thread.currentThread().getContextClassLoader().getResource("templates").getFile()));
+		configuration.setDirectoryForTemplateLoading(new File(Thread.currentThread().getContextClassLoader().getResource("ftl").getFile()));
 		configuration.setObjectWrapper(new DefaultObjectWrapper(Configuration.VERSION_2_3_28));
 	    Template template = configuration.getTemplate(map.get("templateFileName").toString());
 	    File file = new File(outputFilePath+map.get("fileName"));

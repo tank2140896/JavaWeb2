@@ -113,10 +113,10 @@ public class AllOpenController extends BaseController {
 	//获得请求ID
 	@GetMapping("/getRequestId")
 	public String getRequestId() {
-		String date = DateUtil.getStringDate(DateUtil.DATETIME_PATTERN_TYPE2);
-		String uuid = UUID.randomUUID().toString();
-		String token = secretToken(uuid,date,false);
-		return uuid+CommonConstant.COMMA+date+CommonConstant.COMMA+token;
+		String uuid = UUID.randomUUID().toString();//36
+		String date = DateUtil.getStringDate(DateUtil.DATETIME_PATTERN_TYPE2);//17
+		String token = secretToken(uuid,date,false);//32
+		return uuid+date+token+uuid.length()+date.length()+token.length();
 	}
 	
 	//验证码
@@ -125,8 +125,7 @@ public class AllOpenController extends BaseController {
 		response.setHeader("Cache-Control", "no-store, no-cache");
 	    response.setContentType("image/jpeg");
 	    String text = defaultKaptcha.createText();
-	    String requestIdSplit[] = requestId.split(CommonConstant.COMMA);
-	    if(requestIdSplit[2].equals(secretToken(requestIdSplit[0],requestIdSplit[1],false))) {
+	    if(requestId.substring(53,85).equals(secretToken(requestId.substring(0,36),requestId.substring(36,53),false))) {
 	    	setDataToRedis(requestId,text,SystemConstant.SYSTEM_DEFAULT_KAPTCHA_TIME_OUT,TimeUnit.MINUTES);
 	    }
 	    BufferedImage image = defaultKaptcha.createImage(text);
