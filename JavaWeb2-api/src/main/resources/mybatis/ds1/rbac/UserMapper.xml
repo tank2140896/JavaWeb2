@@ -14,7 +14,7 @@
 	</select>
 	
 	<select id="userList" parameterType="com.javaweb.web.eo.user.UserListRequest" resultType="com.javaweb.web.eo.user.UserListResponse">
-		select u.user_id as userId,u.user_name as userName,person_name as personName,u.create_date as createDate,
+		select u.user_id as userId,u.user_name as userName,u.person_name as personName,u.status,u.create_date as createDate,
 		(select GROUP_CONCAT(r.role_name) from role r where r.role_id in(select ur.role_id from user_role ur where u.user_id = ur.user_id)) as roleName 
 		from user u
 		<where>

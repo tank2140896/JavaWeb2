@@ -17,6 +17,8 @@ public class UserListResponse implements Serializable {
 	
 	private String personName;//用户姓名
 	
+	private String status;//账号状态
+	
 	private String createDate;//注册日期
 	
 	private String roleName;//角色名称

@@ -37,7 +37,7 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping(ApiConstant.USER_PREFIX)
 public class UserController extends BaseController {
-	
+
 	@ApiOperation(value=SwaggerConstant.SWAGGER_USER_ADD)
 	@PostMapping(ApiConstant.USER_ADD)
 	public BaseResponseResult userAdd(HttpServletRequest request,@RequestBody @Validated({BaseValidatedGroup.add.class}) User user,BindingResult bindingResult){

@@ -2,6 +2,11 @@ package com.javaweb.base;
 
 import java.io.Serializable;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class BaseResponseResult implements Serializable {
 
 	private static final long serialVersionUID = -3883891531784970360L;
@@ -24,30 +29,6 @@ public class BaseResponseResult implements Serializable {
 	public BaseResponseResult(Object code,Object message,Object data){
 		this.code = code;
 		this.message = message;
-		this.data = data;
-	}
-
-	public Object getCode() {
-		return code;
-	}
-
-	public void setCode(Object code) {
-		this.code = code;
-	}
-
-	public Object getMessage() {
-		return message;
-	}
-
-	public void setMessage(Object message) {
-		this.message = message;
-	}
-
-	public Object getData() {
-		return data;
-	}
-
-	public void setData(Object data) {
 		this.data = data;
 	}
 

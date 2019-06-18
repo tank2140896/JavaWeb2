@@ -56,6 +56,7 @@ public class AllOpenController extends BaseController {
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"login.user.kaptcha");
 		}
 		if(systemAdminCheck(userLoginRequest)){//管理员判断
+			userLoginRequest.setType("0");
 			User user = SystemConstant.SYSTEM_DEFAULT_USER;
 			TokenData token = getToken(true,user,userLoginRequest.getType());
 			String key = String.join(CommonConstant.COMMA,user.getUserId(),userLoginRequest.getType());
