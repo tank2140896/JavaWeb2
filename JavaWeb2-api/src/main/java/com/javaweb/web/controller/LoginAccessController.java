@@ -23,7 +23,7 @@ import com.javaweb.web.eo.TokenData;
 @RequestMapping(ApiConstant.LOGIN_ACCESS_PREFIX)
 public class LoginAccessController extends BaseController {
 	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_LOGOUT_VALUE)
+	@ApiOperation(value=SwaggerConstant.SWAGGER_LOGOUT)
 	@GetMapping(ApiConstant.LOGIN_OUT)
 	public BaseResponseResult logout(HttpServletRequest request){
 		String userId = request.getHeader(SystemConstant.HEAD_USERID);

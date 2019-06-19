@@ -3,6 +3,8 @@ package com.javaweb.constant;
 public class ApiConstant {
 	
 	public static final String ALL_OPEN_PREFIX = "";
+	public static final String GET_REQUESTID = "getRequestId";//获得请求ID
+	public static final String GET_KAPTCHA = "/getKaptcha/{requestId}";//获得验证码
 	public static final String LOGIN = "/login";//登录接口
 	public static final String REQUEST_PARAMETER_LOST = "/requestParameterLost";//请求参数缺失接口
 	public static final String INVALID_REQUEST = "/invalidRequest";//请求失效接口

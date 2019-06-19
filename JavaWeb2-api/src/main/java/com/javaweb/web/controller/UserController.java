@@ -74,6 +74,7 @@ public class UserController extends BaseController {
 		}else{
 			TokenData tokenData = getTokenData(request);
 			User currentUser = tokenData.getUser();
+			user.setPassword(null);//密码不在此处修改
 			user.setUpdateDate(DateUtil.getDefaultDate());
 			user.setUpdater(currentUser.getUserName());
 			userService.userModify(user);

@@ -20,23 +20,23 @@ import com.javaweb.constant.SystemConstant;
 
 public class SecretUtil {
 	
-	private static final int KEYBORD_USERD_START = 33;//键盘常用字符开始位数
+	public static final int KEYBORD_USERD_START = 33;//键盘常用字符开始位数
 	
-	private static final int KEYBORD_USERD_END = 127;//键盘常用字符结束位数
+	public static final int KEYBORD_USERD_END = 127;//键盘常用字符结束位数
 	
-	private static final int KEYBORD_USERD_LENGTH = KEYBORD_USERD_END-KEYBORD_USERD_START;//键盘常用字符总长度
+	public static final int KEYBORD_USERD_LENGTH = KEYBORD_USERD_END-KEYBORD_USERD_START;//键盘常用字符总长度
 
-	private static final int CHINESE_USED_START = 19968;//中文常用字符开始位数 (int)'\u4e00'
+	public static final int CHINESE_USED_START = 19968;//中文常用字符开始位数 (int)'\u4e00'
 	
-	private static final int CHINESE_USED_END = 40869;//中文常用字符结束位数 (int)'\u9fa5'
+	public static final int CHINESE_USED_END = 40869;//中文常用字符结束位数 (int)'\u9fa5'
 	
-	private static final int CHINESE_USERD_LENGTH = CHINESE_USED_END-CHINESE_USED_START;//中文常用字符总长度
+	public static final int CHINESE_USERD_LENGTH = CHINESE_USED_END-CHINESE_USED_START;//中文常用字符总长度
 	
-	private static final char[] KEYBORD_USED_CHARACTERSET = new char[KEYBORD_USERD_LENGTH];//键盘常用字符数组
+	public static final char[] KEYBORD_USED_CHARACTERSET = new char[KEYBORD_USERD_LENGTH];//键盘常用字符数组
 	
-	private static final char[] CHINESE_USED_CHARACTERSET = new char[KEYBORD_USERD_LENGTH+CHINESE_USERD_LENGTH];//中文常用字符数组
+	public static final char[] CHINESE_USED_CHARACTERSET = new char[KEYBORD_USERD_LENGTH+CHINESE_USERD_LENGTH];//中文常用字符数组
 	
-	private static final Map<Character,Integer> CHARACTE_KV = new HashMap<>();//字符数字键值对
+	public static final Map<Character,Integer> CHARACTE_KV = new HashMap<>();//字符数字键值对
 	
 	static{
 		/** 初始化键盘常用字符数组和中文常用字符数组 start */
@@ -92,7 +92,7 @@ public class SecretUtil {
 			} catch (InterruptedException e) {
 				
 			}
-			return  DateUtil.getStringDate(DateUtil.DATETIME_PATTERN_TYPE2);
+			return DateUtil.getStringDate(DateUtil.DATETIME_PATTERN_TYPE2);
 		}
 	}
 	
@@ -140,18 +140,18 @@ public class SecretUtil {
 		return (bytes[0]&0xFF)<<24 | (bytes[1]&0xFF)<<16 | (bytes[2]&0xFF)<<8 | (bytes[3]&0xFF);
 	}
 	
-	//生成JWT示例
-	public static String getDemoJwt(Map<String,Object> map){
+	//生成JWT
+	public static String createJwtToken(Map<String,Object> map,Date date){
 		return Jwts.builder().setSubject(SystemConstant.PROJECT_NAME)
 							 .setClaims(map)
 							 .setIssuedAt(new Date())
-		              	     .setExpiration(new Date(System.currentTimeMillis()+SystemConstant.SYSTEM_DEFAULT_JWT_TIME_OUT*60*1000))//5分钟过期
+		              	     .setExpiration(date/*new Date(System.currentTimeMillis()+SystemConstant.SYSTEM_DEFAULT_JWT_TIME_OUT*60*1000)*/)
 		              	     .signWith(SignatureAlgorithm.HS256,SystemConstant.DEFAULT_SECURITY_KEY)
 		              	     .compact();
 	}
 	
-	//解析JWT示例
-	public static Claims getDemoJwtToken(String token){
+	//解析JWT
+	public static Claims analyseJwtToken(String token){
 		return Jwts.parser().setSigningKey(SystemConstant.DEFAULT_SECURITY_KEY)
 				            .parseClaimsJws(token)
 				            .getBody();

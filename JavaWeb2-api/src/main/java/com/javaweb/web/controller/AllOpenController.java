@@ -1,14 +1,24 @@
 package com.javaweb.web.controller;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,6 +35,7 @@ import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.MathUtil;
 import com.javaweb.util.core.SecretUtil;
+import com.javaweb.util.core.StringUtil;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.user.UserLoginRequest;
 import com.javaweb.web.po.Module;
@@ -37,17 +48,20 @@ import io.swagger.annotations.ApiOperation;
 @Api(tags=SwaggerConstant.SWAGGER_ALL_OPEN_CONTROLLER_TAGS)
 @RestController
 public class AllOpenController extends BaseController {
+	
+	@Value("${login.kaptcha.check}")
+	private boolean loginKaptchaCheck;
 
-	@ApiOperation(value=SwaggerConstant.SWAGGER_LOGIN_VALUE,notes=SwaggerConstant.SWAGGER_LOGIN_NOTES)
-    @ApiImplicitParam(name="userLoginRequest",value=SwaggerConstant.SWAGGER_LOGIN_PARAM_VALUE,required=true,dataType="UserLoginRequest")
+	@ApiOperation(value=SwaggerConstant.SWAGGER_LOGIN,notes=SwaggerConstant.SWAGGER_LOGIN_NOTES)
+    @ApiImplicitParam(name="userLoginRequest",value=SwaggerConstant.SWAGGER_LOGIN_PARAM,required=true,dataType="UserLoginRequest")
 	@PostMapping(ApiConstant.LOGIN)
 	public BaseResponseResult login(@RequestBody @Validated UserLoginRequest userLoginRequest,BindingResult bindingResult,HttpServletRequest request){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}
-		//if(kaptchaCheck(userLoginRequest,request)){//验证码校验
-		//	return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"login.user.kaptcha");
-		//}
+		if(loginKaptchaCheck&&kaptchaCheck(userLoginRequest,request)){//验证码校验
+			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"login.user.kaptcha");
+		}
 		if(systemAdminCheck(userLoginRequest)){//管理员判断
 			userLoginRequest.setType("0");
 			User user = SystemConstant.SYSTEM_DEFAULT_USER;
@@ -68,55 +82,69 @@ public class AllOpenController extends BaseController {
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.loginSuccess",token);
 	}
 	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_REQUEST_PARAMETER_LOST_VALUE)
+	@ApiOperation(value=SwaggerConstant.SWAGGER_REQUEST_PARAMETER_LOST)
 	@RequestMapping(value=ApiConstant.REQUEST_PARAMETER_LOST,method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 	public BaseResponseResult requestParameterLost() {
 		return getBaseResponseResult(HttpCodeEnum.REQUEST_PARAMETER_LOST,"validated.permission.requestParameterLost");
 	}
 	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_INVALID_REQUEST_VALUE)
+	@ApiOperation(value=SwaggerConstant.SWAGGER_INVALID_REQUEST)
 	@RequestMapping(value=ApiConstant.INVALID_REQUEST,method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 	public BaseResponseResult invalidRequest(){
 		return getBaseResponseResult(HttpCodeEnum.INVALID_REQUEST,"validated.permission.invalidRequest");
 	}
 	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_REQUEST_PARAMETER_ERROR_VALUE)
+	@ApiOperation(value=SwaggerConstant.SWAGGER_REQUEST_PARAMETER_ERROR)
 	@RequestMapping(value=ApiConstant.REQUEST_PARAMETER_ERROR,method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 	public BaseResponseResult requestParameterError(){
 		return getBaseResponseResult(HttpCodeEnum.REQUEST_PARAMETER_ERROR,"validated.permission.requestParameterError");
 	}
 	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_NO_AUTHORY_VALUE)
+	@ApiOperation(value=SwaggerConstant.SWAGGER_NO_AUTHORY)
 	@RequestMapping(value=ApiConstant.NO_AUTHORY,method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 	public BaseResponseResult noAuthory(){
 		return getBaseResponseResult(HttpCodeEnum.NO_AUTHORY,"validated.permission.noAuthory");
 	}
 	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_NOT_FOUND_VALUE)
+	@ApiOperation(value=SwaggerConstant.SWAGGER_NOT_FOUND)
 	@RequestMapping(value=ApiConstant.NOT_FOUND,method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 	public BaseResponseResult notFound(){
 		return getBaseResponseResult(HttpCodeEnum.NOT_FOUND,"validated.permission.notFound");
 	}
 	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_INTERNAL_ERROR_VALUE)
+	@ApiOperation(value=SwaggerConstant.SWAGGER_INTERNAL_ERROR)
 	@RequestMapping(value=ApiConstant.INTERNAL_ERROR,method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 	public BaseResponseResult internalError(){
 		return getBaseResponseResult(HttpCodeEnum.INTERNAL_ERROR,"validated.permission.internalError");
 	}
 	
-	/**
-	//验证码
-	@GetMapping("/kaptcha/{requestId}")
-	public void kaptcha(HttpServletRequest request,HttpServletResponse response,@PathVariable(name="requestId",required=true) String requestId) throws Exception {
+	@ApiOperation(value=SwaggerConstant.SWAGGER_GET_REQUEST_ID,notes=SwaggerConstant.SWAGGER_GET_REQUEST_ID_NOTES)
+	@GetMapping(value=ApiConstant.GET_REQUESTID)
+	public String getRequestId() {
+		Map<String,Object> map = new HashMap<>();
+		map.put("key",defaultKaptcha.createText());
+		System.out.println(loginKaptchaCheck);
+		return SecretUtil.createJwtToken(map,null);
+	}
+	
+	@ApiOperation(value=SwaggerConstant.SWAGGER_GET_KAPTCHA)
+	@GetMapping(value=ApiConstant.GET_KAPTCHA)
+	public void getKaptcha(HttpServletRequest request,HttpServletResponse response,@PathVariable(name="requestId",required=true) String requestId) throws Exception {
 		response.setHeader("Cache-Control", "no-store, no-cache");
 	    response.setContentType("image/jpeg");
-	    String text = defaultKaptcha.createText();
-	    setDataToRedis(requestId,text,SystemConstant.SYSTEM_DEFAULT_KAPTCHA_TIME_OUT,TimeUnit.MINUTES);
+	    String text = defaultKaptcha.createText();;
+	    try {
+	    	text = SecretUtil.analyseJwtToken(requestId).get("key").toString();
+	    	if(loginKaptchaCheck&&!CommonConstant.EMPTY_VALUE.equals(StringUtil.handleNullString(text))) {
+	    		setDataToRedis(requestId,text,SystemConstant.SYSTEM_DEFAULT_KAPTCHA_TIME_OUT,TimeUnit.MINUTES);
+	    	}
+	    }catch (Exception e) {
+			//do nothing
+		}
 	    BufferedImage image = defaultKaptcha.createImage(text);
 	    ServletOutputStream out = response.getOutputStream();
 	    ImageIO.write(image,"jpg",out);
 	}
-	*/
 	
 	//对token进行简单加密
 	private String secretToken(String token,String date,boolean random) {
@@ -180,7 +208,6 @@ public class AllOpenController extends BaseController {
 		return moduleList;
 	}
 	
-	/**
 	//验证码校验
 	private boolean kaptchaCheck(UserLoginRequest userLogin,HttpServletRequest request){
 		boolean result = true;
@@ -192,6 +219,5 @@ public class AllOpenController extends BaseController {
 		}
 		return result;
 	}
-	*/
 	
 }

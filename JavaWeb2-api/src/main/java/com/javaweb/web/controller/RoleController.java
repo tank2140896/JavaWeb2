@@ -91,18 +91,18 @@ public class RoleController extends BaseController {
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"role.delete.success",null);
 	}
 	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_ROLE_MODULE_ASSIGNMENT)
-	@PostMapping(ApiConstant.ROLE_MODULE_ASSIGNMENT)
-	public BaseResponseResult roleModuleAssignment(@PathVariable(name="roleId",required=true) String roleId,@RequestBody List<String> list){
-		roleService.roleModuleAssignment(roleId,list);
-		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"role.roleModuleAssignment.success",null);
-	}
-	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_ROLE_MODULE_INFO)
 	@GetMapping(ApiConstant.ROLE_MODULE_INFO)
 	public BaseResponseResult roleModuleInfo(@PathVariable(name="roleId",required=true) String roleId){
 		List<ModuleInfoResponse> list = roleService.roleModuleInfo(roleId);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"role.roleModuleInfo.success",list);
+	}
+	
+	@ApiOperation(value=SwaggerConstant.SWAGGER_ROLE_MODULE_ASSIGNMENT)
+	@PostMapping(ApiConstant.ROLE_MODULE_ASSIGNMENT)
+	public BaseResponseResult roleModuleAssignment(@PathVariable(name="roleId",required=true) String roleId,@RequestBody List<String> list){
+		roleService.roleModuleAssignment(roleId,list);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"role.roleModuleAssignment.success",null);
 	}
 	
 }

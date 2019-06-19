@@ -17,6 +17,9 @@ public class CommonConstant {
 	//杠
 	public static final String BAR = "-";
 	
+	//下划线
+	public static final String UNDERLINE = "_";
+	
 	//回车(windows)
 	public static final String ENTER_WINDOWS = "\r\n";
 	

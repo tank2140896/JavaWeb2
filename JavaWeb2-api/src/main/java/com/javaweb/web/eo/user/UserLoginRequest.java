@@ -25,8 +25,10 @@ public class UserLoginRequest implements Serializable {
 	private String password;
 	
 	@UserLoginRequestTypeValidate(easyWayCheck=false,message="validated.user.type.pattern")//自定义校验
-	private String type;
+	private String type = "1";
 	
-	//private String kaptcha;
+	private String kaptcha;
+	
+	private String requestId;
 	
 }

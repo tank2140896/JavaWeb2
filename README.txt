@@ -3,6 +3,7 @@
 2、maven3.3+
 3、redis4.0.8+
 4、mysql5.6+
+5、lombok最新版
 二、使用前重要说明：
 1、本项目使用redis存储session，但是没用spring-session-redis（写法在代码中也有参考），而是采用自己设置session到redis
 2、nginx用于处理跨域和负载均衡，本项目已经处理了跨域，因此可以不用nginx，此处提及的目的是为今后负载均衡做准备
