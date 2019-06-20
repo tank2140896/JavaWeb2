@@ -1,7 +1,10 @@
 package com.javaweb.config;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.ContentNegotiationConfigurer;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -9,7 +12,9 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.javaweb.constant.SystemConstant;
-import com.javaweb.interceptor.PermissionInterceptor;
+import com.javaweb.interceptor.AppPermissionInterceptor;
+import com.javaweb.interceptor.WebPermissionInterceptor;
+import com.javaweb.resolver.TokenDataHandlerMethodArgumentResolver;
 
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
@@ -23,7 +28,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     public void addInterceptors(InterceptorRegistry registry) {
     	if(!testModelOpen) {
-    		registry.addInterceptor(new PermissionInterceptor()).addPathPatterns(SystemConstant.URL_INTERCEPTOR_PATTERN);//拦截/web下面的所有请求
+    		registry.addInterceptor(new WebPermissionInterceptor()).addPathPatterns(SystemConstant.URL_WEB_INTERCEPTOR_PATTERN);//拦截/web下面的所有请求
+    		registry.addInterceptor(new AppPermissionInterceptor()).addPathPatterns(SystemConstant.URL_APP_INTERCEPTOR_PATTERN);//拦截/app下面的所有请求
     	}
     }
     
@@ -43,5 +49,9 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
+
+	public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
+		resolvers.add(new TokenDataHandlerMethodArgumentResolver());
+	}
     
 }

@@ -3,6 +3,11 @@ package com.javaweb.config.redis;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 @Component
 public class RedisParameter1 {
 	
@@ -29,69 +34,5 @@ public class RedisParameter1 {
 	
 	@Value("${redis1.commandTimeout}")
 	private long commandTimeout;
-
-	public String getHost() {
-		return host;
-	}
-
-	public void setHost(String host) {
-		this.host = host;
-	}
-
-	public String getPassword() {
-		return password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	public int getPort() {
-		return port;
-	}
-
-	public void setPort(int port) {
-		this.port = port;
-	}
-
-	public int getMinIdle() {
-		return minIdle;
-	}
-
-	public void setMinIdle(int minIdle) {
-		this.minIdle = minIdle;
-	}
-
-	public int getMaxIdle() {
-		return maxIdle;
-	}
-
-	public void setMaxIdle(int maxIdle) {
-		this.maxIdle = maxIdle;
-	}
-
-	public int getMaxTotal() {
-		return maxTotal;
-	}
-
-	public void setMaxTotal(int maxTotal) {
-		this.maxTotal = maxTotal;
-	}
-
-	public long getMaxWaitMillis() {
-		return maxWaitMillis;
-	}
-
-	public void setMaxWaitMillis(long maxWaitMillis) {
-		this.maxWaitMillis = maxWaitMillis;
-	}
-
-	public long getCommandTimeout() {
-		return commandTimeout;
-	}
-
-	public void setCommandTimeout(long commandTimeout) {
-		this.commandTimeout = commandTimeout;
-	}
 
 }

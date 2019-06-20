@@ -16,7 +16,7 @@ public class BaseControllerTest {
 	
 	public final List<Header> getHeaders(){
 		Header header1 = new BasicHeader("userId","admin123456");
-		Header header2 = new BasicHeader("token","E44E92759862C46CA7972B386676A0B7215");
+		Header header2 = new BasicHeader("token","CE3AEB1443FEFABD921DBACC6EBE74049");
 		Header header3 = new BasicHeader("type","0");
 		List<Header> list = new ArrayList<>();
 		list.add(header1);

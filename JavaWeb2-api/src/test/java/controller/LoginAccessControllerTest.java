@@ -8,13 +8,13 @@ public class LoginAccessControllerTest extends BaseControllerTest {
 	
 	@Test
 	public void testGetRedisTokenData() throws Exception {
-		String out = HttpUtil.defaultGetRequest(URL_PREFIX+"/web/pc/loginAccess/getRedisTokenData",getHeaders());
+		String out = HttpUtil.defaultGetRequest(URL_PREFIX+"/web/loginAccess/getRedisTokenData",getHeaders());
 		System.out.println(out);
 	}
 	
 	@Test
 	public void testLogout() throws Exception {
-		String out = HttpUtil.defaultGetRequest(URL_PREFIX+"/web/pc/loginAccess/logout",getHeaders());
+		String out = HttpUtil.defaultGetRequest(URL_PREFIX+"/web/loginAccess/logout",getHeaders());
 		System.out.println(out);
 	}
 

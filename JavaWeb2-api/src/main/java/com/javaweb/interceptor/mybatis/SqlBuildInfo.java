@@ -2,6 +2,11 @@ package com.javaweb.interceptor.mybatis;
 
 import java.util.List;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class SqlBuildInfo {
 	
 	private String tableName;//表名
@@ -18,60 +23,4 @@ public class SqlBuildInfo {
 	
 	private Boolean pkGenerate;//主键是否自增
 
-	public String getTableName() {
-		return tableName;
-	}
-
-	public void setTableName(String tableName) {
-		this.tableName = tableName;
-	}
-
-	public List<String> getEntityList() {
-		return entityList;
-	}
-
-	public void setEntityList(List<String> entityList) {
-		this.entityList = entityList;
-	}
-
-	public List<Object> getEntityValueList() {
-		return entityValueList;
-	}
-
-	public void setEntityValueList(List<Object> entityValueList) {
-		this.entityValueList = entityValueList;
-	}
-
-	public Object getParameterValue() {
-		return parameterValue;
-	}
-
-	public void setParameterValue(Object parameterValue) {
-		this.parameterValue = parameterValue;
-	}
-
-	public List<String> getColumnList() {
-		return columnList;
-	}
-
-	public void setColumnList(List<String> columnList) {
-		this.columnList = columnList;
-	}
-
-	public String getPk() {
-		return pk;
-	}
-
-	public void setPk(String pk) {
-		this.pk = pk;
-	}
-
-	public Boolean getPkGenerate() {
-		return pkGenerate;
-	}
-
-	public void setPkGenerate(Boolean pkGenerate) {
-		this.pkGenerate = pkGenerate;
-	}
-	
 }

@@ -2,6 +2,11 @@ package com.javaweb.base;
 
 import com.javaweb.interceptor.mybatis.Column;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class BaseEntity extends BaseValidatedGroup {
 	
 	@Column(name="create_date")
@@ -18,45 +23,5 @@ public class BaseEntity extends BaseValidatedGroup {
 	
 	@Column(name="del_flag")
 	private Integer delFlag = 0;//删除标记(0:未被删除;1:已被删除)
-
-	public String getCreateDate() {
-		return createDate;
-	}
-
-	public void setCreateDate(String createDate) {
-		this.createDate = createDate;
-	}
-
-	public String getCreator() {
-		return creator;
-	}
-
-	public void setCreator(String creator) {
-		this.creator = creator;
-	}
-
-	public String getUpdateDate() {
-		return updateDate;
-	}
-
-	public void setUpdateDate(String updateDate) {
-		this.updateDate = updateDate;
-	}
-
-	public String getUpdater() {
-		return updater;
-	}
-
-	public void setUpdater(String updater) {
-		this.updater = updater;
-	}
-
-	public Integer getDelFlag() {
-		return delFlag;
-	}
-
-	public void setDelFlag(Integer delFlag) {
-		this.delFlag = delFlag;
-	}
 
 }

@@ -1,5 +1,10 @@
 package com.javaweb.util.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class MaxMin<T extends Number> {
 	
 	private T minNum;
@@ -11,20 +16,4 @@ public class MaxMin<T extends Number> {
 		this.maxNum = maxNum;
 	}
 
-	public T getMaxNum() {
-		return maxNum;
-	}
-
-	public void setMaxNum(T maxNum) {
-		this.maxNum = maxNum;
-	}
-
-	public T getMinNum() {
-		return minNum;
-	}
-
-	public void setMinNum(T minNum) {
-		this.minNum = minNum;
-	}
-	
 }

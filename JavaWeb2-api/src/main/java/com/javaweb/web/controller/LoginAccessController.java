@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.javaweb.annotation.TokenDataAnnotation;
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.constant.ApiConstant;
@@ -39,10 +40,13 @@ public class LoginAccessController extends BaseController {
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_GET_REDIS_TOKEN_DATA)
 	@GetMapping(ApiConstant.GET_REDIS_TOKEN_DATA)
-	public BaseResponseResult getRedisTokenData(HttpServletRequest request){
+	public BaseResponseResult getRedisTokenData(@TokenDataAnnotation TokenData tokenData,HttpServletRequest request){
+		/**
 		TokenData tokenData = getTokenData(request);
 		String key = String.join(CommonConstant.COMMA,request.getHeader(SystemConstant.HEAD_USERID),request.getHeader(SystemConstant.HEAD_TYPE));
 		setDefaultDataToRedis(key,tokenData);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.getTokenDataSuccess",tokenData);
+		*/
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.getTokenDataSuccess",tokenData);
 	}
 	

@@ -1,6 +1,5 @@
 package com.javaweb.interceptor;
 
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +17,7 @@ import com.javaweb.constant.SystemConstant;
 import com.javaweb.web.eo.TokenData;
 
 @Component
-public class PermissionInterceptor extends HandlerInterceptorAdapter {
+public class AppPermissionInterceptor extends HandlerInterceptorAdapter {
 	
 	//private Logger logger = LoggerFactory.getLogger(PermissionInterceptor.class);//本类日志
 	//private Logger urlLog = LoggerFactory.getLogger("urlLog");//自定义输出日志
@@ -46,7 +45,7 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 		String userId = request.getHeader(SystemConstant.HEAD_USERID);
 		String token = request.getHeader(SystemConstant.HEAD_TOKEN);
 		String type = request.getHeader(SystemConstant.HEAD_TYPE);
-		String servletPath = request.getServletPath();
+		//String servletPath = request.getServletPath();
 		boolean nullOrEmptyHead = Stream.of(userId,token,type).anyMatch(i->i==null||i.trim().equals(CommonConstant.EMPTY_VALUE));
 		if(nullOrEmptyHead){
 			request.getRequestDispatcher(ApiConstant.REQUEST_PARAMETER_LOST).forward(request,response);
@@ -65,7 +64,8 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 			request.getRequestDispatcher(ApiConstant.REQUEST_PARAMETER_ERROR).forward(request,response);
 			return false;
 		}
-		if(servletPath.startsWith(SystemConstant.URL_LOGIN_PC_PERMISSION)){//该路径下只要登录即可访问，不需要权限
+		/**
+		if(servletPath.startsWith(SystemConstant.URL_LOGIN_WEB_PERMISSION)){//该路径下只要登录即可访问，不需要权限
 			redisTemplate1.opsForValue().set(String.join(CommonConstant.COMMA,userId,type),tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
 			return true;
 		}
@@ -86,6 +86,8 @@ public class PermissionInterceptor extends HandlerInterceptorAdapter {
 			redisTemplate1.opsForValue().set(String.join(CommonConstant.COMMA,userId,type),tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
 			return true;
 		}
+		*/
+		return true;
 	}
 	
 }
