@@ -123,18 +123,17 @@ public class AllOpenController extends BaseController {
 	public String getRequestId() {
 		Map<String,Object> map = new HashMap<>();
 		map.put("key",defaultKaptcha.createText());
-		System.out.println(loginKaptchaCheck);
+		map.put("date",DateUtil.getStringDate(DateUtil.DATETIME_PATTERN_TYPE1));
 		return SecretUtil.createJwtToken(map,null);
 	}
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_GET_KAPTCHA)
 	@GetMapping(value=ApiConstant.GET_KAPTCHA)
 	public void getKaptcha(HttpServletRequest request,HttpServletResponse response,@PathVariable(name="requestId",required=true) String requestId) throws Exception {
-		response.setHeader("Cache-Control", "no-store, no-cache");
+		response.setHeader("Cache-Control","no-store,no-cache");
 	    response.setContentType("image/jpeg");
-	    String text = defaultKaptcha.createText();;
+	    String text = defaultKaptcha.createText();
 	    try {
-	    	text = SecretUtil.analyseJwtToken(requestId).get("key").toString();
 	    	if(loginKaptchaCheck&&!CommonConstant.EMPTY_VALUE.equals(StringUtil.handleNullString(text))) {
 	    		setDataToRedis(requestId,text,SystemConstant.SYSTEM_DEFAULT_KAPTCHA_TIME_OUT,TimeUnit.MINUTES);
 	    	}
