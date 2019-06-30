@@ -5,9 +5,9 @@ import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import com.javaweb.annotation.sql.Column;
+import com.javaweb.annotation.sql.Table;
 import com.javaweb.base.BaseEntity;
-import com.javaweb.interceptor.mybatis.Column;
-import com.javaweb.interceptor.mybatis.Table;
 
 import lombok.Getter;
 import lombok.Setter;

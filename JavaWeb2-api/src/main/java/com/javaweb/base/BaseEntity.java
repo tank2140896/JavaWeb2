@@ -1,6 +1,6 @@
 package com.javaweb.base;
 
-import com.javaweb.interceptor.mybatis.Column;
+import com.javaweb.annotation.sql.Column;
 
 import lombok.Getter;
 import lombok.Setter;

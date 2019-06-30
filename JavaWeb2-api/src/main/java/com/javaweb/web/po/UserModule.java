@@ -2,8 +2,8 @@ package com.javaweb.web.po;
 
 import java.io.Serializable;
 
-import com.javaweb.interceptor.mybatis.Column;
-import com.javaweb.interceptor.mybatis.Table;
+import com.javaweb.annotation.sql.Column;
+import com.javaweb.annotation.sql.Table;
 
 import lombok.Getter;
 import lombok.Setter;

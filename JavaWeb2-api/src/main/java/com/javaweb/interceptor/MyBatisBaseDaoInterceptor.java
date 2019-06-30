@@ -25,9 +25,10 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Component;
 
+import com.javaweb.annotation.sql.Column;
+import com.javaweb.annotation.sql.Table;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.interceptor.mybatis.BoundSqlSource;
-import com.javaweb.interceptor.mybatis.Column;
 import com.javaweb.interceptor.mybatis.HandleDelete;
 import com.javaweb.interceptor.mybatis.HandleInsert;
 import com.javaweb.interceptor.mybatis.HandleSelectAll;
@@ -37,7 +38,6 @@ import com.javaweb.interceptor.mybatis.HandleSelectByPk;
 import com.javaweb.interceptor.mybatis.HandleUpdate;
 import com.javaweb.interceptor.mybatis.SqlBuildInfo;
 import com.javaweb.interceptor.mybatis.SqlHandle;
-import com.javaweb.interceptor.mybatis.Table;
 import com.javaweb.util.core.DateUtil;
 
 /**

@@ -7,7 +7,7 @@ import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
-import com.javaweb.annotation.TokenDataAnnotation;
+import com.javaweb.annotation.token.TokenDataAnnotation;
 import com.javaweb.config.context.ApplicationContextHelper;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;

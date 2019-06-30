@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import com.javaweb.validate.UserLoginRequestTypeValidate;
+import com.javaweb.annotation.validate.UserLoginRequestTypeValidate;
 
 import lombok.Getter;
 import lombok.Setter;
