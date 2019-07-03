@@ -35,7 +35,7 @@ import io.swagger.annotations.ApiOperation;
 
 @Api(tags=SwaggerConstant.SWAGGER_ROLE_CONTROLLER_TAGS)
 @RestController
-@RequestMapping(ApiConstant.ROLE_PREFIX)
+@RequestMapping(ApiConstant.WEB_ROLE_PREFIX)
 public class RoleController extends BaseController {
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_ROLE_ADD)

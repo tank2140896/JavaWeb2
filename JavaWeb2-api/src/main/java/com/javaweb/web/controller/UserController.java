@@ -35,7 +35,7 @@ import io.swagger.annotations.ApiOperation;
 
 @Api(tags=SwaggerConstant.SWAGGER_USER_CONTROLLER_TAGS)
 @RestController
-@RequestMapping(ApiConstant.USER_PREFIX)
+@RequestMapping(ApiConstant.WEB_USER_PREFIX)
 public class UserController extends BaseController {
 
 	@ApiOperation(value=SwaggerConstant.SWAGGER_USER_ADD)

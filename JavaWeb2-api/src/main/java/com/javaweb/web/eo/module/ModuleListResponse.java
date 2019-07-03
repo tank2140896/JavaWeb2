@@ -13,6 +13,8 @@ public class ModuleListResponse implements Serializable {
 
 	private String moduleId;//模块ID
 	
+	private String parentId;//父ID
+	
 	private String moduleName;//模块名称
 	
 	private String pageUrl;//页面URL

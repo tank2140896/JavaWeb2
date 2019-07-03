@@ -54,7 +54,7 @@ public class AllOpenController extends BaseController {
 
 	@ApiOperation(value=SwaggerConstant.SWAGGER_LOGIN,notes=SwaggerConstant.SWAGGER_LOGIN_NOTES)
     @ApiImplicitParam(name="userLoginRequest",value=SwaggerConstant.SWAGGER_LOGIN_PARAM,required=true,dataType="UserLoginRequest")
-	@PostMapping(ApiConstant.LOGIN)
+	@PostMapping(ApiConstant.WEB_LOGIN)
 	public BaseResponseResult login(@RequestBody @Validated UserLoginRequest userLoginRequest,BindingResult bindingResult,HttpServletRequest request){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
@@ -119,7 +119,7 @@ public class AllOpenController extends BaseController {
 	}
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_GET_REQUEST_ID,notes=SwaggerConstant.SWAGGER_GET_REQUEST_ID_NOTES)
-	@GetMapping(value=ApiConstant.GET_REQUESTID)
+	@GetMapping(value=ApiConstant.WEB_REQUESTID)
 	public String getRequestId() {
 		Map<String,Object> map = new HashMap<>();
 		map.put("key",defaultKaptcha.createText());
@@ -128,7 +128,7 @@ public class AllOpenController extends BaseController {
 	}
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_GET_KAPTCHA)
-	@GetMapping(value=ApiConstant.GET_KAPTCHA)
+	@GetMapping(value=ApiConstant.WEB_KAPTCHA)
 	public void getKaptcha(HttpServletRequest request,HttpServletResponse response,@PathVariable(name="requestId",required=true) String requestId) throws Exception {
 		response.setHeader("Cache-Control","no-store,no-cache");
 	    response.setContentType("image/jpeg");

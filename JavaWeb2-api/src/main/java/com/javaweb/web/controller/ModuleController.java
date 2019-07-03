@@ -32,7 +32,7 @@ import io.swagger.annotations.ApiOperation;
 
 @Api(tags=SwaggerConstant.SWAGGER_MODULE_CONTROLLER_TAGS)
 @RestController
-@RequestMapping(ApiConstant.MODULE_PREFIX)
+@RequestMapping(ApiConstant.WEB_MODULE_PREFIX)
 public class ModuleController extends BaseController {
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_MODULE_ADD)
