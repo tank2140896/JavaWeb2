@@ -34,6 +34,7 @@ import com.javaweb.interceptor.mybatis.HandleInsert;
 import com.javaweb.interceptor.mybatis.HandleSelectAll;
 import com.javaweb.interceptor.mybatis.HandleSelectAllByPaging;
 import com.javaweb.interceptor.mybatis.HandleSelectAllCount;
+import com.javaweb.interceptor.mybatis.HandleSelectByCondition;
 import com.javaweb.interceptor.mybatis.HandleSelectByPk;
 import com.javaweb.interceptor.mybatis.HandleUpdate;
 import com.javaweb.interceptor.mybatis.SqlBuildInfo;
@@ -62,6 +63,7 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 		map.put("selectAllCount",new HandleSelectAllCount());
 		map.put("selectAllByPaging",new HandleSelectAllByPaging());
 		map.put("selectByPk",new HandleSelectByPk());
+		map.put("selectByCondition",new HandleSelectByCondition());
 	}
 	
 	public Object intercept(Invocation invocation) throws Throwable {

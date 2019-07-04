@@ -1,6 +1,30 @@
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
+-- Table structure for `dictionary`
+-- ----------------------------
+DROP TABLE IF EXISTS `dictionary`;
+CREATE TABLE `dictionary` (
+  `id` varchar(255) NOT NULL,
+  `parent_id` varchar(255) DEFAULT NULL,
+  `key_code` varchar(255) NOT NULL,
+  `value_code` varchar(255) DEFAULT NULL,
+  `category` varchar(255) DEFAULT NULL,
+  `sort` int(11) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `create_date` varchar(255) DEFAULT NULL,
+  `creator` varchar(255) DEFAULT NULL,
+  `update_date` varchar(255) DEFAULT NULL,
+  `updater` varchar(255) DEFAULT NULL,
+  `del_flag` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of dictionary
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `module`
 -- ----------------------------
 DROP TABLE IF EXISTS `module`;

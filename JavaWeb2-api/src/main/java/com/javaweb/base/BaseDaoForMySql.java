@@ -35,4 +35,7 @@ public interface BaseDaoForMySql<T> {
 	@Select(CommonConstant.EMPTY_VALUE)
 	public T selectByPk(Object id);//根据主键查询
 	
+	@Select(CommonConstant.EMPTY_VALUE)
+	public List<T> selectByCondition(Map<String,Object> map);//根据条件查询(不推荐使用)
+	
 }

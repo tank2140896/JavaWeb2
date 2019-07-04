@@ -106,7 +106,7 @@ public class DataSourceConfig {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(multipleDataSourceManage);
         /**
-         * 还可以这么写:
+                           *    还可以这么写:
          * @Autowired
          * private Environment environment;
          * sqlSessionFactoryBean.setTypeAliasesPackage(environment.getProperty("mybatis.typeAliasesPackage"));

@@ -28,3 +28,10 @@ C、@ConfigurationProperties(prefix="com.demo")
 6、谷歌浏览器伪https免认证：浏览器->属性->目标: --test-type --ignore-certificate-errors
 三、其它
 1、https://start.spring.io
+
+
+
+
+
+
+字典表处理：AllOpenController、BaseSystemMemory

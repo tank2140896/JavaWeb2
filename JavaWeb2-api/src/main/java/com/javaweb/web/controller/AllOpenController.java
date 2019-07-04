@@ -9,6 +9,7 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -38,6 +39,7 @@ import com.javaweb.util.core.SecretUtil;
 import com.javaweb.util.core.StringUtil;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.user.UserLoginRequest;
+import com.javaweb.web.po.Dictionary;
 import com.javaweb.web.po.Module;
 import com.javaweb.web.po.User;
 
@@ -48,6 +50,13 @@ import io.swagger.annotations.ApiOperation;
 @Api(tags=SwaggerConstant.SWAGGER_ALL_OPEN_CONTROLLER_TAGS)
 @RestController
 public class AllOpenController extends BaseController {
+    
+    @PostConstruct
+    public void init() {
+        //TODO 加载字典表内容至本地内存
+        List<Dictionary> list =  dictionaryService.selectAll();
+        System.err.println(list.size());
+    }
 	
 	@Value("${login.kaptcha.check}")
 	private boolean loginKaptchaCheck;
