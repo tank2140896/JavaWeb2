@@ -20,8 +20,8 @@ public class TaskService extends BaseService {
 	user.setUserName("超级管理员");
 	webSocketHandleService.onMessage("我是超级管理员",user);
 	*/
-	
-	@Async  
+
+    @Async  
     public Future<String> task1() throws InterruptedException{  
         long currentTimeMillis1 = System.currentTimeMillis();  
         Thread.sleep(1000);  

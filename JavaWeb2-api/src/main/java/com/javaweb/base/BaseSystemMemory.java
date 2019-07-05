@@ -7,6 +7,6 @@ import com.javaweb.web.po.Dictionary;
 
 public class BaseSystemMemory {
     
-    public static List<Dictionary> dictionaryList = new ArrayList<>();//TODO
-
+    public static List<Dictionary> dictionaryList = new ArrayList<>();
+    
 }

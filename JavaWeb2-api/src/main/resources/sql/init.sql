@@ -7,7 +7,8 @@ DROP TABLE IF EXISTS `dictionary`;
 CREATE TABLE `dictionary` (
   `id` varchar(255) NOT NULL,
   `parent_id` varchar(255) DEFAULT NULL,
-  `key_code` varchar(255) NOT NULL,
+  `data_type` varchar(255) DEFAULT NULL,
+  `key_code` varchar(255) DEFAULT NULL,
   `value_code` varchar(255) DEFAULT NULL,
   `category` varchar(255) DEFAULT NULL,
   `sort` int(11) DEFAULT NULL,
@@ -23,6 +24,8 @@ CREATE TABLE `dictionary` (
 -- ----------------------------
 -- Records of dictionary
 -- ----------------------------
+INSERT INTO `dictionary` VALUES ('20190705214431115', null, 'del_flag', 'undelete', '0', 'system', '1', '未删除', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `dictionary` VALUES ('20190705214431116', null, 'del_flag', 'delete', '1', 'system', '2', '删除', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
 
 -- ----------------------------
 -- Table structure for `module`

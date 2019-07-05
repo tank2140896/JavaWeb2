@@ -5,6 +5,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
+import org.springframework.scheduling.concurrent.ConcurrentTaskScheduler;
 import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.scheduling.config.TriggerTask;
 import org.springframework.scheduling.support.CronTrigger;
@@ -14,7 +15,11 @@ public class ScheduledTask implements SchedulingConfigurer {
 	
 	//一般用于读取数据的定时任务操作
 	public void configureTasks(ScheduledTaskRegistrar scheduledTaskRegistrar) {
-		scheduledTaskRegistrar.addFixedRateTask(()->System.out.println("我每隔3秒被输出一次"),3000);
+	    ConcurrentTaskScheduler concurrentTaskScheduler = new ConcurrentTaskScheduler();
+	    concurrentTaskScheduler.execute(()->System.out.println("我只会被执行一次"));
+	    concurrentTaskScheduler.schedule(()->System.out.println("我会被多次执行"),new CronTrigger("0/2 * * * * ?"));
+
+	    scheduledTaskRegistrar.addFixedRateTask(()->System.out.println("我每隔3秒被输出一次"),3000);
 		
 		TriggerTask triggrtTask = new TriggerTask(
 			()->{System.out.println("我每隔4秒被输出一次");},

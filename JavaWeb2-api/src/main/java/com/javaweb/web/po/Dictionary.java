@@ -22,6 +22,9 @@ public class Dictionary extends BaseEntity implements Serializable {
     @Column(name="parent_id")
     private String parentId;//父ID
     
+    @Column(name="data_type")
+    private String dataType;//数据类型
+    
     @Column(name="key_code")
     private String keyCode;//key值
     
