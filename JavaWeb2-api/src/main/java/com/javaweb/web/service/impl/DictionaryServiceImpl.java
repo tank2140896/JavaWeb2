@@ -14,5 +14,9 @@ public class DictionaryServiceImpl extends BaseService implements DictionaryServ
     public List<Dictionary> selectAll() {
          return dictionaryDao.selectAll();
     }
+
+    public List<Dictionary> getDictionary(Dictionary dictionary) {
+         return dictionaryDao.getDictionary(dictionary);
+    }
 	
 }

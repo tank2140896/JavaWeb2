@@ -17,6 +17,7 @@ public class ApiConstant {
 	public static final String WEB_LOGIN_ACCESS_PREFIX = "/web/loginAccess";
 	public static final String LOGIN_OUT = "/logout";//用户登出接口
 	public static final String GET_REDIS_TOKEN_DATA = "/getRedisTokenData";//获取redis中的token信息接口
+	public static final String GET_DICTIONARY = "/getDictionary";//获得字典信息接口
 	
 	public static final String WEB_MODULE_PREFIX = "/web/sys/module";
 	public static final String MODULE_ADD = "/add";//新增模块接口

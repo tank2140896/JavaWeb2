@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.javaweb.web.dao.ds1.DictionaryDao">
+
+	<sql id="selectDictionary" >
+		id,parent_id as parentId,data_type as dataType,key_code as keyCode,value_code as valueCode,category,sort,means,remark,
+		create_date as createDate,creator,update_date as updateDate,updater,del_flag as delFlag
+	</sql>
+	
+	<select id="getDictionary" parameterType="com.javaweb.web.po.Dictionary" resultType="com.javaweb.web.po.Dictionary">
+		select <include refid="selectDictionary"></include> from dictionary where del_flag = 0
+		<if test="id != null and id != ''">and id = #{id}</if>
+		<if test="parentId != null and parentId != ''">and parent_id = #{parentId}</if>
+		<if test="dataType != null and dataType != ''">and data_type = #{dataType}</if>
+		<if test="keyCode != null and keyCode != ''">and key_code = #{keyCode}</if>
+		<if test="valueCode != null and valueCode != ''">and value_code = #{valueCode}</if>
+		<if test="category != null and category != ''">and category = #{category}</if>
+		<if test="sort != null and sort != ''">and sort = #{sort}</if>
+		<if test="means != null and means != ''">and means = #{means}</if>
+		<if test="remark != null and remark != ''">and remark = #{remark}</if>
+		order by sort asc
+	</select>
+	
+</mapper>

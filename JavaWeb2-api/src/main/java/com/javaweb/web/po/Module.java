@@ -48,7 +48,7 @@ public class Module extends BaseEntity implements Serializable {
 	private Integer orders = 0;//模块顺序(0表示没有顺序;顺序从1开始)
 	
 	@Column(name="module_type")
-	private Integer moduleType = 0;//模块类型(0:未定义模块类型;1:菜单;2:操作)
+	private Integer moduleType = 0;//模块类型(0:未定义模块类型;1:目录;2:菜单；3:功能)
 	
 	@Column(name="alias")
 	private String alias;//别名

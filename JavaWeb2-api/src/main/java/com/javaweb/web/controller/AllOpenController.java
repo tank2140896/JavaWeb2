@@ -187,8 +187,8 @@ public class AllOpenController extends BaseController {
 		tokenData.setToken(secretToken(UUID.randomUUID().toString(),DateUtil.getStringDate(DateUtil.DATETIME_PATTERN_TYPE2),true));
 		tokenData.setUser(user);
 		tokenData.setType(type);
-		List<Module> menuList = moduleList.stream().filter(i->1==i.getModuleType()).collect(Collectors.toList());//获得菜单列表
-		List<Module> authOperateList = moduleList.stream().filter(i->2==i.getModuleType()).collect(Collectors.toList());//获得操作权限列表
+		List<Module> menuList = moduleList.stream().filter(i->1==i.getModuleType()||2==i.getModuleType()).collect(Collectors.toList());//获得目录、菜单列表
+		List<Module> authOperateList = moduleList.stream().filter(i->3==i.getModuleType()).collect(Collectors.toList());//获得操作权限列表
 		tokenData.setMenuListForTree(setTreeList(menuList,null));
 		tokenData.setAuthOperateList(authOperateList);
 		return tokenData;

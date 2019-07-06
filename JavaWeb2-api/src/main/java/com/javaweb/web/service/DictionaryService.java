@@ -7,5 +7,7 @@ import com.javaweb.web.po.Dictionary;
 public interface DictionaryService {
     
     public List<Dictionary> selectAll();
+    
+    public List<Dictionary> getDictionary(Dictionary dictionary);
 	
 }

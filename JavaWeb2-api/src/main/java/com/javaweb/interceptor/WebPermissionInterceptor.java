@@ -52,7 +52,7 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 			request.getRequestDispatcher(ApiConstant.REQUEST_PARAMETER_LOST).forward(request,response);
 			return false;
 		}
-		if(!PatternConstant.isPattern(type,PatternConstant.HEAD_TYPE_PATTERN)){//0:admin;1:web;2:Android;3:IOS
+		if(!PatternConstant.isPattern(type,PatternConstant.HEAD_TYPE_PATTERN)){//0:admin;1:web;2:android;3:ios
 			request.getRequestDispatcher(ApiConstant.REQUEST_PARAMETER_LOST).forward(request,response);
 			return false;
 		}

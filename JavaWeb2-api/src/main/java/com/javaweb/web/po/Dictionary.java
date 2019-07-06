@@ -37,6 +37,9 @@ public class Dictionary extends BaseEntity implements Serializable {
     @Column(name="sort")
     private String sort;//序号
     
+    @Column(name="means")
+    private String means;//含义
+    
     @Column(name="remark")
     private String remark;//备注说明
 

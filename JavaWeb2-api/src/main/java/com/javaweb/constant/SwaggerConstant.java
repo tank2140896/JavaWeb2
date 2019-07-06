@@ -32,6 +32,7 @@ public class SwaggerConstant {
 	
 	public static final String SWAGGER_LOGOUT = "用户登出接口";
 	public static final String SWAGGER_GET_REDIS_TOKEN_DATA = "获取redis中的token信息接口";
+	public static final String SWAGGER_GET_DICTIONARY = "获得字典信息接口";
 	/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ swagger-LoginAccessController ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */
 	
 	/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ swagger-ModuleController ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */
