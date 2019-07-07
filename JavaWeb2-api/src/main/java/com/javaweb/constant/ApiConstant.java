@@ -20,6 +20,7 @@ public class ApiConstant {
 	public static final String GET_DICTIONARY = "/getDictionary";//获得字典信息接口
 	
 	public static final String WEB_MODULE_PREFIX = "/web/sys/module";
+	public static final String MODULE_GET_MODULE_ID_AND_NAME_LIST = "/getModuleIdAndNameList/{moduleType}";//获取模块ID和模块名称列表接口
 	public static final String MODULE_ADD = "/add";//新增模块接口
 	public static final String MODULE_LIST = "/list";//查询模块接口
 	public static final String MODULE_MODIFY = "/modify";//修改模块接口
@@ -36,14 +37,14 @@ public class ApiConstant {
 	public static final String ROLE_MODULE_INFO = "/roleModuleInfo/{roleId}";//角色模块信息接口
 	
 	public static final String WEB_USER_PREFIX = "/web/sys/user";
-	public static final String USER_ADD = "/add";//新增角色接口
-	public static final String USER_LIST = "/list";//查询角色接口
-	public static final String USER_MODIFY = "/modify";//修改角色接口
-	public static final String USER_DETAIL = "/detail/{userId}";//角色详情接口
-	public static final String USER_DELETE = "/delete/{userId}";//删除角色接口
-	public static final String USER_ROLE_INFO = "/userRoleInfo/{userId}";//角色模块分配接口
-	public static final String USER_ROLE_ASSIGNMENT = "/userRoleAssignment/{userId}";//角色模块信息接口
-	public static final String USER_MODULE_INFO = "/userModuleInfo/{userId}";//角色模块信息接口
-	public static final String USER_MODULE_ASSIGNMENT = "/userModuleAssignment/{userId}";//角色模块信息接口
+	public static final String USER_ADD = "/add";//新增用户接口
+	public static final String USER_LIST = "/list";//查询用户接口
+	public static final String USER_MODIFY = "/modify";//修改用户接口
+	public static final String USER_DETAIL = "/detail/{userId}";//用户详情接口
+	public static final String USER_DELETE = "/delete/{userId}";//删除用户接口
+	public static final String USER_ROLE_INFO = "/userRoleInfo/{userId}";//用户角色信息接口
+	public static final String USER_ROLE_ASSIGNMENT = "/userRoleAssignment/{userId}";//用户角色分配接口
+	public static final String USER_MODULE_INFO = "/userModuleInfo/{userId}";//用户模块信息接口
+	public static final String USER_MODULE_ASSIGNMENT = "/userModuleAssignment/{userId}";//用户模块分配接口
 	
 }

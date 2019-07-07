@@ -1,7 +1,9 @@
 package com.javaweb.web.service.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -9,7 +11,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.javaweb.base.BaseService;
+import com.javaweb.constant.CommonConstant;
 import com.javaweb.util.entity.Page;
+import com.javaweb.web.eo.module.ModuleIdAndNameResponse;
 import com.javaweb.web.eo.module.ModuleLevelAndOrdersResponse;
 import com.javaweb.web.eo.module.ModuleListRequest;
 import com.javaweb.web.eo.module.ModuleListResponse;
@@ -89,5 +93,19 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
 	public Module moduleDetail(String moduleId) {
 		return moduleDao.moduleDetail(moduleId);
 	}
+
+    public List<ModuleIdAndNameResponse> getModuleIdAndNameList(String moduleType) {
+        Map<String,String> map = new HashMap<>();
+        String parameter = null;
+        if("1".equals(moduleType)||"2".equals(moduleType)) {
+            parameter = moduleType;
+        }else if(moduleType==null||CommonConstant.EMPTY_VALUE.equals(moduleType.trim())) {
+            parameter = null;
+        }else {
+            parameter = "-1";
+        }
+        map.put("moduleType",parameter);
+        return moduleDao.getModuleIdAndNameList(map);
+    }
 
 }

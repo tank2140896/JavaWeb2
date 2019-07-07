@@ -38,6 +38,8 @@ public class Module extends BaseEntity implements Serializable {
 	@Column(name="parent_id")
 	private String parentId;//模块的上级ID
 	
+	private String parentName;//模块的上级模块名称(辅助属性)
+	
 	@Column(name="fcode")
 	private String fcode;//层级关系
 	

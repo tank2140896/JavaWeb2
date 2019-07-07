@@ -38,6 +38,7 @@ public class SwaggerConstant {
 	/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ swagger-ModuleController ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */
 	public static final String SWAGGER_MODULE_CONTROLLER_TAGS = "3、登录且需要权限才可访问的模块管理模块";
 	
+	public static final String SWAGGER_MODULE_GET_MODULE_ID_AND_NAME_LIST = "获取模块ID和模块名称列表接口";
 	public static final String SWAGGER_MODULE_ADD = "新增模块接口";
 	public static final String SWAGGER_MODULE_LIST = "查询模块接口";
 	public static final String SWAGGER_MODULE_MODIFY = "修改模块接口";

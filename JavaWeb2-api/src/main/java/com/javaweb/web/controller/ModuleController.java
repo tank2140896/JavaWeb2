@@ -34,6 +34,12 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping(ApiConstant.WEB_MODULE_PREFIX)
 public class ModuleController extends BaseController {
+    
+    @ApiOperation(value=SwaggerConstant.SWAGGER_MODULE_GET_MODULE_ID_AND_NAME_LIST)
+    @GetMapping(ApiConstant.MODULE_GET_MODULE_ID_AND_NAME_LIST)
+    public BaseResponseResult getModuleIdAndNameList(@PathVariable(name="moduleType",required=false) String moduleType) {
+        return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.getModuleIdAndNameList.success",moduleService.getModuleIdAndNameList(moduleType));
+    }
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_MODULE_ADD)
 	@PostMapping(ApiConstant.MODULE_ADD)

@@ -1,10 +1,12 @@
 package com.javaweb.web.dao.ds1;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import com.javaweb.base.BaseDaoForMySql;
+import com.javaweb.web.eo.module.ModuleIdAndNameResponse;
 import com.javaweb.web.eo.module.ModuleLevelAndOrdersResponse;
 import com.javaweb.web.eo.module.ModuleListRequest;
 import com.javaweb.web.eo.module.ModuleListResponse;
@@ -26,5 +28,7 @@ public interface ModuleDao extends BaseDaoForMySql<Module> {
 	public ModuleLevelAndOrdersResponse getModuleLevelAndOrdersByParentId(String parentId);
 	
 	public ModuleLevelAndOrdersResponse getModuleLevelAndOrdersWithoutParentId();
+	
+	public List<ModuleIdAndNameResponse> getModuleIdAndNameList(Map<String,String> map);
 	
 }

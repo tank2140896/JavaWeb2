@@ -17,6 +17,8 @@ public class ModuleListResponse implements Serializable {
 	
 	private String moduleName;//模块名称
 	
+	private String parentName;//父模块ID
+	
 	private String pageUrl;//页面URL
 	
 	private String apiUrl;//API请求URL

@@ -34,6 +34,11 @@ INSERT INTO `dictionary` VALUES ('20190705214431120', null, 'login_type', 'ios',
 INSERT INTO `dictionary` VALUES ('20190705214431121', null, 'module_type', 'catalogue', '1', 'system', '1', '目录', '模块类型', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
 INSERT INTO `dictionary` VALUES ('20190705214431122', null, 'module_type', 'menu', '2', 'system', '2', '菜单', '模块类型', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
 INSERT INTO `dictionary` VALUES ('20190705214431123', null, 'module_type', 'function', '3', 'system', '3', '功能', '模块类型', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `dictionary` VALUES ('20190705214431124', null, 'user_role_strategy', 'customize', '0', 'system', '1', '自定义', '用户角色策略', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `dictionary` VALUES ('20190705214431125', null, 'user_role_strategy', 'union', '1', 'system', '2', '并集', '用户角色策略', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `dictionary` VALUES ('20190705214431126', null, 'user_role_strategy', 'intersection', '2', 'system', '3', '交集', '用户角色策略', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `dictionary` VALUES ('20190705214431127', null, 'user_role_strategy', 'basedOnUser', '3', 'system', '4', '以用户权限为准', '用户角色策略', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `dictionary` VALUES ('20190705214431128', null, 'user_role_strategy', 'basedOnRole', '4', 'system', '5', '以角色权限为准', '用户角色策略', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
 
 -- ----------------------------
 -- Table structure for `module`
@@ -87,9 +92,10 @@ INSERT INTO `module` VALUES ('20190408142025602', '角色模块分配', null, '/
 INSERT INTO `module` VALUES ('20190408142025603', '角色模块信息', null, '/web/sys/role/roleModuleInfo', '20190408140517989', null, '3', '7', '3', 'sys:role:module', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
 INSERT INTO `module` VALUES ('20190408142112268', '查询模块', null, '/web/sys/module/list', '20190408140608316', null, '3', '1', '3', 'sys:module:list', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
 INSERT INTO `module` VALUES ('20190408142122024', '模块详情', null, '/web/sys/module/detail', '20190408140608316', null, '3', '2', '3', 'sys:module:detail', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408142132292', '新增模块', null, '/web/sys/module/add', '20190408140608316', null, '3', '3', '3', 'sys:module:add', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('20190408142132292', '新增模块', null, '/web/sys/module/add,/web/sys/module/getModuleIdAndNameList', '20190408140608316', null, '3', '3', '3', 'sys:module:add', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
 INSERT INTO `module` VALUES ('20190408142143289', '删除模块', null, '/web/sys/module/delete', '20190408140608316', null, '3', '4', '3', 'sys:module:delete', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408142154821', '修改模块', null, '/web/sys/module/modify,/web/sys/module/detail', '20190408140608316', null, '3', '5', '3', 'sys:module:modify', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('20190408142154821', '修改模块', null, '/web/sys/module/modify,/web/sys/module/getModuleIdAndNameList', '20190408140608316', null, '3', '5', '3', 'sys:module:modify', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('20190408142154822', '模块ID和名称列表', null, '/web/sys/module/getModuleIdAndNameList', '20190408140608316', null, '3', '6', '3', 'sys:module:getModuleIdAndNameList', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
 
 -- ----------------------------
 -- Table structure for `role`

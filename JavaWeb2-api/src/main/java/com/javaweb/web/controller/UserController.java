@@ -26,6 +26,7 @@ import com.javaweb.util.core.SecretUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.role.ModuleInfoResponse;
+import com.javaweb.web.eo.role.RoleIdAndStrategyRequest;
 import com.javaweb.web.eo.user.RoleInfoResponse;
 import com.javaweb.web.eo.user.UserListRequest;
 import com.javaweb.web.po.User;
@@ -108,7 +109,7 @@ public class UserController extends BaseController {
 
 	@ApiOperation(value=SwaggerConstant.SWAGGER_USER_ROLE_ASSIGNMENT)
 	@PostMapping(ApiConstant.USER_ROLE_ASSIGNMENT)
-	public BaseResponseResult userRoleAssignment(@PathVariable(name="userId",required=true) String userId,@RequestBody List<String> list){
+	public BaseResponseResult userRoleAssignment(@PathVariable(name="userId",required=true) String userId,@RequestBody List<RoleIdAndStrategyRequest> list){
 		userService.userRoleAssignment(userId,list);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.userRoleAssignment.success",null);
 	}

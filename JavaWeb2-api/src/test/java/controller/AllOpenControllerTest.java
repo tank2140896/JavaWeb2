@@ -13,7 +13,7 @@ public class AllOpenControllerTest extends BaseControllerTest {
 		UserLoginRequest userLoginRequest = new UserLoginRequest();
 		userLoginRequest.setUsername(SystemConstant.ADMIN);
 		userLoginRequest.setPassword(SystemConstant.ADMIN);
-		String out = HttpUtil.defaultPostRequest(URL_PREFIX+"/login",objectMapper.writeValueAsString(userLoginRequest),null);
+		String out = HttpUtil.defaultPostRequest(URL_PREFIX+"/webLogin",objectMapper.writeValueAsString(userLoginRequest),null);
 		System.out.println(out);
 	}
 

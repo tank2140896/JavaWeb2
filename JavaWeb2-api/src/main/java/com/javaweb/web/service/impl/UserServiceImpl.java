@@ -12,6 +12,7 @@ import com.javaweb.base.BaseService;
 import com.javaweb.util.core.SecretUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.role.ModuleInfoResponse;
+import com.javaweb.web.eo.role.RoleIdAndStrategyRequest;
 import com.javaweb.web.eo.user.RoleInfoResponse;
 import com.javaweb.web.eo.user.UserListRequest;
 import com.javaweb.web.eo.user.UserListResponse;
@@ -59,14 +60,15 @@ public class UserServiceImpl extends BaseService implements UserService {
 	}
 	
 	@Transactional
-	public void userRoleAssignment(String userId,List<String> list) {
+	public void userRoleAssignment(String userId,List<RoleIdAndStrategyRequest> list) {
 		Map<String,Object> map = new HashMap<>();
 		List<UserRole> userRoleList = new ArrayList<>();
 		for(int i=0;i<list.size();i++) {
 			UserRole userRole = new UserRole();
 			userRole.setId(SecretUtil.defaultGenUniqueStr());
 			userRole.setUserId(userId);
-			userRole.setRoleId(list.get(i));
+			userRole.setRoleId(list.get(i).getRoleId());
+			userRole.setStrategy(list.get(i).getRoleStrategy());
 			userRoleList.add(userRole);
 		}
 		map.put("userId",userId);
