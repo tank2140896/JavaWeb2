@@ -1,6 +1,5 @@
 package com.javaweb.config.log;
-
-/** 使用请解注
+/**
 import java.util.Arrays;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,6 +32,15 @@ public class LogAspect {
 		             .append("请求类方法:").append(joinPoint.getSignature()).append(",")
 		             .append("请求类方法参数:").append(Arrays.toString(joinPoint.getArgs()));
 		log.info(stringBuilder.toString());
+	    //Object obj[] = joinPoint.getArgs();
+	    //for(int i=0;i<obj.length;i++) {
+	    //    Object o = obj[i];
+	    //    try {
+	    //        obj[i] = JSONObject.fromObject(o).toString();
+	    //    }catch (Exception e) {
+        //        //do nothing
+        //    }
+	    //}
 	}
 	
 	@AfterReturning(value=SystemConstant.DEFAULT_LOG_POINT_CUT,returning="object")
