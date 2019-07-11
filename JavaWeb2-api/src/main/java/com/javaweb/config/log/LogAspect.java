@@ -31,7 +31,6 @@ public class LogAspect {
 		             .append("请求方式:").append(httpServletRequest.getMethod()).append(",")
 		             .append("请求类方法:").append(joinPoint.getSignature()).append(",")
 		             .append("请求类方法参数:").append(Arrays.toString(joinPoint.getArgs()));
-		log.info(stringBuilder.toString());
 	    //Object obj[] = joinPoint.getArgs();
 	    //for(int i=0;i<obj.length;i++) {
 	    //    Object o = obj[i];
@@ -41,6 +40,7 @@ public class LogAspect {
         //        //do nothing
         //    }
 	    //}
+	    log.info(stringBuilder.toString());
 	}
 	
 	@AfterReturning(value=SystemConstant.DEFAULT_LOG_POINT_CUT,returning="object")
