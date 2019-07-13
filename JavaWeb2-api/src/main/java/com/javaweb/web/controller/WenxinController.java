@@ -219,6 +219,8 @@ public class WenxinController extends BaseController {
 		}
 	}
 	
+	/* -------------------------------------------------- 分界线 -------------------------------------------------- */
+	
 	private String createSign(SortedMap<String,String> sortedMap,String key) throws Exception {
 		StringBuilder sb = new StringBuilder();
 		Set<Map.Entry<String,String>> entrySet = sortedMap.entrySet();

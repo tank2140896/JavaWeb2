@@ -50,7 +50,7 @@ import io.swagger.annotations.ApiOperation;
 public class AllOpenController extends BaseController {
     
 	@Value("${login.kaptcha.check}")
-	private boolean loginKaptchaCheck;
+	private boolean loginKaptchaCheck;//在前后端分离模式下，后端不推荐进行验证码生成、校验，验证码生成、校验更推荐由前端处理
 
 	@ApiOperation(value=SwaggerConstant.SWAGGER_LOGIN,notes=SwaggerConstant.SWAGGER_LOGIN_NOTES)
     @ApiImplicitParam(name="userLoginRequest",value=SwaggerConstant.SWAGGER_LOGIN_PARAM,required=true,dataType="UserLoginRequest")
@@ -144,6 +144,8 @@ public class AllOpenController extends BaseController {
 	    ServletOutputStream out = response.getOutputStream();
 	    ImageIO.write(image,"jpg",out);
 	}
+	
+	/* -------------------------------------------------- 分界线 -------------------------------------------------- */
 	
 	//对token进行简单加密
 	private String secretToken(String token,String date,boolean random) {
