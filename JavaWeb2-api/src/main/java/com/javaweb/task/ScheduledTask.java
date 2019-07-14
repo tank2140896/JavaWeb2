@@ -1,5 +1,9 @@
 package com.javaweb.task;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -15,6 +19,18 @@ public class ScheduledTask implements SchedulingConfigurer {
 	
 	//一般用于读取数据的定时任务操作
 	public void configureTasks(ScheduledTaskRegistrar scheduledTaskRegistrar) {
+	    Timer timer = new Timer();
+        try {
+            timer.schedule(new TimerTask() {
+                public void run() {
+                    System.out.println("时间到了，我要执行了");
+                    timer.cancel();
+                }
+            },new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse("2019-07-07 07:07:07"));
+        } catch (ParseException e) {
+             e.printStackTrace();
+        }
+	    
 	    ConcurrentTaskScheduler concurrentTaskScheduler = new ConcurrentTaskScheduler();
 	    concurrentTaskScheduler.execute(()->System.out.println("我只会被执行一次"));
 	    concurrentTaskScheduler.schedule(()->System.out.println("我会被多次执行"),new CronTrigger("0/2 * * * * ?"));

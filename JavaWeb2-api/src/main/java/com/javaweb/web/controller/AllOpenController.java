@@ -198,7 +198,7 @@ public class AllOpenController extends BaseController {
 		return tokenData;
 	}
 	
-	//封装成树形结构集合
+	//封装成树形结构集合(递归版)
 	private List<Module> setTreeList(List<Module> originList,Module module){
 		List<Module> moduleList = new ArrayList<>();
 		for (int i = 0; i < originList.size(); i++) {
@@ -210,6 +210,71 @@ public class AllOpenController extends BaseController {
 		}
 		return moduleList;
 	}
+	
+	//封装成树形结构集合(非递归版)
+    @SuppressWarnings("unused")
+    private List<Module> setTreeList(List<Module> list){
+        List<List<Module>> deepList = getEachDeep(list);
+        for(int i=deepList.size()-1;i>0;i--){
+            List<Module> childs = deepList.get(i);
+            List<Module> parrents = deepList.get(i-1);
+            //将子类归属于父类
+            for(int j=0;j<parrents.size();j++){
+                Module parentModule = parrents.get(j);
+                for(int k=0;k<childs.size();k++){
+                    Module childModule = childs.get(k);
+                    if(parentModule.getModuleId().equals(childModule.getParentId())){
+                        List<Module> parentsList = parentModule.getList();
+                        parentsList.add(childModule);
+                        parentModule.setList(parentsList);
+                        childs.remove(k);
+                        k--;
+                    }
+                }
+                parrents.set(j,parentModule);
+            }
+            deepList.set(i-1, parrents);
+        }
+        return deepList.get(0);
+    }
+	    
+    private List<List<Module>> getEachDeep(List<Module> list){
+        List<List<Module>> arrayList = new ArrayList<>();//定义一个深度集合
+        int deep = 0;//深度
+        for(int i=0;i<list.size();){
+            Module module = list.get(i);
+            if(module.getParentId()==null){//第一层(顶层)
+                List<Module> first = new ArrayList<>();
+                first.add(module);
+                arrayList.add(first);
+                deep++;
+                list.remove(i);
+                i=0;
+            }else{//非第一层(非顶层)
+                if(deep-1<0){
+                    continue;
+                }
+                List<Module> noFirst = new ArrayList<>();
+                List<Module> upper = arrayList.get(deep-1);//获得上一层
+                for(int j=0;j<upper.size();j++){
+                    Module upperModule = upper.get(j);
+                    for(int k=0;k<list.size();k++){
+                        Module restEachModule = list.get(k);
+                        if(upperModule.getModuleId().equals(restEachModule.getParentId())){
+                            noFirst.add(restEachModule);
+                            list.remove(k);
+                            k--;//这里不是k=0
+                            i=0;
+                        }
+                    }
+                }
+                arrayList.add(noFirst);
+                deep++;
+            }
+        }
+        //deep:由于数组下标是从0开始的,因此要获得深度,最终需要deep+1,才是我们理解的深度值
+        return arrayList;
+    }
 	
 	//验证码校验
 	private boolean kaptchaCheck(UserLoginRequest userLogin,HttpServletRequest request){
