@@ -47,6 +47,13 @@ public class ScheduledTask implements SchedulingConfigurer {
 		ScheduledExecutorService scheduledExecutorService = Executors.newSingleThreadScheduledExecutor();
 		scheduledExecutorService.scheduleAtFixedRate(()->System.out.println("我每隔5秒被输出一次"),0,5,TimeUnit.SECONDS);
 		scheduledExecutorService.scheduleAtFixedRate(()->System.out.println("我每隔6秒被输出一次"),0,6,TimeUnit.SECONDS);
+		ScheduledFuture<String> scheduledFuture = scheduledExecutorService.schedule(new Callable<String>() {
+			public String call() throws Exception {
+				TimeUnit.SECONDS.sleep(2);
+				return "2秒间隔后只会输出一次";
+			}
+		},7,TimeUnit.SECONDS);
+		System.out.println(scheduledFuture.get());
 	}
 	
 }
