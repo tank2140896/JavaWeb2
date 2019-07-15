@@ -4,8 +4,10 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
 import org.springframework.scheduling.annotation.SchedulingConfigurer;
@@ -53,7 +55,11 @@ public class ScheduledTask implements SchedulingConfigurer {
 				return "2秒间隔后只会输出一次";
 			}
 		},7,TimeUnit.SECONDS);
-		System.out.println(scheduledFuture.get());
+		try {
+            System.out.println(scheduledFuture.get());
+        } catch (Exception e) {
+             e.printStackTrace();
+        }
 	}
 	
 }
