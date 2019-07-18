@@ -192,9 +192,9 @@ public class AllOpenController extends BaseController {
 		List<Module> menuList = moduleList.stream().filter(i->2==i.getModuleType()).collect(Collectors.toList());//获得菜单列表
 		List<Module> menuListForTree = moduleList.stream().filter(i->1==i.getModuleType()||2==i.getModuleType()).collect(Collectors.toList());//获得目录、菜单列表
 		List<Module> authOperateList = moduleList.stream().filter(i->3==i.getModuleType()).collect(Collectors.toList());//获得操作权限列表
-		tokenData.setMenuList(menuList);
-		tokenData.setMenuListForTree(setTreeList(menuListForTree,null));
-		tokenData.setAuthOperateList(authOperateList);
+		tokenData.setMenuList(menuList);//目前其实只需要用到：moduleName、pageUrl、icon
+		tokenData.setMenuListForTree(setTreeList(menuListForTree,null));//目前其实只需要用到：moduleName、pageUrl、icon
+		tokenData.setAuthOperateList(authOperateList);//目前其实只需要用到：apiUrl、alias
 		return tokenData;
 	}
 	
@@ -289,3 +289,4 @@ public class AllOpenController extends BaseController {
 	}
 	
 }
+
