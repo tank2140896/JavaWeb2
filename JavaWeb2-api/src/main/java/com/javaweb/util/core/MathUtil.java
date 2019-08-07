@@ -1,8 +1,70 @@
 package com.javaweb.util.core;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.Map;
 import java.util.stream.LongStream;
 
+import org.mvel2.MVEL;
+
+import com.javaweb.exception.MatrixException;
+
 public class MathUtil {
+    
+    //根据公式计算结果(默认四舍五入)
+    public static BigDecimal defaultFormulaCalculate(String formula,Map<String,Object> parameterMap) {
+        return ((BigDecimal)MVEL.eval(formula,parameterMap)).setScale(2,RoundingMode.HALF_UP);
+    }
+    
+    //二阶行列式计算(克拉默法则)
+    public static int[] x(int[][] array) {
+        int d = array[0][0]*array[1][1]-array[0][1]*array[1][0];//系数
+        int d1 = array[0][2]*array[1][1]-array[0][1]*array[1][2];
+        int d2 = array[0][0]*array[1][2]-array[0][2]*array[1][0];
+        return new int[]{d1/d,d2/d};
+    }
+    
+    /**
+    <<算法导论>>的伪代码如下:
+    n=A.rows
+    let C be a new n*n matrix
+    for i=1 to n
+        for j=1 to n
+            c[i,j] = 0
+            for k=1 to n
+                c[i,j]=c[i,j]+a[i,k]+b[k,j]
+    return C
+    */
+    //矩阵相乘(行乘以列)  
+    public static int[][] matrixMultiplication(int a[][],int b[][]) throws MatrixException {
+        final int aLength = a.length;
+        final int bLength = b[0].length;
+        //a的列数要与b的行数相同  
+        if(aLength!=bLength){  
+            throw new MatrixException("第一个矩阵的列数与第二个矩阵的行数不同"); 
+        } 
+        int newArray[][] = new int[aLength][aLength];
+        for(int i=0;i<aLength;i++){
+            for(int j=0;j<aLength;j++){
+                newArray[i][j] = 0;
+                for(int k=0;k<b.length;k++){
+                    newArray[i][j] += a[i][k]*b[k][j];
+                }
+            }
+        }
+        return newArray;
+    }
+    
+    //矩阵置换(行列置换)  
+    public static int[][] maxtrixPermutation(int beforeArray[][]){  
+        int newArray[][] = new int[beforeArray[0].length][beforeArray.length];  
+        for (int i = 0; i < newArray.length; i++) {  
+            for (int j = 0; j < newArray[i].length; j++) {  
+                newArray[i][j] = beforeArray[j][i];  
+            }  
+        }  
+        return newArray;  
+    }
 	
 	//获取两数的较大者
 	public static int getTheTwoNumOfMax(int x,int y){

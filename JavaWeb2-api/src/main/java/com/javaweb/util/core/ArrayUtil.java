@@ -6,7 +6,6 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import com.javaweb.exception.MatrixException;
 import com.javaweb.util.entity.MaxMin;
 import com.javaweb.util.help.sort.QuickSort;
 
@@ -96,48 +95,6 @@ public class ArrayUtil {
 	public static int[] getArrayUnion(int a[],int b[]){
 		return IntStream.concat(Arrays.stream(a),Arrays.stream(b)).distinct().toArray();
 	}
-	
-	/**
-	<<算法导论>>的伪代码如下:
-	n=A.rows
-	let C be a new n*n matrix
-	for i=1 to n
-		for j=1 to n
-			c[i,j] = 0
-			for k=1 to n
-				c[i,j]=c[i,j]+a[i,k]+b[k,j]
-	return C
-	*/
-	//矩阵相乘(行乘以列)  
-    public static int[][] matrixMultiplication(int a[][],int b[][]) throws MatrixException {
-        final int aLength = a.length;
-        final int bLength = b[0].length;
-        //a的列数要与b的行数相同  
-        if(aLength!=bLength){  
-            throw new MatrixException("第一个矩阵的列数与第二个矩阵的行数不同"); 
-        } 
-        int newArray[][] = new int[aLength][aLength];
-        for(int i=0;i<aLength;i++){
-        	for(int j=0;j<aLength;j++){
-        		newArray[i][j] = 0;
-        		for(int k=0;k<b.length;k++){
-        			newArray[i][j] += a[i][k]*b[k][j];
-        		}
-        	}
-        }
-        return newArray;
-    }
-    
-    //矩阵置换(行列置换)  
-    public static int[][] maxtrixPermutation(int beforeArray[][]){  
-        int newArray[][] = new int[beforeArray[0].length][beforeArray.length];  
-        for (int i = 0; i < newArray.length; i++) {  
-            for (int j = 0; j < newArray[i].length; j++) {  
-                newArray[i][j] = beforeArray[j][i];  
-            }  
-        }  
-        return newArray;  
-    }
 	
 	//获得数组的最大子数组
 	public static int[] getMaxSubarray(int[] array,int low,int high){
