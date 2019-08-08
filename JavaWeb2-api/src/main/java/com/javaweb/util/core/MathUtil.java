@@ -17,11 +17,27 @@ public class MathUtil {
     }
     
     //二阶行列式计算(克拉默法则)
-    public static int[] x(int[][] array) {
+    public static BigDecimal[] cramersRule(int[][] array) {
         int d = array[0][0]*array[1][1]-array[0][1]*array[1][0];//系数
         int d1 = array[0][2]*array[1][1]-array[0][1]*array[1][2];
         int d2 = array[0][0]*array[1][2]-array[0][2]*array[1][0];
-        return new int[]{d1/d,d2/d};
+        return new BigDecimal[]{new BigDecimal(d1).divide(new BigDecimal(d),1,RoundingMode.HALF_UP),
+                                new BigDecimal(d2).divide(new BigDecimal(d),1,RoundingMode.HALF_UP)};
+    }
+    
+    //三阶行列式计算(沙路法则)
+    public static BigDecimal[] sandRoadRule(int[][] array) {
+        int d = array[0][0]*array[1][1]*array[2][2]+array[1][0]*array[2][1]*array[0][2]+array[0][1]*array[1][2]*array[2][0]
+                -(array[0][2]*array[1][1]*array[2][0]+array[0][1]*array[1][0]*array[2][2]+array[0][0]*array[1][2]*array[2][1]);//系数
+        int d1 = array[0][3]*array[1][1]*array[2][2]+array[0][1]*array[1][2]*array[2][3]+array[1][3]*array[2][1]*array[0][2]
+                 -(array[0][2]*array[1][1]*array[2][3]+array[0][1]*array[1][3]*array[2][2]+array[0][3]*array[1][2]*array[2][1]);
+        int d2 = array[0][0]*array[1][3]*array[2][2]+array[0][3]*array[1][2]*array[2][0]+array[1][0]*array[2][3]*array[0][2]
+                 -(array[0][2]*array[1][3]*array[2][0]+array[0][3]*array[1][0]*array[2][2]+array[0][0]*array[1][2]*array[2][3]);
+        int d3 = array[0][0]*array[1][1]*array[2][3]+array[0][1]*array[1][3]*array[2][0]+array[0][3]*array[1][0]*array[2][1]
+                 -(array[0][3]*array[1][1]*array[2][0]+array[0][1]*array[1][0]*array[2][3]+array[0][0]*array[1][3]*array[2][1]);
+        return new BigDecimal[]{new BigDecimal(d1).divide(new BigDecimal(d),1,RoundingMode.HALF_UP),
+                                new BigDecimal(d2).divide(new BigDecimal(d),1,RoundingMode.HALF_UP),
+                                new BigDecimal(d3).divide(new BigDecimal(d),1,RoundingMode.HALF_UP)};
     }
     
     /**
