@@ -16,6 +16,22 @@ public class MathUtil {
         return ((BigDecimal)MVEL.eval(formula,parameterMap)).setScale(2,RoundingMode.HALF_UP);
     }
     
+    //计算逆序数
+    public static int getInversionNumber(int[] array) {
+        int count = 0;
+        int index = 1;
+        while(index!=array.length) {
+            int temp =  array[index-1];
+            for(int i=index;i<array.length;i++) {
+                if(temp>array[i]) {
+                    count++;
+                }
+            } 
+            index++;
+        }
+        return count;
+    }
+    
     //二阶行列式计算(克拉默法则)
     public static BigDecimal[] cramersRule(int[][] array) {
         int d = array[0][0]*array[1][1]-array[0][1]*array[1][0];//系数
