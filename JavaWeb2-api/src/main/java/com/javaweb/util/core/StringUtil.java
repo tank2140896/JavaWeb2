@@ -128,6 +128,8 @@ public class StringUtil{
 	
 	//敏感词检查(极简易实现)
 	public static boolean isContainSensitiveWord(String text,JSONObject sensitiveWordRule){
+	    //int startIndex = 0;
+	    //int endIndex = 0;
 		for(int i=0;i<text.length();i++){
 			String each = String.valueOf(text.charAt(i));
 			JSONObject jo = sensitiveWordRule;
@@ -135,8 +137,11 @@ public class StringUtil{
 				jo = (JSONObject)jo.get(each);
 				if(jo!=null){
 					if(true==(boolean)jo.get("isEnd")){
+					    //endIndex = i;
+					    //text.substring(startIndex,endIndex+1)//要替换的词
 						return true;
 					}else{
+					    //startIndex = i;
 						i++;
 						each = String.valueOf(text.charAt(i));
 					}
