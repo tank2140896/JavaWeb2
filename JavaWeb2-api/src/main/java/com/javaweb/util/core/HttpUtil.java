@@ -3,9 +3,9 @@ package com.javaweb.util.core;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.net.InetAddress;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.security.cert.X509Certificate;
@@ -14,7 +14,6 @@ import java.util.List;
 import javax.net.ssl.SSLContext;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.RequestConfig;
@@ -218,35 +217,35 @@ public class HttpUtil {
 	}
 	
 	//获取用户真实IP
-    	public static String getIpAddress(HttpServletRequest request){  
-		String ipAddress = request.getHeader("x-forwarded-for");  
-		if(ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {  
-		    ipAddress = request.getHeader("Proxy-Client-IP");  
-		}  
-		if(ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {  
-		    ipAddress = request.getHeader("WL-Proxy-Client-IP");  
-		}  
-		if(ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {  
-		    ipAddress = request.getRemoteAddr();  
-		    if(ipAddress.equals("127.0.0.1") || ipAddress.equals("0:0:0:0:0:0:0:1")){  
-			//根据网卡取本机配置的IP  
-			InetAddress inet=null;  
-			try {  
-			    inet = InetAddress.getLocalHost();  
-			} catch (UnknownHostException e) {  
-			    //do nothing  
-			}  
-			ipAddress= inet.getHostAddress();  
-		    }  
-		}  
-		//对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割  
-		if(ipAddress!=null && ipAddress.length()>15){ //"***.***.***.***".length() = 15  
-		    if(ipAddress.indexOf(",")>0){  
-			ipAddress = ipAddress.substring(0,ipAddress.indexOf(","));  
-		    }  
-		}  
-		return ipAddress;   
-    	}
+	public static String getIpAddress(HttpServletRequest request){  
+    	String ipAddress = request.getHeader("x-forwarded-for");  
+    	if(ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {  
+    	    ipAddress = request.getHeader("Proxy-Client-IP");  
+    	}  
+    	if(ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {  
+    	    ipAddress = request.getHeader("WL-Proxy-Client-IP");  
+    	}  
+    	if(ipAddress == null || ipAddress.length() == 0 || "unknown".equalsIgnoreCase(ipAddress)) {  
+    	    ipAddress = request.getRemoteAddr();  
+    	    if(ipAddress.equals("127.0.0.1") || ipAddress.equals("0:0:0:0:0:0:0:1")){  
+    		//根据网卡取本机配置的IP  
+    		InetAddress inet=null;  
+    		try {  
+    		    inet = InetAddress.getLocalHost();  
+    		} catch (UnknownHostException e) {  
+    		    //do nothing  
+    		}  
+    		ipAddress= inet.getHostAddress();  
+    	    }  
+    	}  
+    	//对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割  
+    	if(ipAddress!=null && ipAddress.length()>15){//"***.***.***.***".length() = 15  
+    	    if(ipAddress.indexOf(",")>0){  
+    		ipAddress = ipAddress.substring(0,ipAddress.indexOf(","));  
+    	    }  
+    	}  
+    	return ipAddress;
+	}
 	
 	//获得linux的ssh连接
 	public static ByteArrayInputStream getLinuxSsh(String ip,int port,String userName,String passWord,String fileName) throws Exception {
