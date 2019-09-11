@@ -4,19 +4,19 @@
 <!-- 若test比较的是字符串，①将外层变为单引号，内层变为双引号；②单引号的值.toString() -->
 <mapper namespace="com.javaweb.web.dao.ds1.CommonDao">
 
-	<select id="sqlSelect" parameterType="String" resultType="java.util.LinkedHashMap"> 
+	<select id="sqlSelect" parameterType="java.lang.String" resultType="java.util.LinkedHashMap"> 
 		${value}
 	</select>
 	
-	<update id="sqlUpdate" parameterType="String">
+	<update id="sqlUpdate" parameterType="java.lang.String">
 		${value}
 	</update>
 	
-	<insert id="sqlInsert" parameterType="String">
+	<insert id="sqlInsert" parameterType="java.lang.String">
 		${value}
 	</insert>
 	
-	<delete id="sqlDelete" parameterType="String">
+	<delete id="sqlDelete" parameterType="java.lang.String">
 		${value}
 	</delete>
 	

@@ -8,12 +8,12 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface CommonDao {
 	
-	List<Map<String,Object>> sqlSelect(String sqlSelect);
+	public List<Map<String,Object>> sqlSelect(String sqlSelect);
 	
-	Integer sqlUpdate(String sqlUpdate);
+	public Integer sqlUpdate(String sqlUpdate);
 	
-	Integer sqlInsert(String sqlInsert);
+	public Integer sqlInsert(String sqlInsert);
 	
-	Integer sqlDelete(String sqlDelete);
+	public Integer sqlDelete(String sqlDelete);
 	
 }

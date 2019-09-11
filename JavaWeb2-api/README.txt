@@ -1,6 +1,9 @@
 ﻿一、项目主要知识点
 1、前后端分离【后端只提供接口】
-2、多数据源【采用mybatis时要注意不同数据源对应的dao接口名称不要一样，比如可以一个叫dao1一个叫dao2）；也可使用不同数据源的JdbcTemplate，注意@Qualifier标注使用的数据源，然后直接使用如： mysql_d1_JdbcTemplate.query("select * from user where id = ?",new Object[]{"1"},new BeanPropertyRowMapper<User>(User.class))】
+2、多数据源
+采用mybatis时要注意不同数据源对应的dao接口名称不要一样，比如可以一个叫dao1一个叫dao2,如果一样会报：Specified class is an interface
+也可使用不同数据源的JdbcTemplate，注意@Qualifier标注使用的数据源，然后直接使用如： 
+mysql_d1_JdbcTemplate.query("select * from user where id = ?",new Object[]{"1"},new BeanPropertyRowMapper<User>(User.class))
 3、国际化
 4、接口入参校验
 5、reids
