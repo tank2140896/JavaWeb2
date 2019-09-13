@@ -1,16 +1,18 @@
-package com.javaweb.interceptor.mybatis;
+package com.javaweb.interceptor.mybatis.mysql;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
-public class HandleSelectAllByPaging implements SqlHandle {
+import com.javaweb.interceptor.mybatis.SqlBuildInfo;
+import com.javaweb.interceptor.mybatis.SqlHandle;
+
+public class HandleSelectByConditionForMySql implements SqlHandle {
 
 	@SuppressWarnings("unchecked")
 	public String handle(SqlBuildInfo sqlBuildInfo) {
-		Map<String,Long> map = (Map<String,Long>)sqlBuildInfo.getParameterValue();
-		Long currentPage = map.get("currentPage");
-		Long pageSize = map.get("pageSize");
-		
+		Map<String,Object> map = (Map<String,Object>)sqlBuildInfo.getParameterValue();
+		Set<String> keySet = map.keySet();
 		String tableName = sqlBuildInfo.getTableName();
 		List<String> entityList = sqlBuildInfo.getEntityList();
 		List<String> columnList = sqlBuildInfo.getColumnList();
@@ -22,9 +24,10 @@ public class HandleSelectAllByPaging implements SqlHandle {
 				stringBuilder.append(",");
 			}
 		}
-		stringBuilder.append(" from ").append(tableName)
-		             .append(" limit ").append((currentPage-1)*pageSize)
-		             .append(",").append(pageSize);
+		stringBuilder.append(" from ").append(tableName).append(" where 1=1 ");
+		for(String key:keySet) {
+		    stringBuilder.append("and ").append(key).append("=").append("'"+map.get(key)+"'");
+		}
 		return stringBuilder.toString();
 	}
 

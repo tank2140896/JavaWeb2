@@ -36,7 +36,7 @@ public class EasyTest {
 	
 	@Test
 	public void test() throws Exception {
-		List<User> list = userDao.selectAll();
+		List<User> list = userDao.selectAllForMySql();
 		list.stream().forEach(i->System.out.println(i.getUserId()));
 	}
 	

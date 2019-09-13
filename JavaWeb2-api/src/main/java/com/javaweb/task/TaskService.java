@@ -26,7 +26,7 @@ public class TaskService extends BaseService {
         long currentTimeMillis1 = System.currentTimeMillis();  
         Thread.sleep(1000);  
         long currentTimeMillis2 = System.currentTimeMillis();
-        System.out.println(userDao.selectAll().size());
+        System.out.println(userDao.selectAllForMySql().size());
         System.out.println("task1任务耗时:"+(currentTimeMillis2-currentTimeMillis1)+"ms");  
         return new AsyncResult<String>("task1执行完毕");  
     }  

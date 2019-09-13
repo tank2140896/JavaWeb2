@@ -43,12 +43,12 @@ public class UserServiceImpl extends BaseService implements UserService {
 	
 	@Transactional
 	public void userAdd(User user) {
-		userDao.insert(user);
+		userDao.insertForMySql(user);
 	}
 
 	@Transactional
 	public void userModify(User user) {
-		userDao.update(user);
+		userDao.updateForMySql(user);
 	}
 
 	public User userDetail(String userId) {

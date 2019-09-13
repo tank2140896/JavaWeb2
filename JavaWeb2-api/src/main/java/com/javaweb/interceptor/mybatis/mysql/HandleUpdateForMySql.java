@@ -1,8 +1,11 @@
-package com.javaweb.interceptor.mybatis;
+package com.javaweb.interceptor.mybatis.mysql;
 
 import java.util.List;
 
-public class HandleUpdate implements SqlHandle {
+import com.javaweb.interceptor.mybatis.SqlBuildInfo;
+import com.javaweb.interceptor.mybatis.SqlHandle;
+
+public class HandleUpdateForMySql implements SqlHandle {
 
 	public String handle(SqlBuildInfo sqlBuildInfo) {
 		String tableName = sqlBuildInfo.getTableName();

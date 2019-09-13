@@ -29,16 +29,16 @@ import com.javaweb.annotation.sql.Column;
 import com.javaweb.annotation.sql.Table;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.interceptor.mybatis.BoundSqlSource;
-import com.javaweb.interceptor.mybatis.HandleDelete;
-import com.javaweb.interceptor.mybatis.HandleInsert;
-import com.javaweb.interceptor.mybatis.HandleSelectAll;
-import com.javaweb.interceptor.mybatis.HandleSelectAllByPaging;
-import com.javaweb.interceptor.mybatis.HandleSelectAllCount;
-import com.javaweb.interceptor.mybatis.HandleSelectByCondition;
-import com.javaweb.interceptor.mybatis.HandleSelectByPk;
-import com.javaweb.interceptor.mybatis.HandleUpdate;
 import com.javaweb.interceptor.mybatis.SqlBuildInfo;
 import com.javaweb.interceptor.mybatis.SqlHandle;
+import com.javaweb.interceptor.mybatis.mysql.HandleDeleteForMySql;
+import com.javaweb.interceptor.mybatis.mysql.HandleInsertForMySql;
+import com.javaweb.interceptor.mybatis.mysql.HandleSelectAllForMySql;
+import com.javaweb.interceptor.mybatis.mysql.HandleSelectAllByPagingForMySql;
+import com.javaweb.interceptor.mybatis.mysql.HandleSelectAllCountForMySql;
+import com.javaweb.interceptor.mybatis.mysql.HandleSelectByConditionForMySql;
+import com.javaweb.interceptor.mybatis.mysql.HandleSelectByPkForMySql;
+import com.javaweb.interceptor.mybatis.mysql.HandleUpdateForMySql;
 import com.javaweb.util.core.DateUtil;
 
 /**
@@ -56,14 +56,14 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 	
 	private static final Map<String,SqlHandle> map = new HashMap<>();
 	static{
-		map.put("insert",new HandleInsert());
-		map.put("update",new HandleUpdate());
-		map.put("delete",new HandleDelete());
-		map.put("selectAll",new HandleSelectAll());
-		map.put("selectAllCount",new HandleSelectAllCount());
-		map.put("selectAllByPaging",new HandleSelectAllByPaging());
-		map.put("selectByPk",new HandleSelectByPk());
-		map.put("selectByCondition",new HandleSelectByCondition());
+		map.put("insertForMySql",new HandleInsertForMySql());
+		map.put("updateForMySql",new HandleUpdateForMySql());
+		map.put("deleteForMySql",new HandleDeleteForMySql());
+		map.put("selectAllForMySql",new HandleSelectAllForMySql());
+		map.put("selectAllCountForMySql",new HandleSelectAllCountForMySql());
+		map.put("selectAllByPagingForMySql",new HandleSelectAllByPagingForMySql());
+		map.put("selectByPkForMySql",new HandleSelectByPkForMySql());
+		map.put("selectByConditionForMySql",new HandleSelectByConditionForMySql());
 	}
 	
 	public Object intercept(Invocation invocation) throws Throwable {

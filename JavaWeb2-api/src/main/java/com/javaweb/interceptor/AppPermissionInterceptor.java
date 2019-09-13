@@ -1,14 +1,18 @@
 package com.javaweb.interceptor;
 
+import java.lang.reflect.Method;
 import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
+import com.javaweb.annotation.url.IgnoreUrl;
 import com.javaweb.config.context.ApplicationContextHelper;
 import com.javaweb.constant.ApiConstant;
 import com.javaweb.constant.CommonConstant;
@@ -39,7 +43,14 @@ public class AppPermissionInterceptor extends HandlerInterceptorAdapter {
 		//RedisTemplate redisTemplate = (RedisTemplate) factory.getBean("redisTemplate"); 
 		//RedisTemplate<String,Object> redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
 		//String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();  
-		if(redisTemplate1==null){
+	    if(handler instanceof HandlerMethod) {
+            Method method = ((HandlerMethod)handler).getMethod();
+            if (AnnotatedElementUtils.isAnnotated(method,IgnoreUrl.class)) {
+                //IgnoreUrl ignoreUrl = method.getAnnotation(IgnoreUrl.class);
+                return true;
+            }
+        }
+	    if(redisTemplate1==null){
 			redisTemplate1 = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE_1);
 		}
 		String userId = request.getHeader(SystemConstant.HEAD_USERID);

@@ -12,7 +12,7 @@ import com.javaweb.web.service.DictionaryService;
 public class DictionaryServiceImpl extends BaseService implements DictionaryService {
 
     public List<Dictionary> selectAll() {
-         return dictionaryDao.selectAll();
+         return dictionaryDao.selectAllForMySql();
     }
 
     public List<Dictionary> getDictionary(Dictionary dictionary) {

@@ -26,7 +26,7 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
 	
 	public List<Module> getModule(boolean adminFlag,String userId) {
 		if(adminFlag){//管理员
-			return moduleDao.selectAll();
+			return moduleDao.selectAllForMySql();
 		}else{//非管理员
 			//1.获得user_role的所有对应关系
 			List<UserRole> userRoleList = userRoleDao.getUserRoleByUserId(userId);
@@ -82,12 +82,12 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
 		}
 		module.setOrders(moduleLevelAndOrdersResponse.getOrders()+1);
 		module.setLevel(moduleLevelAndOrdersResponse.getLevel());
-		moduleDao.insert(module);
+		moduleDao.insertForMySql(module);
 	}
 	
 	@Transactional
 	public void moduleModify(Module module) {
-		moduleDao.update(module);
+		moduleDao.updateForMySql(module);
 	}
 
 	public Module moduleDetail(String moduleId) {
