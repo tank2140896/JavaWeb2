@@ -84,7 +84,7 @@ public class SecretUtil {
 				}).mapToObj(each->Character.toString(KEYBORD_USED_CHARACTERSET[each])).limit(passLen).collect(Collectors.joining());
 	}
 	
-	//默认根据当前时间生成唯一字符串(不适用与大量高并发的情景)
+	//默认根据当前时间生成唯一字符串(不适用于大量高并发的情景)
 	public static String defaultGenUniqueStr(){
 		synchronized ("defaultGenUniqueStr") {
 			try {

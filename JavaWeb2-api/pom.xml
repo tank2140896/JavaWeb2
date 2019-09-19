@@ -73,6 +73,11 @@
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-freemarker</artifactId>
 		</dependency>
+		<!-- quartz定时任务 -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-quartz</artifactId>
+		</dependency>
 	    <!-- elasticsearch 
 		<dependency>  
 	        <groupId>org.springframework.boot</groupId>  
