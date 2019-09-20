@@ -7,6 +7,7 @@ import com.javaweb.web.po.Quartz;
 
 @Mapper
 public interface QuartzDao extends BaseDaoForMySql<Quartz> {
-	
+    
+    public void updateAll(Integer status);
 	
 }
