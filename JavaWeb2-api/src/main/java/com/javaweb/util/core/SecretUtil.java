@@ -1,12 +1,9 @@
 package com.javaweb.util.core;
 
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
-
+import java.io.ByteArrayOutputStream;
 import java.security.MessageDigest;
 import java.util.Date;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -17,6 +14,10 @@ import java.util.stream.IntStream;
 import org.apache.commons.codec.binary.Hex;
 
 import com.javaweb.constant.SystemConstant;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 public class SecretUtil {
 	
@@ -36,7 +37,9 @@ public class SecretUtil {
 	
 	public static final char[] CHINESE_USED_CHARACTERSET = new char[KEYBORD_USERD_LENGTH+CHINESE_USERD_LENGTH];//中文常用字符数组
 	
-	public static final Map<Character,Integer> CHARACTE_KV = new HashMap<>();//字符数字键值对
+	public static final Map<Character,Integer> CHARACTE_KV = new LinkedHashMap<>();//字符数字键值对
+	
+	public static String CHARACTE_KV_KEY_STRING = "";//字符数字键值对key的字符串
 	
 	static{
 		/** 初始化键盘常用字符数组和中文常用字符数组 start */
@@ -68,7 +71,15 @@ public class SecretUtil {
 		CHARACTE_KV.put('E', 14);
 		CHARACTE_KV.put('F', 15);
 		/** 初始化字符数字键值对 end */
+		for(Character character: CHARACTE_KV.keySet()) {
+		    CHARACTE_KV_KEY_STRING+=character;
+		}
 	}
+	public static void main(String[] args) {
+	    System.out.println(CHARACTE_KV_KEY_STRING);
+	    
+	    
+    }
 
 	//获取UUID
 	public static String getRandomUUID() {
@@ -156,5 +167,68 @@ public class SecretUtil {
 				            .parseClaimsJws(token)
 				            .getBody();
 	}
+	
+	//16进制字符串转byte数组
+    public static byte[] hexStringToBytes(String hexString) {   
+        if (hexString == null || hexString.equals("")) {   
+            return null;   
+        }   
+        hexString = hexString.toUpperCase();   
+        int length = hexString.length() / 2;   
+        char[] hexChars = hexString.toCharArray();   
+        byte[] d = new byte[length];   
+        for (int i = 0; i < length; i++) {   
+            int pos = i * 2;   
+            d[i] = (byte) (charToByte(hexChars[pos]) << 4 | charToByte(hexChars[pos + 1]));   
+        }   
+        return d;   
+    } 
+    
+    //字符转byte
+    public static byte charToByte(char c) {   
+        return (byte) CHARACTE_KV_KEY_STRING.indexOf(c);   
+    } 
+    
+    //byte数组转16进制字符串
+    public static String bytesToHexString(byte[] src){   
+        StringBuilder stringBuilder = new StringBuilder("");   
+        if (src == null || src.length <= 0) {   
+            return null;   
+        }   
+        for (int i = 0; i < src.length; i++) {   
+            int v = src[i] & 0xFF;   
+            String hv = Integer.toHexString(v);   
+            if (hv.length() < 2) {   
+                stringBuilder.append(0);   
+            }   
+            stringBuilder.append(hv);   
+        }   
+        return stringBuilder.toString();   
+    }
+    
+    //字符串转16进制字符串
+    public static String str2HexStr(String str) {    
+        char[] chars = CHARACTE_KV_KEY_STRING.toCharArray();    
+        StringBuilder sb = new StringBuilder("");  
+        byte[] bs = str.getBytes();    
+        int bit;    
+        for (int i = 0; i < bs.length; i++) {    
+            bit = (bs[i] & 0x0f0) >> 4;    
+            sb.append(chars[bit]);    
+            bit = bs[i] & 0x0f;    
+            sb.append(chars[bit]);    
+        }    
+        return sb.toString();    
+    }
+    
+    //16进制字符串转字符串
+    public static String hexStr2Str(String hexStr) {  
+       ByteArrayOutputStream baos = new ByteArrayOutputStream(hexStr.length() / 2);  
+       //将每2位16进制整数组装成一个字节  
+       for (int i = 0; i < hexStr.length(); i += 2) {
+           baos.write((CHARACTE_KV_KEY_STRING.indexOf(hexStr.charAt(i)) << 4 | CHARACTE_KV_KEY_STRING.indexOf(hexStr.charAt(i + 1))));  
+       } 
+       return new String(baos.toByteArray());  
+    }
     	
 }
