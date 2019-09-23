@@ -2,8 +2,6 @@ package com.javaweb.web.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,7 +39,7 @@ public class UserController extends BaseController {
 
 	@ApiOperation(value=SwaggerConstant.SWAGGER_USER_ADD)
 	@PostMapping(ApiConstant.USER_ADD)
-	public BaseResponseResult userAdd(HttpServletRequest request,@RequestBody @Validated({BaseValidatedGroup.add.class}) User user,BindingResult bindingResult){
+	public BaseResponseResult userAdd(/*HttpServletRequest request,*/@RequestBody @Validated({BaseValidatedGroup.add.class}) User user,BindingResult bindingResult){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}else{
@@ -60,7 +58,7 @@ public class UserController extends BaseController {
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_USER_LIST)
 	@PostMapping(ApiConstant.USER_LIST)
-	public BaseResponseResult userList(HttpServletRequest request,@RequestBody UserListRequest userListRequest){
+	public BaseResponseResult userList(/*HttpServletRequest request,*/@RequestBody UserListRequest userListRequest){
 		TokenData tokenData = getTokenData(request);
 		userListRequest.setLevel(tokenData.getUser().getLevel());
 		Page page = userService.userList(userListRequest);
@@ -69,7 +67,7 @@ public class UserController extends BaseController {
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_USER_MODIFY)
 	@PutMapping(ApiConstant.USER_MODIFY)
-	public BaseResponseResult userModify(HttpServletRequest request,@RequestBody @Validated({BaseValidatedGroup.update.class}) User user,BindingResult bindingResult){
+	public BaseResponseResult userModify(/*HttpServletRequest request,*/@RequestBody @Validated({BaseValidatedGroup.update.class}) User user,BindingResult bindingResult){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}else{

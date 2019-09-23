@@ -14,9 +14,6 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -55,13 +52,13 @@ public class WenxinController extends BaseController {
 	
 	//微信公众平台服务器配置(初始化)
 	@GetMapping("/wxgzptServerConfig")
-	public String wxgzptServerConfigForGet(HttpServletRequest request) {
+	public String wxgzptServerConfigForGet(/*HttpServletRequest request*/) {
 		String echostr = null;
 		try {
-			String signature = request.getParameter("signature");
-			String timestamp = request.getParameter("timestamp");
-			String nonce = request.getParameter("nonce");
-			echostr = request.getParameter("echostr");
+			String signature = super.request.getParameter("signature");
+			String timestamp = super.request.getParameter("timestamp");
+			String nonce = super.request.getParameter("nonce");
+			echostr = super.request.getParameter("echostr");
 			String array[] = new String[]{weixinConfig.getWxopenPublicPlatformToken(),timestamp,nonce};
 			Arrays.sort(array);
 			StringBuilder stringBuilder = new StringBuilder();
@@ -151,10 +148,10 @@ public class WenxinController extends BaseController {
 	
 	//微信公众平台获取用户信息
 	@GetMapping("/weixin/getUserInfo")
-	public BaseResponseResult getUserInfo(HttpServletRequest request) {
+	public BaseResponseResult getUserInfo(/*HttpServletRequest request*/) {
 		UserInfoResponse userInfoResponse = null;
 		try {
-			String code = request.getParameter("code");
+			String code = super.request.getParameter("code");
 			String url = String.format(weixinConfig.getWxopenAccessTokenUrl(),weixinConfig.getWxopenAppid(),weixinConfig.getWxopenAppsecret(),code);
 			AccessTokenResponse accessTokenResponse = new ObjectMapper().readValue(HttpUtil.defaultGetRequest(url,null),AccessTokenResponse.class);
 			url = String.format(weixinConfig.getWxopenUserInfo(),accessTokenResponse.getAccess_token(),accessTokenResponse.getOpenid());
@@ -197,8 +194,8 @@ public class WenxinController extends BaseController {
 	
 	//微信扫码付款成功后的回调处理
 	@PostMapping("/weixin/payCallBack")
-	public void payCallBack(HttpServletRequest request,HttpServletResponse response) throws Exception {
-		InputStream is = request.getInputStream();
+	public void payCallBack(/*HttpServletRequest request,HttpServletResponse response*/) throws Exception {
+		InputStream is = super.request.getInputStream();
 		BufferedReader br = new BufferedReader(new InputStreamReader(is,"UTF-8"));
 		StringBuilder sb = new StringBuilder();
 		String line = null;
@@ -213,8 +210,8 @@ public class WenxinController extends BaseController {
 			String resultCode = map.get("result_code");
 			if("SUCCESS".equals(resultCode)){
 				//这里省略了查询、更新订单状态及事物回滚等操作
-				response.setContentType("text/xml");
-				response.getWriter().print("success");
+			    super.response.setContentType("text/xml");
+			    super.response.getWriter().print("success");
 			}
 		}
 	}

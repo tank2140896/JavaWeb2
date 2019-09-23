@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.BindingResult;
@@ -55,7 +54,7 @@ public class AllOpenController extends BaseController {
 	@ApiOperation(value=SwaggerConstant.SWAGGER_LOGIN,notes=SwaggerConstant.SWAGGER_LOGIN_NOTES)
     @ApiImplicitParam(name="userLoginRequest",value=SwaggerConstant.SWAGGER_LOGIN_PARAM,required=true,dataType="UserLoginRequest")
 	@PostMapping(ApiConstant.WEB_LOGIN)
-	public BaseResponseResult login(@RequestBody @Validated UserLoginRequest userLoginRequest,BindingResult bindingResult,HttpServletRequest request){
+	public BaseResponseResult login(@RequestBody @Validated UserLoginRequest userLoginRequest,BindingResult bindingResult/*,HttpServletRequest request*/){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}
@@ -129,7 +128,7 @@ public class AllOpenController extends BaseController {
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_GET_KAPTCHA)
 	@GetMapping(value=ApiConstant.WEB_KAPTCHA)
-	public void getKaptcha(HttpServletRequest request,HttpServletResponse response,@PathVariable(name="requestId",required=true) String requestId) throws Exception {
+	public void getKaptcha(/*HttpServletRequest request,HttpServletResponse response,*/@PathVariable(name="requestId",required=true) String requestId) throws Exception {
 		response.setHeader("Cache-Control","no-store,no-cache");
 	    response.setContentType("image/jpeg");
 	    String text = defaultKaptcha.createText();
