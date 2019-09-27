@@ -75,11 +75,6 @@ public class SecretUtil {
 		    CHARACTE_KV_KEY_STRING+=character;
 		}
 	}
-	public static void main(String[] args) {
-	    System.out.println(CHARACTE_KV_KEY_STRING);
-	    
-	    
-    }
 
 	//获取UUID
 	public static String getRandomUUID() {
