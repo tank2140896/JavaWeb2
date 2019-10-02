@@ -149,6 +149,12 @@
     		<groupId>org.springframework.boot</groupId>
 	        <artifactId>spring-boot-devtools</artifactId>
     	 </dependency>
+    	 <!-- 解析json(阿里巴巴的) -->
+	     <dependency>
+	        <groupId>com.alibaba</groupId>
+	        <artifactId>fastjson</artifactId>
+	        <version>1.2.61</version>
+	     </dependency>
 		 <!-- swagger -->
 		 <dependency>
 		    <groupId>io.springfox</groupId>
