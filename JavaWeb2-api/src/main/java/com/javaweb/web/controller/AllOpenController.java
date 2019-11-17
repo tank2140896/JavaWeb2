@@ -61,28 +61,34 @@ public class AllOpenController extends BaseController {
 		if(loginKaptchaCheck&&kaptchaCheck(userLoginRequest,request)){//验证码校验
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"login.user.kaptcha");
 		}
+		TokenData token = null;
 		if(systemAdminCheck(userLoginRequest)){//管理员判断
 			userLoginRequest.setType("0");
 			User user = SystemConstant.SYSTEM_DEFAULT_USER;
-			TokenData token = getToken(true,user,userLoginRequest.getType());
+			token = getToken(true,user,userLoginRequest.getType());
 			String key = String.join(CommonConstant.COMMA,user.getUserId(),userLoginRequest.getType());
 			setDefaultDataToRedis(key,token);
-			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.loginSuccess",token);
+		}else {
+		    try{
+	            userLoginRequest.setPassword(SecretUtil.getSecret(userLoginRequest.getPassword(),"SHA-256"));
+	        }catch(Exception e){
+	            //do nothing
+	        }
+	        User user = userService.userLogin(userLoginRequest);
+	        if(user==null){
+	            return getBaseResponseResult(HttpCodeEnum.LOGIN_FAIL,"login.user.userNameOrPassword");
+	        }
+	        user.setPassword(null);
+	        token = getToken(false,user,userLoginRequest.getType());
+	        String key = String.join(CommonConstant.COMMA,user.getUserId(),userLoginRequest.getType());
+	        setDefaultDataToRedis(key,token);
 		}
-		try{
-		    userLoginRequest.setPassword(SecretUtil.getSecret(userLoginRequest.getPassword(),"SHA-256"));
-		}catch(Exception e){
-		    //do nothing
-		}
-		User user = userService.userLogin(userLoginRequest);
-		if(user==null){
-			return getBaseResponseResult(HttpCodeEnum.LOGIN_FAIL,"login.user.userNameOrPassword");
-		}
-		user.setPassword(null);
-		TokenData token = getToken(false,user,userLoginRequest.getType());
-		String key = String.join(CommonConstant.COMMA,user.getUserId(),userLoginRequest.getType());
-		setDefaultDataToRedis(key,token);
-		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.loginSuccess",token);
+		//这里我个人认为redis中包含权限信息，但是前端不需要获得太多权限信息，权限信息可以通过其它接口获得
+		TokenData returnTokenData = new TokenData();
+		returnTokenData.setToken(token.getToken());
+		returnTokenData.setUser(token.getUser());
+		returnTokenData.setType(token.getType());
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.loginSuccess",returnTokenData/*token*/);
 	}
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_REQUEST_PARAMETER_LOST)
