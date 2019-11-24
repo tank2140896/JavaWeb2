@@ -44,7 +44,7 @@ public class RedisConfig {
         return factory;
 	}
 	
-	@Bean("redisTemplate1")
+    @Bean("redisTemplate1")
 	public StringRedisTemplate redisTemplate1(){
 		StringRedisTemplate stringRedisTemplate = new StringRedisTemplate(getRedisConnectionFactory1());
 		Jackson2JsonRedisSerializer<Object> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<Object>(Object.class);
