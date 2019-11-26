@@ -1,6 +1,9 @@
 package com.javaweb.constant;
 
 public class CommonConstant {
+    
+    //0值字符串
+    public static final String ZERO_STRING_VALUE = "0";
 	
 	//空值
 	public static final String EMPTY_VALUE = "";
