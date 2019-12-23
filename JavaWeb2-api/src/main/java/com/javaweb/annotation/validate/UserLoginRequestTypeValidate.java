@@ -12,6 +12,7 @@ import javax.validation.Payload;
 
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.PatternConstant;
+import com.javaweb.util.core.PatternUtil;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
@@ -42,7 +43,7 @@ class UserLoginRequestTypeClass implements ConstraintValidator<UserLoginRequestT
 			result = true;
 		}
 		if(!userLoginRequestTypeValidate.easyWayCheck()) {
-			result = PatternConstant.isPattern(value.toString(),PatternConstant.HEAD_TYPE_PATTERN);
+			result = PatternUtil.isPattern(value.toString(),PatternConstant.HEAD_TYPE_PATTERN);
 		}
 		return result;
 	}

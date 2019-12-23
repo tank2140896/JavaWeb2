@@ -5,14 +5,14 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.javaweb.base.BaseDaoForMySql;
+import com.javaweb.dao.DaoForMySql;
 import com.javaweb.web.eo.role.ModuleInfoResponse;
 import com.javaweb.web.eo.role.RoleListRequest;
 import com.javaweb.web.eo.role.RoleListResponse;
 import com.javaweb.web.po.Role;
 
 @Mapper
-public interface RoleDao extends BaseDaoForMySql<Role> {
+public interface RoleDao extends DaoForMySql<Role> {
 	
 	public List<RoleListResponse> roleList(RoleListRequest roleListRequest);
 	

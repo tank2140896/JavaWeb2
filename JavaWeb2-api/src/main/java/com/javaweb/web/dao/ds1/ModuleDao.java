@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.javaweb.base.BaseDaoForMySql;
+import com.javaweb.dao.DaoForMySql;
 import com.javaweb.web.eo.module.ModuleIdAndNameResponse;
 import com.javaweb.web.eo.module.ModuleLevelAndOrdersResponse;
 import com.javaweb.web.eo.module.ModuleListRequest;
@@ -13,7 +13,7 @@ import com.javaweb.web.eo.module.ModuleListResponse;
 import com.javaweb.web.po.Module;
 
 @Mapper
-public interface ModuleDao extends BaseDaoForMySql<Module> {
+public interface ModuleDao extends DaoForMySql<Module> {
 	
 	public List<Module> getModuleByModuleId(List<String> list);
 	

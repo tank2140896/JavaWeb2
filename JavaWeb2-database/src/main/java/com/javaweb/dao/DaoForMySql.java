@@ -1,4 +1,4 @@
-package com.javaweb.base;
+package com.javaweb.dao;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +12,7 @@ import org.apache.ibatis.annotations.Update;
 import com.javaweb.constant.CommonConstant;
 
 @Mapper
-public interface BaseDaoForMySql<T> {
+public interface DaoForMySql<T> {
 	
 	@Insert(CommonConstant.EMPTY_VALUE)
 	public Integer insertForMySql(T t);//插入实体类

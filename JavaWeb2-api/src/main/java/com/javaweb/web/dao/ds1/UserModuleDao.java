@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.javaweb.base.BaseDaoForMySql;
+import com.javaweb.dao.DaoForMySql;
 import com.javaweb.web.po.UserModule;
 
 @Mapper
-public interface UserModuleDao extends BaseDaoForMySql<UserModule> {
+public interface UserModuleDao extends DaoForMySql<UserModule> {
 	
 	public List<String> getModuleIdsByUserId(String userId);
 	

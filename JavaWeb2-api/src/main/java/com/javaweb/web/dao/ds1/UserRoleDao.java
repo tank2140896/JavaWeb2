@@ -4,11 +4,11 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.javaweb.base.BaseDaoForMySql;
+import com.javaweb.dao.DaoForMySql;
 import com.javaweb.web.po.UserRole;
 
 @Mapper
-public interface UserRoleDao extends BaseDaoForMySql<UserRole> {
+public interface UserRoleDao extends DaoForMySql<UserRole> {
 	
 	public List<UserRole> getUserRoleByUserId(String userId);
 	

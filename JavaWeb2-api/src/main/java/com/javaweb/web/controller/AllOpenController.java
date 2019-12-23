@@ -133,7 +133,7 @@ public class AllOpenController extends BaseController {
 		Map<String,Object> map = new HashMap<>();
 		map.put("key",defaultKaptcha.createText());
 		map.put("date",DateUtil.getStringDate(DateUtil.DATETIME_PATTERN_TYPE1));
-		return SecretUtil.createJwtToken(map,null);
+		return SecretUtil.createJwtToken(map,null,SystemConstant.PROJECT_NAME,SystemConstant.DEFAULT_SECURITY_KEY);
 	}
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_GET_KAPTCHA)

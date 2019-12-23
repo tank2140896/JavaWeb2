@@ -18,6 +18,7 @@ import com.javaweb.constant.ApiConstant;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.PatternConstant;
 import com.javaweb.constant.SystemConstant;
+import com.javaweb.util.core.PatternUtil;
 import com.javaweb.web.eo.TokenData;
 
 @Component
@@ -62,7 +63,7 @@ public class AppPermissionInterceptor extends HandlerInterceptorAdapter {
 			request.getRequestDispatcher(ApiConstant.REQUEST_PARAMETER_LOST).forward(request,response);
 			return false;
 		}
-		if(!PatternConstant.isPattern(type,PatternConstant.HEAD_TYPE_PATTERN)){//0:admin;1:web;2:Android;3:IOS
+		if(!PatternUtil.isPattern(type,PatternConstant.HEAD_TYPE_PATTERN)){//0:admin;1:web;2:Android;3:IOS
 			request.getRequestDispatcher(ApiConstant.REQUEST_PARAMETER_LOST).forward(request,response);
 			return false;
 		}

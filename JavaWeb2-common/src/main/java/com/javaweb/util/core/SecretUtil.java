@@ -13,8 +13,6 @@ import java.util.stream.IntStream;
 
 import org.apache.commons.codec.binary.Hex;
 
-import com.javaweb.constant.SystemConstant;
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -147,18 +145,18 @@ public class SecretUtil {
 	}
 	
 	//生成JWT
-	public static String createJwtToken(Map<String,Object> map,Date date){
-		return Jwts.builder().setSubject(SystemConstant.PROJECT_NAME)
+	public static String createJwtToken(Map<String,Object> map,Date date,String projectName,String securityKey){
+		return Jwts.builder().setSubject(projectName)
 							 .setClaims(map)
 							 .setIssuedAt(new Date())
 		              	     .setExpiration(date/*new Date(System.currentTimeMillis()+SystemConstant.SYSTEM_DEFAULT_JWT_TIME_OUT*60*1000)*/)
-		              	     .signWith(SignatureAlgorithm.HS256,SystemConstant.DEFAULT_SECURITY_KEY)
+		              	     .signWith(SignatureAlgorithm.HS256,securityKey)
 		              	     .compact();
 	}
 	
 	//解析JWT
-	public static Claims analyseJwtToken(String token){
-		return Jwts.parser().setSigningKey(SystemConstant.DEFAULT_SECURITY_KEY)
+	public static Claims analyseJwtToken(String token,String securityKey){
+		return Jwts.parser().setSigningKey(securityKey)
 				            .parseClaimsJws(token)
 				            .getBody();
 	}
