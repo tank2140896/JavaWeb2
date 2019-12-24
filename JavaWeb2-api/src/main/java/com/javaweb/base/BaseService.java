@@ -13,7 +13,7 @@ import com.javaweb.web.dao.ds1.UserModuleDao;
 import com.javaweb.web.dao.ds1.UserRoleDao;
 
 public class BaseService extends BaseTool {
-	
+    
 	@Autowired
 	protected CommonDao commonDao;
 	

@@ -13,23 +13,23 @@ JavaWeb2-api
 三、使用前重要说明：
 1、本项目使用redis存储session，但是没用spring-session-redis（写法在代码中也有参考），而是采用自己设置session到redis
 2、后端几乎所有的增删改查删除操作都是物理操作（忽略数据库表中的del_flag字段），如果想做逻辑操作（使用数据库表中的del_flag字段）需要重写相关SQL语句（目前虽然保留了逻辑删除字段，但是形同虚设）
-3、本项目暂无前端实现，本项目全程采用Postman验证接口
+3、本项目目前暂无前端实现，本项目目前全程采用Postman验证接口
 四、后端近期开发计划：
 1、各功能细节优化
 2、接口测试管理
 3、文件上传下载管理
 4、HTTP2.0
 5、websoket完善并优化
-6、多数据源通过类似注解@DS在service或dao层完成
-7、优化后端验证码的代码
-8、后端将采用JAVA13及函数式编程（WebFlux/RxJava2）
-9、将JAVA算法改用C语言实现，JAVA本地调用C语言的实现方法
+6、优化后端验证码的代码
+7、后端将采用JAVA13及函数式编程（WebFlux/RxJava2）
+8、将JAVA算法改用C语言实现，JAVA本地调用C语言的实现方法
 五、项目主要特点
 1、前后端分离(后端只提供接口)
 2、多数据源
-采用mybatis时要注意不同数据源对应的dao接口名称不要一样，比如可以一个叫dao1一个叫dao2,如果一样会报：Specified class is an interface
-也可使用不同数据源的JdbcTemplate，注意@Qualifier标注使用的数据源，然后直接使用如： 
-mysql_d1_JdbcTemplate.query("select * from user where id = ?",new Object[]{"1"},new BeanPropertyRowMapper<User>(User.class))
+提供了三种方式接入：
+第一种是包命名方式：采用mybatis时要注意不同数据源对应的dao接口名称不要一样，比如可以一个叫UserDao一个叫UserDao2,如果一样会报：Specified class is an interface
+第二种是注解的方式：采用mybatis时在接口标注的@Mapper上加上如@DataSource(value="ds1")即可
+第三种是JdbcTemplate的方式：采用@Qualifier标注使用的数据源，然后直接使用如： mysql_d1_JdbcTemplate.query("select * from user where id = ?",new Object[]{"1"},new BeanPropertyRowMapper<User>(User.class))
 3、国际化
 4、接口入参校验
 5、reids
