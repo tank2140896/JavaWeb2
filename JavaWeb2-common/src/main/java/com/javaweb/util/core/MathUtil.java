@@ -21,7 +21,7 @@ public class MathUtil {
         int count = 0;
         int index = 1;
         while(index!=array.length) {
-            int temp =  array[index-1];
+            int temp = array[index-1];
             for(int i=index;i<array.length;i++) {
                 if(temp>array[i]) {
                     count++;

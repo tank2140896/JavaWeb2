@@ -2,10 +2,13 @@ package com.javaweb.util.core;
 
 import java.io.ByteArrayOutputStream;
 import java.security.MessageDigest;
+import java.util.Base64;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
+import java.util.Base64.Decoder;
+import java.util.Base64.Encoder;
 import java.util.concurrent.TimeUnit;
 import java.util.function.IntSupplier;
 import java.util.stream.Collectors;
@@ -124,10 +127,25 @@ public class SecretUtil {
 	
 	//加密(SHA1(SHA-1)、SHA256(SHA-256)、MD5(MD5)等加密)
 	public static String getSecret(String data,String algorithm) throws Exception {
-		 MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
-		 byte[] hash = messageDigest.digest(data.getBytes("UTF-8"));
-		 return Hex.encodeHexString(hash);
+		MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
+		byte[] hash = messageDigest.digest(data.getBytes("UTF-8"));
+		return Hex.encodeHexString(hash);
 	}
+	
+	//简单加密字符串
+	public static String encoderString(String str,String charsetName) throws Exception {
+	     
+	    Encoder encoder = Base64.getEncoder();
+        String encoderString = new String(encoder.encode(str.getBytes(charsetName)),charsetName);
+        return encoderString;
+	}
+	
+	//简单解密字符串
+    public static String decoderString(String str,String charsetName) throws Exception {
+        Decoder decoder = Base64.getDecoder();
+        String decoderString = new String(decoder.decode(str),charsetName);
+        return decoderString;
+    }
 	
 	//int转byte
 	public static byte[] intToByte(int num){
