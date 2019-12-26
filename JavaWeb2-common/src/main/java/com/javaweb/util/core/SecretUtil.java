@@ -134,7 +134,6 @@ public class SecretUtil {
 	
 	//简单加密字符串
 	public static String encoderString(String str,String charsetName) throws Exception {
-	     
 	    Encoder encoder = Base64.getEncoder();
         String encoderString = new String(encoder.encode(str.getBytes(charsetName)),charsetName);
         return encoderString;
