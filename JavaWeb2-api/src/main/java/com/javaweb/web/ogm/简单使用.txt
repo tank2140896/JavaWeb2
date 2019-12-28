@@ -1,0 +1,33 @@
+1、删除所有：
+MATCH (n)
+OPTIONAL MATCH (n)-[r]-()
+DELETE n,r
+2、简单使用示例：
+@Autowired
+private PersonNodeRepository pnr;
+
+@Autowired
+private PersonRelationNodeRepository prnr;
+
+@GetMapping("/a")
+public String a() {
+    try {
+        PersonNodeEntity pne1 = new PersonNodeEntity();
+        pne1.setId("a");
+        pne1.setName("张三");
+        PersonNodeEntity pne2 = new PersonNodeEntity();
+        pne2.setId("b");
+        pne2.setName("李四");
+        pnr.save(pne1);
+        pnr.save(pne2);
+        PersonRelationNodeEntity prne = new PersonRelationNodeEntity();
+        prne.setId("c");
+        prne.setPne1(pne1);    
+        prne.setPne2(pne2);
+        prne.setRelationName("兄弟");
+        prnr.save(prne);
+    }catch (Exception e) {
+        e.printStackTrace();
+    }
+    return "success";
+}

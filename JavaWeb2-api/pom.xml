@@ -220,6 +220,12 @@
 			<artifactId>lombok</artifactId>
 			<scope>provided</scope>
 		 </dependency>
+		 <!-- neo4j 
+		 <dependency>
+		 	<groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-data-neo4j</artifactId>
+		 </dependency>
+		 -->
 		 <!-- hbase 
 		 <dependency>
 		    <groupId>org.apache.hbase</groupId>
