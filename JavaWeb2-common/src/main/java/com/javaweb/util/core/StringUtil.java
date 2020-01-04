@@ -20,10 +20,6 @@ import net.sf.json.JSONObject;
 
 public class StringUtil{
 	
-	public static final Pattern NUMBER_PATTERN = Pattern.compile("[\\d]+[.]?[\\d]*");//数字的正则
-	
-	public static final Pattern ZERO_PATTERN = Pattern.compile("[+-]?0.?[0]*");//0的正则
-	
 	//去除前后指定字符(trim()方法的补充)
 	public static String trim(String str,char c) {
        int start = 0;
@@ -171,7 +167,7 @@ public class StringUtil{
 					jsonTypeEnum = JsonTypeEnum.OBJECT;
 				}else if("true".equals(str)||"false".equals(str)){
 					jsonTypeEnum = JsonTypeEnum.BOOLEAN;
-				}else if(NUMBER_PATTERN.matcher(str).matches()){
+				}else if(PatternUtil.NUMBER_PATTERN.matcher(str).matches()){
 					jsonTypeEnum = JsonTypeEnum.NUMBER;
 				}
 			}

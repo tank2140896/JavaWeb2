@@ -28,7 +28,7 @@ public class NumberFormatUtil {
 	
 	//任意形式的0格式字符串转成纯0的字符串
 	public static String zeroFormat(String zeroString) {
-	    if(StringUtil.ZERO_PATTERN.matcher(zeroString).matches()) {
+	    if(PatternUtil.ZERO_PATTERN.matcher(zeroString).matches()) {
 	        return CommonConstant.ZERO_STRING_VALUE;
 	    }
 	    return zeroString;

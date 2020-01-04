@@ -17,6 +17,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.RandomAccessFile;
 import java.math.BigInteger;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -29,6 +30,8 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
+
+import com.javaweb.constant.CommonConstant;
 
 public class FileUtil {
 	
@@ -91,8 +94,8 @@ public class FileUtil {
     
     //写文件
     public static void writeFile(InputStream inputStream,byte[] buffer,File file) throws IOException {
-    	/**
-    	 * 多文件合并写入
+    	/** 
+    	 * 多文件合并写入                  
     	 * FileOutputStream fos = new FileOutputStream(new File("test.zip"));
     	 * fos.write(new byte[1]);
     	 * fos.write(new byte[2]);
@@ -397,5 +400,28 @@ public class FileUtil {
 		randomAccessFile.close();
 		return out;
 	}
+	
+	//按行数读取
+	public static String readFileByLineNumber(String fileName,long lineNumber) throws Exception {
+	    return Files.lines(Paths.get(fileName),Charset.forName("UTF-8")).skip(lineNumber-1).limit(1).iterator().next();
+	}
+	
+	//读取某一行数据并修改该行数据
+	@Deprecated
+    public static void readAndModifyFile(String fileName,String newFileName,long lineNumber,String context) throws Exception {
+        try(LineNumberReader lineNumberReader = new LineNumberReader(new InputStreamReader(new FileInputStream(fileName),"UTF-8"))) {
+            String eachLine = null;
+            long position = 1;
+            while((eachLine=lineNumberReader.readLine())!=null){
+                if(lineNumber==position) {
+                    eachLine = context;
+                }
+                writeFileAppend(Paths.get(newFileName),eachLine+(SystemUtil.isLinux()?CommonConstant.ENTER_LINUX:CommonConstant.ENTER_WINDOWS));
+                position++;
+            }
+        }catch(IOException e){
+            throw new IOException(e);
+        }
+    }
 	
 }
