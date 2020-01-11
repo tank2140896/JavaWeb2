@@ -48,6 +48,14 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 public class AllOpenController extends BaseController {
     
+    @GetMapping("/test")
+    public String index() {
+        System.out.println(discoveryClient.getInstances("eureka-client-user"));
+        System.out.println("---------------------------------------------");
+        System.out.println(eurekaClient.getInstancesByVipAddress("eureka-client-user",false));
+        return "test";
+    }
+    
 	@Value("${login.kaptcha.check}")
 	private boolean loginKaptchaCheck;//在前后端分离模式下，后端不推荐进行验证码生成、校验，验证码生成、校验更推荐由前端处理
 
