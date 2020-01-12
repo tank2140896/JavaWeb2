@@ -49,11 +49,11 @@ import io.swagger.annotations.ApiOperation;
 public class AllOpenController extends BaseController {
     
     @GetMapping("/test")
-    public String index() {
+    public String index(HttpServletRequest request) {
         System.out.println(discoveryClient.getInstances("eureka-client-user"));
         System.out.println("---------------------------------------------");
         System.out.println(eurekaClient.getInstancesByVipAddress("eureka-client-user",false));
-        return "test";
+        return "test success!port is:"+request.getServerPort();
     }
     
 	@Value("${login.kaptcha.check}")
