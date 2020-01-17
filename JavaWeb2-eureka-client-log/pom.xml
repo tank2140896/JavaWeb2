@@ -4,7 +4,7 @@
   	
   	<modelVersion>4.0.0</modelVersion>
   	<groupId>com.javaweb</groupId>
-  	<artifactId>JavaWeb2-eureka-client-feigin-user</artifactId>
+  	<artifactId>JavaWeb2-eureka-client-feigin-log</artifactId>
   	<version>1.0.0</version>
   	<packaging>jar</packaging>
 
@@ -42,14 +42,6 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
-		<!-- 引入本地jar包 -->
-		<dependency>
-	        <groupId>com.demo1</groupId>
-	        <artifactId>test</artifactId>
-	        <version>0.0.1-SNAPSHOT</version>
-	        <scope>system</scope>
-	        <systemPath>${project.basedir}/src/main/resources/lib/test.jar</systemPath>
-      	</dependency>
 	</dependencies>
 	
 	<dependencyManagement>
@@ -66,28 +58,20 @@
 	
 	<build>
 		<plugins>
-		   <plugin>
-		        <groupId>org.apache.maven.plugins</groupId>
-		        <artifactId>maven-surefire-plugin</artifactId>
-		        <configuration>
-		        	<skip>true</skip>
-		        </configuration>
-		    </plugin>
-	    	<plugin>
-	        	<groupId>org.springframework.boot</groupId>
-	            <artifactId>spring-boot-maven-plugin</artifactId>
-	            <configuration>
-	            	<mainClass>com.javaweb.Application</mainClass>
-                    <includeSystemScope>true</includeSystemScope><!-- 引入本地jar包 -->
-	            </configuration>
-	            <executions>
-	                <execution>
-	                	<goals>
-	                    	<goal>repackage</goal>
-	                    </goals>
-	                </execution>
-	            </executions>
-	        </plugin>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.javaweb.Application</mainClass>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 
