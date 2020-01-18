@@ -217,7 +217,7 @@ public class SecretUtil {
     }
     
     //字符串转16进制字符串
-    public static String str2HexStr(String str) {    
+    public static String str2HexStr(String str) {   
         char[] chars = CHARACTE_KV_KEY_STRING.toCharArray();    
         StringBuilder sb = new StringBuilder("");  
         byte[] bs = str.getBytes();    
