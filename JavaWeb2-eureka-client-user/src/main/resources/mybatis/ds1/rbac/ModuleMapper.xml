@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.javaweb.web.dao.ds1.ModuleDao">
+
+	<select id="getModuleByModuleId" parameterType="java.util.List" resultType="com.javaweb.web.po.Module">
+		<if test="list.size()>0"> 
+			SELECT module_id as moduleId,module_name as moduleName,page_url as pageUrl,api_url as apiUrl,parent_id as parentId,
+			(select n.module_name from module n where n.module_id = module.parent_id and n.del_flag = 0) as parentName,
+			fcode,level,orders,module_type as moduleType,alias,parent_alias as parentAlias,remark,icon,
+			create_date as createDate,creator,update_date as updateDate,updater,del_flag as delFlag
+			from module WHERE module_id in
+			<foreach collection="list" item="id" open="(" separator="," close=")">
+				#{id}
+			</foreach> 
+			and del_flag = 0 ORDER BY level ASC,orders ASC
+		</if>
+		<if test="list.size()==0"> 
+			SELECT module_id as moduleId,module_name as moduleName,page_url as pageUrl,api_url as apiUrl,parent_id as parentId,
+			(select n.module_name from module n where n.module_id = module.parent_id and n.del_flag = 0) as parentName,
+			fcode,level,orders,module_type as moduleType,alias,parent_alias as parentAlias,remark,icon,
+			create_date as createDate,creator,update_date as updateDate,updater,del_flag as delFlag
+			from module WHERE 1=2
+		</if>
+	</select>
+	
+	<select id="moduleList" parameterType="com.javaweb.web.eo.module.ModuleListRequest" resultType="com.javaweb.web.eo.module.ModuleListResponse">
+		select m.module_id as moduleId,m.parent_id as parentId,m.module_name as moduleName,
+		(select n.module_name from module n where n.module_id = m.parent_id and n.del_flag = 0) as parentName,
+		m.page_url as pageUrl,m.api_url as apiUrl,m.module_type as moduleType,m.alias,m.create_date as createDate
+		from module m
+		<where>
+			m.del_flag = 0
+			<if test="moduleName != null and moduleName != ''">and m.module_name like CONCAT('%',#{moduleName},'%')</if>
+			<if test="pageUrl != null and pageUrl != ''">and m.page_url like CONCAT('%',#{pageUrl},'%')</if>
+			<if test="apiUrl != null and apiUrl != ''">and m.page_url like CONCAT('%',#{apiUrl},'%')</if>
+			<if test='moduleType == "1" or moduleType == "2"'>and m.module_type = ${moduleType}</if>
+			<if test="alias != null and alias != ''">and m.alias like CONCAT('%',#{alias},'%')</if>
+			<if test="createStartDate != null and createStartDate != ''">and m.create_date &gt;=#{createStartDate}</if>
+			<if test="createEndDate != null and createEndDate != ''">and m.create_date &lt;=#{createEndDate}</if>
+		</where>
+		order by m.level asc,m.orders asc
+		limit ${(currentPage-1)*pageSize},${pageSize}
+	</select>
+	
+	<select id="moduleListCount" parameterType="com.javaweb.web.eo.module.ModuleListRequest" resultType="java.lang.Long">
+		select count(1) from module m
+		<where>
+			m.del_flag = 0
+			<if test="moduleName != null and moduleName != ''">and m.module_name like CONCAT('%',#{moduleName},'%')</if>
+			<if test="pageUrl != null and pageUrl != ''">and m.page_url like CONCAT('%',#{pageUrl},'%')</if>
+			<if test="apiUrl != null and apiUrl != ''">and m.page_url like CONCAT('%',#{apiUrl},'%')</if>
+			<if test='moduleType == "1" or moduleType == "2"'>and m.module_type = ${moduleType}</if>
+			<if test="alias != null and alias != ''">and m.alias like CONCAT('%',#{alias},'%')</if>
+			<if test="createStartDate != null and createStartDate != ''">and m.create_date &gt;=#{createStartDate}</if>
+			<if test="createEndDate != null and createEndDate != ''">and m.create_date &lt;=#{createEndDate}</if>
+		</where>
+	</select>
+	
+	<delete id="moduleDelete" parameterType="java.lang.String">
+		<!-- 删除用户模块关联 -->
+		delete from user_module where module_id = #{_parameter};
+		<!-- 删除角色模块关联 -->
+		delete from role_module where module_id = #{_parameter};
+		<!-- 删除模块 -->
+		delete from module where module_id = #{_parameter};
+	</delete>
+	
+	<select id="moduleDetail" parameterType="java.lang.String" resultType="com.javaweb.web.po.Module">
+		select module_id as moduleId,module_name as moduleName,page_url as pageUrl,api_url as apiUrl,parent_id as parentId,
+		(select n.module_name from module n where n.module_id = module.parent_id and n.del_flag = 0) as parentName,
+		fcode,level,orders,module_type as moduleType,alias,parent_alias as parentAlias,remark,icon,
+		create_date as createDate,creator,update_date as updateDate,updater,del_flag as delFlag
+		from module where module_id = #{_parameter} and del_flag = 0 limit 1
+	</select>
+	
+	<select id="getModuleLevelAndOrdersByParentId" parameterType="java.lang.String" resultType="com.javaweb.web.eo.module.ModuleLevelAndOrdersResponse">
+		SELECT level,orders from module where parent_id = #{_parameter} and del_flag = 0 ORDER BY level desc,orders desc LIMIT 1 
+	</select>
+	
+	<select id="getModuleLevelAndOrdersWithoutParentId" resultType="com.javaweb.web.eo.module.ModuleLevelAndOrdersResponse">
+		SELECT level,orders from module where parent_id is null and del_flag = 0 ORDER BY level desc,orders desc LIMIT 1 
+	</select>
+	
+	<select id="getModuleIdAndNameList" parameterType="java.util.Map" resultType="com.javaweb.web.eo.module.ModuleIdAndNameResponse">
+		select module_id as moduleId,module_name as moduleName from module where del_flag = 0
+		<if test='moduleType == "1" or moduleType == "2"'>and module_type = #{moduleType}</if>
+		<if test="moduleType == null">and module_type in('1','2')</if>
+		<if test='moduleType == "-1"'>and 1=2</if>
+	</select>
+	
+</mapper>

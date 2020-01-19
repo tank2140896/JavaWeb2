@@ -20,6 +20,11 @@
     </parent>
     
     <dependencies>
+       	<dependency>
+    		<groupId>com.javaweb</groupId>
+	    	<artifactId>JavaWeb2-common</artifactId>
+	    	<version>1.0.0</version>
+    	</dependency>
     	<dependency>
 	        <groupId>org.springframework.boot</groupId>
 	        <artifactId>spring-boot-starter-web</artifactId>
@@ -32,6 +37,31 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-netflix-zuul</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-openfeign</artifactId>
+        </dependency>
+        <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-data-redis</artifactId>
+	    </dependency>
+	    <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+        <dependency>
+	      	<groupId>io.lettuce</groupId>
+	      	<artifactId>lettuce-core</artifactId>
+	    </dependency>
+	    <dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		</dependency>
+        <dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
 	</dependencies>
 	
 	<dependencyManagement>

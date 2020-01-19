@@ -2,6 +2,20 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0http://maven.apache.org/xsd/maven-4.0.0.xsd">
   	
+  	<!--
+	一、maven私有仓库搭建可以使用nexus 
+	二、maven&eclipse离线模式
+	1、maven->conf->settings.xml
+	<localRepository>C:\Users\he\.m2\repository</localRepository>
+	2、mirror配置
+	<mirror>
+    		<id>central</id>
+    		<mirrorOf>*</mirrorOf>
+    		<name>central</name>
+    		<url>file://C:\Users\he\.m2\repository</url>
+	</mirror>
+	3、eclipse->window->Preferences->Maven->Installations和User Settings配置为本地maven路径
+	-->
   	<modelVersion>4.0.0</modelVersion>
   	<groupId>com.javaweb</groupId>
   	<artifactId>JavaWeb2-eureka-client-feigin-user</artifactId>
@@ -11,6 +25,7 @@
   	<properties>
   		<java.version>1.8</java.version>
     	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    	<!-- <lucene.version>7.3.0</lucene.version> -->
   	</properties>
   	
   	<parent>
@@ -31,10 +46,6 @@
 	    	<version>1.0.0</version>
     	</dependency>
     	<dependency>
-	        <groupId>org.springframework.boot</groupId>
-	        <artifactId>spring-boot-starter-web</artifactId>
-	    </dependency>
-    	<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
@@ -42,14 +53,248 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
-		<!-- 引入本地jar包 -->
+        <!-- RxJava2响应式编程 -->
+    	<dependency>
+		    <groupId>io.reactivex.rxjava2</groupId>
+		    <artifactId>rxjava</artifactId>
+		</dependency>
+		<!-- web -->
+	    <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-web</artifactId>
+	        <!-- webflux(用了webflux就不要spring-boot-starter-web了) -->
+	        <!-- <artifactId>spring-boot-starter-webflux</artifactId> -->
+	    </dependency>
+		<!-- 邮件发送 -->
+	    <dependency>  
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+    	<!-- AOP -->
 		<dependency>
-	        <groupId>com.demo1</groupId>
-	        <artifactId>test</artifactId>
-	        <version>0.0.1-SNAPSHOT</version>
-	        <scope>system</scope>
-	        <systemPath>${project.basedir}/src/main/resources/lib/test.jar</systemPath>
-      	</dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+	    <!-- test -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-test</artifactId>
+		    <scope>test</scope>
+		</dependency>
+		<!-- redis -->
+		<dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-data-redis</artifactId>
+	    </dependency>
+	    <!-- freemarker -->
+	    <dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-freemarker</artifactId>
+		</dependency>
+		<!-- quartz定时任务 -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-quartz</artifactId>
+		</dependency>
+	    <!-- elasticsearch 
+		<dependency>  
+	        <groupId>org.springframework.boot</groupId>  
+	        <artifactId>spring-boot-starter-data-elasticsearch</artifactId>  
+    	</dependency>
+    	<dependency>
+        	<groupId>org.elasticsearch.client</groupId>
+        	<artifactId>transport</artifactId>
+    	</dependency>
+    	<dependency>
+       		<groupId>org.elasticsearch.plugin</groupId>
+        	<artifactId>transport-netty4-client</artifactId>
+    	</dependency>
+    	-->
+	    <!-- kafka 
+	    <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+        -->
+    	<!-- solr --> 
+    	<dependency>  
+		    <groupId>org.springframework.data</groupId>
+		    <artifactId>spring-data-solr</artifactId> 
+		</dependency> 
+	    <!-- mysql驱动 -->
+	    <dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+		</dependency>
+    	<!-- 解析json(google的) -->
+		<dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		</dependency>
+		<!-- lettuce pool -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+        <dependency>
+	      	<groupId>io.lettuce</groupId>
+	      	<artifactId>lettuce-core</artifactId>
+	    </dependency>
+		<!-- json-lib -->
+		<dependency>
+		    <groupId>net.sf.json-lib</groupId>
+		    <artifactId>json-lib</artifactId>
+		    <version>2.4</version>
+		    <classifier>jdk15</classifier>
+		</dependency>
+		<!-- Netty -->
+		<dependency>
+		    <groupId>io.netty</groupId>
+		    <artifactId>netty-all</artifactId>
+		</dependency>
+		<!-- websocket -->
+		<dependency>
+		 	<groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-websocket</artifactId>
+		 </dependency>
+		 <!-- 编码处理 -->
+		 <dependency>
+		 	<groupId>commons-codec</groupId>
+		    <artifactId>commons-codec</artifactId>
+		 </dependency>
+		 <!-- 使用热部署 -->
+    	 <dependency>
+    		<groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-devtools</artifactId>
+    	 </dependency>
+    	 <!-- 解析json(阿里巴巴的) -->
+	     <dependency>
+	        <groupId>com.alibaba</groupId>
+	        <artifactId>fastjson</artifactId>
+	        <version>1.2.61</version>
+	     </dependency>
+		 <!-- swagger -->
+		 <dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-swagger-ui</artifactId>
+		    <version>2.9.2</version>
+		 </dependency>
+		 <dependency>
+		    <groupId>io.springfox</groupId>
+		    <artifactId>springfox-swagger2</artifactId>
+		    <version>2.9.2</version>
+		 </dependency>
+		 <!-- jwt -->
+		 <dependency>
+		    <groupId>io.jsonwebtoken</groupId>
+		    <artifactId>jjwt</artifactId>
+		    <version>0.9.1</version>
+		 </dependency>
+		 <!-- 数据库连接池Druid -->
+		 <dependency>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>druid</artifactId>
+		    <version>1.1.6</version>
+		 </dependency>
+		 <!-- 数据库连接池HikariCP -->
+    	 <dependency>
+		    <groupId>com.zaxxer</groupId>
+		    <artifactId>HikariCP</artifactId>
+		 </dependency>
+    	 <!-- SpringBoot和Mybatis整合 -->
+	     <dependency>
+		    <groupId>org.mybatis.spring.boot</groupId>
+		    <artifactId>mybatis-spring-boot-starter</artifactId>
+		    <version>1.3.2</version>
+		 </dependency>
+		 <!-- 验证码 -->
+		 <dependency>
+			<groupId>com.github.penggle</groupId>
+			<artifactId>kaptcha</artifactId>
+			<version>2.3.2</version>
+		 </dependency>
+		 <!-- 表达式解释器 -->
+		 <dependency>
+		    <groupId>org.mvel</groupId>
+		    <artifactId>mvel2</artifactId>
+		    <version>2.4.4.Final</version>
+		 </dependency>
+		 <!-- lombok(eclipse.ini添加) 
+			-Xbootclaspath/C:/Users/he/.m2/repository/org/projectlombok/lombok/1.18.2/lombok-1.18.2.jar
+			-javaagent:C:/Users/he/.m2/repository/org/projectlombok/lombok/1.18.2/lombok-1.18.2.jar
+		 -->
+		 <dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		 </dependency>
+		 <!-- neo4j 
+		 <dependency>
+		 	<groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-data-neo4j</artifactId>
+		 </dependency>
+		 -->
+		 <!-- hbase 
+		 <dependency>
+		    <groupId>org.apache.hbase</groupId>
+		    <artifactId>hbase-client</artifactId>
+		    <version>2.1.1</version>
+		 </dependency>
+		 -->
+		 <!-- lucene 
+		 <dependency>  
+	        <groupId>org.apache.lucene</groupId>  
+	        <artifactId>lucene-core</artifactId> 
+	        <version>${lucene.version}</version> 
+	     </dependency>  
+	     <dependency>  
+	     	<groupId>org.apache.lucene</groupId>  
+	        <artifactId>lucene-queryparser</artifactId>  
+	        <version>${lucene.version}</version> 
+	     </dependency>  
+	     <dependency>  
+	        <groupId>org.apache.lucene</groupId>  
+	        <artifactId>lucene-analyzers-common</artifactId>  
+	        <version>${lucene.version}</version> 
+	     </dependency>  
+		 <dependency>
+		    <groupId>org.apache.lucene</groupId>
+		    <artifactId>lucene-queries</artifactId>
+		    <version>${lucene.version}</version> 
+		 </dependency>
+	     <dependency>  
+		    <groupId>org.apache.lucene</groupId>  
+		    <artifactId>lucene-highlighter</artifactId>  
+		    <version>${lucene.version}</version> 
+		 </dependency>
+		 <dependency>  
+		    <groupId>org.apache.lucene</groupId>  
+		    <artifactId>lucene-analyzers-smartcn</artifactId>  
+		    <version>${lucene.version}</version>
+		 </dependency>
+		 -->
+	 	 <!-- Hadoop 
+    	 <dependency>
+		    <groupId>org.springframework.data</groupId>
+		    <artifactId>spring-data-hadoop</artifactId>
+		    <version>2.5.0.RELEASE</version>
+		 </dependency>
+		 -->
+		 <!-- Spark 
+		 <dependency>
+		    <groupId>org.apache.spark</groupId>
+		    <artifactId>spark-core_2.11</artifactId>
+		    <version>2.3.0</version>
+		 </dependency>
+		 -->
+		 <!-- 引入本地jar包 -->
+		 <dependency>
+	         <groupId>com.demo1</groupId>
+	         <artifactId>test</artifactId>
+	         <version>0.0.1-SNAPSHOT</version>
+	         <scope>system</scope>
+	         <systemPath>${project.basedir}/src/main/resources/lib/test.jar</systemPath>
+      	 </dependency>
 	</dependencies>
 	
 	<dependencyManagement>

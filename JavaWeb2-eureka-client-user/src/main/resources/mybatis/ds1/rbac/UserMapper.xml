@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.javaweb.web.dao.ds1.UserDao">
+
+	<sql id="selectUser" >
+		user_id as userId,user_name as userName,password,person_name as personName,email,phone,
+		portrait,parent_id as parentId,fcode,level,remark,status,create_date as createDate,creator,
+		update_date as updateDate,updater,del_flag as delFlag
+	</sql>
+	
+	<select id="userLogin" parameterType="com.javaweb.web.eo.user.UserLoginRequest" resultType="com.javaweb.web.po.User">
+		select <include refid="selectUser"></include> from user where user_name = #{username} and password = #{password} and del_flag = 0 limit 1
+	</select>
+	
+	<select id="userList" parameterType="com.javaweb.web.eo.user.UserListRequest" resultType="com.javaweb.web.eo.user.UserListResponse">
+		select u.user_id as userId,u.user_name as userName,u.person_name as personName,u.status,u.create_date as createDate,
+		(select GROUP_CONCAT(r.role_name) from role r where r.role_id in(select ur.role_id from user_role ur where u.user_id = ur.user_id)) as roleName 
+		from user u
+		<where>
+			u.del_flag = 0
+			<if test="userName != null and userName != ''">and u.user_name like CONCAT('%',#{userName},'%')</if>
+			<if test="personName != null and personName != ''">and u.person_name like CONCAT('%',#{personName},'%')</if>
+			<if test="createStartDate != null and createStartDate != ''">and u.create_date &gt;=#{createStartDate}</if>
+			<if test="createEndDate != null and createEndDate != ''">and u.create_date &lt;=#{createEndDate}</if>
+		</where>
+		and u.level > ${level}
+		order by u.create_date desc
+		limit ${(currentPage-1)*pageSize},${pageSize}
+	</select>
+	
+	<select id="userListCount" parameterType="com.javaweb.web.eo.user.UserListRequest" resultType="java.lang.Long">
+		select count(1) 
+		from user u
+		<where>
+			u.del_flag = 0
+			<if test="userName != null and userName != ''">and u.user_name like CONCAT('%',#{userName},'%')</if>
+			<if test="personName != null and personName != ''">and u.person_name like CONCAT('%',#{personName},'%')</if>
+			<if test="createStartDate != null and createStartDate != ''">and u.create_date &gt;=#{createStartDate}</if>
+			<if test="createEndDate != null and createEndDate != ''">and u.create_date &lt;=#{createEndDate}</if>
+		</where>
+		and u.level > ${level}
+	</select>
+	
+	<delete id="userDelete" parameterType="java.lang.String">
+		<!-- 删除用户角色关联 -->
+		delete from user_role where user_id = #{_parameter};
+		<!-- 删除用户模块关联 -->
+		delete from user_module where user_id = #{_parameter};
+		<!-- 删除用户 -->
+		delete from user where user_id = #{_parameter};
+	</delete>
+	
+	<select id="userDetail" parameterType="java.lang.String" resultType="com.javaweb.web.po.User">
+		select <include refid="selectUser"></include> from user where user_id = #{_parameter} and del_flag = 0 limit 1
+	</select>
+	
+	<select id="userRoleInfo" parameterType="java.lang.String" resultType="com.javaweb.web.eo.user.RoleInfoResponse">
+		SELECT r.role_id as roleId,r.role_name as roleName,(CASE WHEN tmp.role_id IS NULL THEN false ELSE true END) as checkFlag
+		from role as r
+		LEFT JOIN
+		(SELECT role_id from user_role where user_id = #{_parameter}) as tmp
+		ON r.role_id = tmp.role_id
+	</select>
+	
+	<update id="userRoleAssignment" parameterType="java.util.Map">
+		<!-- 删除用户角色关联 -->
+		delete from user_role where user_id = #{userId};
+		<!-- 重新插入新的用户角色关联 -->
+		<if test="list!=null and list.size()>0">
+			insert into user_role(id,user_id,role_id,strategy) values
+			<foreach collection="list" index="index" item="item" open="" separator="," close="">   
+		        (#{item.id},#{item.userId},#{item.roleId},#{item.strategy})
+	    	</foreach>
+		</if>
+	</update>
+	
+	<select id="userModuleInfo" parameterType="java.lang.String" resultType="com.javaweb.web.eo.role.ModuleInfoResponse">
+		SELECT (CASE WHEN tmp.module_id is NULL THEN false ELSE true END) as checkFlag,
+	            m.module_name as moduleName,m.module_id as moduleId,m.parent_id as parentId from module as m 
+		LEFT JOIN (SELECT module_id from user_module where user_id = #{_parameter}) as tmp
+		on m.module_id = tmp.module_id 
+		ORDER BY level asc,module_type asc,orders asc
+	</select>
+	
+	<update id="userModuleAssignment" parameterType="java.util.Map">
+		<!-- 删除用户模块关联 -->
+		delete from user_module where user_id = #{userId};
+		<!-- 重新插入新的用户模块关联 -->
+		<if test="list!=null and list.size()>0">
+			insert into user_module(id,user_id,module_id) values
+			<foreach collection="list" index="index" item="item" open="" separator="," close="">   
+		        (#{item.id},#{item.userId},#{item.moduleId})
+	    	</foreach>
+		</if>
+	</update>
+	
+</mapper>
