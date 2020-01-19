@@ -1,10 +1,10 @@
-﻿一、环境依赖                                                       
+﻿# 一、环境依赖                                                       
 1、jdk8                 
 2、maven3.3+                 
 3、redis4.0.8+                 
 4、mysql5.6+                 
 5、lombok                 
-二、项目依赖关系                                                       
+# 二、项目依赖关系                                                       
 JavaWeb2-eureka-server-1（端口1001）                 
 JavaWeb2-eureka-server-2（端口1002）                 
 JavaWeb2-eureka-server-3（端口1003）                 
@@ -16,18 +16,18 @@ JavaWeb2-eureka-client-log（端口2002）
 JavaWeb2-eureka-client-zuul（端口3001）                 
                                       -JavaWeb2-common                 
 因此，要正确完成JavaWeb2-eureka-client-user的编译需要先编译JavaWeb2-common再编译JavaWeb2-database                 
-三、启动顺序                                                       
+# 三、启动顺序                                                       
 JavaWeb2-eureka-server-1（端口1001）                 
 JavaWeb2-eureka-server-2（端口1002）                 
 JavaWeb2-eureka-server-3（端口1003）                 
                                    -JavaWeb2-eureka-client-user（端口2001）                 
 			           -JavaWeb2-eureka-client-log（端口2002）                 
                                    -JavaWeb2-eureka-client-zuul（端口3001）                 
-四、使用前重要说明：                                                       
+# 四、使用前重要说明：                                                       
 1、本项目使用redis存储session，但是没用spring-session-redis（写法在代码中也有参考），而是采用自己设置session到redis                 
 2、后端几乎所有的增删改查删除操作都是物理操作（忽略数据库表中的del_flag字段），如果想做逻辑操作（使用数据库表中的del_flag字段）需要重写相关SQL语句（目前虽然保留了逻辑删除字段，但是形同虚设）                 
 3、本项目目前暂无前端实现，本项目目前全程采用Postman验证接口                 
-五、后端近期开发计划：                                                       
+# 五、后端近期开发计划：                                                       
 1、完善、优化JavaWeb2-eureka-client-user的代码                 
 2、接口测试管理（swagger2完善、优化）                 
 3、文件上传下载                 
@@ -40,7 +40,7 @@ JavaWeb2-eureka-server-3（端口1003）
 10、加入SpringCloudConfig、SpringCloudSleuth、SpringBootAdmin、SpringSecurityOAuth2JWT                 
 11、容器技术的加入                 
 12、数据权限的处理                 
-六、项目主要特点                                                       
+# 六、项目主要特点                                                       
 1、微服务化                 
 2、前后端分离(后端只提供接口)                 
 3、多数据源                 
@@ -55,7 +55,7 @@ JavaWeb2-eureka-server-3（端口1003）
 8、kafka【kafka生产者（producer）一般可以使用kafkaTemplate；kafka消费者（consumer）一般可以使用@KafkaListener；实际项目中生产者和消费者一般都是分开的】                 
 9、Netty客户端和服务端示例（IO模型、数据协议、线程模型）                 
 10、websocket                 
-七、项目使用说明                                                       
+# 七、项目使用说明                                                       
 1、除了涉及事务的service加上@Transactional，建议涉及事务的Controller也加上@Transactional，另外不建议try、catch，除非能确保无数据库相关事务操作或确保Controller内的方法不会抛出异常                 
 2、关于@Configuration的类，配置代码常用的有两种写法，一是通过常量类配置，二是通过配置文件配置                 
 3、原始JDBC                 
@@ -72,6 +72,6 @@ C、@ConfigurationProperties(prefix="com.demo")
       ......                 
    }                 
    @Autowired private Test test                 
-八、其它                                                       
+# 八、其它                                                       
 1、https://start.spring.io                 
 2、https://spring.io/projects/spring-cloud                 
