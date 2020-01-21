@@ -42,12 +42,8 @@ public class AppPermissionInterceptor extends HandlerInterceptorAdapter {
 		//RedisTemplate redisTemplate = (RedisTemplate) factory.getBean("redisTemplate"); 
 		//RedisTemplate<String,Object> redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
 		//String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();  
-	    if(handler instanceof HandlerMethod) {
-            Method method = ((HandlerMethod)handler).getMethod();
-            if (AnnotatedElementUtils.isAnnotated(method,IgnoreUrl.class)) {
-                //IgnoreUrl ignoreUrl = method.getAnnotation(IgnoreUrl.class);
-                return true;
-            }
+	    if(ignoreUrl(handler)) {
+            return true;
         }
 	    if(redisTemplate1==null){
 			redisTemplate1 = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE_1);
@@ -101,5 +97,16 @@ public class AppPermissionInterceptor extends HandlerInterceptorAdapter {
 		*/
 		return true;
 	}
+	
+    private boolean ignoreUrl(Object handler) {
+        if(handler instanceof HandlerMethod) {
+            Method method = ((HandlerMethod)handler).getMethod();
+            if (AnnotatedElementUtils.isAnnotated(method,IgnoreUrl.class)) {
+                //IgnoreUrl ignoreUrl = method.getAnnotation(IgnoreUrl.class);
+                return true;
+            }
+        }
+        return false;
+    }
 	
 }

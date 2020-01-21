@@ -1,9 +1,10 @@
-package com.javaweb.annotation.validate;
+package com.javaweb.annotation.validate.userServer;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.util.regex.Pattern;
 
 import javax.validation.Constraint;
 import javax.validation.ConstraintValidator;
@@ -11,7 +12,6 @@ import javax.validation.ConstraintValidatorContext;
 import javax.validation.Payload;
 
 import com.javaweb.constant.CommonConstant;
-import com.javaweb.constant.PatternConstant;
 import com.javaweb.util.core.PatternUtil;
 
 @Target({ElementType.FIELD})
@@ -30,7 +30,7 @@ public @interface UserLoginRequestTypeValidate {
 }
 
 class UserLoginRequestTypeClass implements ConstraintValidator<UserLoginRequestTypeValidate,Object> {
-	
+    
 	protected UserLoginRequestTypeValidate userLoginRequestTypeValidate;
 	
 	public void initialize(UserLoginRequestTypeValidate userLoginRequestTypeValidate) {
@@ -43,7 +43,7 @@ class UserLoginRequestTypeClass implements ConstraintValidator<UserLoginRequestT
 			result = true;
 		}
 		if(!userLoginRequestTypeValidate.easyWayCheck()) {
-			result = PatternUtil.isPattern(value.toString(),PatternConstant.HEAD_TYPE_PATTERN);
+			result = PatternUtil.isPattern(value.toString(),Pattern.compile("[0-3]"));//0:admin;1:web;2:android;3:ios
 		}
 		return result;
 	}

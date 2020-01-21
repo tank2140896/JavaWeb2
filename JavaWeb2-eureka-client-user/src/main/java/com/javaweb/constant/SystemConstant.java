@@ -26,13 +26,11 @@ public class SystemConstant {
 	
 	public static final String DATA_SOURCE_KEY_2 = "mysql_d2";
 	
-	public static final String HEAD_TYPE_PATTERN = "[0-3]";
-	
-	public static final String URL_WEB_INTERCEPTOR_PATTERN = "/yhfw/**";
+	public static final String URL_WEB_INTERCEPTOR_PATTERN = "/web/**";
 	
 	public static final String URL_APP_INTERCEPTOR_PATTERN = "/app/**";
 
-	public static final String URL_LOGIN_WEB_PERMISSION = "/yhfw/loginAccess";
+	public static final String URL_LOGIN_WEB_PERMISSION = "/web/loginAccess";
 	
 	public static final Long SYSTEM_DEFAULT_SESSION_OUT = 15L;
 	
