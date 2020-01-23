@@ -24,7 +24,7 @@ JavaWeb2-eureka-client-zuul（端口3001）->JavaWeb2-common
 1、完善、优化JavaWeb2-eureka-client-user的代码                 
 2、接口测试管理（swagger2完善、优化）                 
 3、文件上传下载                 
-4、HTTP2.0                 
+4、HTTP2.0和HTTPS                 
 5、websoket完善、优化                 
 6、优化后端验证码的代码                 
 7、后端将采用JAVA13+及函数式编程（WebFlux/RxJava2）                 
