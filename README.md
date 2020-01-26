@@ -23,16 +23,15 @@ JavaWeb2-eureka-client-zuul（端口3001）->JavaWeb2-common
 # 五、后端近期开发计划：                                                       
 1、完善、优化JavaWeb2-eureka-client-user的代码                 
 2、接口测试管理（swagger2完善、优化）                 
-3、文件上传下载                 
-4、HTTP2.0和HTTPS                 
-5、websoket完善、优化                 
-6、优化后端验证码的代码                 
-7、后端将采用JAVA13+及函数式编程（WebFlux/RxJava2）                 
-8、将JAVA算法改用C语言实现，JAVA本地调用C语言的实现方法                 
-9、将zuul变为gateway                 
-10、加入SpringCloudConfig、SpringCloudSleuth、SpringBootAdmin、SpringSecurityOAuth2JWT                 
-11、容器技术的加入                 
-12、数据权限的处理                 
+3、文件上传下载                                 
+4、websoket完善、优化                 
+5、优化后端验证码的代码                 
+6、后端一部分将采用JAVA13+及函数式编程（包括WebFlux/RxJava2）                 
+7、将JAVA算法改用C语言实现，JAVA本地调用C语言的实现方法                 
+8、将zuul变为gateway                 
+9、加入SpringCloudConfig、SpringCloudSleuth、SpringBootAdmin、SpringSecurityOAuth2JWT                 
+10、容器技术的加入                 
+11、用户角色权限的完善（包括数据权限的处理）                 
 # 六、项目主要特点                                                       
 1、微服务化                 
 2、前后端分离(后端只提供接口)                 
