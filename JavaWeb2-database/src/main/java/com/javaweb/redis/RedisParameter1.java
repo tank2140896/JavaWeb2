@@ -1,4 +1,4 @@
-package com.javaweb.config.redis;
+package com.javaweb.redis;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;

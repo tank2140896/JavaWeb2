@@ -19,7 +19,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.javaweb.constant.SystemConstant;
-import com.javaweb.interceptor.MyBatisBaseDaoInterceptor;
+import com.javaweb.mybatis.interceptor.MyBatisBaseDaoInterceptor;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration
@@ -106,7 +106,7 @@ public class DataSourceConfig {
         SqlSessionFactoryBean sqlSessionFactoryBean = new SqlSessionFactoryBean();
         sqlSessionFactoryBean.setDataSource(multipleDataSourceManage);
         /**
-                           *    还可以这么写:
+         * 还可以这么写:
          * @Autowired
          * private Environment environment;
          * sqlSessionFactoryBean.setTypeAliasesPackage(environment.getProperty("mybatis.typeAliasesPackage"));

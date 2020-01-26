@@ -2,6 +2,7 @@ package com.javaweb;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 import org.springframework.cloud.netflix.zuul.EnableZuulProxy;
@@ -9,7 +10,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @EnableZuulProxy
 @EnableEurekaClient
-@SpringBootApplication
+@SpringBootApplication(exclude={DataSourceAutoConfiguration.class})//采用多数据源时需要加上
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages={"com.javaweb"})
 public class Application {

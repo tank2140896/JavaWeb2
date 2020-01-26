@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.javaweb.dao.DaoForMySql;
+import com.javaweb.mybatis.api.DaoForMySql;
 import com.javaweb.web.po.Dictionary;
 
 @Mapper

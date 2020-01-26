@@ -42,6 +42,7 @@ public class MyZuulFilter extends ZuulFilter {
         }else {
             //redis在这里有个坑，一个项目中对实体类序列化后，另一个项目读取该类如果两个项目的类的路径不一致就会报错
             TokenData tokenData = (TokenData)(redisTemplate1.opsForValue().get(token));
+            System.err.println(tokenData);
             if(tokenData==null) {
                 requestContext.setSendZuulResponse(false);
                 try {

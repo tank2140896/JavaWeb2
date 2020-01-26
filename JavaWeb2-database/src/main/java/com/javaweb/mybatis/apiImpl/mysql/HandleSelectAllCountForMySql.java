@@ -1,7 +1,7 @@
-package com.javaweb.interceptor.mybatis.mysql;
+package com.javaweb.mybatis.apiImpl.mysql;
 
-import com.javaweb.interceptor.mybatis.SqlBuildInfo;
-import com.javaweb.interceptor.mybatis.SqlHandle;
+import com.javaweb.mybatis.apiImpl.SqlBuildInfo;
+import com.javaweb.mybatis.apiImpl.SqlHandle;
 
 public class HandleSelectAllCountForMySql implements SqlHandle {
 

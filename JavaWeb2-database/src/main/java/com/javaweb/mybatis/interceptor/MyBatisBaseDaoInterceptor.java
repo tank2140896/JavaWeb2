@@ -1,4 +1,4 @@
-package com.javaweb.interceptor;
+package com.javaweb.mybatis.interceptor;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -28,17 +28,17 @@ import org.springframework.stereotype.Component;
 import com.javaweb.annotation.sql.Column;
 import com.javaweb.annotation.sql.Table;
 import com.javaweb.constant.CommonConstant;
-import com.javaweb.interceptor.mybatis.BoundSqlSource;
-import com.javaweb.interceptor.mybatis.SqlBuildInfo;
-import com.javaweb.interceptor.mybatis.SqlHandle;
-import com.javaweb.interceptor.mybatis.mysql.HandleDeleteForMySql;
-import com.javaweb.interceptor.mybatis.mysql.HandleInsertForMySql;
-import com.javaweb.interceptor.mybatis.mysql.HandleSelectAllForMySql;
-import com.javaweb.interceptor.mybatis.mysql.HandleSelectAllByPagingForMySql;
-import com.javaweb.interceptor.mybatis.mysql.HandleSelectAllCountForMySql;
-import com.javaweb.interceptor.mybatis.mysql.HandleSelectByConditionForMySql;
-import com.javaweb.interceptor.mybatis.mysql.HandleSelectByPkForMySql;
-import com.javaweb.interceptor.mybatis.mysql.HandleUpdateForMySql;
+import com.javaweb.mybatis.apiImpl.BoundSqlSource;
+import com.javaweb.mybatis.apiImpl.SqlBuildInfo;
+import com.javaweb.mybatis.apiImpl.SqlHandle;
+import com.javaweb.mybatis.apiImpl.mysql.HandleDeleteForMySql;
+import com.javaweb.mybatis.apiImpl.mysql.HandleInsertForMySql;
+import com.javaweb.mybatis.apiImpl.mysql.HandleSelectAllByPagingForMySql;
+import com.javaweb.mybatis.apiImpl.mysql.HandleSelectAllCountForMySql;
+import com.javaweb.mybatis.apiImpl.mysql.HandleSelectAllForMySql;
+import com.javaweb.mybatis.apiImpl.mysql.HandleSelectByConditionForMySql;
+import com.javaweb.mybatis.apiImpl.mysql.HandleSelectByPkForMySql;
+import com.javaweb.mybatis.apiImpl.mysql.HandleUpdateForMySql;
 import com.javaweb.util.core.DateUtil;
 
 /**

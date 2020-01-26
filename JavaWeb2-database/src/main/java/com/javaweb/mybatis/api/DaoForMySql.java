@@ -1,4 +1,4 @@
-package com.javaweb.dao;
+package com.javaweb.mybatis.api;
 
 import java.util.List;
 import java.util.Map;
