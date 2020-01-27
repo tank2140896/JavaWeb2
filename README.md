@@ -11,7 +11,7 @@ JavaWeb2-eureka-server-2（端口1002）
 JavaWeb2-eureka-server-3（端口1003）                 
 JavaWeb2-eureka-client-user（端口2001）->JavaWeb2-database                                                                    
 JavaWeb2-eureka-client-log（端口2002）->JavaWeb2-database                                                            
-JavaWeb2-eureka-client-zuul（端口3001）->->JavaWeb2-database                                                     
+JavaWeb2-eureka-client-zuul（端口3001）->JavaWeb2-database                                                     
 因此，要正确完成JavaWeb2-eureka-client-user的编译需要先编译JavaWeb2-common再编译JavaWeb2-database                                  
 # 三、启动顺序                                                       
 1、JavaWeb2-eureka-server-1（端口1001）、JavaWeb2-eureka-server-2（端口1002）、JavaWeb2-eureka-server-3（端口1003）                                  
