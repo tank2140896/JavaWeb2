@@ -4,23 +4,23 @@
 3、redis4.0.8+                 
 4、mysql5.6+                 
 5、lombok                 
-# 二、项目依赖关系                                                       
+# 二、项目依赖关系                                                                 
+JavaWeb2-database->JavaWeb2-common                        
 JavaWeb2-eureka-server-1（端口1001）                 
 JavaWeb2-eureka-server-2（端口1002）                 
 JavaWeb2-eureka-server-3（端口1003）                 
-JavaWeb2-eureka-client-user（端口2001）->JavaWeb2-common和JavaWeb2-database                                  
-JavaWeb2-database->JavaWeb2-common                                  
-JavaWeb2-eureka-client-log（端口2002）                                  
-JavaWeb2-eureka-client-zuul（端口3001）->JavaWeb2-common                                  
+JavaWeb2-eureka-client-user（端口2001）->JavaWeb2-database                                                                    
+JavaWeb2-eureka-client-log（端口2002）->JavaWeb2-database                                                            
+JavaWeb2-eureka-client-zuul（端口3001）->->JavaWeb2-database                                                     
 因此，要正确完成JavaWeb2-eureka-client-user的编译需要先编译JavaWeb2-common再编译JavaWeb2-database                                  
 # 三、启动顺序                                                       
-1、JavaWeb2-eureka-server-1（端口1001）和JavaWeb2-eureka-server-2（端口1002）和JavaWeb2-eureka-server-3（端口1003）                                  
-2、JavaWeb2-eureka-client-user（端口2001和JavaWeb2-eureka-client-log（端口2002）和-JavaWeb2-eureka-client-zuul（端口3001）                                  
-# 四、使用前重要说明：                                                
-1、如果项目用到JavaWeb2-database就要配置mysql和redis的连接                     
-2、本项目使用redis存储session，但是没用spring-session-redis（写法在代码中也有参考），而是采用自己设置session到redis                 
-3、后端几乎所有的增删改查删除操作都是物理操作（忽略数据库表中的del_flag字段），如果想做逻辑操作（使用数据库表中的del_flag字段）需要重写相关SQL语句（目前虽然保留了逻辑删除字段，但是形同虚设）                 
-4、本项目目前暂无前端实现，本项目目前全程采用Postman验证接口                 
+1、JavaWeb2-eureka-server-1（端口1001）、JavaWeb2-eureka-server-2（端口1002）、JavaWeb2-eureka-server-3（端口1003）                                  
+2、JavaWeb2-eureka-client-user（端口2001）、JavaWeb2-eureka-client-log（端口2002）、JavaWeb2-eureka-client-zuul（端口3001）                                  
+# 四、使用前重要说明：                                                                     
+1、本项目使用redis存储session，但是没用spring-session-redis（写法在代码中也有参考），而是采用自己设置session到redis                 
+2、后端几乎所有的增删改查删除操作都是物理操作（忽略数据库表中的del_flag字段），如果想做逻辑操作（使用数据库表中的del_flag字段）需要重写相关SQL语句（目前虽然保留了逻辑删除字段，但是形同虚设）                 
+3、本项目目前暂无前端实现，本项目目前全程采用Postman验证接口                 
+4、jar包依赖细节参考JavaWeb2-eureka-client-user中的pom.xml               
 # 五、后端近期开发计划：                                                       
 1、完善、优化JavaWeb2-eureka-client-user的代码                 
 2、接口测试管理（swagger2完善、优化）                 
@@ -34,6 +34,7 @@ JavaWeb2-eureka-client-zuul（端口3001）->JavaWeb2-common
 10、容器技术的加入                 
 11、用户角色权限的完善（包括数据权限的处理）                 
 12、尽量多的将东西提取到JavaWeb2-common和JavaWeb2-database中去                    
+13、抽取单独的分布式定时任务                     
 # 六、项目主要特点                                                       
 1、微服务化                 
 2、前后端分离(后端只提供接口)                 

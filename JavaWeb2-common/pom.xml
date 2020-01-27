@@ -59,12 +59,10 @@
 		    <artifactId>spring-data-solr</artifactId> 
 		</dependency>
 		<dependency>
-	         <groupId>com.javaweb.common.local.1</groupId>
-	         <artifactId>ganymed-ssh2-build210</artifactId>
-	         <version>0.0.1-SNAPSHOT</version>
-	         <scope>system</scope>
-	         <systemPath>${project.basedir}/src/main/resources/lib/ganymed-ssh2-build210.jar</systemPath>
-      	 </dependency> 
+		    <groupId>ch.ethz.ganymed</groupId>
+		    <artifactId>ganymed-ssh2</artifactId>
+		    <version>262</version>
+		</dependency>
 	</dependencies>
 	
 	<build>

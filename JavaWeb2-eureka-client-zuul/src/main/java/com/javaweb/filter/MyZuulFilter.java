@@ -35,18 +35,19 @@ public class MyZuulFilter extends ZuulFilter {
         if(token==null||CommonConstant.EMPTY_VALUE.equals(token)) {
             requestContext.setSendZuulResponse(false);
             try {
-                requestContext.setResponseBody(new ObjectMapper().writeValueAsString(new BaseResponseResult(HttpCodeEnum.VALIDATE_ERROR.getCode(),"token不存在",CommonConstant.EMPTY_VALUE)));
+            	requestContext.getResponse().setContentType("application/json;charset=UTF-8");
+                requestContext.setResponseBody(new ObjectMapper().writeValueAsString(new BaseResponseResult(HttpCodeEnum.VALIDATE_ERROR.getCode(),"token错误或不存在",CommonConstant.EMPTY_VALUE)));
             } catch (JsonProcessingException e) {
                 //do nothing
             }
         }else {
             //redis在这里有个坑，一个项目中对实体类序列化后，另一个项目读取该类如果两个项目的类的路径不一致就会报错
             TokenData tokenData = (TokenData)(redisTemplate1.opsForValue().get(token));
-            System.err.println(tokenData);
             if(tokenData==null) {
                 requestContext.setSendZuulResponse(false);
                 try {
-                    requestContext.setResponseBody(new ObjectMapper().writeValueAsString(new BaseResponseResult(HttpCodeEnum.VALIDATE_ERROR.getCode(),"token失效或错误",CommonConstant.EMPTY_VALUE)));
+                	requestContext.getResponse().setContentType("application/json;charset=UTF-8");
+                    requestContext.setResponseBody(new ObjectMapper().writeValueAsString(new BaseResponseResult(HttpCodeEnum.VALIDATE_ERROR.getCode(),"token错误或失效",CommonConstant.EMPTY_VALUE)));
                 } catch (JsonProcessingException e) {
                     //do nothing
                 }

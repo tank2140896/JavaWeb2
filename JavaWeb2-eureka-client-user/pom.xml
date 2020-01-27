@@ -12,7 +12,7 @@
     		<id>central</id>
     		<mirrorOf>*</mirrorOf>
     		<name>central</name>
-    		<url>file://C:\Users\he\.m2\repository</url>
+    		<url>file://C:\Users\admin\.m2\repository</url>
 	</mirror>
 	3、eclipse->window->Preferences->Maven->Installations和User Settings配置为本地maven路径
 	-->
@@ -35,11 +35,13 @@
     </parent>
     
     <dependencies>
+    	<!-- 用到JavaWeb2-database就不需要引入JavaWeb2-common了，因为JavaWeb2-database已经包含JavaWeb2-common了 
     	<dependency>
     		<groupId>com.javaweb</groupId>
 	    	<artifactId>JavaWeb2-common</artifactId>
 	    	<version>1.0.0</version>
     	</dependency>
+    	-->
     	<dependency>
     		<groupId>com.javaweb</groupId>
 	    	<artifactId>JavaWeb2-database</artifactId>
@@ -53,18 +55,97 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
         </dependency>
-        <!-- RxJava2响应式编程 -->
-    	<dependency>
-		    <groupId>io.reactivex.rxjava2</groupId>
-		    <artifactId>rxjava</artifactId>
+        <!-- JavaWeb2-common start -->
+        <!-- lombok(eclipse.ini添加) 
+			-Xbootclaspath/C:/Users/admin/.m2/repository/org/projectlombok/lombok/1.18.2/lombok-1.18.2.jar
+			-javaagent:C:/Users/admin/.m2/repository/org/projectlombok/lombok/1.18.2/lombok-1.18.2.jar
+		-->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
 		</dependency>
-		<!-- web -->
+        <!-- web -->
 	    <dependency>
 	        <groupId>org.springframework.boot</groupId>
 	        <artifactId>spring-boot-starter-web</artifactId>
 	        <!-- webflux(用了webflux就不要spring-boot-starter-web了) -->
 	        <!-- <artifactId>spring-boot-starter-webflux</artifactId> -->
 	    </dependency>
+       	<!-- freemarker -->
+	    <dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-freemarker</artifactId>
+		</dependency>
+     	<!-- json-lib -->
+		<dependency>
+		    <groupId>net.sf.json-lib</groupId>
+		    <artifactId>json-lib</artifactId>
+		    <version>2.4</version>
+		    <classifier>jdk15</classifier>
+		</dependency>
+        <!-- 表达式解释器 -->
+		<dependency>
+		    <groupId>org.mvel</groupId>
+		    <artifactId>mvel2</artifactId>
+		    <version>2.4.4.Final</version>
+		</dependency>
+		<!-- jwt -->
+		<dependency>
+		    <groupId>io.jsonwebtoken</groupId>
+		    <artifactId>jjwt</artifactId>
+		    <version>0.9.1</version>
+		</dependency>        
+        <!-- 编码处理 -->
+		<dependency>
+		 	<groupId>commons-codec</groupId>
+		    <artifactId>commons-codec</artifactId>
+		</dependency>
+        <!-- solr --> 
+    	<dependency>  
+		    <groupId>org.springframework.data</groupId>
+		    <artifactId>spring-data-solr</artifactId> 
+		</dependency>
+        <!-- ssh -->
+		<dependency>
+			<groupId>ch.ethz.ganymed</groupId>
+			<artifactId>ganymed-ssh2</artifactId>
+			<version>262</version>
+		</dependency>
+        <!-- JavaWeb2-common end -->
+        <!-- JavaWeb2-database start -->
+        <!-- SpringBoot和Mybatis整合 -->
+	    <dependency>
+		    <groupId>org.mybatis.spring.boot</groupId>
+		    <artifactId>mybatis-spring-boot-starter</artifactId>
+		    <version>1.3.2</version>
+		</dependency>
+        <!-- redis -->
+		<dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-data-redis</artifactId>
+	    </dependency>
+	    <!-- lettuce pool -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-pool2</artifactId>
+        </dependency>
+        <dependency>
+	      	<groupId>io.lettuce</groupId>
+	      	<artifactId>lettuce-core</artifactId>
+	    </dependency>
+	    <!-- 解析json(google的) -->
+		<dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		</dependency>
+        <!-- JavaWeb2-database end -->
+        <!-- self start -->
+        <!-- RxJava2响应式编程 -->
+    	<dependency>
+		    <groupId>io.reactivex.rxjava2</groupId>
+		    <artifactId>rxjava</artifactId>
+		</dependency>
 		<!-- 邮件发送 -->
 	    <dependency>  
 		    <groupId>org.springframework.boot</groupId>
@@ -80,16 +161,6 @@
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-test</artifactId>
 		    <scope>test</scope>
-		</dependency>
-		<!-- redis -->
-		<dependency>
-	        <groupId>org.springframework.boot</groupId>
-	        <artifactId>spring-boot-starter-data-redis</artifactId>
-	    </dependency>
-	    <!-- freemarker -->
-	    <dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-freemarker</artifactId>
 		</dependency>
 		<!-- quartz定时任务 -->
 		<dependency>
@@ -116,36 +187,10 @@
             <artifactId>spring-kafka</artifactId>
         </dependency>
         -->
-    	<!-- solr --> 
-    	<dependency>  
-		    <groupId>org.springframework.data</groupId>
-		    <artifactId>spring-data-solr</artifactId> 
-		</dependency> 
 	    <!-- mysql驱动 -->
 	    <dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-		</dependency>
-    	<!-- 解析json(google的) -->
-		<dependency>
-		    <groupId>com.google.code.gson</groupId>
-		    <artifactId>gson</artifactId>
-		</dependency>
-		<!-- lettuce pool -->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-pool2</artifactId>
-        </dependency>
-        <dependency>
-	      	<groupId>io.lettuce</groupId>
-	      	<artifactId>lettuce-core</artifactId>
-	    </dependency>
-		<!-- json-lib -->
-		<dependency>
-		    <groupId>net.sf.json-lib</groupId>
-		    <artifactId>json-lib</artifactId>
-		    <version>2.4</version>
-		    <classifier>jdk15</classifier>
 		</dependency>
 		<!-- Netty -->
 		<dependency>
@@ -156,11 +201,6 @@
 		<dependency>
 		 	<groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-websocket</artifactId>
-		 </dependency>
-		 <!-- 编码处理 -->
-		 <dependency>
-		 	<groupId>commons-codec</groupId>
-		    <artifactId>commons-codec</artifactId>
 		 </dependency>
 		 <!-- 使用热部署 -->
     	 <dependency>
@@ -184,12 +224,6 @@
 		    <artifactId>springfox-swagger2</artifactId>
 		    <version>2.9.2</version>
 		 </dependency>
-		 <!-- jwt -->
-		 <dependency>
-		    <groupId>io.jsonwebtoken</groupId>
-		    <artifactId>jjwt</artifactId>
-		    <version>0.9.1</version>
-		 </dependency>
 		 <!-- 数据库连接池Druid -->
 		 <dependency>
 		    <groupId>com.alibaba</groupId>
@@ -201,32 +235,11 @@
 		    <groupId>com.zaxxer</groupId>
 		    <artifactId>HikariCP</artifactId>
 		 </dependency>
-    	 <!-- SpringBoot和Mybatis整合 -->
-	     <dependency>
-		    <groupId>org.mybatis.spring.boot</groupId>
-		    <artifactId>mybatis-spring-boot-starter</artifactId>
-		    <version>1.3.2</version>
-		 </dependency>
 		 <!-- 验证码 -->
 		 <dependency>
 			<groupId>com.github.penggle</groupId>
 			<artifactId>kaptcha</artifactId>
 			<version>2.3.2</version>
-		 </dependency>
-		 <!-- 表达式解释器 -->
-		 <dependency>
-		    <groupId>org.mvel</groupId>
-		    <artifactId>mvel2</artifactId>
-		    <version>2.4.4.Final</version>
-		 </dependency>
-		 <!-- lombok(eclipse.ini添加) 
-			-Xbootclaspath/C:/Users/he/.m2/repository/org/projectlombok/lombok/1.18.2/lombok-1.18.2.jar
-			-javaagent:C:/Users/he/.m2/repository/org/projectlombok/lombok/1.18.2/lombok-1.18.2.jar
-		 -->
-		 <dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<scope>provided</scope>
 		 </dependency>
 		 <!-- neo4j 
 		 <dependency>
@@ -289,12 +302,13 @@
 		 -->
 		 <!-- 引入本地jar包 -->
 		 <dependency>
-	         <groupId>com.demo1</groupId>
-	         <artifactId>test</artifactId>
-	         <version>0.0.1-SNAPSHOT</version>
-	         <scope>system</scope>
-	         <systemPath>${project.basedir}/src/main/resources/lib/test.jar</systemPath>
+	     	<groupId>com.demo1</groupId>
+	        <artifactId>test</artifactId>
+	        <version>0.0.1-SNAPSHOT</version>
+	        <scope>system</scope>
+	        <systemPath>${project.basedir}/src/main/resources/lib/test.jar</systemPath>
       	 </dependency>
+      	 <!-- self end -->
 	</dependencies>
 	
 	<dependencyManagement>
