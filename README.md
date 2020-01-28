@@ -53,13 +53,9 @@ JavaWeb2-eureka-client-zuul（端口3001）->JavaWeb2-common
 10、websocket                 
 # 七、项目使用说明                                                       
 1、除了涉及事务的service加上@Transactional，建议涉及事务的Controller也加上@Transactional，另外不建议try、catch，除非能确保无数据库相关事务操作或确保Controller内的方法不会抛出异常                 
-2、关于@Configuration的类，配置代码常用的有两种写法，一是通过常量类配置，二是通过配置文件配置                 
-3、原始JDBC                 
-Class.forName(driveClassName);                 
-Connection connection = DriverManager.getConnection(url,userName,password);                 
-PreparedStatement preparedStatement = connection.prepareStatement(sql);                 
-4、src/main/resources下的静态资源文件在SpringBoot中的默认(未添加拦截器等情况下)查找顺序为:META/resources->resources->static->public                 
-5、读取配置文件一般有以下三种常用写法                 
+2、关于@Configuration的类，配置代码常用的有两种写法，一是通过常量类配置，二是通过配置文件配置                                
+3、src/main/resources下的静态资源文件在SpringBoot中的默认(未添加拦截器等情况下)查找顺序为:META/resources->resources->static->public                 
+4、读取配置文件一般有以下三种常用写法                 
 A、@Autowired private Environment environment                 
 B、@Value("${server.port}") private String port                 
 C、@ConfigurationProperties(prefix="com.demo")                 

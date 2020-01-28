@@ -16,6 +16,8 @@ import java.util.stream.IntStream;
 
 import org.apache.commons.codec.binary.Hex;
 
+import com.javaweb.constant.CommonConstant;
+
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -159,6 +161,17 @@ public class SecretUtil {
 	//byte转int
 	public static int byteToInt(byte[] bytes) {
 		return (bytes[0]&0xFF)<<24 | (bytes[1]&0xFF)<<16 | (bytes[2]&0xFF)<<8 | (bytes[3]&0xFF);
+	}
+	
+	//对token进行简单加密
+	public static String secretTokenForEasyWay(String token,boolean random) {
+		String randomNumber = CommonConstant.EMPTY_VALUE;
+		if(random){
+			randomNumber = String.valueOf(MathUtil.getRandomNumForLCRC(Integer.MAX_VALUE-1));
+		}
+		String out = token+randomNumber;
+		out = out.replaceAll(CommonConstant.BAR,CommonConstant.EMPTY_VALUE).toUpperCase();
+		return out;
 	}
 	
 	//生成JWT

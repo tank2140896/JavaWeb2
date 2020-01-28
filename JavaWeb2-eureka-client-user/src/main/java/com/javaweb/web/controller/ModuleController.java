@@ -1,5 +1,7 @@
 package com.javaweb.web.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -41,7 +43,7 @@ public class ModuleController extends BaseController {
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_MODULE_ADD)
 	@PostMapping(ApiConstant.MODULE_ADD)
-	public BaseResponseResult moduleAdd(/*HttpServletRequest request,*/@RequestBody @Validated({BaseValidatedGroup.add.class}) Module module,BindingResult bindingResult){
+	public BaseResponseResult moduleAdd(HttpServletRequest request,@RequestBody @Validated({BaseValidatedGroup.add.class}) Module module,BindingResult bindingResult){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}else{
@@ -65,7 +67,7 @@ public class ModuleController extends BaseController {
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_MODULE_MODIFY)
 	@PutMapping(ApiConstant.MODULE_MODIFY)
-	public BaseResponseResult moduleModify(/*HttpServletRequest request,*/@RequestBody @Validated({BaseValidatedGroup.update.class}) Module module,BindingResult bindingResult){
+	public BaseResponseResult moduleModify(HttpServletRequest request,@RequestBody @Validated({BaseValidatedGroup.update.class}) Module module,BindingResult bindingResult){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}else{

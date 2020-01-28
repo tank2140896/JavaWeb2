@@ -1,8 +1,5 @@
 package com.javaweb.base;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
@@ -16,12 +13,6 @@ import com.javaweb.web.service.RoleService;
 import com.javaweb.web.service.UserService;
 
 public class BaseController extends BaseTool {
-    
-    @Autowired
-    protected HttpServletRequest request;
-    
-    @Autowired
-    protected HttpServletResponse response;
     
     @Autowired
     protected DictionaryService dictionaryService;

@@ -16,7 +16,7 @@ public class SwaggerConstant {
 	public static final String SWAGGER_GET_KAPTCHA = "获得验证码接口";
 	public static final String SWAGGER_GET_REQUEST_ID_NOTES = "在生成验证码前应该调用该方法";
 	public static final String SWAGGER_LOGIN = "用户登录接口";
-	public static final String SWAGGER_LOGIN_NOTES = "输入用户名、密码来进行登录（type、kaptcha、requestId当前可以不传）";
+	public static final String SWAGGER_LOGIN_NOTES = "输入用户名、密码来进行登录";
 	public static final String SWAGGER_LOGIN_PARAM = "用户登录实体类";
 	
 	public static final String SWAGGER_REQUEST_PARAMETER_LOST = "请求参数缺失接口";

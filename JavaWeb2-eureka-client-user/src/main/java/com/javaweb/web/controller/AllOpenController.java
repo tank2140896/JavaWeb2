@@ -12,8 +12,8 @@ import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -33,11 +33,8 @@ import com.javaweb.constant.SwaggerConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.util.core.DateUtil;
-import com.javaweb.util.core.MathUtil;
 import com.javaweb.util.core.SecretUtil;
 import com.javaweb.util.core.StringUtil;
-import com.javaweb.web.docking.LogServerApi;
-import com.javaweb.web.docking.LogServerApiEntity;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.user.UserLoginRequest;
 import com.javaweb.web.po.Module;
@@ -51,28 +48,14 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 public class AllOpenController extends BaseController {
     
-    @Autowired
-    private LogServerApi logServerApi;
-    
-    @GetMapping("/test")
-    public String index() {
-        LogServerApiEntity logServerApiEntity = new LogServerApiEntity();
-        logServerApiEntity.setUsername("abc");
-        logServerApiEntity.setPassword("123");
-        String part1 = logServerApi.test(logServerApiEntity);
-        String part2 = discoveryClient.getInstances("eureka-client-log").toString();
-        String part3 = eurekaClient.getInstancesByVipAddress("eureka-client-log",false).toString();
-        String part4 = String.valueOf(request.getServerPort());
-        return String.join(CommonConstant.COMMA,part1,part2,part3,part4);
-    }
-    
 	@Value("${login.kaptcha.check}")
 	private boolean loginKaptchaCheck;//在前后端分离模式下，后端不推荐进行验证码生成、校验，验证码生成、校验更推荐由前端处理
 
+	//登录接口
 	@ApiOperation(value=SwaggerConstant.SWAGGER_LOGIN,notes=SwaggerConstant.SWAGGER_LOGIN_NOTES)
     @ApiImplicitParam(name="userLoginRequest",value=SwaggerConstant.SWAGGER_LOGIN_PARAM,required=true,dataType="UserLoginRequest")
 	@PostMapping(ApiConstant.WEB_LOGIN)
-	public BaseResponseResult login(@RequestBody @Validated UserLoginRequest userLoginRequest,BindingResult bindingResult/*,HttpServletRequest request*/){
+	public BaseResponseResult login(@RequestBody @Validated UserLoginRequest userLoginRequest,BindingResult bindingResult,HttpServletRequest request){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}
@@ -158,7 +141,7 @@ public class AllOpenController extends BaseController {
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_GET_KAPTCHA)
 	@GetMapping(value=ApiConstant.WEB_KAPTCHA)
-	public void getKaptcha(/*HttpServletRequest request,HttpServletResponse response,*/@PathVariable(name="requestId",required=true) String requestId) throws Exception {
+	public void getKaptcha(HttpServletRequest request,HttpServletResponse response,@PathVariable(name="requestId",required=true) String requestId) throws Exception {
 		response.setHeader("Cache-Control","no-store,no-cache");
 	    response.setContentType("image/jpeg");
 	    String text = defaultKaptcha.createText();
@@ -176,33 +159,6 @@ public class AllOpenController extends BaseController {
 	
 	/* -------------------------------------------------- 分界线 -------------------------------------------------- */
 	
-	//对token进行简单加密
-	private String secretToken(String token,String date,boolean random) {
-		String tempArray[] = new String[token.length()];
-		for(int i=0;i<tempArray.length;i++){
-			tempArray[i] = String.valueOf(token.charAt(i));
-		}
-		for(int i=0;i<date.length();i++){
-			String str = String.valueOf(date.charAt(i));//获得日期字符串的每位数字
-			int m = i;
-			int n = Integer.parseInt(str);
-			str = tempArray[m];
-			tempArray[m] = tempArray[n];
-			tempArray[n] = str;
-		}
-		StringBuilder sb = new StringBuilder();
-		for(int i=0;i<tempArray.length;i++){
-			sb.append(tempArray[i]);
-		}
-		String out = sb.toString();
-		if(random) {
-			out = out.replaceAll(CommonConstant.BAR,CommonConstant.EMPTY_VALUE).toUpperCase()+MathUtil.getRandomNumForLCRC(token.length()*date.length());
-		}else {
-			out = out.replaceAll(CommonConstant.BAR,CommonConstant.EMPTY_VALUE).toUpperCase();
-		}
-		return out;
-	}
-	
 	//管理员判断
 	private boolean systemAdminCheck(UserLoginRequest userLoginRequest){
 		final String systemAdminUsernameAndPassword = SystemConstant.SYSTEM_DEFAULT_USER_NAME+SystemConstant.SYSTEM_DEFAULT_USER_PASSWORD;
@@ -215,7 +171,7 @@ public class AllOpenController extends BaseController {
 	private TokenData getToken(boolean adminFlag,User user,String type){
 		List<Module> moduleList = moduleService.getModule(adminFlag,user.getUserId());
 		TokenData tokenData = new TokenData();
-		tokenData.setToken(secretToken(UUID.randomUUID().toString(),DateUtil.getStringDate(DateUtil.DATETIME_PATTERN_TYPE2),true)+CommonConstant.COMMA+type);
+		tokenData.setToken(SecretUtil.secretTokenForEasyWay(UUID.randomUUID().toString(),true));
 		tokenData.setUser(user);
 		tokenData.setType(type);
 		List<Module> menuList = moduleList.stream().filter(i->2==i.getModuleType()).collect(Collectors.toList());//获得菜单列表
@@ -318,4 +274,3 @@ public class AllOpenController extends BaseController {
 	}
 	
 }
-

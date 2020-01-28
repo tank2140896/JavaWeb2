@@ -2,6 +2,8 @@ package com.javaweb.web.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,7 +40,7 @@ public class RoleController extends BaseController {
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_ROLE_ADD)
 	@PostMapping(ApiConstant.ROLE_ADD)
-	public BaseResponseResult roleAdd(/*HttpServletRequest request,*/@RequestBody @Validated({BaseValidatedGroup.add.class}) Role role,BindingResult bindingResult){
+	public BaseResponseResult roleAdd(HttpServletRequest request,@RequestBody @Validated({BaseValidatedGroup.add.class}) Role role,BindingResult bindingResult){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}else{
@@ -62,7 +64,7 @@ public class RoleController extends BaseController {
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_ROLE_MODIFY)
 	@PutMapping(ApiConstant.ROLE_MODIFY)
-	public BaseResponseResult roleModify(/*HttpServletRequest request,*/@RequestBody @Validated({BaseValidatedGroup.update.class}) Role role,BindingResult bindingResult){
+	public BaseResponseResult roleModify(HttpServletRequest request,@RequestBody @Validated({BaseValidatedGroup.update.class}) Role role,BindingResult bindingResult){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}else{
