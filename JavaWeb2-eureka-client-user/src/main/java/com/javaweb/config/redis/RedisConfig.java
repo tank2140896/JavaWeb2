@@ -1,11 +1,13 @@
-package com.javaweb.redis;
+package com.javaweb.config.redis;
 
 import java.time.Duration;
 
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.EnableCaching;
 //import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 //import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
@@ -21,8 +23,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 
 //集群模式建议采用此配置
-//@Configuration
-//@EnableCaching
+@Configuration
+@EnableCaching
 public class RedisConfig {
 	
 	@Autowired

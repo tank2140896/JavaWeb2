@@ -38,7 +38,7 @@ public class BaseTool extends BaseInject {
 	}
 
 	public TokenData getTokenData(HttpServletRequest request){
-		String key = String.join(CommonConstant.COMMA,request.getHeader(SystemConstant.HEAD_USERID),request.getHeader(SystemConstant.HEAD_TYPE));
+		String key = request.getHeader(SystemConstant.HEAD_TOKEN);//String.join(CommonConstant.COMMA,request.getHeader(SystemConstant.HEAD_USERID),request.getHeader(SystemConstant.HEAD_TYPE));
 		return (TokenData)valueOperations1.get(key);
 	}
 	

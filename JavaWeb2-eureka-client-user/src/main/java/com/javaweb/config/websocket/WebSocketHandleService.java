@@ -16,8 +16,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.javaweb.config.context.ApplicationContextHelper;
 import com.javaweb.constant.SystemConstant;
+import com.javaweb.context.ApplicationContextHelper;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.chat.ChatResponse;
 import com.javaweb.web.po.User;

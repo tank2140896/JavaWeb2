@@ -14,10 +14,10 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.javaweb.annotation.url.IgnoreUrl;
-import com.javaweb.config.context.ApplicationContextHelper;
 import com.javaweb.constant.ApiConstant;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
+import com.javaweb.context.ApplicationContextHelper;
 import com.javaweb.web.eo.TokenData;
 
 @Component
