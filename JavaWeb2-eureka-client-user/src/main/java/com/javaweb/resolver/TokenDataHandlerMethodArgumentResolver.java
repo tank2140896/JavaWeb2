@@ -8,7 +8,6 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import com.javaweb.annotation.token.TokenDataAnnotation;
-import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.context.ApplicationContextHelper;
 import com.javaweb.web.eo.TokenData;
@@ -26,7 +25,7 @@ public class TokenDataHandlerMethodArgumentResolver implements HandlerMethodArgu
     	if(redisTemplate1==null){
 			redisTemplate1 = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE_1);
 		}
-    	String key = String.join(CommonConstant.COMMA,request.getHeader(SystemConstant.HEAD_USERID),request.getHeader(SystemConstant.HEAD_TYPE));
+    	String key = request.getHeader(SystemConstant.HEAD_USERID);//String.join(CommonConstant.COMMA,request.getHeader(SystemConstant.HEAD_USERID),request.getHeader(SystemConstant.HEAD_TYPE));
 		return (TokenData)redisTemplate1.opsForValue().get(key);
     }
     
