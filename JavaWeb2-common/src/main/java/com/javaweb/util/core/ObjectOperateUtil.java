@@ -6,6 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+import net.sf.json.JsonConfig;
+
 public class ObjectOperateUtil {
 	
 	private static final String METHOD_GET = "get"; 
@@ -54,6 +58,17 @@ public class ObjectOperateUtil {
 			return simpleName.substring(0,1).toLowerCase()+simpleName.substring(1,simpleName.length());
 		}else{
 			return simpleName;
+		}
+	}
+	
+	//属性排除
+	public static String excludeField(Object obj,String[] excludes,boolean isArray){
+		JsonConfig jsonConfig = new JsonConfig();
+		jsonConfig.setExcludes(excludes);
+		if(isArray){
+			return JSONArray.fromObject(obj,jsonConfig).toString();
+		}else{
+			return JSONObject.fromObject(obj,jsonConfig).toString();
 		}
 	}
 
