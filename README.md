@@ -17,15 +17,15 @@ JavaWeb2-eureka-client-zuul（端口3001）->JavaWeb2-common
 1、JavaWeb2-eureka-server-1（端口1001）、JavaWeb2-eureka-server-2（端口1002）、JavaWeb2-eureka-server-3（端口1003）                                  
 2、JavaWeb2-eureka-client-user（端口2001）、JavaWeb2-eureka-client-log（端口2002）、JavaWeb2-eureka-client-zuul（端口3001）                                  
 # 四、使用前重要说明：                                                                     
-1、本项目存在很多不足，水平有限，请见谅。                            
+1、本项目存在很多不足，水平有限，请见谅                            
 2、本项目没有使用redis存储session（spring-session-redis（写法在代码中也有参考）），而是采用token形式存储到redis                 
 3、后端几乎所有的增删改查删除操作都是物理操作（忽略数据库表中的del_flag字段），如果想做逻辑操作（使用数据库表中的del_flag字段）需要重写相关SQL语句（目前虽然保留了逻辑删除字段，但是形同虚设）                 
 4、本项目目前暂无前端实现，本项目目前全程采用Postman验证接口                 
 5、jar包依赖细节参考JavaWeb2-eureka-client-user中的pom.xml               
 # 五、后端近期开发计划：                                                       
 1、完善、优化JavaWeb2-eureka-client-user的代码                 
-2、接口测试管理（swagger2完善、优化）                 
-3、文件上传下载                                 
+2、swagger2完善、优化                 
+3、文件上传下载示例代码补充                                            
 4、websoket完善、优化                 
 5、优化后端验证码的代码                 
 6、后端一部分将采用JAVA13+及函数式编程（包括WebFlux/RxJava2）                 
@@ -33,9 +33,10 @@ JavaWeb2-eureka-client-zuul（端口3001）->JavaWeb2-common
 8、将zuul变为gateway                 
 9、加入SpringCloudConfig、SpringCloudSleuth、SpringBootAdmin、SpringSecurityOAuth2JWT                 
 10、容器技术的加入                 
-11、用户角色权限的完善（包括数据权限的处理）                 
+11、用户角色权限的完善（包括数据权限的复杂处理）                 
 12、尽量多的将东西提取到JavaWeb2-common和JavaWeb2-database中去                    
-13、抽取单独的分布式定时任务                     
+13、抽取单独的分布式定时任务         
+14、自动代码生成                 
 # 六、项目主要特点                                                       
 1、微服务                          
 2、前后端分离(后端只提供接口)                 
@@ -64,6 +65,8 @@ C、@ConfigurationProperties(prefix="com.demo")
       ......                 
    }                 
    @Autowired private Test test                 
-# 八、其它                                                       
-1、https://start.spring.io                 
-2、https://spring.io/projects/spring-cloud                 
+# 八、后期侧重点                                                                           
+数学、算法、人工智能、机器学习、编程语言底层实现                                        
+# 九、其它       
+1、https://start.spring.io                       
+2、https://spring.io/projects/spring-cloud                            

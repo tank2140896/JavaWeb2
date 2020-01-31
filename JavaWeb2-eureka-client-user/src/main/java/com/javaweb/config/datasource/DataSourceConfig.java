@@ -41,7 +41,7 @@ public class DataSourceConfig {
 	private MyBatisBaseDaoInterceptor myBatisBaseDaoInterceptor;
 
 	/**
-	  *   还可以这么写:
+	 * 还可以这么写:
 	 * @Bean("mysql_d1")  
 	 * @ConfigurationProperties(prefix="application.server.db.slave")
 	 * public DataSource mysql_d1(){
