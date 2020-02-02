@@ -1,0 +1,188 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" 
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  	
+  	<modelVersion>4.0.0</modelVersion>
+  	<groupId>com.javaweb</groupId>
+  	<artifactId>JavaWeb2-integration-demo</artifactId>
+  	<version>1.0.0</version>
+  	<packaging>jar</packaging>
+
+  	<properties>
+  		<java.version>1.8</java.version>
+    	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    	<lucene.version>7.3.0</lucene.version>
+  	</properties>
+  	
+  	<parent>
+    	<groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.2.1.RELEASE</version>
+    </parent>
+    
+    <dependencies>
+        <!-- json-lib -->
+		<dependency>
+		    <groupId>net.sf.json-lib</groupId>
+		    <artifactId>json-lib</artifactId>
+		    <version>2.4</version>
+		    <classifier>jdk15</classifier>
+		</dependency>
+    	<!-- lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<!-- web -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<!-- hbase -->
+		<dependency>
+		    <groupId>org.apache.hbase</groupId>
+		    <artifactId>hbase-client</artifactId>
+		    <version>2.1.1</version>
+		</dependency>
+		<!-- hbase use hadoop -->
+    	<dependency>
+		    <groupId>org.springframework.data</groupId>
+		    <artifactId>spring-data-hadoop</artifactId>
+		    <version>2.5.0.RELEASE</version>
+		</dependency>
+		<!-- kafka -->
+	    <dependency>
+            <groupId>org.springframework.kafka</groupId>
+            <artifactId>spring-kafka</artifactId>
+        </dependency>
+        <!-- Netty -->
+		<dependency>
+		    <groupId>io.netty</groupId>
+		    <artifactId>netty-all</artifactId>
+		</dependency>
+		<!-- solr --> 
+    	<dependency>  
+		    <groupId>org.springframework.data</groupId>
+		    <artifactId>spring-data-solr</artifactId> 
+		</dependency>
+		<!-- AOP -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-aop</artifactId>
+		</dependency>
+		<!-- mongodb -->
+		<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <!-- websocket -->
+		<dependency>
+		 	<groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-websocket</artifactId>
+		</dependency>
+		<!-- elasticsearch --> 
+		<dependency>  
+	        <groupId>org.springframework.boot</groupId>  
+	        <artifactId>spring-boot-starter-data-elasticsearch</artifactId>  
+    	</dependency>
+    	<dependency>
+        	<groupId>org.elasticsearch.client</groupId>
+        	<artifactId>transport</artifactId>
+    	</dependency>
+    	<dependency>
+       		<groupId>org.elasticsearch.plugin</groupId>
+        	<artifactId>transport-netty4-client</artifactId>
+    	</dependency>
+    	<!-- neo4j -->
+		<dependency>
+		 	<groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-data-neo4j</artifactId>
+		</dependency>
+		<!-- 验证码 -->
+		<dependency>
+			<groupId>com.github.penggle</groupId>
+			<artifactId>kaptcha</artifactId>
+			<version>2.3.2</version>
+		</dependency>
+		<!-- freemarker -->
+	    <dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-freemarker</artifactId>
+		</dependency>
+		<!-- 邮件发送 -->
+	    <dependency>  
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
+		<!-- lucene -->
+		<dependency>  
+	        <groupId>org.apache.lucene</groupId>  
+	        <artifactId>lucene-core</artifactId> 
+	        <version>${lucene.version}</version> 
+	    </dependency>  
+	    <dependency>  
+	     	<groupId>org.apache.lucene</groupId>  
+	        <artifactId>lucene-queryparser</artifactId>  
+	        <version>${lucene.version}</version> 
+	    </dependency>  
+	    <dependency>  
+	        <groupId>org.apache.lucene</groupId>  
+	        <artifactId>lucene-analyzers-common</artifactId>  
+	        <version>${lucene.version}</version> 
+	    </dependency>  
+		<dependency>
+		    <groupId>org.apache.lucene</groupId>
+		    <artifactId>lucene-queries</artifactId>
+		    <version>${lucene.version}</version> 
+		</dependency>
+	    <dependency>  
+		    <groupId>org.apache.lucene</groupId>  
+		    <artifactId>lucene-highlighter</artifactId>  
+		    <version>${lucene.version}</version> 
+		</dependency>
+		<dependency>  
+		    <groupId>org.apache.lucene</groupId>  
+		    <artifactId>lucene-analyzers-smartcn</artifactId>  
+		    <version>${lucene.version}</version>
+		</dependency>
+		<!-- Spark -->
+		<dependency>
+		    <groupId>org.apache.spark</groupId>
+		    <artifactId>spark-core_2.11</artifactId>
+		    <version>2.3.0</version>
+		</dependency>
+	</dependencies>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>Hoxton.RELEASE</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.javaweb.Application</mainClass>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

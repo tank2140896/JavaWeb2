@@ -35,10 +35,6 @@
 	        <groupId>org.springframework.boot</groupId>
 	        <artifactId>spring-boot-starter-web</artifactId>
 	    </dependency>
-   	    <dependency>
-		    <groupId>org.springframework.boot</groupId>
-		    <artifactId>spring-boot-starter-freemarker</artifactId>
-		</dependency>
 	    <dependency>
 		    <groupId>net.sf.json-lib</groupId>
 		    <artifactId>json-lib</artifactId>
@@ -67,6 +63,10 @@
 			<groupId>ch.ethz.ganymed</groupId>
 			<artifactId>ganymed-ssh2</artifactId>
 			<version>262</version>
+		</dependency>
+	    <dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-freemarker</artifactId>
 		</dependency>
 	    <dependency>
 	    	<groupId>org.mybatis.spring.boot</groupId>

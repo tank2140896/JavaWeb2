@@ -14,8 +14,6 @@ public class SystemConstant {
 	
 	public static final String BASE_PACKAGE = "com.javaweb";
 	
-	public static final String DEFAULT_LOG_POINT_CUT = "execution(* com.javaweb.web.controller..*.*(..))";
-
 	public static final String DEFAULT_DATA_SOURCE_POINT_CUT = "execution(* com.javaweb.web.dao..*.*(..))";
 	
 	public static final String DATA_SOURCE_PACKAGE_NAME_1 = "ds1";

@@ -12,9 +12,6 @@ public class SwaggerConstant {
 	/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ swagger-AllOpenController ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */
 	public static final String SWAGGER_ALL_OPEN_CONTROLLER_TAGS = "1、无需登录即可访问模块";
 	
-	public static final String SWAGGER_GET_REQUEST_ID = "获得请求ID接口";
-	public static final String SWAGGER_GET_KAPTCHA = "获得验证码接口";
-	public static final String SWAGGER_GET_REQUEST_ID_NOTES = "在生成验证码前应该调用该方法";
 	public static final String SWAGGER_LOGIN = "用户登录接口";
 	public static final String SWAGGER_LOGIN_NOTES = "输入用户名、密码来进行登录";
 	public static final String SWAGGER_LOGIN_PARAM = "用户登录实体类";

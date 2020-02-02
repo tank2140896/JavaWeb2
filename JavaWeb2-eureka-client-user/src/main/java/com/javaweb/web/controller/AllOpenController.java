@@ -1,24 +1,14 @@
 package com.javaweb.web.controller;
 
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import javax.imageio.ImageIO;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,13 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.constant.ApiConstant;
-import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SwaggerConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.enums.HttpCodeEnum;
-import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.SecretUtil;
-import com.javaweb.util.core.StringUtil;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.user.UserLoginRequest;
 import com.javaweb.web.po.Module;
@@ -48,9 +35,6 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 public class AllOpenController extends BaseController {
     
-	@Value("${login.kaptcha.check}")
-	private boolean loginKaptchaCheck;//在前后端分离模式下，后端不推荐进行验证码生成、校验，验证码生成、校验更推荐由前端处理
-
 	//登录接口
 	@ApiOperation(value=SwaggerConstant.SWAGGER_LOGIN,notes=SwaggerConstant.SWAGGER_LOGIN_NOTES)
     @ApiImplicitParam(name="userLoginRequest",value=SwaggerConstant.SWAGGER_LOGIN_PARAM,required=true,dataType="UserLoginRequest")
@@ -59,9 +43,7 @@ public class AllOpenController extends BaseController {
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}
-		if(loginKaptchaCheck&&kaptchaCheck(userLoginRequest,request)){//验证码校验
-			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"login.user.kaptcha");
-		}
+		//还可以进行验证码校验等处理
 		TokenData token = null;
 		if(systemAdminCheck(userLoginRequest)){//管理员判断
 			userLoginRequest.setType("0");
@@ -128,33 +110,6 @@ public class AllOpenController extends BaseController {
 	@RequestMapping(value=ApiConstant.INTERNAL_ERROR,method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 	public BaseResponseResult internalError(){
 		return getBaseResponseResult(HttpCodeEnum.INTERNAL_ERROR,"validated.permission.internalError");
-	}
-	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_GET_REQUEST_ID,notes=SwaggerConstant.SWAGGER_GET_REQUEST_ID_NOTES)
-	@GetMapping(value=ApiConstant.WEB_REQUESTID)
-	public String getRequestId() {
-		Map<String,Object> map = new HashMap<>();
-		map.put("key",defaultKaptcha.createText());
-		map.put("date",DateUtil.getStringDate(DateUtil.DATETIME_PATTERN_TYPE1));
-		return SecretUtil.createJwtToken(map,null,SystemConstant.PROJECT_NAME,SystemConstant.DEFAULT_SECURITY_KEY);
-	}
-	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_GET_KAPTCHA)
-	@GetMapping(value=ApiConstant.WEB_KAPTCHA)
-	public void getKaptcha(HttpServletRequest request,HttpServletResponse response,@PathVariable(name="requestId",required=true) String requestId) throws Exception {
-		response.setHeader("Cache-Control","no-store,no-cache");
-	    response.setContentType("image/jpeg");
-	    String text = defaultKaptcha.createText();
-	    try {
-	    	if(loginKaptchaCheck&&!CommonConstant.EMPTY_VALUE.equals(StringUtil.handleNullString(text))) {
-	    		setDataToRedis(requestId,text,SystemConstant.SYSTEM_DEFAULT_KAPTCHA_TIME_OUT,TimeUnit.MINUTES);
-	    	}
-	    }catch (Exception e) {
-			//do nothing
-		}
-	    BufferedImage image = defaultKaptcha.createImage(text);
-	    ServletOutputStream out = response.getOutputStream();
-	    ImageIO.write(image,"jpg",out);
 	}
 	
 	/* -------------------------------------------------- 分界线 -------------------------------------------------- */
@@ -260,17 +215,5 @@ public class AllOpenController extends BaseController {
         //deep:由于数组下标是从0开始的,因此要获得深度,最终需要deep+1,才是我们理解的深度值
         return arrayList;
     }
-	
-	//验证码校验
-	private boolean kaptchaCheck(UserLoginRequest userLogin,HttpServletRequest request){
-		boolean result = true;
-		String kaptcha = (String)getDateFromRedis(userLogin.getRequestId());
-		if(kaptcha!=null){
-			if(kaptcha.equalsIgnoreCase(userLogin.getKaptcha())){//忽略大小写
-				result = false;
-			}
-		}
-		return result;
-	}
 	
 }
