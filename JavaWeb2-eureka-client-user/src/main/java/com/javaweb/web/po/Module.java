@@ -58,6 +58,9 @@ public class Module extends BaseEntity implements Serializable {
 	@Column(name="parent_alias")
 	private String parentAlias;//上级别名
 	
+	@Column(name="system_id")
+	private String systemId;//系统ID
+	
 	@Column(name="remark")
 	private String remark;//备注
 	

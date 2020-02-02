@@ -7,12 +7,16 @@ DROP TABLE IF EXISTS `dictionary`;
 CREATE TABLE `dictionary` (
   `id` varchar(255) NOT NULL,
   `parent_id` varchar(255) DEFAULT NULL,
+  `fcode` varchar(255) DEFAULT NULL,
+  `level` int(11) DEFAULT NULL,
   `data_type` varchar(255) DEFAULT NULL,
   `key_code` varchar(255) DEFAULT NULL,
   `value_code` varchar(255) DEFAULT NULL,
   `category` varchar(255) DEFAULT NULL,
   `sort` int(11) DEFAULT NULL,
   `means` varchar(255) DEFAULT NULL,
+  `universally` tinyint(4) DEFAULT NULL,
+  `system_id` varchar(255) DEFAULT NULL,
   `remark` varchar(255) DEFAULT NULL,
   `create_date` varchar(255) DEFAULT NULL,
   `creator` varchar(255) DEFAULT NULL,
@@ -25,20 +29,20 @@ CREATE TABLE `dictionary` (
 -- ----------------------------
 -- Records of dictionary
 -- ----------------------------
-INSERT INTO `dictionary` VALUES ('20190705214431115', null, 'del_flag', 'undelete', '0', 'yhfw', '1', '未删除', '删除标记', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `dictionary` VALUES ('20190705214431116', null, 'del_flag', 'delete', '1', 'yhfw', '2', '删除', '删除标记', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `dictionary` VALUES ('20190705214431117', null, 'login_type', 'admin', '0', 'yhfw', '1', '管理员', '登录类型', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `dictionary` VALUES ('20190705214431118', null, 'login_type', 'web', '1', 'yhfw', '2', '网页端', '登录类型', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `dictionary` VALUES ('20190705214431119', null, 'login_type', 'android', '2', 'yhfw', '3', '安卓端', '登录类型', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `dictionary` VALUES ('20190705214431120', null, 'login_type', 'ios', '3', 'yhfw', '4', 'IOS端', '登录类型', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `dictionary` VALUES ('20190705214431121', null, 'module_type', 'catalogue', '1', 'yhfw', '1', '目录', '模块类型', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `dictionary` VALUES ('20190705214431122', null, 'module_type', 'menu', '2', 'yhfw', '2', '菜单', '模块类型', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `dictionary` VALUES ('20190705214431123', null, 'module_type', 'function', '3', 'yhfw', '3', '功能', '模块类型', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `dictionary` VALUES ('20190705214431124', null, 'user_role_strategy', 'customize', '0', 'yhfw', '1', '自定义', '用户角色策略', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `dictionary` VALUES ('20190705214431125', null, 'user_role_strategy', 'union', '1', 'yhfw', '2', '并集', '用户角色策略', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `dictionary` VALUES ('20190705214431126', null, 'user_role_strategy', 'intersection', '2', 'yhfw', '3', '交集', '用户角色策略', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `dictionary` VALUES ('20190705214431127', null, 'user_role_strategy', 'basedOnUser', '3', 'yhfw', '4', '以用户权限为准', '用户角色策略', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `dictionary` VALUES ('20190705214431128', null, 'user_role_strategy', 'basedOnRole', '4', 'yhfw', '5', '以角色权限为准', '用户角色策略', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `dictionary` VALUES ('0d8a5557-65b0-4d3a-a649-5746370f03da', null, null, '0', 'del_flag', 'undelete', '0', 'yhfw', '1', '未删除', '0', null, '删除标记', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `dictionary` VALUES ('1307a3b1-1eeb-4313-9fd2-0fb8fabad023', null, null, '0', 'user_role_strategy', 'intersection', '2', 'yhfw', '3', '交集', '0', null, '用户角色策略', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `dictionary` VALUES ('19ed8562-91d4-4f88-a80e-a8ce32dd3ebb', null, null, '0', 'user_role_strategy', 'union', '1', 'yhfw', '2', '并集', '0', null, '用户角色策略', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `dictionary` VALUES ('339e270e-cf23-4146-bd7f-02ad6d952738', null, null, '0', 'login_type', 'web', '1', 'yhfw', '2', '网页端', '0', null, '登录类型', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `dictionary` VALUES ('4cf06744-6b36-4986-afa8-c00901e7ea56', null, null, '0', 'login_type', 'android', '2', 'yhfw', '3', '安卓端', '0', null, '登录类型', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `dictionary` VALUES ('563f4dca-59cc-48a2-8d77-3d316958c6ea', null, null, '0', 'login_type', 'admin', '0', 'yhfw', '1', '管理员', '0', null, '登录类型', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `dictionary` VALUES ('7ffb55c0-9384-411e-89ab-9d9aefd877c7', null, null, '0', 'module_type', 'catalogue', '1', 'yhfw', '1', '目录', '0', null, '模块类型', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `dictionary` VALUES ('9a641145-540c-4e4a-be56-3fea1b4de787', null, null, '0', 'module_type', 'function', '3', 'yhfw', '3', '功能', '0', null, '模块类型', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `dictionary` VALUES ('a68296ea-e585-4681-a115-31d689220f51', null, null, '0', 'login_type', 'ios', '3', 'yhfw', '4', 'IOS端', '0', null, '登录类型', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `dictionary` VALUES ('b744cf0c-7307-4b57-a191-aa7935f8a9bb', null, null, '0', 'user_role_strategy', 'basedOnRole', '4', 'yhfw', '5', '以角色权限为准', '0', null, '用户角色策略', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `dictionary` VALUES ('bcc8ee2f-1be1-4c84-a4cb-69933eaae107', null, null, '0', 'module_type', 'menu', '2', 'yhfw', '2', '菜单', '0', null, '模块类型', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `dictionary` VALUES ('cb2c19c1-3f7a-4d7a-a07d-4e459455ca73', null, null, '0', 'del_flag', 'delete', '1', 'yhfw', '2', '删除', '0', null, '删除标记', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `dictionary` VALUES ('dc7bc4c8-d414-4832-9bea-e10b9f3915f2', null, null, '0', 'user_role_strategy', 'basedOnUser', '3', 'yhfw', '4', '以用户权限为准', '0', null, '用户角色策略', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `dictionary` VALUES ('fbd2a910-c611-47a4-b5c2-0d2baca7e0ad', null, null, '0', 'user_role_strategy', 'customize', '0', 'yhfw', '1', '自定义', '0', null, '用户角色策略', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
 
 -- ----------------------------
 -- Table structure for `module`
@@ -56,6 +60,7 @@ CREATE TABLE `module` (
   `module_type` int(11) DEFAULT NULL,
   `alias` varchar(255) DEFAULT NULL,
   `parent_alias` varchar(255) DEFAULT NULL,
+  `system_id` varchar(255) DEFAULT NULL,
   `remark` varchar(255) DEFAULT NULL,
   `icon` varchar(255) DEFAULT NULL,
   `type` int(11) DEFAULT NULL,
@@ -70,32 +75,32 @@ CREATE TABLE `module` (
 -- ----------------------------
 -- Records of module
 -- ----------------------------
-INSERT INTO `module` VALUES ('20190408140043147', '系统管理', null, null, null, null, '1', '1', '1', 'sys', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408140336803', '用户管理', '/web/sys/user', null, '20190408140043147', null, '2', '1', '2', 'sys:user', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408140517989', '角色管理', '/web/sys/role', null, '20190408140043147', null, '2', '2', '2', 'sys:role', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408140608316', '模块管理', '/web/sys/module', null, '20190408140043147', null, '2', '3', '2', 'sys:module', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408141509095', '查询用户', null, '/web/sys/user/list', '20190408140336803', null, '3', '1', '3', 'sys:user:list', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408141522656', '新增用户', null, '/web/sys/user/add', '20190408140336803', null, '3', '2', '3', 'sys:user:add', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408141538196', '修改用户', null, '/web/sys/user/modify,/web/sys/user/detail', '20190408140336803', null, '3', '3', '3', 'sys:user:modify', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408141553730', '删除用户', null, '/web/sys/user/delete', '20190408140336803', null, '3', '4', '3', 'sys:user:delete', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408141702725', '用户详情', null, '/web/sys/user/detail', '20190408140336803', null, '3', '5', '3', 'sys:user:detail', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408141702726', '用户角色信息', null, '/web/sys/user/userRoleInfo', '20190408140336803', null, '3', '6', '3', 'sys:user:role', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408141702727', '用户角色分配', null, '/web/sys/user/userRoleAssignment,/web/sys/user/userRoleInfo', '20190408140336803', null, '3', '7', '3', 'sys:user:role:assignment', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408141702728', '用户模块信息', null, '/web/sys/user/userModuleInfo', '20190408140336803', null, '3', '8', '3', 'sys:user:module', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408141702729', '用户模块分配', null, '/web/sys/user/userModuleAssignment,/web/sys/user/userModuleInfo', '20190408140336803', null, '3', '9', '3', 'sys:user:module:assignment', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408141815822', '新增角色', null, '/web/sys/role/add', '20190408140517989', null, '3', '1', '3', 'sys:role:add', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408141827174', '修改角色', null, '/web/sys/role/modify,/web/sys/role/detail', '20190408140517989', null, '3', '2', '3', 'sys:role:modifty', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408141852659', '查询角色', null, '/web/sys/role/list', '20190408140517989', null, '3', '3', '3', 'sys:role:list', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408141902486', '角色详情', null, '/web/sys/role/detail', '20190408140517989', null, '3', '4', '3', 'sys:role:detail', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408141916424', '删除角色', null, '/web/sys/role/delete', '20190408140517989', null, '3', '5', '3', 'sys:role:delete', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408142025602', '角色模块分配', null, '/web/sys/role/roleModuleAssignment,/web/sys/role/roleModuleInfo', '20190408140517989', null, '3', '6', '3', 'sys:role:module:assignment', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408142025603', '角色模块信息', null, '/web/sys/role/roleModuleInfo', '20190408140517989', null, '3', '7', '3', 'sys:role:module', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408142112268', '查询模块', null, '/web/sys/module/list', '20190408140608316', null, '3', '1', '3', 'sys:module:list', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408142122024', '模块详情', null, '/web/sys/module/detail', '20190408140608316', null, '3', '2', '3', 'sys:module:detail', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408142132292', '新增模块', null, '/web/sys/module/add,/web/sys/module/getModuleIdAndNameList', '20190408140608316', null, '3', '3', '3', 'sys:module:add', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408142143289', '删除模块', null, '/web/sys/module/delete', '20190408140608316', null, '3', '4', '3', 'sys:module:delete', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408142154821', '修改模块', null, '/web/sys/module/modify,/web/sys/module/getModuleIdAndNameList', '20190408140608316', null, '3', '5', '3', 'sys:module:modify', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('20190408142154822', '模块ID和名称列表', null, '/web/sys/module/getModuleIdAndNameList', '20190408140608316', null, '3', '6', '3', 'sys:module:getModuleIdAndNameList', null, null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('05f56db2-cc8f-4d58-89b4-98a155d47010', '用户模块分配', null, '/web/sys/user/userModuleAssignment,/web/sys/user/userModuleInfo', '8c4f0ba6-105d-4d8b-8de5-3d88a24c8e0b', null, '3', '9', '3', 'sys:user:module:assignment', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('09816d73-e882-4590-a0c7-87836d580a04', '修改模块', null, '/web/sys/module/modify,/web/sys/module/getModuleIdAndNameList', '18375a1b-2f5e-4a78-80f0-981f19a891ca', null, '3', '5', '3', 'sys:module:modify', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('152ff9f8-e090-4e12-bd20-8c252cf70853', '删除角色', null, '/web/sys/role/delete', '9a709d31-4984-4239-a651-cfeccb9749a1', null, '3', '5', '3', 'sys:role:delete', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('18375a1b-2f5e-4a78-80f0-981f19a891ca', '模块管理', '/web/sys/module', null, '64bf3393-8a94-4162-b80e-877d7678167c', null, '2', '3', '2', 'sys:module', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('1bd42365-2558-48b2-a69f-23abd05b64f1', '查询角色', null, '/web/sys/role/list', '9a709d31-4984-4239-a651-cfeccb9749a1', null, '3', '3', '3', 'sys:role:list', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('30005a59-b103-49c2-a2dd-dd2dae637937', '新增用户', null, '/web/sys/user/add', '8c4f0ba6-105d-4d8b-8de5-3d88a24c8e0b', null, '3', '2', '3', 'sys:user:add', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('6294919a-655f-475c-8ed4-050bdba14797', '模块ID和名称列表', null, '/web/sys/module/getModuleIdAndNameList', '18375a1b-2f5e-4a78-80f0-981f19a891ca', null, '3', '6', '3', 'sys:module:getModuleIdAndNameList', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('64bf3393-8a94-4162-b80e-877d7678167c', '系统管理', null, null, null, null, '1', '1', '1', 'sys', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('6b98fde7-c887-45c1-ae38-f0920e6f3de8', '查询模块', null, '/web/sys/module/list', '18375a1b-2f5e-4a78-80f0-981f19a891ca', null, '3', '1', '3', 'sys:module:list', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('725e517b-756f-4f46-b519-2be71aa21ede', '新增角色', null, '/web/sys/role/add', '9a709d31-4984-4239-a651-cfeccb9749a1', null, '3', '1', '3', 'sys:role:add', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('72aee33b-180b-451a-9c4e-411a67329093', '删除用户', null, '/web/sys/user/delete', '8c4f0ba6-105d-4d8b-8de5-3d88a24c8e0b', null, '3', '4', '3', 'sys:user:delete', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('7d896336-04a1-4fe4-a821-6cbe340e4c2f', '角色详情', null, '/web/sys/role/detail', '9a709d31-4984-4239-a651-cfeccb9749a1', null, '3', '4', '3', 'sys:role:detail', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('8c4f0ba6-105d-4d8b-8de5-3d88a24c8e0b', '用户管理', '/web/sys/user', null, '64bf3393-8a94-4162-b80e-877d7678167c', null, '2', '1', '2', 'sys:user', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('95004702-6316-4dc1-84b3-c74b21d8db19', '用户角色分配', null, '/web/sys/user/userRoleAssignment,/web/sys/user/userRoleInfo', '8c4f0ba6-105d-4d8b-8de5-3d88a24c8e0b', null, '3', '7', '3', 'sys:user:role:assignment', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('9a709d31-4984-4239-a651-cfeccb9749a1', '角色管理', '/web/sys/role', null, '64bf3393-8a94-4162-b80e-877d7678167c', null, '2', '2', '2', 'sys:role', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('abe0b68f-beac-4c51-ac0e-9f80882cb44d', '角色模块分配', null, '/web/sys/role/roleModuleAssignment,/web/sys/role/roleModuleInfo', '9a709d31-4984-4239-a651-cfeccb9749a1', null, '3', '6', '3', 'sys:role:module:assignment', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('b681978d-ac0a-4eb1-968e-0f4a2c38cdb1', '用户角色信息', null, '/web/sys/user/userRoleInfo', '8c4f0ba6-105d-4d8b-8de5-3d88a24c8e0b', null, '3', '6', '3', 'sys:user:role', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('b82bf57c-bbf6-452d-ac95-acb8ed7425a8', '查询用户', null, '/web/sys/user/list', '8c4f0ba6-105d-4d8b-8de5-3d88a24c8e0b', null, '3', '1', '3', 'sys:user:list', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('bb479f15-2693-463a-8fa0-5938a5fa0b3d', '角色模块信息', null, '/web/sys/role/roleModuleInfo', '9a709d31-4984-4239-a651-cfeccb9749a1', null, '3', '7', '3', 'sys:role:module', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('c1bc76f6-f1a8-4e1b-a5bc-c5254d3df7d5', '用户详情', null, '/web/sys/user/detail', '8c4f0ba6-105d-4d8b-8de5-3d88a24c8e0b', null, '3', '5', '3', 'sys:user:detail', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('d216d200-415f-4de3-bd5d-2d1cf7f1137a', '删除模块', null, '/web/sys/module/delete', '18375a1b-2f5e-4a78-80f0-981f19a891ca', null, '3', '4', '3', 'sys:module:delete', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('d45cd7f7-b7e3-48b3-b201-1d5a952ab215', '修改用户', null, '/web/sys/user/modify,/web/sys/user/detail', '8c4f0ba6-105d-4d8b-8de5-3d88a24c8e0b', null, '3', '3', '3', 'sys:user:modify', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('d77d7d31-52d2-48c9-8926-88d5d1eb927d', '修改角色', null, '/web/sys/role/modify,/web/sys/role/detail', '9a709d31-4984-4239-a651-cfeccb9749a1', null, '3', '2', '3', 'sys:role:modifty', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('e566412e-5c8b-4e98-a694-60b721a55ae3', '模块详情', null, '/web/sys/module/detail', '18375a1b-2f5e-4a78-80f0-981f19a891ca', null, '3', '2', '3', 'sys:module:detail', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('f330b698-feda-418c-9de9-9b5b44c8ccb4', '用户模块信息', null, '/web/sys/user/userModuleInfo', '8c4f0ba6-105d-4d8b-8de5-3d88a24c8e0b', null, '3', '8', '3', 'sys:user:module', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('f365c0b5-82f2-45e4-9957-c52ae73757e2', '新增模块', null, '/web/sys/module/add,/web/sys/module/getModuleIdAndNameList', '18375a1b-2f5e-4a78-80f0-981f19a891ca', null, '3', '3', '3', 'sys:module:add', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
 
 -- ----------------------------
 -- Table structure for `quartz`
@@ -371,6 +376,7 @@ CREATE TABLE `role` (
   `fcode` varchar(255) DEFAULT NULL,
   `level` int(11) DEFAULT '0',
   `type` int(11) DEFAULT '0',
+  `system_id` varchar(255) DEFAULT NULL,
   `remark` varchar(255) DEFAULT NULL,
   `create_date` varchar(19) DEFAULT NULL,
   `creator` varchar(255) DEFAULT NULL,

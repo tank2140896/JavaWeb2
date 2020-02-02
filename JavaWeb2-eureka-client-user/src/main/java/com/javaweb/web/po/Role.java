@@ -36,7 +36,10 @@ public class Role extends BaseEntity implements Serializable {
 	private Integer level = 0;//第几级(0表示未定义层级数;层级数1为最高,即根节点)
 	
 	@Column(name="type")
-	private Integer type = 0;//类型(0表示未定义类型)
+	private Integer type = 0;//类型(0:未定义类型,作为全端通用接口使用;1:PC端;2:安卓端;3:IOS端) 
+	
+	@Column(name="system_id")
+	private String systemId;//系统ID
 	
 	@Column(name="remark")
 	private String remark;//备注

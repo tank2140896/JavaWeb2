@@ -22,6 +22,12 @@ public class Dictionary extends BaseEntity implements Serializable {
     @Column(name="parent_id")
     private String parentId;//父ID
     
+	@Column(name="fcode")
+	private String fcode;//层级关系
+	
+	@Column(name="level")
+	private Integer level = 0;//第几级(0表示未定义层级数;层级数1为最高,即根节点)
+    
     @Column(name="data_type")
     private String dataType;//数据类型
     
@@ -39,6 +45,12 @@ public class Dictionary extends BaseEntity implements Serializable {
     
     @Column(name="means")
     private String means;//含义
+    
+    @Column(name="universally")
+    private Integer universally;//是否通用(0:通用;1:不通用)
+    
+    @Column(name="system_id")
+	private String systemId;//系统ID
     
     @Column(name="remark")
     private String remark;//备注说明
