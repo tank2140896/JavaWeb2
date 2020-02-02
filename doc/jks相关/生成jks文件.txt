@@ -1,3 +1,0 @@
-keytool -genkeypair -alias test -validity 3650 -keyalg RSA -dname "CN=jwt,OU=jtw,O=jtw,L=zurich,S=zurich,C=CH" -keypass test123 -keystore test.jks -storepass test123
-
-keytool -list -rfc --keystore test.jks | openssl x509 -inform pem -pubkey -out out.txt
