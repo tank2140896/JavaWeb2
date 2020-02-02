@@ -17,13 +17,13 @@ JavaWeb2-eureka-client-zuul（端口3001）->JavaWeb2-common
 # 三、启动顺序                                                       
 1、JavaWeb2-eureka-server-1（端口1001）、JavaWeb2-eureka-server-2（端口1002）、JavaWeb2-eureka-server-3（端口1003）                                  
 2、JavaWeb2-eureka-client-user（端口2001）、JavaWeb2-eureka-client-log（端口2002）、JavaWeb2-eureka-client-zuul（端口3001）                                  
-# 四、使用前重要说明：                                                                     
+# 四、使用前重要说明                                                                     
 1、本项目存在很多不足，水平有限，请见谅                            
 2、本项目没有使用redis存储session（spring-session-redis（写法在代码中也有参考）），而是采用token形式存储到redis                 
 3、后端几乎所有的增删改查删除操作都是物理操作（忽略数据库表中的del_flag字段），如果想做逻辑操作（使用数据库表中的del_flag字段）需要重写相关SQL语句（目前虽然保留了逻辑删除字段，但是形同虚设）                 
 4、本项目目前暂无前端实现，本项目目前全程采用Postman验证接口                 
 5、JavaWeb2-integration-demo包括了一些常用技术与SpringBoot组合的示例（hbase、kafka、netty、solr、log aspect、mongodb、websocket、elasticsearch、neo4j、kaptcha、mail、qq、wechat）                                                                                
-# 五、后端近期开发计划：                                                       
+# 五、后端近期开发计划                                                       
 1、完善、优化websoket，补充freemarker、lucene、hadoop、spark                 
 2、文件上传下载示例代码补充                                            
 3、用户角色权限的完善（包括数据权限的复杂处理）                                       
