@@ -5,9 +5,12 @@ import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.solr.client.solrj.SolrClient;
 import org.elasticsearch.client.transport.TransportClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.web.client.RestTemplate;
 
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.javaweb.config.hbase.HbaseHandleService;
@@ -44,5 +47,16 @@ public class BaseInject {
 	
 	@Autowired
 	protected JavaMailSender javaMailSender;
+	
+	@Autowired
+	@Qualifier("redisTemplate1")
+	protected StringRedisTemplate stringRedisTemplate1;
+	
+	@Autowired
+	@Qualifier("redisTemplate2")
+	protected StringRedisTemplate stringRedisTemplate2;
+	
+	@Autowired
+	protected RestTemplate restTemplate;
 	
 }

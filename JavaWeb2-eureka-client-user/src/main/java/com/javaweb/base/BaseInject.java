@@ -7,7 +7,6 @@ import org.springframework.context.MessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.web.client.RestTemplate;
 
 import com.netflix.discovery.EurekaClient;
 
@@ -23,9 +22,6 @@ public class BaseInject {
 	protected Environment environment;
 	
 	@Autowired
-	protected RestTemplate restTemplate;
-	
-	@Autowired
     protected MessageSource messageSource;
 	
 	@Autowired
@@ -37,7 +33,7 @@ public class BaseInject {
 	protected JdbcTemplate mysql_d2_JdbcTemplate;
 	
 	@Autowired
-	@Qualifier("redisTemplate1")
+	@Qualifier("redisTemplate")
 	protected StringRedisTemplate stringRedisTemplate;
 	
 }

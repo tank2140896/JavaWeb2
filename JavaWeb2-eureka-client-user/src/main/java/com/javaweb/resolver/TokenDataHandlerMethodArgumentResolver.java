@@ -14,7 +14,7 @@ import com.javaweb.web.eo.TokenData;
 
 public class TokenDataHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
 	
-	private RedisTemplate<String,Object> redisTemplate1 = null;
+	private RedisTemplate<String,Object> redisTemplate = null;
 
     public boolean supportsParameter(MethodParameter parameter) {
         return parameter.getParameterType().isAssignableFrom(TokenData.class) && parameter.hasParameterAnnotation(TokenDataAnnotation.class);
@@ -22,11 +22,11 @@ public class TokenDataHandlerMethodArgumentResolver implements HandlerMethodArgu
 
     @SuppressWarnings("unchecked")
 	public Object resolveArgument(MethodParameter parameter,ModelAndViewContainer container,NativeWebRequest request,WebDataBinderFactory factory) throws Exception {
-    	if(redisTemplate1==null){
-			redisTemplate1 = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE_1);
+    	if(redisTemplate==null){
+    		redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
 		}
     	String key = request.getHeader(SystemConstant.HEAD_USERID);//String.join(CommonConstant.COMMA,request.getHeader(SystemConstant.HEAD_USERID),request.getHeader(SystemConstant.HEAD_TYPE));
-		return (TokenData)redisTemplate1.opsForValue().get(key);
+		return (TokenData)redisTemplate.opsForValue().get(key);
     }
     
 }

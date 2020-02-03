@@ -18,7 +18,7 @@ public class TestController extends BaseController {
     private LogServerApi logServerApi;
     
     @GetMapping("/test")
-    public String index(HttpServletRequest request) {
+    public String test(HttpServletRequest request) {
         LogServerApiEntity logServerApiEntity = new LogServerApiEntity();
         logServerApiEntity.setUsername("abc");
         logServerApiEntity.setPassword("123");

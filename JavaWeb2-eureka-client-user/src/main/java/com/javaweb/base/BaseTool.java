@@ -18,19 +18,19 @@ import com.javaweb.web.eo.TokenData;
 
 public class BaseTool extends BaseInject {
 	
-	@Resource(name="redisTemplate1")
-	protected ValueOperations<Object,Object> valueOperations1;
+	@Resource(name="redisTemplate")
+	protected ValueOperations<Object,Object> valueOperations;
 	
 	public void setDataToRedis(String key,Object value,long timeOut,TimeUnit timeUnit){
-		valueOperations1.set(key,value,timeOut,timeUnit);
+		valueOperations.set(key,value,timeOut,timeUnit);
 	}
 	
 	public void setDefaultDataToRedis(String key,Object value){
-		valueOperations1.set(key,value,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
+		valueOperations.set(key,value,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
 	}
 	
 	public Object getDateFromRedis(String key){
-		return valueOperations1.get(key);
+		return valueOperations.get(key);
 	}
 	
 	public boolean deleteFromRedisByKey(String key) {
@@ -39,7 +39,7 @@ public class BaseTool extends BaseInject {
 
 	public TokenData getTokenData(HttpServletRequest request){
 		String key = request.getHeader(SystemConstant.HEAD_TOKEN);//String.join(CommonConstant.COMMA,request.getHeader(SystemConstant.HEAD_USERID),request.getHeader(SystemConstant.HEAD_TYPE));
-		return (TokenData)valueOperations1.get(key);
+		return (TokenData)valueOperations.get(key);
 	}
 	
 	public String getMessage(String messageKey){

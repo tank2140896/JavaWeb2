@@ -5,7 +5,7 @@
   	
   	<modelVersion>4.0.0</modelVersion>
   	<groupId>com.javaweb</groupId>
-  	<artifactId>JavaWeb2-eureka-server-3</artifactId>
+  	<artifactId>JavaWeb2-eureka-server</artifactId>
   	<version>1.0.0</version>
   	<packaging>jar</packaging>
   	

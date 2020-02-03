@@ -19,12 +19,12 @@ import com.netflix.zuul.exception.ZuulException;
 @Component
 public class MyZuulFilter extends ZuulFilter {
     
-    private RedisTemplate<String,Object> redisTemplate1 = null;
+    private RedisTemplate<String,Object> redisTemplate = null;
     
     @SuppressWarnings("unchecked")
     public Object run() throws ZuulException {
-        if(redisTemplate1==null){
-            redisTemplate1 = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean("redisTemplate1");
+        if(redisTemplate==null){
+        	redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean("redisTemplate");
         }
         RequestContext requestContext = RequestContext.getCurrentContext();
         HttpServletRequest request = requestContext.getRequest();
@@ -42,7 +42,7 @@ public class MyZuulFilter extends ZuulFilter {
             }
         }else {
             //redis在这里有个坑，一个项目中对实体类序列化后，另一个项目读取该类如果两个项目的类的路径不一致就会报错
-            TokenData tokenData = (TokenData)(redisTemplate1.opsForValue().get(token));
+            TokenData tokenData = (TokenData)(redisTemplate.opsForValue().get(token));
             if(tokenData==null) {
                 requestContext.setSendZuulResponse(false);
                 try {

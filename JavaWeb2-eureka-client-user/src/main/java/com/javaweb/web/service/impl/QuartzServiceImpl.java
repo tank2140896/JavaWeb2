@@ -21,7 +21,7 @@ import com.javaweb.web.service.QuartzService;
 @Service("quartzServiceImpl")
 public class QuartzServiceImpl extends BaseService implements QuartzService {
     
-    @Autowired
+    @Autowired(required=false)//表示忽略当前要注入的bean,如果有直接注入,没有跳过,不会报错(若要使用改为true即可,默认就是true)
     private Scheduler scheduler;
     
     public void save(Quartz quartz,Job job) {

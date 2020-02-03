@@ -44,7 +44,7 @@ public class SystemConstant {
 	
 	public static final String HEAD_TYPE = "type";
 
-	public static final String REDIS_TEMPLATE_1 = "redisTemplate1";
+	public static final String REDIS_TEMPLATE = "redisTemplate";
 	
 	public static final String SYSTEM_DEFAULT_USER_ID = ADMIN;
 	
