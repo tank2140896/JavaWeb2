@@ -1,8 +1,8 @@
-package com.javaweb.web.service;
+package com.javaweb.config.quartz;
 
 import org.quartz.Job;
 
-import com.javaweb.web.po.Quartz;
+import com.javaweb.po.Quartz;
 
 public interface QuartzService {
     

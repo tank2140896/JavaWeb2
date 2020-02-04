@@ -21,6 +21,12 @@
     </parent>
     
     <dependencies>
+    	<!-- 编译时需要加入JavaWeb2-database所依赖的所有包 -->
+        <dependency>
+    		<groupId>com.javaweb</groupId>
+	    	<artifactId>JavaWeb2-database</artifactId>
+	    	<version>1.0.0</version>
+    	</dependency>
         <!-- json-lib -->
 		<dependency>
 		    <groupId>net.sf.json-lib</groupId>
@@ -129,6 +135,11 @@
 	      	<groupId>io.lettuce</groupId>
 	      	<artifactId>lettuce-core</artifactId>
 	    </dependency>
+	    <!-- quartz定时任务 -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-quartz</artifactId>
+		</dependency>
 		<!-- lucene -->
 		<dependency>  
 	        <groupId>org.apache.lucene</groupId>  

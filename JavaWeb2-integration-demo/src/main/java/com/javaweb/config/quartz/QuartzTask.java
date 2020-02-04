@@ -1,4 +1,4 @@
-package com.javaweb.task;
+package com.javaweb.config.quartz;
 
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;

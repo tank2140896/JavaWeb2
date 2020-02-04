@@ -1,9 +1,9 @@
-package com.javaweb.web.dao.ds1;
+package com.javaweb.config.quartz;
 
 import org.apache.ibatis.annotations.Mapper;
 
 import com.javaweb.mybatis.api.DaoForMySql;
-import com.javaweb.web.po.Quartz;
+import com.javaweb.po.Quartz;
 
 @Mapper
 public interface QuartzDao extends DaoForMySql<Quartz> {

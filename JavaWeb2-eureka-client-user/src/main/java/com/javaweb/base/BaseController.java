@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.javaweb.task.TaskService;
 import com.javaweb.web.service.DictionaryService;
 import com.javaweb.web.service.ModuleService;
-import com.javaweb.web.service.QuartzService;
 import com.javaweb.web.service.RoleService;
 import com.javaweb.web.service.UserService;
 
@@ -25,8 +24,5 @@ public class BaseController extends BaseTool {
 	
 	@Autowired  
 	protected TaskService taskService;
-	
-	@Autowired
-	protected QuartzService quartzService;
 	
 }

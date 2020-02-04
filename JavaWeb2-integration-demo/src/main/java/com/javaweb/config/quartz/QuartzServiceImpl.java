@@ -1,4 +1,4 @@
-package com.javaweb.web.service.impl;
+package com.javaweb.config.quartz;
 
 import org.quartz.CronScheduleBuilder;
 import org.quartz.CronTrigger;
@@ -14,14 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.javaweb.base.BaseService;
+import com.javaweb.po.Quartz;
 import com.javaweb.util.core.DateUtil;
-import com.javaweb.web.po.Quartz;
-import com.javaweb.web.service.QuartzService;
 
 @Service("quartzServiceImpl")
 public class QuartzServiceImpl extends BaseService implements QuartzService {
     
-    @Autowired(required=false)//表示忽略当前要注入的bean,如果有直接注入,没有跳过,不会报错(若要使用改为true即可,默认就是true)
+    @Autowired
     private Scheduler scheduler;
     
     public void save(Quartz quartz,Job job) {

@@ -1,4 +1,4 @@
-package com.javaweb.web.po;
+package com.javaweb.po;
 
 import java.io.Serializable;
 
