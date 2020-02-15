@@ -2,46 +2,11 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"  
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   	
-  	<!--
-	一、maven私有仓库搭建可以使用nexus 
-	二、maven&eclipse离线模式
-	1、maven->conf->settings.xml
-	<localRepository>C:\Users\he\.m2\repository</localRepository>
-	2、mirror配置
-	<mirror>
-    		<id>central</id>
-    		<mirrorOf>*</mirrorOf>
-    		<name>central</name>
-    		<url>file://C:\Users\admin\.m2\repository</url>
-	</mirror>
-	3、eclipse->window->Preferences->Maven->Installations和User Settings配置为本地maven路径
-	三、maven国内镜像设置
-	1、maven->conf->setting.xml配置：                  
-	<mirror>           
-	      <id>alimaven</id>              
-	      <name>aliyun maven</name>            
-	      <url>http://maven.aliyun.com/nexus/content/groups/public/</url>                    
-	      <mirrorOf>central</mirrorOf>                          
-	</mirror>                
-	2、eclipse配置：eclipse->maven->User Settings->Global Setting->setting.xml 
-	-->
   	<modelVersion>4.0.0</modelVersion>
   	<groupId>com.javaweb</groupId>
   	<artifactId>JavaWeb2-eureka-client-feigin-user</artifactId>
   	<version>1.0.0</version>
   	<packaging>jar</packaging>
-  	<!-- 打成war包 
-  	1、 <packaging>war</packaging>
-  	2、 <dependency>
-	  	   <groupId>org.springframework.boot</groupId>
-	       <artifactId>spring-boot-starter-tomcat</artifactId>
-	       <scope>provided</scope>
- 	   </dependency>
-  	3、 标记有@SpringBootApplication的类继承SpringBootServletInitializer，然后重写：
-	   protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-	       return application.sources(SampleController.class);
-	   }
-	-->
 	
   	<properties>
   		<java.version>1.8</java.version>
