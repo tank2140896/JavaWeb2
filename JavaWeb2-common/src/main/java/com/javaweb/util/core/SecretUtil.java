@@ -3,12 +3,13 @@ package com.javaweb.util.core;
 import java.io.ByteArrayOutputStream;
 import java.security.MessageDigest;
 import java.util.Base64;
+import java.util.Base64.Decoder;
+import java.util.Base64.Encoder;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.Base64.Decoder;
-import java.util.Base64.Encoder;
 import java.util.concurrent.TimeUnit;
 import java.util.function.IntSupplier;
 import java.util.stream.Collectors;
@@ -78,6 +79,34 @@ public class SecretUtil {
 		    CHARACTE_KV_KEY_STRING+=character;
 		}
 	}
+	
+	//键盘常用字符随机字典对照表
+	public static Map<Character,Character> initKeybordDictionary(){
+		//初始化字典key值
+        char c1[] = new char[KEYBORD_USERD_END-KEYBORD_USERD_START];
+        char c2[] = new char[KEYBORD_USERD_END-KEYBORD_USERD_START];
+        int index = 0;
+        for(int i=KEYBORD_USERD_START;i<KEYBORD_USERD_END;i++){
+            c1[index] = (char)i;
+            c2[index] = (char)i;
+            index++;
+        }
+        //随机打乱key值
+        char temp = ' ';
+        for(int i=0;i<c1.length;i++){
+            int randomNum1 = (int)(Math.random()*(KEYBORD_USERD_END-KEYBORD_USERD_START));
+            int randomNum2 = (int)(Math.random()*(KEYBORD_USERD_END-KEYBORD_USERD_START));
+            temp = c2[randomNum1];
+            c2[randomNum1] = c2[randomNum2];
+            c2[randomNum2] = temp;
+        }
+        //生成字典对照表
+        Map<Character,Character> map = new HashMap<>();
+        for(int i=0;i<c1.length;i++){
+            map.put(c1[i],c2[i]);
+        }
+        return map;
+	}
 
 	//获取UUID
 	public static String getRandomUUID() {
@@ -138,6 +167,13 @@ public class SecretUtil {
 	public static String encoderString(String str,String charsetName) throws Exception {
 	    Encoder encoder = Base64.getEncoder();
         String encoderString = new String(encoder.encode(str.getBytes(charsetName)),charsetName);
+        return encoderString;
+	}
+	
+	//简单加密字符串
+	public static String encoderString(byte str[],String charsetName) throws Exception {
+	    Encoder encoder = Base64.getEncoder();
+        String encoderString = new String(encoder.encode(str),charsetName);
         return encoderString;
 	}
 	

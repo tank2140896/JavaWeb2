@@ -1,4 +1,4 @@
-package com.javaweb.config.log;
+package com.javaweb.config.aspect;
 
 import java.util.Arrays;
 

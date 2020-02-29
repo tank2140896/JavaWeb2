@@ -20,7 +20,7 @@ JavaWeb2-eureka-client-zuul（端口3001）->JavaWeb2-common
 2、本项目没有使用redis存储session（spring-session-redis（写法在代码中也有参考）），而是采用token形式存储到redis                 
 3、后端几乎所有的增删改查删除操作都是物理操作（忽略数据库表中的del_flag字段），如果想做逻辑操作（使用数据库表中的del_flag字段）需要重写相关SQL语句（目前虽然保留了逻辑删除字段，但是形同虚设）                 
 4、本项目目前暂无前端实现，本项目目前全程采用Postman验证接口                 
-5、JavaWeb2-integration-demo包括了一些常用技术与SpringBoot组合的示例（hbase、kafka、netty、solr、日志切面、mongodb、websocket、elasticsearch、neo4j、kaptcha、邮件发送、redis、restTemplate、quartz（分布式）定时任务、文件上传下载、qq、wechat）                                                                                            
+5、JavaWeb2-integration-demo包括了一些常用技术与SpringBoot组合的示例（hbase、kafka、netty、solr、切面处理、mongodb、websocket、elasticsearch、neo4j、kaptcha、邮件发送、redis、restTemplate、quartz（分布式）定时任务、文件上传下载、qq、wechat）                                                                                            
 # 五、后端近期开发计划                                                       
 1、完善、优化websoket，补充freemarker、lucene、hadoop、spark                 
 2、用户角色权限的完善（包括数据权限的复杂处理）                                       
