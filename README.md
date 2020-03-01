@@ -29,7 +29,8 @@ JavaWeb2-eureka-client-zuul（端口3001）->JavaWeb2-common
 5、将zuul变为gateway                 
 6、加入SpringCloudConfig、SpringCloudSleuth、SpringBootAdmin、SpringSecurityOAuth2JWT                 
 7、后端一部分将采用JAVA13+、函数式、异步编程（包括WebFlux/RxJava2/Netty）                 
-8、将JAVA算法改用C语言实现，JAVA本地调用C语言的实现方法                                  
+8、将JAVA算法改用C语言实现，JAVA本地调用C语言的实现方法                
+9、工作流（activiti）              
 # 六、项目主要特点                                                       
 1、微服务                          
 2、前后端分离(后端只提供接口)                 

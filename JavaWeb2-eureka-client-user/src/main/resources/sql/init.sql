@@ -103,6 +103,25 @@ INSERT INTO `module` VALUES ('f330b698-feda-418c-9de9-9b5b44c8ccb4', '用户模�
 INSERT INTO `module` VALUES ('f365c0b5-82f2-45e4-9957-c52ae73757e2', '新增模块', null, '/web/sys/module/add,/web/sys/module/getModuleIdAndNameList', '18375a1b-2f5e-4a78-80f0-981f19a891ca', null, '3', '3', '3', 'sys:module:add', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
 
 -- ----------------------------
+-- Table structure for `operation_log`
+-- ----------------------------
+DROP TABLE IF EXISTS `operation_log`;
+CREATE TABLE `operation_log` (
+  `id` varchar(255) NOT NULL,
+  `user_id` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `request_parameter` varchar(255) DEFAULT NULL,
+  `request_ip_address` varchar(255) DEFAULT NULL,
+  `request_time` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+-- ----------------------------
+-- Records of operation_log
+-- ----------------------------
+
+-- ----------------------------
 -- Table structure for `quartz`
 -- ----------------------------
 DROP TABLE IF EXISTS `quartz`;

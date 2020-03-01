@@ -26,5 +26,8 @@ public class UserRole implements Serializable {
 	
 	@Column(name="strategy")
 	private Integer strategy = 1;//权限获取策略(0:自定义;1:并集;2:交集;3:以用户权限为准;4:以角色权限为准;其它:默认为未定义,作为并集处理)
+	
+	//@Column(name="subordinate_authorize")
+	//private Integer subordinateAuthorize = 0;//限定用户下级授权权,即当前用户如果有两个权限,那么当他拥有分配角色权限时最多给其下级自己所拥有的两个权限,一般不推荐使用此字段(0:不启用;1:启用)
 
 }
