@@ -19,7 +19,7 @@ JavaWeb2-eureka-client-zuul（端口3001）->JavaWeb2-common
 1、本项目存在很多不足，水平有限，请见谅                            
 2、本项目没有使用redis存储session（spring-session-redis（写法在代码中也有参考）），而是采用token形式存储到redis                 
 3、后端几乎所有的增删改查删除操作都是物理操作（忽略数据库表中的del_flag字段），如果想做逻辑操作（使用数据库表中的del_flag字段）需要重写相关SQL语句（目前虽然保留了逻辑删除字段，但是形同虚设）                 
-4、本项目目前暂无前端实现，本项目目前全程采用Postman验证接口                 
+4、本项目目前暂无前端实现，本项目目前全程采用JUnit或Postman验证接口，前端界面待补充                                       
 5、JavaWeb2-integration-demo包括了一些常用技术与SpringBoot组合的示例（hbase、kafka、netty、solr、切面处理、mongodb、websocket、elasticsearch、neo4j、kaptcha、邮件发送、redis、restTemplate、quartz（分布式）定时任务、文件上传下载、qq、wechat）                                                                                            
 # 五、后端近期开发计划                                                       
 1、完善、优化websoket，补充freemarker、lucene、hadoop、spark                 
@@ -33,7 +33,7 @@ JavaWeb2-eureka-client-zuul（端口3001）->JavaWeb2-common
 9、工作流（activiti）              
 # 六、项目主要特点                                                       
 1、微服务                          
-2、前后端分离(后端只提供接口)                 
+2、前后端分离                 
 3、多数据源                 
 提供了三种方式接入：                 
 第一种是包命名方式：采用mybatis时要注意不同数据源对应的dao接口名称不要一样，比如可以一个叫UserDao一个叫UserDao2,如果一样会报：Specified class is an interface                 

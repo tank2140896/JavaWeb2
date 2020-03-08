@@ -25,7 +25,7 @@ public class TokenDataHandlerMethodArgumentResolver implements HandlerMethodArgu
     	if(redisTemplate==null){
     		redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
 		}
-    	String key = request.getHeader(SystemConstant.HEAD_USERID);//String.join(CommonConstant.COMMA,request.getHeader(SystemConstant.HEAD_USERID),request.getHeader(SystemConstant.HEAD_TYPE));
+    	String key = request.getHeader(SystemConstant.HEAD_TOKEN);
 		return (TokenData)redisTemplate.opsForValue().get(key);
     }
     

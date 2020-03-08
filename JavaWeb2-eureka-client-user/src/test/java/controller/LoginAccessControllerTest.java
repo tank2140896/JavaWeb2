@@ -13,16 +13,16 @@ public class LoginAccessControllerTest extends BaseControllerTest {
 	}
 	
 	@Test
-	public void testLogout() throws Exception {
-		String out = HttpUtil.defaultGetRequest(URL_PREFIX+"/web/loginAccess/getRedisTokenData/logout",getHeaders());
-		System.out.println(out);
+	public void testGetDictionary() throws Exception {
+	    String body = "{\"dataType\":\"module_type\"}";
+	    String out = HttpUtil.defaultPostRequest(URL_PREFIX+"/web/loginAccess/getDictionary",body,getHeaders());
+        System.out.println(out);
 	}
 	
 	@Test
-	public void testGetDictionary() throws Exception {
-	    String body = "{\"dataType\":\"module_type\"}";
-	    String out = HttpUtil.defaultPostRequest(URL_PREFIX+"/web/loginAccess/getRedisTokenData/getDictionary",body,getHeaders());
-        System.out.println(out);
+	public void testLogout() throws Exception {
+		String out = HttpUtil.defaultGetRequest(URL_PREFIX+"/web/loginAccess/logout",getHeaders());
+		System.out.println(out);
 	}
-
+	
 }

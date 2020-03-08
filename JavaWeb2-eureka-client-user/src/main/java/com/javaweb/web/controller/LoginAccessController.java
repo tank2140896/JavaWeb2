@@ -26,14 +26,7 @@ public class LoginAccessController extends BaseController {
 	@ApiOperation(value=SwaggerConstant.SWAGGER_LOGOUT)
 	@GetMapping(ApiConstant.LOGIN_OUT)
 	public BaseResponseResult logout(@TokenDataAnnotation TokenData tokenData/*,HttpServletRequest request*/){
-		/*
-		String userId = request.getHeader(SystemConstant.HEAD_USERID);
-		String token = request.getHeader(SystemConstant.HEAD_TOKEN);
-		String type = request.getHeader(SystemConstant.HEAD_TYPE);
-		String key = String.join(CommonConstant.COMMA,userId,type);
-		*/
-		//String key = String.join(CommonConstant.COMMA,tokenData.getUser().getUserId(),tokenData.getType());
-		if(deleteFromRedisByKey(/*key*/tokenData.getToken())) {
+		if(deleteFromRedisByKey(tokenData.getToken())) {
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.logoutSuccess");
 		}else {
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.logoutFail");
@@ -42,13 +35,7 @@ public class LoginAccessController extends BaseController {
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_GET_REDIS_TOKEN_DATA)
 	@GetMapping(ApiConstant.GET_REDIS_TOKEN_DATA)
-	public BaseResponseResult getRedisTokenData(@TokenDataAnnotation TokenData tokenData/*,HttpServletRequest request*/){
-		/*
-		TokenData tokenData = getTokenData(request);
-		String key = String.join(CommonConstant.COMMA,request.getHeader(SystemConstant.HEAD_USERID),request.getHeader(SystemConstant.HEAD_TYPE));
-		setDefaultDataToRedis(key,tokenData);
-		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.getTokenDataSuccess",tokenData);
-		*/
+	public BaseResponseResult getRedisTokenData(@TokenDataAnnotation TokenData tokenData){
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.getTokenDataSuccess",tokenData);
 	}
 	
