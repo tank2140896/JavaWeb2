@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.constant.ApiConstant;
+import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SwaggerConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.enums.HttpCodeEnum;
@@ -49,8 +50,7 @@ public class AllOpenController extends BaseController {
 			userLoginRequest.setType("0");
 			User user = SystemConstant.SYSTEM_DEFAULT_USER;
 			tokenData = getToken(true,user,userLoginRequest.getType());
-			//此时key直为一串随机字符串，那么如何判断用户一个账号登录两台机呢？可以拿到token里的user和type来组合比较
-			setDefaultDataToRedis(tokenData.getToken(),tokenData);
+			setDefaultDataToRedis(user.getUserId()+CommonConstant.COMMA+userLoginRequest.getType(),tokenData);
 		}else {
 		    try{
 	            userLoginRequest.setPassword(SecretUtil.getSecret(userLoginRequest.getPassword(),"SHA-256"));
@@ -63,7 +63,7 @@ public class AllOpenController extends BaseController {
 	        }
 	        user.setPassword(null);
 	        tokenData = getToken(false,user,userLoginRequest.getType());
-	        setDefaultDataToRedis(tokenData.getToken(),tokenData);
+	        setDefaultDataToRedis(user.getUserId()+CommonConstant.COMMA+userLoginRequest.getType(),tokenData);
 		}
 		//这里我个人认为redis中包含权限信息，但是前端不需要获得太多权限信息，权限信息可以通过其它接口获得
 		TokenData returnTokenData = new TokenData();
@@ -125,7 +125,13 @@ public class AllOpenController extends BaseController {
 	private TokenData getToken(boolean adminFlag,User user,String type){
 		List<Module> moduleList = moduleService.getModule(adminFlag,user.getUserId());
 		TokenData tokenData = new TokenData();
-		tokenData.setToken(SecretUtil.secretTokenForEasyWay(UUID.randomUUID().toString(),true));
+		String token = SecretUtil.secretTokenForEasyWay(UUID.randomUUID().toString(),true);
+		try {
+			token = SecretUtil.encoderString(token+CommonConstant.COMMA+user.getUserId()+CommonConstant.COMMA+type,"UTF-8");
+		} catch (Exception e) {
+			//do nothing
+		}
+		tokenData.setToken(token);
 		tokenData.setUser(user);
 		tokenData.setType(type);
 		List<Module> menuList = moduleList.stream().filter(i->2==i.getModuleType()).collect(Collectors.toList());//获得菜单列表

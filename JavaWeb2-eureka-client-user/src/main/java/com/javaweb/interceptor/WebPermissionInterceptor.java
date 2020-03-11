@@ -18,6 +18,7 @@ import com.javaweb.constant.ApiConstant;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.context.ApplicationContextHelper;
+import com.javaweb.util.core.SecretUtil;
 import com.javaweb.web.eo.TokenData;
 
 @Component
@@ -49,39 +50,40 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 	    if(redisTemplate==null){
 			redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
 		}
-		//String userId = request.getHeader(SystemConstant.HEAD_USERID);
-		String token = request.getHeader(SystemConstant.HEAD_TOKEN);
-		//String type = request.getHeader(SystemConstant.HEAD_TYPE);
+		String token = CommonConstant.NULL_VALUE;
+		try{
+			token = request.getHeader(SystemConstant.HEAD_TOKEN);
+			token = SecretUtil.decoderString(token,"UTF-8");
+	    	String tokens[] = token.split(CommonConstant.COMMA);
+	    	token = tokens[1]+CommonConstant.COMMA+tokens[2];//userId+type
+		}catch(Exception e){
+			//do nothing
+		}
 		String servletPath = request.getServletPath();
-		boolean nullOrEmptyHead = Stream.of(/*userId,*/token/*,type*/).anyMatch(i->i==null||i.trim().equals(CommonConstant.EMPTY_VALUE));
+		boolean nullOrEmptyHead = Stream.of(token/*,userId,type*/).anyMatch(i->i==null||i.trim().equals(CommonConstant.EMPTY_VALUE));
 		if(nullOrEmptyHead){
 			request.getRequestDispatcher(ApiConstant.REQUEST_PARAMETER_LOST).forward(request,response);
 			return false;
 		}
-		/**
-		if(!PatternUtil.isPattern(type,PatternConstant.HEAD_TYPE_PATTERN)){//0:admin;1:web;2:android;3:ios
-			request.getRequestDispatcher(ApiConstant.REQUEST_PARAMETER_LOST).forward(request,response);
-			return false;
-		}
-		*/
-		TokenData tokenData = (TokenData)(redisTemplate.opsForValue().get(token/*String.join(CommonConstant.COMMA,userId,type)*/));
+		TokenData tokenData = (TokenData)(redisTemplate.opsForValue().get(token));
 		if(tokenData==null){
 			request.getRequestDispatcher(ApiConstant.INVALID_REQUEST).forward(request,response);
 			return false;
 		}
-        if(!(tokenData.getToken().equals(token))/*(String.join(CommonConstant.COMMA,tokenData.getUser().getUserId(),tokenData.getType(),tokenData.getToken()).equals(String.join(CommonConstant.COMMA,userId,type,token)))*/){
+        if(!(tokenData.getToken().equals(request.getHeader(SystemConstant.HEAD_TOKEN)))){
 			request.getRequestDispatcher(ApiConstant.REQUEST_PARAMETER_ERROR).forward(request,response);
 			return false;
 		}
 		if(servletPath.startsWith(SystemConstant.URL_LOGIN_WEB_PERMISSION)){//该路径下只要登录即可访问，不需要权限
-			redisTemplate.opsForValue().set(token/*String.join(CommonConstant.COMMA,userId,type)*/,tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
+			redisTemplate.opsForValue().set(token,tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
 			return true;
 		}
+		String newToken = token;
 		long count = tokenData.getAuthOperateList().stream().filter(i->{
 			String splitApiUrl[] = i.getApiUrl().split(CommonConstant.COMMA);//某一操作可能会调用多个附属操作，多个附属操作约定用逗号分开
 			for(String str:splitApiUrl){
 				if(servletPath.startsWith(str)){
-					redisTemplate.opsForValue().set(token/*String.join(CommonConstant.COMMA,userId,type)*/,tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
+					redisTemplate.opsForValue().set(newToken,tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
 					return true;
 				}
 			}
@@ -91,7 +93,7 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 			request.getRequestDispatcher(ApiConstant.NO_AUTHORY).forward(request,response);
 			return false;
 		}else{
-			redisTemplate.opsForValue().set(token/*String.join(CommonConstant.COMMA,userId,type)*/,tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
+			redisTemplate.opsForValue().set(token,tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
 			return true;
 		}
 	}

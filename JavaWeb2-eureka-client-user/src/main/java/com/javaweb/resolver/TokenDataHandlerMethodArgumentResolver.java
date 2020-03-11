@@ -8,8 +8,10 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import com.javaweb.annotation.token.TokenDataAnnotation;
+import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.context.ApplicationContextHelper;
+import com.javaweb.util.core.SecretUtil;
 import com.javaweb.web.eo.TokenData;
 
 public class TokenDataHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
@@ -25,8 +27,10 @@ public class TokenDataHandlerMethodArgumentResolver implements HandlerMethodArgu
     	if(redisTemplate==null){
     		redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
 		}
-    	String key = request.getHeader(SystemConstant.HEAD_TOKEN);
-		return (TokenData)redisTemplate.opsForValue().get(key);
+    	String token = request.getHeader(SystemConstant.HEAD_TOKEN);
+    	token = SecretUtil.decoderString(token,"UTF-8");
+    	String tokens[] = token.split(CommonConstant.COMMA);
+		return (TokenData)redisTemplate.opsForValue().get(tokens[1]+CommonConstant.COMMA+tokens[2]);
     }
     
 }

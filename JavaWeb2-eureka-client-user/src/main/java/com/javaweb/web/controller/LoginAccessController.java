@@ -10,6 +10,7 @@ import com.javaweb.annotation.token.TokenDataAnnotation;
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.constant.ApiConstant;
+import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SwaggerConstant;
 import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.web.eo.TokenData;
@@ -26,7 +27,7 @@ public class LoginAccessController extends BaseController {
 	@ApiOperation(value=SwaggerConstant.SWAGGER_LOGOUT)
 	@GetMapping(ApiConstant.LOGIN_OUT)
 	public BaseResponseResult logout(@TokenDataAnnotation TokenData tokenData/*,HttpServletRequest request*/){
-		if(deleteFromRedisByKey(tokenData.getToken())) {
+		if(deleteFromRedisByKey(tokenData.getUser().getUserId()+CommonConstant.COMMA+tokenData.getType())) {
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.logoutSuccess");
 		}else {
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.logoutFail");
