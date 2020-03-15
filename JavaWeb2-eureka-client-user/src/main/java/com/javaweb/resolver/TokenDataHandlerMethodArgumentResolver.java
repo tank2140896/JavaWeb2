@@ -28,7 +28,7 @@ public class TokenDataHandlerMethodArgumentResolver implements HandlerMethodArgu
     		redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
 		}
     	String token = request.getHeader(SystemConstant.HEAD_TOKEN);
-    	token = SecretUtil.decoderString(token,"UTF-8");
+    	token = SecretUtil.base64DecoderString(token,"UTF-8");
     	String tokens[] = token.split(CommonConstant.COMMA);
 		return (TokenData)redisTemplate.opsForValue().get(tokens[1]+CommonConstant.COMMA+tokens[2]);
     }

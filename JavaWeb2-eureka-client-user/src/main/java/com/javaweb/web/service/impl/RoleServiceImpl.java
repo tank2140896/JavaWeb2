@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.javaweb.base.BaseService;
+import com.javaweb.constant.SystemConstant;
 import com.javaweb.util.core.SecretUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.role.ModuleInfoResponse;
@@ -72,7 +73,7 @@ public class RoleServiceImpl extends BaseService implements RoleService {
 		List<RoleModule> roleModuleList = new ArrayList<>();
 		for(int i=0;i<list.size();i++) {
 			RoleModule roleModule = new RoleModule();
-			roleModule.setId(SecretUtil.defaultGenUniqueStr());
+			roleModule.setId(SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO));
 			roleModule.setRoleId(roleId);
 			roleModule.setModuleId(list.get(i));
 			roleModuleList.add(roleModule);

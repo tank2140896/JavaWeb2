@@ -122,15 +122,15 @@ public class SecretUtil {
 				}).mapToObj(each->Character.toString(KEYBORD_USED_CHARACTERSET[each])).limit(passLen).collect(Collectors.joining());
 	}
 	
-	//默认根据当前时间生成唯一字符串(不适用于大量高并发的情景)
-	public static String defaultGenUniqueStr(){
+	//默认根据当前时间生成唯一字符串（带系统编号，用于分布式）
+	public static String defaultGenUniqueStr(int systemNo){
 		synchronized ("defaultGenUniqueStr") {
 			try {
 				TimeUnit.MILLISECONDS.sleep(1);
 			} catch (InterruptedException e) {
 				
 			}
-			return DateUtil.getStringDate(DateUtil.DATETIME_PATTERN_TYPE2);
+			return DateUtil.getStringDate(DateUtil.DATETIME_PATTERN_TYPE2)+systemNo;
 		}
 	}
 	
@@ -163,22 +163,29 @@ public class SecretUtil {
 		return Hex.encodeHexString(hash);
 	}
 	
-	//简单加密字符串
-	public static String encoderString(String str,String charsetName) throws Exception {
+	//Base64加密字符串
+	public static String base64EncoderString(String str,String charsetName) throws Exception {
 	    Encoder encoder = Base64.getEncoder();
         String encoderString = new String(encoder.encode(str.getBytes(charsetName)),charsetName);
         return encoderString;
 	}
 	
-	//简单加密字符串
-	public static String encoderString(byte str[],String charsetName) throws Exception {
+	//Base64加密字符串
+	public static String base64EncoderString(byte str[],String charsetName) throws Exception {
 	    Encoder encoder = Base64.getEncoder();
         String encoderString = new String(encoder.encode(str),charsetName);
         return encoderString;
 	}
 	
 	//简单解密字符串
-    public static String decoderString(String str,String charsetName) throws Exception {
+    public static String base64DecoderString(String str,String charsetName) throws Exception {
+        Decoder decoder = Base64.getDecoder();
+        String decoderString = new String(decoder.decode(str.getBytes(charsetName)),charsetName);
+        return decoderString;
+    }
+    
+	//简单解密字符串
+    public static String base64DecoderString(byte str[],String charsetName) throws Exception {
         Decoder decoder = Base64.getDecoder();
         String decoderString = new String(decoder.decode(str),charsetName);
         return decoderString;

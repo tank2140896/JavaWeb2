@@ -127,7 +127,7 @@ public class AllOpenController extends BaseController {
 		TokenData tokenData = new TokenData();
 		String token = SecretUtil.secretTokenForEasyWay(UUID.randomUUID().toString(),true);
 		try {
-			token = SecretUtil.encoderString(token+CommonConstant.COMMA+user.getUserId()+CommonConstant.COMMA+type,"UTF-8");
+			token = SecretUtil.base64EncoderString(token+CommonConstant.COMMA+user.getUserId()+CommonConstant.COMMA+type,"UTF-8");
 		} catch (Exception e) {
 			//do nothing
 		}

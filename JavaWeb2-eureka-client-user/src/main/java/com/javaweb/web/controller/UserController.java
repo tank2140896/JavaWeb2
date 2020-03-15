@@ -20,6 +20,7 @@ import com.javaweb.base.BaseResponseResult;
 import com.javaweb.base.BaseValidatedGroup;
 import com.javaweb.constant.ApiConstant;
 import com.javaweb.constant.SwaggerConstant;
+import com.javaweb.constant.SystemConstant;
 import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.SecretUtil;
@@ -47,7 +48,7 @@ public class UserController extends BaseController {
 		}else{
 			TokenData tokenData = getTokenData(request);
 			User currentUser = tokenData.getUser();
-			user.setUserId(SecretUtil.defaultGenUniqueStr());
+			user.setUserId(SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO));
 			try{user.setPassword(SecretUtil.getSecret(user.getPassword(),"SHA-256"));}catch(Exception e){}
 			user.setParentId(currentUser.getUserId());
 			user.setLevel(currentUser.getLevel()+1);

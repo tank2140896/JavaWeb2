@@ -18,6 +18,7 @@ import com.javaweb.base.BaseResponseResult;
 import com.javaweb.base.BaseValidatedGroup;
 import com.javaweb.constant.ApiConstant;
 import com.javaweb.constant.SwaggerConstant;
+import com.javaweb.constant.SystemConstant;
 import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.SecretUtil;
@@ -49,7 +50,7 @@ public class ModuleController extends BaseController {
 		}else{
 			TokenData tokenData = getTokenData(request);
 			User currentUser = tokenData.getUser();
-			module.setModuleId(SecretUtil.defaultGenUniqueStr());
+			module.setModuleId(SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO));
 			module.setCreateDate(DateUtil.getDefaultDate());
 			module.setCreator(currentUser.getUserName());
 			module.setDelFlag(0);

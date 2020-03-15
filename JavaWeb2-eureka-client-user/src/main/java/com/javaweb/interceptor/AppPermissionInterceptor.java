@@ -52,7 +52,7 @@ public class AppPermissionInterceptor extends HandlerInterceptorAdapter {
 	    String token = CommonConstant.NULL_VALUE;
 		try{
 			token = request.getHeader(SystemConstant.HEAD_TOKEN);
-			token = SecretUtil.decoderString(token,"UTF-8");
+			token = SecretUtil.base64DecoderString(token,"UTF-8");
 	    	String tokens[] = token.split(CommonConstant.COMMA);
 	    	token = tokens[1]+CommonConstant.COMMA+tokens[2];//userId+type
 		}catch(Exception e){

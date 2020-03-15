@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.javaweb.base.BaseService;
+import com.javaweb.constant.SystemConstant;
 import com.javaweb.util.core.SecretUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.role.ModuleInfoResponse;
@@ -65,7 +66,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 		List<UserRole> userRoleList = new ArrayList<>();
 		for(int i=0;i<list.size();i++) {
 			UserRole userRole = new UserRole();
-			userRole.setId(SecretUtil.defaultGenUniqueStr());
+			userRole.setId(SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO));
 			userRole.setUserId(userId);
 			userRole.setRoleId(list.get(i).getRoleId());
 			userRole.setStrategy(list.get(i).getRoleStrategy());
@@ -101,7 +102,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 		List<UserModule> userModuleList = new ArrayList<>();
 		for(int i=0;i<list.size();i++) {
 			UserModule userModule = new UserModule();
-			userModule.setId(SecretUtil.defaultGenUniqueStr());
+			userModule.setId(SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO));
 			userModule.setUserId(userId);
 			userModule.setModuleId(list.get(i));
 			userModuleList.add(userModule);
