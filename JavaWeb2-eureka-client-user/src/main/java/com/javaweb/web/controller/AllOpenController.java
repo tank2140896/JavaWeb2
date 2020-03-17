@@ -134,12 +134,10 @@ public class AllOpenController extends BaseController {
 		tokenData.setToken(token);
 		tokenData.setUser(user);
 		tokenData.setType(type);
-		List<Module> menuList = moduleList.stream().filter(i->2==i.getModuleType()).collect(Collectors.toList());//获得菜单列表
-		List<Module> menuListForTree = moduleList.stream().filter(i->1==i.getModuleType()||2==i.getModuleType()).collect(Collectors.toList());//获得目录、菜单列表
+		List<Module> menuListForTree = moduleList.stream().filter(i->1==i.getModuleType()||2==i.getModuleType()).collect(Collectors.toList());//获得目录、菜单列表并封装成树型结构
 		List<Module> authOperateList = moduleList.stream().filter(i->3==i.getModuleType()).collect(Collectors.toList());//获得操作权限列表
-		tokenData.setMenuList(menuList);//目前其实只需要用到：moduleName、pageUrl、icon
-		tokenData.setMenuListForTree(setTreeList(menuListForTree,null));//目前其实只需要用到：moduleName、pageUrl、icon
-		tokenData.setAuthOperateList(authOperateList);//目前其实只需要用到：apiUrl、alias
+		tokenData.setMenuListForTree(setTreeList(menuListForTree,null));//主要用到：moduleName、pageUrl、icon
+		tokenData.setAuthOperateList(authOperateList);//主要用到：apiUrl、alias
 		return tokenData;
 	}
 	

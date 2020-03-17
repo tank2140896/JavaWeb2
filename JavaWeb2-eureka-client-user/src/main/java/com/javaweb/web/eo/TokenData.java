@@ -21,10 +21,6 @@ public class TokenData implements Serializable {
 	
 	private String type;
 	
-	private List<Module> moduleList;
-	
-	private List<Module> menuList;
-	
 	private List<Module> menuListForTree;
 	
 	private List<Module> authOperateList;
