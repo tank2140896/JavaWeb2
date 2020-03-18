@@ -25,14 +25,14 @@ public class TokenDataHandlerMethodArgumentResolver implements HandlerMethodArgu
     @SuppressWarnings("unchecked")
 	public Object resolveArgument(MethodParameter parameter,ModelAndViewContainer container,NativeWebRequest request,WebDataBinderFactory factory) throws Exception {
     	try{
-	if(redisTemplate==null){
-    		redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
-		}
-    	String token = request.getHeader(SystemConstant.HEAD_TOKEN);
-    	token = SecretUtil.base64DecoderString(token,"UTF-8");
-    	String tokens[] = token.split(CommonConstant.COMMA);
-		return (TokenData)redisTemplate.opsForValue().get(tokens[1]+CommonConstant.COMMA+tokens[2]);
-	}catch(Exception e){
+    		if(redisTemplate==null){
+    			redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
+    		}
+    		String token = request.getHeader(SystemConstant.HEAD_TOKEN);
+    		token = SecretUtil.base64DecoderString(token,"UTF-8");
+    		String tokens[] = token.split(CommonConstant.COMMA);
+    		return (TokenData)redisTemplate.opsForValue().get(tokens[1]+CommonConstant.COMMA+tokens[2]);
+    	}catch(Exception e){
     		return null;
     	}
     }

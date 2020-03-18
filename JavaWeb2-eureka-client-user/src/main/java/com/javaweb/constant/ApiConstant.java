@@ -33,6 +33,7 @@ public class ApiConstant {
 	public static final String ROLE_DELETE = "/delete/{roleId}";//删除角色接口
 	public static final String ROLE_MODULE_ASSIGNMENT = "/roleModuleAssignment/{roleId}";//角色模块分配接口
 	public static final String ROLE_MODULE_INFO = "/roleModuleInfo/{roleId}";//角色模块信息接口
+	public static final String ROLE_MODULE_INFO2 = "/roleModuleInfo";//角色模块信息接口（所有模块信息）
 	
 	public static final String WEB_USER_PREFIX = "/web/sys/user";
 	public static final String USER_ADD = "/add";//新增用户接口
@@ -41,8 +42,10 @@ public class ApiConstant {
 	public static final String USER_DETAIL = "/detail/{userId}";//用户详情接口
 	public static final String USER_DELETE = "/delete/{userId}";//删除用户接口
 	public static final String USER_ROLE_INFO = "/userRoleInfo/{userId}";//用户角色信息接口
+	public static final String USER_ROLE_INFO2 = "/userRoleInfo";//用户角色信息接口（所有角色信息）
 	public static final String USER_ROLE_ASSIGNMENT = "/userRoleAssignment/{userId}";//用户角色分配接口
 	public static final String USER_MODULE_INFO = "/userModuleInfo/{userId}";//用户模块信息接口
+	public static final String USER_MODULE_INFO2 = "/userModuleInfo";//用户模块信息接口（所有模块信息）
 	public static final String USER_MODULE_ASSIGNMENT = "/userModuleAssignment/{userId}";//用户模块分配接口
 	
 }

@@ -7,12 +7,14 @@ import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.enums.JsonTypeEnum;
 
@@ -204,6 +206,14 @@ public class StringUtil{
 			throw new IOException(e);
 		}
 		return stringBuilder.toString();
+	}
+	
+	//对象中包含日期格式转字符串
+	public static String withDate2JsonString(Object object) throws Exception {
+		ObjectMapper objectMapper = new ObjectMapper();
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		objectMapper.setDateFormat(simpleDateFormat);
+		return objectMapper.writeValueAsString(object);
 	}
 	
 }
