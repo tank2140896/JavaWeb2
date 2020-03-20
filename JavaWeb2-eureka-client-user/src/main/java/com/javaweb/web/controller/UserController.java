@@ -94,6 +94,7 @@ public class UserController extends BaseController {
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.detail.success",user);
 	}
 	
+        //支持批量删除，用逗号隔开
 	@ApiOperation(value=SwaggerConstant.SWAGGER_USER_DELETE)
 	@DeleteMapping(ApiConstant.USER_DELETE)
 	public BaseResponseResult userDelete(@PathVariable(name="userId",required=true) String userId){
