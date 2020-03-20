@@ -70,15 +70,17 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
 
 	@Transactional
 	public void moduleDelete(String moduleId) {
-		moduleDao.moduleDelete(moduleId);
+		String moduleIds[] = moduleId.split(",");
+		for(String id:moduleIds){
+			moduleDao.moduleDelete(id);
+		}
 	}
 
 	@Transactional
 	public void moduleAdd(Module module) {
 		ModuleLevelAndOrdersResponse moduleLevelAndOrdersResponse = moduleDao.getModuleLevelAndOrdersByParentId(module.getParentId());
 		if(moduleLevelAndOrdersResponse==null) {
-			moduleLevelAndOrdersResponse = moduleDao.getModuleLevelAndOrdersWithoutParentId();
-			
+			moduleLevelAndOrdersResponse = moduleDao.getModuleLevelAndOrdersWithoutParentId();	
 		}
 		module.setOrders(moduleLevelAndOrdersResponse.getOrders()+1);
 		module.setLevel(moduleLevelAndOrdersResponse.getLevel());
