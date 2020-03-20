@@ -31,7 +31,10 @@ public class RoleServiceImpl extends BaseService implements RoleService {
 
 	@Transactional
 	public void roleDelete(String roleId) {
-		roleDao.roleDelete(roleId);
+		String roleIds[] = roleId.split(",");
+		for(String id:roleIds){
+			roleDao.roleDelete(id);
+		}
 	}
 
 	@Transactional
