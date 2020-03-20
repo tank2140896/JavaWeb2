@@ -39,7 +39,10 @@ public class UserServiceImpl extends BaseService implements UserService {
 
 	@Transactional
 	public void userDelete(String userId) {
-		userDao.userDelete(userId);
+		String userIds[] = userId.split(",");
+		for(String id:userIds){
+			userDao.userDelete(id);
+		}
 	}
 	
 	@Transactional
