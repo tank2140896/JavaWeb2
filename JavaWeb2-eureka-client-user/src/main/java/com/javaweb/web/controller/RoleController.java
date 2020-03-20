@@ -85,6 +85,7 @@ public class RoleController extends BaseController {
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"role.detail.success",role);
 	}
 	
+	//支持批量删除，用逗号隔开
 	@ApiOperation(value=SwaggerConstant.SWAGGER_ROLE_DELETE)
 	@DeleteMapping(ApiConstant.ROLE_DELETE)
 	public BaseResponseResult roleDelete(@PathVariable(name="roleId",required=true) String roleId){
