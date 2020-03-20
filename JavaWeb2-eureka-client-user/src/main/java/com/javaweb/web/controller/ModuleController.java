@@ -88,6 +88,7 @@ public class ModuleController extends BaseController {
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.detail.success",module);
 	}
 	
+        //支持批量删除，用逗号隔开
 	@ApiOperation(value=SwaggerConstant.SWAGGER_MODULE_DELETE)
 	@DeleteMapping(ApiConstant.MODULE_DELETE)
 	public BaseResponseResult moduleDelete(@PathVariable(name="moduleId",required=true) String moduleId){
