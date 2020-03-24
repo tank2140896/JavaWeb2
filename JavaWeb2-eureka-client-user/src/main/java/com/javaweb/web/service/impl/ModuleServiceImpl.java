@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.javaweb.base.BaseService;
-import com.javaweb.constant.CommonConstant;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.module.ModuleIdAndNameResponse;
 import com.javaweb.web.eo.module.ModuleLevelAndOrdersResponse;
@@ -97,16 +96,16 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
 	}
 
     public List<ModuleIdAndNameResponse> getModuleIdAndNameList(String moduleType) {
+    	/** 这里约定：
+    	1、选择目录（1）不需要返回可选的上级模块列表
+        2、选择菜单（2）需要返回可选的上级模块列表，条件为moduleType=1或moduleType=2且pageUrl为空或null
+        3、选择功能（3）需要返回可选的上级模块列表，条件为moduleType=2且pageUrl不为空或null
+        */
         Map<String,String> map = new HashMap<>();
-        String parameter = null;
-        if("1".equals(moduleType)||"2".equals(moduleType)) {
-            parameter = moduleType;
-        }else if(moduleType==null||CommonConstant.EMPTY_VALUE.equals(moduleType.trim())) {
-            parameter = null;
-        }else {
-            parameter = "-1";
+        if((!"1".equals(moduleType))&&(!"2".equals(moduleType))&&(!"3".equals(moduleType))){
+        	moduleType = "1";
         }
-        map.put("moduleType",parameter);
+        map.put("moduleType",moduleType);
         return moduleDao.getModuleIdAndNameList(map);
     }
 
