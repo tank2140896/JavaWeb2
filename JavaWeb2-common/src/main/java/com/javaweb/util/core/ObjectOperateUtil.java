@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.BeanUtils;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
@@ -19,6 +21,38 @@ public class ObjectOperateUtil {
 	private static final Object[] NULL_OBJECT = new Object[]{};//无返回值（void）
 	
 	private static final Class<?>[] NULL_CLASS = new Class[]{};//无参
+	
+	//对象拷贝
+	public static void copyProperties(Object source,Object target){
+		BeanUtils.copyProperties(source,target);
+	}
+	
+	//集合对象拷贝
+	public static <T,E> void copyListProperties(List<T> sourceList,List<E> targetList){
+		if(sourceList==null||targetList==null){
+			return;
+		}
+		if(sourceList.size()!=targetList.size()){
+			return;
+		}
+		for(int i=0;i<sourceList.size();i++){
+			BeanUtils.copyProperties(sourceList.get(i),targetList.get(i));
+		}
+	}
+	
+	//集合对象拷贝
+	public static <T,E> List<E> copyListProperties(List<T> sourceList,Class<E> targetClass) throws Exception {
+		if(sourceList==null||targetClass==null){
+			return new ArrayList<E>();
+		}
+		List<E> eList = new ArrayList<>();
+		for(int i=0;i<sourceList.size();i++){
+			E e = targetClass.newInstance();
+			BeanUtils.copyProperties(sourceList.get(i),e);
+			eList.add(e);
+		}
+		return eList;
+	}
 	
 	//对象映射转换
 	public static List<Object> objectMapperConversion(List<Object> sourceList,Class<?> target,Map<String,String> map) throws Exception {
