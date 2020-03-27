@@ -146,7 +146,10 @@ public class AllOpenController extends BaseController {
 		List<Module> moduleList = new ArrayList<>();
 		for (int i = 0; i < originList.size(); i++) {
 			Module currentModule = originList.get(i);
+			//String类型写法
 			if((module!=null&&module.getModuleId().equals(currentModule.getParentId()))||(module==null&&currentModule.getParentId()==null)){
+			//Long类型写法
+			//if(((module!=null)&&(module.getModuleId()==currentModule.getParentId()))||((module==null)&&(currentModule.getParentId()==null||currentModule.getParentId()==0))){
 				currentModule.setList(setTreeList(originList, currentModule));
 				moduleList.add(currentModule);
 			}
