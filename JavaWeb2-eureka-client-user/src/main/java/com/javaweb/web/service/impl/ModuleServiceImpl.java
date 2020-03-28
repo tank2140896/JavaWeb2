@@ -97,14 +97,11 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
 
     public List<ModuleIdAndNameResponse> getModuleIdAndNameList(String moduleType) {
     	/** 这里约定：
-    	1、选择目录（1）不需要返回可选的上级模块列表
-        2、选择菜单（2）需要返回可选的上级模块列表，条件为moduleType=1或moduleType=2且pageUrl为空或null
-        3、选择功能（3）需要返回可选的上级模块列表，条件为moduleType=2且pageUrl不为空或null
+    	1、选择目录（1）需要返回可选的上级模块列表，条件为moduleType=1
+        2、选择菜单（2）需要返回可选的上级模块列表，条件为moduleType=1
+        3、选择功能（3）需要返回可选的上级模块列表，条件为moduleType=2且pageUrl不为null
         */
         Map<String,String> map = new HashMap<>();
-        if((!"1".equals(moduleType))&&(!"2".equals(moduleType))&&(!"3".equals(moduleType))){
-        	moduleType = "1";
-        }
         map.put("moduleType",moduleType);
         return moduleDao.getModuleIdAndNameList(map);
     }

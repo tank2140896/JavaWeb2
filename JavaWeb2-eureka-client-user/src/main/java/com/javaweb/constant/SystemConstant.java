@@ -32,8 +32,6 @@ public class SystemConstant {
 
 	public static final String URL_LOGIN_WEB_PERMISSION = "/web/loginAccess";
 	
-	public static final Long SYSTEM_DEFAULT_SESSION_OUT = 15L;
-	
 	public static final Long SYSTEM_DEFAULT_KAPTCHA_TIME_OUT = 5L;
 
 	public static final Long SYSTEM_DEFAULT_JWT_TIME_OUT = 5L;
@@ -47,6 +45,8 @@ public class SystemConstant {
 	public static final String HEAD_TYPE = "type";
 
 	public static final String REDIS_TEMPLATE = "redisTemplate";
+	
+	public static final String ENVIRONMENT = "environment";
 	
 	public static final String SYSTEM_DEFAULT_USER_ID = ADMIN;
 	

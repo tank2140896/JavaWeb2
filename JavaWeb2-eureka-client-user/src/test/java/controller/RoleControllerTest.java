@@ -13,16 +13,18 @@ public class RoleControllerTest extends BaseControllerTest {
 	
 	@Test
 	public void testRoleAdd() throws Exception {
-		Role role = new Role();
-		role.setRoleName("角色_1");
-		String out = HttpUtil.defaultPostRequest(URL_PREFIX+"/web/sys/role/add",objectMapper.writeValueAsString(role),getHeaders());
-		System.out.println(out);
+		for(int i=0;i<11;i++){
+			Role role = new Role();
+			role.setRoleName("角色_"+i);
+			String out = HttpUtil.defaultPostRequest(URL_PREFIX+"/web/sys/role/add",objectMapper.writeValueAsString(role),getHeaders());
+			System.out.println(out);
+		}
 	}
 	
 	@Test
 	public void testRoleList() throws Exception {
 		RoleListRequest roleListRequest = new RoleListRequest();
-		roleListRequest.setRoleName("_1");
+		roleListRequest.setRoleName("角色");
 		String out = HttpUtil.defaultPostRequest(URL_PREFIX+"/web/sys/role/list",objectMapper.writeValueAsString(roleListRequest),getHeaders());
 		System.out.println(out);
 	}
@@ -30,22 +32,21 @@ public class RoleControllerTest extends BaseControllerTest {
 	@Test
 	public void testRoleModify() throws Exception {
 		Role role = new Role();
-		role.setRoleId("20190413204536637");
-		role.setRoleName("角色_2");
-		role.setDelFlag(1);
+		role.setRoleId("202003281400199551");
+		role.setRoleName("10角色");
 		String out = HttpUtil.defaultPutRequest(URL_PREFIX+"/web/sys/role/modify",objectMapper.writeValueAsString(role),getHeaders());
 		System.out.println(out);
 	}
 	
 	@Test
 	public void testRoleDetail() throws Exception {
-		String out = HttpUtil.defaultGetRequest(URL_PREFIX+"/web/sys/role/detail/20190413204536637",getHeaders());
+		String out = HttpUtil.defaultGetRequest(URL_PREFIX+"/web/sys/role/detail/202003281400199551",getHeaders());
 		System.out.println(out);
 	}
 	
 	@Test
 	public void testRoleDelete() throws Exception {
-		String out = HttpUtil.defaultDeleteRequest(URL_PREFIX+"/web/sys/role/delete/20190413204536637",null,getHeaders());
+		String out = HttpUtil.defaultDeleteRequest(URL_PREFIX+"/web/sys/role/delete/202003281400199551",null,getHeaders());
 		System.out.println(out);
 	}
 	

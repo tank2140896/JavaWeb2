@@ -6,6 +6,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.javaweb.util.core.HttpUtil;
+import com.javaweb.web.eo.role.RoleIdAndStrategyRequest;
 import com.javaweb.web.eo.user.UserListRequest;
 import com.javaweb.web.po.User;
 
@@ -13,18 +14,21 @@ public class UserControllerTest extends BaseControllerTest {
 	
 	@Test
 	public void testUserAdd() throws Exception {
-		User user = new User();
-		user.setUserName("username_1");
-		user.setPassword("password_1");
-		user.setPersonName("用户1");
-		String out = HttpUtil.defaultPostRequest(URL_PREFIX+"/web/sys/user/add",objectMapper.writeValueAsString(user),getHeaders());
-		System.out.println(out);
+		for(int i=0;i<11;i++){
+			User user = new User();
+			user.setUserName("username_"+i);
+			user.setPassword("password_"+i);
+			user.setPersonName("用户"+i);
+			String out = HttpUtil.defaultPostRequest(URL_PREFIX+"/web/sys/user/add",objectMapper.writeValueAsString(user),getHeaders());
+			System.out.println(out);
+		}
 	}
 	
 	@Test
 	public void testUserList() throws Exception {
 		UserListRequest userListRequest = new UserListRequest();
-		userListRequest.setUserName("_1");
+		userListRequest.setUserName("username_");
+		userListRequest.setCurrentPage(2L);
 		String out = HttpUtil.defaultPostRequest(URL_PREFIX+"/web/sys/user/list",objectMapper.writeValueAsString(userListRequest),getHeaders());
 		System.out.println(out);
 	}
@@ -32,50 +36,53 @@ public class UserControllerTest extends BaseControllerTest {
 	@Test
 	public void testUserModify() throws Exception {
 		User user = new User();
-		user.setUserId("20190413214407588");
-		user.setUserName("username_1");
-		user.setPersonName("用户2");
+		user.setUserId("202003281354003631");
+		user.setUserName("10_username");
+		user.setPersonName("10用户");
 		String out = HttpUtil.defaultPutRequest(URL_PREFIX+"/web/sys/user/modify",objectMapper.writeValueAsString(user),getHeaders());
 		System.out.println(out);
 	}
 	
 	@Test
 	public void testUserDetail() throws Exception {
-		String out = HttpUtil.defaultGetRequest(URL_PREFIX+"/web/sys/user/detail/20190413215101793",getHeaders());
-		System.out.println(out);
-	}
-	
-	@Test
-	public void testUserDelete() throws Exception {
-		String out = HttpUtil.defaultDeleteRequest(URL_PREFIX+"/web/sys/user/delete/20190413214407588",null,getHeaders());
-		System.out.println(out);
-	}
-	
-	@Test
-	public void testUserRoleInfo() throws Exception {
-		String out = HttpUtil.defaultGetRequest(URL_PREFIX+"/web/sys/user/userRoleInfo/20190413215101793",getHeaders());
+		String out = HttpUtil.defaultGetRequest(URL_PREFIX+"/web/sys/user/detail/202003281354003631",getHeaders());
 		System.out.println(out);
 	}
 	
 	@Test
 	public void testUserRoleAssignment() throws Exception {
-		List<String> list = new ArrayList<>();
-		list.add("20190413204536637");
-		String out = HttpUtil.defaultPostRequest(URL_PREFIX+"/web/sys/user/userRoleAssignment/20190413215101793",objectMapper.writeValueAsString(list),getHeaders());
+		List<RoleIdAndStrategyRequest> list = new ArrayList<>();
+		RoleIdAndStrategyRequest roleIdAndStrategyRequest = new RoleIdAndStrategyRequest();
+		roleIdAndStrategyRequest.setRoleId("202003281400197771");
+		roleIdAndStrategyRequest.setRoleStrategy(1);
+		list.add(roleIdAndStrategyRequest);
+		String out = HttpUtil.defaultPostRequest(URL_PREFIX+"/web/sys/user/userRoleAssignment/202003281354003631",objectMapper.writeValueAsString(list),getHeaders());
 		System.out.println(out);
 	}
 	
 	@Test
-	public void testUserModuleInfo() throws Exception {
-		String out = HttpUtil.defaultGetRequest(URL_PREFIX+"/web/sys/user/userModuleInfo/20190413215101793",getHeaders());
+	public void testUserRoleInfo() throws Exception {
+		String out = HttpUtil.defaultGetRequest(URL_PREFIX+"/web/sys/user/userRoleInfo/202003281354003631",getHeaders());
 		System.out.println(out);
 	}
 	
 	@Test
 	public void testUserModuleAssignment() throws Exception {
 		List<String> list = new ArrayList<>();
-		list.add("20190408142112268");
-		String out = HttpUtil.defaultPostRequest(URL_PREFIX+"/web/sys/user/userModuleAssignment/20190413215101793",objectMapper.writeValueAsString(list),getHeaders());
+		list.add("202003281408434951");
+		String out = HttpUtil.defaultPostRequest(URL_PREFIX+"/web/sys/user/userModuleAssignment/202003281354003631",objectMapper.writeValueAsString(list),getHeaders());
+		System.out.println(out);
+	}
+	
+	@Test
+	public void testUserModuleInfo() throws Exception {
+		String out = HttpUtil.defaultGetRequest(URL_PREFIX+"/web/sys/user/userModuleInfo/202003281354003631",getHeaders());
+		System.out.println(out);
+	}
+	
+	@Test
+	public void testUserDelete() throws Exception {
+		String out = HttpUtil.defaultDeleteRequest(URL_PREFIX+"/web/sys/user/delete/202003281354003631",null,getHeaders());
 		System.out.println(out);
 	}
 	

@@ -15,7 +15,7 @@ public class BaseControllerTest {
 	public final ObjectMapper objectMapper = new ObjectMapper();
 	
 	public final List<Header> getHeaders(){
-		Header header1 = new BasicHeader("token","8F686C6F684449C1A1F770E1D61BA2F3931415080");
+		Header header1 = new BasicHeader("token","MjNFRjRBN0NFQjcyNEE4M0ExQkZCNDVEQkY4NTdDOEU0NDEzMDk5MzAsYWRtaW4xMjM0NTYsMA==");
 		List<Header> list = new ArrayList<>();
 		list.add(header1);
 		return list;

@@ -10,7 +10,7 @@ import com.javaweb.web.eo.user.UserLoginRequest;
 public class AllOpenControllerTest extends BaseControllerTest {
 	
 	@Test
-	public void testLogin() throws Exception {
+	public void testWebLogin() throws Exception {
 		UserLoginRequest userLoginRequest = new UserLoginRequest();
 		userLoginRequest.setUsername(SystemConstant.ADMIN);
 		userLoginRequest.setPassword(SystemConstant.ADMIN);

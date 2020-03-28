@@ -1,7 +1,7 @@
 package com.javaweb.base;
 
+import java.time.Duration;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -21,12 +21,12 @@ public class BaseTool extends BaseInject {
 	@Resource(name="redisTemplate")
 	protected ValueOperations<Object,Object> valueOperations;
 	
-	public void setDataToRedis(String key,Object value,long timeOut,TimeUnit timeUnit){
-		valueOperations.set(key,value,timeOut,timeUnit);
+	public void setDataToRedis(String key,Object value,Duration duration){
+		valueOperations.set(key,value,duration);
 	}
 	
 	public void setDefaultDataToRedis(String key,Object value){
-		valueOperations.set(key,value,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
+		valueOperations.set(key,value,Duration.ofMinutes(Long.parseLong(environment.getProperty("redis.session.timeout"))));
 	}
 	
 	public Object getDateFromRedis(String key){

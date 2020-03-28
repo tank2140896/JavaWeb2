@@ -30,7 +30,7 @@ public class GlobalExceptionHandler extends BaseTool {
 	
 	@ExceptionHandler(Exception.class)
 	public BaseResponseResult handleMissingServletRequestParameterException(HttpServletRequest request,Exception e) {
-		//e.printStackTrace();
+		e.printStackTrace();
 		logger.error(e.getMessage());
 		return getBaseResponseResult(HttpCodeEnum.INTERNAL_ERROR,"validated.permission.internalError");
 	}

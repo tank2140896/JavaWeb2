@@ -85,9 +85,9 @@
 	<select id="getModuleIdAndNameList" parameterType="java.util.Map" resultType="com.javaweb.web.eo.module.ModuleIdAndNameResponse">
 		<!-- <if test='moduleType == "1" or moduleType == "2"'> -->
 		select module_id as moduleId,module_name as moduleName from module where del_flag = 0
-		<if test='moduleType == "1"'>and 1=2</if>
-		<if test='moduleType == "2"'>and module_type in(1,2) and (page_url is null or page_url = '')</if>
-		<if test='moduleType == "3"'>and module_type = 2 and (page_url is not null and page_url != '')</if>
+		<if test='moduleType == "1"'>and module_type = 1</if>
+		<if test='moduleType == "2"'>and module_type = 1</if>
+		<if test='moduleType == "3"'>and module_type = 2 and page_url is not null</if>
 	</select>
 	
 </mapper>

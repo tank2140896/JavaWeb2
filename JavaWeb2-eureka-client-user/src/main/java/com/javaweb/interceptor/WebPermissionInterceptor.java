@@ -1,13 +1,14 @@
 package com.javaweb.interceptor;
 
 import java.lang.reflect.Method;
-import java.util.concurrent.TimeUnit;
+import java.time.Duration;
 import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.core.annotation.AnnotatedElementUtils;
+import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -21,6 +22,7 @@ import com.javaweb.context.ApplicationContextHelper;
 import com.javaweb.util.core.SecretUtil;
 import com.javaweb.web.eo.TokenData;
 
+//页面端总拦截器
 @Component
 public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 	
@@ -28,6 +30,8 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 	//private Logger urlLog = LoggerFactory.getLogger("urlLog");//自定义输出日志
 	
 	private RedisTemplate<String,Object> redisTemplate = null;
+	
+	private Environment environment = null;
 
 	/**
 	 * httpServletRequest.getRequestURI()            -------------------- /javaweb/app/html/home.html
@@ -40,21 +44,25 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 	 */
 	@SuppressWarnings("unchecked")
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response,Object handler) throws Exception {
-		//BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext()); 
-		//RedisTemplate redisTemplate = (RedisTemplate) factory.getBean("redisTemplate"); 
-		//RedisTemplate<String,Object> redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
-		//String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath();  
 		if(ignoreUrl(handler)) {
 	        return true;
 		}
-	    if(redisTemplate==null){
+		//BeanFactory factory = WebApplicationContextUtils.getRequiredWebApplicationContext(request.getServletContext()); 
+		//RedisTemplate redisTemplate = (RedisTemplate) factory.getBean("redisTemplate"); 
+		//RedisTemplate<String,Object> redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
+		//String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath(); 
+		if(redisTemplate==null){
 			redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
 		}
+		if(environment==null){
+			environment = (Environment)ApplicationContextHelper.getBean(SystemConstant.ENVIRONMENT);
+		}
+		Long redisSessionTimeout = Long.parseLong(environment.getProperty("redis.session.timeout"));//获得配置文件中redis设置session失效的时间
 		String token = CommonConstant.NULL_VALUE;
 		try{
 			token = request.getHeader(SystemConstant.HEAD_TOKEN);
 			token = SecretUtil.base64DecoderString(token,"UTF-8");
-	    	String tokens[] = token.split(CommonConstant.COMMA);
+	    	String tokens[] = token.split(CommonConstant.COMMA);//token由三部分组成：token,userId,type
 	    	token = tokens[1]+CommonConstant.COMMA+tokens[2];//userId+type
 		}catch(Exception e){
 			//do nothing
@@ -75,15 +83,13 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 			return false;
 		}
 		if(servletPath.startsWith(SystemConstant.URL_LOGIN_WEB_PERMISSION)){//该路径下只要登录即可访问，不需要权限
-			redisTemplate.opsForValue().set(token,tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
+			redisTemplate.opsForValue().set(token,tokenData,Duration.ofMinutes(redisSessionTimeout));
 			return true;
 		}
-		String newToken = token;
 		long count = tokenData.getAuthOperateList().stream().filter(i->{
-			String splitApiUrl[] = i.getApiUrl().split(CommonConstant.COMMA);//某一操作可能会调用多个附属操作，多个附属操作约定用逗号分开
+			String splitApiUrl[] = i.getApiUrl().split(CommonConstant.COMMA);//某一操作可能会调用多个附属操作（即API接口），多个附属操作约定用逗号分开
 			for(String str:splitApiUrl){
 				if(servletPath.startsWith(str)){
-					redisTemplate.opsForValue().set(newToken,tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
 					return true;
 				}
 			}
@@ -93,7 +99,7 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 			request.getRequestDispatcher(ApiConstant.NO_AUTHORY).forward(request,response);
 			return false;
 		}else{
-			redisTemplate.opsForValue().set(token,tokenData,SystemConstant.SYSTEM_DEFAULT_SESSION_OUT,TimeUnit.MINUTES);
+			redisTemplate.opsForValue().set(token,tokenData,Duration.ofMinutes(redisSessionTimeout));
 			return true;
 		}
 	}
@@ -108,5 +114,5 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
         }
 	    return false;
 	}
-	
+
 }
