@@ -68,8 +68,8 @@ public class AllOpenController extends BaseController {
 		//这里我个人认为redis中包含权限信息，但是前端不需要获得太多权限信息，权限信息可以通过其它接口获得
 		TokenData returnTokenData = new TokenData();
 		returnTokenData.setToken(tokenData.getToken());
-		returnTokenData.setUser(tokenData.getUser());
-		returnTokenData.setType(tokenData.getType());
+		//returnTokenData.setUser(tokenData.getUser());
+		//returnTokenData.setType(tokenData.getType());
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.loginSuccess",returnTokenData/*tokenData.getToken()*/);
 	}
 	
@@ -134,8 +134,10 @@ public class AllOpenController extends BaseController {
 		tokenData.setToken(token);
 		tokenData.setUser(user);
 		tokenData.setType(type);
+		List<Module> menuList = moduleList.stream().filter(i->2==i.getModuleType()).collect(Collectors.toList());//获得菜单列表
 		List<Module> menuListForTree = moduleList.stream().filter(i->1==i.getModuleType()||2==i.getModuleType()).collect(Collectors.toList());//获得目录、菜单列表并封装成树型结构
 		List<Module> authOperateList = moduleList.stream().filter(i->3==i.getModuleType()).collect(Collectors.toList());//获得操作权限列表
+		tokenData.setMenuList(menuList);
 		tokenData.setMenuListForTree(setTreeList(menuListForTree,null));//主要用到：moduleName、pageUrl、icon
 		tokenData.setAuthOperateList(authOperateList);//主要用到：apiUrl、alias
 		return tokenData;

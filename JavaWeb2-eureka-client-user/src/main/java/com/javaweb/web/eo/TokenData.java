@@ -20,6 +20,8 @@ public class TokenData implements Serializable {
 	private User user;
 	
 	private String type;
+
+	private List<Module> menuList;
 	
 	private List<Module> menuListForTree;
 	
