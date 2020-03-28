@@ -1,7 +1,5 @@
 package com.javaweb.web.controller;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.javaweb.annotation.token.TokenDataAnnotation;
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.base.BaseValidatedGroup;
@@ -42,13 +41,18 @@ public class ModuleController extends BaseController {
         return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.getModuleIdAndNameList.success",moduleService.getModuleIdAndNameList(moduleType));
     }
 	
+    /**
+          实践建议：
+    1、目录：模块的上级ID可选（那就是子目录）也可不选（那就是根目录），页面URL和API的URL都是不需要的
+    2、菜单：模块的上级ID必选（所有目录，即moduleType=1），页面URL需要
+    3、功能：模块的上级ID必选（所有菜单，即moduleType=2），API的URL需要
+	*/
 	@ApiOperation(value=SwaggerConstant.SWAGGER_MODULE_ADD)
 	@PostMapping(ApiConstant.MODULE_ADD)
-	public BaseResponseResult moduleAdd(HttpServletRequest request,@RequestBody @Validated({BaseValidatedGroup.add.class}) Module module,BindingResult bindingResult){
+	public BaseResponseResult moduleAdd(@TokenDataAnnotation TokenData tokenData,@RequestBody @Validated({BaseValidatedGroup.add.class}) Module module,BindingResult bindingResult){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}else{
-			TokenData tokenData = getTokenData(request);
 			User currentUser = tokenData.getUser();
 			module.setModuleId(SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO));
 			module.setCreateDate(DateUtil.getDefaultDate());
@@ -61,18 +65,17 @@ public class ModuleController extends BaseController {
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_MODULE_LIST)
 	@PostMapping(ApiConstant.MODULE_LIST)
-	public BaseResponseResult moduleList(/*HttpServletRequest request,*/@RequestBody ModuleListRequest moduleListRequest){
+	public BaseResponseResult moduleList(@RequestBody ModuleListRequest moduleListRequest){
 		Page page = moduleService.moduleList(moduleListRequest);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.list.success",page);
 	}
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_MODULE_MODIFY)
 	@PutMapping(ApiConstant.MODULE_MODIFY)
-	public BaseResponseResult moduleModify(HttpServletRequest request,@RequestBody @Validated({BaseValidatedGroup.update.class}) Module module,BindingResult bindingResult){
+	public BaseResponseResult moduleModify(@TokenDataAnnotation TokenData tokenData,@RequestBody @Validated({BaseValidatedGroup.update.class}) Module module,BindingResult bindingResult){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}else{
-			TokenData tokenData = getTokenData(request);
 			User currentUser = tokenData.getUser();
 			module.setUpdateDate(DateUtil.getDefaultDate());
 			module.setUpdater(currentUser.getUserName());

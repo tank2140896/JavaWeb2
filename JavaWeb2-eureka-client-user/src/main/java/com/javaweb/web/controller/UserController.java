@@ -2,8 +2,6 @@ package com.javaweb.web.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.javaweb.annotation.token.TokenDataAnnotation;
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.base.BaseValidatedGroup;
@@ -42,16 +41,15 @@ public class UserController extends BaseController {
 
 	@ApiOperation(value=SwaggerConstant.SWAGGER_USER_ADD)
 	@PostMapping(ApiConstant.USER_ADD)
-	public BaseResponseResult userAdd(HttpServletRequest request,@RequestBody @Validated({BaseValidatedGroup.add.class}) User user,BindingResult bindingResult){
+	public BaseResponseResult userAdd(@TokenDataAnnotation TokenData tokenData,@RequestBody @Validated({BaseValidatedGroup.add.class}) User user,BindingResult bindingResult){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}else{
-			TokenData tokenData = getTokenData(request);
 			User currentUser = tokenData.getUser();
 			user.setUserId(SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO));
 			try{user.setPassword(SecretUtil.getSecret(user.getPassword(),"SHA-256"));}catch(Exception e){}
 			user.setParentId(currentUser.getUserId());
-			user.setLevel(currentUser.getLevel()+1);
+			user.setLevel(currentUser.getLevel()+1);//数字越大用户级别越低，这里默认新创建的用户都比创建它的用户低一级（数字是加1）
 			user.setCreateDate(DateUtil.getDefaultDate());
 			user.setCreator(currentUser.getUserName());
 			userService.userAdd(user);
@@ -61,20 +59,17 @@ public class UserController extends BaseController {
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_USER_LIST)
 	@PostMapping(ApiConstant.USER_LIST)
-	public BaseResponseResult userList(HttpServletRequest request,@RequestBody UserListRequest userListRequest){
-		TokenData tokenData = getTokenData(request);
-		userListRequest.setLevel(tokenData.getUser().getLevel());
+	public BaseResponseResult userList(@TokenDataAnnotation TokenData tokenData,@RequestBody UserListRequest userListRequest){
 		Page page = userService.userList(userListRequest);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.list.success",page);
 	}
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_USER_MODIFY)
 	@PutMapping(ApiConstant.USER_MODIFY)
-	public BaseResponseResult userModify(HttpServletRequest request,@RequestBody @Validated({BaseValidatedGroup.update.class}) User user,BindingResult bindingResult){
+	public BaseResponseResult userModify(@TokenDataAnnotation TokenData tokenData,@RequestBody @Validated({BaseValidatedGroup.update.class}) User user,BindingResult bindingResult){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}else{
-			TokenData tokenData = getTokenData(request);
 			User currentUser = tokenData.getUser();
 			user.setPassword(null);//密码不在此处修改
 			user.setUpdateDate(DateUtil.getDefaultDate());
