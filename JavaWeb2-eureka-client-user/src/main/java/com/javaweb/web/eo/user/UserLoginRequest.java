@@ -24,7 +24,7 @@ public class UserLoginRequest implements Serializable {
 	@Pattern(regexp="^(?![^a-zA-Z]+$)(?!\\D+$).{6,20}$",message="validated.user.password.pattern")
 	private String password;
 	
-	@UserLoginRequestTypeValidate(easyWayCheck=false,message="validated.user.type.pattern")//自定义校验
+	@UserLoginRequestTypeValidate(easyWayCheck=true,message="validated.user.type.pattern")//自定义校验
 	private String type = "1";
 	
 	private String kaptcha;

@@ -66,11 +66,7 @@ public class AllOpenController extends BaseController {
 	        setDefaultDataToRedis(user.getUserId()+CommonConstant.COMMA+userLoginRequest.getType(),tokenData);
 		}
 		//这里我个人认为redis中包含权限信息，但是前端不需要获得太多权限信息，权限信息可以通过其它接口获得
-		TokenData returnTokenData = new TokenData();
-		returnTokenData.setToken(tokenData.getToken());
-		//returnTokenData.setUser(tokenData.getUser());
-		//returnTokenData.setType(tokenData.getType());
-		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.loginSuccess",returnTokenData/*tokenData.getToken()*/);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.loginSuccess",tokenData.getToken()/*tokenData.getToken()*/);
 	}
 	
 	/* -------------------------------------------------- 分界线 -------------------------------------------------- */
