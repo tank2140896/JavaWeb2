@@ -90,7 +90,8 @@ public class RoleController extends BaseController {
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"role.delete.success",null);
 	}
 	
-	//这里接口设计的初衷是新增角色仅仅就是新增角色，而不是在新增角色时给其分配模块，但是为了接口的两用型，所以做了适配
+	//ApiConstant.ROLE_MODULE_INFO：获取指定角色的模块信息
+	//ApiConstant.ROLE_MODULE_INFO2：获取所有模块信息
 	@ApiOperation(value=SwaggerConstant.SWAGGER_ROLE_MODULE_INFO)
 	@GetMapping(value={ApiConstant.ROLE_MODULE_INFO,ApiConstant.ROLE_MODULE_INFO2})
 	public BaseResponseResult roleModuleInfo(@PathVariable(name="roleId",required=false) String roleId){

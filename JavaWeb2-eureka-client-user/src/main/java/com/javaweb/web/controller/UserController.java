@@ -97,7 +97,8 @@ public class UserController extends BaseController {
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.delete.success",null);
 	}
 	
-	//这里接口设计的初衷是新增用户仅仅就是新增用户，而不是在新增用户时给其分配角色，但是为了接口的两用型，所以做了适配
+	//ApiConstant.USER_ROLE_INFO：获取指定用户的角色信息
+	//ApiConstant.USER_ROLE_INFO2：获取所有角色信息
 	@ApiOperation(value=SwaggerConstant.SWAGGER_USER_ROLE_INFO)
 	@GetMapping(value={ApiConstant.USER_ROLE_INFO,ApiConstant.USER_ROLE_INFO2})
 	public BaseResponseResult userRoleInfo(@PathVariable(name="userId",required=false) String userId){
@@ -112,7 +113,8 @@ public class UserController extends BaseController {
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.userRoleAssignment.success",null);
 	}
 	
-	//这里接口设计的初衷是新增用户仅仅就是新增用户，而不是在新增用户时给其分配模块，但是为了接口的两用型，所以做了适配
+	//ApiConstant.USER_MODULE_INFO：获取指定用户的模块信息
+	//ApiConstant.USER_ROLE_INFO2：获取所有模块信息
 	@ApiOperation(value=SwaggerConstant.SWAGGER_USER_MODULE_INFO)
 	@GetMapping(value={ApiConstant.USER_MODULE_INFO,ApiConstant.USER_MODULE_INFO2})
 	public BaseResponseResult userModuleInfo(@PathVariable(name="userId",required=false) String userId){

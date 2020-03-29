@@ -58,6 +58,14 @@ public class ModuleController extends BaseController {
 			module.setCreateDate(DateUtil.getDefaultDate());
 			module.setCreator(currentUser.getUserName());
 			module.setDelFlag(0);
+			if(module.getModuleType()==1){//目录
+				module.setApiUrl(null);
+				module.setPageUrl(null);
+			}else if(module.getModuleType()==2){//菜单
+				module.setApiUrl(null);
+			}else if(module.getModuleType()==3){//功能
+				module.setPageUrl(null);
+			}
 			moduleService.moduleAdd(module);
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.add.success",null);
 		}
