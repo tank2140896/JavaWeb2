@@ -23,6 +23,9 @@ public class OperationLog implements Serializable {
 	
 	@Column(name="url")
 	private String url;//请求地址
+
+	@Column(name="request_method")
+	private String requestMethod;//请求方法
 	
 	@Column(name="request_parameter")
 	private String requestParameter;//请求参数
