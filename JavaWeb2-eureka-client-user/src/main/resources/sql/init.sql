@@ -110,6 +110,7 @@ CREATE TABLE `operation_log` (
   `id` varchar(255) NOT NULL,
   `user_id` varchar(255) DEFAULT NULL,
   `url` varchar(255) DEFAULT NULL,
+  `request_method` varchar(255) DEFAULT NULL,
   `request_parameter` varchar(255) DEFAULT NULL,
   `request_ip_address` varchar(255) DEFAULT NULL,
   `request_time` varchar(255) DEFAULT NULL,
