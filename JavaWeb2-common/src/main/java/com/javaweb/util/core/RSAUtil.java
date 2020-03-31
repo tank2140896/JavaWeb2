@@ -93,10 +93,14 @@ public class RSAUtil {
 	RsaKey rsaKey = new RsaKey();
 	try{
 	    KeyPair keyPair = getKeyPair();
-	    String publicKey = new String(Base64.encodeBase64(keyPair.getPublic().getEncoded()));
-	    String privateKey = new String(Base64.encodeBase64(keyPair.getPrivate().getEncoded()));
+	    PublicKey publicKey = keyPair.getPublic();
+	    PrivateKey privateKey = keyPair.getPrivate();
+	    String stringPublicKey = new String(Base64.encodeBase64(keyPair.getPublic().getEncoded()));
+	    String stringPrivateKey = new String(Base64.encodeBase64(keyPair.getPrivate().getEncoded()));
 	    rsaKey.setRsaPublicKey(publicKey);
 	    rsaKey.setRsaPrivateKey(privateKey);
+	    rsaKey.setRsaStringPublicKey(stringPublicKey);
+	    rsaKey.setRsaStringPrivateKey(stringPrivateKey);
 	}catch(Exception e){
 	    //do nothing
 	}
