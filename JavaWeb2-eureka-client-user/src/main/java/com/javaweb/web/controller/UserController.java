@@ -41,7 +41,7 @@ public class UserController extends BaseController {
 
 	@ApiOperation(value=SwaggerConstant.SWAGGER_USER_ADD)
 	@PostMapping(ApiConstant.USER_ADD)
-	public BaseResponseResult userAdd(@TokenDataAnnotation TokenData tokenData,@RequestBody @Validated({BaseValidatedGroup.add.class}) User user,BindingResult bindingResult){
+	public BaseResponseResult userAdd(@RequestBody @Validated({BaseValidatedGroup.add.class}) User user,@TokenDataAnnotation TokenData tokenData,BindingResult bindingResult){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}else{
@@ -59,14 +59,14 @@ public class UserController extends BaseController {
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_USER_LIST)
 	@PostMapping(ApiConstant.USER_LIST)
-	public BaseResponseResult userList(@TokenDataAnnotation TokenData tokenData,@RequestBody UserListRequest userListRequest){
+	public BaseResponseResult userList(@RequestBody UserListRequest userListRequest,@TokenDataAnnotation TokenData tokenData){
 		Page page = userService.userList(userListRequest);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.list.success",page);
 	}
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_USER_MODIFY)
 	@PutMapping(ApiConstant.USER_MODIFY)
-	public BaseResponseResult userModify(@TokenDataAnnotation TokenData tokenData,@RequestBody @Validated({BaseValidatedGroup.update.class}) User user,BindingResult bindingResult){
+	public BaseResponseResult userModify(@RequestBody @Validated({BaseValidatedGroup.update.class}) User user,@TokenDataAnnotation TokenData tokenData,BindingResult bindingResult){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}else{
@@ -108,7 +108,7 @@ public class UserController extends BaseController {
 
 	@ApiOperation(value=SwaggerConstant.SWAGGER_USER_ROLE_ASSIGNMENT)
 	@PostMapping(ApiConstant.USER_ROLE_ASSIGNMENT)
-	public BaseResponseResult userRoleAssignment(@PathVariable(name="userId",required=true) String userId,@RequestBody List<RoleIdAndStrategyRequest> list){
+	public BaseResponseResult userRoleAssignment(@RequestBody List<RoleIdAndStrategyRequest> list,@PathVariable(name="userId",required=true) String userId){
 		userService.userRoleAssignment(userId,list);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.userRoleAssignment.success",null);
 	}
@@ -124,7 +124,7 @@ public class UserController extends BaseController {
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_USER_MODULE_ASSIGNMENT)
 	@PostMapping(ApiConstant.USER_MODULE_ASSIGNMENT)
-	public BaseResponseResult userModuleAssignment(@PathVariable(name="userId",required=true) String userId,@RequestBody List<String> list){
+	public BaseResponseResult userModuleAssignment(@RequestBody List<String> list,@PathVariable(name="userId",required=true) String userId){
 		userService.userModuleAssignment(userId,list);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.userModuleAssignment.success",null);
 	}

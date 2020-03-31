@@ -37,6 +37,7 @@ public class LoginAccessController extends BaseController {
 	@ApiOperation(value=SwaggerConstant.SWAGGER_GET_REDIS_TOKEN_DATA)
 	@GetMapping(ApiConstant.GET_REDIS_TOKEN_DATA)
 	public BaseResponseResult getRedisTokenData(@TokenDataAnnotation TokenData tokenData){
+		tokenData.setRsaPrivateKeyOfBackend(null);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.getTokenDataSuccess",tokenData);
 	}
 	

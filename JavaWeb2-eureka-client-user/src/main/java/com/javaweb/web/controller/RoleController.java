@@ -40,7 +40,7 @@ public class RoleController extends BaseController {
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_ROLE_ADD)
 	@PostMapping(ApiConstant.ROLE_ADD)
-	public BaseResponseResult roleAdd(@TokenDataAnnotation TokenData tokenData,@RequestBody @Validated({BaseValidatedGroup.add.class}) Role role,BindingResult bindingResult){
+	public BaseResponseResult roleAdd(@RequestBody @Validated({BaseValidatedGroup.add.class}) Role role,@TokenDataAnnotation TokenData tokenData,BindingResult bindingResult){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}else{
@@ -63,7 +63,7 @@ public class RoleController extends BaseController {
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_ROLE_MODIFY)
 	@PutMapping(ApiConstant.ROLE_MODIFY)
-	public BaseResponseResult roleModify(@TokenDataAnnotation TokenData tokenData,@RequestBody @Validated({BaseValidatedGroup.update.class}) Role role,BindingResult bindingResult){
+	public BaseResponseResult roleModify(@RequestBody @Validated({BaseValidatedGroup.update.class}) Role role,@TokenDataAnnotation TokenData tokenData,BindingResult bindingResult){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}else{
@@ -101,7 +101,7 @@ public class RoleController extends BaseController {
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_ROLE_MODULE_ASSIGNMENT)
 	@PostMapping(ApiConstant.ROLE_MODULE_ASSIGNMENT)
-	public BaseResponseResult roleModuleAssignment(@PathVariable(name="roleId",required=true) String roleId,@RequestBody List<String> list){
+	public BaseResponseResult roleModuleAssignment(@RequestBody List<String> list,@PathVariable(name="roleId",required=true) String roleId){
 		roleService.roleModuleAssignment(roleId,list);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"role.roleModuleAssignment.success",null);
 	}

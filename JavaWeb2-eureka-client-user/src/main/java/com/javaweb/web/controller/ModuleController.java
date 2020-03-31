@@ -49,7 +49,7 @@ public class ModuleController extends BaseController {
 	*/
 	@ApiOperation(value=SwaggerConstant.SWAGGER_MODULE_ADD)
 	@PostMapping(ApiConstant.MODULE_ADD)
-	public BaseResponseResult moduleAdd(@TokenDataAnnotation TokenData tokenData,@RequestBody @Validated({BaseValidatedGroup.add.class}) Module module,BindingResult bindingResult){
+	public BaseResponseResult moduleAdd(@RequestBody @Validated({BaseValidatedGroup.add.class}) Module module,@TokenDataAnnotation TokenData tokenData,BindingResult bindingResult){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}else{
@@ -80,7 +80,7 @@ public class ModuleController extends BaseController {
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_MODULE_MODIFY)
 	@PutMapping(ApiConstant.MODULE_MODIFY)
-	public BaseResponseResult moduleModify(@TokenDataAnnotation TokenData tokenData,@RequestBody @Validated({BaseValidatedGroup.update.class}) Module module,BindingResult bindingResult){
+	public BaseResponseResult moduleModify(@RequestBody @Validated({BaseValidatedGroup.update.class}) Module module,@TokenDataAnnotation TokenData tokenData,BindingResult bindingResult){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}else{

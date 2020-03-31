@@ -22,7 +22,9 @@ import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SwaggerConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.enums.HttpCodeEnum;
+import com.javaweb.util.core.RsaUtil;
 import com.javaweb.util.core.SecretUtil;
+import com.javaweb.util.entity.RsaKey;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.user.UserLoginRequest;
 import com.javaweb.web.po.Module;
@@ -66,7 +68,7 @@ public class AllOpenController extends BaseController {
 	        setDefaultDataToRedis(user.getUserId()+CommonConstant.COMMA+userLoginRequest.getType(),tokenData);
 		}
 		//这里我个人认为redis中包含权限信息，但是前端不需要获得太多权限信息，权限信息可以通过其它接口获得
-		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.loginSuccess",tokenData.getToken()/*tokenData.getToken()*/);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.loginSuccess",tokenData.getToken());
 	}
 	
 	/* -------------------------------------------------- 分界线 -------------------------------------------------- */
@@ -136,6 +138,12 @@ public class AllOpenController extends BaseController {
 		tokenData.setMenuList(menuList);
 		tokenData.setMenuListForTree(setTreeList(menuListForTree,null));//主要用到：moduleName、pageUrl、icon
 		tokenData.setAuthOperateList(authOperateList);//主要用到：apiUrl、alias
+		RsaKey rsaKey = RsaUtil.getRsaKey();
+		tokenData.setRsaPublicKeyOfBackend(rsaKey.getRsaStringPublicKey());
+		tokenData.setRsaPrivateKeyOfBackend(rsaKey.getRsaStringPrivateKey());
+		rsaKey = RsaUtil.getRsaKey();
+		tokenData.setRsaPublicKeyOfFrontend(rsaKey.getRsaStringPublicKey());
+		tokenData.setRsaPrivateKeyOfFrontend(rsaKey.getRsaStringPrivateKey());
 		return tokenData;
 	}
 	

@@ -26,7 +26,7 @@ import org.apache.commons.codec.binary.Base64;
 
 import com.javaweb.util.entity.RsaKey;
 
-public class RSAUtil {
+public class RsaUtil {
 	
 	/**
 	<!DOCTYPE html>
@@ -90,21 +90,21 @@ public class RSAUtil {
 	private static final int MAX_DECRYPT_BLOCK = 128;//RSA最大解密密文大小
 	
     public static RsaKey getRsaKey() {
-	RsaKey rsaKey = new RsaKey();
-	try{
-	    KeyPair keyPair = getKeyPair();
-	    PublicKey publicKey = keyPair.getPublic();
-	    PrivateKey privateKey = keyPair.getPrivate();
-	    String stringPublicKey = new String(Base64.encodeBase64(keyPair.getPublic().getEncoded()));
-	    String stringPrivateKey = new String(Base64.encodeBase64(keyPair.getPrivate().getEncoded()));
-	    rsaKey.setRsaPublicKey(publicKey);
-	    rsaKey.setRsaPrivateKey(privateKey);
-	    rsaKey.setRsaStringPublicKey(stringPublicKey);
-	    rsaKey.setRsaStringPrivateKey(stringPrivateKey);
-	}catch(Exception e){
-	    //do nothing
-	}
-	return rsaKey;
+		RsaKey rsaKey = new RsaKey();
+		try{
+		    KeyPair keyPair = getKeyPair();
+		    PublicKey publicKey = keyPair.getPublic();
+		    PrivateKey privateKey = keyPair.getPrivate();
+		    String stringPublicKey = new String(Base64.encodeBase64(keyPair.getPublic().getEncoded()));
+		    String stringPrivateKey = new String(Base64.encodeBase64(keyPair.getPrivate().getEncoded()));
+		    rsaKey.setRsaPublicKey(publicKey);
+		    rsaKey.setRsaPrivateKey(privateKey);
+		    rsaKey.setRsaStringPublicKey(stringPublicKey);
+		    rsaKey.setRsaStringPrivateKey(stringPrivateKey);
+		}catch(Exception e){
+		    //do nothing
+		}
+		return rsaKey;
     }
 	
     public static KeyPair getKeyPair() throws Exception {

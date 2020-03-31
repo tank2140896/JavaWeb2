@@ -27,4 +27,12 @@ public class TokenData implements Serializable {
 	
 	private List<Module> authOperateList;
 	
+	private String rsaPublicKeyOfBackend;
+	
+	private String rsaPrivateKeyOfBackend;
+	
+	private String rsaPublicKeyOfFrontend;
+	
+	private String rsaPrivateKeyOfFrontend;
+	
 }
