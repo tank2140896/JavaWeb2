@@ -24,6 +24,8 @@ import javax.crypto.SecretKey;
 
 import org.apache.commons.codec.binary.Base64;
 
+import com.javaweb.util.entity.RsaKey;
+
 public class RSAUtil {
 	
 	/**
@@ -86,6 +88,20 @@ public class RSAUtil {
 
 	private static final int MAX_ENCRYPT_BLOCK = 117;//RSA最大加密明文大小
 	private static final int MAX_DECRYPT_BLOCK = 128;//RSA最大解密密文大小
+	
+    public static RsaKey getRsaKey() {
+	RsaKey rsaKey = new RsaKey();
+	try{
+	    KeyPair keyPair = getKeyPair();
+	    String publicKey = new String(Base64.encodeBase64(keyPair.getPublic().getEncoded()));
+	    String privateKey = new String(Base64.encodeBase64(keyPair.getPrivate().getEncoded()));
+	    rsaKey.setRsaPublicKey(publicKey);
+	    rsaKey.setRsaPrivateKey(privateKey);
+	}catch(Exception e){
+	    //do nothing
+	}
+	return rsaKey;
+    }
 	
     public static KeyPair getKeyPair() throws Exception {
         KeyPairGenerator keyPairGenerator = KeyPairGenerator.getInstance("RSA");
