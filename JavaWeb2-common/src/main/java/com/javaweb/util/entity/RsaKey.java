@@ -1,5 +1,8 @@
 package com.javaweb.util.entity;
 
+import java.security.PrivateKey;
+import java.security.PublicKey;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -7,8 +10,12 @@ import lombok.Setter;
 @Setter
 public class RsaKey {
 	
-	private String rsaPublicKey;
+	private PublicKey rsaPublicKey;
 	
-	private String rsaPrivateKey;
+	private PrivateKey rsaPrivateKey;
+	
+	private String rsaStringPublicKey;
+	
+	private String rsaStringPrivateKey;
 	
 }
