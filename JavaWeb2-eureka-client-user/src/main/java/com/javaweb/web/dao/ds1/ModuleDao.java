@@ -11,6 +11,8 @@ import com.javaweb.web.eo.module.ModuleLevelAndOrdersResponse;
 import com.javaweb.web.eo.module.ModuleListRequest;
 import com.javaweb.web.eo.module.ModuleListResponse;
 import com.javaweb.web.po.Module;
+import com.javaweb.web.po.Role;
+import com.javaweb.web.po.User;
 
 @Mapper
 public interface ModuleDao extends DaoForMySql<Module> {
@@ -30,5 +32,9 @@ public interface ModuleDao extends DaoForMySql<Module> {
 	public ModuleLevelAndOrdersResponse getModuleLevelAndOrdersWithoutParentId();
 	
 	public List<ModuleIdAndNameResponse> getModuleIdAndNameList(Map<String,String> map);
+	
+	public List<Role> getAllRoleByModuleId(String moduleId);
+	
+	public List<User> getAllUserByModuleId(String moduleId);
 	
 }

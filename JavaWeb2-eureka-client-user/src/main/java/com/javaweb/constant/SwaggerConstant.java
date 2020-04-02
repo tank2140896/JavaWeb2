@@ -12,6 +12,8 @@ public class SwaggerConstant {
 	/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ swagger-AllOpenController ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */
 	public static final String SWAGGER_ALL_OPEN_CONTROLLER_TAGS = "1、无需登录即可访问模块";
 	
+	public static final String SWAGGER_GET_SERVE_TIME = "获取服务器时间接口";
+	
 	public static final String SWAGGER_LOGIN = "用户登录接口";
 	public static final String SWAGGER_LOGIN_NOTES = "输入用户名、密码来进行登录";
 	public static final String SWAGGER_LOGIN_PARAM = "用户登录实体类";

@@ -3,6 +3,7 @@ package com.javaweb.constant;
 public class ApiConstant {
 	
 	public static final String ALL_OPEN_PREFIX = "";
+	public static final String GET_SERVE_TIME = "/getServeTime";//获取服务器时间接口
 	public static final String WEB_LOGIN = "/webLogin";//登录接口
 	public static final String REQUEST_PARAMETER_LOST = "/requestParameterLost";//请求参数缺失接口
 	public static final String INVALID_REQUEST = "/invalidRequest";//请求失效接口

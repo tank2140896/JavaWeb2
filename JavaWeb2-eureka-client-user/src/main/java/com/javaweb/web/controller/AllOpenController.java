@@ -1,10 +1,14 @@
 package com.javaweb.web.controller;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.validation.BindingResult;
@@ -17,11 +21,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
+import com.javaweb.base.BaseSystemMemory;
 import com.javaweb.constant.ApiConstant;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SwaggerConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.enums.HttpCodeEnum;
+import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.RsaUtil;
 import com.javaweb.util.core.SecretUtil;
 import com.javaweb.util.entity.RsaKey;
@@ -37,6 +43,20 @@ import io.swagger.annotations.ApiOperation;
 @Api(tags=SwaggerConstant.SWAGGER_ALL_OPEN_CONTROLLER_TAGS)
 @RestController
 public class AllOpenController extends BaseController {
+	
+	@PostConstruct
+	public void init(){
+		BaseSystemMemory.dictionaryList = dictionaryService.selectAll();//将字典表数据加载进内存
+	}
+	
+	//获取服务器时间接口
+	@ApiOperation(value=SwaggerConstant.SWAGGER_GET_SERVE_TIME)
+	@PostMapping(ApiConstant.GET_SERVE_TIME)
+	public BaseResponseResult getServeTime(){
+		LocalDateTime localDateTime = LocalDateTime.now(ZoneId.systemDefault());//ZoneId.of("GMT+8")
+		String dateTime = localDateTime.format(DateTimeFormatter.ofPattern(DateUtil.DEFAULT_DATETIME_PATTERN));
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"serve.getServeTime.success",dateTime);
+	}
     
 	//登录接口
 	@ApiOperation(value=SwaggerConstant.SWAGGER_LOGIN,notes=SwaggerConstant.SWAGGER_LOGIN_NOTES)

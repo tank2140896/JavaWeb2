@@ -90,4 +90,22 @@
 		<if test='moduleType == "3"'>and module_type = 2 and page_url is not null</if>
 	</select>
 	
+	<select id="getAllRoleByModuleId" parameterType="java.lang.String" resultType="com.javaweb.web.po.Role">
+		select role_id as roleId,role_name as roleName,parent_id as parentId,fcode,level,type,remark,
+		create_date as createDate,creator,update_date as updateDate,updater,del_flag as delFlag 
+		from role where role_id in(select DISTINCT role_id from role_module where module_id = #{_parameter})
+	</select>
+	
+	<select id="getAllUserByModuleId" parameterType="java.lang.String" resultType="com.javaweb.web.po.User">
+		select user_id as userId,user_name as userName,password,person_name as personName,email,phone,portrait,parent_id as parentId,
+		fcode,level,remark,status,create_date as createDate,creator,update_date as updateDate,updater,del_flag as delFlag
+		from user where user_id in(
+			select distinct user_id from user_role where role_id in(
+				select role_id from role where role_id in(
+					select distinct role_id from role_module where module_id = #{_parameter}
+				)
+			)
+		)
+	</select>
+	
 </mapper>

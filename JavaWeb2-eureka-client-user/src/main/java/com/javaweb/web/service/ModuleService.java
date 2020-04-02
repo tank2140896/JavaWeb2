@@ -6,6 +6,8 @@ import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.module.ModuleIdAndNameResponse;
 import com.javaweb.web.eo.module.ModuleListRequest;
 import com.javaweb.web.po.Module;
+import com.javaweb.web.po.Role;
+import com.javaweb.web.po.User;
 
 public interface ModuleService {
     
@@ -22,5 +24,9 @@ public interface ModuleService {
 	public void moduleModify(Module module);
 	
 	public Module moduleDetail(String moduleId);
+	
+	public List<Role> getAllRoleByModuleId(String moduleId);
+	
+	public List<User> getAllUserByModuleId(String moduleId);
 	
 }

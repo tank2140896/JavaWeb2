@@ -17,6 +17,8 @@ import com.javaweb.web.eo.module.ModuleLevelAndOrdersResponse;
 import com.javaweb.web.eo.module.ModuleListRequest;
 import com.javaweb.web.eo.module.ModuleListResponse;
 import com.javaweb.web.po.Module;
+import com.javaweb.web.po.Role;
+import com.javaweb.web.po.User;
 import com.javaweb.web.po.UserRole;
 import com.javaweb.web.service.ModuleService;
 
@@ -105,5 +107,13 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
         map.put("moduleType",moduleType);
         return moduleDao.getModuleIdAndNameList(map);
     }
+
+	public List<Role> getAllRoleByModuleId(String moduleId) {
+		return moduleDao.getAllRoleByModuleId(moduleId);
+	}
+	
+	public List<User> getAllUserByModuleId(String moduleId) {
+		return moduleDao.getAllUserByModuleId(moduleId);
+	}
 
 }
