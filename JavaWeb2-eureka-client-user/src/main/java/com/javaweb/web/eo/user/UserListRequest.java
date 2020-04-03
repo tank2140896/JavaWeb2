@@ -14,6 +14,8 @@ public class UserListRequest implements Serializable {
 	private String userName;//用户名
 	
 	private String personName;//用户姓名
+
+        private String roleName;//角色名
 	
 	private String createStartDate;//用户创建的开始日期
 	
