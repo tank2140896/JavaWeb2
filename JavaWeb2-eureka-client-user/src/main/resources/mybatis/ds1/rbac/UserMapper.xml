@@ -21,6 +21,7 @@
 			u.del_flag = 0
 			<if test="userName != null and userName != ''">and u.user_name like CONCAT('%',#{userName},'%')</if>
 			<if test="personName != null and personName != ''">and u.person_name like CONCAT('%',#{personName},'%')</if>
+			<if test="roleName != null and roleName != ''">and u.user_id in(select user_id from user_role where role_id in(select role_id from role where role_name like CONCAT('%',#{roleName},'%')))</if>
 			<if test="createStartDate != null and createStartDate != ''">and u.create_date &gt;=#{createStartDate}</if>
 			<if test="createEndDate != null and createEndDate != ''">and u.create_date &lt;=#{createEndDate}</if>
 		</where>
@@ -36,6 +37,7 @@
 			u.del_flag = 0
 			<if test="userName != null and userName != ''">and u.user_name like CONCAT('%',#{userName},'%')</if>
 			<if test="personName != null and personName != ''">and u.person_name like CONCAT('%',#{personName},'%')</if>
+			<if test="roleName != null and roleName != ''">and u.user_id in(select user_id from user_role where role_id in(select role_id from role where role_name like CONCAT('%',#{roleName},'%')))</if>
 			<if test="createStartDate != null and createStartDate != ''">and u.create_date &gt;=#{createStartDate}</if>
 			<if test="createEndDate != null and createEndDate != ''">and u.create_date &lt;=#{createEndDate}</if>
 		</where>
