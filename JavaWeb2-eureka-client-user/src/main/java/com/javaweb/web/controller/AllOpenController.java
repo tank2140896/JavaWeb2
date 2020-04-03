@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,7 +52,7 @@ public class AllOpenController extends BaseController {
 	
 	//获取服务器时间接口
 	@ApiOperation(value=SwaggerConstant.SWAGGER_GET_SERVE_TIME)
-	@PostMapping(ApiConstant.GET_SERVE_TIME)
+	@GetMapping(ApiConstant.GET_SERVE_TIME)
 	public BaseResponseResult getServeTime(){
 		LocalDateTime localDateTime = LocalDateTime.now(ZoneId.systemDefault());//ZoneId.of("GMT+8")
 		String dateTime = localDateTime.format(DateTimeFormatter.ofPattern(DateUtil.DEFAULT_DATETIME_PATTERN));
