@@ -40,7 +40,7 @@ public class RoleController extends BaseController {
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_ROLE_ADD)
 	@PostMapping(ApiConstant.ROLE_ADD)
-	public BaseResponseResult roleAdd(@RequestBody @Validated({BaseValidatedGroup.add.class}) Role role,@TokenDataAnnotation TokenData tokenData,BindingResult bindingResult){
+	public BaseResponseResult roleAdd(@RequestBody @Validated({BaseValidatedGroup.add.class}) Role role,BindingResult bindingResult,@TokenDataAnnotation TokenData tokenData){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}else{
@@ -63,7 +63,7 @@ public class RoleController extends BaseController {
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_ROLE_MODIFY)
 	@PutMapping(ApiConstant.ROLE_MODIFY)
-	public BaseResponseResult roleModify(@RequestBody @Validated({BaseValidatedGroup.update.class}) Role role,@TokenDataAnnotation TokenData tokenData,BindingResult bindingResult){
+	public BaseResponseResult roleModify(@RequestBody @Validated({BaseValidatedGroup.update.class}) Role role,BindingResult bindingResult,@TokenDataAnnotation TokenData tokenData){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}else{

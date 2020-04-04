@@ -41,7 +41,7 @@ public class UserController extends BaseController {
 
 	@ApiOperation(value=SwaggerConstant.SWAGGER_USER_ADD)
 	@PostMapping(ApiConstant.USER_ADD)
-	public BaseResponseResult userAdd(@RequestBody @Validated({BaseValidatedGroup.add.class}) User user,@TokenDataAnnotation TokenData tokenData,BindingResult bindingResult){
+	public BaseResponseResult userAdd(@RequestBody @Validated({BaseValidatedGroup.add.class}) User user,BindingResult bindingResult,@TokenDataAnnotation TokenData tokenData){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}else{
@@ -66,7 +66,7 @@ public class UserController extends BaseController {
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_USER_MODIFY)
 	@PutMapping(ApiConstant.USER_MODIFY)
-	public BaseResponseResult userModify(@RequestBody @Validated({BaseValidatedGroup.update.class}) User user,@TokenDataAnnotation TokenData tokenData,BindingResult bindingResult){
+	public BaseResponseResult userModify(@RequestBody @Validated({BaseValidatedGroup.update.class}) User user,BindingResult bindingResult,@TokenDataAnnotation TokenData tokenData){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}else{
