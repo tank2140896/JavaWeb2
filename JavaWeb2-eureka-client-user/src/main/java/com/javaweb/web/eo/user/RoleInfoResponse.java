@@ -15,6 +15,8 @@ public class RoleInfoResponse implements Serializable {
 	
 	private String roleName;
 	
+	private Integer strategy;
+	
 	private Boolean checkFlag;//false表示未被选中；true表示被选中
 
 }

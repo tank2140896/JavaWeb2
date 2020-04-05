@@ -58,10 +58,10 @@
 	</select>
 	
 	<select id="userRoleInfo" parameterType="java.lang.String" resultType="com.javaweb.web.eo.user.RoleInfoResponse">
-		SELECT r.role_id as roleId,r.role_name as roleName,(CASE WHEN tmp.role_id IS NULL THEN false ELSE true END) as checkFlag
-		from role as r
-		LEFT JOIN
-		(SELECT role_id from user_role where user_id = #{_parameter}) as tmp
+		SELECT r.role_id as roleId,r.role_name as roleName,tmp.strategy as strategy,
+		(CASE WHEN tmp.role_id IS NULL THEN false ELSE true END) as checkFlag
+		from role as r LEFT JOIN
+		(SELECT role_id,strategy from user_role where user_id = #{_parameter}) as tmp
 		ON r.role_id = tmp.role_id
 	</select>
 	

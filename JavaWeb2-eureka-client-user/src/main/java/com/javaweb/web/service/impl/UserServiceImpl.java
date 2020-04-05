@@ -72,7 +72,8 @@ public class UserServiceImpl extends BaseService implements UserService {
 			userRole.setId(SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO));
 			userRole.setUserId(userId);
 			userRole.setRoleId(list.get(i).getRoleId());
-			userRole.setStrategy(list.get(i).getRoleStrategy());
+			Integer strategy = list.get(i).getRoleStrategy();
+			userRole.setStrategy(strategy==null?0:strategy);
 			userRoleList.add(userRole);
 		}
 		map.put("userId",userId);
