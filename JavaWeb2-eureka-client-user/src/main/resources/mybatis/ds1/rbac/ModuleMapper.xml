@@ -33,13 +33,13 @@
 			m.del_flag = 0
 			<if test="moduleName != null and moduleName != ''">and m.module_name like CONCAT('%',#{moduleName},'%')</if>
 			<if test="pageUrl != null and pageUrl != ''">and m.page_url like CONCAT('%',#{pageUrl},'%')</if>
-			<if test="apiUrl != null and apiUrl != ''">and m.page_url like CONCAT('%',#{apiUrl},'%')</if>
-			<if test='moduleType == "1" or moduleType == "2"'>and m.module_type = ${moduleType}</if>
+			<if test="apiUrl != null and apiUrl != ''">and m.api_url like CONCAT('%',#{apiUrl},'%')</if>
+			<if test='moduleType == "1" or moduleType == "2" or moduleType == "3"'>and m.module_type = ${moduleType}</if>
 			<if test="alias != null and alias != ''">and m.alias like CONCAT('%',#{alias},'%')</if>
 			<if test="createStartDate != null and createStartDate != ''">and m.create_date &gt;=#{createStartDate}</if>
 			<if test="createEndDate != null and createEndDate != ''">and m.create_date &lt;=#{createEndDate}</if>
 		</where>
-		order by m.level asc,m.orders asc
+		order by m.module_type asc,m.orders asc
 		limit ${(currentPage-1)*pageSize},${pageSize}
 	</select>
 	
@@ -49,8 +49,8 @@
 			m.del_flag = 0
 			<if test="moduleName != null and moduleName != ''">and m.module_name like CONCAT('%',#{moduleName},'%')</if>
 			<if test="pageUrl != null and pageUrl != ''">and m.page_url like CONCAT('%',#{pageUrl},'%')</if>
-			<if test="apiUrl != null and apiUrl != ''">and m.page_url like CONCAT('%',#{apiUrl},'%')</if>
-			<if test='moduleType == "1" or moduleType == "2"'>and m.module_type = ${moduleType}</if>
+			<if test="apiUrl != null and apiUrl != ''">and m.api_url like CONCAT('%',#{apiUrl},'%')</if>
+			<if test='moduleType == "1" or moduleType == "2" or moduleType == "3"'>and m.module_type = ${moduleType}</if>
 			<if test="alias != null and alias != ''">and m.alias like CONCAT('%',#{alias},'%')</if>
 			<if test="createStartDate != null and createStartDate != ''">and m.create_date &gt;=#{createStartDate}</if>
 			<if test="createEndDate != null and createEndDate != ''">and m.create_date &lt;=#{createEndDate}</if>

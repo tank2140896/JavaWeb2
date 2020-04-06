@@ -21,6 +21,8 @@ public class Module extends BaseEntity implements Serializable {
 
 	private List<Module> list;/**辅助属性*/
 	
+	private String parentName;/**辅助属性（模块的上级模块名称）*/
+	
 	@NotNull(groups={update.class,delete.class},message="validated.module.moduleId.notNull")
 	@Column(name="module_id",pk=true)
 	private String moduleId;//模块ID
@@ -37,8 +39,6 @@ public class Module extends BaseEntity implements Serializable {
 	
 	@Column(name="parent_id")
 	private String parentId;//模块的上级ID
-	
-	private String parentName;//模块的上级模块名称(辅助属性)
 	
 	@Column(name="fcode")
 	private String fcode;//层级关系
