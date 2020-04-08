@@ -15,6 +15,7 @@ import com.javaweb.constant.SwaggerConstant;
 import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.po.Dictionary;
+import com.javaweb.web.po.User;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -38,11 +39,13 @@ public class LoginAccessController extends BaseController {
 	@GetMapping(ApiConstant.GET_REDIS_TOKEN_DATA)
 	public BaseResponseResult getRedisTokenData(@TokenDataAnnotation TokenData tokenData){
 		tokenData.setRsaPrivateKeyOfBackend(null);
+		User user = tokenData.getUser();
+		user.setPassword(null);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.getTokenDataSuccess",tokenData);
 	}
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_GET_DICTIONARY)
-    @PostMapping(ApiConstant.GET_DICTIONARY)
+        @PostMapping(ApiConstant.GET_DICTIONARY)
 	public BaseResponseResult getDictionary(@RequestBody Dictionary dictionary) {
 	    return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.getDictionarySuccess",dictionaryService.getDictionary(dictionary));
 	}
