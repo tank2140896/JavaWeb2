@@ -3,7 +3,7 @@ package com.javaweb.web.eo;
 import java.io.Serializable;
 import java.util.List;
 
-import com.javaweb.web.po.Module;
+import com.javaweb.web.eo.module.SidebarInfoResponse;
 import com.javaweb.web.po.User;
 
 import lombok.Getter;
@@ -21,11 +21,11 @@ public class TokenData implements Serializable {
 	
 	private String type;
 
-	private List<Module> menuList;
+	private List<String> pageUrlList;
 	
-	private List<Module> menuListForTree;
+	private List<String> apiUrlList;
 	
-	private List<Module> authOperateList;
+	private List<SidebarInfoResponse> menuListForTree;
 	
 	private String rsaPublicKeyOfBackend;
 	

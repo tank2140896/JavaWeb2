@@ -29,10 +29,12 @@ import com.javaweb.constant.SwaggerConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.util.core.DateUtil;
+import com.javaweb.util.core.ObjectOperateUtil;
 import com.javaweb.util.core.RsaUtil;
 import com.javaweb.util.core.SecretUtil;
 import com.javaweb.util.entity.RsaKey;
 import com.javaweb.web.eo.TokenData;
+import com.javaweb.web.eo.module.SidebarInfoResponse;
 import com.javaweb.web.eo.user.UserLoginRequest;
 import com.javaweb.web.po.Module;
 import com.javaweb.web.po.User;
@@ -153,12 +155,34 @@ public class AllOpenController extends BaseController {
 		tokenData.setToken(token);
 		tokenData.setUser(user);
 		tokenData.setType(type);
-		List<Module> menuList = moduleList.stream().filter(i->2==i.getModuleType()).collect(Collectors.toList());//获得菜单列表
-		List<Module> menuListForTree = moduleList.stream().filter(i->1==i.getModuleType()||2==i.getModuleType()).collect(Collectors.toList());//获得目录、菜单列表并封装成树型结构
-		List<Module> authOperateList = moduleList.stream().filter(i->3==i.getModuleType()).collect(Collectors.toList());//获得操作权限列表
-		tokenData.setMenuList(menuList);
-		tokenData.setMenuListForTree(setTreeList(menuListForTree,null));//主要用到：moduleName、pageUrl、icon
-		tokenData.setAuthOperateList(authOperateList);//主要用到：apiUrl、alias
+		//获得pageUrl列表
+		List<String> pageUrlList = new ArrayList<>();
+		for(int i=0;i<moduleList.size();i++){
+			String pageUrl = moduleList.get(i).getPageUrl();
+			if((pageUrl!=null)&&(!CommonConstant.EMPTY_VALUE.equals(pageUrl))){
+				pageUrlList.add(pageUrl);
+			}
+		}
+		pageUrlList = pageUrlList.stream().distinct().collect(Collectors.toList());
+		//获得apiUrl列表
+		List<String> apiUrlList = new ArrayList<>();
+		for(int i=0;i<moduleList.size();i++){
+			String apiUrl = moduleList.get(i).getApiUrl();
+			if((apiUrl!=null)&&(!CommonConstant.EMPTY_VALUE.equals(apiUrl))){
+				String apiUrls[] = apiUrl.split(CommonConstant.COMMA);//某一操作可能会调用多个附属操作（即API接口），多个附属操作约定用逗号分开
+				for(String each:apiUrls){
+					apiUrlList.add(each);
+				}
+			}
+		}
+		apiUrlList = apiUrlList.stream().distinct().collect(Collectors.toList());
+		tokenData.setPageUrlList(pageUrlList);
+		tokenData.setApiUrlList(apiUrlList);
+		List<Module> modules = moduleList.stream().filter(i->1==i.getModuleType()||2==i.getModuleType()).collect(Collectors.toList());//获得目录、菜单列表并封装成树型结构
+		List<SidebarInfoResponse> menuListForTree = new ArrayList<>();
+		menuListForTree = ObjectOperateUtil.copyListProperties(modules,SidebarInfoResponse.class);//主要用到：moduleName、pageUrl、icon
+		menuListForTree = setTreeList(menuListForTree,null);
+		tokenData.setMenuListForTree(menuListForTree);
 		RsaKey rsaKey = RsaUtil.getRsaKey();
 		tokenData.setRsaPublicKeyOfBackend(rsaKey.getRsaStringPublicKey());
 		tokenData.setRsaPrivateKeyOfBackend(rsaKey.getRsaStringPrivateKey());
@@ -168,8 +192,22 @@ public class AllOpenController extends BaseController {
 		return tokenData;
 	}
 	
+	public List<SidebarInfoResponse> setTreeList(List<SidebarInfoResponse> originList,SidebarInfoResponse module){
+		List<SidebarInfoResponse> moduleList = new ArrayList<>();
+		for (int i = 0; i < originList.size(); i++) {
+			SidebarInfoResponse currentModule = originList.get(i);
+			if((module!=null&&module.getModuleId().equals(currentModule.getParentId()))||(module==null&&currentModule.getParentId()==null)){
+				currentModule.setList(setTreeList(originList, currentModule));
+				moduleList.add(currentModule);
+			}
+		}
+		return moduleList;
+	}
+	
+	/* -------------------------------------------------- 分界线（下面的目前没用到） -------------------------------------------------- */
+	
 	//封装成树形结构集合(递归版)
-	private List<Module> setTreeList(List<Module> originList,Module module){
+	public List<Module> setTreeList(List<Module> originList,Module module){
 		List<Module> moduleList = new ArrayList<>();
 		for (int i = 0; i < originList.size(); i++) {
 			Module currentModule = originList.get(i);
@@ -185,8 +223,7 @@ public class AllOpenController extends BaseController {
 	}
 	
 	//封装成树形结构集合(非递归版)
-    @SuppressWarnings("unused")
-    private List<Module> setTreeList(List<Module> list){
+    public List<Module> setTreeList(List<Module> list){
         List<List<Module>> deepList = getEachDeep(list);
         for(int i=deepList.size()-1;i>0;i--){
             List<Module> childs = deepList.get(i);
@@ -211,7 +248,7 @@ public class AllOpenController extends BaseController {
         return deepList.get(0);
     }
 	    
-    private List<List<Module>> getEachDeep(List<Module> list){
+    public List<List<Module>> getEachDeep(List<Module> list){
         List<List<Module>> arrayList = new ArrayList<>();//定义一个深度集合
         int deep = 0;//深度
         for(int i=0;i<list.size();){

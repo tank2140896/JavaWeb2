@@ -41,15 +41,19 @@ public class ObjectOperateUtil {
 	}
 	
 	//集合对象拷贝
-	public static <T,E> List<E> copyListProperties(List<T> sourceList,Class<E> targetClass) throws Exception {
+	public static <T,E> List<E> copyListProperties(List<T> sourceList,Class<E> targetClass) {
 		if(sourceList==null||targetClass==null){
 			return new ArrayList<E>();
 		}
 		List<E> eList = new ArrayList<>();
-		for(int i=0;i<sourceList.size();i++){
-			E e = targetClass.newInstance();
-			BeanUtils.copyProperties(sourceList.get(i),e);
-			eList.add(e);
+		try{
+			for(int i=0;i<sourceList.size();i++){
+				E e = targetClass.newInstance();
+				BeanUtils.copyProperties(sourceList.get(i),e);
+				eList.add(e);
+			}
+		}catch(Exception e){
+			//do nothing
 		}
 		return eList;
 	}

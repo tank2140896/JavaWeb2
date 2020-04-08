@@ -86,12 +86,9 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 			redisTemplate.opsForValue().set(token,tokenData,Duration.ofMinutes(redisSessionTimeout));
 			return true;
 		}
-		long count = tokenData.getAuthOperateList().stream().filter(i->{
-			String splitApiUrl[] = i.getApiUrl().split(CommonConstant.COMMA);//某一操作可能会调用多个附属操作（即API接口），多个附属操作约定用逗号分开
-			for(String str:splitApiUrl){
-				if(servletPath.startsWith(str)){
-					return true;
-				}
+		long count = tokenData.getApiUrlList().stream().filter(i->{
+			if(servletPath.startsWith(i)){
+				return true;
 			}
 			return false; 
 		}).count();
