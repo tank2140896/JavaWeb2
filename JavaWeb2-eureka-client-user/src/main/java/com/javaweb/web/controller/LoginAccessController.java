@@ -45,7 +45,7 @@ public class LoginAccessController extends BaseController {
 	}
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_GET_DICTIONARY)
-        @PostMapping(ApiConstant.GET_DICTIONARY)
+    @PostMapping(ApiConstant.GET_DICTIONARY)
 	public BaseResponseResult getDictionary(@RequestBody Dictionary dictionary) {
 	    return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.getDictionarySuccess",dictionaryService.getDictionary(dictionary));
 	}
