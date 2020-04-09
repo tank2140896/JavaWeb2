@@ -85,6 +85,8 @@ public class ModuleController extends BaseController {
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}else{
 			User currentUser = tokenData.getUser();
+                        module.setLevel(null);
+			module.setType(null);
 			module.setUpdateDate(DateUtil.getDefaultDate());
 			module.setUpdater(currentUser.getUserName());
 			moduleService.moduleModify(module);
