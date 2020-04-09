@@ -83,8 +83,8 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
 		if(moduleLevelAndOrdersResponse==null) {
 			moduleLevelAndOrdersResponse = moduleDao.getModuleLevelAndOrdersWithoutParentId();	
 		}
-		module.setOrders(moduleLevelAndOrdersResponse.getOrders()==null?1:moduleLevelAndOrdersResponse.getOrders()+1);
-		//module.setLevel(moduleLevelAndOrdersResponse.getLevel()==null?1:moduleLevelAndOrdersResponse.getLevel()+1);//暂时不做处理
+		module.setOrders(moduleLevelAndOrdersResponse.getOrders()+1);
+		module.setLevel(moduleLevelAndOrdersResponse.getLevel());
 		moduleDao.insertForMySql(module);
 	}
 	
