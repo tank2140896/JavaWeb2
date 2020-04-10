@@ -71,4 +71,20 @@ public class SwaggerConstant {
 	public static final String SWAGGER_USER_MODULE_ASSIGNMENT = "用户模块分配接口";
 	/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ swagger-UserController ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */
 	
+	/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ swagger-DictionaryController ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */
+	public static final String SWAGGER_DICTIONARY_CONTROLLER_TAGS = "6、登录且需要权限才可访问的字典管理模块";
+	
+	public static final String SWAGGER_DICTIONARY_ADD = "新增字典接口";
+	public static final String SWAGGER_DICTIONARY_LIST = "查询字典接口";
+	public static final String SWAGGER_DICTIONARY_MODIFY = "修改字典接口";
+	public static final String SWAGGER_DICTIONARY_DETAIL = "字典详情接口";
+	public static final String SWAGGER_DICTIONARY_DELETE = "删除字典接口";
+	/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ swagger-UserController ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */
+	
+	/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ swagger-OperationLogController ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */
+	public static final String SWAGGER_OPERATIONLOG_CONTROLLER_TAGS = "7、登录且需要权限才可访问的操作日志管理模块";
+	
+	public static final String SWAGGER_OPERATIONLOG_LIST = "查询操作日志接口";
+	/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ swagger-UserController ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */
+	
 }

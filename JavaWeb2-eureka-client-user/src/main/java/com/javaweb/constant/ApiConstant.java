@@ -48,4 +48,14 @@ public class ApiConstant {
 	public static final String MODULE_DETAIL = "/detail/{moduleId}";//模块详情接口
 	public static final String MODULE_DELETE = "/delete/{moduleId}";//删除模块接口
 	
+	public static final String WEB_DICTIONARY_PREFIX = "/web/sys/dictionary";
+	public static final String DICTIONARY_ADD = "/add";//新增字典接口
+	public static final String DICTIONARY_LIST = "/list";//查询字典接口
+	public static final String DICTIONARY_MODIFY = "/modify";//修改字典接口
+	public static final String DICTIONARY_DETAIL = "/detail/{dictionaryId}";//字典详情接口
+	public static final String DICTIONARY_DELETE = "/delete/{dictionaryId}";//删除字典接口
+	
+	public static final String WEB_OPERATIONLOG_PREFIX = "/web/sys/operationLog";
+	public static final String OPERATIONLOG_LIST = "/list";//查询操作日志接口
+	
 }

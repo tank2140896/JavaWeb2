@@ -22,4 +22,20 @@
 		order by sort asc
 	</select>
 	
+	<select id="dictionaryList" parameterType="com.javaweb.web.eo.dictionary.DictionaryListRequest" resultType="com.javaweb.web.po.Dictionary">
+		select <include refid="selectDictionary"></include> from dictionary where del_flag = 0
+		<if test="dataType != null and dataType != ''">and data_type like CONCAT('%',#{dataType},'%')</if>
+		<if test="keyCode != null and keyCode != ''">and key_code like CONCAT('%',#{keyCode},'%')</if>
+		<if test="means != null and means != ''">and means like CONCAT('%',#{means},'%')</if>
+		order by data_type asc,value_code asc
+		limit ${(currentPage-1)*pageSize},${pageSize}
+	</select>
+	
+	<select id="dictionaryCount" parameterType="com.javaweb.web.eo.dictionary.DictionaryListRequest" resultType="java.lang.Long">
+		select count(1) from dictionary where del_flag = 0
+		<if test="dataType != null and dataType != ''">and data_type like CONCAT('%',#{dataType},'%')</if>
+		<if test="keyCode != null and keyCode != ''">and key_code like CONCAT('%',#{keyCode},'%')</if>
+		<if test="means != null and means != ''">and means like CONCAT('%',#{means},'%')</if>
+	</select>
+	
 </mapper>

@@ -75,32 +75,36 @@ CREATE TABLE `module` (
 -- ----------------------------
 -- Records of module
 -- ----------------------------
-INSERT INTO `module` VALUES ('202003282108350611', '系统管理', null, null, null, null, '1', '1', '1', 'sys', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('202003282108350781', '用户管理', '/web/sys/user', null, '202003282108350611', null, '2', '1', '2', 'sys:user', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('202003282108350791', '角色管理', '/web/sys/role', null, '202003282108350611', null, '2', '2', '2', 'sys:role', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('202003282108350801', '模块管理', '/web/sys/module', null, '202003282108350611', null, '2', '3', '2', 'sys:module', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('202003282108350831', '用户模块分配', null, '/web/sys/user/userModuleAssignment,/web/sys/user/userModuleInfo', '202003282108350781', null, '3', '9', '3', 'sys:user:module:assignment', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('202003282108350861', '修改模块', null, '/web/sys/module/modify,/web/sys/module/getModuleIdAndNameList', '202003282108350801', null, '3', '5', '3', 'sys:module:modify', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282108350611', '系统管理', null, null, null, null, '1', '1', '1', 'sys', null, '总管理系统', null, 'fa fa-window-maximize', '1', '2018-02-08 17:02:21', 'admin123456', '2020-04-09 14:16:11', 'admin123456', '0');
+INSERT INTO `module` VALUES ('202003282108350781', '用户管理', '/web/sys/user', null, '202003282108350611', null, '2', '1', '2', 'sys:user', null, '总管理系统', null, 'fa fa-user-circle', '1', '2018-02-08 17:02:21', 'admin123456', '2020-04-09 14:18:54', 'admin123456', '0');
+INSERT INTO `module` VALUES ('202003282108350791', '角色管理', '/web/sys/role', null, '202003282108350611', null, '2', '2', '2', 'sys:role', null, '总管理系统', null, 'fa fa-address-card', '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282108350801', '模块管理', '/web/sys/module', null, '202003282108350611', null, '2', '3', '2', 'sys:module', null, '总管理系统', null, 'fa fa-modx', '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282108350802', '字典管理', '/web/sys/dictionary', null, '202003282108350611', null, '2', '4', '2', 'sys:dictionary', null, '总管理系统', null, 'fa fa-book', '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282108350803', '操作日志管理', '/web/sys/operationLog', null, '202003282108350611', null, '2', '5', '2', 'sys:operationLog', null, '总管理系统', null, 'fa fa-wpforms', '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282108350831', '用户模块分配', '/web/sys/user/userModuleAssignment', '/web/sys/user/userModuleAssignment,/web/sys/user/userModuleInfo', '202003282108350781', null, '3', '9', '3', 'sys:user:module:assignment', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282108350861', '修改模块', '/web/sys/module/modify', '/web/sys/module/modify,/web/sys/module/getModuleIdAndNameList', '202003282108350801', null, '3', '5', '3', 'sys:module:modify', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
 INSERT INTO `module` VALUES ('202003282108350891', '删除角色', null, '/web/sys/role/delete', '202003282108350791', null, '3', '5', '3', 'sys:role:delete', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('202003282108350931', '查询角色', null, '/web/sys/role/list', '202003282108350791', null, '3', '3', '3', 'sys:role:list', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('202003282108350991', '新增用户', null, '/web/sys/user/add', '202003282108350781', null, '3', '2', '3', 'sys:user:add', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('202003282108351001', '模块ID和名称列表', null, '/web/sys/module/getModuleIdAndNameList', '202003282108350801', null, '3', '6', '3', 'sys:module:getModuleIdAndNameList', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('202003282115442191', '查询模块', null, '/web/sys/module/list', '202003282108350801', null, '3', '1', '3', 'sys:module:list', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('202003282115442421', '角色详情', null, '/web/sys/role/detail', '202003282108350791', null, '3', '4', '3', 'sys:role:detail', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282108350931', '查询角色', '/web/sys/role/list', '/web/sys/role/list', '202003282108350791', null, '3', '3', '3', 'sys:role:list', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282108350991', '新增用户', '/web/sys/user/add', '/web/sys/user/add', '202003282108350781', null, '3', '2', '3', 'sys:user:add', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282115442191', '查询模块', '/web/sys/module/list', '/web/sys/module/list', '202003282108350801', null, '3', '1', '3', 'sys:module:list', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282115442421', '角色详情', '/web/sys/role/detail', '/web/sys/role/detail', '202003282108350791', null, '3', '4', '3', 'sys:role:detail', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
 INSERT INTO `module` VALUES ('202003282115442491', '删除模块', null, '/web/sys/module/delete', '202003282108350801', null, '3', '4', '3', 'sys:module:delete', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('202003282115442541', '修改角色', null, '/web/sys/role/modify,/web/sys/role/detail', '202003282108350791', null, '3', '2', '3', 'sys:role:modifty', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('202003282115442571', '模块详情', null, '/web/sys/module/detail', '202003282108350801', null, '3', '2', '3', 'sys:module:detail', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('202003282116237201', '新增角色', null, '/web/sys/role/add', '202003282108350791', null, '3', '1', '3', 'sys:role:add', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('202003282116237411', '用户角色分配', null, '/web/sys/user/userRoleAssignment,/web/sys/user/userRoleInfo', '202003282108350781', null, '3', '7', '3', 'sys:user:role:assignment', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('202003282116237491', '修改用户', null, '/web/sys/user/modify,/web/sys/user/detail', '202003282108350781', null, '3', '3', '3', 'sys:user:modify', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('202003282116237541', '用户模块信息', null, '/web/sys/user/userModuleInfo', '202003282108350781', null, '3', '8', '3', 'sys:user:module', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('202003282116593201', '角色模块分配', null, '/web/sys/role/roleModuleAssignment,/web/sys/role/roleModuleInfo', '202003282108350791', null, '3', '6', '3', 'sys:role:module:assignment', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282115442541', '修改角色', '/web/sys/role/modify', '/web/sys/role/modify,/web/sys/role/detail', '202003282108350791', null, '3', '2', '3', 'sys:role:modifty', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282115442571', '模块详情', '/web/sys/module/detail', '/web/sys/module/detail', '202003282108350801', null, '3', '2', '3', 'sys:module:detail', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282116237201', '新增角色', '/web/sys/role/add', '/web/sys/role/add', '202003282108350791', null, '3', '1', '3', 'sys:role:add', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282116237411', '用户角色分配', '/web/sys/user/userRoleAssignment', '/web/sys/user/userRoleAssignment,/web/sys/user/userRoleInfo', '202003282108350781', null, '3', '7', '3', 'sys:user:role:assignment', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282116237491', '修改用户', '/web/sys/user/modify', '/web/sys/user/modify,/web/sys/user/detail', '202003282108350781', null, '3', '3', '3', 'sys:user:modify', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282116593201', '角色模块分配', '/web/sys/role/roleModuleAssignment', '/web/sys/role/roleModuleAssignment,/web/sys/role/roleModuleInfo', '202003282108350791', null, '3', '6', '3', 'sys:role:module:assignment', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
 INSERT INTO `module` VALUES ('202003282116593381', '删除用户', null, '/web/sys/user/delete', '202003282108350781', null, '3', '4', '3', 'sys:user:delete', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('202003282116593521', '新增模块', null, '/web/sys/module/add,/web/sys/module/getModuleIdAndNameList', '202003282108350801', null, '3', '3', '3', 'sys:module:add', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('202003282117250201', '用户角色信息', null, '/web/sys/user/userRoleInfo', '202003282108350781', null, '3', '6', '3', 'sys:user:role', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('202003282117355621', '查询用户', null, '/web/sys/user/list', '202003282108350781', null, '3', '1', '3', 'sys:user:list', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('202003282117355941', '用户详情', null, '/web/sys/user/detail', '202003282108350781', null, '3', '5', '3', 'sys:user:detail', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
-INSERT INTO `module` VALUES ('202003282117534261', '角色模块信息', null, '/web/sys/role/roleModuleInfo', '202003282108350791', null, '3', '7', '3', 'sys:role:module', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282116593521', '新增模块', '/web/sys/module/add', '/web/sys/module/add,/web/sys/module/getModuleIdAndNameList', '202003282108350801', null, '3', '3', '3', 'sys:module:add', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282117355621', '查询用户', '/web/sys/user/list', '/web/sys/user/list', '202003282108350781', null, '3', '1', '3', 'sys:user:list', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282117355941', '用户详情', '/web/sys/user/detail', '/web/sys/user/detail', '202003282108350781', null, '3', '5', '3', 'sys:user:detail', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282117355942', '新增字典', '/web/sys/dictionary/add', '/web/sys/dictionary/add', '202003282108350802', null, '3', '1', '3', 'sys:dictionary:add', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282117355943', '修改字典', '/web/sys/dictionary/modify', '/web/sys/dictionary/modify,/web/sys/dictionary/detail', '202003282108350802', null, '3', '2', '3', 'sys:dictionary:modify', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282117355944', '查询字典', '/web/sys/dictionary/list', '/web/sys/dictionary/list', '202003282108350802', null, '3', '3', '3', 'sys:dictionary:list', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282117355945', '删除字典', null, '/web/sys/dictionary/delete', '202003282108350802', null, '3', '4', '3', 'sys:dictionary:delete', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282117355946', '字典详情', '/web/sys/dictionary/detail', '/web/sys/dictionary/detail', '202003282108350802', null, '3', '5', '3', 'sys:dictionary:detail', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282117355947', '查询操作日志', '/web/sys/operationLog/list', '/web/sys/operationLog/list', '202003282108350803', null, '3', '1', '3', 'sys:operationLog:list', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
 
 -- ----------------------------
 -- Table structure for `operation_log`
@@ -121,6 +125,9 @@ CREATE TABLE `operation_log` (
 -- ----------------------------
 -- Records of operation_log
 -- ----------------------------
+INSERT INTO `operation_log` VALUES ('202004100931410091', 'admin123456', 'http://client1:2001/web/sys/dictionary/delete/202004100928532131', 'DELETE', '[202004100928532131]', '10.131.9.221', '2020-04-10 09:31:41', null);
+INSERT INTO `operation_log` VALUES ('202004100932106291', 'admin123456', 'http://client1:2001/web/sys/dictionary/add', 'POST', '[com.javaweb.web.po.Dictionary@652d8f47, com.javaweb.web.eo.TokenData@e34347e]', '10.131.9.221', '2020-04-10 09:32:10', null);
+INSERT INTO `operation_log` VALUES ('202004100932225471', 'admin123456', 'http://client1:2001/web/sys/dictionary/delete/202004100932107541', 'DELETE', '[202004100932107541]', '10.131.9.221', '2020-04-10 09:32:22', null);
 
 -- ----------------------------
 -- Table structure for `quartz`
@@ -409,6 +416,9 @@ CREATE TABLE `role` (
 -- ----------------------------
 -- Records of role
 -- ----------------------------
+INSERT INTO `role` VALUES ('202004052117534261', '角色1', null, null, '0', '0', null, '备注1', '2019-12-21 11:22:33', 'admin123456', '2020-04-10 13:13:14', 'admin123456', '0');
+INSERT INTO `role` VALUES ('202004052117534262', '角色2', null, null, '0', '0', null, '备注2', '2019-12-21 11:22:33', 'admin123456', null, null, '0');
+INSERT INTO `role` VALUES ('202004052117534263', '角色3', null, null, '0', '0', null, '备注3', '2019-12-21 11:22:33', 'admin123456', null, null, '0');
 
 -- ----------------------------
 -- Table structure for `role_module`
@@ -424,6 +434,14 @@ CREATE TABLE `role_module` (
 -- ----------------------------
 -- Records of role_module
 -- ----------------------------
+INSERT INTO `role_module` VALUES ('202004061204205771', '202004052117534261', '202003282108350791');
+INSERT INTO `role_module` VALUES ('202004061204205791', '202004052117534261', '202003282116237201');
+INSERT INTO `role_module` VALUES ('202004061204205801', '202004052117534261', '202003282115442541');
+INSERT INTO `role_module` VALUES ('202004061204205811', '202004052117534261', '202003282108350931');
+INSERT INTO `role_module` VALUES ('202004061204205821', '202004052117534261', '202003282115442421');
+INSERT INTO `role_module` VALUES ('202004061204205831', '202004052117534261', '202003282108350891');
+INSERT INTO `role_module` VALUES ('202004061204205851', '202004052117534261', '202003282116593201');
+INSERT INTO `role_module` VALUES ('202004061204205871', '202004052117534261', '202003282108350611');
 
 -- ----------------------------
 -- Table structure for `user`
@@ -453,6 +471,19 @@ CREATE TABLE `user` (
 -- ----------------------------
 -- Records of user
 -- ----------------------------
+INSERT INTO `user` VALUES ('202004041557207981', 'username_9', 'ac0e7d037817094e9e0b4441f9bae3209d67b02fa484917065f71b16109a1a78', '用户_1', 'user14@qq.com', '11111111111', null, 'admin123456', null, '1', 'dad', '0', '2020-04-04 15:57:20', 'admin123456', null, null, '0');
+INSERT INTO `user` VALUES ('202004041600480641', 'username_8', 'ac0e7d037817094e9e0b4441f9bae3209d67b02fa484917065f71b16109a1a78', '用户_2', 'user13@qq.com', '11111111111', null, 'admin123456', null, '1', 'dadasd', '0', '2020-04-04 16:00:48', 'admin123456', null, null, '0');
+INSERT INTO `user` VALUES ('202004041601405691', 'username_2', 'ac0e7d037817094e9e0b4441f9bae3209d67b02fa484917065f71b16109a1a78', '用户_3', 'user12@qq.com', '11111111111', null, 'admin123456', null, '1', '备注', '0', '2020-04-04 16:01:40', 'admin123456', null, null, '0');
+INSERT INTO `user` VALUES ('202004041609538011', 'username_1', 'ac0e7d037817094e9e0b4441f9bae3209d67b02fa484917065f71b16109a1a78', '用户_4', 'user11@qq.com', '2222222222', null, 'admin123456', null, '1', '这是用户1', '0', '2020-04-04 16:09:53', 'admin123456', '2020-04-04 20:03:18', 'admin123456', '0');
+INSERT INTO `user` VALUES ('202004041609538012', 'username_3', 'ac0e7d037817094e9e0b4441f9bae3209d67b02fa484917065f71b16109a1a78', '用户_5', 'user10@qq.com', '11111111111', null, 'admin123456', null, '1', 'adad', '0', '2019-12-21 11:22:33', 'admin123456', null, null, '0');
+INSERT INTO `user` VALUES ('202004041609538013', 'username_4', 'ac0e7d037817094e9e0b4441f9bae3209d67b02fa484917065f71b16109a1a78', '用户_6', 'user9@qq.com', '11111111111', null, 'admin123456', null, '1', 'adasd', '0', '2019-12-21 11:22:33', 'admin123456', null, null, '0');
+INSERT INTO `user` VALUES ('202004041609538014', 'username_5', 'ac0e7d037817094e9e0b4441f9bae3209d67b02fa484917065f71b16109a1a78', '用户_7', 'user8@qq.com', '11111111111', null, 'admin123456', null, '1', 'asdas', '0', '2019-12-21 11:22:33', 'admin123456', null, null, '0');
+INSERT INTO `user` VALUES ('202004041609538015', 'username_6', 'ac0e7d037817094e9e0b4441f9bae3209d67b02fa484917065f71b16109a1a78', '用户_8', 'user7@qq.com', '11111111111', null, 'admin123456', null, '1', 'dadasd', '0', '2019-12-21 11:22:33', 'admin123456', null, null, '0');
+INSERT INTO `user` VALUES ('202004041609538016', 'username_7', 'ac0e7d037817094e9e0b4441f9bae3209d67b02fa484917065f71b16109a1a78', '用户_9', 'user6@qq.com', '11111111111', null, 'admin123456', null, '1', 'asdad', '0', '2019-12-21 11:22:33', 'admin123456', null, null, '0');
+INSERT INTO `user` VALUES ('202004041609538017', 'username_10', 'ac0e7d037817094e9e0b4441f9bae3209d67b02fa484917065f71b16109a1a78', '用户_10', 'user5@qq.com', '11111111111', null, 'admin123456', null, '1', 'addasda', '0', '2019-12-11 11:22:33', 'admin123456', null, null, '0');
+INSERT INTO `user` VALUES ('202004041609538018', 'username_11', 'ac0e7d037817094e9e0b4441f9bae3209d67b02fa484917065f71b16109a1a78', '用户_11', 'user4@qq.com', '11111111111', null, 'admin123456', null, '1', '123sa', '0', '2019-12-23 11:22:33', 'admin123456', null, null, '0');
+INSERT INTO `user` VALUES ('202004041609538019', 'username_12', 'ac0e7d037817094e9e0b4441f9bae3209d67b02fa484917065f71b16109a1a78', '用户_12', 'user3@qq.com', '11111111111', null, 'admin123456', null, '1', 'dasd', '0', '2019-12-21 11:22:33', 'admin123456', null, null, '0');
+INSERT INTO `user` VALUES ('202004041609538020', 'username_13', 'ac0e7d037817094e9e0b4441f9bae3209d67b02fa484917065f71b16109a1a78', '用户_13', 'user2@qq.com', '11111111111', null, 'admin123456', null, '1', 'adasd', '0', '2019-12-21 11:22:33', 'admin123456', null, null, '0');
 
 -- ----------------------------
 -- Table structure for `user_module`
@@ -468,6 +499,15 @@ CREATE TABLE `user_module` (
 -- ----------------------------
 -- Records of user_module
 -- ----------------------------
+INSERT INTO `user_module` VALUES ('202004091357264121', '202004041609538011', '202003282108350611');
+INSERT INTO `user_module` VALUES ('202004091357264151', '202004041609538011', '202003282108350781');
+INSERT INTO `user_module` VALUES ('202004091357264161', '202004041609538011', '202003282117355621');
+INSERT INTO `user_module` VALUES ('202004091357264191', '202004041609538011', '202003282108350991');
+INSERT INTO `user_module` VALUES ('202004091357264211', '202004041609538011', '202003282116237491');
+INSERT INTO `user_module` VALUES ('202004091357264231', '202004041609538011', '202003282117355941');
+INSERT INTO `user_module` VALUES ('202004091357264241', '202004041609538011', '202003282116237411');
+INSERT INTO `user_module` VALUES ('202004091357264251', '202004041609538011', '202003282108350831');
+INSERT INTO `user_module` VALUES ('202004091357264271', '202004041609538011', '202003282116593381');
 
 -- ----------------------------
 -- Table structure for `user_role`
@@ -484,3 +524,4 @@ CREATE TABLE `user_role` (
 -- ----------------------------
 -- Records of user_role
 -- ----------------------------
+INSERT INTO `user_role` VALUES ('202004051547588371', '202004041609538011', '202004052117534261', '1');

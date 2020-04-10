@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.javaweb.web.dao.ds1.OperationLogDao">
+
+	<sql id="selectOperationLog" >
+		id,user_id as userId,url,request_method as requestMethod,request_parameter as requestParameter,request_ip_address as requestIpAddress,request_time as requestTime,remark
+	</sql>
+	
+	<select id="operationLogList" parameterType="com.javaweb.web.eo.operationLog.OperationLogListRequest" resultType="com.javaweb.web.eo.operationLog.OperationLogListResponse">
+		select ifnull((select us.user_name from user us where us.user_id = ol.user_id),'admin123456') as userName,
+		ol.url,request_ip_address as requestIpAddress,request_time as requestTime
+		from operation_log ol where 1=1
+		<if test="userName != null and userName != ''">
+			<if test="userName != 'admin123456'">
+				and ol.user_id in(select u.user_id from user u where u.user_name like CONCAT('%',#{userName},'%'))
+			</if>
+		</if>
+		<if test="requestIpAddress != null and requestIpAddress != ''">and ol.request_ip_address like CONCAT('%',#{requestIpAddress},'%')</if>
+		order by ol.request_time desc
+		limit ${(currentPage-1)*pageSize},${pageSize}
+	</select>
+	
+	<select id="operationLogListCount" parameterType="com.javaweb.web.eo.operationLog.OperationLogListRequest" resultType="java.lang.Long">
+		select count(1) from operation_log ol where 1=1
+		<if test="userName != null and userName != ''">
+			<if test="userName != 'admin123456'">
+				and ol.user_id in(select u.user_id from user u where u.user_name like CONCAT('%',#{userName},'%'))
+			</if>
+		</if>
+		<if test="requestIpAddress != null and requestIpAddress != ''">and ol.request_ip_address like CONCAT('%',#{requestIpAddress},'%')</if>
+	</select>
+	
+</mapper>
