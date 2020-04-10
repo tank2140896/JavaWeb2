@@ -32,4 +32,5 @@ public class OperationLogController extends BaseController {
         Page page = operationLogService.operationLogList(operationLogListRequest);
         return getBaseResponseResult(HttpCodeEnum.SUCCESS,"operationlog.list.success",page);
     }
+    
 }
