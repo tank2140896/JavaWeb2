@@ -58,4 +58,8 @@ public class ApiConstant {
 	public static final String WEB_OPERATIONLOG_PREFIX = "/web/sys/operationLog";
 	public static final String OPERATIONLOG_LIST = "/list";//查询操作日志接口
 	
+	public static final String WEB_SCHEDULE_PREFIX = "/web/sys/schedule";
+	public static final String SCHEDULE_LIST = "/list";//日程列表接口
+	public static final String SCHEDULE_ADD = "/add";//保存日程接口
+	
 }

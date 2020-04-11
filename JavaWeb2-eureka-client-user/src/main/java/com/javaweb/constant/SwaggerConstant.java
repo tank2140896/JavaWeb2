@@ -87,4 +87,11 @@ public class SwaggerConstant {
 	public static final String SWAGGER_OPERATIONLOG_LIST = "查询操作日志接口";
 	/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ swagger-UserController ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */
 	
+	/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ swagger-OperationLogController ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */
+	public static final String SWAGGER_SCHEDULE_CONTROLLER_TAGS = "8、登录且需要权限才可访问的日程管理模块";
+	
+	public static final String SWAGGER_SCHEDULE_LIST = "日程列表接口";
+	public static final String SWAGGER_SCHEDULE_ADD = "保存日程接口";
+	/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ swagger-UserController ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */
+	
 }

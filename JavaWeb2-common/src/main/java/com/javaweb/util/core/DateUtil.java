@@ -38,6 +38,11 @@ public class DateUtil {
 	//日期格式(年月日)
 	public static final String DEFAULT_DATE_PATTERN = "yyyy-MM-dd";
 	public static final String DATE_PATTERN_TYPE1 = "yyyyMMdd";
+	public static final String DATE_PATTERN_TYPE2 = "yyyyMM";
+	public static final String DATE_PATTERN_TYPE3 = "MMdd";
+	public static final String DATE_PATTERN_TYPE4 = "yyyy年MM月dd日";
+	public static final String DATE_PATTERN_TYPE5 = "yyyy年MM月";
+	public static final String DATE_PATTERN_TYPE6 = "MM月dd日";
 	
 	//日期格式(时分秒)
 	public static final String DEFAULT_TIME_PATTERN = "HH:mm:ss";
@@ -198,7 +203,7 @@ public class DateUtil {
 	}
 	
 	//根据指定日期(年月日)获得该日期的后面N天的日期(年月日)
-	public static List<String> getAfterDays(String date,String pattern,int afterDays) throws Exception {
+	public static List<String> getAfterDays(String date,String pattern,int afterDays) {
 		LocalDate localDate = getDate(date, pattern);
 		List<String> list = new ArrayList<>();
 		for (int i = 0; i < afterDays; i++) {

@@ -81,6 +81,7 @@ INSERT INTO `module` VALUES ('202003282108350791', '角色管理', '/web/sys/rol
 INSERT INTO `module` VALUES ('202003282108350801', '模块管理', '/web/sys/module', null, '202003282108350611', null, '2', '3', '2', 'sys:module', null, '总管理系统', null, 'fa fa-modx', '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
 INSERT INTO `module` VALUES ('202003282108350802', '字典管理', '/web/sys/dictionary', null, '202003282108350611', null, '2', '4', '2', 'sys:dictionary', null, '总管理系统', null, 'fa fa-book', '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
 INSERT INTO `module` VALUES ('202003282108350803', '操作日志管理', '/web/sys/operationLog', null, '202003282108350611', null, '2', '5', '2', 'sys:operationLog', null, '总管理系统', null, 'fa fa-wpforms', '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282108350804', '日程管理', '/web/sys/schedule', null, '202003282108350611', null, '2', '6', '2', 'sys:schedule', null, '总管理系统', null, 'fa fa-calendar', '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
 INSERT INTO `module` VALUES ('202003282108350831', '用户模块分配', '/web/sys/user/userModuleAssignment', '/web/sys/user/userModuleAssignment,/web/sys/user/userModuleInfo', '202003282108350781', null, '3', '9', '3', 'sys:user:module:assignment', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
 INSERT INTO `module` VALUES ('202003282108350861', '修改模块', '/web/sys/module/modify', '/web/sys/module/modify,/web/sys/module/getModuleIdAndNameList', '202003282108350801', null, '3', '5', '3', 'sys:module:modify', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
 INSERT INTO `module` VALUES ('202003282108350891', '删除角色', null, '/web/sys/role/delete', '202003282108350791', null, '3', '5', '3', 'sys:role:delete', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
@@ -105,6 +106,8 @@ INSERT INTO `module` VALUES ('202003282117355944', '查询字典', '/web/sys/dic
 INSERT INTO `module` VALUES ('202003282117355945', '删除字典', null, '/web/sys/dictionary/delete', '202003282108350802', null, '3', '4', '3', 'sys:dictionary:delete', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
 INSERT INTO `module` VALUES ('202003282117355946', '字典详情', '/web/sys/dictionary/detail', '/web/sys/dictionary/detail', '202003282108350802', null, '3', '5', '3', 'sys:dictionary:detail', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
 INSERT INTO `module` VALUES ('202003282117355947', '查询操作日志', '/web/sys/operationLog/list', '/web/sys/operationLog/list', '202003282108350803', null, '3', '1', '3', 'sys:operationLog:list', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282117355948', '查询日程', '/web/sys/schedule/list', '/web/sys/schedule/list', '202003282108350804', null, '3', '1', '3', 'sys:schedule:list', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
+INSERT INTO `module` VALUES ('202003282117355949', '保存日程', null, '/web/sys/schedule/add', '202003282108350804', null, '3', '2', '3', 'sys:schedule:add', null, '总管理系统', null, null, '1', '2018-02-08 17:02:21', 'admin123456', null, null, '0');
 
 -- ----------------------------
 -- Table structure for `operation_log`
@@ -442,6 +445,69 @@ INSERT INTO `role_module` VALUES ('202004061204205821', '202004052117534261', '2
 INSERT INTO `role_module` VALUES ('202004061204205831', '202004052117534261', '202003282108350891');
 INSERT INTO `role_module` VALUES ('202004061204205851', '202004052117534261', '202003282116593201');
 INSERT INTO `role_module` VALUES ('202004061204205871', '202004052117534261', '202003282108350611');
+
+-- ----------------------------
+-- Table structure for `schedule`
+-- ----------------------------
+DROP TABLE IF EXISTS `schedule`;
+CREATE TABLE `schedule` (
+  `id` varchar(255) NOT NULL,
+  `schedule_date` varchar(255) DEFAULT NULL,
+  `schedule_type` int(11) DEFAULT NULL COMMENT '1:周末;2:正常;3:节假日;4:休假',
+  `remark` varchar(255) DEFAULT NULL,
+  `create_date` varchar(255) DEFAULT NULL,
+  `creator` varchar(255) DEFAULT NULL,
+  `update_date` varchar(255) DEFAULT NULL,
+  `updater` varchar(255) DEFAULT NULL,
+  `del_flag` tinyint(4) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- ----------------------------
+-- Records of schedule
+-- ----------------------------
+INSERT INTO `schedule` VALUES ('202004112112252261', '2020-03-30', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252281', '2020-03-31', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252291', '2020-04-01', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252311', '2020-04-02', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252331', '2020-04-03', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252351', '2020-04-04', '3', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252371', '2020-04-05', '3', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252391', '2020-04-06', '3', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252401', '2020-04-07', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252421', '2020-04-08', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252431', '2020-04-09', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252451', '2020-04-10', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252471', '2020-04-11', '1', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252491', '2020-04-12', '1', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252511', '2020-04-13', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252531', '2020-04-14', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252551', '2020-04-15', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252561', '2020-04-16', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252581', '2020-04-17', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252601', '2020-04-18', '1', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252621', '2020-04-19', '1', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252631', '2020-04-20', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252651', '2020-04-21', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252671', '2020-04-22', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252691', '2020-04-23', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252701', '2020-04-24', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252721', '2020-04-25', '1', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252741', '2020-04-26', '1', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252751', '2020-04-27', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252771', '2020-04-28', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252791', '2020-04-29', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252801', '2020-04-30', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252821', '2020-05-01', '3', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252841', '2020-05-02', '3', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252861', '2020-05-03', '3', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252881', '2020-05-04', '3', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252901', '2020-05-05', '3', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252911', '2020-05-06', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252931', '2020-05-07', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252951', '2020-05-08', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252961', '2020-05-09', '2', null, '2020-04-11 21:12:25', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004112112252981', '2020-05-10', '1', null, '2020-04-11 21:12:25', null, null, null, '0');
 
 -- ----------------------------
 -- Table structure for `user`
