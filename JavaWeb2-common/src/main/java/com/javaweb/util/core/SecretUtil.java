@@ -2,6 +2,7 @@ package com.javaweb.util.core;
 
 import java.io.ByteArrayOutputStream;
 import java.security.MessageDigest;
+import java.security.Security;
 import java.util.Base64;
 import java.util.Base64.Decoder;
 import java.util.Base64.Encoder;
@@ -14,6 +15,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.IntSupplier;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Hex;
 
@@ -233,6 +237,30 @@ public class SecretUtil {
 				            .parseClaimsJws(token)
 				            .getBody();
 	}
+	
+	//3DES加密
+	public static byte[] encryptDESede(byte[] src, byte[] key) {
+        Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+        try {
+            Cipher c1 = Cipher.getInstance("DESede/ECB/NOPADDING","BC");
+            c1.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(key, "DESede/ECB/NOPADDING"));
+            return c1.doFinal(src);
+        } catch (Exception e) {
+        	return null;
+        }
+    }
+	
+	//3DES解密
+	public static byte[] decryptDESede(byte[] src, byte[] key) {
+        Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+        try {
+            Cipher c1 = Cipher.getInstance("DESede/ECB/NOPADDING","BC");
+            c1.init(Cipher.DECRYPT_MODE, new SecretKeySpec(key, "DESede/ECB/NOPADDING"));
+            return c1.doFinal(src);
+        } catch (Exception e) {
+        	return null;
+        }
+    }
 	
 	//16进制字符串转byte数组
     public static byte[] hexStringToBytes(String hexString) {   

@@ -156,7 +156,7 @@ public class RsaUtil {
     
     //加密
     public static String encrypt(String data, PublicKey publicKey) throws Exception {
-    	Cipher cipher = Cipher.getInstance("RSA");
+    	Cipher cipher = Cipher.getInstance("RSA");//RSA/ECB/NoPadding或RSA/ECB/PKCS1Padding
     	cipher.init(Cipher.ENCRYPT_MODE, publicKey);
     	int inputLen = data.getBytes().length;
     	ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -183,7 +183,7 @@ public class RsaUtil {
 
     //解密
     public static String decrypt(String data, PrivateKey privateKey) throws Exception {
-    	Cipher cipher = Cipher.getInstance("RSA");
+    	Cipher cipher = Cipher.getInstance("RSA");//RSA/ECB/NoPadding或RSA/ECB/PKCS1Padding
         cipher.init(Cipher.DECRYPT_MODE, privateKey);
         byte[] dataBytes = Base64.decodeBase64(data);
         int inputLen = dataBytes.length;
