@@ -98,6 +98,12 @@
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-freemarker</artifactId>
 		</dependency>
+	    <dependency>
+		<dependency>
+		    <groupId>org.bouncycastle</groupId>
+		    <artifactId>bcprov-jdk15on</artifactId>
+		    <version>1.65</version>
+		</dependency>
         <!-- JavaWeb2-common end -->
         <!-- JavaWeb2-database start -->
         <!-- SpringBoot和Mybatis整合 -->
