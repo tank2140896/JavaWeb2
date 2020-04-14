@@ -99,7 +99,12 @@ public class ObjectOperateUtil {
 		}
 	}
 	
-	//属性排除
+	/**
+	 * 属性排除
+	 * 场景注意：在对{"a":"1","b":"2","a":"2"}进行转化时不同的jar包方法有不同的表现
+	 * net.sf.json结果为：{"a":["1","2"],"b":"2"}
+	 * com.alibaba.fastjson结果为：{"a":"2","b":"2"}
+	 */
 	public static String excludeField(Object obj,String[] excludes,boolean isArray){
 		JsonConfig jsonConfig = new JsonConfig();
 		jsonConfig.setExcludes(excludes);
