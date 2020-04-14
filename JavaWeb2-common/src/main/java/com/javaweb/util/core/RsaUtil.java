@@ -229,7 +229,7 @@ public class RsaUtil {
             in.close();
             out.close();
         } catch (Exception e) {
-            e.printStackTrace();
+            //do nothing
         }
     }
 
@@ -251,7 +251,7 @@ public class RsaUtil {
             in.close();
             out.close();
         } catch (Exception e) {
-            e.printStackTrace();
+        	//do nothing
         }
     }
     
