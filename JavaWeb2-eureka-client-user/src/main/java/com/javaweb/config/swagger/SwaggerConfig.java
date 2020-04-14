@@ -29,7 +29,6 @@ public class SwaggerConfig {
 	@Bean
     public Docket createRestApi() {
     	List<Parameter> parameters = new ArrayList<Parameter>();
-    	parameters.add(new ParameterBuilder().name(SystemConstant.HEAD_USERID).description(SwaggerConstant.SWAGGER_HEAD_USERID).modelRef(new ModelRef("string")).parameterType("header").required(false).build());
     	parameters.add(new ParameterBuilder().name(SystemConstant.HEAD_TOKEN).description(SwaggerConstant.SWAGGER_HEAD_TOKEN).modelRef(new ModelRef("string")).parameterType("header").required(false).build());
     	parameters.add(new ParameterBuilder().name(SystemConstant.HEAD_TYPE).description(SwaggerConstant.SWAGGER_HEAD_TYPE).modelRef(new ModelRef("string")).parameterType("header").required(false).build());
         return new Docket(DocumentationType.SWAGGER_2)
