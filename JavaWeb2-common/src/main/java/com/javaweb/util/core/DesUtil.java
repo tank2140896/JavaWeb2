@@ -14,7 +14,7 @@ Key key = keyFactory.generateSecret(new DESedeKeySpec(getKey.getBytes("UTF8")));
 前端参考： https://www.cnblogs.com/claireyuancy/p/6805790.html 
 其中两行重要代码要修改：
 var encrypted = CryptoJS.TripleDES.encrypt   
-iv:CryptoJS.enc.Utf8.parse('01234567'),  
+iv:CryptoJS.enc.Utf8.parse('01234567') 
 */
 public class DesUtil {
 	

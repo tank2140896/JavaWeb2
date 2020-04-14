@@ -23,7 +23,7 @@ public class RsaRequest {
 		String isAuth = request.getHeader("isAuth");//0（不加密）；1（加密）
 		String token = request.getHeader("token");
 		String currentTime = request.getHeader("currentTime");//格式为yyyyMMddHHmmss
-		String nonce = request.getHeader("nonce");//长度为10位的随机小写字母和数字的组合
+		String nonce = request.getHeader("nonce");//长度为24位的随机小写字母和数字的组合
 		String thatSign = request.getHeader("sign");//post和put的不是放在header里的
 		if(("0".equals(isAuth))&&(!isAuthController)){//只有此特殊情况下不需要加密处理，其它一律认为需要加密处理
 			return true;
@@ -35,7 +35,15 @@ public class RsaRequest {
 				}
 			}
 			new SimpleDateFormat("yyyyMMddHHmmss").parse(currentTime);//日期校验，判断传的是不是日期
-			if(nonce.length()!=10){//随机数长度判断
+			/**
+			//RSA结合3DES
+			try{
+				nonce = RsaUtil.decrypt(nonce,RsaUtil.getPrivateKey(tokenData.getRsaPrivateKeyOfBackend()));
+			}catch(Exception e){
+				//do nothing
+			}
+			*/
+			if(nonce.length()!=24){//随机数长度判断
 				return false;
 			}
 			if("GET".equals(request.getMethod().toUpperCase())||"DELETE".equals(request.getMethod().toUpperCase())){
@@ -46,6 +54,11 @@ public class RsaRequest {
 				//3.判断两个值是否一致
 				return d1.equals(d2);
 			}else{
+				/**
+				//RSA结合3DES
+				//1.用3DES解密code
+				String d1 = DesUtil.decrypt(this.code,SecretKeyFactory.getInstance("DESede").generateSecret(new DESedeKeySpec(nonce.getBytes("UTF8")))); 
+				*/
 				//1.用后端私钥解密code
 				String d1 = RsaUtil.decrypt(this.code,RsaUtil.getPrivateKey(tokenData.getRsaPrivateKeyOfBackend()));
 				//2.用前端公钥验签
