@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.javaweb.task.TaskService;
 import com.javaweb.web.service.DictionaryService;
+import com.javaweb.web.service.InterfacesService;
 import com.javaweb.web.service.ModuleService;
 import com.javaweb.web.service.OperationLogService;
 import com.javaweb.web.service.RoleService;
@@ -21,6 +22,7 @@ public class BaseController extends BaseTool {
 		if(initStartFlag){
 			initStartFlag = false;
 			BaseSystemMemory.dictionaryList = dictionaryService.selectAll();//将字典表数据加载进内存
+			interfacesService.synchronizedInterfaces();//同步数据库中的接口信息表
 		}
 	}
     
@@ -44,5 +46,8 @@ public class BaseController extends BaseTool {
 	
 	@Autowired  
 	protected TaskService taskService;
+	
+	@Autowired  
+	protected InterfacesService interfacesService;
 	
 }

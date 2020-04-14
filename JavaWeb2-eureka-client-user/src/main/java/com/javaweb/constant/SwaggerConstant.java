@@ -94,4 +94,10 @@ public class SwaggerConstant {
 	public static final String SWAGGER_SCHEDULE_ADD = "保存日程接口";
 	/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ swagger-UserController ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */
 	
+	/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ swagger-InterfacesController ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */
+	public static final String SWAGGER_INTERFACES_CONTROLLER_TAGS = "8、登录且需要权限才可访问的接口管理模块";
+	
+	public static final String SWAGGER_INTERFACES_LIST = "接口列表接口";
+	/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ swagger-UserController ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */
+	
 }

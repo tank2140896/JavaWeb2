@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.javaweb.web.dao.ds1.InterfacesDao">
+
+	<insert id="interfacesBatchInsert" parameterType="com.javaweb.web.po.Interfaces">
+		insert into interfaces(id,name,url,method,remark,create_date,creator,update_date,updater,del_flag) values
+		<foreach collection="list" index="index" item="item" open="" separator="," close="">   
+	        (#{item.id},#{item.name},#{item.url},#{item.method},#{item.remark},#{item.createDate},#{item.creator},#{item.updateDate},#{item.updater},#{item.delFlag})
+    	</foreach>
+	</insert>
+	
+	<insert id="interfacesBatchDelete" parameterType="java.lang.String">
+		delete from interfaces where id in
+		<foreach collection="list" item="item" index="no" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</insert>
+	
+	<select id="interfacesList" parameterType="com.javaweb.web.eo.interfaces.InterfacesListRequest" resultType="com.javaweb.web.po.Interfaces">
+		select id,name,url,method,remark,create_date as createDate,creator,update_date as updateDate,updater,del_flag as delFlag
+		from interfaces
+		<where>
+			del_flag = 0
+			<if test="name != null and name != ''">and name like CONCAT('%',#{name},'%')</if>
+			<if test="url != null and url != ''">and url like CONCAT('%',#{url},'%')</if>
+			<if test="method != null and method != ''">and method like CONCAT('%',#{method},'%')</if>
+		</where>
+		ORDER BY name desc
+		limit ${(currentPage-1)*pageSize},${pageSize}
+	</select>
+	
+	<select id="interfacesListCount" parameterType="com.javaweb.web.eo.interfaces.InterfacesListRequest" resultType="java.lang.Long">
+		select count(1) from interfaces
+		<where>
+			del_flag = 0
+			<if test="name != null and name != ''">and name like CONCAT('%',#{name},'%')</if>
+			<if test="url != null and url != ''">and url like CONCAT('%',#{url},'%')</if>
+			<if test="method != null and method != ''">and method like CONCAT('%',#{method},'%')</if>
+		</where>
+	</select>
+	
+</mapper>

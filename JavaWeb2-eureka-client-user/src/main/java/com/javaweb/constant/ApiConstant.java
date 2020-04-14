@@ -62,4 +62,7 @@ public class ApiConstant {
 	public static final String SCHEDULE_LIST = "/list";//日程列表接口
 	public static final String SCHEDULE_ADD = "/add";//保存日程接口
 	
+	public static final String WEB_INTERFACES_PREFIX = "/web/sys/interfaces";
+	public static final String INTERFACES_LIST = "/list";//接口列表接口
+	
 }
