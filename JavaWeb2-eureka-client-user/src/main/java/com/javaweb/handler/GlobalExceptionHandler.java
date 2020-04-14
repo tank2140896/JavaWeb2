@@ -19,18 +19,18 @@ public class GlobalExceptionHandler extends BaseTool {
 	private Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 	
 	@ExceptionHandler(NoHandlerFoundException.class)
-	public BaseResponseResult handleMissingServletRequestParameterException(HttpServletRequest request,NoHandlerFoundException e) {
+	public BaseResponseResult handleException(HttpServletRequest request,NoHandlerFoundException e) {
 		return getBaseResponseResult(HttpCodeEnum.NOT_FOUND,"validated.permission.notFound");
 	}
 	
 	@ExceptionHandler(TokenExpiredException.class)
-	public BaseResponseResult handleMissingServletRequestParameterException(HttpServletRequest request,TokenExpiredException e) {
+	public BaseResponseResult handleException(HttpServletRequest request,TokenExpiredException e) {
 		return new BaseResponseResult(HttpCodeEnum.INVALID_REQUEST,"validated.permission.invalidRequest");
 	}
 	
 	@ExceptionHandler(Exception.class)
-	public BaseResponseResult handleMissingServletRequestParameterException(HttpServletRequest request,Exception e) {
-		e.printStackTrace();
+	public BaseResponseResult handleException(HttpServletRequest request,Exception e) {
+		//e.printStackTrace();
 		logger.error(e.getMessage());
 		return getBaseResponseResult(HttpCodeEnum.INTERNAL_ERROR,"validated.permission.internalError");
 	}
