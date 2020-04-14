@@ -17,10 +17,10 @@ public class BaseController extends BaseTool {
 	private static boolean initStartFlag = true;
 	
 	@PostConstruct
-	public final void init(){
+	final public synchronized void init(){
 		if(initStartFlag){
-			BaseSystemMemory.dictionaryList = dictionaryService.selectAll();//将字典表数据加载进内存
 			initStartFlag = false;
+			BaseSystemMemory.dictionaryList = dictionaryService.selectAll();//将字典表数据加载进内存
 		}
 	}
     
