@@ -1,6 +1,9 @@
 package com.javaweb.web.controller;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,9 +14,12 @@ import com.javaweb.base.BaseResponseResult;
 import com.javaweb.constant.ApiConstant;
 import com.javaweb.constant.SwaggerConstant;
 import com.javaweb.enums.HttpCodeEnum;
+import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.interfaces.InterfacesListRequest;
+import com.javaweb.web.po.Interfaces;
+import com.javaweb.web.po.User;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,6 +34,23 @@ public class InterfacesController extends BaseController {
 	public BaseResponseResult interfacesList(@RequestBody InterfacesListRequest interfacesListRequest,@TokenDataAnnotation TokenData tokenData){
 		Page page = interfacesService.interfacesList(interfacesListRequest);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"interfaces.list.success",page);
+	}
+	
+	@ApiOperation(value=SwaggerConstant.SWAGGER_INTERFACES_DETAIL)
+	@GetMapping(ApiConstant.INTERFACES_DETAIL)
+	public BaseResponseResult interfacesDetail(@PathVariable(name="interfacesId",required=true) String interfacesId){
+		Interfaces interfaces = interfacesService.interfacesDetail(interfacesId);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"interfaces.detail.success",interfaces);
+	}
+	
+	@ApiOperation(value=SwaggerConstant.SWAGGER_INTERFACES_MODIFY)
+	@PutMapping(ApiConstant.INTERFACES_MODIFY)
+	public BaseResponseResult interfacesModify(@RequestBody Interfaces interfaces,@TokenDataAnnotation TokenData tokenData){
+		User currentUser = tokenData.getUser();
+		interfaces.setUpdateDate(DateUtil.getDefaultDate());
+		interfaces.setUpdater(currentUser.getUserName());
+		interfacesService.interfacesModify(interfaces);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"interfaces.modify.success",null);
 	}
 	
 }
