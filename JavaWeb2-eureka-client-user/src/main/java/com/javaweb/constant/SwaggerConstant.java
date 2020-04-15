@@ -95,9 +95,11 @@ public class SwaggerConstant {
 	/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ swagger-UserController ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */
 	
 	/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ swagger-InterfacesController ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */
-	public static final String SWAGGER_INTERFACES_CONTROLLER_TAGS = "8、登录且需要权限才可访问的接口管理模块";
+	public static final String SWAGGER_INTERFACES_CONTROLLER_TAGS = "9、登录且需要权限才可访问的接口管理模块";
 	
 	public static final String SWAGGER_INTERFACES_LIST = "接口列表接口";
+	public static final String SWAGGER_INTERFACES_MODIFY = "修改接口接口";
+	public static final String SWAGGER_INTERFACES_DETAIL = "接口详情接口";
 	/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ swagger-UserController ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */
 	
 }
