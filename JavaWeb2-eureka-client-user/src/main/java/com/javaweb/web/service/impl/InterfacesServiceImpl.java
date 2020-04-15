@@ -39,6 +39,15 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 		Page page = new Page(interfacesListRequest,list,count);
 		return page;
 	}
+	
+	public Interfaces interfacesDetail(String interfacesId) {
+		return interfacesDao.selectByPkForMySql(interfacesId);
+	}
+
+	@Transactional
+	public void interfacesModify(Interfaces interfaces) {
+		interfacesDao.updateForMySql(interfaces);
+	}
 
 	@Transactional
 	public void synchronizedInterfaces() {
