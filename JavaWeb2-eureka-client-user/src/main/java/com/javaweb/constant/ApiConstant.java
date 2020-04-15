@@ -64,5 +64,7 @@ public class ApiConstant {
 	
 	public static final String WEB_INTERFACES_PREFIX = "/web/sys/interfaces";
 	public static final String INTERFACES_LIST = "/list";//接口列表接口
+	public static final String INTERFACES_MODIFY = "/modify";//修改接口接口
+	public static final String INTERFACES_DETAIL = "/detail/{interfacesId}";//接口详情接口
 	
 }
