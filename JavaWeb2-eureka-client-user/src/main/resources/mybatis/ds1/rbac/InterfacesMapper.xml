@@ -4,9 +4,9 @@
 <mapper namespace="com.javaweb.web.dao.ds1.InterfacesDao">
 
 	<insert id="interfacesBatchInsert" parameterType="com.javaweb.web.po.Interfaces">
-		insert into interfaces(id,name,url,method,remark,create_date,creator,update_date,updater,del_flag) values
+		insert into interfaces(id,name,url,method,times,unit,counts,remark,create_date,creator,update_date,updater,del_flag) values
 		<foreach collection="list" index="index" item="item" open="" separator="," close="">   
-	        (#{item.id},#{item.name},#{item.url},#{item.method},#{item.remark},#{item.createDate},#{item.creator},#{item.updateDate},#{item.updater},#{item.delFlag})
+	        (#{item.id},#{item.name},#{item.url},#{item.method},#{item.times},#{item.unit},#{item.counts}#{item.remark},#{item.createDate},#{item.creator},#{item.updateDate},#{item.updater},#{item.delFlag})
     	</foreach>
 	</insert>
 	
@@ -18,7 +18,7 @@
 	</insert>
 	
 	<select id="interfacesList" parameterType="com.javaweb.web.eo.interfaces.InterfacesListRequest" resultType="com.javaweb.web.po.Interfaces">
-		select id,name,url,method,remark,create_date as createDate,creator,update_date as updateDate,updater,del_flag as delFlag
+		select id,name,url,method,times,unit,counts,remark,create_date as createDate,creator,update_date as updateDate,updater,del_flag as delFlag
 		from interfaces
 		<where>
 			del_flag = 0
