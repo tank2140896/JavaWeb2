@@ -28,6 +28,15 @@ public class Interfaces extends BaseEntity implements Serializable {
 	@Column(name="method")
 	private String method;//方法名称
 	
+	@Column(name="times")
+	private String times;//时间
+	
+	@Column(name="unit")
+	private String unit;//单位
+	
+	@Column(name="counts")
+	private Integer counts;//次数
+	
 	@Column(name="remark")
 	private String remark;//备注
 
