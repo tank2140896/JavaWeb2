@@ -1,0 +1,28 @@
+<div>
+  <div class="form-group">
+    <label>数据类型</label>
+    <input type="text" class="form-control" [(ngModel)]="dictionaryAddRequest.dataType">
+  </div>
+  <div class="form-group">
+    <label>key值</label>
+    <input type="text" class="form-control" [(ngModel)]="dictionaryAddRequest.keyCode">
+  </div>
+  <div class="form-group">
+    <label>value值</label>
+    <input type="text" class="form-control" [(ngModel)]="dictionaryAddRequest.valueCode">
+  </div>
+  <div class="form-group">
+    <label>分类</label>
+    <input type="text" class="form-control" [(ngModel)]="dictionaryAddRequest.category">
+  </div>
+  <div class="form-group">
+    <label>含义</label>
+    <input type="text" class="form-control" [(ngModel)]="dictionaryAddRequest.means">
+  </div>
+  <div class="form-group">
+    <label>备注</label>
+    <input type="text" class="form-control" [(ngModel)]="dictionaryAddRequest.remark">
+  </div>
+  <button type="button" (click)="dictionaryAdd()" class="btn btn-primary">提交</button>
+  <button type="button" (click)="dictionaryAddBack()" class="btn btn-primary" style="margin-left:1%;">返回</button>
+</div>

@@ -1,0 +1,52 @@
+<div style="margin-top:1%;margin-left:1%">
+  <div>
+    <span>特殊说明：目前日程中的类型有：<span style="color:#ff8987;font-weight:900">周末</span>、<span style="color:#a2a1ff;font-weight:900">正常</span>、<span style="color:#f0ad4e;font-weight:900">节假日</span>、<span style="color:#5CB85C;font-weight:900">休假（包括了请假、福利假、特殊假等）</span></span>
+  </div>
+  <div style="margin-top:1%;">
+    <div class="triangle-left" *ngIf="scheduleListZone" (click)="preMonth()"></div>
+    <div class="show-date">{{currentYearMonth}}</div>
+    <div class="triangle-right" *ngIf="scheduleListZone" (click)="nextMonth()"></div>
+    <button *ngIf="scheduleAddZone" (click)="scheduleSet()" [hidden]="scheduleSetFlag" type="button" class="btn btn-success" style="padding: .375rem .75rem;border:100px;margin-left:1%;">日程设定</button>
+    <button *ngIf="scheduleAddZone" (click)="scheduleSave()" [hidden]="!scheduleSetFlag" type="button" class="btn btn-primary" style="padding: .375rem .75rem;border:100px;margin-left:1%;">保存</button>
+    <button *ngIf="scheduleAddZone" (click)="scheduleCancel()" [hidden]="!scheduleSetFlag" type="button" class="btn btn-primary" style="padding: .375rem .75rem;border:100px;margin-left:1%;">取消</button>
+    <br/>
+  </div>
+</div>
+<div class="col col-xl-12 col-lg-12" style="margin-top:1%;">
+  <div class="row" id="scheduleId">
+    <div class="col-lg-12">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="main">
+            <div class="head">
+              <ul class="title">
+                <li class="weekday">星期一</li>
+                <li class="weekday">星期二</li>
+                <li class="weekday">星期三</li>
+                <li class="weekday">星期四</li>
+                <li class="weekday">星期五</li>
+                <li class="weekend">星期六</li>
+                <li class="weekend">星期日</li>
+              </ul>
+            </div>
+            <div class="banner">
+              <ul class="content">
+                <li (click)="changeScheduleType(day)" [ngClass]="{'dateEnd':1==day.scheduleType,'dateDay':2==day.scheduleType,'hollyDay':3==day.scheduleType,'restDay':4==day.scheduleType}" *ngFor="let day of dateList;let xh=index">
+                  <table cellpadding="0" cellspacing="0">
+                    <caption>{{day.scheduleDate}}</caption>
+                    <tr>
+                      <td *ngIf="1==day.scheduleType" class="borderR">周末</td>
+                      <td *ngIf="2==day.scheduleType" class="borderR">正常</td>
+                      <td *ngIf="3==day.scheduleType" class="borderR">节假日</td>
+                      <td *ngIf="4==day.scheduleType" class="borderR">休假</td>
+                    </tr>
+                  </table>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

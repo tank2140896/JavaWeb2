@@ -1,0 +1,25 @@
+<div class="loginImage">
+  <div class="login">
+    <div class="form-group">
+      <h2>后台管理系统V1.0</h2>
+    </div>
+    <div class="form-group">
+      <span class="userLoginErrorMessage">{{userLoginErrorMessage}}</span>
+    </div>
+    <div class="form-group">
+      <label class="form-inline">账号&nbsp;&nbsp;&nbsp;
+        <input class="form-control" type="text" [(ngModel)]="userLoginRequest.username" placeholder="请输入账号">
+      </label>
+    </div>
+    <div class="form-group">
+      <label class="form-inline">密码&nbsp;&nbsp;&nbsp;
+        <input class="form-control" type="password" [(ngModel)]="userLoginRequest.password" (keydown.enter)="keydownEnter($event)" placeholder="请输入密码">
+      </label>
+    </div>
+    <div class="form-group">
+      <label class="form-inline">
+        <button type="button" class="btn btn-primary" (click)="login()">登录</button>
+      </label>
+    </div>
+  </div>
+</div>

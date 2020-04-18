@@ -1,0 +1,62 @@
+<div style="margin-top:1%;margin-left:1%">
+  数据类型<input type="text" style="height:35px;" placeholder="请输入数据类型" [(ngModel)]="dictionaryListRequest.dataType">
+  key值<input type="text" style="height:35px;" placeholder="请输入key值" [(ngModel)]="dictionaryListRequest.keyCode">
+  含义<input type="text" style="height:35px;" placeholder="请输入含义" [(ngModel)]="dictionaryListRequest.means">
+  <button type="button" class="btn btn-primary" style="margin-left:1%;" (click)="dictionarySearch(1)" *ngIf="dictionaryListZone">查询</button>
+  <button type="button" class="btn btn-info" style="margin-left:1%;" (click)="reset()">重置</button>
+  <button type="button" class="btn btn-success" style="margin-left:1%;" (click)="dictionaryAddFunction()" *ngIf="dictionaryAddZone">新增</button>
+</div>
+<div class="col col-xl-12 col-lg-12" style="margin-top:1%;">
+  <div class="card mb-3">
+    <div class="card-body table table-hover">
+      <table class="table">
+        <thead>
+        <tr class="text-center">
+          <th>序号</th>
+          <th>数据类型</th>
+          <th>key值</th>
+          <th>value值</th>
+          <th>含义</th>
+          <th>注册日期</th>
+          <th>操作</th>
+        </tr>
+        </thead>
+        <tbody *ngIf="resultPage.data==resultPage.dataLoading">
+        <tr class="text-center">
+          <td colspan=6>数据获取中...</td>
+        </tr>
+        </tbody>
+        <tbody *ngIf="resultPage.data==null">
+        <tr class="text-center">
+          <td colspan=6>无数据</td>
+        </tr>
+        </tbody>
+        <tbody *ngIf="resultPage.data!=null&&resultPage.data!=resultPage.dataLoading">
+        <tr *ngFor="let eachData of resultPage.data;let xh=index" class="text-center">
+          <td>{{(xh+1)+(resultPage.currentPage-1)*resultPage.pageSize}}</td>
+          <td>{{eachData.dataType}}</td>
+          <td>{{eachData.keyCode}}</td>
+          <td>{{eachData.valueCode}}</td>
+          <td>{{eachData.means}}</td>
+          <td>{{eachData.createDate}}</td>
+          <td>
+            <button style="margin-right:10px;" *ngIf="dictionaryDeleteZone" class="btn btn-sm btn-danger" (click)="dictionaryDeleteFunction(eachData.id)">删除字典</button>
+            <button style="margin-right:10px;" *ngIf="dictionaryModifyZone" class="btn btn-sm btn-warning" (click)="dictionaryModifyFunction(eachData.id)">修改字典</button>
+            <button *ngIf="dictionaryDetailZone" class="btn btn-sm btn-info" (click)="dictionaryDetailFunction(eachData.id)">字典详情</button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="resultPage.data!=null&&resultPage.data!=resultPage.dataLoading">
+      <div style="float:right;padding:0px 1em 1ex 0em;">
+        <span style="margin-right:10px;"><a *ngIf="resultPage.currentPage>1" (click)="dictionarySearch(1)" class="btn btn-info">首页</a></span>
+        <span style="margin-right:10px;"><a *ngIf="resultPage.currentPage>1" (click)="dictionarySearch(resultPage.currentPage-1)" class="btn btn-info">上一页</a></span>
+        <span style="margin-right:10px;"style="margin-right:10px;" *ngFor="let eachPage of resultPage.pageList"><a (click)="dictionarySearch(eachPage)" class="btn btn-info" [ngClass]="{'active':(resultPage.currentPage==eachPage)}">{{eachPage}}</a></span>
+        <span style="margin-right:10px;"><a *ngIf="resultPage.totalPage>resultPage.currentPage" (click)="dictionarySearch(resultPage.currentPage+1)" class="btn btn-info">下一页</a></span>
+        <span style="margin-right:10px;"><a *ngIf="resultPage.totalPage>resultPage.currentPage" (click)="dictionarySearch(resultPage.totalPage)" class="btn btn-info">末页</a></span>
+        <span *ngIf="resultPage.totalPage>=resultPage.currentPage">当前第{{resultPage.currentPage}}/{{resultPage.totalPage}}页，共{{resultPage.totalSize}}条</span>
+      </div>
+    </div>
+  </div>
+</div>

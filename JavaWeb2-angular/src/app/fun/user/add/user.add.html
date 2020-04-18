@@ -1,0 +1,28 @@
+<div>
+  <div class="form-group">
+    <label>用户名</label>
+    <input type="text" class="form-control" [(ngModel)]="userAddRequest.userName">
+  </div>
+  <div class="form-group">
+    <label>用户密码</label>
+    <input type="password" class="form-control" [(ngModel)]="userAddRequest.password">
+  </div>
+  <div class="form-group">
+    <label>用户姓名</label>
+    <input type="text" class="form-control" [(ngModel)]="userAddRequest.personName">
+  </div>
+  <div class="form-group">
+    <label>邮箱</label>
+    <input type="text" class="form-control" [(ngModel)]="userAddRequest.email">
+  </div>
+  <div class="form-group">
+    <label>手机号</label>
+    <input type="text" class="form-control" [(ngModel)]="userAddRequest.phone">
+  </div>
+  <div class="form-group">
+    <label>备注</label>
+    <input type="text" class="form-control" [(ngModel)]="userAddRequest.remark">
+  </div>
+  <button type="button" (click)="userAdd()" class="btn btn-primary">提交</button>
+  <button type="button" (click)="userAddBack()" class="btn btn-primary" style="margin-left:1%;">返回</button>
+</div>

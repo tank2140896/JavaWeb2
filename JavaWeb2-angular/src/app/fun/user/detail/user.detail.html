@@ -1,0 +1,23 @@
+<div>
+  <div class="form-group">
+    <label>用户名</label>
+    <input disabled type="text" class="form-control" [(ngModel)]="userDetailResponse.userName">
+  </div>
+  <div class="form-group">
+    <label>用户姓名</label>
+    <input disabled type="text" class="form-control" [(ngModel)]="userDetailResponse.personName">
+  </div>
+  <div class="form-group">
+    <label>邮箱</label>
+    <input disabled type="text" class="form-control" [(ngModel)]="userDetailResponse.email">
+  </div>
+  <div class="form-group">
+    <label>手机号</label>
+    <input disabled type="text" class="form-control" [(ngModel)]="userDetailResponse.phone">
+  </div>
+  <div class="form-group">
+    <label>备注</label>
+    <input disabled type="text" class="form-control" [(ngModel)]="userDetailResponse.remark">
+  </div>
+  <button type="button" (click)="userDetailBack()" class="btn btn-primary" style="margin-left:1%;">返回</button>
+</div>

@@ -1,0 +1,5 @@
+<div style="margin-left:5%;"><i class="fa fa-home" aria-hidden="true"></i><span style="margin-left:2%;"><a [routerLink]="['/web']">首页</a></span></div>
+<div *ngIf="menuListForTree!=null">
+  <app-web-home-sidebar-recursion *ngFor="let i of menuListForTree" [icon]="i.icon" [url]="i.pageUrl" [name]="i.moduleName" [list]="i.list"></app-web-home-sidebar-recursion>
+</div>
+

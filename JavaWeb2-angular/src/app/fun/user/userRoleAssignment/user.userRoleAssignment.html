@@ -1,0 +1,30 @@
+<div style="margin-left:5%;">
+  <div class="form-check form-check-inline">
+    <table class="table">
+      <thead>
+      <tr class="text-center">
+        <th>序号</th>
+        <th>是否拥有</th>
+        <th>角色名</th>
+        <th>用户权限、角色权限同时存在时的策略</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="text-center" *ngFor="let eachData of userRoleInfoData;let xh=index">
+        <td>{{xh+1}}</td>
+        <td><input class="form-check-input" type="checkbox" [checked]="eachData.checkFlag" [(ngModel)]="eachData.checkFlag" value="{{eachData.roleId}}"></td>
+        <td><label class="form-check-label">{{eachData.roleName}}</label></td>
+        <td>
+          <select (change)="selectChange($event,eachData)">
+            <option *ngFor="let eachData2 of userRoleStrategyFromDictionaryData;" [selected]="eachData.strategy==eachData2.valueCode" value="{{eachData2.valueCode}}">{{eachData2.means}}</option>
+          </select>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div>
+    <button type="button" (click)="userRoleAssignment()" class="btn btn-primary">分配</button>
+    <button type="button" (click)="userRoleAssignmentBack()" class="btn btn-primary" style="margin-left:1%;">返回</button>
+  </div>
+</div>

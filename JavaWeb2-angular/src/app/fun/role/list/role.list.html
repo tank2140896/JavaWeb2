@@ -1,0 +1,55 @@
+<div style="margin-top:1%;margin-left:1%">
+  角色名<input type="text" style="height:35px;" placeholder="请输入角色名" [(ngModel)]="roleListRequest.roleName">
+  <button type="button" class="btn btn-primary" style="margin-left:1%;" (click)="roleSearch(1)" *ngIf="roleListZone">查询</button>
+  <button type="button" class="btn btn-info" style="margin-left:1%;" (click)="reset()">重置</button>
+  <button type="button" class="btn btn-success" style="margin-left:1%;" (click)="roleAddFunction()" *ngIf="roleAddZone">新增</button>
+</div>
+<div class="col col-xl-12 col-lg-12" style="margin-top:1%;">
+  <div class="card mb-3">
+    <div class="card-body table table-hover">
+      <table class="table">
+        <thead>
+          <tr class="text-center">
+            <th>序号</th>
+            <th>角色名</th>
+            <th>注册日期</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="resultPage.data==resultPage.dataLoading">
+          <tr class="text-center">
+            <td colspan=6>数据获取中...</td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="resultPage.data==null">
+          <tr class="text-center">
+            <td colspan=6>无数据</td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="resultPage.data!=null&&resultPage.data!=resultPage.dataLoading">
+          <tr *ngFor="let eachData of resultPage.data;let xh=index" class="text-center">
+            <td>{{(xh+1)+(resultPage.currentPage-1)*resultPage.pageSize}}</td>
+            <td>{{eachData.roleName}}</td>
+            <td>{{eachData.createDate}}</td>
+            <td>
+              <button style="margin-right:10px;" *ngIf="roleDeleteZone" class="btn btn-sm btn-danger" (click)="roleDeleteFunction(eachData.roleId)">删除角色</button>
+              <button style="margin-right:10px;" *ngIf="roleModifyZone" class="btn btn-sm btn-warning" (click)="roleModifyFunction(eachData.roleId)">修改角色</button>
+              <button style="margin-right:10px;" *ngIf="roleDetailZone" class="btn btn-sm btn-info" (click)="roleDetailFunction(eachData.roleId)">角色详情</button>
+              <button *ngIf="roleModuleAssignmentZone" class="btn btn-sm btn-primary" (click)="roleModuleAssignmentFunction(eachData.roleId)">角色模块分配</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="resultPage.data!=null&&resultPage.data!=resultPage.dataLoading">
+      <div style="float:right;padding:0px 1em 1ex 0em;">
+        <span style="margin-right:10px;"><a *ngIf="resultPage.currentPage>1" (click)="roleSearch(1)" class="btn btn-info">首页</a></span>
+        <span style="margin-right:10px;"><a *ngIf="resultPage.currentPage>1" (click)="roleSearch(resultPage.currentPage-1)" class="btn btn-info">上一页</a></span>
+        <span style="margin-right:10px;"style="margin-right:10px;" *ngFor="let eachPage of resultPage.pageList"><a (click)="roleSearch(eachPage)" class="btn btn-info" [ngClass]="{'active':(resultPage.currentPage==eachPage)}">{{eachPage}}</a></span>
+        <span style="margin-right:10px;"><a *ngIf="resultPage.totalPage>resultPage.currentPage" (click)="roleSearch(resultPage.currentPage+1)" class="btn btn-info">下一页</a></span>
+        <span style="margin-right:10px;"><a *ngIf="resultPage.totalPage>resultPage.currentPage" (click)="roleSearch(resultPage.totalPage)" class="btn btn-info">末页</a></span>
+        <span *ngIf="resultPage.totalPage>=resultPage.currentPage">当前第{{resultPage.currentPage}}/{{resultPage.totalPage}}页，共{{resultPage.totalSize}}条</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+<div style="margin-left:5%;" *ngIf="list==null||list.length==0">
+  <i class="{{(icon==null||icon=='')?'icon':icon}}" aria-hidden="true"></i>
+  <a [routerLink]="[url]" href="javascript:void(0);">{{name}}</a>
+</div>
+<div *ngIf="list.length>0">
+  <div style="margin-left:5%;">
+    <i class="{{(icon==null||icon=='')?'icon':icon}}" aria-hidden="true"></i>
+    <a (click)="addExpandClass()" href="javascript:void(0);">{{name}}</a>
+    <span [hidden]="!showMenu" style="float:right;"><i class="fa fa-angle-down" aria-hidden="true"></i></span>
+    <span [hidden]="showMenu" style="float:right;"><i class="fa fa-angle-up" aria-hidden="true"></i></span>
+  </div>
+  <div style="margin-left:5%;" [hidden]="showMenu">
+    <app-web-home-sidebar-recursion *ngFor="let i of list" [icon]="i.icon" [url]="i.pageUrl" [name]="i.moduleName" [list]="i.list"></app-web-home-sidebar-recursion>
+  </div>
+</div>

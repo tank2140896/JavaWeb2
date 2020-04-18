@@ -1,0 +1,69 @@
+<div style="margin-top:1%;margin-left:1%">
+  模块名<input type="text" style="height:35px;" placeholder="请输入模块名" [(ngModel)]="moduleListRequest.moduleName">
+  页面URL<input type="text" style="height:35px;" placeholder="请输入页面URL" [(ngModel)]="moduleListRequest.pageUrl">
+  API请求URL<input type="text" style="height:35px;" placeholder="请输入API请求URL" [(ngModel)]="moduleListRequest.apiUrl">
+  模块类型
+  <select (change)="selectChange($event)" style="width:70px;height:35px;">
+    <option value=""></option>
+    <option *ngFor="let eachData2 of moduleListModuleTypeFromDictionaryData;" value="{{eachData2.valueCode}}">{{eachData2.means}}</option>
+  </select>
+  <button type="button" class="btn btn-primary" style="margin-left:1%;" (click)="moduleSearch(1)" *ngIf="moduleListZone">查询</button>
+  <button type="button" class="btn btn-info" style="margin-left:1%;" (click)="reset()">重置</button>
+  <button type="button" class="btn btn-success" style="margin-left:1%;" (click)="moduleAddFunction()" *ngIf="moduleAddZone">新增</button>
+</div>
+<div class="col col-xl-12 col-lg-12" style="margin-top:1%;">
+  <div class="card mb-3">
+    <div class="card-body table table-hover">
+      <table class="table" style="table-layout:fixed;word-break:break-all">
+        <thead>
+          <tr class="text-center">
+            <th>序号</th>
+            <th>模块名</th>
+            <th>别名</th>
+            <th>页面URL</th>
+            <th>API请求URL</th>
+            <th>模块类型</th>
+            <th>注册日期</th>
+            <th width="270px;">操作</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="resultPage.data==resultPage.dataLoading">
+          <tr class="text-center">
+            <td colspan=6>数据获取中...</td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="resultPage.data==null">
+          <tr class="text-center">
+            <td colspan=6>无数据</td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="resultPage.data!=null&&resultPage.data!=resultPage.dataLoading">
+          <tr *ngFor="let eachData of resultPage.data;let xh=index" class="text-center">
+            <td>{{(xh+1)+(resultPage.currentPage-1)*resultPage.pageSize}}</td>
+            <td>{{eachData.moduleName}}</td>
+            <td>{{eachData.alias}}</td>
+            <td>{{eachData.pageUrl}}</td>
+            <td>{{eachData.apiUrl}}</td>
+            <td *ngIf="eachData.moduleType=='1'"><span style="color:#ff0b0c">目录</span></td><td *ngIf="eachData.moduleType=='2'"><span style="color:#0d1bff">菜单</span></td><td *ngIf="eachData.moduleType=='3'"><span style="color:#06801f">功能</span></td>
+            <td>{{eachData.createDate}}</td>
+            <td>
+              <button style="margin-right:10px;" *ngIf="moduleDeleteZone" class="btn btn-sm btn-danger" (click)="moduleDeleteFunction(eachData.moduleId)">删除模块</button>
+              <button style="margin-right:10px;" *ngIf="moduleModifyZone" class="btn btn-sm btn-warning" (click)="moduleModifyFunction(eachData.moduleId)">修改模块</button>
+              <button *ngIf="moduleDetailZone" class="btn btn-sm btn-info" (click)="moduleDetailFunction(eachData.moduleId)">模块详情</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="resultPage.data!=null&&resultPage.data!=resultPage.dataLoading">
+      <div style="float:right;padding:0px 1em 1ex 0em;">
+        <span style="margin-right:10px;"><a *ngIf="resultPage.currentPage>1" (click)="moduleSearch(1)" class="btn btn-info">首页</a></span>
+        <span style="margin-right:10px;"><a *ngIf="resultPage.currentPage>1" (click)="moduleSearch(resultPage.currentPage-1)" class="btn btn-info">上一页</a></span>
+        <span style="margin-right:10px;"style="margin-right:10px;" *ngFor="let eachPage of resultPage.pageList"><a (click)="moduleSearch(eachPage)" class="btn btn-info" [ngClass]="{'active':(resultPage.currentPage==eachPage)}">{{eachPage}}</a></span>
+        <span style="margin-right:10px;"><a *ngIf="resultPage.totalPage>resultPage.currentPage" (click)="moduleSearch(resultPage.currentPage+1)" class="btn btn-info">下一页</a></span>
+        <span style="margin-right:10px;"><a *ngIf="resultPage.totalPage>resultPage.currentPage" (click)="moduleSearch(resultPage.totalPage)" class="btn btn-info">末页</a></span>
+        <span *ngIf="resultPage.totalPage>=resultPage.currentPage">当前第{{resultPage.currentPage}}/{{resultPage.totalPage}}页，共{{resultPage.totalSize}}条</span>
+      </div>
+    </div>
+  </div>
+</div>

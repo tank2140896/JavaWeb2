@@ -1,0 +1,21 @@
+.app-web-home-header{
+  width: 90%;
+  height: 50px;
+  float: right;
+  background-color: lightblue;
+}
+.app-web-home-sidebar{
+  width: 10%;
+  height:calc(100% - 0px);
+  background-color: bisque;
+  float: left;
+  position: absolute;
+}
+.app-web-home-centeral{
+  width: 90%;
+  height:calc(100% - 0px);
+  background-color: #ffffff;
+  float: right;
+  position: relative;
+  border-top: solid #ACC0D8 1px;
+}

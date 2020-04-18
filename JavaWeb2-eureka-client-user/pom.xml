@@ -181,6 +181,11 @@
 		    <groupId>com.zaxxer</groupId>
 		    <artifactId>HikariCP</artifactId>
 		</dependency>
+		<!-- netty -->
+		<dependency>
+		    <groupId>io.netty</groupId>
+		    <artifactId>netty-all</artifactId>
+		</dependency>
 		<!-- 引入本地jar包 -->
 		<dependency>
 	     	<groupId>com.demo1</groupId>

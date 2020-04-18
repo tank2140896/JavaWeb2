@@ -1,0 +1,64 @@
+<div style="margin-top:1%;margin-left:1%">
+  用户名<input type="text" style="height:35px;" placeholder="请输入用户名" [(ngModel)]="userListRequest.userName">
+  用户姓名<input type="text" style="height:35px;" placeholder="请输入用户姓名" [(ngModel)]="userListRequest.personName">
+  角色名<input type="text" style="height:35px;" placeholder="请输入角色名" [(ngModel)]="userListRequest.roleName">
+  <button type="button" class="btn btn-primary" style="margin-left:1%;" (click)="userSearch(1)" *ngIf="userListZone">查询</button>
+  <button type="button" class="btn btn-info" style="margin-left:1%;" (click)="reset()">重置</button>
+  <button type="button" class="btn btn-success" style="margin-left:1%;" (click)="userAddFunction()" *ngIf="userAddZone">新增</button>
+</div>
+<div class="col col-xl-12 col-lg-12" style="margin-top:1%;">
+  <div class="card mb-3">
+    <div class="card-body table table-hover">
+      <table class="table">
+        <thead>
+          <tr class="text-center">
+            <th>序号</th>
+            <th>用户名</th>
+            <th>用户姓名</th>
+            <th>用户角色</th>
+            <th>注册日期</th>
+            <th>状态</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="resultPage.data==resultPage.dataLoading">
+          <tr class="text-center">
+            <td colspan=6>数据获取中...</td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="resultPage.data==null">
+          <tr class="text-center">
+            <td colspan=6>无数据</td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="resultPage.data!=null&&resultPage.data!=resultPage.dataLoading">
+          <tr *ngFor="let eachData of resultPage.data;let xh=index" class="text-center">
+            <td>{{(xh+1)+(resultPage.currentPage-1)*resultPage.pageSize}}</td>
+            <td>{{eachData.userName}}</td>
+            <td>{{eachData.personName}}</td>
+            <td *ngIf="eachData.roleName==null||eachData.roleName==''"><span style="color:red">未分配角色</span></td><td *ngIf="eachData.roleName!=null&&eachData.roleName!=''">{{eachData.roleName}}</td>
+            <td>{{eachData.createDate}}</td>
+            <td *ngIf="eachData.status==0" style="color:#438b0e">正常</td><td *ngIf="eachData.status!=0" style="color:red">异常</td>
+            <td>
+              <button style="margin-right:10px;" *ngIf="userDeleteZone" class="btn btn-sm btn-danger" (click)="userDeleteFunction(eachData.userId)">删除用户</button>
+              <button style="margin-right:10px;" *ngIf="userModifyZone" class="btn btn-sm btn-warning" (click)="userModifyFunction(eachData.userId)">修改用户</button>
+              <button style="margin-right:10px;" *ngIf="userDetailZone" class="btn btn-sm btn-info" (click)="userDetailFunction(eachData.userId)">用户详情</button>
+              <button style="margin-right:10px;" *ngIf="userRoleAssignmentZone" class="btn btn-sm btn-primary" (click)="userRoleAssignmentFunction(eachData.userId)">用户角色分配</button>
+              <button *ngIf="userModuleAssignmentZone" class="btn btn-sm btn-primary" (click)="userModuleAssignmentFunction(eachData.userId)">用户模块分配</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="resultPage.data!=null&&resultPage.data!=resultPage.dataLoading">
+      <div style="float:right;padding:0px 1em 1ex 0em;">
+        <span style="margin-right:10px;"><a *ngIf="resultPage.currentPage>1" (click)="userSearch(1)" class="btn btn-info">首页</a></span>
+        <span style="margin-right:10px;"><a *ngIf="resultPage.currentPage>1" (click)="userSearch(resultPage.currentPage-1)" class="btn btn-info">上一页</a></span>
+        <span style="margin-right:10px;"style="margin-right:10px;" *ngFor="let eachPage of resultPage.pageList"><a (click)="userSearch(eachPage)" class="btn btn-info" [ngClass]="{'active':(resultPage.currentPage==eachPage)}">{{eachPage}}</a></span>
+        <span style="margin-right:10px;"><a *ngIf="resultPage.totalPage>resultPage.currentPage" (click)="userSearch(resultPage.currentPage+1)" class="btn btn-info">下一页</a></span>
+        <span style="margin-right:10px;"><a *ngIf="resultPage.totalPage>resultPage.currentPage" (click)="userSearch(resultPage.totalPage)" class="btn btn-info">末页</a></span>
+        <span *ngIf="resultPage.totalPage>=resultPage.currentPage">当前第{{resultPage.currentPage}}/{{resultPage.totalPage}}页，共{{resultPage.totalSize}}条</span>
+      </div>
+    </div>
+  </div>
+</div>

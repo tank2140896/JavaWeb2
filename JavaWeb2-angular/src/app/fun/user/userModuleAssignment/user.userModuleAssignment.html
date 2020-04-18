@@ -1,0 +1,9 @@
+<div style="margin-left:5%;">
+  <div *ngIf="moduleTree!=null&&moduleTree.length>0">
+    <app-web-user-user-module-assignment-module-recursion *ngFor="let i of moduleTree" [checkFlag]="i.checkFlag" [id]="i.moduleId" [name]="i.moduleName" [list]="i.list"></app-web-user-user-module-assignment-module-recursion>
+  </div>
+  <div>
+    <button type="button" (click)="userModuleAssignment()" class="btn btn-primary">分配</button>
+    <button type="button" (click)="userModuleAssignmentBack()" class="btn btn-primary" style="margin-left:1%;">返回</button>
+  </div>
+</div>

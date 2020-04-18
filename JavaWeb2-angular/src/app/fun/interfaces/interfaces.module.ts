@@ -1,0 +1,21 @@
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {RouterModule} from '@angular/router';
+import {InterfacesComponent} from './interfaces.component';
+import {InterfacesListModule} from './list/interfaces.list.module';
+import {InterfacesDetailModule} from './detail/interfaces.detail.module';
+import {InterfacesModifyModule} from './modify/interfaces.modify.module';
+
+
+@NgModule({
+  imports:[
+    CommonModule,RouterModule,
+    InterfacesListModule,InterfacesDetailModule,InterfacesModifyModule
+  ],
+  declarations:[InterfacesComponent],
+  exports:[InterfacesComponent]
+})
+
+export class InterfacesModule {
+
+}

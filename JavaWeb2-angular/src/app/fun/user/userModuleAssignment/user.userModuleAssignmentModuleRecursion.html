@@ -1,0 +1,11 @@
+<div *ngIf="list==null||list.length==0">
+  <input type="checkbox" [checked]="checkFlag" (change)="moduleIdCheckedChange($event,id)">{{name}}
+</div>
+<div *ngIf="list.length>0">
+  <div>
+    <input type="checkbox" [checked]="checkFlag" (change)="moduleIdCheckedChange($event,id)">{{name}}
+  </div>
+  <div style="margin-left:5%;">
+    <app-web-user-user-module-assignment-module-recursion *ngFor="let i of list" [checkFlag]="i.checkFlag" [id]="i.moduleId" [name]="i.moduleName" [list]="i.list"></app-web-user-user-module-assignment-module-recursion>
+  </div>
+</div>

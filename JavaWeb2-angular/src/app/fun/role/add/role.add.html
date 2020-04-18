@@ -1,0 +1,12 @@
+<div>
+  <div class="form-group">
+    <label>角色名</label>
+    <input type="text" class="form-control" [(ngModel)]="roleAddRequest.roleName">
+  </div>
+  <div class="form-group">
+    <label>备注</label>
+    <input type="text" class="form-control" [(ngModel)]="roleAddRequest.remark">
+  </div>
+  <button type="button" (click)="roleAdd()" class="btn btn-primary">提交</button>
+  <button type="button" (click)="roleAddBack()" class="btn btn-primary" style="margin-left:1%;">返回</button>
+</div>
