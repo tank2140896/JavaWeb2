@@ -11,6 +11,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CommonModule} from '@angular/common';
 import {HomeModule} from './fun/home/home.module';
 import {FormsModule} from '@angular/forms';
+import {DemoModule} from './fun/demo/demo.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,7 @@ import {FormsModule} from '@angular/forms';
   imports: [
     CommonModule,FormsModule,BrowserModule,BrowserAnimationsModule,HttpClientModule,
     AppRoutingModule,
-    LoginModule,HomeModule
+    LoginModule,HomeModule,DemoModule
   ],
   providers: [HttpService,SessionService,AuthService],
   bootstrap: [AppComponent]

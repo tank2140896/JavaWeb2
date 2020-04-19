@@ -36,11 +36,21 @@ import {InterfacesListComponent} from './fun/interfaces/list/interfaces.list.com
 import {InterfacesModifyComponent} from './fun/interfaces/modify/interfaces.modify.component';
 import {InterfacesDetailComponent} from './fun/interfaces/detail/interfaces.detail.component';
 import {OnlineChatComponent} from './fun/onlineChat/online.chat.component';
+import {DemoComponent} from './fun/demo/demo.components';
+import {Demo1Component} from './fun/demo/demo1/demo1.component';
+import {Demo2Component} from './fun/demo/demo2/demo2.component';
+import {DemoListComponent} from './fun/demo/demoList/demoList.components';
 
 
 const routes: Routes = [
   {path:'',component:LoginComponent},//默认登录页面
   {path:'webLogin',component:LoginComponent},//登录页面
+  {path:'demo',component:DemoComponent,children:[
+    {path:'',component:DemoListComponent},//示例列表页面
+    {path:'demo1',component:Demo1Component},//示例页面1
+    {path:'demo2',component:Demo2Component},//示例页面2
+    {path:'**',redirectTo:'/demo',pathMatch:'full'}
+  ]},
   {path:'web',component:HomeComponent,children:[
     {path:'',component:CenteralComponent,canActivate:[AuthService]},
     {path:'loginAccess/logout',component:HeaderComponent},//用户登出接口

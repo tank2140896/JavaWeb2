@@ -4,7 +4,6 @@ import {DatePipe} from '@angular/common';
 import {SessionService} from '../../../service/SessionService';
 import {HttpService} from '../../../service/HttpService';
 import {ApiConstant} from '../../../constant/ApiConstant';
-import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-web-home-header',

@@ -70,4 +70,9 @@ export class LoginComponent implements OnInit {
     );
   }
 
+  //示例
+  public demo():void {
+    this.router.navigate(['demo']);
+  }
+
 }
