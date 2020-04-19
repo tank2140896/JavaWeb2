@@ -64,3 +64,4 @@ C、@ConfigurationProperties(prefix="com.demo")
 # 九、其它       
 1、https://start.spring.io                       
 2、https://spring.io/projects/spring-cloud                          
+3、https://angular.io/start          
