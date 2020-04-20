@@ -126,7 +126,12 @@ public class SecretUtil {
 				}).mapToObj(each->Character.toString(KEYBORD_USED_CHARACTERSET[each])).limit(passLen).collect(Collectors.joining());
 	}
 	
-	//默认根据当前时间生成唯一字符串（带系统编号，用于分布式）
+	/**
+	默认根据当前时间生成唯一字符串（带系统编号，用于分布式，高并发下效率较低）
+	推荐redis处理，核心写法为：
+	redisTemplate.opsForValue().set("defaultGenUniqueStr",1);
+	System.out.println(redisTemplate.opsForValue().increment("defaultGenUniqueStr",1));
+	*/
 	public static String defaultGenUniqueStr(int systemNo){
 		synchronized ("defaultGenUniqueStr") {
 			try {
