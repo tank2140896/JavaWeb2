@@ -1,0 +1,18 @@
+<div style="margin-left:1%">
+  <div><a [routerLink]="['/webLogin']" style="margin-left:1%">返回上级</a></div>
+  <div>1、{{demo1_1}}的用法：{{demo1_1}}</div>
+  <div>2、*ngFor的用法：<span *ngFor="let eachData of demo1_2;let xh=index" style="margin-left:10px;">序号{{xh}}:{{eachData}}</span></div>
+  <div>3、组件@Input（是[]）和@Output（是()）的用法：<app-web-demo-child [inputValue]="demo1_3" (outputValue)="wordsClick($event)"></app-web-demo-child></div>
+  <div>4、点击事件(click)、#v1和#v2的传值、$输出：输入框1<input #v1>输入框2<input #v2><button (click)="demo1_4(v1,v2)">点我</button></div>
+  <div>5、@HostBinding和@HostListener用法（见InputKeyDownColorChangeDirective）：<input appInputKeyDownColorChangeDirective></div>
+  <div>6、创建对象：Demo1EntityComponent demo1EntityComponent = new Demo1EntityComponent('{{demo1_6.userName}}',{{demo1_6.age}})</div>
+  <div>7、*ngIf的用法：<span *ngIf="demo1_7()">{{demo1_7}}</span></div>
+  <div [ngSwitch]="demo1_8">8、*ngSwitchCase的用法：
+    <span *ngSwitchCase="'A'">A</span>
+    <span *ngSwitchCase="'B'">B</span>
+    <span *ngSwitchDefault [ngStyle]="{color:demo1_8}" [style.font-size.px]="18" [ngClass]="['blue']">not A and not B</span>
+  </div>
+  <div ngNonBindable>9、不编译Angular标签：{{我不会被当做标签处理}}</div>
+  <div>10、[(ngModel)]双向绑定的用法（[]是输入，()是输出）：<input [(ngModel)]="demo1_10"></div>
+</div>
+

@@ -102,4 +102,11 @@ public class SwaggerConstant {
 	public static final String SWAGGER_INTERFACES_DETAIL = "接口详情接口";
 	/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ swagger-UserController ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */
 	
+	/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ swagger-OnlineChatController ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */
+	public static final String SWAGGER_ONLINE_CHAT_CONTROLLER_TAGS = "11、登录且需要权限才可访问的在线聊天管理模块";
+	
+	public static final String SWAGGER_ONLINE_CHAT_USER_LIST = "在线用户列表接口";
+	public static final String SWAGGER_ONLINE_CHAT_USER_OFFLINE = "用户下线接口";
+	/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ swagger-OnlineChatController ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */
+	
 }

@@ -22,15 +22,16 @@ JavaWeb2-eureka-client-zuul（端口3001）->JavaWeb2-common
 4、本项目目前暂无前端实现，本项目目前全程采用JUnit或Postman验证接口，前端界面待补充                                       
 5、JavaWeb2-integration-demo包括了一些常用技术与SpringBoot组合的示例（hbase、kafka、netty、solr、切面处理、mongodb、websocket（SpringBoot版和Netty版）、elasticsearch、neo4j、kaptcha、邮件发送、redis、restTemplate、quartz（分布式）定时任务、文件上传下载、qq、wechat）                                                                                            
 # 五、后端近期开发计划                                                                             
-1、完善、优化websoket（尤其是Netty版），补充freemarker、lucene、hadoop、spark                 
-2、用户数据权限                                       
-3、自动代码生成                   
-4、使用容器技术                                     
-5、将zuul变为gateway                 
-6、加入SpringCloudConfig、SpringCloudSleuth、SpringBootAdmin、SpringSecurityOAuth2JWT                 
-7、后端一部分将采用JAVA13+、函数式、异步编程（包括WebFlux/RxJava2/Netty）                 
-8、将JAVA算法改用C语言实现，JAVA本地调用C语言的实现方法                
-9、工作流（activiti）              
+1、完善、优化websoket（尤其是Netty版）的前后端代码                     
+2、补充freemarker、lucene、hadoop、spark                                       
+3、用户数据权限                                       
+4、自动代码生成                   
+5、使用容器技术                                     
+6、将zuul变为gateway                 
+7、加入SpringCloudConfig、SpringCloudSleuth、SpringBootAdmin、SpringSecurityOAuth2JWT                 
+8、后端一部分将采用JAVA13+、函数式、异步编程（包括WebFlux/RxJava2/Netty）                 
+9、将JAVA算法改用C语言实现，JAVA本地调用C语言的实现方法                
+10、工作流（activiti）              
 # 六、项目主要特点                                                       
 1、微服务                          
 2、前后端分离                 

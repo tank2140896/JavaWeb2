@@ -6,7 +6,7 @@
 	<insert id="interfacesBatchInsert" parameterType="com.javaweb.web.po.Interfaces">
 		insert into interfaces(id,name,url,method,times,unit,counts,remark,create_date,creator,update_date,updater,del_flag) values
 		<foreach collection="list" index="index" item="item" open="" separator="," close="">   
-	        (#{item.id},#{item.name},#{item.url},#{item.method},#{item.times},#{item.unit},#{item.counts}#{item.remark},#{item.createDate},#{item.creator},#{item.updateDate},#{item.updater},#{item.delFlag})
+	        (#{item.id},#{item.name},#{item.url},#{item.method},#{item.times},#{item.unit},#{item.counts},#{item.remark},#{item.createDate},#{item.creator},#{item.updateDate},#{item.updater},#{item.delFlag})
     	</foreach>
 	</insert>
 	

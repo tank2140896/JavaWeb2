@@ -67,4 +67,8 @@ public class ApiConstant {
 	public static final String INTERFACES_MODIFY = "/modify";//修改接口接口
 	public static final String INTERFACES_DETAIL = "/detail/{interfacesId}";//接口详情接口
 	
+	public static final String WEB_ONLINE_CHAT_PREFIX = "/web/sys/onlineChat";
+	public static final String ONLINE_CHAT_USER_LIST = "/userList";//在线用户列表接口
+	public static final String ONLINE_CHAT_USER_OFFLINE = "/userOffline/{key}";//用户下线接口
+	
 }
