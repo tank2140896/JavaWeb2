@@ -25,6 +25,7 @@
   </div>
   <div style="float:right">
     <input [(ngModel)]="sendMessage" type="text" style="height:38px;width:300px;margin-right:10px;margin-top:10px;" (keydown.enter)="keydownEnter($event)"/>
-    <button type="button" class="btn btn-primary" (click)="sendFunction()">发送</button>
+    <button type="button" class="btn btn-primary" (click)="sendFunction()" style="margin-right:10px;">发送</button>
+    <button type="button" class="btn btn-primary" (click)="clearFunction()">清空</button>
   </div>
 </div>
