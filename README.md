@@ -3,35 +3,38 @@
 2、maven3.3+                 
 3、redis4.0.8+                 
 4、mysql5.6+                 
-5、lombok                 
+5、lombok     
+6、nodejs              
 # 二、项目依赖关系                                                                 
 JavaWeb2-integration-demo                    
 JavaWeb2-database->JavaWeb2-common                        
 JavaWeb2-eureka-server（要起3个，端口1001、1002、1003）                                                
 JavaWeb2-eureka-client-user（端口2001）->JavaWeb2-database                                                                    
 JavaWeb2-eureka-client-log（端口2002）                                                                            
-JavaWeb2-eureka-client-zuul（端口3001）->JavaWeb2-common                                                                    
+JavaWeb2-eureka-client-zuul（端口3001）->JavaWeb2-common             
+JavaWeb2-angular（npm start）              
 因此，要正确完成JavaWeb2-eureka-client-user的编译需要先编译JavaWeb2-common再编译JavaWeb2-database                                  
 # 三、启动顺序                                                       
 1、JavaWeb2-eureka-server（要起3个，端口1001、1002、1003）                          
-2、JavaWeb2-eureka-client-user（端口2001）、JavaWeb2-eureka-client-log（端口2002）、JavaWeb2-eureka-client-zuul（端口3001）                                  
+2、JavaWeb2-eureka-client-user（端口2001）、JavaWeb2-eureka-client-log（端口2002）、JavaWeb2-eureka-client-zuul（端口3001）          
+3、JavaWeb2-angular（端口4200）     
+页面访问：localhost:4200，账号和密码都是admin123456     
 # 四、使用前重要说明                                                                     
 1、本项目存在很多不足，水平有限，请见谅                            
-2、本项目没有使用redis存储session（spring-session-redis（写法在代码中也有参考）），而是采用token形式存储到redis                 
-3、后端几乎所有的增删改查删除操作都是物理操作（忽略数据库表中的del_flag字段），如果想做逻辑操作（使用数据库表中的del_flag字段）需要重写相关SQL语句（目前虽然保留了逻辑删除字段，但是形同虚设）                 
-4、本项目目前暂无前端实现，本项目目前全程采用JUnit或Postman验证接口，前端界面待补充                                       
+2、本项目没有使用session，而是使用redis替代session，没有使用spring-session-redis，而是自己代码处理的                          
+3、后端几乎所有的增删改查删除操作都是物理操作（忽略数据库表中的del_flag字段），如果想做逻辑操作（使用数据库表中的del_flag字段）需要重写相关SQL语句                        
+4、本项目所有接口都可以用JUnit或Postman验证接口，JUnit代码也有部分，但是比较老旧，以后应该也不会再维护该部分代码了                            
 5、JavaWeb2-integration-demo包括了一些常用技术与SpringBoot组合的示例（hbase、kafka、netty、solr、切面处理、mongodb、websocket（SpringBoot版和Netty版）、elasticsearch、neo4j、kaptcha、邮件发送、redis、restTemplate、quartz（分布式）定时任务、文件上传下载、qq、wechat）                                                                                            
 # 五、后端近期开发计划                                                                             
-1、完善、优化websoket（尤其是Netty版）的前后端代码                     
-2、补充freemarker、lucene、hadoop、spark                                       
-3、用户数据权限                                       
-4、自动代码生成                   
-5、使用容器技术                                     
-6、将zuul变为gateway                 
-7、加入SpringCloudConfig、SpringCloudSleuth、SpringBootAdmin、SpringSecurityOAuth2JWT                 
-8、后端一部分将采用JAVA13+、函数式、异步编程（包括WebFlux/RxJava2/Netty）                 
-9、将JAVA算法改用C语言实现，JAVA本地调用C语言的实现方法                
-10、工作流（activiti）              
+1、freemarker、lucene、hadoop、spark                                       
+2、用户数据权限                                       
+3、自动代码生成                   
+4、使用容器技术                                     
+5、将zuul变为gateway                 
+6、加入SpringCloudConfig、SpringCloudSleuth、SpringBootAdmin、SpringSecurityOAuth2JWT                 
+7、后端一部分将采用JAVA14+、函数式、异步编程（包括WebFlux/RxJava2/Netty）                 
+8、将JAVA算法改用C语言实现，JAVA本地调用C语言的实现方法                
+9、工作流（activiti）              
 # 六、项目主要特点                                                       
 1、微服务                          
 2、前后端分离                 
