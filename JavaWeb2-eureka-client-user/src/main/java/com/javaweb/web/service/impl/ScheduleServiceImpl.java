@@ -76,11 +76,6 @@ public class ScheduleServiceImpl extends BaseService implements ScheduleService 
 		finalList.addAll(afterList);
 		return finalList;
 	}
-	
-	public static void main(String[] args) {
-		String s = String.format("%02d",4);
-		System.out.println(s);
-	}
 
 	@Transactional
 	public void scheduleSave(ScheduleAddRequest scheduleAddRequest,User user) {
