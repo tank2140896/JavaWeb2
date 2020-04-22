@@ -24,6 +24,8 @@ public interface UserDao extends DaoForMySql<User> {
 	
 	public void userDelete(String userId);
 	
+	public List<User> getUsersByUserId(List<String> list);
+	
 	public User userDetail(String userId);
 	
 	public List<RoleInfoResponse> userRoleInfo(String userId);
