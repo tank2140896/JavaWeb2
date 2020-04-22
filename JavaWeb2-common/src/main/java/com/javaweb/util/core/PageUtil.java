@@ -46,7 +46,7 @@ public class PageUtil {
 	}
 	
 	//获取数据截取开始位
-	public Long getSubStart(long currentPage,long pageSize) {
+	public static Long getSubStart(long currentPage,long pageSize) {
 		if(currentPage==1){
 			return 0L;
 		}else{
@@ -55,7 +55,7 @@ public class PageUtil {
 	}
 
 	//获取数据截取结束位
-	public Long getSubEnd(long currentPage,long pageSize,long totalSize) {
+	public static Long getSubEnd(long currentPage,long pageSize,long totalSize) {
 		Long endStart;
 		if(currentPage==1){
 			endStart = pageSize;
@@ -67,6 +67,19 @@ public class PageUtil {
 		}else{
 			return totalSize;
 		}
+	}
+	
+	//数组截取
+	public static <T> List<T> getSubList(List<T> list,long pageSize,long currentPage){
+	    if(list==null||list.size()==0){
+        	return null;
+		}
+		int startIndex = Integer.parseInt(getSubStart(currentPage, pageSize).toString());
+		int endIndex = Integer.parseInt(getSubEnd(currentPage, pageSize,list.size()).toString());
+		if(startIndex>endIndex){
+			return null;
+		}
+		return list.subList(startIndex,endIndex);
 	}
 
 }
