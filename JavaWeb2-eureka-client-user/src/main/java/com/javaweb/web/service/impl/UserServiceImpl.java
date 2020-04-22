@@ -58,6 +58,10 @@ public class UserServiceImpl extends BaseService implements UserService {
 	public User userDetail(String userId) {
 		return userDao.userDetail(userId);
 	}
+	
+	public List<User> getUsersByUserId(List<String> list) {
+		return userDao.getUsersByUserId(list);
+	}
 
 	public List<RoleInfoResponse> userRoleInfo(String userId) {
 		return userDao.userRoleInfo(userId);
@@ -115,5 +119,5 @@ public class UserServiceImpl extends BaseService implements UserService {
 		map.put("list",userModuleList);
 		userDao.userModuleAssignment(map);
 	}
-	
+
 }
