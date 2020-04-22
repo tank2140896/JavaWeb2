@@ -29,12 +29,21 @@ public class OnlineChatController extends BaseController {
 	@ApiOperation(value=SwaggerConstant.SWAGGER_ONLINE_CHAT_USER_LIST)
 	@GetMapping(ApiConstant.ONLINE_CHAT_USER_LIST)
 	public BaseResponseResult userList(){
-		List<User> list = new ArrayList<>();
-		Set<String> set = stringRedisTemplate.keys("*,*");
+		Set<String> set = stringRedisTemplate.keys("*,1");//只取web端的在线用户，这里做的较简单，全部取出不分页
+		/**
+		数组手动分页处理方式：
+		1、List<String> sortedList = set.stream().sorted().collect(Collectors.toList());
+		2、调用PageUtil.getSubList(list,pageSize,currentPage)
+		*/
+		List<String> noSortist = new ArrayList<>();
 		for(String str:set){
-			if(!str.equals(SystemConstant.ADMIN+CommonConstant.COMMA+CommonConstant.ZERO_STRING_VALUE)){
-				list.add(userService.userDetail(str.split(CommonConstant.COMMA)[0]));
+			if(!str.equals(SystemConstant.ADMIN+CommonConstant.COMMA+CommonConstant.ZERO_STRING_VALUE)){//去除管理员
+				noSortist.add(str.split(CommonConstant.COMMA)[0]);
 			}
+		}
+		List<User> list = new ArrayList<>();
+		if(noSortist.size()!=0){
+			list = userService.getUsersByUserId(noSortist);
 		}
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"onlineChat.userList.success",list);
 	}
