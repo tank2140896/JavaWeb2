@@ -105,6 +105,17 @@ public class ObjectOperateUtil {
 	net.sf.json结果为：{"a":["1","2"],"b":"2"}
 	com.alibaba.fastjson结果为：{"a":"2","b":"2"}
 	*/
+	/**
+	写法示例：
+	List<A> list = new ArrayList<>();
+	A a1 = new A("a",18,"x1");
+	A a2 = new A("b",19,"x2");
+	A a3 = new A("c",20,"x3");
+	list.add(a1);list.add(a2);list.add(a3);
+	B b = new B(200,"success",list);
+	//{"code":200,"data":[{"address":"x1","age":18},{"address":"x2","age":19},{"address":"x3","age":20}],"message":"success"}
+	System.out.println(excludeField(b,new String[]{"userName"},false));
+	*/
 	public static String excludeField(Object obj,String[] excludes,boolean isArray){
 		JsonConfig jsonConfig = new JsonConfig();
 		jsonConfig.setExcludes(excludes);
