@@ -24,6 +24,8 @@ public interface UserService {
 	
 	public User userDetail(String userId);
 	
+	public List<User> getUsersByUserId(List<String> list);
+	
 	public List<RoleInfoResponse> userRoleInfo(String userId);
 	
 	public void userRoleAssignment(String userId,List<RoleIdAndStrategyRequest> list);
