@@ -27,15 +27,14 @@ JavaWeb2-angular（npm start）
 4、本项目所有接口都可以用JUnit或Postman验证接口，JUnit代码也有部分，但是比较老旧，以后应该也不会再维护该部分代码了                            
 5、JavaWeb2-integration-demo包括了一些常用技术与SpringBoot组合的示例（hbase、kafka、netty、solr、切面处理、mongodb、websocket（SpringBoot版和Netty版）、elasticsearch、neo4j、kaptcha、邮件发送、redis、restTemplate、quartz（分布式）定时任务、文件上传下载、qq、wechat）                                                                                            
 # 五、后端近期开发计划                                                                             
-1、freemarker、lucene、hadoop、spark                                       
-2、用户数据权限                                       
-3、自动代码生成                   
-4、使用容器技术                                     
-5、将zuul变为gateway                 
-6、加入SpringCloudConfig、SpringCloudSleuth、SpringBootAdmin、SpringSecurityOAuth2JWT                 
-7、后端一部分将采用JAVA14+、函数式、异步编程（包括WebFlux/RxJava2/Netty）                 
-8、将JAVA算法改用C语言实现，JAVA本地调用C语言的实现方法                
-9、工作流（activiti）              
+1、lucene、hadoop、spark                                       
+2、用户数据权限                                                          
+3、容器技术                                     
+4、将zuul变为gateway                 
+5、加入SpringCloudConfig、SpringCloudSleuth、SpringBootAdmin、SpringSecurityOAuth2JWT                 
+6、后端一部分将采用JAVA14+、函数式、异步编程（包括WebFlux/RxJava2/Netty）                 
+7、将JAVA算法改用C语言实现，JAVA本地调用C语言的实现方法                
+8、工作流（activiti）              
 # 六、项目主要特点                                                       
 1、微服务                          
 2、前后端分离                 
