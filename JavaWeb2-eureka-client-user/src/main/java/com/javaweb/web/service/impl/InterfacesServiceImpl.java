@@ -15,6 +15,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
+import com.javaweb.annotation.url.DataPermission;
 import com.javaweb.base.BaseService;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
@@ -64,6 +65,7 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 					dbListEach.setName(projectListEach.getName());
 					dbListEach.setUrl(projectListEach.getUrl());
 					dbListEach.setMethod(projectListEach.getMethod());
+					dbListEach.setDataPermission(projectListEach.getDataPermission());
 					dbListEach.setUpdateDate(DateUtil.getDefaultDate());
 					dbListEach.setUpdater(SystemConstant.SYSTEM_DEFAULT_USER_ID);
 					forUpdate.add(dbListEach);
@@ -105,9 +107,19 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 			String methodName = requestMappingInfo.getMethodsCondition().getMethods().toString().replace("[","").replace("]","");
 			String url = requestMappingInfo.getPatternsCondition().toString().replace("[","").replace("]", "").replace(" || ",",");
 			String swaggerApiName = null;
+			DataPermission dataPermission = null;
 			if(urlMap.get(url)==null){
 				try{
 					swaggerApiName = map.get(requestMappingInfo).getMethodAnnotation(ApiOperation.class).value();
+				}catch(Exception e){
+					//do nothing
+				}
+				interfaces.setDataPermission(0);
+				try{
+					dataPermission = map.get(requestMappingInfo).getMethodAnnotation(DataPermission.class);
+					if(dataPermission!=null){
+						interfaces.setDataPermission(1);
+					}
 				}catch(Exception e){
 					//do nothing
 				}
