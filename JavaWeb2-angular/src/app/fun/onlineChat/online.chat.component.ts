@@ -73,6 +73,11 @@ export class OnlineChatComponent implements OnInit {
     this.sendMessage = CommonConstant.EMPTY;
   }
 
+  //清空消息
+  public clearFunction():void {
+    this.getMessage = CommonConstant.EMPTY;
+  }
+
   //回车事件
   public keydownEnter($event):void {
     //console.log($event);
