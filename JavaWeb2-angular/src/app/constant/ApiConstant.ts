@@ -54,6 +54,8 @@ export class ApiConstant{
   public static SYS_INTERFACES_LIST = '/web/sys/interfaces/list';//接口列表
   public static SYS_INTERFACES_MODIFY = '/web/sys/interfaces/modify';//修改接口
   public static SYS_INTERFACES_DETAIL = '/web/sys/interfaces/detail';//接口详情
+  public static SYS_INTERFACES_USER_ROLE_DATA_PERMISSION = '/web/sys/interfaces/userRoleDataPermission';//用户角色数据权限接口
+  public static SYS_INTERFACES_DATA_PERMISSION_ASSIGNMENT = '/web/sys/interfaces/dataPermissionAssignment';//数据权限分配接口
 
   public static SYS_ONLINE_CHAT_USER_LIST = '/web/sys/onlineChat/userList';//在线用户列表
   public static SYS_ONLINE_CHAT_USER_OFFLINE = '/web/sys/onlineChat/userOffline';//用户下线
