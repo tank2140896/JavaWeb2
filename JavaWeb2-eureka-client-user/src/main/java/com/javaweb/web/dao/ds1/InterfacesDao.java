@@ -6,6 +6,8 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.javaweb.mybatis.api.DaoForMySql;
 import com.javaweb.web.eo.interfaces.InterfacesListRequest;
+import com.javaweb.web.eo.interfaces.RolePermissionResponse;
+import com.javaweb.web.eo.interfaces.UserPermissionResponse;
 import com.javaweb.web.po.Interfaces;
 
 @Mapper
@@ -18,5 +20,11 @@ public interface InterfacesDao extends DaoForMySql<Interfaces>{
 	public List<Interfaces> interfacesList(InterfacesListRequest interfacesListRequest);
 	
 	public Long interfacesListCount(InterfacesListRequest interfacesListRequest);
+	
+	public List<UserPermissionResponse> userPermissionList(String interfacesId);
+	
+	public List<RolePermissionResponse> rolePermissionList(String interfacesId);
+	
+	public void clearUserRoleDataPermission(); 
 
 }
