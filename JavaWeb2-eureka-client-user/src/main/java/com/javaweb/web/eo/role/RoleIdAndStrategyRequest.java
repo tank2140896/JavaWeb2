@@ -9,6 +9,8 @@ public class RoleIdAndStrategyRequest {
 
     private String roleId;
     
-    private Integer roleStrategy;
+    private Integer moduleStrategy;
+    
+    private Integer dataStrategy;
     
 }
