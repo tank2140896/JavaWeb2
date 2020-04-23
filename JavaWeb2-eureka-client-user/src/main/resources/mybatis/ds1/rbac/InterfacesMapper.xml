@@ -40,4 +40,24 @@
 		</where>
 	</select>
 	
+	<select id="userPermissionList" parameterType="java.lang.Long" resultType="com.javaweb.web.eo.interfaces.UserPermissionResponse">
+		select u.user_id as userId,u.user_name as userName,dp.exclude_field as excludeField 
+		from user u 
+		left join user_data ud on u.user_id = ud.user_id
+		left join data_permission dp on ud.data_permission_id = dp.id
+	</select>
+	
+	<select id="rolePermissionList" parameterType="java.lang.Long" resultType="com.javaweb.web.eo.interfaces.RolePermissionResponse">
+		select r.role_id as roleId,r.role_name as roleName,dp.exclude_field as excludeField 
+		from role r 
+		left join role_data rd on r.role_id = rd.role_id
+		left join data_permission dp on rd.data_permission_id = dp.id
+	</select>
+	
+	<delete id="clearUserRoleDataPermission">
+		delete from data_permission;
+		delete from user_data;
+		delete from role_data;
+	</delete>
+	
 </mapper>
