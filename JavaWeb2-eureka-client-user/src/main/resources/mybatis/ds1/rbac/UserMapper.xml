@@ -65,10 +65,11 @@
 	</select>
 	
 	<select id="userRoleInfo" parameterType="java.lang.String" resultType="com.javaweb.web.eo.user.RoleInfoResponse">
-		SELECT r.role_id as roleId,r.role_name as roleName,tmp.strategy as strategy,
-		(CASE WHEN tmp.role_id IS NULL THEN false ELSE true END) as checkFlag
+		SELECT r.role_id as roleId,r.role_name as roleName,
+		tmp.module_strategy as moduleStrategy,tmp.data_strategy as dataStrategy,
+	    (CASE WHEN tmp.role_id IS NULL THEN false ELSE true END) as checkFlag
 		from role as r LEFT JOIN
-		(SELECT role_id,strategy from user_role where user_id = #{_parameter}) as tmp
+		(SELECT role_id,module_strategy,data_strategy from user_role where user_id = #{_parameter}) as tmp
 		ON r.role_id = tmp.role_id
 	</select>
 	
@@ -77,9 +78,9 @@
 		delete from user_role where user_id = #{userId};
 		<!-- 重新插入新的用户角色关联 -->
 		<if test="list!=null and list.size()>0">
-			insert into user_role(id,user_id,role_id,strategy) values
+			insert into user_role(id,user_id,role_id,module_strategy,data_strategy) values
 			<foreach collection="list" index="index" item="item" open="" separator="," close="">   
-		        (#{item.id},#{item.userId},#{item.roleId},#{item.strategy})
+		        (#{item.id},#{item.userId},#{item.roleId},#{item.moduleStrategy},#{item.dataStrategy})
 	    	</foreach>
 		</if>
 	</update>
