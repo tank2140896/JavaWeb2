@@ -66,6 +66,8 @@ public class ApiConstant {
 	public static final String INTERFACES_LIST = "/list";//接口列表接口
 	public static final String INTERFACES_MODIFY = "/modify";//修改接口接口
 	public static final String INTERFACES_DETAIL = "/detail/{interfacesId}";//接口详情接口
+	public static final String INTERFACES_USER_ROLE_DATA_PERMISSION = "/userRoleDataPermission/{interfacesId}";//用户角色数据权限接口
+	public static final String INTERFACES_DATA_PERMISSION_ASSIGNMENT = "/dataPermissionAssignment/{interfacesId}";//数据权限分配接口
 	
 	public static final String WEB_ONLINE_CHAT_PREFIX = "/web/sys/onlineChat";
 	public static final String ONLINE_CHAT_USER_LIST = "/userList";//在线用户列表接口
