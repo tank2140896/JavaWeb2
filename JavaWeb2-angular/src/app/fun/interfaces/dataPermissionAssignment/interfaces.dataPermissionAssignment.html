@@ -1,0 +1,43 @@
+<div style="width:100%;background-color:#ACC0D8;">
+  <h2 style="color:red">接口名称：{{url}}</h2>
+  <h3>用户列表</h3>
+  <table border="1">
+    <tr align="center">
+      <th width="400px;">序号</th>
+      <th width="400px;">用户ID</th>
+      <th width="400px;">用户名</th>
+      <th width="400px;">排除字段</th>
+    </tr>
+    <tr align="center" *ngFor="let eachData of resultData.userPermissionResponseList;let xh=index">
+      <td>{{xh+1}}</td>
+      <td>{{eachData.userId}}</td>
+      <td>{{eachData.userName}}</td>
+      <td><input value="{{eachData.excludeField}}" [(ngModel)]="eachData.excludeField"></td>
+    </tr>
+    <tr align="center" *ngIf="resultData.userPermissionResponseList==null || resultData.userPermissionResponseList.length==0">
+      <td colspan="4">无数据</td>
+    </tr>
+  </table>
+  <h3>角色列表</h3>
+  <table border="1">
+    <tr align="center">
+      <th width="400px;">序号</th>
+      <th width="400px;">角色ID</th>
+      <th width="400px;">角色名</th>
+      <th width="400px;">排除字段</th>
+    </tr>
+    <tr align="center" *ngFor="let eachData2 of resultData.rolePermissionResponseList;let xh=index">
+      <td>{{xh+1}}</td>
+      <td>{{eachData2.roleId}}</td>
+      <td>{{eachData2.roleName}}</td>
+      <td><input value="{{eachData2.excludeField}}" [(ngModel)]="eachData2.excludeField"></td>
+    </tr>
+    <tr align="center" *ngIf="resultData.rolePermissionResponseList==null || resultData.rolePermissionResponseList.length==0">
+      <td colspan="4">无数据</td>
+    </tr>
+  </table>
+  <div style="margin-top:1%">
+    <button type="button" (click)="dataPermissionAssignment()" class="btn btn-primary" style="margin-left:1%;">分配</button>
+    <button type="button" (click)="dataPermissionAssignmentBack()" class="btn btn-primary" style="margin-left:1%;">返回</button>
+  </div>
+</div>
