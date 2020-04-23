@@ -2,6 +2,7 @@ package com.javaweb.web.service;
 
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.interfaces.InterfacesListRequest;
+import com.javaweb.web.eo.interfaces.UserRolePermissionResponse;
 import com.javaweb.web.po.Interfaces;
 
 public interface InterfacesService {
@@ -13,5 +14,9 @@ public interface InterfacesService {
 	public Interfaces interfacesDetail(String interfacesId);
 	
 	public void interfacesModify(Interfaces interfaces);
+	
+	public UserRolePermissionResponse userRoleDataPermission(String interfacesId);
+	
+	public void dataPermissionAssignment(UserRolePermissionResponse userRolePermissionResponse,String interfacesId);
 
 }
