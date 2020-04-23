@@ -37,6 +37,7 @@ import {InterfacesModifyComponent} from './fun/interfaces/modify/interfaces.modi
 import {InterfacesDetailComponent} from './fun/interfaces/detail/interfaces.detail.component';
 import {OnlineChatComponent} from './fun/onlineChat/online.chat.component';
 import {DemoComponent} from './fun/demo/demo.components';
+import {InterfacesDataPermissionAssignmentComponent} from './fun/interfaces/dataPermissionAssignment/interfaces.dataPermissionAssignment.component';
 
 const routes: Routes = [
   {path:'',component:LoginComponent},//默认登录页面
@@ -98,6 +99,7 @@ const routes: Routes = [
       {path:'list',component:InterfacesListComponent},//接口列表页面
       {path:'modify',component:InterfacesModifyComponent},//接口修改页面
       {path:'detail',component:InterfacesDetailComponent},//接口详情页面
+      {path:'dataPermissionAssignment',component:InterfacesDataPermissionAssignmentComponent},//数据权限分配页面
       {path:'**',redirectTo:'/web',pathMatch:'full'}
     ],canActivate:[AuthService]},
     {path:'sys/onlineChat',component:OnlineChatComponent,children:[
