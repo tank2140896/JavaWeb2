@@ -4,19 +4,25 @@
       <thead>
       <tr class="text-center">
         <th>序号</th>
-        <th>是否拥有</th>
         <th>角色名</th>
-        <th>用户权限、角色权限同时存在时的策略</th>
+        <th>是否拥有</th>
+        <th>模块权限策略</th>
+        <th>数据权限策略</th>
       </tr>
       </thead>
       <tbody>
       <tr class="text-center" *ngFor="let eachData of userRoleInfoData;let xh=index">
         <td>{{xh+1}}</td>
-        <td><input class="form-check-input" type="checkbox" [checked]="eachData.checkFlag" [(ngModel)]="eachData.checkFlag" value="{{eachData.roleId}}"></td>
         <td><label class="form-check-label">{{eachData.roleName}}</label></td>
+        <td><input class="form-check-input" type="checkbox" [checked]="eachData.checkFlag" [(ngModel)]="eachData.checkFlag" value="{{eachData.roleId}}"></td>
         <td>
-          <select (change)="selectChange($event,eachData)">
-            <option *ngFor="let eachData2 of userRoleStrategyFromDictionaryData;" [selected]="eachData.strategy==eachData2.valueCode" value="{{eachData2.valueCode}}">{{eachData2.means}}</option>
+          <select (change)="selectChangeModule($event,eachData)">
+            <option *ngFor="let eachData2 of userRoleStrategyFromDictionaryData;" [selected]="eachData.moduleStrategy==eachData2.valueCode" value="{{eachData2.valueCode}}">{{eachData2.means}}</option>
+          </select>
+        </td>
+        <td>
+          <select (change)="selectChangeData($event,eachData)">
+            <option *ngFor="let eachData3 of userRoleStrategyFromDictionaryData;" [selected]="eachData.dataStrategy==eachData3.valueCode" value="{{eachData3.valueCode}}">{{eachData3.means}}</option>
           </select>
         </td>
       </tr>
