@@ -5,12 +5,12 @@ import {InterfacesComponent} from './interfaces.component';
 import {InterfacesListModule} from './list/interfaces.list.module';
 import {InterfacesDetailModule} from './detail/interfaces.detail.module';
 import {InterfacesModifyModule} from './modify/interfaces.modify.module';
-
+import {InterfacesDataPermissionAssignmentModule} from './dataPermissionAssignment/interfaces.dataPermissionAssignment.module';
 
 @NgModule({
   imports:[
     CommonModule,RouterModule,
-    InterfacesListModule,InterfacesDetailModule,InterfacesModifyModule
+    InterfacesListModule,InterfacesDetailModule,InterfacesModifyModule,InterfacesDataPermissionAssignmentModule
   ],
   declarations:[InterfacesComponent],
   exports:[InterfacesComponent]
