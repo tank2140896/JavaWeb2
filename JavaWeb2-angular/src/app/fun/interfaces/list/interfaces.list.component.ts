@@ -26,12 +26,14 @@ export class InterfacesListComponent implements OnInit {
     this.interfacesListZone = authService.canShow(ApiConstant.getPath(ApiConstant.SYS_INTERFACES_LIST,false));
     this.interfacesModifyZone = authService.canShow(ApiConstant.getPath(ApiConstant.SYS_INTERFACES_MODIFY,false));
     this.interfacesDetailZone = authService.canShow(ApiConstant.getPath(ApiConstant.SYS_INTERFACES_DETAIL,false));
+    this.interfacesUserRoleDataPermissionZone = authService.canShow(ApiConstant.getPath(ApiConstant.SYS_INTERFACES_USER_ROLE_DATA_PERMISSION,false));
   }
 
   /** 操作权限 start */
   interfacesListZone:boolean;//接口列表
   interfacesModifyZone:boolean;//修改接口
   interfacesDetailZone:boolean;//接口详情
+  interfacesUserRoleDataPermissionZone:boolean;//用户角色数据权限接口
   /** 操作权限 end */
 
   private interfacesListRequest:InterfacesListRequest = new InterfacesListRequest();//接口列表搜索条件
@@ -85,6 +87,11 @@ export class InterfacesListComponent implements OnInit {
   //修改接口
   public interfacesModifyFunction(id:string):void {
     this.router.navigate(['modify'],{relativeTo:this.activatedRoute,queryParams:{id:id}});
+  }
+
+  //数据权限分配
+  public interfacesDataPermissionAssignmentFunction(id:string,url:string):void {
+    this.router.navigate(['dataPermissionAssignment'],{relativeTo:this.activatedRoute,queryParams:{id:id,url:url}});
   }
 
 }
