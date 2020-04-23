@@ -54,7 +54,8 @@ public class UserControllerTest extends BaseControllerTest {
 		List<RoleIdAndStrategyRequest> list = new ArrayList<>();
 		RoleIdAndStrategyRequest roleIdAndStrategyRequest = new RoleIdAndStrategyRequest();
 		roleIdAndStrategyRequest.setRoleId("202003281400197771");
-		roleIdAndStrategyRequest.setRoleStrategy(1);
+		roleIdAndStrategyRequest.setModuleStrategy(1);
+		roleIdAndStrategyRequest.setDataStrategy(1);
 		list.add(roleIdAndStrategyRequest);
 		String out = HttpUtil.defaultPostRequest(URL_PREFIX+"/web/sys/user/userRoleAssignment/202003281354003631",objectMapper.writeValueAsString(list),getHeaders());
 		System.out.println(out);
