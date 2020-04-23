@@ -18,6 +18,7 @@ import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.interfaces.InterfacesListRequest;
+import com.javaweb.web.eo.interfaces.UserRolePermissionResponse;
 import com.javaweb.web.po.Interfaces;
 import com.javaweb.web.po.User;
 
@@ -51,6 +52,20 @@ public class InterfacesController extends BaseController {
 		interfaces.setUpdater(currentUser.getUserName());
 		interfacesService.interfacesModify(interfaces);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"interfaces.modify.success",null);
+	}
+	
+	@ApiOperation(value=SwaggerConstant.SWAGGER_INTERFACES_USER_ROLE_DATA_PERMISSION)
+	@GetMapping(ApiConstant.INTERFACES_USER_ROLE_DATA_PERMISSION)
+	public BaseResponseResult userRoleDataPermission(@PathVariable(name="interfacesId",required=true) String interfacesId){
+		UserRolePermissionResponse userRolePermissionResponse = interfacesService.userRoleDataPermission(interfacesId);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"interfaces.userRolePermission.success",userRolePermissionResponse);
+	}
+	
+	@ApiOperation(value=SwaggerConstant.SWAGGER_INTERFACES_DATA_PERMISSION_ASSIGNMENT)
+	@PostMapping(ApiConstant.INTERFACES_DATA_PERMISSION_ASSIGNMENT)
+	public BaseResponseResult dataPermissionAssignment(@PathVariable(name="interfacesId",required=true) String interfacesId,@RequestBody UserRolePermissionResponse userRolePermissionResponse){
+		interfacesService.dataPermissionAssignment(userRolePermissionResponse,interfacesId);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"interfaces.dataPermissionAssignment.success",null);
 	}
 	
 }
