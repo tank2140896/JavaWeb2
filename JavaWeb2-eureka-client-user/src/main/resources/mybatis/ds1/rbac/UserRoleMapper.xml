@@ -4,7 +4,7 @@
 <mapper namespace="com.javaweb.web.dao.ds1.UserRoleDao">
 
 	<select id="getUserRoleByUserId" parameterType="java.lang.String" resultType="com.javaweb.web.po.UserRole">
-		select id,user_id as userId,role_id as roleId,strategy from user_role where user_id = #{_parameter}
+		select id,user_id as userId,role_id as roleId,module_strategy as moduleStrategy,data_strategy as dataStrategy from user_role where user_id = #{_parameter}
 	</select>
 	
 </mapper>
