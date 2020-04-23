@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javaweb.annotation.token.TokenDataAnnotation;
+import com.javaweb.annotation.url.DataPermission;
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.base.BaseValidatedGroup;
@@ -57,6 +58,7 @@ public class UserController extends BaseController {
 		}
 	}
 	
+	@DataPermission
 	@ApiOperation(value=SwaggerConstant.SWAGGER_USER_LIST)
 	@PostMapping(ApiConstant.USER_LIST)
 	public BaseResponseResult userList(@RequestBody UserListRequest userListRequest,@TokenDataAnnotation TokenData tokenData){
