@@ -23,7 +23,12 @@ import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.SecretUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.interfaces.InterfacesListRequest;
+import com.javaweb.web.eo.interfaces.RolePermissionResponse;
+import com.javaweb.web.eo.interfaces.UserPermissionResponse;
+import com.javaweb.web.eo.interfaces.UserRolePermissionResponse;
 import com.javaweb.web.po.Interfaces;
+import com.javaweb.web.po.RoleData;
+import com.javaweb.web.po.UserData;
 import com.javaweb.web.service.InterfacesService;
 
 import io.swagger.annotations.ApiOperation;
@@ -132,6 +137,52 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 			}
 		}
 		return list;
+	}
+
+	public UserRolePermissionResponse userRoleDataPermission(String interfacesId) {
+		//获得所有用户及其设定的排除字段（这里做的比较简单，没有分页和筛选查询）
+		List<UserPermissionResponse> userPermissionResponseList = interfacesDao.userPermissionList(interfacesId);
+		//获得所有角色及其设定的排除字段（这里做的比较简单，没有分页和筛选查询）
+		List<RolePermissionResponse> rolePermissionResponseList = interfacesDao.rolePermissionList(interfacesId);
+		UserRolePermissionResponse userRolePermissionResponse = new UserRolePermissionResponse();
+		userRolePermissionResponse.setUserPermissionResponseList(userPermissionResponseList);
+		userRolePermissionResponse.setRolePermissionResponseList(rolePermissionResponseList);
+		return userRolePermissionResponse;
+	}
+
+	@Transactional
+	public void dataPermissionAssignment(UserRolePermissionResponse userRolePermissionResponse,String interfacesId) {
+		List<UserPermissionResponse> userPermissionResponseList = userRolePermissionResponse.getUserPermissionResponseList();
+		List<RolePermissionResponse> rolePermissionResponseList = userRolePermissionResponse.getRolePermissionResponseList();
+		userPermissionResponseList = userPermissionResponseList.stream().filter(each->(each.getExcludeField()!=null)&&(!each.getExcludeField().trim().equals(CommonConstant.EMPTY_VALUE))).collect(Collectors.toList());
+		rolePermissionResponseList = rolePermissionResponseList.stream().filter(each->(each.getExcludeField()!=null)&&(!each.getExcludeField().trim().equals(CommonConstant.EMPTY_VALUE))).collect(Collectors.toList());
+		interfacesDao.clearUserRoleDataPermission();
+		for(int i=0;i<userPermissionResponseList.size();i++){
+			com.javaweb.web.po.DataPermission dataPermission = new com.javaweb.web.po.DataPermission();
+			String dataPermissionId = SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO);
+			dataPermission.setId(dataPermissionId);
+			dataPermission.setExcludeField(userPermissionResponseList.get(i).getExcludeField());
+			dataPermission.setInterfacesId(interfacesId);
+			UserData userData = new UserData();
+			userData.setId(SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO));
+			userData.setUserId(userPermissionResponseList.get(i).getUserId());
+			userData.setDataPermissionId(dataPermissionId);
+			dataPermissionDao.insertForMySql(dataPermission);
+			userDataDao.insertForMySql(userData);
+		}
+		for(int i=0;i<rolePermissionResponseList.size();i++){
+			com.javaweb.web.po.DataPermission dataPermission = new com.javaweb.web.po.DataPermission();
+			String dataPermissionId = SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO);
+			dataPermission.setId(dataPermissionId);
+			dataPermission.setExcludeField(rolePermissionResponseList.get(i).getExcludeField());
+			dataPermission.setInterfacesId(interfacesId);
+			RoleData roleData = new RoleData();
+			roleData.setId(SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO));
+			roleData.setRoleId(rolePermissionResponseList.get(i).getRoleId());
+			roleData.setDataPermissionId(dataPermissionId);
+			dataPermissionDao.insertForMySql(dataPermission);
+			roleDataDao.insertForMySql(roleData);
+		}
 	}
 
 }
