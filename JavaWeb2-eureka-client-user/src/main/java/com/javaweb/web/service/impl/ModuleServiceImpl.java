@@ -36,7 +36,7 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
 			for(int i=0;i<userRoleList.size();i++){
 				List<String> list = null;
 				UserRole userRole = userRoleList.get(i);
-				int strategy = userRole.getStrategy();//权限获取策略(0:自定义;1:并集;2:交集;3:差集;4:以用户权限为准;5:以角色权限为准;其它:默认为未定义,作为并集处理)
+				int strategy = userRole.getModuleStrategy();//权限获取策略(0:自定义;1:并集;2:交集;3:差集;4:以用户权限为准;5:以角色权限为准;其它:默认为未定义,作为并集处理)
 				List<String> list1 = userModuleDao.getModuleIdsByUserId(userRole.getUserId());
 				List<String> list2 = roleModuleDao.getModuleIdsByRoleId(userRole.getRoleId());
 				if(strategy==1){
