@@ -2,6 +2,8 @@ export class UserRoleAssignmentRequest {
 
   roleId:string;
 
-  roleStrategy:number;
+  moduleStrategy:number;
+
+  dataStrategy:number;
 
 }
