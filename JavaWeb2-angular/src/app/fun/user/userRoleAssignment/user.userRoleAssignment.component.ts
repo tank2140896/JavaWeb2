@@ -68,10 +68,12 @@ export class UserRoleAssignmentComponent implements OnInit {
       if(_userRoleInfoData[i].checkFlag){
         let userRoleAssignmentRequest:UserRoleAssignmentRequest = new UserRoleAssignmentRequest();
         userRoleAssignmentRequest.roleId = _userRoleInfoData[i].roleId;
-        userRoleAssignmentRequest.roleStrategy = _userRoleInfoData[i].strategy;
+        userRoleAssignmentRequest.moduleStrategy = _userRoleInfoData[i].moduleStrategy;
+        userRoleAssignmentRequest.dataStrategy = _userRoleInfoData[i].dataStrategy;
         array.push(userRoleAssignmentRequest);
       }
     }
+    //console.log(JSON.stringify(array));
     this.httpService.postJsonData(ApiConstant.getPath(ApiConstant.SYS_USER_ROLE_ASSIGNMENT+'/'+this.needUserId,true),JSON.stringify(array),this.sessionService.getHeadToken()).subscribe(
       {
         next:(result:any) => {
@@ -108,9 +110,13 @@ export class UserRoleAssignmentComponent implements OnInit {
   }
 
   //下拉联动
-  public selectChange($event,eachData:any):void {
+  public selectChangeModule($event,eachData:any):void {
     //console.log($event.target.value);
-    eachData.strategy = $event.target.value;
+    eachData.moduleStrategy = $event.target.value;
+  }
+  public selectChangeData($event,eachData:any):void {
+    //console.log($event.target.value);
+    eachData.dataStrategy = $event.target.value;
   }
 
   //返回
