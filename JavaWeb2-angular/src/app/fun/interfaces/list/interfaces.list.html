@@ -41,8 +41,9 @@
             <td *ngIf="eachData.counts == null || eachData.times == null || eachData.unit == null" style="color:#06801f">无限制</td>
             <td *ngIf="eachData.counts != null && eachData.times != null && eachData.unit != null" style="color:#ff0b0c">{{eachData.times}}{{eachData.unit}}{{eachData.counts}}次</td>
             <td>
+              <button *ngIf="interfacesDetailZone" (click)="interfacesDetailFunction(eachData.id)" class="btn btn-sm btn-info" style="margin-right:10px;">接口详情</button>
               <button *ngIf="interfacesModifyZone" (click)="interfacesModifyFunction(eachData.id)" class="btn btn-sm btn-warning" style="margin-right:10px;">修改接口</button>
-              <button *ngIf="interfacesDetailZone" (click)="interfacesDetailFunction(eachData.id)" class="btn btn-sm btn-info">接口详情</button>
+              <button *ngIf="eachData.dataPermission==1 && interfacesUserRoleDataPermissionZone" (click)="interfacesDataPermissionAssignmentFunction(eachData.id,eachData.url)" class="btn btn-sm btn-primary">数据权限分配</button>
             </td>
           </tr>
         </tbody>
