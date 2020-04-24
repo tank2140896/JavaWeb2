@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,7 @@ import com.javaweb.constant.SystemConstant;
 import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.SecretUtil;
 import com.javaweb.util.entity.Page;
+import com.javaweb.web.eo.interfaces.ExcludeInfoResponse;
 import com.javaweb.web.eo.interfaces.InterfacesListRequest;
 import com.javaweb.web.eo.interfaces.RolePermissionResponse;
 import com.javaweb.web.eo.interfaces.UserPermissionResponse;
@@ -29,6 +31,7 @@ import com.javaweb.web.eo.interfaces.UserRolePermissionResponse;
 import com.javaweb.web.po.Interfaces;
 import com.javaweb.web.po.RoleData;
 import com.javaweb.web.po.UserData;
+import com.javaweb.web.po.UserRole;
 import com.javaweb.web.service.InterfacesService;
 
 import io.swagger.annotations.ApiOperation;
@@ -183,6 +186,45 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 			dataPermissionDao.insertForMySql(dataPermission);
 			roleDataDao.insertForMySql(roleData);
 		}
+	}
+	
+	public List<ExcludeInfoResponse> getExcludeInfoResponseList(String userId){
+		//1、根据当前用户ID获得用户角色和策略
+		List<UserRole> userRoleList = userRoleDao.getUserRoleByUserId(userId);
+		//2、根据当前用户ID获得data_permission_id
+		List<UserData> userDataList = userDataDao.selectAllByUserId(userId);
+		//3、根据当前用户角色ID获得data_permission_id
+		List<String> roleIdList = userRoleList.stream().map(e->e.getRoleId()).collect(Collectors.toList());
+		List<RoleData> roleDataList = roleDataDao.selectAllByRoleIds(roleIdList);
+		//4、根据策略合并2和3
+		List<String> allList = new ArrayList<>(); 
+		for(int i=0;i<userRoleList.size();i++){
+			List<String> list = null;
+			UserRole userRole = userRoleList.get(i);
+			int strategy = userRole.getDataStrategy();//权限获取策略(0:自定义;1:并集;2:交集;3:差集;4:以用户权限为准;5:以角色权限为准;其它:默认为未定义,作为并集处理)
+			List<String> list1 = userDataList.stream().map(e->e.getDataPermissionId()).collect(Collectors.toList());
+			List<String> list2 = roleDataList.stream().map(e->e.getDataPermissionId()).collect(Collectors.toList());
+			if(strategy==1){
+				list = Stream.concat(list1.stream(),list2.stream()).distinct().collect(Collectors.toList());
+			}else if(strategy==2){
+				list = list1.stream().filter(item->list2.contains(item)).distinct().collect(Collectors.toList());
+			}else if(strategy==3){
+				List<String> list3 = list1.stream().filter(item->list2.contains(item)).distinct().collect(Collectors.toList());//交集
+				List<String> list4 = Stream.concat(list1.stream(),list2.stream()).distinct().collect(Collectors.toList());//并集
+				list3.stream().forEach(item->list4.remove(item));
+				list = list4;
+			}else if(strategy==4){
+				list = list1;
+			}else if(strategy==5){
+				list = list2;
+			}else{
+				list = Stream.concat(list1.stream(),list2.stream()).distinct().collect(Collectors.toList());
+			}
+			allList = Stream.concat(allList.stream(),list.stream()).distinct().collect(Collectors.toList());
+		}
+		//5、获得data_permission集合
+		List<ExcludeInfoResponse> excludeInfoResponseList = dataPermissionDao.selectExcludeInfo(allList);
+		return excludeInfoResponseList;
 	}
 
 }
