@@ -55,7 +55,7 @@ public class RsaRequest {
 				return d1.equals(d2);
 			}else{
 				/**
-				//RSA结合3DES
+				//RSA结合3DES（推荐），原因参考：https://ask.csdn.net/questions/763621和https://github.com/travist/jsencrypt/issues/137
 				//1.用3DES解密code
 				String d1 = DesUtil.decrypt(this.code,SecretKeyFactory.getInstance("DESede").generateSecret(new DESedeKeySpec(nonce.getBytes("UTF8")))); 
 				*/
