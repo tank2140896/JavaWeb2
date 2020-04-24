@@ -3,6 +3,7 @@ package com.javaweb.web.eo;
 import java.io.Serializable;
 import java.util.List;
 
+import com.javaweb.web.eo.interfaces.ExcludeInfoResponse;
 import com.javaweb.web.eo.module.SidebarInfoResponse;
 import com.javaweb.web.po.User;
 
@@ -34,5 +35,7 @@ public class TokenData implements Serializable {
 	private String rsaPublicKeyOfFrontend;
 	
 	private String rsaPrivateKeyOfFrontend;
+	
+	private List<ExcludeInfoResponse> excludeInfoResponseList;
 	
 }
