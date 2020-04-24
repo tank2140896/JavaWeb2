@@ -27,8 +27,8 @@ JavaWeb2-angular（npm start）
 4、本项目所有接口都可以用JUnit或Postman验证接口，JUnit代码也有部分，但是比较老旧，以后应该也不会再维护该部分代码了                            
 5、JavaWeb2-integration-demo包括了一些常用技术与SpringBoot组合的示例（hbase、kafka、netty、solr、切面处理、mongodb、websocket（SpringBoot版和Netty版）、elasticsearch、neo4j、kaptcha、邮件发送、redis、restTemplate、quartz（分布式）定时任务、文件上传下载、qq、wechat）                                                                                            
 # 五、后端近期开发计划                                                                             
-1、lucene、hadoop、spark                                       
-2、用户数据权限                                                          
+1、持续优化迭代各已有功能                                                 
+2、lucene、hadoop、spark                                                                
 3、容器技术                                     
 4、将zuul变为gateway                 
 5、加入SpringCloudConfig、SpringCloudSleuth、SpringBootAdmin、SpringSecurityOAuth2JWT                 
@@ -50,7 +50,7 @@ JavaWeb2-angular（npm start）
 8、kafka【kafka生产者（producer）一般可以使用kafkaTemplate；kafka消费者（consumer）一般可以使用@KafkaListener；实际项目中生产者和消费者一般都是分开的】                 
 9、Netty客户端和服务端示例（IO模型、数据协议、线程模型）                 
 10、websocket            
-11、数据权限：本项目的数据权限全部围绕接口展开的，使用时在Controller的方法上加上@DataPermission                            
+11、数据权限：本项目的数据权限全部围绕接口展开的，使用时在Controller的方法上加上@DataPermission，默认/web开头的接口都是权限受控的                                   
 # 七、项目使用说明                                                       
 1、除了涉及事务的service加上@Transactional，建议涉及事务的Controller也加上@Transactional，另外不建议try、catch，除非能确保无数据库相关事务操作或确保Controller内的方法不会抛出异常                 
 2、关于@Configuration的类，配置代码常用的有两种写法，一是通过常量类配置，二是通过配置文件配置                                
