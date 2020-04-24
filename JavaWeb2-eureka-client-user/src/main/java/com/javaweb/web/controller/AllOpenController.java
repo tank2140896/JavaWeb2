@@ -32,6 +32,7 @@ import com.javaweb.util.core.RsaUtil;
 import com.javaweb.util.core.SecretUtil;
 import com.javaweb.util.entity.RsaKey;
 import com.javaweb.web.eo.TokenData;
+import com.javaweb.web.eo.interfaces.ExcludeInfoResponse;
 import com.javaweb.web.eo.module.SidebarInfoResponse;
 import com.javaweb.web.eo.user.UserLoginRequest;
 import com.javaweb.web.po.Module;
@@ -148,16 +149,24 @@ public class AllOpenController extends BaseController {
 		tokenData.setToken(token);
 		tokenData.setUser(user);
 		tokenData.setType(type);
-		//获得pageUrl列表
-		List<String> pageUrlList = new ArrayList<>();
-		for(int i=0;i<moduleList.size();i++){
-			String pageUrl = moduleList.get(i).getPageUrl();
-			if((pageUrl!=null)&&(!CommonConstant.EMPTY_VALUE.equals(pageUrl))){
-				pageUrlList.add(pageUrl);
-			}
+		List<String> pageUrlList = getPageUrlList(moduleList);//获得pageUrl列表
+		List<String> apiUrlList = getApiUrlList(moduleList);//获得apiUrl列表
+		tokenData.setPageUrlList(pageUrlList);
+		tokenData.setApiUrlList(apiUrlList);
+		List<Module> modules = moduleList.stream().filter(i->1==i.getModuleType()||2==i.getModuleType()).collect(Collectors.toList());//获得目录、菜单列表并封装成树型结构
+		List<SidebarInfoResponse> menuListForTree = new ArrayList<>();
+		menuListForTree = ObjectOperateUtil.copyListProperties(modules,SidebarInfoResponse.class);//主要用到：moduleName、pageUrl、icon
+		menuListForTree = setTreeList(menuListForTree,null);
+		tokenData.setMenuListForTree(menuListForTree);
+		setRsaKey(tokenData);
+		if(!adminFlag){
+			List<ExcludeInfoResponse> excludeInfoResponseList = interfacesService.getExcludeInfoResponseList(user.getUserId());
+			tokenData.setExcludeInfoResponseList(excludeInfoResponseList);
 		}
-		pageUrlList = pageUrlList.stream().distinct().collect(Collectors.toList());
-		//获得apiUrl列表
+		return tokenData;
+	}
+	
+	public List<String> getApiUrlList(List<Module> moduleList){
 		List<String> apiUrlList = new ArrayList<>();
 		for(int i=0;i<moduleList.size();i++){
 			String apiUrl = moduleList.get(i).getApiUrl();
@@ -169,20 +178,28 @@ public class AllOpenController extends BaseController {
 			}
 		}
 		apiUrlList = apiUrlList.stream().distinct().collect(Collectors.toList());
-		tokenData.setPageUrlList(pageUrlList);
-		tokenData.setApiUrlList(apiUrlList);
-		List<Module> modules = moduleList.stream().filter(i->1==i.getModuleType()||2==i.getModuleType()).collect(Collectors.toList());//获得目录、菜单列表并封装成树型结构
-		List<SidebarInfoResponse> menuListForTree = new ArrayList<>();
-		menuListForTree = ObjectOperateUtil.copyListProperties(modules,SidebarInfoResponse.class);//主要用到：moduleName、pageUrl、icon
-		menuListForTree = setTreeList(menuListForTree,null);
-		tokenData.setMenuListForTree(menuListForTree);
+		return apiUrlList;
+	}
+	
+	public List<String> getPageUrlList(List<Module> moduleList){
+		List<String> pageUrlList = new ArrayList<>();
+		for(int i=0;i<moduleList.size();i++){
+			String pageUrl = moduleList.get(i).getPageUrl();
+			if((pageUrl!=null)&&(!CommonConstant.EMPTY_VALUE.equals(pageUrl))){
+				pageUrlList.add(pageUrl);
+			}
+		}
+		pageUrlList = pageUrlList.stream().distinct().collect(Collectors.toList());
+		return pageUrlList;
+	}
+	
+	public void setRsaKey(TokenData tokenData){
 		RsaKey rsaKey = RsaUtil.getRsaKey();
 		tokenData.setRsaPublicKeyOfBackend(rsaKey.getRsaStringPublicKey());
 		tokenData.setRsaPrivateKeyOfBackend(rsaKey.getRsaStringPrivateKey());
 		rsaKey = RsaUtil.getRsaKey();
 		tokenData.setRsaPublicKeyOfFrontend(rsaKey.getRsaStringPublicKey());
 		tokenData.setRsaPrivateKeyOfFrontend(rsaKey.getRsaStringPrivateKey());
-		return tokenData;
 	}
 	
 	public List<SidebarInfoResponse> setTreeList(List<SidebarInfoResponse> originList,SidebarInfoResponse module){
