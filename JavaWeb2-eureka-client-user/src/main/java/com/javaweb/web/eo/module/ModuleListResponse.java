@@ -25,6 +25,8 @@ public class ModuleListResponse implements Serializable {
 	
 	private String moduleType;//模块类型
 	
+	private Integer orders;//模块顺序
+	
 	private String alias;//别名
 	
 	private String createDate;//注册日期
