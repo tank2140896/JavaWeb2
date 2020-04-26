@@ -49,6 +49,10 @@
 		delete from user_role where user_id = #{_parameter};
 		<!-- 删除用户模块关联 -->
 		delete from user_module where user_id = #{_parameter};
+		<!-- 删除数据权限 -->
+		delete from data_permission where id in(select distinct data_permission_id from user_data where user_id = #{_parameter});
+		<!-- 删除用户数据关联 -->
+		delete from user_data where user_id = #{_parameter};
 		<!-- 删除用户 -->
 		delete from user where user_id = #{_parameter};
 	</delete>
