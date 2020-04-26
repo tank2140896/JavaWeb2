@@ -23,6 +23,7 @@
             <th>页面URL</th>
             <th>API请求URL</th>
             <th>模块类型</th>
+            <th>模块顺序</th>
             <th>注册日期</th>
             <th width="270px;">操作</th>
           </tr>
@@ -45,6 +46,7 @@
             <td>{{eachData.pageUrl}}</td>
             <td>{{eachData.apiUrl}}</td>
             <td *ngIf="eachData.moduleType=='1'"><span style="color:#ff0b0c">目录</span></td><td *ngIf="eachData.moduleType=='2'"><span style="color:#0d1bff">菜单</span></td><td *ngIf="eachData.moduleType=='3'"><span style="color:#06801f">功能</span></td>
+            <td>{{eachData.orders}}</td>
             <td>{{eachData.createDate}}</td>
             <td>
               <button style="margin-right:10px;" *ngIf="moduleDeleteZone" class="btn btn-sm btn-danger" (click)="moduleDeleteFunction(eachData.moduleId)">删除模块</button>
