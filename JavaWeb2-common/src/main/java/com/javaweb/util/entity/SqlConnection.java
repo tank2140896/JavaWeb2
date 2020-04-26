@@ -7,7 +7,7 @@ import lombok.Setter;
 @Setter
 public class SqlConnection {
 	
-	private int port = 3306;
+	private Integer port = 3306;
 	
 	private String ip = "127.0.0.1";
 	
