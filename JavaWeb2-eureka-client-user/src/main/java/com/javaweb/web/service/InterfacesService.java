@@ -7,6 +7,7 @@ import com.javaweb.web.eo.interfaces.ExcludeInfoResponse;
 import com.javaweb.web.eo.interfaces.InterfacesListRequest;
 import com.javaweb.web.eo.interfaces.UserRolePermissionResponse;
 import com.javaweb.web.po.Interfaces;
+import com.javaweb.web.po.User;
 
 public interface InterfacesService {
 	
@@ -20,7 +21,7 @@ public interface InterfacesService {
 	
 	public UserRolePermissionResponse userRoleDataPermission(String interfacesId);
 	
-	public void dataPermissionAssignment(UserRolePermissionResponse userRolePermissionResponse,String interfacesId);
+	public void dataPermissionAssignment(UserRolePermissionResponse userRolePermissionResponse,String interfacesId,User user);
 	
 	public List<ExcludeInfoResponse> getExcludeInfoResponseList(String userId);
 
