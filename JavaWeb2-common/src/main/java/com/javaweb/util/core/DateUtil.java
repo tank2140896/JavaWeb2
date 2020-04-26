@@ -29,6 +29,7 @@ public class DateUtil {
 	
 	//默认每月第一天是1号
 	public static final int FIRST_DAY_OF_MONTH = 1;
+	public static final String FIRST_DAY_OF_MONTH_STRING_FORMAT = "01";
 	
 	//日期格式(年月日时分秒)
 	public static final String DEFAULT_DATETIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
