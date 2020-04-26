@@ -20,8 +20,8 @@ CREATE TABLE `data_permission` (
 -- ----------------------------
 -- Records of data_permission
 -- ----------------------------
-INSERT INTO `data_permission` VALUES ('202004231616262731', 'userName', '202004141620407961', null, null, null, null, null, '0');
-INSERT INTO `data_permission` VALUES ('202004231616262801', 'createDate', '202004141620407961', null, null, null, null, null, '0');
+INSERT INTO `data_permission` VALUES ('202004261438413591', 'userName,status', '202004141620407961', null, null, null, null, null, '0');
+INSERT INTO `data_permission` VALUES ('202004261438413631', 'createDate,status', '202004141620407961', null, null, null, null, null, '0');
 
 -- ----------------------------
 -- Table structure for `dictionary`
@@ -92,60 +92,60 @@ CREATE TABLE `interfaces` (
 -- ----------------------------
 -- Records of interfaces
 -- ----------------------------
-INSERT INTO `interfaces` VALUES ('202004141620407331', '请求参数错误接口', '/requestParameterError', 'GET, POST, PUT, DELETE', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407371', '请求参数缺失接口', '/requestParameterLost', 'GET, POST, PUT, DELETE', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407391', '获取服务器时间接口', '/getServeTime', 'GET', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407411', '请求接口不存在接口', '/notFound', 'GET, POST, PUT, DELETE', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407431', '用户登录接口', '/webLogin', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407441', '请求失效接口', '/invalidRequest', 'GET, POST, PUT, DELETE', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407451', '没有权限接口', '/noAuthory', 'GET, POST, PUT, DELETE', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407461', '系统异常接口', '/internalError', 'GET, POST, PUT, DELETE', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407481', '查询字典接口', '/web/sys/dictionary/list', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407501', '删除字典接口', '/web/sys/dictionary/delete/{dictionaryId}', 'DELETE', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407511', '新增字典接口', '/web/sys/dictionary/add', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407531', '修改字典接口', '/web/sys/dictionary/modify', 'PUT', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407551', '字典详情接口', '/web/sys/dictionary/detail/{dictionaryId}', 'GET', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407561', '获取redis中的token信息接口', '/web/loginAccess/getRedisTokenData', 'GET', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407571', '用户登出接口', '/web/loginAccess/logout', 'GET', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407591', '获得字典信息接口', '/web/loginAccess/getDictionary', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407601', '获取模块ID和模块名称列表接口', '/web/sys/module/getModuleIdAndNameList/{moduleType}', 'GET', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407621', '查询模块接口', '/web/sys/module/list', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407631', '新增模块接口', '/web/sys/module/add', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407651', '修改模块接口', '/web/sys/module/modify', 'PUT', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407661', '模块详情接口', '/web/sys/module/detail/{moduleId}', 'GET', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407671', '删除模块接口', '/web/sys/module/delete/{moduleId}', 'DELETE', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407691', '查询操作日志接口', '/web/sys/operationLog/list', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407701', '角色模块分配接口', '/web/sys/role/roleModuleAssignment/{roleId}', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407721', '角色详情接口', '/web/sys/role/detail/{roleId}', 'GET', '5', '秒', '10', '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407731', '新增角色接口', '/web/sys/role/add', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407741', '查询角色接口', '/web/sys/role/list', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407761', '修改角色接口', '/web/sys/role/modify', 'PUT', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407781', '角色模块信息接口', '/web/sys/role/roleModuleInfo/{roleId},/web/sys/role/roleModuleInfo', 'GET', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407791', '删除角色接口', '/web/sys/role/delete/{roleId}', 'DELETE', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407811', '日程列表接口', '/web/sys/schedule/list', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407821', '保存日程接口', '/web/sys/schedule/add', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407841', null, '/eurekaTest', 'GET', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407851', '用户角色分配接口', '/web/sys/user/userRoleAssignment/{userId}', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407871', '用户模块分配接口', '/web/sys/user/userModuleAssignment/{userId}', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407881', '新增用户接口', '/web/sys/user/add', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407901', '用户角色信息接口', '/web/sys/user/userRoleInfo/{userId},/web/sys/user/userRoleInfo', 'GET', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407921', '用户模块信息接口', '/web/sys/user/userModuleInfo/{userId},/web/sys/user/userModuleInfo', 'GET', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407941', '修改用户接口', '/web/sys/user/modify', 'PUT', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407951', '用户详情接口', '/web/sys/user/detail/{userId}', 'GET', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407961', '查询用户接口', '/web/sys/user/list', 'POST', null, null, null, '1', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407981', '删除用户接口', '/web/sys/user/delete/{userId}', 'DELETE', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620407991', null, '/swagger-resources/configuration/security', '', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620408001', null, '/swagger-resources', '', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620408021', null, '/swagger-resources/configuration/ui', '', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141620408041', null, '/error', '', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141625283561', null, '/test', 'GET', null, null, null, '0', null, '2020-04-14 16:25:28', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004141700287271', '接口列表接口', '/web/sys/interfaces/list', 'POST', null, null, null, '0', null, '2020-04-14 17:00:28', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004151025123271', '修改接口接口', '/web/sys/interfaces/modify', 'PUT', null, null, null, '0', null, '2020-04-15 10:25:12', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004151025123301', '接口详情接口', '/web/sys/interfaces/detail/{interfacesId}', 'GET', null, null, null, '0', null, '2020-04-15 10:25:12', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004212010126741', '在线用户列表接口', '/web/sys/onlineChat/userList', 'GET', null, null, null, '0', null, '2020-04-21 20:10:12', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004212048263881', '用户下线接口', '/web/sys/onlineChat/userOffline/{key}', 'GET', null, null, null, '0', null, '2020-04-21 20:48:26', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004231353190541', '用户角色数据权限接口', '/web/sys/interfaces/userRoleDataPermission/{interfacesId}', 'GET', null, null, null, '0', null, '2020-04-23 13:53:19', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
-INSERT INTO `interfaces` VALUES ('202004231525337771', '数据权限分配接口', '/web/sys/interfaces/dataPermissionAssignment/{interfacesId}', 'POST', null, null, null, '0', null, '2020-04-23 15:25:33', 'admin123456', '2020-04-24 10:18:29', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407331', '请求参数错误接口', '/requestParameterError', 'GET, POST, PUT, DELETE', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407371', '请求参数缺失接口', '/requestParameterLost', 'GET, POST, PUT, DELETE', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407391', '获取服务器时间接口', '/getServeTime', 'GET', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407411', '请求接口不存在接口', '/notFound', 'GET, POST, PUT, DELETE', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407431', '用户登录接口', '/webLogin', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407441', '请求失效接口', '/invalidRequest', 'GET, POST, PUT, DELETE', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407451', '没有权限接口', '/noAuthory', 'GET, POST, PUT, DELETE', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407461', '系统异常接口', '/internalError', 'GET, POST, PUT, DELETE', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407481', '查询字典接口', '/web/sys/dictionary/list', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407501', '删除字典接口', '/web/sys/dictionary/delete/{dictionaryId}', 'DELETE', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407511', '新增字典接口', '/web/sys/dictionary/add', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407531', '修改字典接口', '/web/sys/dictionary/modify', 'PUT', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407551', '字典详情接口', '/web/sys/dictionary/detail/{dictionaryId}', 'GET', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407561', '获取redis中的token信息接口', '/web/loginAccess/getRedisTokenData', 'GET', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407571', '用户登出接口', '/web/loginAccess/logout', 'GET', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407591', '获得字典信息接口', '/web/loginAccess/getDictionary', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407601', '获取模块ID和模块名称列表接口', '/web/sys/module/getModuleIdAndNameList/{moduleType}', 'GET', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407621', '查询模块接口', '/web/sys/module/list', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407631', '新增模块接口', '/web/sys/module/add', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407651', '修改模块接口', '/web/sys/module/modify', 'PUT', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407661', '模块详情接口', '/web/sys/module/detail/{moduleId}', 'GET', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407671', '删除模块接口', '/web/sys/module/delete/{moduleId}', 'DELETE', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407691', '查询操作日志接口', '/web/sys/operationLog/list', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407701', '角色模块分配接口', '/web/sys/role/roleModuleAssignment/{roleId}', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407721', '角色详情接口', '/web/sys/role/detail/{roleId}', 'GET', '5', '秒', '10', '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407731', '新增角色接口', '/web/sys/role/add', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407741', '查询角色接口', '/web/sys/role/list', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407761', '修改角色接口', '/web/sys/role/modify', 'PUT', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407781', '角色模块信息接口', '/web/sys/role/roleModuleInfo/{roleId},/web/sys/role/roleModuleInfo', 'GET', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407791', '删除角色接口', '/web/sys/role/delete/{roleId}', 'DELETE', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407811', '日程列表接口', '/web/sys/schedule/list', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407821', '保存日程接口', '/web/sys/schedule/add', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407841', null, '/eurekaTest', 'GET', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407851', '用户角色分配接口', '/web/sys/user/userRoleAssignment/{userId}', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407871', '用户模块分配接口', '/web/sys/user/userModuleAssignment/{userId}', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407881', '新增用户接口', '/web/sys/user/add', 'POST', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407901', '用户角色信息接口', '/web/sys/user/userRoleInfo/{userId},/web/sys/user/userRoleInfo', 'GET', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407921', '用户模块信息接口', '/web/sys/user/userModuleInfo/{userId},/web/sys/user/userModuleInfo', 'GET', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407941', '修改用户接口', '/web/sys/user/modify', 'PUT', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407951', '用户详情接口', '/web/sys/user/detail/{userId}', 'GET', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407961', '查询用户接口', '/web/sys/user/list', 'POST', null, null, null, '1', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407981', '删除用户接口', '/web/sys/user/delete/{userId}', 'DELETE', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620407991', null, '/swagger-resources/configuration/security', '', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620408001', null, '/swagger-resources', '', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620408021', null, '/swagger-resources/configuration/ui', '', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141620408041', null, '/error', '', null, null, null, '0', null, '2020-04-14 16:20:40', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141625283561', null, '/test', 'GET', null, null, null, '0', null, '2020-04-14 16:25:28', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004141700287271', '接口列表接口', '/web/sys/interfaces/list', 'POST', null, null, null, '0', null, '2020-04-14 17:00:28', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004151025123271', '修改接口接口', '/web/sys/interfaces/modify', 'PUT', null, null, null, '0', null, '2020-04-15 10:25:12', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004151025123301', '接口详情接口', '/web/sys/interfaces/detail/{interfacesId}', 'GET', null, null, null, '0', null, '2020-04-15 10:25:12', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004212010126741', '在线用户列表接口', '/web/sys/onlineChat/userList', 'GET', null, null, null, '0', null, '2020-04-21 20:10:12', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004212048263881', '用户下线接口', '/web/sys/onlineChat/userOffline/{key}', 'GET', null, null, null, '0', null, '2020-04-21 20:48:26', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004231353190541', '用户角色数据权限接口', '/web/sys/interfaces/userRoleDataPermission/{interfacesId}', 'GET', null, null, null, '0', null, '2020-04-23 13:53:19', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
+INSERT INTO `interfaces` VALUES ('202004231525337771', '数据权限分配接口', '/web/sys/interfaces/dataPermissionAssignment/{interfacesId}', 'POST', null, null, null, '0', null, '2020-04-23 15:25:33', 'admin123456', '2020-04-26 14:59:31', 'admin123456', '0');
 
 -- ----------------------------
 -- Table structure for `module`
@@ -548,7 +548,7 @@ CREATE TABLE `role_data` (
 -- ----------------------------
 -- Records of role_data
 -- ----------------------------
-INSERT INTO `role_data` VALUES ('202004231616262821', '202004052117534261', '202004231616262801');
+INSERT INTO `role_data` VALUES ('202004261438413651', '202004052117534261', '202004261438413631');
 
 -- ----------------------------
 -- Table structure for `role_module`
@@ -564,27 +564,21 @@ CREATE TABLE `role_module` (
 -- ----------------------------
 -- Records of role_module
 -- ----------------------------
-INSERT INTO `role_module` VALUES ('202004240957441961', '202004052117534261', '202003282108350611');
-INSERT INTO `role_module` VALUES ('202004240957441981', '202004052117534261', '202003282108350805');
-INSERT INTO `role_module` VALUES ('202004240957442001', '202004052117534261', '202003282117355950');
-INSERT INTO `role_module` VALUES ('202004240957442021', '202004052117534261', '202003282117355951');
-INSERT INTO `role_module` VALUES ('202004240957442041', '202004052117534261', '202003282117355952');
-INSERT INTO `role_module` VALUES ('202004240957442061', '202004052117534261', '202003282117355953');
-INSERT INTO `role_module` VALUES ('202004240957442081', '202004052117534261', '202003282108350806');
-INSERT INTO `role_module` VALUES ('202004240957442101', '202004052117534261', '202003282117355954');
-INSERT INTO `role_module` VALUES ('202004240957442111', '202004052117534261', '202004212010126742');
-INSERT INTO `role_module` VALUES ('202004240957442131', '202004052117534261', '202003282108350611');
-INSERT INTO `role_module` VALUES ('202004240957442141', '202004052117534261', '202003282108350805');
-INSERT INTO `role_module` VALUES ('202004240957442151', '202004052117534261', '202003282117355950');
-INSERT INTO `role_module` VALUES ('202004240957442161', '202004052117534261', '202003282117355951');
-INSERT INTO `role_module` VALUES ('202004240957442181', '202004052117534261', '202003282117355952');
-INSERT INTO `role_module` VALUES ('202004240957442191', '202004052117534261', '202003282117355953');
-INSERT INTO `role_module` VALUES ('202004240957442211', '202004052117534261', '202003282108350806');
-INSERT INTO `role_module` VALUES ('202004240957442221', '202004052117534261', '202003282117355954');
-INSERT INTO `role_module` VALUES ('202004240957442231', '202004052117534261', '202004212010126742');
-INSERT INTO `role_module` VALUES ('202004240957442251', '202004052117534261', '202003282108350781');
-INSERT INTO `role_module` VALUES ('202004240957442261', '202004052117534261', '202003282117355621');
-INSERT INTO `role_module` VALUES ('202004240957442271', '202004052117534261', '202003282117355941');
+INSERT INTO `role_module` VALUES ('202004261336354451', '202004052117534261', '202003282108350611');
+INSERT INTO `role_module` VALUES ('202004261336354471', '202004052117534261', '202003282117355621');
+INSERT INTO `role_module` VALUES ('202004261336354481', '202004052117534261', '202003282108350991');
+INSERT INTO `role_module` VALUES ('202004261336354501', '202004052117534261', '202003282116237491');
+INSERT INTO `role_module` VALUES ('202004261336354511', '202004052117534261', '202003282116593381');
+INSERT INTO `role_module` VALUES ('202004261336354521', '202004052117534261', '202003282117355941');
+INSERT INTO `role_module` VALUES ('202004261336354541', '202004052117534261', '202003282108350805');
+INSERT INTO `role_module` VALUES ('202004261336354551', '202004052117534261', '202003282117355950');
+INSERT INTO `role_module` VALUES ('202004261336354571', '202004052117534261', '202003282117355951');
+INSERT INTO `role_module` VALUES ('202004261336354581', '202004052117534261', '202003282117355952');
+INSERT INTO `role_module` VALUES ('202004261336354591', '202004052117534261', '202003282117355953');
+INSERT INTO `role_module` VALUES ('202004261336354601', '202004052117534261', '202003282108350806');
+INSERT INTO `role_module` VALUES ('202004261336354621', '202004052117534261', '202003282117355954');
+INSERT INTO `role_module` VALUES ('202004261336354631', '202004052117534261', '202004212010126742');
+INSERT INTO `role_module` VALUES ('202004261336354651', '202004052117534261', '202003282108350781');
 
 -- ----------------------------
 -- Table structure for `schedule`
@@ -606,48 +600,48 @@ CREATE TABLE `schedule` (
 -- ----------------------------
 -- Records of schedule
 -- ----------------------------
-INSERT INTO `schedule` VALUES ('202004221350096951', '2020-03-30', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350096961', '2020-03-31', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350096971', '2020-04-01', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350096981', '2020-04-02', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097001', '2020-04-03', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097011', '2020-04-04', '3', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097031', '2020-04-05', '3', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097041', '2020-04-06', '3', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097061', '2020-04-07', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097071', '2020-04-08', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097081', '2020-04-09', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097101', '2020-04-10', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097121', '2020-04-11', '1', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097141', '2020-04-12', '1', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097161', '2020-04-13', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097181', '2020-04-14', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097191', '2020-04-15', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097211', '2020-04-16', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097231', '2020-04-17', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097241', '2020-04-18', '1', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097261', '2020-04-19', '1', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097271', '2020-04-20', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097281', '2020-04-21', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097301', '2020-04-22', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097321', '2020-04-23', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097341', '2020-04-24', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097361', '2020-04-25', '1', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097371', '2020-04-26', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097391', '2020-04-27', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097401', '2020-04-28', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097421', '2020-04-29', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097431', '2020-04-30', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097441', '2020-05-01', '3', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097461', '2020-05-02', '3', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097471', '2020-05-03', '3', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097491', '2020-05-04', '3', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097501', '2020-05-05', '3', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097521', '2020-05-06', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097541', '2020-05-07', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097551', '2020-05-08', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097571', '2020-05-09', '2', null, '2020-04-22 13:50:09', null, null, null, '0');
-INSERT INTO `schedule` VALUES ('202004221350097581', '2020-05-10', '1', null, '2020-04-22 13:50:09', null, null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431244861', '2020-03-30', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431244871', '2020-03-31', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431244881', '2020-04-01', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431244901', '2020-04-02', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431244911', '2020-04-03', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431244931', '2020-04-04', '3', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431244941', '2020-04-05', '3', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431244951', '2020-04-06', '3', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431244961', '2020-04-07', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431244981', '2020-04-08', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431244991', '2020-04-09', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245011', '2020-04-10', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245031', '2020-04-11', '1', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245051', '2020-04-12', '1', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245061', '2020-04-13', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245081', '2020-04-14', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245091', '2020-04-15', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245111', '2020-04-16', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245131', '2020-04-17', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245141', '2020-04-18', '1', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245151', '2020-04-19', '1', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245171', '2020-04-20', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245191', '2020-04-21', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245201', '2020-04-22', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245211', '2020-04-23', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245231', '2020-04-24', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245251', '2020-04-25', '1', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245261', '2020-04-26', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245281', '2020-04-27', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245291', '2020-04-28', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245301', '2020-04-29', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245321', '2020-04-30', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245331', '2020-05-01', '3', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245351', '2020-05-02', '3', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245361', '2020-05-03', '3', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245381', '2020-05-04', '3', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245401', '2020-05-05', '3', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245411', '2020-05-06', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245431', '2020-05-07', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245441', '2020-05-08', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245461', '2020-05-09', '2', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
+INSERT INTO `schedule` VALUES ('202004261431245471', '2020-05-10', '1', null, '2020-04-26 14:31:24', 'admin123456', null, null, '0');
 
 -- ----------------------------
 -- Table structure for `user`
@@ -705,7 +699,7 @@ CREATE TABLE `user_data` (
 -- ----------------------------
 -- Records of user_data
 -- ----------------------------
-INSERT INTO `user_data` VALUES ('202004231616262751', '202004041609538011', '202004231616262731');
+INSERT INTO `user_data` VALUES ('202004261438413601', '202004041609538011', '202004261438413591');
 
 -- ----------------------------
 -- Table structure for `user_module`
@@ -721,6 +715,14 @@ CREATE TABLE `user_module` (
 -- ----------------------------
 -- Records of user_module
 -- ----------------------------
+INSERT INTO `user_module` VALUES ('202004261340308661', '202004041609538011', '202003282108350791');
+INSERT INTO `user_module` VALUES ('202004261340308681', '202004041609538011', '202003282116237201');
+INSERT INTO `user_module` VALUES ('202004261340308691', '202004041609538011', '202003282115442541');
+INSERT INTO `user_module` VALUES ('202004261340308701', '202004041609538011', '202003282108350931');
+INSERT INTO `user_module` VALUES ('202004261340308721', '202004041609538011', '202003282115442421');
+INSERT INTO `user_module` VALUES ('202004261340308731', '202004041609538011', '202003282108350891');
+INSERT INTO `user_module` VALUES ('202004261340308751', '202004041609538011', '202003282116593201');
+INSERT INTO `user_module` VALUES ('202004261340308761', '202004041609538011', '202003282108350611');
 
 -- ----------------------------
 -- Table structure for `user_role`
