@@ -30,6 +30,7 @@ import com.javaweb.web.eo.interfaces.UserPermissionResponse;
 import com.javaweb.web.eo.interfaces.UserRolePermissionResponse;
 import com.javaweb.web.po.Interfaces;
 import com.javaweb.web.po.RoleData;
+import com.javaweb.web.po.User;
 import com.javaweb.web.po.UserData;
 import com.javaweb.web.po.UserRole;
 import com.javaweb.web.service.InterfacesService;
@@ -143,9 +144,9 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 	}
 
 	public UserRolePermissionResponse userRoleDataPermission(String interfacesId) {
-		//获得所有用户及其设定的排除字段（这里做的比较简单，没有分页和筛选查询）
+		//获得所有用户及其设定的排除字段（这里做的比较简单，没有分页和筛选查询，实际项目这部分请自行改造）
 		List<UserPermissionResponse> userPermissionResponseList = interfacesDao.userPermissionList(interfacesId);
-		//获得所有角色及其设定的排除字段（这里做的比较简单，没有分页和筛选查询）
+		//获得所有角色及其设定的排除字段（这里做的比较简单，没有分页和筛选查询，实际项目这部分请自行改造）
 		List<RolePermissionResponse> rolePermissionResponseList = interfacesDao.rolePermissionList(interfacesId);
 		UserRolePermissionResponse userRolePermissionResponse = new UserRolePermissionResponse();
 		userRolePermissionResponse.setUserPermissionResponseList(userPermissionResponseList);
@@ -154,18 +155,20 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 	}
 
 	@Transactional
-	public void dataPermissionAssignment(UserRolePermissionResponse userRolePermissionResponse,String interfacesId) {
+	public void dataPermissionAssignment(UserRolePermissionResponse userRolePermissionResponse,String interfacesId,User user) {
 		List<UserPermissionResponse> userPermissionResponseList = userRolePermissionResponse.getUserPermissionResponseList();
 		List<RolePermissionResponse> rolePermissionResponseList = userRolePermissionResponse.getRolePermissionResponseList();
 		userPermissionResponseList = userPermissionResponseList.stream().filter(each->(each.getExcludeField()!=null)&&(!each.getExcludeField().trim().equals(CommonConstant.EMPTY_VALUE))).collect(Collectors.toList());
 		rolePermissionResponseList = rolePermissionResponseList.stream().filter(each->(each.getExcludeField()!=null)&&(!each.getExcludeField().trim().equals(CommonConstant.EMPTY_VALUE))).collect(Collectors.toList());
-		interfacesDao.clearUserRoleDataPermission();
-		for(int i=0;i<userPermissionResponseList.size();i++){
+		interfacesDao.clearUserRoleDataPermission();//因为每次都是获得所有用户和角色的数据权限，所以每次都是先清空表再插入（这里做的比较简单，没有判断是否存在，存在更新不存在插入的逻辑，实际项目这部分请自行改造）
+		for(int i=0;i<userPermissionResponseList.size();i++){//用户数据权限
 			com.javaweb.web.po.DataPermission dataPermission = new com.javaweb.web.po.DataPermission();
 			String dataPermissionId = SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO);
 			dataPermission.setId(dataPermissionId);
 			dataPermission.setExcludeField(userPermissionResponseList.get(i).getExcludeField());
 			dataPermission.setInterfacesId(interfacesId);
+			dataPermission.setCreateDate(DateUtil.getDefaultDate());
+			dataPermission.setCreator(user.getUserId());
 			UserData userData = new UserData();
 			userData.setId(SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO));
 			userData.setUserId(userPermissionResponseList.get(i).getUserId());
@@ -173,12 +176,14 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 			dataPermissionDao.insertForMySql(dataPermission);
 			userDataDao.insertForMySql(userData);
 		}
-		for(int i=0;i<rolePermissionResponseList.size();i++){
+		for(int i=0;i<rolePermissionResponseList.size();i++){//角色数据权限
 			com.javaweb.web.po.DataPermission dataPermission = new com.javaweb.web.po.DataPermission();
 			String dataPermissionId = SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO);
 			dataPermission.setId(dataPermissionId);
 			dataPermission.setExcludeField(rolePermissionResponseList.get(i).getExcludeField());
 			dataPermission.setInterfacesId(interfacesId);
+			dataPermission.setCreateDate(DateUtil.getDefaultDate());
+			dataPermission.setCreator(user.getUserId());
 			RoleData roleData = new RoleData();
 			roleData.setId(SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO));
 			roleData.setRoleId(rolePermissionResponseList.get(i).getRoleId());
