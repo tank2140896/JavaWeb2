@@ -6,7 +6,7 @@
     <div class="triangle-left" *ngIf="scheduleListZone" (click)="preMonth()"></div>
     <div class="show-date">{{currentYearMonth}}</div>
     <div class="triangle-right" *ngIf="scheduleListZone" (click)="nextMonth()"></div>
-    <button *ngIf="scheduleAddZone" (click)="scheduleSet()" [hidden]="scheduleSetFlag" type="button" class="btn btn-success" style="padding: .375rem .75rem;border:100px;margin-left:1%;">日程设定</button>
+    <button *ngIf="scheduleAddZone" (click)="scheduleSet()" [hidden]="scheduleSetFlag" type="button" class="btn btn-success" style="padding: .375rem .75rem;border:100px;margin-left:1%;">公司日程设定</button>
     <button *ngIf="scheduleAddZone" (click)="scheduleSave()" [hidden]="!scheduleSetFlag" type="button" class="btn btn-primary" style="padding: .375rem .75rem;border:100px;margin-left:1%;">保存</button>
     <button *ngIf="scheduleAddZone" (click)="scheduleCancel()" [hidden]="!scheduleSetFlag" type="button" class="btn btn-primary" style="padding: .375rem .75rem;border:100px;margin-left:1%;">取消</button>
     <br/>
