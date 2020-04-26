@@ -28,8 +28,8 @@ public class ScheduleServiceImpl extends BaseService implements ScheduleService 
 	public List<ScheduleListResponse> getScheduleByDate(ScheduleListRequest scheduleListRequest){
 		String year = scheduleListRequest.getYear();
 		String month = scheduleListRequest.getMonth();
-		String yearMonth = year+"-"+month+"-";
-		String startDate = yearMonth+"01";
+		String yearMonth = year+CommonConstant.BAR+month+CommonConstant.BAR;
+		String startDate = yearMonth+DateUtil.FIRST_DAY_OF_MONTH_STRING_FORMAT;
 		String endDate = yearMonth+DateUtil.getLastDayOfMonth(Integer.parseInt(year),Integer.parseInt(month));
 		List<String> allDates = getAllDates(startDate,endDate);
 		Map<String,String> map = new HashMap<String,String>();
@@ -79,9 +79,11 @@ public class ScheduleServiceImpl extends BaseService implements ScheduleService 
 
 	@Transactional
 	public void scheduleSave(ScheduleAddRequest scheduleAddRequest,User user) {
-		String yearMonth = scheduleAddRequest.getYear()+"-"+String.format("%02d",Integer.parseInt(scheduleAddRequest.getMonth()))+"-";
-		String startDate = yearMonth+"01";
-		String endDate = yearMonth+DateUtil.getLastDayOfMonth(Integer.parseInt(scheduleAddRequest.getYear()),Integer.parseInt(scheduleAddRequest.getMonth()));
+		String year = scheduleAddRequest.getYear();
+		String month = scheduleAddRequest.getMonth();
+		String yearMonth = year+CommonConstant.BAR+month+CommonConstant.BAR;
+		String startDate = yearMonth+DateUtil.FIRST_DAY_OF_MONTH_STRING_FORMAT;
+		String endDate = yearMonth+DateUtil.getLastDayOfMonth(Integer.parseInt(year),Integer.parseInt(month));
 		List<String> allDates = getAllDates(startDate,endDate);
 		List<ScheduleListResponse> list = scheduleAddRequest.getList();
 		List<Schedule> scheduleList = new ArrayList<>();
