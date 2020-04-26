@@ -36,6 +36,10 @@
 		delete from role_module where role_id = #{_parameter};
 		<!-- 删除用户角色关联 -->
 		delete from user_role where role_id = #{_parameter};
+		<!-- 删除数据权限 -->
+		delete from data_permission where id in(select distinct data_permission_id from role_data where role_id = #{_parameter});
+		<!-- 删除用户数据关联 -->
+		delete from role_data where role_id = #{_parameter};
 		<!-- 删除角色 -->
 		delete from role where role_id = #{_parameter};
 	</delete>
