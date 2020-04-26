@@ -63,8 +63,10 @@ public class InterfacesController extends BaseController {
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_INTERFACES_DATA_PERMISSION_ASSIGNMENT)
 	@PostMapping(ApiConstant.INTERFACES_DATA_PERMISSION_ASSIGNMENT)
-	public BaseResponseResult dataPermissionAssignment(@PathVariable(name="interfacesId",required=true) String interfacesId,@RequestBody UserRolePermissionResponse userRolePermissionResponse){
-		interfacesService.dataPermissionAssignment(userRolePermissionResponse,interfacesId);
+	public BaseResponseResult dataPermissionAssignment(@PathVariable(name="interfacesId",required=true) String interfacesId,
+			                                           @RequestBody UserRolePermissionResponse userRolePermissionResponse,
+			                                           @TokenDataAnnotation TokenData tokenData){
+		interfacesService.dataPermissionAssignment(userRolePermissionResponse,interfacesId,tokenData.getUser());
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"interfaces.dataPermissionAssignment.success",null);
 	}
 	
