@@ -27,7 +27,7 @@
 	<select id="moduleList" parameterType="com.javaweb.web.eo.module.ModuleListRequest" resultType="com.javaweb.web.eo.module.ModuleListResponse">
 		select m.module_id as moduleId,m.parent_id as parentId,m.module_name as moduleName,
 		(select n.module_name from module n where n.module_id = m.parent_id and n.del_flag = 0) as parentName,
-		m.page_url as pageUrl,m.api_url as apiUrl,m.module_type as moduleType,m.alias,m.create_date as createDate
+		m.page_url as pageUrl,m.api_url as apiUrl,m.module_type as moduleType,m.orders,m.alias,m.create_date as createDate
 		from module m
 		<where>
 			m.del_flag = 0
