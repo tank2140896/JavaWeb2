@@ -128,7 +128,10 @@ export class ScheduleListComponent implements OnInit {
 
   //保存日程
   public scheduleSave():void{
-    let data = {list:this.dateList,year:this.currentYear,month:this.currentMonth};
+    let sendYear = this.currentYear+'';
+    let sendMonth = this.currentMonth<10?('0'+this.currentMonth):this.currentMonth;
+    let data = {list:this.dateList,year:sendYear,month:sendMonth};
+    //console.log(data);
     this.httpService.postJsonData(ApiConstant.getPath(ApiConstant.SYS_SCHEDULE_ADD,true),JSON.stringify(data),this.sessionService.getHeadToken()).subscribe(
       {
         next:(result:any) => {
