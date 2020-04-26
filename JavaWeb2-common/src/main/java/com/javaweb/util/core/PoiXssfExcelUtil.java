@@ -19,6 +19,9 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import com.javaweb.constant.CommonConstant;
+
+//使用对象封装，对象的属性需要为封装类型
 public class PoiXssfExcelUtil {
 	
 	//遍历所有sheet
@@ -44,10 +47,10 @@ public class PoiXssfExcelUtil {
 	}
 	
 	//根据sheet名字遍历单个sheet
-	public static List<?> readSingleExcelSheet(InputStream inputStream,String sheetName,Map<Integer,String> map,Class<?> objectClass) throws Exception {
+	public static <T> List<T> readSingleExcelSheet(InputStream inputStream,String sheetName,Map<Integer,String> map,Class<T> objectClass) throws Exception {
 		XSSFWorkbook xssfWorkbook = new XSSFWorkbook(inputStream);
 		XSSFSheet xssfSheet = xssfWorkbook.getSheet(sheetName);
-		List<?> list = readSheet(xssfSheet,map,objectClass);
+		List<T> list = readSheet(xssfSheet,map,objectClass);
 		xssfWorkbook.close();
 		return list;
 	}
@@ -62,10 +65,10 @@ public class PoiXssfExcelUtil {
 	}
 	
 	//根据sheet序号遍历单个sheet
-	public static List<?> readSingleExcelSheet(InputStream inputStream,int sheetIndex,Map<Integer,String> map,Class<?> objectClass) throws Exception {
+	public static <T> List<T> readSingleExcelSheet(InputStream inputStream,int sheetIndex,Map<Integer,String> map,Class<T> objectClass) throws Exception {
 		XSSFWorkbook xssfWorkbook = new XSSFWorkbook(inputStream);
 		XSSFSheet xssfSheet = xssfWorkbook.getSheetAt(sheetIndex);
-		List<?> list = readSheet(xssfSheet,map,objectClass);
+		List<T> list = readSheet(xssfSheet,map,objectClass);
 		xssfWorkbook.close();
 		return list;
 	}
@@ -115,7 +118,7 @@ public class PoiXssfExcelUtil {
 	}
 	
 	//读取每个sheet里的数据
-	private static List<List<String>> readSheet(XSSFSheet xssfSheet){
+	public static List<List<String>> readSheet(XSSFSheet xssfSheet){
 		int rows = xssfSheet.getPhysicalNumberOfRows();
 		List<List<String>> rowList = new ArrayList<>();
 		for(int i=0;i<rows;i++){//遍历每一行
@@ -127,10 +130,13 @@ public class PoiXssfExcelUtil {
 			List<String> cellList = new ArrayList<>();
 			for(int j=0;j<cells;j++){//遍历每一列
 				XSSFCell cell = row.getCell(j);
-				cell.setCellType(CellType.STRING);
-				//new Double("1.0").intValue()
-				String cellValue = cell.getStringCellValue();
-				cellList.add(cellValue);
+				if(cell==null){
+					cellList.add(CommonConstant.EMPTY_VALUE);
+				}else{
+					cell.setCellType(CellType.STRING);
+					String cellValue = cell.getStringCellValue();
+					cellList.add(cellValue);
+				}
 			}
 			rowList.add(cellList);
 		}
@@ -138,11 +144,11 @@ public class PoiXssfExcelUtil {
 	}
 	
 	//读取每个sheet里的数据
-	private static List<?> readSheet(XSSFSheet xssfSheet,Map<Integer,String> map,Class<?> objectClass) throws Exception{
+	public static <T> List<T> readSheet(XSSFSheet xssfSheet,Map<Integer,String> map,Class<T> objectClass) throws Exception{
 		int rows = xssfSheet.getPhysicalNumberOfRows();
-		List<Object> rowList = new ArrayList<>();
+		List<T> rowList = new ArrayList<>();
 		for(int i=0;i<rows;i++){//遍历每一行
-			Object target = objectClass.newInstance();
+			T target = objectClass.newInstance();
 			XSSFRow row = xssfSheet.getRow(i);
 			if(row==null){
 				continue;
@@ -153,27 +159,21 @@ public class PoiXssfExcelUtil {
 				if(cell==null){
 					continue;
 				}
-				cell.setCellType(CellType.STRING);
+				cell.setCellType(CellType.STRING);//无论什么类型都先转为String
 				String fieldName = map.get(each);
 				Class<?> fieldType = objectClass.getDeclaredField(fieldName).getType();
 				fieldName = fieldName.substring(0,1).toUpperCase()+fieldName.substring(1,fieldName.length());
-				Object value = "";
-				try{
-					if("java.lang.Double".equals(fieldType.getName())){
-						value = new Double(cell.toString());
-						target.getClass().getDeclaredMethod("set"+fieldName,Double.class).invoke(target, value);
-					}else if("java.lang.Integer".equals(fieldType.getName())){
-						value = new Double(cell.toString()).intValue();
-						target.getClass().getDeclaredMethod("set"+fieldName,Integer.class).invoke(target, value);
-					}else if("java.lang.Float".equals(fieldType.getName())){
-						value = new Float(cell.toString());
-						target.getClass().getDeclaredMethod("set"+fieldName,Float.class).invoke(target, value);
-					}else{
-						value = cell.toString();
-						target.getClass().getDeclaredMethod("set"+fieldName,String.class).invoke(target, value);
-					}
-				}catch(Exception e){
-					//do nothing
+				Method method = target.getClass().getDeclaredMethod("set"+fieldName,fieldType);
+				if("java.lang.Integer".equals(fieldType.getName())){
+					method.invoke(target,Integer.parseInt(cell.toString()));
+				}else if("java.lang.Long".equals(fieldType.getName())){
+					method.invoke(target,Long.parseLong(cell.toString()));
+				}else if("java.lang.Float".equals(fieldType.getName())){
+					method.invoke(target,Float.parseFloat(cell.toString()));
+				}else if("java.lang.Double".equals(fieldType.getName())){
+					method.invoke(target,Double.parseDouble(cell.toString()));
+				}else{
+					method.invoke(target,cell.toString());
 				}
 			}
 			rowList.add(target);
@@ -182,7 +182,7 @@ public class PoiXssfExcelUtil {
 	}
 	
 	//写入每个sheet里的数据
-	private static XSSFWorkbook writeSheetData(List<List<String>> data,String sheetName){
+	public static XSSFWorkbook writeSheetData(List<List<String>> data,String sheetName){
 		XSSFWorkbook xssfWorkbook = new XSSFWorkbook();
 		XSSFSheet xssfSheet = xssfWorkbook.createSheet(sheetName);
 		XSSFRow[] rows = new XSSFRow[data.size()];
@@ -201,7 +201,7 @@ public class PoiXssfExcelUtil {
 	}
 	
 	//写入每个sheet里的数据
-	private static XSSFWorkbook writeSheetObject(List<Object> data,String sheetName) throws Exception {
+	public static XSSFWorkbook writeSheetObject(List<Object> data,String sheetName) throws Exception {
 		XSSFWorkbook xssfWorkbook = new XSSFWorkbook();
 		XSSFSheet xssfSheet = xssfWorkbook.createSheet(sheetName);
 		XSSFRow[] rows = new XSSFRow[data.size()];
@@ -221,13 +221,12 @@ public class PoiXssfExcelUtil {
 				if(value instanceof Double){
 					cells[j].setCellValue(new Double(value.toString()));
 				}else if(value instanceof Integer){
-					cells[j].setCellValue(new Double(value.toString()).intValue());
+					cells[j].setCellValue(new Integer(value.toString()));
 				}else if(value instanceof Float){
-					cells[j].setCellValue(new Double(value.toString()));
+					cells[j].setCellValue(new Float(value.toString()));
 				}else{
 					cells[j].setCellValue(value.toString());
 				}
-				//cells[j].setCellStyle(XSSFCellStyle);
 			}
 		}
 		return xssfWorkbook;
