@@ -42,11 +42,19 @@ public class OnlineUserController extends BaseController {
 		for(String str:set){
 			sortedList.add(str.split(CommonConstant.COMMA)[0]);
 		}
-		String userId = onlineUserListRequest.getUserId();
-		if(StringUtil.handleNullString(userId).trim().equals(CommonConstant.EMPTY_VALUE)){
+		List<User> userList = userService.getAllUsers();
+		String userName = onlineUserListRequest.getUserName();
+		if(StringUtil.handleNullString(userName).trim().equals(CommonConstant.EMPTY_VALUE)){
 			sortedList = sortedList.stream().sorted().collect(Collectors.toList());
 		}else{
-			sortedList = sortedList.stream().filter(e->e.contains(onlineUserListRequest.getUserId())).sorted().collect(Collectors.toList());
+			sortedList = sortedList.stream().filter(e->{
+				for(User user:userList){
+					if(e.equals(user.getUserId())&&user.getUserName().contains(userName)){
+						return true;
+					}
+				}
+				return false;
+			}).sorted().collect(Collectors.toList());
 		}
 		sortedList = PageUtil.getSubList(sortedList,onlineUserListRequest.getPageSize(),onlineUserListRequest.getCurrentPage());
 		if(sortedList==null){
