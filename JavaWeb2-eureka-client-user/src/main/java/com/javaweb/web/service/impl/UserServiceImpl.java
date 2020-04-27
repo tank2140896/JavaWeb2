@@ -122,4 +122,8 @@ public class UserServiceImpl extends BaseService implements UserService {
 		userDao.userModuleAssignment(map);
 	}
 
+	public List<User> getAllUsers() {
+		return userDao.selectAllForMySql();
+	}
+
 }
