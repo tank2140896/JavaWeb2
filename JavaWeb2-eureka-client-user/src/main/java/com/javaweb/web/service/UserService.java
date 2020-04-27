@@ -34,4 +34,6 @@ public interface UserService {
 	
 	public void userModuleAssignment(String userId,List<String> list);
 	
+	public List<User> getAllUsers();
+	
 }
