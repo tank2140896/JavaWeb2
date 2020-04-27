@@ -11,7 +11,7 @@ public class OnlineUserListRequest implements Serializable {
 	
 	private static final long serialVersionUID = -3414850279981979366L;
 
-	private String userId;//用户ID
+	private String userName;//用户名称
 	
 	private Long currentPage = 1L;//默认当前第1页
 	
