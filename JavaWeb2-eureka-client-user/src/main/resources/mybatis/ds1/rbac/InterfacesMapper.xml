@@ -15,6 +15,14 @@
 		<foreach collection="list" item="item" index="no" open="(" separator="," close=")">
 			#{item}
 		</foreach>
+		;
+		delete from user_data where data_permission_id in(
+			select id from data_permission where interfaces_id not in(SELECT id from interfaces)
+		);
+		delete from role_data where data_permission_id in(
+			select id from data_permission where interfaces_id not in(SELECT id from interfaces)
+		);
+		delete from data_permission where interfaces_id not in(SELECT id from interfaces);
 	</insert>
 	
 	<select id="interfacesList" parameterType="com.javaweb.web.eo.interfaces.InterfacesListRequest" resultType="com.javaweb.web.po.Interfaces">
