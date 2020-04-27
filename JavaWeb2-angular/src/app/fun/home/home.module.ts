@@ -13,12 +13,13 @@ import {OperationLogModule} from '../operationLog/operation.log.module';
 import {ScheduleModule} from '../schedule/schedule.module';
 import {InterfacesModule} from '../interfaces/interfaces.module';
 import {OnlineChatModule} from '../onlineChat/online.chat.module';
+import {OnlineUserModule} from '../onlineUser/online.user.module';
 
 @NgModule({
   imports:[CommonModule,RouterModule,
            HeaderModule,SidebarModule,CenteralModule,
            UserModule,RoleModule,ModuleModule,
-           DictionaryModule,OperationLogModule,ScheduleModule,InterfacesModule,OnlineChatModule
+           DictionaryModule,OperationLogModule,ScheduleModule,InterfacesModule,OnlineChatModule,OnlineUserModule
   ],
   declarations:[HomeComponent],
   exports:[HomeComponent]
