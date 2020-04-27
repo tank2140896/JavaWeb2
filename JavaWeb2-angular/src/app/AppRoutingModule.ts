@@ -38,6 +38,7 @@ import {InterfacesDetailComponent} from './fun/interfaces/detail/interfaces.deta
 import {OnlineChatComponent} from './fun/onlineChat/online.chat.component';
 import {DemoComponent} from './fun/demo/demo.components';
 import {InterfacesDataPermissionAssignmentComponent} from './fun/interfaces/dataPermissionAssignment/interfaces.dataPermissionAssignment.component';
+import {OnlineUserComponent} from './fun/onlineUser/online.user.component';
 
 const routes: Routes = [
   {path:'',component:LoginComponent},//默认登录页面
@@ -104,6 +105,11 @@ const routes: Routes = [
     ],canActivate:[AuthService]},
     {path:'sys/onlineChat',component:OnlineChatComponent,children:[
       {path:'',component:OnlineChatComponent,canActivate:[AuthService]},//在线聊天室页面
+      {path:'**',redirectTo:'/web',pathMatch:'full'}
+    ],canActivate:[AuthService]},
+    {path:'sys/onlineUser',component:OnlineUserComponent,children:[
+      {path:'',component:OnlineUserComponent,canActivate:[AuthService]},//在线用户列表
+      {path:'list',component:OnlineUserComponent,canActivate:[AuthService]},//在线用户列表
       {path:'**',redirectTo:'/web',pathMatch:'full'}
     ],canActivate:[AuthService]},
     {path:'**',redirectTo: '/web', pathMatch: 'full'}
