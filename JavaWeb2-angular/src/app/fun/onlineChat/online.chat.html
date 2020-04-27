@@ -3,26 +3,6 @@
     <div><h3>在线聊天室</h3></div>
     <textarea disabled style="width:100%;height:500px;overflow-y:scroll;" [(ngModel)]="getMessage"></textarea>
   </div>
-  <div style="width:100%;height:300px;background-color:#ACC0D8;">
-    <div><h3>在线用户（非聊天室在线用户）</h3></div>
-    <table border="1">
-      <tr align="center">
-        <th width="300px;">序号</th>
-        <th width="300px;">用户ID</th>
-        <th width="300px;">用户名</th>
-        <th width="300px;">用户操作</th>
-      </tr>
-      <tr align="center" *ngFor="let eachData of onLineUserList;let xh=index">
-        <td>{{xh+1}}</td>
-        <td>{{eachData.userId}}</td>
-        <td>{{eachData.userName}}</td>
-        <td><a *ngIf="userOfflineZone" href="javascript:void(0)" (click)="userOffline(eachData)">下线</a></td>
-      </tr>
-      <tr align="center" *ngIf="onLineUserList==null || onLineUserList.length==0">
-        <td colspan="4">无数据</td>
-      </tr>
-    </table>
-  </div>
   <div style="float:right">
     <input [(ngModel)]="sendMessage" type="text" style="height:38px;width:300px;margin-right:10px;margin-top:10px;" (keydown.enter)="keydownEnter($event)"/>
     <button type="button" class="btn btn-primary" (click)="sendFunction()" style="margin-right:10px;">发送</button>
