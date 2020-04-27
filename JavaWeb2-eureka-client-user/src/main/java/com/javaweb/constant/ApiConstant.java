@@ -69,8 +69,8 @@ public class ApiConstant {
 	public static final String INTERFACES_USER_ROLE_DATA_PERMISSION = "/userRoleDataPermission/{interfacesId}";//用户角色数据权限接口
 	public static final String INTERFACES_DATA_PERMISSION_ASSIGNMENT = "/dataPermissionAssignment/{interfacesId}";//数据权限分配接口
 	
-	public static final String WEB_ONLINE_CHAT_PREFIX = "/web/sys/onlineChat";
-	public static final String ONLINE_CHAT_USER_LIST = "/userList";//在线用户列表接口
-	public static final String ONLINE_CHAT_USER_OFFLINE = "/userOffline/{key}";//用户下线接口
+	public static final String WEB_ONLINE_USER_PREFIX = "/web/sys/onlineUser";
+	public static final String ONLINE_USER_LIST = "/list";//在线用户列表接口
+	public static final String ONLINE_USER_OFFLINE = "/offline/{key}";//用户下线接口
 	
 }
