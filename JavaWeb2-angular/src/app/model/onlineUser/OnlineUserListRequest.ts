@@ -2,7 +2,7 @@ import {CommonConstant} from '../../constant/CommonConstant';
 
 export class OnlineUserListRequest {
 
-  userId:string = CommonConstant.EMPTY;//用户ID
+  userName:string = CommonConstant.EMPTY;//用户名称
 
   currentPage = 1;//当前页数
 
