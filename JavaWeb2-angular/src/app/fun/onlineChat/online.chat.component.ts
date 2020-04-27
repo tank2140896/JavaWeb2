@@ -60,7 +60,7 @@ export class OnlineChatComponent implements OnInit {
 
   //发送消息
   public sendFunction():void {
-    const sendInfo = {userName:this.userName,message:this.sendMessage};
+    const sendInfo = {userName:this.userName,message:this.sendMessage,token:this.sessionService.getHeadToken().token};
     this.webSocket.send(JSON.stringify(sendInfo));
     this.getMessage += ('[我]' + this.sendMessage + '\n');
     this.sendMessage = CommonConstant.EMPTY;
