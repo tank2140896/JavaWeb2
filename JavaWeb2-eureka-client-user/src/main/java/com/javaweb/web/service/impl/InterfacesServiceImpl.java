@@ -228,8 +228,11 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 			allList = Stream.concat(allList.stream(),list.stream()).distinct().collect(Collectors.toList());
 		}
 		//5、获得data_permission集合
-		List<ExcludeInfoResponse> excludeInfoResponseList = dataPermissionDao.selectExcludeInfo(allList);
-		return excludeInfoResponseList;
+		if(allList.size()>0){
+			return dataPermissionDao.selectExcludeInfo(allList);
+		}else{
+			return null;
+		}
 	}
 
 }
