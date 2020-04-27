@@ -5,7 +5,7 @@ import {Router} from '@angular/router';
 import {ApiConstant} from '../../constant/ApiConstant';
 import {AuthService} from '../../service/AuthService';
 import {ResultPage} from '../../model/ResultPage';
-import {OnlineUserListRequest} from '../../model/onlineUser/OnlineUserRequest';
+import {OnlineUserListRequest} from '../../model/onlineUser/OnlineUserListRequest';
 
 @Component({
   selector: 'app-web-online-user',
