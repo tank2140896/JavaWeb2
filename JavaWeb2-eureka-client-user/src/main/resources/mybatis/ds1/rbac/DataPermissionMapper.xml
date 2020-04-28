@@ -16,4 +16,8 @@
 		LEFT JOIN interfaces i on tmp.interfaces_id = i.id
 	</select>
 	
+	<select id="selectAllByInterfacesId" parameterType="java.lang.String" resultType="com.javaweb.web.po.DataPermission">
+		select id,exclude_field as excludeField,interfaces_id as interfacesId,remark from data_permission where interfaces_id = #{_parameter}
+	</select>
+	
 </mapper>
