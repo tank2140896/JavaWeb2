@@ -80,6 +80,7 @@ public class OperateLogAspect {
 					operationLog.setUserId(tokenData.getUser().getUserId());
 					operationLog.setUrl(url);
 					operationLog.setRequestMethod(httpServletRequest.getMethod());
+					//TODO 获取@RequestBody注解的实体类
 					operationLog.setRequestParameter(Arrays.toString(joinPoint.getArgs()));//joinPoint.getSignature()
 					operationLog.setRequestIpAddress(HttpUtil.getIpAddress(httpServletRequest));
 					operationLog.setRequestTime(DateUtil.getDefaultDate());
