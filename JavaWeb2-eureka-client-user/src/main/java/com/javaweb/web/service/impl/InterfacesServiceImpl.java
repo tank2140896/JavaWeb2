@@ -27,7 +27,8 @@ import com.javaweb.web.eo.interfaces.ExcludeInfoResponse;
 import com.javaweb.web.eo.interfaces.InterfacesListRequest;
 import com.javaweb.web.eo.interfaces.RolePermissionResponse;
 import com.javaweb.web.eo.interfaces.UserPermissionResponse;
-import com.javaweb.web.eo.interfaces.UserRolePermissionResponse;
+import com.javaweb.web.eo.interfaces.UserRoleDataPermissionRequest;
+import com.javaweb.web.eo.interfaces.UserRolePermissionRequest;
 import com.javaweb.web.po.Interfaces;
 import com.javaweb.web.po.RoleData;
 import com.javaweb.web.po.User;
@@ -143,24 +144,36 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 		return list;
 	}
 
-	public UserRolePermissionResponse userRoleDataPermission(String interfacesId) {
-		//获得所有用户及其设定的排除字段（这里做的比较简单，没有分页和筛选查询，实际项目这部分请自行改造）
-		List<UserPermissionResponse> userPermissionResponseList = interfacesDao.userPermissionList(interfacesId);
-		//获得所有角色及其设定的排除字段（这里做的比较简单，没有分页和筛选查询，实际项目这部分请自行改造）
-		List<RolePermissionResponse> rolePermissionResponseList = interfacesDao.rolePermissionList(interfacesId);
-		UserRolePermissionResponse userRolePermissionResponse = new UserRolePermissionResponse();
-		userRolePermissionResponse.setUserPermissionResponseList(userPermissionResponseList);
-		userRolePermissionResponse.setRolePermissionResponseList(rolePermissionResponseList);
-		return userRolePermissionResponse;
+	public Page userRoleDataPermission(UserRoleDataPermissionRequest userRoleDataPermissionRequest) {
+		if(userRoleDataPermissionRequest.getType()==1){//用户
+			List<UserPermissionResponse> userPermissionResponseList = interfacesDao.userPermissionList(userRoleDataPermissionRequest);
+			long count = interfacesDao.userPermissionListCount(userRoleDataPermissionRequest);
+			Page page = new Page(userRoleDataPermissionRequest,userPermissionResponseList,count);
+			return page;
+		}else{//角色
+			List<RolePermissionResponse> rolePermissionResponseList = interfacesDao.rolePermissionList(userRoleDataPermissionRequest);
+			long count = interfacesDao.rolePermissionListCount(userRoleDataPermissionRequest);
+			Page page = new Page(userRoleDataPermissionRequest,rolePermissionResponseList,count);
+			return page;
+		}
 	}
 
 	@Transactional
-	public void dataPermissionAssignment(UserRolePermissionResponse userRolePermissionResponse,String interfacesId,User user) {
+	public void dataPermissionAssignment(UserRolePermissionRequest userRolePermissionResponse,String interfacesId,User user) {
 		List<UserPermissionResponse> userPermissionResponseList = userRolePermissionResponse.getUserPermissionResponseList();
 		List<RolePermissionResponse> rolePermissionResponseList = userRolePermissionResponse.getRolePermissionResponseList();
-		userPermissionResponseList = userPermissionResponseList.stream().filter(each->(each.getExcludeField()!=null)&&(!each.getExcludeField().trim().equals(CommonConstant.EMPTY_VALUE))).collect(Collectors.toList());
-		rolePermissionResponseList = rolePermissionResponseList.stream().filter(each->(each.getExcludeField()!=null)&&(!each.getExcludeField().trim().equals(CommonConstant.EMPTY_VALUE))).collect(Collectors.toList());
-		interfacesDao.clearUserRoleDataPermission();//因为每次都是获得所有用户和角色的数据权限，所以每次都是先清空表再插入（这里做的比较简单，没有判断是否存在，存在更新不存在插入的逻辑，实际项目这部分请自行改造）
+		//根据user_id删除user_data和data_permission相关的数据
+		List<String> userIds = userPermissionResponseList.stream().map(e->e.getUserId()).collect(Collectors.toList());
+		if(userIds!=null&&userIds.size()>0){
+			interfacesDao.deleteUserDataPermission(userIds);
+		}
+		//根据user_id删除user_data和data_permission相关的数据
+		List<String> roleIds = rolePermissionResponseList.stream().map(e->e.getRoleId()).collect(Collectors.toList());
+		if(roleIds!=null&&roleIds.size()>0){
+			interfacesDao.deleteRoleDataPermission(roleIds);
+		}
+		userPermissionResponseList = userPermissionResponseList.stream().filter(e->{return (e.getExcludeField()!=CommonConstant.NULL_VALUE)&&(!e.getExcludeField().equals(CommonConstant.EMPTY_VALUE));}).collect(Collectors.toList());
+		rolePermissionResponseList = rolePermissionResponseList.stream().filter(e->{return (e.getExcludeField()!=CommonConstant.NULL_VALUE)&&(!e.getExcludeField().equals(CommonConstant.EMPTY_VALUE));}).collect(Collectors.toList());
 		for(int i=0;i<userPermissionResponseList.size();i++){//用户数据权限
 			com.javaweb.web.po.DataPermission dataPermission = new com.javaweb.web.po.DataPermission();
 			String dataPermissionId = SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO);
