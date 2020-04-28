@@ -35,6 +35,19 @@ public class OperateLogAspect {
 	@Autowired
 	private OperationLogService operationLogService;
 	
+	//TODO 等待改造
+	/* 如果业务要求只记录Controller校验通过的操作，最简单的方法就是将@Before变为@Around，主要判断逻辑示例如下： 
+	@Around(value=DEFAULT_LOG_POINT_CUT)
+	public Object aroundMethod(ProceedingJoinPoint joinPoint) throws Throwable {
+		Object object = joinPoint.proceed();
+		BaseResponseResult baseResponseResult = new ObjectMapper().readValue(JSONObject.fromObject(object).toString(),BaseResponseResult.class);
+		if("200".equals(baseResponseResult.getCode().toString())){//只记录操作成功的数据
+			//记录操作日志
+		}
+		return joinPoint.proceed();
+	}
+	*/
+	
 	@SuppressWarnings("unchecked")
 	@Before(value=SystemConstant.DEFAULT_LOG_POINT_CUT)
 	public void beforeMethod(JoinPoint joinPoint) {
