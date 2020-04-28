@@ -8,7 +8,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserRolePermissionResponse implements Serializable {
+public class UserRolePermissionRequest implements Serializable {
 
 	private static final long serialVersionUID = 8502645489040187193L;
 
