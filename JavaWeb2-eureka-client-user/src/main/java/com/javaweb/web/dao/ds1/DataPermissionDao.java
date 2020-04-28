@@ -13,4 +13,6 @@ public interface DataPermissionDao extends DaoForMySql<DataPermission> {
 	
 	public List<ExcludeInfoResponse> selectExcludeInfo(List<String> list);
 	
+	public List<DataPermission> selectAllByInterfacesId(String interfacesId);
+	
 }
