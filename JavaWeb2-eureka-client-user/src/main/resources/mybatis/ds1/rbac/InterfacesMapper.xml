@@ -12,7 +12,7 @@
 	
 	<insert id="interfacesBatchDelete" parameterType="java.lang.String">
 		delete from interfaces where id in
-		<foreach collection="list" item="item" index="no" open="(" separator="," close=")">
+		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
 			#{item}
 		</foreach>
 		;
@@ -48,24 +48,74 @@
 		</where>
 	</select>
 	
-	<select id="userPermissionList" parameterType="java.lang.Long" resultType="com.javaweb.web.eo.interfaces.UserPermissionResponse">
+	<select id="userPermissionList" parameterType="com.javaweb.web.eo.interfaces.UserRoleDataPermissionRequest" resultType="com.javaweb.web.eo.interfaces.UserPermissionResponse">
 		select u.user_id as userId,u.user_name as userName,dp.exclude_field as excludeField 
 		from user u 
 		left join user_data ud on u.user_id = ud.user_id
 		left join data_permission dp on ud.data_permission_id = dp.id
+		<if test="userName != null and userName != ''">where u.user_name like CONCAT('%',#{userName},'%')</if>
+		order by u.create_date desc
+		limit ${(currentPage-1)*pageSize},${pageSize}
 	</select>
 	
-	<select id="rolePermissionList" parameterType="java.lang.Long" resultType="com.javaweb.web.eo.interfaces.RolePermissionResponse">
+	<select id="userPermissionListCount" parameterType="com.javaweb.web.eo.interfaces.UserRoleDataPermissionRequest" resultType="java.lang.Long">
+		select count(1) 
+		from user u 
+		left join user_data ud on u.user_id = ud.user_id
+		left join data_permission dp on ud.data_permission_id = dp.id
+		<if test="userName != null and userName != ''">where u.user_name like CONCAT('%',#{userName},'%')</if>
+	</select>
+	
+	<select id="rolePermissionList" parameterType="com.javaweb.web.eo.interfaces.UserRoleDataPermissionRequest" resultType="com.javaweb.web.eo.interfaces.RolePermissionResponse">
 		select r.role_id as roleId,r.role_name as roleName,dp.exclude_field as excludeField 
 		from role r 
 		left join role_data rd on r.role_id = rd.role_id
 		left join data_permission dp on rd.data_permission_id = dp.id
+		<if test="roleName != null and roleName != ''">where r.role_name like CONCAT('%',#{roleName},'%')</if>
+		order by r.create_date desc
+		limit ${(currentPage-1)*pageSize},${pageSize}
+	</select>
+	
+	<select id="rolePermissionListCount" parameterType="com.javaweb.web.eo.interfaces.UserRoleDataPermissionRequest" resultType="java.lang.Long">
+		select count(1) 
+		from role r 
+		left join role_data rd on r.role_id = rd.role_id
+		left join data_permission dp on rd.data_permission_id = dp.id
+		<if test="roleName != null and roleName != ''">where r.role_name like CONCAT('%',#{roleName},'%')</if>
 	</select>
 	
 	<delete id="clearUserRoleDataPermission">
 		delete from data_permission;
 		delete from user_data;
 		delete from role_data;
+	</delete>
+	
+	<delete id="deleteUserDataPermission" parameterType="java.util.List">
+		delete from data_permission where id in
+		(
+			select data_permission_id from user_data where user_id in
+			<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		);
+		delete from user_data where user_id in
+		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>;
+	</delete>
+	
+	<delete id="deleteRoleDataPermission" parameterType="java.util.List">
+		delete from data_permission where id in
+		(
+			select data_permission_id from role_data where role_id in
+			<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		);
+		delete from role_data where role_id in
+		<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+			#{item}
+		</foreach>;
 	</delete>
 	
 </mapper>
