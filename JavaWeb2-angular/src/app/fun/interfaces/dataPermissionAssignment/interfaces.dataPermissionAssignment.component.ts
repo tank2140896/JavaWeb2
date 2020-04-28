@@ -5,6 +5,8 @@ import {HttpService} from '../../../service/HttpService';
 import {AuthService} from '../../../service/AuthService';
 import {SessionService} from '../../../service/SessionService';
 import {ApiConstant} from '../../../constant/ApiConstant';
+import {InterfacesUserRoleDataPermissionResponse} from '../../../model/interfaces/InterfacesUserRoleDataPermissionResponse';
+import {ResultPage} from '../../../model/ResultPage';
 
 @Component({
   selector: 'app-web-interfaces-data-permission-assignment',
@@ -23,27 +25,42 @@ export class InterfacesDataPermissionAssignmentComponent implements OnInit {
 
   }
 
-  private resultData = {userPermissionResponseList:[],rolePermissionResponseList:[]};
+  private interfacesUserRoleDataPermissionResponse_user:InterfacesUserRoleDataPermissionResponse = new InterfacesUserRoleDataPermissionResponse();
+  private interfacesUserRoleDataPermissionResponse_role:InterfacesUserRoleDataPermissionResponse = new InterfacesUserRoleDataPermissionResponse();
+
+  private resultPage_user:ResultPage = new ResultPage();//分页结果初始化;
+  private resultPage_role:ResultPage = new ResultPage();//分页结果初始化;
   private url:String;
   private id:string;
 
   //初始化
   ngOnInit(): void {
+    /** 若需修改分页大小或其它请求参数请注释后自行调整，这里使用默认值
+    this.interfacesUserRoleDataPermissionResponse_user.currentPage = 1;
+    this.interfacesUserRoleDataPermissionResponse_user.pageSize = 5;
+    this.interfacesUserRoleDataPermissionResponse_role.currentPage = 1;
+    this.interfacesUserRoleDataPermissionResponse_role.pageSize = 5;
+    */
     this.activatedRoute.queryParams.subscribe(queryParam => {
       this.id = queryParam.id;
       this.url = queryParam.url;
-      this.userRoleDataPermission(this.id);
+      this.interfacesUserRoleDataPermissionResponse_user.interfacesId = this.id;
+      this.interfacesUserRoleDataPermissionResponse_user.type = 1;//用户
+      this.interfacesUserRoleDataPermissionResponse_role.interfacesId = this.id;
+      this.interfacesUserRoleDataPermissionResponse_role.type = 2;//角色
+      this.userDataPermission(this.interfacesUserRoleDataPermissionResponse_user);
+      this.roleDataPermission(this.interfacesUserRoleDataPermissionResponse_role);
     });
   }
 
-  public userRoleDataPermission(id:string):void {
-    this.httpService.getJsonData(ApiConstant.getPath(ApiConstant.SYS_INTERFACES_USER_ROLE_DATA_PERMISSION+'/'+id,true),this.sessionService.getHeadToken()).subscribe(
+  public userDataPermission(interfacesUserRoleDataPermissionResponse:InterfacesUserRoleDataPermissionResponse):void {
+    this.httpService.postJsonData(ApiConstant.getPath(ApiConstant.SYS_INTERFACES_USER_ROLE_DATA_PERMISSION,true),JSON.stringify(interfacesUserRoleDataPermissionResponse),this.sessionService.getHeadToken()).subscribe(
       {
         next:(result:any) => {
           //console.log(result);
           if(result.code==200){
             let ret = result.data;
-            this.resultData = ret;
+            this.resultPage_user = new ResultPage(ret);
           }else{
             this.router.navigate(['webLogin']);
           }
@@ -54,8 +71,57 @@ export class InterfacesDataPermissionAssignmentComponent implements OnInit {
     );
   }
 
+  public roleDataPermission(interfacesUserRoleDataPermissionResponse:InterfacesUserRoleDataPermissionResponse):void {
+    this.httpService.postJsonData(ApiConstant.getPath(ApiConstant.SYS_INTERFACES_USER_ROLE_DATA_PERMISSION,true),JSON.stringify(interfacesUserRoleDataPermissionResponse),this.sessionService.getHeadToken()).subscribe(
+      {
+        next:(result:any) => {
+          //console.log(result);
+          if(result.code==200){
+            let ret = result.data;
+            this.resultPage_role = new ResultPage(ret);
+          }else{
+            this.router.navigate(['webLogin']);
+          }
+        },
+        error:e => {},
+        complete:() => {}
+      }
+    );
+  }
+
+  public interfacesUserSearch(currentPage):void {
+    this.interfacesUserRoleDataPermissionResponse_user.currentPage = currentPage;
+    this.interfacesUserRoleDataPermissionResponse_user.type = 1;//用户
+    this.userDataPermission(this.interfacesUserRoleDataPermissionResponse_user);
+  }
+
+  public interfacesRoleSearch(currentPage):void {
+    this.interfacesUserRoleDataPermissionResponse_role.currentPage = currentPage;
+    this.interfacesUserRoleDataPermissionResponse_role.type = 2;//角色
+    this.roleDataPermission(this.interfacesUserRoleDataPermissionResponse_role);
+
+  }
+
+  //重置用户查询
+  public resetUser():void {
+    this.interfacesUserRoleDataPermissionResponse_user = new InterfacesUserRoleDataPermissionResponse();
+    this.interfacesUserRoleDataPermissionResponse_user.interfacesId = this.id;
+    this.interfacesUserRoleDataPermissionResponse_user.type = 1;//用户
+  }
+
+  //重置角色查询
+  public resetRole():void {
+    this.interfacesUserRoleDataPermissionResponse_role = new InterfacesUserRoleDataPermissionResponse();
+    this.interfacesUserRoleDataPermissionResponse_role.interfacesId = this.id;
+    this.interfacesUserRoleDataPermissionResponse_role.type = 2;//角色
+  }
+
   public dataPermissionAssignment():void {
-    this.httpService.postJsonData(ApiConstant.getPath(ApiConstant.SYS_INTERFACES_DATA_PERMISSION_ASSIGNMENT+'/'+this.id,true),JSON.stringify(this.resultData),this.sessionService.getHeadToken()).subscribe(
+    //console.log(this.resultPage_user.data);
+    //console.log(this.resultPage_role.data);
+    let userRolePermissionRequest = {userPermissionResponseList:this.resultPage_user.data,rolePermissionResponseList:this.resultPage_role.data};
+    //console.log(userRolePermissionRequest);
+    this.httpService.postJsonData(ApiConstant.getPath(ApiConstant.SYS_INTERFACES_DATA_PERMISSION_ASSIGNMENT+'/'+this.id,true),JSON.stringify(userRolePermissionRequest),this.sessionService.getHeadToken()).subscribe(
       {
         next:(result:any) => {
           if(result.code==200){
