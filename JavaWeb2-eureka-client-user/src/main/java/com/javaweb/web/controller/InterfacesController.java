@@ -18,7 +18,8 @@ import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.interfaces.InterfacesListRequest;
-import com.javaweb.web.eo.interfaces.UserRolePermissionResponse;
+import com.javaweb.web.eo.interfaces.UserRoleDataPermissionRequest;
+import com.javaweb.web.eo.interfaces.UserRolePermissionRequest;
 import com.javaweb.web.po.Interfaces;
 import com.javaweb.web.po.User;
 
@@ -55,16 +56,16 @@ public class InterfacesController extends BaseController {
 	}
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_INTERFACES_USER_ROLE_DATA_PERMISSION)
-	@GetMapping(ApiConstant.INTERFACES_USER_ROLE_DATA_PERMISSION)
-	public BaseResponseResult userRoleDataPermission(@PathVariable(name="interfacesId",required=true) String interfacesId){
-		UserRolePermissionResponse userRolePermissionResponse = interfacesService.userRoleDataPermission(interfacesId);
-		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"interfaces.userRolePermission.success",userRolePermissionResponse);
+	@PostMapping(ApiConstant.INTERFACES_USER_ROLE_DATA_PERMISSION)
+	public BaseResponseResult userRoleDataPermission(@RequestBody UserRoleDataPermissionRequest userRoleDataPermissionRequest){
+		Page page = interfacesService.userRoleDataPermission(userRoleDataPermissionRequest);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"interfaces.userRolePermission.success",page);
 	}
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_INTERFACES_DATA_PERMISSION_ASSIGNMENT)
 	@PostMapping(ApiConstant.INTERFACES_DATA_PERMISSION_ASSIGNMENT)
 	public BaseResponseResult dataPermissionAssignment(@PathVariable(name="interfacesId",required=true) String interfacesId,
-			                                           @RequestBody UserRolePermissionResponse userRolePermissionResponse,
+			                                           @RequestBody UserRolePermissionRequest userRolePermissionResponse,
 			                                           @TokenDataAnnotation TokenData tokenData){
 		interfacesService.dataPermissionAssignment(userRolePermissionResponse,interfacesId,tokenData.getUser());
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"interfaces.dataPermissionAssignment.success",null);
