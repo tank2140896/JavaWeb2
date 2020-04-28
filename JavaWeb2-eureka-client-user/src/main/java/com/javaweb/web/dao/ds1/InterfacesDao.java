@@ -8,6 +8,7 @@ import com.javaweb.mybatis.api.DaoForMySql;
 import com.javaweb.web.eo.interfaces.InterfacesListRequest;
 import com.javaweb.web.eo.interfaces.RolePermissionResponse;
 import com.javaweb.web.eo.interfaces.UserPermissionResponse;
+import com.javaweb.web.eo.interfaces.UserRoleDataPermissionRequest;
 import com.javaweb.web.po.Interfaces;
 
 @Mapper
@@ -21,10 +22,18 @@ public interface InterfacesDao extends DaoForMySql<Interfaces>{
 	
 	public Long interfacesListCount(InterfacesListRequest interfacesListRequest);
 	
-	public List<UserPermissionResponse> userPermissionList(String interfacesId);
+	public List<UserPermissionResponse> userPermissionList(UserRoleDataPermissionRequest userRoleDataPermissionRequest);
 	
-	public List<RolePermissionResponse> rolePermissionList(String interfacesId);
+	public Long userPermissionListCount(UserRoleDataPermissionRequest userRoleDataPermissionRequest);
+	
+	public List<RolePermissionResponse> rolePermissionList(UserRoleDataPermissionRequest userRoleDataPermissionRequest);
+	
+	public Long rolePermissionListCount(UserRoleDataPermissionRequest userRoleDataPermissionRequest);
 	
 	public void clearUserRoleDataPermission(); 
+	
+	public void deleteUserDataPermission(List<String> userIds);
+
+	public void deleteRoleDataPermission(List<String> roleIds);
 
 }
