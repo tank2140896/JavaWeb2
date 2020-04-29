@@ -30,7 +30,7 @@ public class LogAspect {
 		if("200".equals(baseResponseResult.getCode().toString())){//只记录操作成功的数据
 			//记录操作日志
 		}
-		return joinPoint.proceed();
+		return object;
 	}
 	*/
 	
