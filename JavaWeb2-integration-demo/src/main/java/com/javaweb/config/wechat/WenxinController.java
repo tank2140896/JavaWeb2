@@ -21,10 +21,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.client.j2se.MatrixToImageWriter;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
 import com.javaweb.eo.wechat.AccessTokenResponse;
 import com.javaweb.eo.wechat.UserInfoResponse;
 
@@ -211,6 +216,85 @@ public class WenxinController {
 			}
 		}
 	}
+	
+	/** 企业微信扫码登录 start */
+	//step1.获取企业微信登录二维码
+	@GetMapping("/getLoginQrCode")
+	public void getLoginQrCode(HttpServletRequest request,HttpServletResponse response){
+		try{
+			QRCodeWriter qrCodeWriter = new QRCodeWriter();
+			BitMatrix bitMatrix = qrCodeWriter.encode("https://127.0.0.1:8001/service_manage_admin/workLogin",BarcodeFormat.QR_CODE,180,180);
+			MatrixToImageWriter.writeToStream(bitMatrix,"jpg",response.getOutputStream());
+		}catch(Exception e){
+			//do nothing
+		}
+	}
+	
+	//扫码登录接入参考：https://work.weixin.qq.com/api/doc/90000/90135/91020
+	//step2.企业微信扫码登录
+	@RequestMapping("/workLogin")
+	public void workLogin(HttpServletResponse response) throws Exception {
+		String appid = "appid";//企业微信的CorpID，在企业微信管理端查看
+		String agentid = "agentid";//权方的网页应用ID，在具体的网页应用中查看
+		String redirect_uri = "https://127.0.0.1:8001/service_manage_admin/workLoginCallBack";//重定向地址，需要进行UrlEncode
+		String state = "state";//用于保持请求和回调的状态，授权请求后原样带回给企业。该参数可用于防止csrf攻击（跨站请求伪造攻击），建议企业带上该参数，可设置为简单的随机数加session进行校验
+		String url = "https://open.work.weixin.qq.com/wwopen/sso/qrConnect?appid="+appid+"&agentid="+agentid+"&redirect_uri="+URLEncoder.encode(redirect_uri,"UTF-8")+"&state="+state;
+		//response.sendRedirect(url);
+		System.out.println(url);
+		//http调用url即可
+	}
+	
+	//step3.企业微信扫码登录回调
+	@RequestMapping("/workLoginCallBack")
+	public void workLoginCallBack(HttpServletRequest request,HttpServletResponse response,@RequestParam("code") String code,@RequestParam("state") String state) throws Exception{
+		//用户允许授权后，将会重定向到redirect_uri的网址上，并且带上code和state参数redirect_uri?code=CODE&state=STATE若用户禁止授权，则重定向后不会带上code参数，仅会带上state参数redirect_uri?state=STATE
+		//获取accessToken，参考：https://open.work.weixin.qq.com/api/doc/90000/90135/91039
+		String accessToken = "accessToken";
+		String url = "https://qyapi.weixin.qq.com/cgi-bin/user/getuserinfo?access_token="+accessToken+"&code="+code;
+		//http调用，成功返回数据格式：{"errcode":0,"errmsg":"ok","UserId":"USERID"}
+		System.out.println(url);
+		//根据用户ID获取用户信息，参考：https://open.work.weixin.qq.com/api/doc/90000/90135/90196
+		//用户名和密码要Base64加密
+		response.sendRedirect("https://127.0.0.1:8001/前端页面/login?username=abc123&password=123456");//跳至前端页面模拟登录请求
+	}
+	
+	/** 简化版沟通对接步骤
+	1.甲方提供扫码URL，如https://www.xxx.com/甲方/x?a=1&b=2  
+	2.乙方（我）在后面拼接一段唯一字符串，形如：https://www.xxx.com/甲方/x?a=1&b=2&uniqueCode=xxxxxxxx  
+	也就是说我的二维码https://www.xxx.com/甲方/x?a=1&b=2&uniqueCode=xxxxxxxx并由用户扫码
+	3.乙方（我）向甲方提供乙方（我）的回调地址，如https://www.yyy.com/workLoginCallBack  
+	4.甲方调用乙方（我）的回调地址，传入是否企业用户扫码成功标识（successFlag）、uniqueCode和userCode（工号）
+	@GetMapping("/getLoginQrCode")
+	public void getLoginQrCode(HttpServletRequest request,HttpServletResponse response){
+		try{
+			String uniqueCode = SecretUtil.getWorkWeixinUniqueCode();
+			QRCodeWriter qrCodeWriter = new QRCodeWriter();
+			BitMatrix bitMatrix = qrCodeWriter.encode("https://www.xxx.com/甲方/x?a=1&b=2&uniqueCode="+uniqueCode,BarcodeFormat.QR_CODE,180,180);
+			MatrixToImageWriter.writeToStream(bitMatrix,"jpg",response.getOutputStream());
+		}catch(Exception e){
+			//do nothing
+		}
+	}
+	
+	@RequestMapping("/workLoginCallBack")
+	public void workLoginCallBack(HttpServletRequest request,HttpServletResponse response,
+			                      @RequestParam("successFlag") String successFlag,
+			                      @RequestParam("uniqueCode") String uniqueCode,
+			                      @RequestParam("userCode") String userCode) throws Exception{
+		if(SecretUtil.workWeixinUniqueCodeCheck(uniqueCode)){//校验uniqueCode
+			User user = userService.getUserByUserCode(userCode);//根据userCode（工号）获取用户ID然后获取用户密码
+			if(user!=null){
+				PasswordRecord passwordRecord = passwordRecordService.getPasswordRecordByUserId(user.getUserId());
+				if(passwordRecord!=null){
+					System.out.println(SecretUtil.base64EncoderString(user.getUserCode(),"UTF-8")+","+SecretUtil.base64EncoderString(passwordRecord.getPassword(),"UTF-8"));//Base64加密
+					response.sendRedirect("https://127.0.0.1:8001/前端页面/login?username=abc123&password=123456");//跳至前端页面模拟登录请求
+				}
+			}
+		}
+		response.sendRedirect("https://127.0.0.1:8001/前端页面/login?errorCode=605");//跳至前端页面模拟登录请求
+	}
+	*/
+	/** 企业微信扫码登录 end */
 	
 	/* -------------------------------------------------- 分界线 -------------------------------------------------- */
 	
