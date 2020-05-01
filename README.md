@@ -27,8 +27,8 @@ JavaWeb2-angular（npm start）
 4、本项目所有接口都可以用JUnit或Postman验证接口，JUnit代码也有部分，但是比较老旧，以后应该也不会再维护该部分代码了                            
 5、JavaWeb2-integration-demo包括了一些常用技术与SpringBoot组合的示例（hbase、kafka、netty、solr、切面处理、mongodb、websocket（SpringBoot版和Netty版）、elasticsearch、neo4j、kaptcha、邮件发送、redis、restTemplate、quartz（分布式）定时任务、文件上传下载、qq、wechat、poi-excel）                                                                                            
 # 五、开发计划                                                                             
-1、持续优化迭代各已有功能
-2、工作流（activiti）       
+1、持续优化迭代各已有功能              
+2、工作流（activiti）                     
 3、后台代码自动生成           
 4、lucene、hadoop、spark                                                                
 5、容器技术                                     
