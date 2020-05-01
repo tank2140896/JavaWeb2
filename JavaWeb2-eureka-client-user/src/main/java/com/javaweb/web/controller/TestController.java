@@ -12,6 +12,7 @@ import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 import com.javaweb.base.BaseController;
+import com.javaweb.base.BaseResponseResult;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.web.docking.LogServerApi;
 import com.javaweb.web.docking.LogServerApiEntity;
@@ -24,8 +25,8 @@ public class TestController extends BaseController {
     
     //测试
     @GetMapping("/test")
-    public String test() {
-		return "success";
+    public BaseResponseResult test() {
+		return new BaseResponseResult(200,"success",null);
     }
     
     //获取登录二维码
@@ -42,7 +43,7 @@ public class TestController extends BaseController {
     
     //测试eureka微服务间的通信
     @GetMapping("/eurekaTest")
-    public String eurekaTest(HttpServletRequest request) {
+    public BaseResponseResult eurekaTest(HttpServletRequest request) {
         LogServerApiEntity logServerApiEntity = new LogServerApiEntity();
         logServerApiEntity.setUsername("abc");
         logServerApiEntity.setPassword("123");
@@ -50,7 +51,7 @@ public class TestController extends BaseController {
         String part2 = discoveryClient.getInstances("eureka-client-log").toString();
         String part3 = eurekaClient.getInstancesByVipAddress("eureka-client-log",false).toString();
         String part4 = String.valueOf(request.getServerPort());
-        return String.join(CommonConstant.COMMA,part1,part2,part3,part4);
+        return new BaseResponseResult(200,String.join(CommonConstant.COMMA,part1,part2,part3,part4),null);
     }
     
 }

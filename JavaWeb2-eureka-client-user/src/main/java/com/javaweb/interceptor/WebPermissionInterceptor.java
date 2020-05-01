@@ -2,7 +2,6 @@ package com.javaweb.interceptor;
 
 import java.lang.reflect.Method;
 import java.time.Duration;
-import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,11 +14,10 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.javaweb.annotation.url.IgnoreUrl;
+import com.javaweb.base.BaseTool;
 import com.javaweb.constant.ApiConstant;
-import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.context.ApplicationContextHelper;
-import com.javaweb.util.core.SecretUtil;
 import com.javaweb.web.eo.TokenData;
 
 //页面端总拦截器
@@ -58,22 +56,8 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 			environment = (Environment)ApplicationContextHelper.getBean(SystemConstant.ENVIRONMENT);
 		}
 		Long redisSessionTimeout = Long.parseLong(environment.getProperty("redis.session.timeout"));//获得配置文件中redis设置session失效的时间
-		String token = CommonConstant.NULL_VALUE;
-		try{
-			token = request.getHeader(SystemConstant.HEAD_TOKEN);
-			token = SecretUtil.base64DecoderString(token,"UTF-8");
-	    	String tokens[] = token.split(CommonConstant.COMMA);//token由三部分组成：token,userId,type
-	    	token = tokens[1]+CommonConstant.COMMA+tokens[2];//userId+type
-		}catch(Exception e){
-			//do nothing
-		}
 		String servletPath = request.getServletPath();
-		boolean nullOrEmptyHead = Stream.of(token/*,userId,type*/).anyMatch(i->i==null||i.trim().equals(CommonConstant.EMPTY_VALUE));
-		if(nullOrEmptyHead){
-			request.getRequestDispatcher(ApiConstant.REQUEST_PARAMETER_LOST).forward(request,response);
-			return false;
-		}
-		TokenData tokenData = (TokenData)(redisTemplate.opsForValue().get(token));
+		TokenData tokenData = BaseTool.getTokenData(request,redisTemplate);
 		if(tokenData==null){
 			request.getRequestDispatcher(ApiConstant.INVALID_REQUEST).forward(request,response);
 			return false;
@@ -83,7 +67,7 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 			return false;
 		}
 		if(servletPath.startsWith(SystemConstant.URL_LOGIN_WEB_PERMISSION)){//该路径下只要登录即可访问，不需要权限
-			redisTemplate.opsForValue().set(token,tokenData,Duration.ofMinutes(redisSessionTimeout));
+			redisTemplate.opsForValue().set(tokenData.getToken(),tokenData,Duration.ofMinutes(redisSessionTimeout));
 			return true;
 		}
 		long count = tokenData.getApiUrlList().stream().filter(i->{
@@ -96,7 +80,7 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 			request.getRequestDispatcher(ApiConstant.NO_AUTHORY).forward(request,response);
 			return false;
 		}else{
-			redisTemplate.opsForValue().set(token,tokenData,Duration.ofMinutes(redisSessionTimeout));
+			redisTemplate.opsForValue().set(tokenData.getToken(),tokenData,Duration.ofMinutes(redisSessionTimeout));
 			return true;
 		}
 	}

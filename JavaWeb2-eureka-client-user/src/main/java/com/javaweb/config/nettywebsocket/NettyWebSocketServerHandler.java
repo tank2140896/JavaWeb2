@@ -5,10 +5,9 @@ import java.time.Duration;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import com.javaweb.constant.CommonConstant;
+import com.javaweb.base.BaseTool;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.context.ApplicationContextHelper;
-import com.javaweb.util.core.SecretUtil;
 import com.javaweb.web.eo.TokenData;
 
 import io.netty.channel.ChannelHandlerContext;
@@ -39,19 +38,10 @@ public class NettyWebSocketServerHandler extends SimpleChannelInboundHandler<Tex
 			environment = (Environment)ApplicationContextHelper.getBean(SystemConstant.ENVIRONMENT);
 		}
 		Long redisSessionTimeout = Long.parseLong(environment.getProperty("redis.session.timeout"));//获得配置文件中redis设置session失效的时间
-		String token = CommonConstant.NULL_VALUE;
-		try{
-			token = JSONObject.fromObject(content).getString(SystemConstant.HEAD_TOKEN);
-			token = SecretUtil.base64DecoderString(token,"UTF-8");
-	    	String tokens[] = token.split(CommonConstant.COMMA);//token由三部分组成：token,userId,type
-	    	token = tokens[1]+CommonConstant.COMMA+tokens[2];//userId+type
-		}catch(Exception e){
-			//do nothing
-		}
-		TokenData tokenData = (TokenData)redisTemplate.opsForValue().get(token);
+		TokenData tokenData = BaseTool.getTokenData(JSONObject.fromObject(content).getString(SystemConstant.HEAD_TOKEN),redisTemplate);
 		if(tokenData!=null){
 			sendMessageToAll(content);
-			redisTemplate.opsForValue().set(token,tokenData,Duration.ofMinutes(redisSessionTimeout));
+			redisTemplate.opsForValue().set(tokenData.getToken(),tokenData,Duration.ofMinutes(redisSessionTimeout));
 		}else{
 			this.channelInactive(channelHandlerContext);
 		}

@@ -8,11 +8,10 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import com.javaweb.annotation.token.TokenDataAnnotation;
-import com.javaweb.constant.CommonConstant;
+import com.javaweb.base.BaseTool;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.context.ApplicationContextHelper;
 import com.javaweb.exception.TokenExpiredException;
-import com.javaweb.util.core.SecretUtil;
 import com.javaweb.web.eo.TokenData;
 
 public class TokenDataHandlerMethodArgumentResolver implements HandlerMethodArgumentResolver {
@@ -33,10 +32,7 @@ public class TokenDataHandlerMethodArgumentResolver implements HandlerMethodArgu
     	if(redisTemplate==null){
 			redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
 		}
-		//String token = request.getHeader(SystemConstant.HEAD_TOKEN);
-		token = SecretUtil.base64DecoderString(token,"UTF-8");
-		String tokens[] = token.split(CommonConstant.COMMA);
-		TokenData tokenData = (TokenData)redisTemplate.opsForValue().get(tokens[1]+CommonConstant.COMMA+tokens[2]);
+		TokenData tokenData = BaseTool.getTokenData(token,redisTemplate);
 		if(tokenData==null){
 			throw new TokenExpiredException();
 		}

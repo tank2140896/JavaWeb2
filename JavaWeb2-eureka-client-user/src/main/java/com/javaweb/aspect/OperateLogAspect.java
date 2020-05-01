@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.javaweb.constant.CommonConstant;
+import com.javaweb.base.BaseTool;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.context.ApplicationContextHelper;
 import com.javaweb.util.core.DateUtil;
@@ -63,17 +63,7 @@ public class OperateLogAspect {
 				if(redisTemplate==null){
 					redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
 				}
-				
-				TokenData tokenData = null;
-				try{
-					String token = httpServletRequest.getHeader(SystemConstant.HEAD_TOKEN);
-					token = SecretUtil.base64DecoderString(token,"UTF-8");
-			    	String tokens[] = token.split(CommonConstant.COMMA);//token由三部分组成：token,userId,type
-			    	token = tokens[1]+CommonConstant.COMMA+tokens[2];//userId+type
-			    	tokenData = (TokenData)(redisTemplate.opsForValue().get(token));
-				}catch(Exception e){
-					//do nothing
-				}
+				TokenData tokenData = BaseTool.getTokenData(httpServletRequest,redisTemplate);
 				if(tokenData!=null){
 					OperationLog operationLog = new OperationLog();
 					operationLog.setId(SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO));

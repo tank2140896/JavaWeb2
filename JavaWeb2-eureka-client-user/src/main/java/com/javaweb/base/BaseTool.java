@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -14,6 +15,7 @@ import org.springframework.validation.ObjectError;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.enums.HttpCodeEnum;
+import com.javaweb.util.core.SecretUtil;
 import com.javaweb.web.eo.TokenData;
 
 public class BaseTool extends BaseInject {
@@ -37,9 +39,31 @@ public class BaseTool extends BaseInject {
 		return stringRedisTemplate.delete(key);
 	}
 
-	public TokenData getTokenData(HttpServletRequest request){
-		String key = request.getHeader(SystemConstant.HEAD_TOKEN);
-		return (TokenData)valueOperations.get(key);
+	public static TokenData getTokenData(HttpServletRequest httpServletRequest,RedisTemplate<String,Object> redisTemplate){
+		TokenData tokenData = null;
+		try{
+			String token = httpServletRequest.getHeader(SystemConstant.HEAD_TOKEN);
+			token = SecretUtil.base64DecoderString(token,"UTF-8");
+	    	String tokens[] = token.split(CommonConstant.COMMA);//token由三部分组成：token,userId,type
+	    	token = tokens[1]+CommonConstant.COMMA+tokens[2];//userId+type
+	    	tokenData = (TokenData)(redisTemplate.opsForValue().get(token));
+		}catch(Exception e){
+			//do nothing
+		}
+		return tokenData;
+	}
+	
+	public static TokenData getTokenData(String token,RedisTemplate<String,Object> redisTemplate){
+		TokenData tokenData = null;
+		try{
+			token = SecretUtil.base64DecoderString(token,"UTF-8");
+	    	String tokens[] = token.split(CommonConstant.COMMA);//token由三部分组成：token,userId,type
+	    	token = tokens[1]+CommonConstant.COMMA+tokens[2];//userId+type
+	    	tokenData = (TokenData)(redisTemplate.opsForValue().get(token));
+		}catch(Exception e){
+			//do nothing
+		}
+		return tokenData;
 	}
 	
 	public String getMessage(String messageKey){
