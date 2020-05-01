@@ -1,9 +1,9 @@
 <div style="margin-top:1%;">
-  <div style="background-color:#ACC0D8">
+  <div>
     <div><h3>在线聊天室</h3></div>
-    <textarea disabled style="width:100%;height:500px;overflow-y:scroll;" [(ngModel)]="getMessage"></textarea>
+    <textarea disabled style="width:100%;height:500px;overflow-y:scroll;margin-top:1%;" [(ngModel)]="getMessage"></textarea>
   </div>
-  <div style="float:right">
+  <div style="float:right;margin-right:1%">
     <input [(ngModel)]="sendMessage" type="text" style="height:38px;width:300px;margin-right:10px;margin-top:10px;" (keydown.enter)="keydownEnter($event)"/>
     <button type="button" class="btn btn-primary" (click)="sendFunction()" style="margin-right:10px;">发送</button>
     <button type="button" class="btn btn-primary" (click)="clearFunction()">清空</button>

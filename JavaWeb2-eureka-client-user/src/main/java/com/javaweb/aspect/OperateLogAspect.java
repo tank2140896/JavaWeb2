@@ -1,12 +1,10 @@
 package com.javaweb.aspect;
 
-import java.util.Arrays;
-
 import javax.servlet.http.HttpServletRequest;
 
-import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -14,6 +12,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.javaweb.base.BaseResponseResult;
 import com.javaweb.base.BaseTool;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.context.ApplicationContextHelper;
@@ -24,10 +24,12 @@ import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.po.OperationLog;
 import com.javaweb.web.service.OperationLogService;
 
+import net.sf.json.JSONObject;
+
 @Aspect
 @Component
 public class OperateLogAspect {
-	
+
 	private RedisTemplate<String,Object> redisTemplate = null;
 	
 	private Environment environment = null;
@@ -35,22 +37,10 @@ public class OperateLogAspect {
 	@Autowired
 	private OperationLogService operationLogService;
 	
-	//TODO 等待改造
-	/* 如果业务要求只记录Controller校验通过的操作，最简单的方法就是将@Before变为@Around，主要判断逻辑示例如下： 
-	@Around(value=DEFAULT_LOG_POINT_CUT)
+	@SuppressWarnings("unchecked")
+	@Around(value=SystemConstant.DEFAULT_LOG_POINT_CUT)
 	public Object aroundMethod(ProceedingJoinPoint joinPoint) throws Throwable {
 		Object object = joinPoint.proceed();
-		BaseResponseResult baseResponseResult = new ObjectMapper().readValue(JSONObject.fromObject(object).toString(),BaseResponseResult.class);
-		if("200".equals(baseResponseResult.getCode().toString())){//只记录操作成功的数据
-			//记录操作日志
-		}
-		return object;
-	}
-	*/
-	
-	@SuppressWarnings("unchecked")
-	@Before(value=SystemConstant.DEFAULT_LOG_POINT_CUT)
-	public void beforeMethod(JoinPoint joinPoint) {
 		if(environment==null){
 			environment = (Environment)ApplicationContextHelper.getBean(SystemConstant.ENVIRONMENT);
 		}
@@ -59,25 +49,29 @@ public class OperateLogAspect {
 			ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
 			HttpServletRequest httpServletRequest = servletRequestAttributes.getRequest();
 			String url = httpServletRequest.getRequestURL().toString();
-			if(url.contains("add")||url.contains("modify")||url.contains("delete")){//只记录关键的新增、修改和删除操作
-				if(redisTemplate==null){
-					redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
-				}
-				TokenData tokenData = BaseTool.getTokenData(httpServletRequest,redisTemplate);
-				if(tokenData!=null){
-					OperationLog operationLog = new OperationLog();
-					operationLog.setId(SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO));
-					operationLog.setUserId(tokenData.getUser().getUserId());
-					operationLog.setUrl(url);
-					operationLog.setRequestMethod(httpServletRequest.getMethod());
-					//TODO 获取@RequestBody注解的实体类
-					operationLog.setRequestParameter(Arrays.toString(joinPoint.getArgs()));//joinPoint.getSignature()
-					operationLog.setRequestIpAddress(HttpUtil.getIpAddress(httpServletRequest));
-					operationLog.setRequestTime(DateUtil.getDefaultDate());
-					operationLogService.saveOperationLog(operationLog);
+			if(url.contains("/web")&&(url.contains("add")||url.contains("modify")||url.contains("delete")||url.contains("Assignment"))){//目前带权限的接口会处理操作日志记录
+				BaseResponseResult baseResponseResult = new ObjectMapper().readValue(JSONObject.fromObject(object).toString(),BaseResponseResult.class);
+				if("200".equals(baseResponseResult.getCode().toString())){//只记录操作成功且符合BaseResponseResult格式的数据
+					if(redisTemplate==null){
+						redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
+					}
+					TokenData tokenData = BaseTool.getTokenData(httpServletRequest,redisTemplate);
+					if(tokenData!=null){
+						OperationLog operationLog = new OperationLog();
+						operationLog.setId(SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO));
+						operationLog.setUserId(tokenData.getUser().getUserId());
+						operationLog.setUrl(url);
+						operationLog.setRequestMethod(httpServletRequest.getMethod());
+						//一般安全性较高的网站会对请求参数加密，这种情况下记录请求参数意义也不大，另外记录请求参数会暴露用户数据，所以个人觉得没有必要记录请求参数
+						operationLog.setRequestParameter(joinPoint.getArgs().toString()/*joinPoint.getSignature()*/);
+						operationLog.setRequestIpAddress(HttpUtil.getIpAddress(httpServletRequest));
+						operationLog.setRequestTime(DateUtil.getDefaultDate());
+						operationLogService.saveOperationLog(operationLog);//记录操作日志
+					}
 				}
 			}
 		}
+		return object;
 	}
 
 }
