@@ -4,7 +4,7 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.javaweb.task.TaskService;
+import com.javaweb.task.MyTaskService;
 import com.javaweb.web.service.DictionaryService;
 import com.javaweb.web.service.InterfacesService;
 import com.javaweb.web.service.ModuleService;
@@ -45,7 +45,7 @@ public class BaseController extends BaseTool {
 	protected ScheduleService scheduleService;
 	
 	@Autowired  
-	protected TaskService taskService;
+	protected MyTaskService taskService;
 	
 	@Autowired  
 	protected InterfacesService interfacesService;

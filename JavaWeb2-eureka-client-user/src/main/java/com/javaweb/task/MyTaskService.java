@@ -10,7 +10,7 @@ import com.javaweb.base.BaseService;
 
 @Component
 //@Async//若该类所有方法都是异步执行方法,则直接在该类上加上@Async即可,类里的方法就不需要都加上@Async了
-public class TaskService extends BaseService {
+public class MyTaskService extends BaseService {
 	
 	/** 广播
 	@Autowired
