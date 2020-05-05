@@ -4,7 +4,7 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.javaweb.task.MyTaskService;
+import com.javaweb.task.SystemTaskService;
 import com.javaweb.web.service.DictionaryService;
 import com.javaweb.web.service.InterfacesService;
 import com.javaweb.web.service.ModuleService;
@@ -21,8 +21,8 @@ public class BaseController extends BaseTool {
 	final public synchronized void init(){
 		if(initStartFlag){
 			initStartFlag = false;
-			BaseSystemMemory.dictionaryList = dictionaryService.selectAll();//将字典表数据加载进内存
-			interfacesService.synchronizedInterfaces();//同步数据库中的接口信息表
+			systemTaskService.task_loadDictionaryInSystemMemory();
+			systemTaskService.task_synchronizedInterfaces();
 		}
 	}
     
@@ -45,9 +45,9 @@ public class BaseController extends BaseTool {
 	protected ScheduleService scheduleService;
 	
 	@Autowired  
-	protected MyTaskService taskService;
+	protected InterfacesService interfacesService;
 	
 	@Autowired  
-	protected InterfacesService interfacesService;
+	protected SystemTaskService systemTaskService;
 	
 }
