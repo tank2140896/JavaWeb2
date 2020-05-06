@@ -255,7 +255,7 @@
 		    <artifactId>javase</artifactId>
 		    <version>3.4.0</version>
 		</dependency>
-	    	<!-- Activiti -->
+	    	<!-- activiti -->
 		<dependency>
 		    <groupId>org.activiti</groupId>
 		    <artifactId>activiti-spring-boot-starter</artifactId>
