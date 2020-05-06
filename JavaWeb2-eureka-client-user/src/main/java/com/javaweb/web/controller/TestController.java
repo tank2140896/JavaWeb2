@@ -29,7 +29,7 @@ public class TestController extends BaseController {
 		return new BaseResponseResult(200,"success",null);
     }
     
-    //获取登录二维码
+    //获取二维码
     @GetMapping("/getQrCode")
     public void getQrCode(HttpServletRequest request,HttpServletResponse response){
     	try{
