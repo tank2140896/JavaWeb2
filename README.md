@@ -25,17 +25,16 @@ JavaWeb2-angular（npm start）
 2、本项目没有使用session，而是使用redis替代session，没有使用spring-session-redis，而是自己代码处理的                          
 3、后端几乎所有的增删改查删除操作都是物理操作（忽略数据库表中的del_flag字段），如果想做逻辑操作（使用数据库表中的del_flag字段）需要重写相关SQL语句                        
 4、本项目所有接口都可以用JUnit或Postman验证接口，JUnit代码也有部分，但是比较老旧，以后应该也不会再维护该部分代码了                            
-5、JavaWeb2-integration-demo包括了一些常用技术与SpringBoot组合的示例（hbase、kafka、netty、solr、切面处理、mongodb、websocket（SpringBoot版和Netty版）、elasticsearch、neo4j、kaptcha、邮件发送、redis、restTemplate、quartz（分布式）定时任务、文件上传下载、qq、wechat、poi-excel）                                                                                            
+5、JavaWeb2-integration-demo包括了一些常用技术与SpringBoot组合的示例（hbase、kafka、netty、solr、切面处理、mongodb、websocket（SpringBoot版和Netty版）、elasticsearch、neo4j、kaptcha、邮件发送、redis、restTemplate、quartz（分布式）定时任务、文件上传下载、activiti、qq、wechat、poi-excel）                                                                                            
 # 五、开发计划                                                                             
-1、持续优化迭代各已有功能                            
-2、工作流（activiti）                     
-3、后台代码自动生成（根据表名自动生成代码）              
-4、lucene、hadoop、spark                                                                
-5、容器技术                                     
-6、将zuul变为gateway                 
-7、加入SpringCloudConfig、SpringCloudSleuth、SpringBootAdmin、SpringSecurityOAuth2JWT                 
-8、后端一部分将采用JAVA14+、函数式、异步编程（包括WebFlux/RxJava2/Netty）                 
-9、将JAVA算法改用C语言实现，JAVA本地调用C语言的实现方法                
+1、持续优化迭代各已有功能                                                
+2、后台代码自动生成（根据表名自动生成代码）              
+3、lucene、hadoop、spark                                                                
+4、容器技术                                     
+5、将zuul变为gateway                 
+6、加入SpringCloudConfig、SpringCloudSleuth、SpringBootAdmin、SpringSecurityOAuth2JWT                 
+7、后端一部分将采用JAVA14+、函数式、异步编程（包括WebFlux/RxJava2/Netty）                 
+8、将JAVA算法改用C语言实现，JAVA本地调用C语言的实现方法                
 # 六、项目主要特点                                                       
 1、微服务                          
 2、前后端分离                 
