@@ -14,12 +14,15 @@ import {ScheduleModule} from '../schedule/schedule.module';
 import {InterfacesModule} from '../interfaces/interfaces.module';
 import {OnlineChatModule} from '../onlineChat/online.chat.module';
 import {OnlineUserModule} from '../onlineUser/online.user.module';
+import {DbTablesModule} from '../dbTables/db.tables.module';
 
 @NgModule({
   imports:[CommonModule,RouterModule,
            HeaderModule,SidebarModule,CenteralModule,
            UserModule,RoleModule,ModuleModule,
-           DictionaryModule,OperationLogModule,ScheduleModule,InterfacesModule,OnlineChatModule,OnlineUserModule
+           DictionaryModule,OperationLogModule,ScheduleModule,
+           InterfacesModule,OnlineChatModule,OnlineUserModule,
+           DbTablesModule
   ],
   declarations:[HomeComponent],
   exports:[HomeComponent]
