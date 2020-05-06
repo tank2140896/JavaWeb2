@@ -39,6 +39,8 @@ import {OnlineChatComponent} from './fun/onlineChat/online.chat.component';
 import {DemoComponent} from './fun/demo/demo.components';
 import {InterfacesDataPermissionAssignmentComponent} from './fun/interfaces/dataPermissionAssignment/interfaces.dataPermissionAssignment.component';
 import {OnlineUserComponent} from './fun/onlineUser/online.user.component';
+import {DbTablesComponent} from './fun/dbTables/db.tables.component';
+import {DbTablesListComponent} from './fun/dbTables/list/db.tables.list.component';
 
 const routes: Routes = [
   {path:'',component:LoginComponent},//默认登录页面
@@ -110,6 +112,11 @@ const routes: Routes = [
     {path:'sys/onlineUser',component:OnlineUserComponent,children:[
       {path:'',component:OnlineUserComponent,canActivate:[AuthService]},//在线用户列表
       {path:'list',component:OnlineUserComponent,canActivate:[AuthService]},//在线用户列表
+      {path:'**',redirectTo:'/web',pathMatch:'full'}
+    ],canActivate:[AuthService]},
+    {path:'sys/dbTables',component:DbTablesComponent,children:[
+      {path:'',component:DbTablesListComponent,canActivate:[AuthService]},//数据库表列表
+      {path:'list',component:DbTablesListComponent,canActivate:[AuthService]},//数据库表列表
       {path:'**',redirectTo:'/web',pathMatch:'full'}
     ],canActivate:[AuthService]},
     {path:'**',redirectTo: '/web', pathMatch: 'full'}
