@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.javaweb.web.dao.ds1.CommonDao;
 import com.javaweb.web.dao.ds1.DataPermissionDao;
+import com.javaweb.web.dao.ds1.DbTablesDao;
 import com.javaweb.web.dao.ds1.DictionaryDao;
 import com.javaweb.web.dao.ds1.InterfacesDao;
 import com.javaweb.web.dao.ds1.ModuleDao;
@@ -60,5 +61,8 @@ public class BaseService extends BaseTool {
 	
 	@Autowired
 	protected RoleDataDao roleDataDao;
+	
+	@Autowired
+	protected DbTablesDao dbTablesDao;
 
 }

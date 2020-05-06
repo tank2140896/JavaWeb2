@@ -105,10 +105,16 @@ public class SwaggerConstant {
 	/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ swagger-UserController ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */
 	
 	/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ swagger-OnlineUserController ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */
-	public static final String SWAGGER_ONLINE_USER_CONTROLLER_TAGS = "11、登录且需要权限才可访问的在线用户管理模块";
+	public static final String SWAGGER_ONLINE_USER_CONTROLLER_TAGS = "10、登录且需要权限才可访问的在线用户管理模块";
 	
 	public static final String SWAGGER_ONLINE_USER_LIST = "在线用户列表接口";
 	public static final String SWAGGER_ONLINE_USER_OFFLINE = "用户下线接口";
 	/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ swagger-OnlineChatController ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */
+	
+	/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ swagger-DbTablesController ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */
+	public static final String SWAGGER_DB_TABLES_CONTROLLER_TAGS = "11、登录且需要权限才可访问的数据库表管理模块";
+	
+	public static final String SWAGGER_DB_TABLES_LIST = "数据库表列表接口";
+	/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ swagger-DbTablesController ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */
 	
 }

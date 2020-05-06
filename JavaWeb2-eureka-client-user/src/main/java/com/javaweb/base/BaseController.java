@@ -5,6 +5,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.javaweb.task.SystemTaskService;
+import com.javaweb.web.service.DbTablesService;
 import com.javaweb.web.service.DictionaryService;
 import com.javaweb.web.service.InterfacesService;
 import com.javaweb.web.service.ModuleService;
@@ -49,5 +50,8 @@ public class BaseController extends BaseTool {
 	
 	@Autowired  
 	protected SystemTaskService systemTaskService;
+	
+	@Autowired
+	protected DbTablesService dbTablesService;
 	
 }

@@ -73,4 +73,7 @@ public class ApiConstant {
 	public static final String ONLINE_USER_LIST = "/list";//在线用户列表接口
 	public static final String ONLINE_USER_OFFLINE = "/offline/{key}";//用户下线接口
 	
+	public static final String WEB_DB_TABLES_PREFIX = "/web/sys/dbTables";
+	public static final String DB_TABLES_LIST = "/list";//数据库表列表接口
+	
 }
