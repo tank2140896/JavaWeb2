@@ -35,7 +35,8 @@
             <td>{{eachData.tableComment}}</td>
             <td>{{eachData.createTime}}</td>
             <td>
-              啊啊啊啊啊啊
+              <button style="margin-right:10px;" *ngIf="dbTablesDetailZone" class="btn btn-sm btn-info" (click)="dbTablesDetailFunction(eachData.tableName)">数据库表详情</button>
+              <button *ngIf="dbTablesCodeGenerateZone" class="btn btn-sm btn-primary" (click)="dbTablesCodeGenerateFunction(eachData.tableName)">代码生成</button>
             </td>
           </tr>
         </tbody>
