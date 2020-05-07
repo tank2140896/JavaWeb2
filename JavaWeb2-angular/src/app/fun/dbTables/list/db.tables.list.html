@@ -11,23 +11,29 @@
           <tr class="text-center">
             <th>序号</th>
             <th>表名</th>
+            <th>存储引擎</th>
+            <th>表说明</th>
+            <th>创建时间</th>
             <th>操作</th>
           </tr>
         </thead>
         <tbody *ngIf="resultPage.data==resultPage.dataLoading">
           <tr class="text-center">
-            <td colspan=3>数据获取中...</td>
+            <td colspan=6>数据获取中...</td>
           </tr>
         </tbody>
         <tbody *ngIf="resultPage.data==null">
           <tr class="text-center">
-            <td colspan=3>无数据</td>
+            <td colspan=6>无数据</td>
           </tr>
         </tbody>
         <tbody *ngIf="resultPage.data!=null&&resultPage.data!=resultPage.dataLoading">
           <tr *ngFor="let eachData of resultPage.data;let xh=index" class="text-center">
             <td>{{(xh+1)+(resultPage.currentPage-1)*resultPage.pageSize}}</td>
-            <td>{{eachData}}</td>
+            <td>{{eachData.tableName}}</td>
+            <td>{{eachData.engine}}</td>
+            <td>{{eachData.tableComment}}</td>
+            <td>{{eachData.createTime}}</td>
             <td>
               啊啊啊啊啊啊
             </td>
