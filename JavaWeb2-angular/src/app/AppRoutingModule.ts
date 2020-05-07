@@ -41,6 +41,7 @@ import {InterfacesDataPermissionAssignmentComponent} from './fun/interfaces/data
 import {OnlineUserComponent} from './fun/onlineUser/online.user.component';
 import {DbTablesComponent} from './fun/dbTables/db.tables.component';
 import {DbTablesListComponent} from './fun/dbTables/list/db.tables.list.component';
+import {DbTablesDetailComponent} from './fun/dbTables/detail/db.tables.detail.component';
 
 const routes: Routes = [
   {path:'',component:LoginComponent},//默认登录页面
@@ -117,6 +118,7 @@ const routes: Routes = [
     {path:'sys/dbTables',component:DbTablesComponent,children:[
       {path:'',component:DbTablesListComponent,canActivate:[AuthService]},//数据库表列表
       {path:'list',component:DbTablesListComponent,canActivate:[AuthService]},//数据库表列表
+      {path:'detail',component:DbTablesDetailComponent,canActivate:[AuthService]},//数据库表详情
       {path:'**',redirectTo:'/web',pathMatch:'full'}
     ],canActivate:[AuthService]},
     {path:'**',redirectTo: '/web', pathMatch: 'full'}
