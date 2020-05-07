@@ -1,0 +1,33 @@
+<div class="col col-xl-12 col-lg-12" style="margin-top:1%;">
+  <div class="card mb-3">
+    <div class="card-body table table-hover" id="myTableStyle">
+      <table class="table">
+        <thead>
+        <tr class="text-center">
+          <th>序号</th>
+          <th>字段名称</th>
+          <th>字段类型</th>
+          <th>是否是null</th>
+          <th>是否是主键</th>
+          <th>默认值</th>
+          <th>额外说明</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let eachData of resultList;let xh=index" class="text-center">
+          <td>{{xh+1}}</td>
+          <td>{{eachData.field}}</td>
+          <td>{{eachData.type}}</td>
+          <td>{{eachData.isNull=='NO'?'不是':'是'}}</td>
+          <td>{{eachData.isKey=='PRI'?'是':'不是'}}</td>
+          <td>{{eachData.defaultValue}}</td>
+          <td>{{eachData.extra}}</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div>
+    <button type="button" (click)="dbTablesDetailBack()" class="btn btn-primary" style="float:right;">返回</button>
+  </div>
+</div>
