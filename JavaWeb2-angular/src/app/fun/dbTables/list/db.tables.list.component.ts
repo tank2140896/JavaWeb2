@@ -25,10 +25,14 @@ export class DbTablesListComponent implements OnInit {
               private authService:AuthService,
               private sessionService:SessionService){
     this.dbTablesListZone = authService.canShow(ApiConstant.getPath(ApiConstant.SYS_DB_TABLES_LIST,false));
+    this.dbTablesDetailZone = authService.canShow(ApiConstant.getPath(ApiConstant.SYS_DB_TABLES_DETAIL,false));
+    this.dbTablesCodeGenerateZone = authService.canShow(ApiConstant.getPath(ApiConstant.SYS_DB_TABLES_LIST,false));
   }
 
   /** 操作权限 start */
   dbTablesListZone:boolean;//数据库表列表
+  dbTablesDetailZone:boolean;//数据库表详情
+  dbTablesCodeGenerateZone:boolean;//代码生成
   /** 操作权限 end */
 
   private dbTablesListRequest:DbTablesListRequest = new DbTablesListRequest();//数据库表列表搜索条件
@@ -72,6 +76,16 @@ export class DbTablesListComponent implements OnInit {
         complete:() => {}
       }
     );
+  }
+
+  //数据库表详情
+  public dbTablesDetailFunction(tableName:string):void{
+    this.router.navigate(['detail'],{relativeTo:this.activatedRoute,queryParams:{tableName:tableName}});
+  }
+
+  //代码生成
+  public dbTablesCodeGenerateFunction(tableName:string):void{
+
   }
 
 }
