@@ -17,16 +17,9 @@
 		)
 	</select>
 
-	<!--  
-	<select id="descTable" parameterType="java.lang.String" resultType="com.javaweb.web.eo.dbTables.TableListResponse">
+	<!-- 更详细的获取方式为：select * from information_schema.columns where table_name = #{_parameter} and table_schema = (select database()) order by ordinal_position -->
+	<select id="getTableColumnInfo" parameterType="java.lang.String" resultType="java.util.Map">
 		desc ${_parameter}
 	</select>
-	
-	<select id="getTableColumns" parameterType="java.lang.String" resultType="com.javaweb.entity.common.ColumnInfo">
-		select column_name as columnName,data_type as dataType,column_comment as columnComment,column_key as columnKey,extra 
-		from information_schema.columns
-		where table_name = ${_parameter} and table_schema = (select database()) order by ordinal_position
-	</select>
-	-->
 	
 </mapper>
