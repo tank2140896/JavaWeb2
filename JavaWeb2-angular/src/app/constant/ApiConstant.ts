@@ -61,6 +61,7 @@ export class ApiConstant{
   public static SYS_ONLINE_USER_OFFLINE = '/web/sys/onlineUser/offline';//用户下线
   
   public static SYS_DB_TABLES_LIST = '/web/sys/dbTables/list';//数据库表列表
+  public static SYS_DB_TABLES_DETAIL = '/web/sys/dbTables/detail';//数据库表详情
   /** 拥有权限才能访问 end */
 
   public static getPath(urlName:string,isFullPath:boolean):string{
