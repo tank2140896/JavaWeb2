@@ -5,9 +5,9 @@ import {HttpService} from '../../../service/HttpService';
 import {AuthService} from '../../../service/AuthService';
 import {SessionService} from '../../../service/SessionService';
 import {ApiConstant} from '../../../constant/ApiConstant';
-import {UserListRequest} from '../../../model/user/UserListRequest';
 import {ResultPage} from '../../../model/ResultPage';
 import {DbTablesListRequest} from '../../../model/dbTables/DbTablesListRequest';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 
 @Component({
@@ -22,11 +22,12 @@ export class DbTablesListComponent implements OnInit {
   constructor(private router:Router,
               private activatedRoute:ActivatedRoute,
               private httpService:HttpService,
+              public httpClient:HttpClient,
               private authService:AuthService,
               private sessionService:SessionService){
     this.dbTablesListZone = authService.canShow(ApiConstant.getPath(ApiConstant.SYS_DB_TABLES_LIST,false));
     this.dbTablesDetailZone = authService.canShow(ApiConstant.getPath(ApiConstant.SYS_DB_TABLES_DETAIL,false));
-    this.dbTablesCodeGenerateZone = authService.canShow(ApiConstant.getPath(ApiConstant.SYS_DB_TABLES_LIST,false));
+    this.dbTablesCodeGenerateZone = authService.canShow(ApiConstant.getPath(ApiConstant.SYS_DB_TABLES_CODE_GENERATE,false));
   }
 
   /** 操作权限 start */
@@ -62,7 +63,7 @@ export class DbTablesListComponent implements OnInit {
   //数据库表列表
   public dbTablesListFunction(dbTablesListRequest:DbTablesListRequest):void {
     this.httpService.postJsonData(ApiConstant.getPath(ApiConstant.SYS_DB_TABLES_LIST,true),JSON.stringify(dbTablesListRequest),this.sessionService.getHeadToken()).subscribe(
-      {
+        {
         next:(result:any) => {
           //console.log(result);
           if(result.code==200){
@@ -85,7 +86,25 @@ export class DbTablesListComponent implements OnInit {
 
   //代码生成
   public dbTablesCodeGenerateFunction(tableName:string):void{
-
+    let headers:HttpHeaders = new HttpHeaders({
+      'Content-Type':'application/json',
+      'Access-Control-Allow-Headers':'Authorization',
+      token:this.sessionService.getHeadToken().token
+    });
+    let options:any = {headers:headers,withCredentials:true,responseType:'blob'};
+    this.httpClient.get(ApiConstant.getPath(ApiConstant.SYS_DB_TABLES_CODE_GENERATE+'/'+tableName,true),options).subscribe(
+        {
+          next:(result:any) => {
+            const blob = new Blob([result],{ type:'application/OCTET-STREAM;charset=UTF-8'});
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = tableName + '.zip';
+            a.click();
+            window.URL.revokeObjectURL(url);
+          }
+        }
+    );
   }
 
 }
