@@ -2,6 +2,8 @@ package com.javaweb.web.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,6 +40,12 @@ public class DbTablesController extends BaseController {
 	public BaseResponseResult dbTablesDetail(@PathVariable(name="tableName",required=true) String tableName){
 		List<DbTablesColumnListResponse> list = dbTablesService.getTableColumnInfo(tableName);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"dbTables.detail.success",list);
+	}
+	
+	@ApiOperation(value=SwaggerConstant.SWAGGER_DB_TABLES_CODE_GENERATE)
+	@GetMapping(ApiConstant.DB_TABLES_CODE_GENERATE)
+	public void dbTablesCodeGenerate(@PathVariable(name="tableName",required=true) String tableName,HttpServletResponse httpServletResponse){
+		dbTablesService.codeGenerate(tableName,httpServletResponse);
 	}
 	
 }
