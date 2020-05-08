@@ -116,6 +116,7 @@ public class SwaggerConstant {
 	
 	public static final String SWAGGER_DB_TABLES_LIST = "数据库表列表接口";
 	public static final String SWAGGER_DB_TABLES_DETAIL = "数据库表详情接口";
+	public static final String SWAGGER_DB_TABLES_CODE_GENERATE = "数据库表代码生成接口";
 	/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ swagger-DbTablesController ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */
 	
 }
