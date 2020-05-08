@@ -2,17 +2,23 @@ package com.javaweb.web.service.impl;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.zip.ZipOutputStream;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Service;
 
 import com.javaweb.base.BaseService;
 import com.javaweb.constant.CommonConstant;
+import com.javaweb.util.core.FreemarkerUtil;
 import com.javaweb.util.core.PageUtil;
 import com.javaweb.util.core.StringUtil;
 import com.javaweb.util.entity.Page;
+import com.javaweb.web.eo.dbTables.DbTablesCodeGenerateResponse;
 import com.javaweb.web.eo.dbTables.DbTablesColumnListResponse;
 import com.javaweb.web.eo.dbTables.DbTablesListRequest;
 import com.javaweb.web.eo.dbTables.DbTablesListResponse;
@@ -55,6 +61,60 @@ public class DbTablesServiceImpl extends BaseService implements DbTablesService 
 			result.add(dbTablesColumnListResponse);
 		}
 		return result;
+	}
+
+	public void codeGenerate(String tableName,HttpServletResponse httpServletResponse) {
+		String tableNames[] = tableName.split(CommonConstant.UNDERLINE);
+		StringBuilder stringBuilder = new StringBuilder();
+		for(int i=0;i<tableNames.length;i++){
+			stringBuilder.append(tableNames[i].substring(0,1).toUpperCase()).append(tableNames[i].substring(1,tableNames[i].length()));
+		}
+		String className = stringBuilder.toString();
+		List<DbTablesCodeGenerateResponse> result = new ArrayList<>();
+		List<Map<String,Object>> list = dbTablesDao.getTableColumnInfo(tableName);
+		for(int i=0;i<list.size();i++){
+			Map<String,Object> map = list.get(i);
+			DbTablesCodeGenerateResponse dbTablesCodeGenerateResponse = new DbTablesCodeGenerateResponse();
+			dbTablesCodeGenerateResponse.setTableColumn(map.get("Field").toString());
+			dbTablesCodeGenerateResponse.setKey((map.get("Key")!=null&&map.get("Key").equals("PRI"))?true:false);
+			stringBuilder = new StringBuilder();
+			String fields[] = map.get("Field").toString().split(CommonConstant.UNDERLINE);
+			for(int j=0;j<fields.length;j++){
+				if(j==0){
+					stringBuilder.append(fields[j]);
+				}else{
+					stringBuilder.append(fields[j].substring(0,1).toUpperCase()).append(fields[j].substring(1,fields[j].length()));
+				}
+			}
+			dbTablesCodeGenerateResponse.setJavaPropertyName(stringBuilder.toString());
+			String type = map.get("Type")==null?null:String.valueOf(map.get("Type"));
+			if(type==null){
+				type = "String";
+			}else{
+				if(type.toLowerCase().contains("varchar")){
+					type = "String";
+				}else if(type.toLowerCase().contains("int")){
+					type = "Integer";
+				}else if(type.toLowerCase().contains("long")){
+					type = "Long";
+				}else{
+					type = "String";
+				}
+			}
+			dbTablesCodeGenerateResponse.setJavaType(type);
+			result.add(dbTablesCodeGenerateResponse);
+		}
+		Map<String,Object> map = new HashMap<>();
+		map.put("tableName",tableName);
+		map.put("className",className);
+		map.put("propertyList",result);
+		String templateFileName[] = {"dao.ftl","mapper.ftl","po.ftl","serviceImpl.ftl","service.ftl"};
+		try{
+			ZipOutputStream zipOutputStream = new ZipOutputStream(httpServletResponse.getOutputStream());
+			FreemarkerUtil.freemarkerForDbTablesCodeGenerate(map,templateFileName,tableName,zipOutputStream);
+		}catch(Exception e){
+			//do nothing
+		}
 	}
 	
 }
