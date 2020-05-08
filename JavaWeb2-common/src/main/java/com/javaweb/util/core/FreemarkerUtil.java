@@ -9,6 +9,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
+import java.util.zip.ZipOutputStream;
 
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.enums.JsonTypeEnum;
@@ -87,13 +89,8 @@ public class FreemarkerUtil {
 			importString+=(str+",");
 		}
 		map.put("imports",importString.equals(CommonConstant.EMPTY_VALUE)?CommonConstant.EMPTY_VALUE:importString.substring(0,importString.length()-1));
-		freemarkerGenerate(map,outputFilePath);
-	}
-	
-	//非通用方法
-	private static void freemarkerGenerate(Map<String,Object> map,String outputFilePath) throws Exception {
 		Configuration configuration = new Configuration(Configuration.VERSION_2_3_28);
-		configuration.setDirectoryForTemplateLoading(new File(Thread.currentThread().getContextClassLoader().getResource("ftl").getFile()));
+		configuration.setDirectoryForTemplateLoading(new File(Thread.currentThread().getContextClassLoader().getResource("ftl/jsonEntityGenerate").getFile()));
 		configuration.setObjectWrapper(new DefaultObjectWrapper(Configuration.VERSION_2_3_28));
 	    Template template = configuration.getTemplate(map.get("templateFileName").toString());
 	    File file = new File(outputFilePath+map.get("fileName"));
@@ -103,6 +100,47 @@ public class FreemarkerUtil {
 	    bufferedWriter.flush();
 	    bufferedWriter.close();
 	    fileWriter.close();
+	}
+	
+	public static void freemarkerForDbTablesCodeGenerate(Map<String,Object> map,String templateFileName[],String outFileName,ZipOutputStream zipOutputStream) throws Exception {
+		Configuration configuration = new Configuration(Configuration.VERSION_2_3_28);
+		//不要带有中文路径
+		configuration.setDirectoryForTemplateLoading(new File(Thread.currentThread().getContextClassLoader().getResource("ftl/dbTablesCodeGenerate").getFile()));
+		//configuration.setDirectoryForTemplateLoading(new File("D:/dbTablesCodeGenerate"));
+		configuration.setObjectWrapper(new DefaultObjectWrapper(Configuration.VERSION_2_3_28));
+		String rootFileName = "E:/"+UUID.randomUUID();
+		File fileRoot = new File(rootFileName);
+	    for(int i=0;i<templateFileName.length;i++){
+	    	Template template = configuration.getTemplate(templateFileName[i]);
+	    	FileUtil.makeFolder(fileRoot);
+	    	String temp = CommonConstant.EMPTY_VALUE;
+	    	String className = map.get("className").toString();
+	    	if(templateFileName[i].equals("dao.ftl")){
+	    		temp += className+"Dao.java";
+	    	}else if(templateFileName[i].equals("mapper.ftl")){
+	    		temp += className+"Mapper.xml";
+	    	}else if(templateFileName[i].equals("po.ftl")){
+	    		temp += className+".java";
+	    	}else if(templateFileName[i].equals("service.ftl")){
+	    		temp += className+"Service.java";
+	    	}else if(templateFileName[i].equals("serviceImpl.ftl")){
+	    		temp += className+"ServiceImpl.java";
+	    	}
+		    File file = new File(rootFileName+"/"+temp);
+		    FileWriter fileWriter = new FileWriter(file);
+		    BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+		    template.process(map,bufferedWriter);
+		    bufferedWriter.flush();
+		    bufferedWriter.close();
+		    fileWriter.close();
+	    }
+		FileUtil.toZip(fileRoot,outFileName,zipOutputStream,new byte[1024]);
+		zipOutputStream.close();
+		File files[] = fileRoot.listFiles();
+		for(File file:files){
+			file.delete();
+		}
+		fileRoot.delete();
 	}
 
 }
