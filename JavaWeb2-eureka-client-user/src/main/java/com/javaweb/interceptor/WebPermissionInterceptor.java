@@ -81,7 +81,6 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 			request.getRequestDispatcher(ApiConstant.NO_AUTHORY).forward(request,response);
 			return false;
 		}else{
-			System.err.println(111111111);
 			redisTemplate.opsForValue().set(tokenData.getUser().getUserId()+CommonConstant.COMMA+tokenData.getType(),tokenData,Duration.ofMinutes(redisSessionTimeout));
 			return true;
 		}
