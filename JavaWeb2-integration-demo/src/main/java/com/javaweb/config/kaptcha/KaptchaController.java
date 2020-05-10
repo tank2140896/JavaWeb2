@@ -1,6 +1,7 @@
 package com.javaweb.config.kaptcha;
 
 import java.awt.image.BufferedImage;
+import java.time.Duration;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
@@ -24,7 +25,7 @@ public class KaptchaController extends BaseInject {
 		    response.setContentType("image/jpeg");
 		    String ip = HttpUtil.getIpAddress(request);
 		    String text = defaultKaptcha.createText();
-		    stringRedisTemplate1.opsForValue().set(ip,text);
+		    stringRedisTemplate1.opsForValue().set("kaptcha_"+ip,text,Duration.ofMillis(5L));
 		    BufferedImage image = defaultKaptcha.createImage(text);
 		    ServletOutputStream out = response.getOutputStream();
 		    ImageIO.write(image,"jpg",out);
@@ -38,7 +39,7 @@ public class KaptchaController extends BaseInject {
 		String ip = HttpUtil.getIpAddress(request);
 		boolean result = true;
 		//可以从redis中获取
-		String kaptcha = stringRedisTemplate1.opsForValue().get(ip);
+		String kaptcha = stringRedisTemplate1.opsForValue().get("kaptcha_"+ip);
 		if(kaptcha!=null){
 			if(kaptcha.equalsIgnoreCase(kaptchaFromFrontend)){//忽略大小写
 				result = false;
