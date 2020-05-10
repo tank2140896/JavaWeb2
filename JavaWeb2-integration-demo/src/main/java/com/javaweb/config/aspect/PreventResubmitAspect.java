@@ -14,6 +14,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.javaweb.annotation.url.PreventResubmit;
+import com.javaweb.base.BaseResponseResult;
 import com.javaweb.context.ApplicationContextHelper;
 
 @Aspect
@@ -41,7 +42,7 @@ public class PreventResubmitAspect {
 		if(isSuccess){
 			return proceedingJoinPoint.proceed();
 		}else{
-			return "fail";//表示重复提交了
+			return new BaseResponseResult(500,"表单重复提交了");//表示重复提交了
 		}
 	}
 

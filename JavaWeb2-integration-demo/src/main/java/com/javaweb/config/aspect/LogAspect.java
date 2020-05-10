@@ -26,9 +26,12 @@ public class LogAspect {
 	@Around(value=DEFAULT_LOG_POINT_CUT)
 	public Object aroundMethod(ProceedingJoinPoint joinPoint) throws Throwable {
 		Object object = joinPoint.proceed();
-		BaseResponseResult baseResponseResult = new ObjectMapper().readValue(JSONObject.fromObject(object).toString(),BaseResponseResult.class);
-		if("200".equals(baseResponseResult.getCode().toString())){//只记录操作成功的数据
-			//记录操作日志
+		String url = httpServletRequest.getRequestURL().toString();
+		if(url.contains("add")||url.contains("modify")||url.contains("delete")){
+			BaseResponseResult baseResponseResult = new ObjectMapper().readValue(JSONObject.fromObject(object).toString(),BaseResponseResult.class);
+			if("200".equals(baseResponseResult.getCode().toString())){//只记录操作成功的数据
+				//记录操作日志
+			}
 		}
 		return object;
 	}
@@ -50,24 +53,7 @@ public class LogAspect {
 		             .append("请求类方法参数:").append(Arrays.toString(joinPoint.getArgs()))
 					 .append(",")
 					 .append("请求IP:").append(HttpUtil.getIpAddress(httpServletRequest));
-		/**
-		String url = httpServletRequest.getRequestURL().toString();
-		if(url.contains("add")||url.contains("modify")||url.contains("delete")){
-			
-		}
-		*/
-	        /**
-		Object obj[] = joinPoint.getArgs();
-	        for(int i=0;i<obj.length;i++) {
-	            Object o = obj[i];
-	            try {
-	                obj[i] = JSONObject.fromObject(o).toString();
-	            }catch (Exception e) {
-                    //do nothing
-                    }
-	        }
-	        */
-	        log.info(stringBuilder.toString());
+        log.info(stringBuilder.toString());
 	}
 	
 	@AfterReturning(value=DEFAULT_LOG_POINT_CUT,returning="object")
