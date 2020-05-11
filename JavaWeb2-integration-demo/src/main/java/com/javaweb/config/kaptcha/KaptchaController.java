@@ -25,7 +25,7 @@ public class KaptchaController extends BaseInject {
 		    response.setContentType("image/jpeg");
 		    String ip = HttpUtil.getIpAddress(request);
 		    String text = defaultKaptcha.createText();
-		    stringRedisTemplate1.opsForValue().set("kaptcha_"+ip,text,Duration.ofMillis(5L));
+		    stringRedisTemplate1.opsForValue().set("kaptcha_"+ip,text,Duration.ofMinutes(5L));
 		    BufferedImage image = defaultKaptcha.createImage(text);
 		    ServletOutputStream out = response.getOutputStream();
 		    ImageIO.write(image,"jpg",out);
