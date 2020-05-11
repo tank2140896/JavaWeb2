@@ -37,12 +37,12 @@ public class KaptchaController extends BaseInject {
 	//验证码校验
 	public boolean kaptchaCheck(String kaptchaFromFrontend,HttpServletRequest request){
 		String ip = HttpUtil.getIpAddress(request);
-		boolean result = true;
+		boolean result = false;
 		//可以从redis中获取
 		String kaptcha = stringRedisTemplate1.opsForValue().get("kaptcha_"+ip);
 		if(kaptcha!=null){
 			if(kaptcha.equalsIgnoreCase(kaptchaFromFrontend)){//忽略大小写
-				result = false;
+				result = true;
 			}
 		}
 		return result;
