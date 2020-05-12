@@ -55,8 +55,16 @@ public class HttpUtil {
 	public static CloseableHttpClient getCloseableHttpClient(String url) {
 		CloseableHttpClient closeableHttpClient = null;
 		if(url.contains("https")){
-			SSLConnectionSocketFactory sslcsf = new SSLConnectionSocketFactory(sslContext);
-			closeableHttpClient = HttpClients.custom().setSSLSocketFactory(sslcsf).build();
+			try {
+				SSLConnectionSocketFactory sslcsf = new SSLConnectionSocketFactory(sslContext);
+				closeableHttpClient = HttpClients.custom().setSSLSocketFactory(sslcsf).build();
+				/** 上面不行的话，请尝试下面的写法，其实上面的写法已经能满足了，之所以可能会用到下面的写法是因为有些地方强制必须唯一使用https，而有些地方可以兼容同时使用http和https
+				SSLConnectionSocketFactory sSLConnectionSocketFactory = new SSLConnectionSocketFactory(SSLContexts.custom().loadTrustMaterial(null,new TrustSelfSignedStrategy()).build(),NoopHostnameVerifier.INSTANCE);
+				closeableHttpClient = HttpClients.custom().setSSLSocketFactory(sSLConnectionSocketFactory).build();
+				*/
+			} catch (Exception e) {
+				//do nothing
+			} 
 		}else{
 			closeableHttpClient = HttpClientBuilder.create().build(); 
 		}
