@@ -223,7 +223,7 @@ public class WenxinController {
 	public void getLoginQrCode(HttpServletRequest request,HttpServletResponse response){
 		try{
 			QRCodeWriter qrCodeWriter = new QRCodeWriter();
-			BitMatrix bitMatrix = qrCodeWriter.encode("https://127.0.0.1:8001/service_manage_admin/workLogin",BarcodeFormat.QR_CODE,180,180);
+			BitMatrix bitMatrix = qrCodeWriter.encode("https://127.0.0.1:8080/JavaWeb2/workLogin",BarcodeFormat.QR_CODE,180,180);
 			MatrixToImageWriter.writeToStream(bitMatrix,"jpg",response.getOutputStream());
 		}catch(Exception e){
 			//do nothing
@@ -236,7 +236,7 @@ public class WenxinController {
 	public void workLogin(HttpServletResponse response) throws Exception {
 		String appid = "appid";//企业微信的CorpID，在企业微信管理端查看
 		String agentid = "agentid";//权方的网页应用ID，在具体的网页应用中查看
-		String redirect_uri = "https://127.0.0.1:8001/service_manage_admin/workLoginCallBack";//重定向地址，需要进行UrlEncode
+		String redirect_uri = "https://127.0.0.1:8080/JavaWeb2/workLoginCallBack";//重定向地址，需要进行UrlEncode
 		String state = "state";//用于保持请求和回调的状态，授权请求后原样带回给企业。该参数可用于防止csrf攻击（跨站请求伪造攻击），建议企业带上该参数，可设置为简单的随机数加session进行校验
 		String url = "https://open.work.weixin.qq.com/wwopen/sso/qrConnect?appid="+appid+"&agentid="+agentid+"&redirect_uri="+URLEncoder.encode(redirect_uri,"UTF-8")+"&state="+state;
 		//response.sendRedirect(url);
@@ -255,7 +255,7 @@ public class WenxinController {
 		System.out.println(url);
 		//根据用户ID获取用户信息，参考：https://open.work.weixin.qq.com/api/doc/90000/90135/90196
 		//用户名和密码要Base64加密
-		response.sendRedirect("https://127.0.0.1:8001/前端页面/login?username=abc123&password=123456");//跳至前端页面模拟登录请求
+		response.sendRedirect("https://127.0.0.1:8081/前端页面/login?username=abc123&password=123456");//跳至前端页面模拟登录请求
 	}
 	
 	/** 简化版沟通对接步骤
@@ -287,11 +287,12 @@ public class WenxinController {
 				PasswordRecord passwordRecord = passwordRecordService.getPasswordRecordByUserId(user.getUserId());
 				if(passwordRecord!=null){
 					System.out.println(SecretUtil.base64EncoderString(user.getUserCode(),"UTF-8")+","+SecretUtil.base64EncoderString(passwordRecord.getPassword(),"UTF-8"));//Base64加密
-					response.sendRedirect("https://127.0.0.1:8001/前端页面/login?username=abc123&password=123456");//跳至前端页面模拟登录请求
+					//若是HttpClient调用方式response.sendRedirect状态码是302,一般200的话可以用response.getWrite()处理
+					response.sendRedirect("https://127.0.0.1:8081/前端页面/login?username=abc123&password=123456");//跳至前端页面模拟登录请求
 				}
 			}
 		}
-		response.sendRedirect("https://127.0.0.1:8001/前端页面/login?errorCode=605");//跳至前端页面模拟登录请求
+		response.sendRedirect("https://127.0.0.1:8081/前端页面/login?errorCode=605");//跳至前端页面模拟登录请求
 	}
 	*/
 	/** 企业微信扫码登录 end */
