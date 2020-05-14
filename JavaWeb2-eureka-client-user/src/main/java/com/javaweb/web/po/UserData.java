@@ -10,7 +10,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Table(name="user_data")
+@Table(name="sys_user_data")
 public class UserData implements Serializable {
 
 	private static final long serialVersionUID = 3816531177960720557L;

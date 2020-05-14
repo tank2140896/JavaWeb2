@@ -7,17 +7,17 @@
 		select tmp.excludeField,i.url FROM
 		(
 			select GROUP_CONCAT(dp.exclude_field) as excludeField,dp.interfaces_id 
-			from data_permission dp where id in
+			from sys_data_permission dp where id in
 			<foreach collection="list" index="index" item="item" open="(" separator="," close=")">   
 		        #{item}
 	    	</foreach>
 			group by dp.interfaces_id
 		) tmp 
-		LEFT JOIN interfaces i on tmp.interfaces_id = i.id
+		LEFT JOIN sys_interfaces i on tmp.interfaces_id = i.id
 	</select>
 	
 	<select id="selectAllByInterfacesId" parameterType="java.lang.String" resultType="com.javaweb.web.po.DataPermission">
-		select id,exclude_field as excludeField,interfaces_id as interfacesId,remark from data_permission where interfaces_id = #{_parameter}
+		select id,exclude_field as excludeField,interfaces_id as interfacesId,remark from sys_data_permission where interfaces_id = #{_parameter}
 	</select>
 	
 </mapper>

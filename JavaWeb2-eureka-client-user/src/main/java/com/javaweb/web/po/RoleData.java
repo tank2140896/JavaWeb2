@@ -10,7 +10,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Table(name="role_data")
+@Table(name="sys_role_data")
 public class RoleData implements Serializable {
 
 	private static final long serialVersionUID = -8720034407531582856L;

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.javaweb.annotation.token.TokenDataAnnotation;
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
+import com.javaweb.base.BaseSystemMemory;
 import com.javaweb.constant.ApiConstant;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SwaggerConstant;
@@ -43,6 +44,7 @@ public class DictionaryController extends BaseController {
 		dictionary.setCreator(currentUser.getUserId());
 		dictionary.setCreateDate(DateUtil.getDefaultDate());
 		dictionaryService.dictionaryAdd(dictionary);
+		BaseSystemMemory.dictionaryList = dictionaryService.selectAll();
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"dictionary.add.success",null);
 	}
 	
@@ -60,6 +62,7 @@ public class DictionaryController extends BaseController {
 		dictionary.setUpdateDate(DateUtil.getDefaultDate());
 		dictionary.setUpdater(currentUser.getUserName());
 		dictionaryService.dictionaryModify(dictionary);
+		BaseSystemMemory.dictionaryList = dictionaryService.selectAll();
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"dictionary.modify.success",null);
 	}
 	
@@ -75,6 +78,7 @@ public class DictionaryController extends BaseController {
 	@DeleteMapping(ApiConstant.DICTIONARY_DELETE)
 	public BaseResponseResult dictionaryDelete(@PathVariable(name="dictionaryId",required=true) String dictionaryId){
 		dictionaryService.dictionaryDelete(dictionaryId);
+		BaseSystemMemory.dictionaryList = dictionaryService.selectAll();
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"dictionary.delete.success",null);
 	}
 	

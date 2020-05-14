@@ -5,7 +5,7 @@
 
 	<select id="selectAllByUserId" parameterType="java.lang.String" resultType="com.javaweb.web.po.UserData">
 		select id,user_id as userId,data_permission_id as dataPermissionId
-		from user_data where user_id = #{_parameter}
+		from sys_user_data where user_id = #{_parameter}
 	</select>
 	
 </mapper>

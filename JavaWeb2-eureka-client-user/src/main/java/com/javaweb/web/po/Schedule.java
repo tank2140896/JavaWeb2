@@ -11,7 +11,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Table(name="schedule")
+@Table(name="sys_schedule")
 public class Schedule extends BaseEntity implements Serializable {
 	
 	private static final long serialVersionUID = -3844395392415923202L;

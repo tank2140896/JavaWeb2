@@ -10,7 +10,7 @@
 
 	<select id="roleList" parameterType="com.javaweb.web.eo.role.RoleListRequest" resultType="com.javaweb.web.eo.role.RoleListResponse">
 		select r.role_id as roleId,r.role_name as roleName,r.create_date as createDate
-		from role r
+		from sys_role r
 		<where>
 			r.del_flag = 0
 			<if test="roleName != null and roleName != ''">and r.role_name like CONCAT('%',#{roleName},'%')</if>
@@ -22,7 +22,7 @@
 	</select>
 	
 	<select id="roleListCount" parameterType="com.javaweb.web.eo.role.RoleListRequest" resultType="java.lang.Long">
-		select count(1) from role r
+		select count(1) from sys_role r
 		<where>
 			r.del_flag = 0
 			<if test="roleName != null and roleName != ''">and r.role_name like CONCAT('%',#{roleName},'%')</if>
@@ -33,35 +33,35 @@
 	
 	<delete id="roleDelete" parameterType="java.lang.String">
 		<!-- 删除角色模块关联 -->
-		delete from role_module where role_id = #{_parameter};
+		delete from sys_role_module where role_id = #{_parameter};
 		<!-- 删除用户角色关联 -->
-		delete from user_role where role_id = #{_parameter};
+		delete from sys_user_role where role_id = #{_parameter};
 		<!-- 删除数据权限 -->
-		delete from data_permission where id in(select distinct data_permission_id from role_data where role_id = #{_parameter});
+		delete from sys_data_permission where id in(select distinct data_permission_id from sys_role_data where role_id = #{_parameter});
 		<!-- 删除用户数据关联 -->
-		delete from role_data where role_id = #{_parameter};
+		delete from sys_role_data where role_id = #{_parameter};
 		<!-- 删除角色 -->
-		delete from role where role_id = #{_parameter};
+		delete from sys_role where role_id = #{_parameter};
 	</delete>
 	
 	<select id="roleDetail" parameterType="java.lang.String" resultType="com.javaweb.web.po.Role">
-		select <include refid="selectRole"></include> from role where role_id = #{_parameter} and del_flag = 0 limit 1
+		select <include refid="selectRole"></include> from sys_role where role_id = #{_parameter} and del_flag = 0 limit 1
 	</select>
 	
 	<select id="roleModuleInfo" parameterType="java.lang.String" resultType="com.javaweb.web.eo.role.ModuleInfoResponse">
 		SELECT (CASE WHEN tmp.module_id is NULL THEN false ELSE true END) as checkFlag,
-	            m.module_name as moduleName,m.module_id as moduleId,m.parent_id as parentId from module as m 
-		LEFT JOIN (SELECT module_id from role_module where role_id = #{_parameter}) as tmp
+	            m.module_name as moduleName,m.module_id as moduleId,m.parent_id as parentId from sys_module as m 
+		LEFT JOIN (SELECT module_id from sys_role_module where role_id = #{_parameter}) as tmp
 		on m.module_id = tmp.module_id 
 		ORDER BY level asc,module_type asc,orders asc
 	</select>
 	
 	<update id="roleModuleAssignment" parameterType="java.util.Map">
 		<!-- 删除角色模块关联 -->
-		delete from role_module where role_id = #{roleId};
+		delete from sys_role_module where role_id = #{roleId};
 		<!-- 重新插入新的角色模块关联 -->
 		<if test="list!=null and list.size()>0">
-			insert into role_module(id,role_id,module_id) values
+			insert into sys_role_module(id,role_id,module_id) values
 			<foreach collection="list" index="index" item="item" open="" separator="," close="">   
 		        (#{item.id},#{item.roleId},#{item.moduleId})
 	    	</foreach>

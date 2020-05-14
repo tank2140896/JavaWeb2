@@ -11,7 +11,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Table(name="dictionary")
+@Table(name="sys_dictionary")
 public class Dictionary extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = -6987225808532290813L;

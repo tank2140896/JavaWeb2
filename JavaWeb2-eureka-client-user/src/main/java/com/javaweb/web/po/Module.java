@@ -14,7 +14,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Table(name="module")
+@Table(name="sys_module")
 public class Module extends BaseEntity implements Serializable {
 	
 	private static final long serialVersionUID = 8495542220648641440L;

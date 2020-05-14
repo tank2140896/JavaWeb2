@@ -10,7 +10,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Table(name="operation_log")
+@Table(name="sys_operation_log")
 public class OperationLog implements Serializable {
 
 	private static final long serialVersionUID = 6824826467869255030L;

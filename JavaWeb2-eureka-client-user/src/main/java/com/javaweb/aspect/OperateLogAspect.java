@@ -14,6 +14,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javaweb.base.BaseResponseResult;
+import com.javaweb.base.BaseSystemMemory;
 import com.javaweb.base.BaseTool;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.context.ApplicationContextHelper;
@@ -21,6 +22,7 @@ import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.HttpUtil;
 import com.javaweb.util.core.SecretUtil;
 import com.javaweb.web.eo.TokenData;
+import com.javaweb.web.po.Dictionary;
 import com.javaweb.web.po.OperationLog;
 import com.javaweb.web.service.OperationLogService;
 
@@ -44,7 +46,7 @@ public class OperateLogAspect {
 		if(environment==null){
 			environment = (Environment)ApplicationContextHelper.getBean(SystemConstant.ENVIRONMENT);
 		}
-		Boolean open = Boolean.parseBoolean(environment.getProperty("operatelog.aspect.open"));//获得配置文件中是否开启操作日志
+		Boolean open = getOperatelogOpenFlag();
 		if(open){
 			ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
 			HttpServletRequest httpServletRequest = servletRequestAttributes.getRequest();
@@ -72,6 +74,19 @@ public class OperateLogAspect {
 			}
 		}
 		return object;
+	}
+	
+	private Boolean getOperatelogOpenFlag(){
+		Boolean open = false;
+		Dictionary dictionary = BaseSystemMemory.getDictionaryByKey("operatelog.aspect.open");
+		try{
+			if(dictionary!=null){
+				open = Boolean.parseBoolean(dictionary.getValueCode());
+			}
+		}catch(Exception e){
+			//do nothing
+		}
+		return open;
 	}
 
 }

@@ -10,7 +10,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Table(name="user_module")
+@Table(name="sys_user_module")
 public class UserModule implements Serializable {
 
 	private static final long serialVersionUID = -3308661987883600632L;

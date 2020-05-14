@@ -5,7 +5,7 @@
 
 	<select id="selectAllByRoleIds" parameterType="java.util.List" resultType="com.javaweb.web.po.RoleData">
 		select id,role_id as roleId,data_permission_id as dataPermissionId
-		from role_data where role_id in
+		from sys_role_data where role_id in
 		<foreach collection="list" index="index" item="item" open="(" separator="," close=")">   
 	        #{item}
     	</foreach>

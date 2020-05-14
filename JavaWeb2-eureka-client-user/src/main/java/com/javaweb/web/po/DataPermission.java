@@ -11,7 +11,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Table(name="data_permission")
+@Table(name="sys_data_permission")
 public class DataPermission extends BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = -4584788854424411139L;

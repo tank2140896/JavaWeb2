@@ -6,10 +6,10 @@
 	<select id="getModuleByModuleId" parameterType="java.util.List" resultType="com.javaweb.web.po.Module">
 		<if test="list.size()>0"> 
 			SELECT module_id as moduleId,module_name as moduleName,page_url as pageUrl,api_url as apiUrl,parent_id as parentId,
-			(select n.module_name from module n where n.module_id = module.parent_id and n.del_flag = 0) as parentName,
+			(select n.module_name from sys_module n where n.module_id = module.parent_id and n.del_flag = 0) as parentName,
 			fcode,level,orders,module_type as moduleType,alias,parent_alias as parentAlias,remark,icon,
 			create_date as createDate,creator,update_date as updateDate,updater,del_flag as delFlag
-			from module WHERE module_id in
+			from sys_module WHERE module_id in
 			<foreach collection="list" item="id" open="(" separator="," close=")">
 				#{id}
 			</foreach> 
@@ -17,18 +17,18 @@
 		</if>
 		<if test="list.size()==0"> 
 			SELECT module_id as moduleId,module_name as moduleName,page_url as pageUrl,api_url as apiUrl,parent_id as parentId,
-			(select n.module_name from module n where n.module_id = module.parent_id and n.del_flag = 0) as parentName,
+			(select n.module_name from sys_module n where n.module_id = module.parent_id and n.del_flag = 0) as parentName,
 			fcode,level,orders,module_type as moduleType,alias,parent_alias as parentAlias,remark,icon,
 			create_date as createDate,creator,update_date as updateDate,updater,del_flag as delFlag
-			from module WHERE 1=2
+			from sys_module WHERE 1=2
 		</if>
 	</select>
 	
 	<select id="moduleList" parameterType="com.javaweb.web.eo.module.ModuleListRequest" resultType="com.javaweb.web.eo.module.ModuleListResponse">
 		select m.module_id as moduleId,m.parent_id as parentId,m.module_name as moduleName,
-		(select n.module_name from module n where n.module_id = m.parent_id and n.del_flag = 0) as parentName,
+		(select n.module_name from sys_module n where n.module_id = m.parent_id and n.del_flag = 0) as parentName,
 		m.page_url as pageUrl,m.api_url as apiUrl,m.module_type as moduleType,m.orders,m.alias,m.create_date as createDate
-		from module m
+		from sys_module m
 		<where>
 			m.del_flag = 0
 			<if test="moduleName != null and moduleName != ''">and m.module_name like CONCAT('%',#{moduleName},'%')</if>
@@ -44,7 +44,7 @@
 	</select>
 	
 	<select id="moduleListCount" parameterType="com.javaweb.web.eo.module.ModuleListRequest" resultType="java.lang.Long">
-		select count(1) from module m
+		select count(1) from sys_module m
 		<where>
 			m.del_flag = 0
 			<if test="moduleName != null and moduleName != ''">and m.module_name like CONCAT('%',#{moduleName},'%')</if>
@@ -59,32 +59,32 @@
 	
 	<delete id="moduleDelete" parameterType="java.lang.String">
 		<!-- 删除用户模块关联 -->
-		delete from user_module where module_id = #{_parameter};
+		delete from sys_user_module where module_id = #{_parameter};
 		<!-- 删除角色模块关联 -->
-		delete from role_module where module_id = #{_parameter};
+		delete from sys_role_module where module_id = #{_parameter};
 		<!-- 删除模块 -->
-		delete from module where module_id = #{_parameter};
+		delete from sys_module where module_id = #{_parameter};
 	</delete>
 	
 	<select id="moduleDetail" parameterType="java.lang.String" resultType="com.javaweb.web.po.Module">
 		select module_id as moduleId,module_name as moduleName,page_url as pageUrl,api_url as apiUrl,parent_id as parentId,
-		(select n.module_name from module n where n.module_id = module.parent_id and n.del_flag = 0) as parentName,
+		(select n.module_name from sys_module n where n.module_id = module.parent_id and n.del_flag = 0) as parentName,
 		fcode,level,orders,module_type as moduleType,alias,parent_alias as parentAlias,remark,icon,
 		create_date as createDate,creator,update_date as updateDate,updater,del_flag as delFlag
-		from module where module_id = #{_parameter} and del_flag = 0 limit 1
+		from sys_module where module_id = #{_parameter} and del_flag = 0 limit 1
 	</select>
 	
 	<select id="getModuleLevelAndOrdersByParentId" parameterType="java.lang.String" resultType="com.javaweb.web.eo.module.ModuleLevelAndOrdersResponse">
-		SELECT level,orders from module where parent_id = #{_parameter} and del_flag = 0 ORDER BY level desc,orders desc LIMIT 1 
+		SELECT level,orders from sys_module where parent_id = #{_parameter} and del_flag = 0 ORDER BY level desc,orders desc LIMIT 1 
 	</select>
 	
 	<select id="getModuleLevelAndOrdersWithoutParentId" resultType="com.javaweb.web.eo.module.ModuleLevelAndOrdersResponse">
-		SELECT level,orders from module where parent_id is null and del_flag = 0 ORDER BY level desc,orders desc LIMIT 1 
+		SELECT level,orders from sys_module where parent_id is null and del_flag = 0 ORDER BY level desc,orders desc LIMIT 1 
 	</select>
 	
 	<select id="getModuleIdAndNameList" parameterType="java.util.Map" resultType="com.javaweb.web.eo.module.ModuleIdAndNameResponse">
 		<!-- <if test='moduleType == "1" or moduleType == "2"'> -->
-		select module_id as moduleId,module_name as moduleName from module where del_flag = 0
+		select module_id as moduleId,module_name as moduleName from sys_module where del_flag = 0
 		<if test='moduleType == "1"'>and module_type = 1</if>
 		<if test='moduleType == "2"'>and module_type = 1</if>
 		<if test='moduleType == "3"'>and module_type = 2 and page_url is not null</if>
@@ -93,16 +93,16 @@
 	<select id="getAllRoleByModuleId" parameterType="java.lang.String" resultType="com.javaweb.web.po.Role">
 		select role_id as roleId,role_name as roleName,parent_id as parentId,fcode,level,type,remark,
 		create_date as createDate,creator,update_date as updateDate,updater,del_flag as delFlag 
-		from role where role_id in(select DISTINCT role_id from role_module where module_id = #{_parameter})
+		from sys_role where role_id in(select DISTINCT role_id from sys_role_module where module_id = #{_parameter})
 	</select>
 	
 	<select id="getAllUserByModuleId" parameterType="java.lang.String" resultType="com.javaweb.web.po.User">
 		select user_id as userId,user_name as userName,password,person_name as personName,email,phone,portrait,parent_id as parentId,
 		fcode,level,remark,status,create_date as createDate,creator,update_date as updateDate,updater,del_flag as delFlag
-		from user where user_id in(
-			select distinct user_id from user_role where role_id in(
-				select role_id from role where role_id in(
-					select distinct role_id from role_module where module_id = #{_parameter}
+		from sys_user where user_id in(
+			select distinct user_id from sys_user_role where role_id in(
+				select role_id from sys_role where role_id in(
+					select distinct role_id from sys_role_module where module_id = #{_parameter}
 				)
 			)
 		)

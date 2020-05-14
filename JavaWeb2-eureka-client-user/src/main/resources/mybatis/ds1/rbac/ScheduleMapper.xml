@@ -6,18 +6,18 @@
 	<select id="getScheduleByDate" parameterType="java.util.Map" resultType="com.javaweb.web.po.Schedule">
 		select id,schedule_date as scheduleDate,schedule_type as scheduleType,remark,
 		create_date as createDate,creator,update_date as updateDate,updater,del_flag as delFlag
-		from schedule where schedule_date &gt;= #{startDate} and schedule_date&lt;= #{endDate}
+		from sys_schedule where schedule_date &gt;= #{startDate} and schedule_date&lt;= #{endDate}
 	</select>
 	
 	<insert id="scheduleSave" parameterType="java.util.List">
-		insert into schedule(id,schedule_date,schedule_type,remark,create_date,creator,update_date,updater,del_flag) values 
+		insert into sys_schedule(id,schedule_date,schedule_type,remark,create_date,creator,update_date,updater,del_flag) values 
 		<foreach collection="list" index="index" item="item" open="" separator="," close="">   
 	        (#{item.id},#{item.scheduleDate},#{item.scheduleType},#{item.remark},#{item.createDate},#{item.creator},#{item.updateDate},#{item.updater},${item.delFlag})
     	</foreach>
 	</insert>
 	
 	<delete id="deleteByScheduleDate" parameterType="java.util.Map">
-		delete from schedule where schedule_date &gt;= #{startDate} and schedule_date&lt;= #{endDate}
+		delete from sys_schedule where schedule_date &gt;= #{startDate} and schedule_date&lt;= #{endDate}
 	</delete>
 	
 </mapper>

@@ -30,12 +30,10 @@ public interface DaoForMySql<T> {
 	public Long selectAllCountForMySql();//统计所有
 	
 	@Select(CommonConstant.EMPTY_VALUE)
+	public T selectByPkForMySql(Object id);//根据主键查询
+
+	@Select(CommonConstant.EMPTY_VALUE)
 	public List<T> selectAllByPagingForMySql(Map<String,Long> map);//分页查询(map的两个参数为:currentPage和pageSize)
 	
-	@Select(CommonConstant.EMPTY_VALUE)
-	public T selectByPkForMySql(Object id);//根据主键查询
-	
-	@Select(CommonConstant.EMPTY_VALUE)
-	public List<T> selectByConditionForMySql(Map<String,Object> map);//根据条件查询(不推荐使用)
 	
 }

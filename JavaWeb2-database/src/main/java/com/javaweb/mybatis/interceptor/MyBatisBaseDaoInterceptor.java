@@ -36,17 +36,8 @@ import com.javaweb.mybatis.apiImpl.mysql.HandleInsertForMySql;
 import com.javaweb.mybatis.apiImpl.mysql.HandleSelectAllByPagingForMySql;
 import com.javaweb.mybatis.apiImpl.mysql.HandleSelectAllCountForMySql;
 import com.javaweb.mybatis.apiImpl.mysql.HandleSelectAllForMySql;
-import com.javaweb.mybatis.apiImpl.mysql.HandleSelectByConditionForMySql;
 import com.javaweb.mybatis.apiImpl.mysql.HandleSelectByPkForMySql;
 import com.javaweb.mybatis.apiImpl.mysql.HandleUpdateForMySql;
-import com.javaweb.mybatis.apiImpl.oracle.HandleDeleteForOracle;
-import com.javaweb.mybatis.apiImpl.oracle.HandleInsertForOracle;
-import com.javaweb.mybatis.apiImpl.oracle.HandleSelectAllByPagingForOracle;
-import com.javaweb.mybatis.apiImpl.oracle.HandleSelectAllCountForOracle;
-import com.javaweb.mybatis.apiImpl.oracle.HandleSelectAllForOracle;
-import com.javaweb.mybatis.apiImpl.oracle.HandleSelectByConditionForOracle;
-import com.javaweb.mybatis.apiImpl.oracle.HandleSelectByPkForOracle;
-import com.javaweb.mybatis.apiImpl.oracle.HandleUpdateForOracle;
 import com.javaweb.util.core.DateUtil;
 
 /**
@@ -70,18 +61,9 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 		map.put("deleteForMySql",new HandleDeleteForMySql());
 		map.put("selectAllForMySql",new HandleSelectAllForMySql());
 		map.put("selectAllCountForMySql",new HandleSelectAllCountForMySql());
-		map.put("selectAllByPagingForMySql",new HandleSelectAllByPagingForMySql());
 		map.put("selectByPkForMySql",new HandleSelectByPkForMySql());
-		map.put("selectByConditionForMySql",new HandleSelectByConditionForMySql());
-		//oracle
-		map.put("insertForOracle",new HandleInsertForOracle());
-		map.put("updateForOracle",new HandleUpdateForOracle());
-		map.put("deleteForOracle",new HandleDeleteForOracle());
-		map.put("selectAllForOracle",new HandleSelectAllForOracle());
-		map.put("selectAllCountForOracle",new HandleSelectAllCountForOracle());
-		map.put("selectAllByPagingForOracle",new HandleSelectAllByPagingForOracle());
-		map.put("selectByPkForOracle",new HandleSelectByPkForOracle());
-		map.put("selectByConditionForOracle",new HandleSelectByConditionForOracle());
+		map.put("selectAllByPagingForMySql",new HandleSelectAllByPagingForMySql());
+		//can add other like oracle
 	}
 	
 	public Object intercept(Invocation invocation) throws Throwable {

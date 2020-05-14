@@ -11,7 +11,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@Table(name="interfaces")
+@Table(name="sys_interfaces")
 public class Interfaces extends BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = -627334587177260300L;

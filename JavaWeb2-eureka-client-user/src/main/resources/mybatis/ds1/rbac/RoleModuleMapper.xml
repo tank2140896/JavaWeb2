@@ -4,7 +4,7 @@
 <mapper namespace="com.javaweb.web.dao.ds1.RoleModuleDao">
 
 	<select id="getModuleIdsByRoleId" parameterType="java.lang.String" resultType="java.lang.String">
-		select module_id from role_module where role_id = #{_parameter}
+		select module_id from sys_role_module where role_id = #{_parameter}
 	</select>
 	
 </mapper>

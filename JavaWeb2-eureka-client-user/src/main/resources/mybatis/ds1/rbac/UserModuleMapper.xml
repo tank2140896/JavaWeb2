@@ -4,7 +4,7 @@
 <mapper namespace="com.javaweb.web.dao.ds1.UserModuleDao">
 
 	<select id="getModuleIdsByUserId" parameterType="java.lang.String" resultType="java.lang.String">
-		select module_id from user_module where user_id = #{_parameter}
+		select module_id from sys_user_module where user_id = #{_parameter}
 	</select>
 	
 </mapper>
