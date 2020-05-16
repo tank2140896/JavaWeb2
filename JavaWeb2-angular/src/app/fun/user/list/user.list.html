@@ -38,13 +38,14 @@
             <td>{{eachData.personName}}</td>
             <td *ngIf="eachData.roleName==null||eachData.roleName==''"><span style="color:red">未分配角色</span></td><td *ngIf="eachData.roleName!=null&&eachData.roleName!=''">{{eachData.roleName}}</td>
             <td>{{eachData.createDate}}</td>
-            <td *ngIf="eachData.status==null"></td><td *ngIf="eachData.status==0" style="color:#438b0e">正常</td><td *ngIf="eachData.status==1" style="color:red">异常</td>
+            <td *ngIf="eachData.status!=0 && eachData.status!=1" style="color:#ff189e">异常</td><td *ngIf="eachData.status==0" style="color:#438b0e">正常</td><td *ngIf="eachData.status==1" style="color:red">禁用</td>
             <td>
               <button style="margin-right:10px;" *ngIf="userDeleteZone" class="btn btn-sm btn-danger" (click)="userDeleteFunction(eachData.userId)">删除用户</button>
               <button style="margin-right:10px;" *ngIf="userModifyZone" class="btn btn-sm btn-warning" (click)="userModifyFunction(eachData.userId)">修改用户</button>
               <button style="margin-right:10px;" *ngIf="userDetailZone" class="btn btn-sm btn-info" (click)="userDetailFunction(eachData.userId)">用户详情</button>
               <button style="margin-right:10px;" *ngIf="userRoleAssignmentZone" class="btn btn-sm btn-primary" (click)="userRoleAssignmentFunction(eachData.userId)">用户角色分配</button>
-              <button *ngIf="userModuleAssignmentZone" class="btn btn-sm btn-primary" (click)="userModuleAssignmentFunction(eachData.userId)">用户模块分配</button>
+              <button style="margin-right:10px;" *ngIf="userModuleAssignmentZone" class="btn btn-sm btn-primary" (click)="userModuleAssignmentFunction(eachData.userId)">用户模块分配</button>
+              <button *ngIf="userModuleAssignmentZone" class="btn btn-sm btn-danger" (click)="userInitPasswordFunction(eachData.userId)">初始化密码</button>
             </td>
           </tr>
         </tbody>

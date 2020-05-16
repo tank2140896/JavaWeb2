@@ -80,6 +80,9 @@ public class AllOpenController extends BaseController {
 	        if(user==null){
 	            return getBaseResponseResult(HttpCodeEnum.LOGIN_FAIL,"login.user.userNameOrPassword");
 	        }
+	        if(user.getStatus()==1){
+	        	return getBaseResponseResult(HttpCodeEnum.LOGIN_FAIL,"login.user.userLocked");
+	        }
 	        user.setPassword(null);
 	        tokenData = getToken(false,user,userLoginRequest.getType());
 	        setDefaultDataToRedis(user.getUserId()+CommonConstant.COMMA+userLoginRequest.getType(),tokenData);

@@ -45,6 +45,7 @@ export class UserDetailComponent implements OnInit {
             this.userDetailResponse.personName = result.data.personName;//用户姓名
             this.userDetailResponse.email = result.data.email;//电子邮箱
             this.userDetailResponse.phone = result.data.phone;//手机号码
+            this.userDetailResponse.status = result.data.status;//用户状态
             this.userDetailResponse.remark = result.data.remark;//备注
           }else{
             alert(result.message);

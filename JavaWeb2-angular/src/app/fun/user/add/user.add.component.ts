@@ -25,10 +25,11 @@ export class UserAddComponent implements OnInit {
   }
 
   private userAddRequest:UserAddRequest = new UserAddRequest();//用户新增
+  private UserStateFromDictionaryData:any;
 
   //初始化
   ngOnInit(): void {
-
+    this.getUserStateFromDictionary();
   }
 
   //新增用户
@@ -49,6 +50,29 @@ export class UserAddComponent implements OnInit {
         complete:() => {}
       }
     );
+  }
+
+  //获取用户状态字典数据
+  public getUserStateFromDictionary():void {
+    this.httpService.postJsonData(ApiConstant.getPath(ApiConstant.GET_DICTIONARY,true),JSON.stringify({dataType:'user_state'}),this.sessionService.getHeadToken()).subscribe(
+      {
+        next:(result:any) => {
+          //console.log(result);
+          if(result.code==200){
+            this.UserStateFromDictionaryData = result.data;
+          }else{
+            alert(result.message);
+          }
+        },
+        error:e => {},
+        complete:() => {}
+      }
+    );
+  }
+
+  //下拉事件
+  public selectChangeModule($event):void{
+    this.userAddRequest.status=$event.target.value;
   }
 
   //返回

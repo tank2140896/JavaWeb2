@@ -3,6 +3,7 @@ package com.javaweb.web.service;
 import java.util.List;
 
 import com.javaweb.util.entity.Page;
+import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.role.ModuleInfoResponse;
 import com.javaweb.web.eo.role.RoleIdAndStrategyRequest;
 import com.javaweb.web.eo.user.RoleInfoResponse;
@@ -35,5 +36,7 @@ public interface UserService {
 	public void userModuleAssignment(String userId,List<String> list);
 	
 	public List<User> getAllUsers();
+	
+	public void userInitPassword(String userId,TokenData tokenData);
 	
 }

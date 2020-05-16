@@ -35,7 +35,7 @@ public class Interfaces extends BaseEntity implements Serializable {
 	private String unit;//单位
 	
 	@Column(name="counts")
-	private Integer counts;//次数
+	private String counts;//次数
 	
 	@Column(name="data_permission")
 	private Integer dataPermission;//数据权限（0:无数据权限；1：有数据权限）

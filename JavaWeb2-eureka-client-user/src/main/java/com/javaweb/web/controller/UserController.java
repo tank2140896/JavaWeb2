@@ -131,4 +131,11 @@ public class UserController extends BaseController {
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.userModuleAssignment.success",null);
 	}
 	
+	@ApiOperation(value=SwaggerConstant.SWAGGER_USER_INIT_PASSWORD)
+	@GetMapping(ApiConstant.USER_INIT_PASSWORD)
+	public BaseResponseResult userInitPassword(@PathVariable(name="userId",required=true) String userId,@TokenDataAnnotation TokenData tokenData){
+		userService.userInitPassword(userId,tokenData);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.init.password.success",null);
+	}
+	
 }

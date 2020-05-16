@@ -16,6 +16,12 @@
     <input disabled type="text" class="form-control" [(ngModel)]="userDetailResponse.phone">
   </div>
   <div class="form-group">
+    <label>用户状态</label>
+    <input disabled type="text" class="form-control" value="正常" *ngIf="userDetailResponse.status==0">
+    <input disabled type="text" class="form-control" value="禁用" *ngIf="userDetailResponse.status==1">
+    <input disabled type="text" class="form-control" value="异常" *ngIf="userDetailResponse.status!=0 && userDetailResponse.status!=1">
+  </div>
+  <div class="form-group">
     <label>备注</label>
     <input disabled type="text" class="form-control" [(ngModel)]="userDetailResponse.remark">
   </div>

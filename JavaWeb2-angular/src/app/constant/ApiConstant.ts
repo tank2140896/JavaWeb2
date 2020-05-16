@@ -24,6 +24,7 @@ export class ApiConstant{
   public static SYS_USER_ROLE_ASSIGNMENT = '/web/sys/user/userRoleAssignment';//用户角色分配
   public static SYS_USER_MODULE_INFO = '/web/sys/user/userModuleInfo';//用户模块信息
   public static SYS_USER_MODULE_ASSIGNMENT = '/web/sys/user/userModuleAssignment';//用户模块分配
+  public static SYS_USER_INIT_PASSWORD = '/web/sys/user/initPassword';//初始化密码
 
   public static SYS_ROLE_LIST = '/web/sys/role/list';//角色列表
   public static SYS_ROLE_DELETE = '/web/sys/role/delete';//删除角色
@@ -59,7 +60,7 @@ export class ApiConstant{
 
   public static SYS_ONLINE_USER_LIST = '/web/sys/onlineUser/list';//在线用户列表
   public static SYS_ONLINE_USER_OFFLINE = '/web/sys/onlineUser/offline';//用户下线
-  
+
   public static SYS_DB_TABLES_LIST = '/web/sys/dbTables/list';//数据库表列表
   public static SYS_DB_TABLES_DETAIL = '/web/sys/dbTables/detail';//数据库表详情
   public static SYS_DB_TABLES_CODE_GENERATE = '/web/sys/dbTables/codeGenerate';//数据库表代码生成接口

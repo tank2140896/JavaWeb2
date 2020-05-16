@@ -69,6 +69,7 @@ public class SwaggerConstant {
 	public static final String SWAGGER_USER_ROLE_ASSIGNMENT = "用户角色分配接口";
 	public static final String SWAGGER_USER_MODULE_INFO = "用户模块信息接口";
 	public static final String SWAGGER_USER_MODULE_ASSIGNMENT = "用户模块分配接口";
+	public static final String SWAGGER_USER_INIT_PASSWORD = "初始化密码接口";
 	/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ swagger-UserController ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */
 	
 	/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ swagger-DictionaryController ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */

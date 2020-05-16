@@ -10,6 +10,8 @@ export class UserAddRequest {
 
   phone:string;//手机号码
 
+  status:number;//用户状态
+
   remark:string;//备注
 
 }

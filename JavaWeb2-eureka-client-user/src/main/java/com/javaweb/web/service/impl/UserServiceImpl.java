@@ -9,15 +9,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.javaweb.base.BaseService;
+import com.javaweb.base.BaseSystemMemory;
 import com.javaweb.constant.SystemConstant;
+import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.SecretUtil;
+import com.javaweb.util.core.StringUtil;
 import com.javaweb.util.entity.Page;
+import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.role.ModuleInfoResponse;
 import com.javaweb.web.eo.role.RoleIdAndStrategyRequest;
 import com.javaweb.web.eo.user.RoleInfoResponse;
 import com.javaweb.web.eo.user.UserListRequest;
 import com.javaweb.web.eo.user.UserListResponse;
 import com.javaweb.web.eo.user.UserLoginRequest;
+import com.javaweb.web.po.Dictionary;
 import com.javaweb.web.po.User;
 import com.javaweb.web.po.UserModule;
 import com.javaweb.web.po.UserRole;
@@ -124,6 +129,29 @@ public class UserServiceImpl extends BaseService implements UserService {
 
 	public List<User> getAllUsers() {
 		return userDao.selectAllForMySql();
+	}
+
+	public void userInitPassword(String userId,TokenData tokenData) {
+		String initPassword = SystemConstant.SYSTEM_DEFAULT_USER_INIT_PASSWORD;
+		Dictionary dictionary = BaseSystemMemory.getDictionaryByKey("init.user.password");
+		if(dictionary!=null){
+			initPassword = StringUtil.handleNullString(dictionary.getValueCode());
+			if(initPassword.length()<6){
+				initPassword = SystemConstant.SYSTEM_DEFAULT_USER_INIT_PASSWORD;
+			}
+		}
+		try{
+			initPassword = SecretUtil.getSecret(initPassword,"SHA-256");
+		}catch(Exception e){ 
+			//do nothing
+		}
+		User user = new User();
+		user.setUserId(userId);
+		user.setPassword(initPassword);
+		user.setStatus(null);
+		user.setUpdater(tokenData.getUser().getUserId());
+		user.setUpdateDate(DateUtil.getDefaultDate());
+		userDao.updateForMySql(user);
 	}
 
 }

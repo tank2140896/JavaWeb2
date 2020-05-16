@@ -38,8 +38,8 @@
             <td>{{eachData.method}}</td>
             <td *ngIf="eachData.dataPermission==1" style="color:#06801f">是</td>
             <td *ngIf="eachData.dataPermission==0" style="color:#ff0b0c">否</td>
-            <td *ngIf="eachData.counts == null || eachData.times == null || eachData.unit == null" style="color:#06801f">无限制</td>
-            <td *ngIf="eachData.counts != null && eachData.times != null && eachData.unit != null" style="color:#ff0b0c">{{eachData.times}}{{eachData.unit}}{{eachData.counts}}次</td>
+            <td *ngIf="eachData.counts == null || eachData.counts.trim() == '' || eachData.times == null || eachData.times.trim() == '' || eachData.unit == null || eachData.unit.trim() == ''" style="color:#06801f">无限制</td>
+            <td *ngIf="eachData.counts != null && eachData.counts.trim() != '' && eachData.times != null && eachData.times.trim() != '' && eachData.unit != null && eachData.unit.trim() != ''" style="color:#ff0b0c">{{eachData.times}}{{eachData.unit}}{{eachData.counts}}次</td>
             <td>
               <button *ngIf="interfacesDetailZone" (click)="interfacesDetailFunction(eachData.id)" class="btn btn-sm btn-info" style="margin-right:10px;">接口详情</button>
               <button *ngIf="interfacesModifyZone" (click)="interfacesModifyFunction(eachData.id)" class="btn btn-sm btn-warning" style="margin-right:10px;">修改接口</button>

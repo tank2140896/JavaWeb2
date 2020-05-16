@@ -25,6 +25,7 @@ export class UserModifyComponent implements OnInit {
   }
 
   private userModifyRequest:UserModifyRequest = new UserModifyRequest();//用户修改
+  private UserStateFromDictionaryData:any;
 
   //初始化
   ngOnInit(): void {
@@ -46,7 +47,9 @@ export class UserModifyComponent implements OnInit {
             this.userModifyRequest.personName = result.data.personName;//用户姓名
             this.userModifyRequest.email = result.data.email;//电子邮箱
             this.userModifyRequest.phone = result.data.phone;//手机号码
+            this.userModifyRequest.status = result.data.status;//用户状态
             this.userModifyRequest.remark = result.data.remark;//备注
+            this.getUserStateFromDictionary();
           }else{
             alert(result.message);
           }
@@ -75,6 +78,29 @@ export class UserModifyComponent implements OnInit {
         complete:() => {}
       }
     );
+  }
+
+  //获取用户状态字典数据
+  public getUserStateFromDictionary():void {
+    this.httpService.postJsonData(ApiConstant.getPath(ApiConstant.GET_DICTIONARY,true),JSON.stringify({dataType:'user_state'}),this.sessionService.getHeadToken()).subscribe(
+      {
+        next:(result:any) => {
+          //console.log(result);
+          if(result.code==200){
+            this.UserStateFromDictionaryData = result.data;
+          }else{
+            alert(result.message);
+          }
+        },
+        error:e => {},
+        complete:() => {}
+      }
+    );
+  }
+
+  //下拉事件
+  public selectChangeModule($event):void{
+    this.userModifyRequest.status=$event.target.value;
   }
 
   //返回

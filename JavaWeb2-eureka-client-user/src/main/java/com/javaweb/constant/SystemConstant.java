@@ -36,7 +36,7 @@ public class SystemConstant {
 
 	public static final String URL_LOGIN_WEB_PERMISSION = "/web/loginAccess";
 	
-	public static final Pattern LOGGERED_URL = Pattern.compile(".*/web/.*(add|modify|delete|Assignment).*");
+	public static final Pattern LOGGERED_URL = Pattern.compile(".*/web/.*(add|modify|delete|Assignment|initPassword).*");
 	
 	public static final String ADMIN = "admin123456";
 	
@@ -49,6 +49,8 @@ public class SystemConstant {
 	public static final String REDIS_TEMPLATE = "redisTemplate";
 	
 	public static final String ENVIRONMENT = "environment";
+	
+	public static final String SYSTEM_DEFAULT_USER_INIT_PASSWORD = "abc123";
 	
 	public static final String SYSTEM_DEFAULT_USER_ID = ADMIN;
 	

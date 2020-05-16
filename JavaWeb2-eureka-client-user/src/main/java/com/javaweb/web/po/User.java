@@ -58,6 +58,6 @@ public class User extends BaseEntity implements Serializable {
 	private String remark;//备注
 	
 	@Column(name="status")
-	private Integer status = 0;//账号状态(0:正常)
+	private Integer status = 0;//账号状态(0:正常；1：禁用)
 
 }

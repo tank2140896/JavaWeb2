@@ -30,6 +30,7 @@ export class UserListComponent implements OnInit {
     this.userDetailZone = authService.canShow(ApiConstant.getPath(ApiConstant.SYS_USER_DETAIL,false));
     this.userRoleAssignmentZone = authService.canShow(ApiConstant.getPath(ApiConstant.SYS_USER_ROLE_ASSIGNMENT,false));
     this.userModuleAssignmentZone = authService.canShow(ApiConstant.getPath(ApiConstant.SYS_USER_MODULE_ASSIGNMENT,false));
+    this.userInitPasswordZone = authService.canShow(ApiConstant.getPath(ApiConstant.SYS_USER_INIT_PASSWORD,false));
   }
 
   /** 操作权限 start */
@@ -40,6 +41,7 @@ export class UserListComponent implements OnInit {
   userDetailZone:boolean;//用户详情
   userRoleAssignmentZone:boolean;//用户角色分配
   userModuleAssignmentZone:boolean;//用户模块分配
+  userInitPasswordZone:boolean;//初始化密码
   /** 操作权限 end */
 
   private userListRequest:UserListRequest = new UserListRequest();//用户列表搜索条件
@@ -127,6 +129,25 @@ export class UserListComponent implements OnInit {
   //用户模块分配
   public userModuleAssignmentFunction(userId:string):void {
     this.router.navigate(['userModuleAssignment'],{relativeTo:this.activatedRoute,queryParams:{userId:userId}});
+  }
+
+  //初始化密码
+  public userInitPasswordFunction(userId:string):void {
+    this.httpService.getJsonData(ApiConstant.getPath(ApiConstant.SYS_USER_INIT_PASSWORD+'/'+userId,true),this.sessionService.getHeadToken()).subscribe(
+      {
+        next:(result:any) => {
+          //console.log(result);
+          if(result.code==200){
+            this.userSearch(1);
+            alert('初始化密码成功');
+          }else{
+            alert('初始化密码失败');
+          }
+        },
+        error:e => {},
+        complete:() => {}
+      }
+    );
   }
 
 }
