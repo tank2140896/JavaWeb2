@@ -231,7 +231,7 @@ public class SecretUtil {
 		return Jwts.builder().setSubject(projectName)
 							 .setClaims(map)
 							 .setIssuedAt(new Date())
-		              	     .setExpiration(date/*new Date(System.currentTimeMillis()+SystemConstant.SYSTEM_DEFAULT_JWT_TIME_OUT*60*1000)*/)
+		              	     .setExpiration(date/*new Date(System.currentTimeMillis()+SystemConstant.SYSTEM_DEFAULT_JWT_TIME_OUT*60*1000)*/)//SYSTEM_DEFAULT_JWT_TIME_OUT = 5L;
 		              	     .signWith(SignatureAlgorithm.HS256,securityKey)
 		              	     .compact();
 	}

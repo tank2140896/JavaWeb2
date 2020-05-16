@@ -1,5 +1,7 @@
 package com.javaweb.constant;
 
+import java.util.regex.Pattern;
+
 import com.javaweb.web.po.User;
 
 public class SystemConstant {
@@ -34,9 +36,7 @@ public class SystemConstant {
 
 	public static final String URL_LOGIN_WEB_PERMISSION = "/web/loginAccess";
 	
-	public static final Long SYSTEM_DEFAULT_KAPTCHA_TIME_OUT = 5L;
-
-	public static final Long SYSTEM_DEFAULT_JWT_TIME_OUT = 5L;
+	public static final Pattern LOGGERED_URL = Pattern.compile(".*/web/.*(add|modify|delete|Assignment).*");
 	
 	public static final String ADMIN = "admin123456";
 	
