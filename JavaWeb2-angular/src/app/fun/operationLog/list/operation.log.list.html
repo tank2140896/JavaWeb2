@@ -12,6 +12,7 @@
         <tr class="text-center">
           <th>序号</th>
           <th>用户名</th>
+          <th>操作名称</th>
           <th>url</th>
           <th>请求IP地址</th>
           <th>请求时间</th>
@@ -31,6 +32,7 @@
         <tr *ngFor="let eachData of resultPage.data;let xh=index" class="text-center">
           <td>{{(xh+1)+(resultPage.currentPage-1)*resultPage.pageSize}}</td>
           <td>{{eachData.userName}}</td>
+          <td>{{eachData.operateName}}</td>
           <td>{{eachData.url}}</td>
           <td>{{eachData.requestIpAddress}}</td>
           <td>{{eachData.requestTime}}</td>
