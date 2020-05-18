@@ -19,4 +19,6 @@ public class OperationLogListResponse implements Serializable {
 	
 	private String requestTime;
 	
+	private String operateName;
+	
 }
