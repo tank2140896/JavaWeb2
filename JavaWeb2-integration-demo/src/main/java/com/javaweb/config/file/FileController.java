@@ -31,7 +31,7 @@ public class FileController {
 					         //如果面对N多个文件上传控件,似乎没有什么办法
 					         //@RequestParam MultipartFile file1,
 					         //@RequestParam MultipartFile file2,
-					         @RequestParam/*("myFile")*/ MultipartFile myFile,
+					         @RequestParam(value="myFile"/*与前端统一*/) MultipartFile myFile,
 							 String myData) {
 		try{
 			//System.out.println(myData);
