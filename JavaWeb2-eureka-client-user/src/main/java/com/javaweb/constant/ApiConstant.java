@@ -30,6 +30,8 @@ public class ApiConstant {
 	public static final String USER_MODULE_INFO2 = "/userModuleInfo";//用户模块信息接口（所有模块信息）
 	public static final String USER_MODULE_ASSIGNMENT = "/userModuleAssignment/{userId}";//用户模块分配接口
 	public static final String USER_INIT_PASSWORD = "/initPassword/{userId}";//初始化密码接口
+	public static final String USER_PORTRAIT_UPLOAD = "/portraitUpload/{userId}";//用户头像上传接口
+	public static final String USER_USER_PORTRAIT = "/userPortrait/{userId}";//获取用户头像接口
 	
 	public static final String WEB_ROLE_PREFIX = "/web/sys/role";
 	public static final String ROLE_ADD = "/add";//新增角色接口
