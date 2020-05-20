@@ -20,6 +20,8 @@ CREATE TABLE `sys_data_permission` (
 -- ----------------------------
 -- Records of sys_data_permission
 -- ----------------------------
+INSERT INTO `sys_data_permission` VALUES ('202005161319472631', 'userName,status', '202005161425051821', null, '2020-05-16 13:19:47', 'admin123456', null, null, '0');
+INSERT INTO `sys_data_permission` VALUES ('202005161319472701', 'createDate', '202005161425051821', null, '2020-05-16 13:19:47', 'admin123456', null, null, '0');
 
 -- ----------------------------
 -- Table structure for `sys_dictionary`
