@@ -13,6 +13,7 @@
         <thead>
         <tr class="text-center">
           <th>序号</th>
+          <th>分类</th>
           <th>数据类型</th>
           <th>key值</th>
           <th>value值</th>
@@ -34,6 +35,7 @@
         <tbody *ngIf="resultPage.data!=null&&resultPage.data!=resultPage.dataLoading">
         <tr *ngFor="let eachData of resultPage.data;let xh=index" class="text-center">
           <td>{{(xh+1)+(resultPage.currentPage-1)*resultPage.pageSize}}</td>
+          <td>{{eachData.category}}</td>
           <td>{{eachData.dataType}}</td>
           <td>{{eachData.keyCode}}</td>
           <td>{{eachData.valueCode}}</td>
