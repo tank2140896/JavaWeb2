@@ -25,6 +25,11 @@
     <label>备注</label>
     <input type="text" class="form-control" [(ngModel)]="userModifyRequest.remark">
   </div>
+  <div class="form-group">
+    <label>头像</label>
+    <img id='img' authSrc='' class="form-control" style="height:200px;width: 200px;"/>
+    <input type="file" multiple="multiple" (change)="portraitSelect($event)" class="form-control"><!-- multiple="multiple" -->
+  </div>
   <button type="button" (click)="userModify()" class="btn btn-primary">提交</button>
   <button type="button" (click)="userModifyBack()" class="btn btn-primary" style="margin-left:1%;">返回</button>
 </div>
