@@ -1,19 +1,27 @@
 package com.javaweb.web.service.impl;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.javaweb.base.BaseService;
 import com.javaweb.base.BaseSystemMemory;
+import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.util.core.DateUtil;
+import com.javaweb.util.core.FileUtil;
 import com.javaweb.util.core.SecretUtil;
 import com.javaweb.util.core.StringUtil;
+import com.javaweb.util.core.SystemUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.role.ModuleInfoResponse;
@@ -46,6 +54,10 @@ public class UserServiceImpl extends BaseService implements UserService {
 	public void userDelete(String userId) {
 		String userIds[] = userId.split(",");
 		for(String id:userIds){
+			User user = userDao.selectByPkForMySql(userId);
+			if(user.getPortrait()!=null){
+				new File(user.getPortrait()).delete();
+			}
 			userDao.userDelete(id);
 		}
 	}
@@ -152,6 +164,68 @@ public class UserServiceImpl extends BaseService implements UserService {
 		user.setUpdater(tokenData.getUser().getUserId());
 		user.setUpdateDate(DateUtil.getDefaultDate());
 		userDao.updateForMySql(user);
+	}
+
+	@Transactional
+	public void userPortraitUpload(String userId,MultipartFile multipartFile) {
+		String uploadMultipartFileName = multipartFile.getOriginalFilename();//得到上传文件的文件名称
+		String uploadFileTypes[] = uploadMultipartFileName.split("\\.");
+		String uploadFileName = userId+CommonConstant.DOT+uploadFileTypes[uploadFileTypes.length-1];
+		String rootPath = getRootPath();
+		FileUtil.makeFolder(new File(rootPath));
+		boolean writeSuccess = true;
+		try{
+			FileUtil.writeFile(multipartFile.getInputStream(),new byte[1024],new File(rootPath+uploadFileName));
+		}catch(IOException e){
+			writeSuccess = false;
+		}
+		if(writeSuccess){
+			User user = userDao.selectByPkForMySql(userId);
+			if(user!=null){
+				user.setPortrait(rootPath+uploadFileName);
+				userDao.updateForMySql(user);
+			}
+		}
+	}
+	
+	private String getRootPath(){
+		String rootPath = CommonConstant.EMPTY_VALUE;
+		if(SystemUtil.isLinux()){//linux路径
+			Dictionary dictionary = BaseSystemMemory.getDictionaryByKey("user.portrait.linux.path");
+			if(dictionary!=null){
+				rootPath = StringUtil.handleNullString(dictionary.getValueCode());
+				if(!CommonConstant.EMPTY_VALUE.equals(rootPath)){
+					return rootPath;
+				}
+			}
+			return rootPath = SystemConstant.SYSTEM_DEFAULT_USER_INIT_PASSWORD;
+		}else{//windows路径
+			Dictionary dictionary = BaseSystemMemory.getDictionaryByKey("user.portrait.windows.path");
+			if(dictionary!=null){
+				rootPath = StringUtil.handleNullString(dictionary.getValueCode());
+				if(!CommonConstant.EMPTY_VALUE.equals(rootPath)){
+					return rootPath;
+				}
+			}
+			return rootPath = SystemConstant.SYSTEM_DEFAULT_USER_PORTRAIT_WINDOWS_PATH;
+		}
+	}
+
+	public void userPortrait(String userId,HttpServletResponse httpServletResponse) {
+		User user = userDao.selectByPkForMySql(userId);
+		if(user!=null){
+			String portrait = user.getPortrait();
+			if(portrait!=null){
+				File file = new File(portrait);
+				if(file.exists()){
+					try {
+						FileUtil.downloadFile(httpServletResponse.getOutputStream(),new byte[1024],file);
+					} catch (IOException e) {
+						//do nothing
+					}
+				}
+			}
+		}
 	}
 
 }
