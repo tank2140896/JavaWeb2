@@ -27,7 +27,7 @@
 		<if test="dataType != null and dataType != ''">and data_type like CONCAT('%',#{dataType},'%')</if>
 		<if test="keyCode != null and keyCode != ''">and key_code like CONCAT('%',#{keyCode},'%')</if>
 		<if test="means != null and means != ''">and means like CONCAT('%',#{means},'%')</if>
-		order by data_type asc,value_code asc
+		order by category desc,value_code asc
 		limit ${(currentPage-1)*pageSize},${pageSize}
 	</select>
 	
