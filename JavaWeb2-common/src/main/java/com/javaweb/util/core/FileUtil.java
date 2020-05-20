@@ -107,6 +107,7 @@ public class FileUtil {
 			while ((n=inputStream.read(buffer)) != -1) {
 				outputStream.write(buffer,0,n);
 			}
+			inputStream.close();
 		} catch (IOException e) {
 			throw new IOException(e);
 		} 
@@ -119,6 +120,7 @@ public class FileUtil {
 			while ((n=inputStream.read(buffer)) != -1) {
 				outputStream.write(buffer,0,n);
 			}
+			inputStream.close();
 		} catch (IOException e) {
 			throw new IOException(e);
 		}
@@ -139,6 +141,7 @@ public class FileUtil {
 			while ((n=inputStream.read(buffer)) != -1) {
 				outputStream.write(buffer,0,n);
 			}
+			outputStream.close();
 		} catch (IOException e) {
 			throw new IOException(e);
 		} 
@@ -151,6 +154,7 @@ public class FileUtil {
 			while ((n=inputStream.read(buffer)) != -1) {
 				outputStream.write(buffer,0,n);
 			}
+			outputStream.close();
 		} catch (IOException e) {
 			throw new IOException(e);
 		} 
