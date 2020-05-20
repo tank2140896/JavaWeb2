@@ -6,6 +6,7 @@ import {AuthService} from '../../../service/AuthService';
 import {SessionService} from '../../../service/SessionService';
 import {ApiConstant} from '../../../constant/ApiConstant';
 import {UserDetailResponse} from '../../../model/user/UserDetailResponse';
+import {CommonConstant} from '../../../constant/CommonConstant';
 
 @Component({
   selector: 'app-web-user-detail',
@@ -47,6 +48,7 @@ export class UserDetailComponent implements OnInit {
             this.userDetailResponse.phone = result.data.phone;//手机号码
             this.userDetailResponse.status = result.data.status;//用户状态
             this.userDetailResponse.remark = result.data.remark;//备注
+            this.userPortrait(userId,result.data.portrait);
           }else{
             alert(result.message);
           }
@@ -55,6 +57,41 @@ export class UserDetailComponent implements OnInit {
         complete:() => {}
       }
     );
+  }
+
+  public userPortrait(userId:string,portrait:string):void {
+    if(portrait==null||portrait==CommonConstant.EMPTY){
+      let img = document.getElementById('img');
+      // @ts-ignore
+      img.src = '../../../../assets/image/user/portrait.jpg';
+      img.onload = () => {
+        // @ts-ignore
+        URL.revokeObjectURL(img.src);
+      }
+    }else{
+      Object.defineProperty(Image.prototype, 'authSrc', {
+        writable : true,
+        enumerable : true,
+        configurable : true
+      })
+      let img = document.getElementById('img');
+      //let url = img.getAttribute('authSrc');
+      let request = new XMLHttpRequest();
+      request.responseType = 'blob';
+      request.open('get',ApiConstant.getPath(ApiConstant.SYS_USER_PORTRAIT+'/'+userId,true), true);
+      request.setRequestHeader('token', this.sessionService.getHeadToken().token);
+      request.onreadystatechange = e => {
+        if (request.readyState == XMLHttpRequest.DONE && request.status == 200) {
+          // @ts-ignore
+          img.src = URL.createObjectURL(request.response);
+          img.onload = () => {
+            // @ts-ignore
+            URL.revokeObjectURL(img.src);
+          }
+        }
+      };
+      request.send(null);
+    }
   }
 
   //返回
