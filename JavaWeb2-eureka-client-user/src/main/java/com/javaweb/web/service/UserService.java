@@ -2,6 +2,10 @@ package com.javaweb.web.service;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.web.multipart.MultipartFile;
+
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.role.ModuleInfoResponse;
@@ -38,5 +42,9 @@ public interface UserService {
 	public List<User> getAllUsers();
 	
 	public void userInitPassword(String userId,TokenData tokenData);
+	
+	public void userPortraitUpload(String userId,MultipartFile multipartFile);
+
+	public void userPortrait(String userId,HttpServletResponse httpServletResponse);
 	
 }
