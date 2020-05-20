@@ -41,8 +41,8 @@
 		</where>
 		<!-- 
 		mysql这里如果要展示树形结构的层次顺序仅仅使用order by是办不到的
-		也没有类似oracle的SELECT * from sys_module p start with p.module_type = 1 CONNECT BY prior p.id = p.parent_id
-		因此需要手动写函数实现 
+		也没有类似oracle的SELECT * from sys_module p start with p.module_type = 1 CONNECT BY prior p.id = p.parent_id and 1=1 ORDER SIBLINGS BY p.orders asc	
+                因此需要手动写函数实现 
 		-->
 		order by m.module_type asc,m.orders asc
 		limit ${(currentPage-1)*pageSize},${pageSize}
