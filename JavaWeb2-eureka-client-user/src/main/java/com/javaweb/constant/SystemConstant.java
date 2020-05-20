@@ -52,6 +52,10 @@ public class SystemConstant {
 	
 	public static final String SYSTEM_DEFAULT_USER_INIT_PASSWORD = "abc123";
 	
+	public static final String SYSTEM_DEFAULT_USER_PORTRAIT_LINUX_PATH = "/tmp/user_portrait/";
+	
+	public static final String SYSTEM_DEFAULT_USER_PORTRAIT_WINDOWS_PATH = "E:\\user_portrait\\";
+	
 	public static final String SYSTEM_DEFAULT_USER_ID = ADMIN;
 	
 	public static final String SYSTEM_DEFAULT_USER_NAME = ADMIN;
