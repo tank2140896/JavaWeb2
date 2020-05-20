@@ -22,12 +22,16 @@
   <div class="form-group">
     <label>用户状态</label>
     <select (change)="selectChangeModule($event)" class="form-control">
-      <option *ngFor="let eachData of UserStateFromDictionaryData;" [selected]="eachData.valueCode=='0'" value="{{eachData.valueCode}}">{{eachData.means}}</option>
+      <option *ngFor="let eachData of userStateFromDictionaryData;" [selected]="eachData.valueCode=='0'" value="{{eachData.valueCode}}">{{eachData.means}}</option>
     </select>
   </div>
   <div class="form-group">
     <label>备注</label>
     <input type="text" class="form-control" [(ngModel)]="userAddRequest.remark">
+  </div>
+  <div class="form-group">
+    <label>头像</label>
+    <input type="file" multiple="multiple" (change)="portraitSelect($event)" class="form-control"><!-- multiple="multiple" -->
   </div>
   <button type="button" (click)="userAdd()" class="btn btn-primary">提交</button>
   <button type="button" (click)="userAddBack()" class="btn btn-primary" style="margin-left:1%;">返回</button>
