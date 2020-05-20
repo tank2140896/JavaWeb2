@@ -2,6 +2,8 @@ package com.javaweb.web.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.javaweb.annotation.token.TokenDataAnnotation;
 import com.javaweb.annotation.url.DataPermission;
@@ -54,7 +58,7 @@ public class UserController extends BaseController {
 			user.setCreateDate(DateUtil.getDefaultDate());
 			user.setCreator(currentUser.getUserName());
 			userService.userAdd(user);
-			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.add.success",null);
+			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.add.success",user.getUserId());
 		}
 	}
 	
@@ -77,7 +81,7 @@ public class UserController extends BaseController {
 			user.setUpdateDate(DateUtil.getDefaultDate());
 			user.setUpdater(currentUser.getUserName());
 			userService.userModify(user);
-			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.modify.success",null);
+			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.modify.success",user.getUserId());
 		}
 	}
 	
@@ -136,6 +140,19 @@ public class UserController extends BaseController {
 	public BaseResponseResult userInitPassword(@PathVariable(name="userId",required=true) String userId,@TokenDataAnnotation TokenData tokenData){
 		userService.userInitPassword(userId,tokenData);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.init.password.success",null);
+	}
+	
+	@ApiOperation(value=SwaggerConstant.SWAGGER_USER_PORTRAIT_UPLOAD)
+	@PostMapping(ApiConstant.USER_PORTRAIT_UPLOAD)
+	public BaseResponseResult userPortraitUpload(@TokenDataAnnotation TokenData tokenData,@PathVariable(name="userId",required=true) String userId,@RequestParam(value="userPortraitFile") MultipartFile multipartFile){
+		userService.userPortraitUpload(userId,multipartFile);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.portrait.upload.success",null);
+	}
+	
+	@ApiOperation(value=SwaggerConstant.SWAGGER_USER_PORTRAIT)
+	@GetMapping(ApiConstant.USER_USER_PORTRAIT)
+	public void userPortrait(@PathVariable(name="userId",required=true) String userId,HttpServletResponse httpServletResponse){
+		userService.userPortrait(userId,httpServletResponse);
 	}
 	
 }
