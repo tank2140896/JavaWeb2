@@ -212,16 +212,18 @@ public class UserServiceImpl extends BaseService implements UserService {
 	}
 
 	public void userPortrait(String userId,HttpServletResponse httpServletResponse) {
-		User user = userDao.selectByPkForMySql(userId);
-		if(user!=null){
-			String portrait = user.getPortrait();
-			if(portrait!=null){
-				File file = new File(portrait);
-				if(file.exists()){
-					try {
-						FileUtil.downloadFile(httpServletResponse.getOutputStream(),new byte[1024],file);
-					} catch (IOException e) {
-						//do nothing
+		if(userId!=null){
+			User user = userDao.selectByPkForMySql(userId);
+			if(user!=null){
+				String portrait = user.getPortrait();
+				if(portrait!=null){
+					File file = new File(portrait);
+					if(file.exists()){
+						try {
+							FileUtil.downloadFile(httpServletResponse.getOutputStream(),new byte[1024],file);
+						} catch (IOException e) {
+							//do nothing
+						}
 					}
 				}
 			}
