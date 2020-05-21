@@ -58,10 +58,7 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 		}
 		Long redisSessionTimeout = Long.parseLong(environment.getProperty("redis.session.timeout"));//获得配置文件中redis设置session失效的时间
 		String servletPath = request.getServletPath();
-		TokenData tokenData = parameterWayCheck(request);
-		if(tokenData==null){
-			tokenData = headerWayCheck(request);
-		}
+		TokenData tokenData = BaseTool.getTokenData(BaseTool.getToken(request),redisTemplate);
 		if(tokenData==null){
 			request.getRequestDispatcher(ApiConstant.INVALID_REQUEST).forward(request,response);
 			return false;
@@ -98,21 +95,6 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
             }
         }
 	    return false;
-	}
-	
-	//1、支持问号传参方式
-	private TokenData parameterWayCheck(HttpServletRequest request){
-		TokenData tokenData = null;
-		String token = request.getParameter(SystemConstant.HEAD_TOKEN);
-		if(token!=null){
-			tokenData = BaseTool.getTokenData(token,redisTemplate);
-		}
-		return tokenData;
-	}
-	
-	//2、支持header传参方式
-	private TokenData headerWayCheck(HttpServletRequest request){
-		return BaseTool.getTokenData(request,redisTemplate);
 	}
 
 }
