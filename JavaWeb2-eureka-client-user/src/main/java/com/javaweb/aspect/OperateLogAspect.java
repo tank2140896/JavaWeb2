@@ -6,7 +6,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -17,7 +16,6 @@ import com.javaweb.base.BaseSystemMemory;
 import com.javaweb.base.BaseTool;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
-import com.javaweb.context.ApplicationContextHelper;
 import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.HttpUtil;
 import com.javaweb.util.core.SecretUtil;
@@ -32,7 +30,7 @@ import net.sf.json.JSONObject;
 @Component
 public class OperateLogAspect {
 	
-	private RedisTemplate<String,Object> redisTemplate = null;
+	
 	
 	@Autowired
 	private OperationLogService operationLogService;
@@ -54,13 +52,7 @@ public class OperateLogAspect {
 		return object;
 	}
 	
-	@SuppressWarnings("unchecked")
-	private RedisTemplate<String,Object> getRedisTemplate(){
-		if(redisTemplate==null){
-			redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
-		}
-		return redisTemplate;
-	}
+
 	
 	private Boolean getOperatelogOpenFlag(){
 		Boolean open = false;
@@ -76,7 +68,7 @@ public class OperateLogAspect {
 	}
 	
 	private void saveOperationLog(HttpServletRequest httpServletRequest,String url,ProceedingJoinPoint joinPoint){
-		TokenData tokenData = BaseTool.getTokenData(httpServletRequest,getRedisTemplate());
+		TokenData tokenData = BaseTool.getTokenData(BaseTool.getToken(httpServletRequest));
 		if(tokenData!=null){
 			OperationLog operationLog = new OperationLog();
 			operationLog.setId(SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO));
