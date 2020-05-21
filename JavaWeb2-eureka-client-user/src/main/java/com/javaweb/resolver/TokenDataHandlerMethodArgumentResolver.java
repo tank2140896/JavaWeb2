@@ -22,23 +22,13 @@ public class TokenDataHandlerMethodArgumentResolver implements HandlerMethodArgu
         return parameter.getParameterType().isAssignableFrom(TokenData.class) && parameter.hasParameterAnnotation(TokenDataAnnotation.class);
     }
     
+    //这里不建议将NativeWebRequest转为HttpServeltRequest
+    @SuppressWarnings("unchecked")
 	public Object resolveArgument(MethodParameter parameter,ModelAndViewContainer container,NativeWebRequest request,WebDataBinderFactory factory) throws Exception {
-		String token = request.getParameter(SystemConstant.HEAD_TOKEN);
-		if(token==null){
-			token = request.getHeader(SystemConstant.HEAD_TOKEN);
-		}
-		if(token==null){
-			throw new TokenExpiredException();
-		}
-		return TokenDataHandlerMethodArgumentResolver.getTokenData(redisTemplate,token);
-    }
-    
-	@SuppressWarnings("unchecked")
-    public static TokenData getTokenData(RedisTemplate<String,Object> redisTemplate,String token) throws Exception {
-    	if(redisTemplate==null){
+		if(redisTemplate==null){
 			redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
 		}
-		TokenData tokenData = BaseTool.getTokenData(token,redisTemplate);
+		TokenData tokenData = BaseTool.getTokenData(BaseTool.getToken(request),redisTemplate);
 		if(tokenData==null){
 			throw new TokenExpiredException();
 		}
