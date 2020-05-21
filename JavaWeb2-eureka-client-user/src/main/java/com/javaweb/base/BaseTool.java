@@ -9,17 +9,21 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
+import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.context.request.NativeWebRequest;
 
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
+import com.javaweb.context.ApplicationContextHelper;
 import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.util.core.SecretUtil;
 import com.javaweb.web.eo.TokenData;
 
 public class BaseTool extends BaseInject {
+	
+	private static RedisTemplate<String,Object> redisTemplate = null;
 	
 	@Resource(name="redisTemplate")
 	protected ValueOperations<Object,Object> valueOperations;
@@ -58,19 +62,41 @@ public class BaseTool extends BaseInject {
 		return token;
 	}
 	
-	public static TokenData getTokenData(String token,RedisTemplate<String,Object> redisTemplate){
+	//优先获取header里的token
+	public static String getToken(ServerHttpRequest serverHttpRequest){
+		String token = serverHttpRequest.getHeaders().getFirst(SystemConstant.HEAD_TOKEN);//1、支持header传参方式
+		if(token==null){
+			try{
+				token = serverHttpRequest.getURI().getPath();//2、支持问号传参方式
+				token = token.split(SystemConstant.HEAD_TOKEN+"=")[1].split("&")[0];
+			}catch(Exception e){
+				//do nothing
+			}
+		}
+		return token;
+	}
+	
+	public static TokenData getTokenData(String token){
 		TokenData tokenData = null;
 		try{
 			if(token!=null){
 				token = SecretUtil.base64DecoderString(token,"UTF-8");
 		    	String tokens[] = token.split(CommonConstant.COMMA);//token由三部分组成：token,userId,type
 		    	token = tokens[1]+CommonConstant.COMMA+tokens[2];//userId+type
-		    	tokenData = (TokenData)(redisTemplate.opsForValue().get(token));
+		    	tokenData = (TokenData)(getRedisTemplate().opsForValue().get(token));
 			}
 		}catch(Exception e){
 			//do nothing
 		}
 		return tokenData;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public static RedisTemplate<String,Object> getRedisTemplate(){
+		if(redisTemplate==null){
+			redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
+		}
+		return redisTemplate;
 	}
 	
 	public String getMessage(String messageKey){
