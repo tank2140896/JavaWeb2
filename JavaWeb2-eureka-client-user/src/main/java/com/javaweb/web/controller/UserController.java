@@ -2,6 +2,7 @@ package com.javaweb.web.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.validation.BindingResult;
@@ -151,8 +152,8 @@ public class UserController extends BaseController {
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_USER_PORTRAIT)
 	@GetMapping(ApiConstant.USER_USER_PORTRAIT)
-	public void userPortrait(@PathVariable(name="userId",required=true) String userId,HttpServletResponse httpServletResponse){
-		userService.userPortrait(userId,httpServletResponse);
+	public void userPortrait(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse){
+		userService.userPortrait(httpServletRequest.getParameter(SystemConstant.HEAD_USERID),httpServletResponse);
 	}
 	
 }
