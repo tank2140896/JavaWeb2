@@ -38,7 +38,7 @@
             <td>{{eachData.personName}}</td>
             <td *ngIf="eachData.roleName==null||eachData.roleName==''"><span style="color:red">未分配角色</span></td><td *ngIf="eachData.roleName!=null&&eachData.roleName!=''">{{eachData.roleName}}</td>
             <td>{{eachData.createDate}}</td>
-            <td *ngIf="eachData.status!=0 && eachData.status!=1" style="color:#ff189e">异常</td><td *ngIf="eachData.status==0" style="color:#438b0e">正常</td><td *ngIf="eachData.status==1" style="color:red">禁用</td>
+            <td *ngIf="eachData.status!=0 && eachData.status!=1"></td><td *ngIf="eachData.status==0" style="color:#438b0e">正常</td><td *ngIf="eachData.status==1" style="color:red">禁用</td>
             <td>
               <button style="margin-right:10px;" *ngIf="userDeleteZone" class="btn btn-sm btn-danger" (click)="userDeleteFunction(eachData.userId)">删除用户</button>
               <button style="margin-right:10px;" *ngIf="userModifyZone" class="btn btn-sm btn-warning" (click)="userModifyFunction(eachData.userId)">修改用户</button>
