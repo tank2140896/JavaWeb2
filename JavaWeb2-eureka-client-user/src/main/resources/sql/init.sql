@@ -20,8 +20,8 @@ CREATE TABLE `sys_data_permission` (
 -- ----------------------------
 -- Records of sys_data_permission
 -- ----------------------------
-INSERT INTO `sys_data_permission` VALUES ('202005161319472631', 'userName,status', '202005161425051821', null, '2020-05-16 13:19:47', 'admin123456', null, null, '0');
-INSERT INTO `sys_data_permission` VALUES ('202005161319472701', 'createDate', '202005161425051821', null, '2020-05-16 13:19:47', 'admin123456', null, null, '0');
+INSERT INTO `sys_data_permission` VALUES ('202005211447517101', 'userName,personName', '202005161425051821', null, '2020-05-21 14:47:51', 'admin123456', null, null, '0');
+INSERT INTO `sys_data_permission` VALUES ('202005211447517191', 'status', '202005161425051821', null, '2020-05-21 14:47:51', 'admin123456', null, null, '0');
 
 -- ----------------------------
 -- Table structure for `sys_dictionary`
@@ -66,7 +66,7 @@ INSERT INTO `sys_dictionary` VALUES ('202003282119469071', null, null, '0', 'mod
 INSERT INTO `sys_dictionary` VALUES ('202003282119469151', null, null, '0', 'del_flag', 'delete', '1', '字典类', '2', '删除', '0', null, '删除标记', '2020-05-14 20:46:46', 'admin123456', null, null, '0');
 INSERT INTO `sys_dictionary` VALUES ('202003282119469221', null, null, '0', 'user_role_strategy', 'basedOnUser', '3', '字典类', '4', '以用户权限为准', '0', null, '用户角色策略', '2020-05-14 20:46:46', 'admin123456', null, null, '0');
 INSERT INTO `sys_dictionary` VALUES ('202003282119469301', null, null, '0', 'user_role_strategy', 'customize', '0', '字典类', '1', '自定义', '0', null, '用户角色策略', '2020-05-14 20:46:46', 'admin123456', null, null, '0');
-INSERT INTO `sys_dictionary` VALUES ('202005142045309911', null, null, '0', 'operatelog', 'operatelog.aspect.open', 'false', '配置类', '0', '是否开启接口请求操作日志记录', '0', null, '操作日志', '2020-05-14 20:46:46', 'admin123456', '2020-05-16 10:10:34', 'admin123456', '0');
+INSERT INTO `sys_dictionary` VALUES ('202005142045309911', null, null, '0', 'operatelog', 'operatelog.aspect.open', 'false', '配置类', '0', '是否开启接口请求操作日志记录', '0', null, '操作日志', '2020-05-14 20:46:46', 'admin123456', '2020-05-21 14:51:10', 'admin123456', '0');
 INSERT INTO `sys_dictionary` VALUES ('202005142045309912', null, null, '0', 'user_state', 'normal', '0', '字典类', '1', '正常', '0', null, '用户状态', '2020-05-14 20:46:46', 'admin123456', null, null, '0');
 INSERT INTO `sys_dictionary` VALUES ('202005142045309913', null, null, '0', 'user_state', 'forbid', '1', '字典类', '2', '禁用', '0', null, '用户状态', '2020-05-14 20:46:46', 'admin123456', null, null, '0');
 INSERT INTO `sys_dictionary` VALUES ('202005142045309914', null, null, '0', 'password', 'init.user.password', 'abc123', '配置类', '1', '初始化密码', '0', null, '密码', '2020-05-14 20:46:46', 'admin123456', '2020-05-16 14:15:17', 'admin123456', '0');
@@ -98,67 +98,67 @@ CREATE TABLE `sys_interfaces` (
 -- ----------------------------
 -- Records of sys_interfaces
 -- ----------------------------
-INSERT INTO `sys_interfaces` VALUES ('202005161425050731', '用户登录接口', '/webLogin', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425050781', '获取服务器时间接口', '/getServeTime', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425050801', '请求失效接口', '/invalidRequest', 'GET, POST, PUT, DELETE', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425050821', '请求接口不存在接口', '/notFound', 'GET, POST, PUT, DELETE', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425050841', '没有权限接口', '/noAuthory', 'GET, POST, PUT, DELETE', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425050861', '系统异常接口', '/internalError', 'GET, POST, PUT, DELETE', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425050881', '请求参数缺失接口', '/requestParameterLost', 'GET, POST, PUT, DELETE', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425050901', '请求参数错误接口', '/requestParameterError', 'GET, POST, PUT, DELETE', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425050921', '数据库表详情接口', '/web/sys/dbTables/detail/{tableName}', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425050941', '数据库表列表接口', '/web/sys/dbTables/list', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425050961', '数据库表代码生成接口', '/web/sys/dbTables/codeGenerate/{tableName}', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425050981', '查询字典接口', '/web/sys/dictionary/list', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051001', '修改字典接口', '/web/sys/dictionary/modify', 'PUT', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051021', '删除字典接口', '/web/sys/dictionary/delete/{dictionaryId}', 'DELETE', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051041', '新增字典接口', '/web/sys/dictionary/add', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051061', '字典详情接口', '/web/sys/dictionary/detail/{dictionaryId}', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051081', '接口列表接口', '/web/sys/interfaces/list', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051131', '接口详情接口', '/web/sys/interfaces/detail/{interfacesId}', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051181', '修改接口接口', '/web/sys/interfaces/modify', 'PUT', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051201', '用户角色数据权限接口', '/web/sys/interfaces/userRoleDataPermission', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051221', '数据权限分配接口', '/web/sys/interfaces/dataPermissionAssignment/{interfacesId}', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051241', '用户登出接口', '/web/loginAccess/logout', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051261', '获得字典信息接口', '/web/loginAccess/getDictionary', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051281', '获取redis中的token信息接口', '/web/loginAccess/getRedisTokenData', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051291', '查询模块接口', '/web/sys/module/list', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051311', '修改模块接口', '/web/sys/module/modify', 'PUT', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051331', '模块详情接口', '/web/sys/module/detail/{moduleId}', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051351', '新增模块接口', '/web/sys/module/add', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051371', '删除模块接口', '/web/sys/module/delete/{moduleId}', 'DELETE', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051391', '获取模块ID和模块名称列表接口', '/web/sys/module/getModuleIdAndNameList/{moduleType}', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051411', '在线用户列表接口', '/web/sys/onlineUser/list', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051441', '用户下线接口', '/web/sys/onlineUser/offline/{key}', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051461', '查询操作日志接口', '/web/sys/operationLog/list', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051481', '删除角色接口', '/web/sys/role/delete/{roleId}', 'DELETE', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051501', '角色模块信息接口', '/web/sys/role/roleModuleInfo/{roleId},/web/sys/role/roleModuleInfo', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051521', '修改角色接口', '/web/sys/role/modify', 'PUT', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051541', '新增角色接口', '/web/sys/role/add', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051561', '角色详情接口', '/web/sys/role/detail/{roleId}', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051581', '查询角色接口', '/web/sys/role/list', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051601', '角色模块分配接口', '/web/sys/role/roleModuleAssignment/{roleId}', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051621', '日程列表接口', '/web/sys/schedule/list', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051651', '保存日程接口', '/web/sys/schedule/add', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051671', null, '/test', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051691', null, '/getQrCode', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051711', null, '/eurekaTest', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051741', '修改用户接口', '/web/sys/user/modify', 'PUT', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051761', '删除用户接口', '/web/sys/user/delete/{userId}', 'DELETE', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051781', '用户角色信息接口', '/web/sys/user/userRoleInfo/{userId},/web/sys/user/userRoleInfo', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051801', '用户模块信息接口', '/web/sys/user/userModuleInfo/{userId},/web/sys/user/userModuleInfo', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051821', '查询用户接口', '/web/sys/user/list', 'POST', '3', '秒', '1', '1', '3秒1次', '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051841', '用户详情接口', '/web/sys/user/detail/{userId}', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051861', '初始化密码接口', '/web/sys/user/initPassword/{userId}', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051881', '新增用户接口', '/web/sys/user/add', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051901', '用户模块分配接口', '/web/sys/user/userModuleAssignment/{userId}', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051921', '用户角色分配接口', '/web/sys/user/userRoleAssignment/{userId}', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051931', null, '/swagger-resources', '', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051951', null, '/swagger-resources/configuration/ui', '', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051971', null, '/swagger-resources/configuration/security', '', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005161425051991', null, '/error', '', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005201102090531', '用户头像上传接口', '/web/sys/user/portraitUpload/{userId}', 'POST', null, null, null, '0', null, '2020-05-20 11:02:09', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
-INSERT INTO `sys_interfaces` VALUES ('202005210936158501', '获取用户头像接口', '/web/sys/user/userPortrait', 'GET', null, null, null, '0', null, '2020-05-21 09:36:15', 'admin123456', '2020-05-21 10:13:17', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425050731', '用户登录接口', '/webLogin', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425050781', '获取服务器时间接口', '/getServeTime', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425050801', '请求失效接口', '/invalidRequest', 'GET, POST, PUT, DELETE', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425050821', '请求接口不存在接口', '/notFound', 'GET, POST, PUT, DELETE', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425050841', '没有权限接口', '/noAuthory', 'GET, POST, PUT, DELETE', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425050861', '系统异常接口', '/internalError', 'GET, POST, PUT, DELETE', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425050881', '请求参数缺失接口', '/requestParameterLost', 'GET, POST, PUT, DELETE', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425050901', '请求参数错误接口', '/requestParameterError', 'GET, POST, PUT, DELETE', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425050921', '数据库表详情接口', '/web/sys/dbTables/detail/{tableName}', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425050941', '数据库表列表接口', '/web/sys/dbTables/list', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425050961', '数据库表代码生成接口', '/web/sys/dbTables/codeGenerate/{tableName}', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425050981', '查询字典接口', '/web/sys/dictionary/list', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051001', '修改字典接口', '/web/sys/dictionary/modify', 'PUT', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051021', '删除字典接口', '/web/sys/dictionary/delete/{dictionaryId}', 'DELETE', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051041', '新增字典接口', '/web/sys/dictionary/add', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051061', '字典详情接口', '/web/sys/dictionary/detail/{dictionaryId}', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051081', '接口列表接口', '/web/sys/interfaces/list', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051131', '接口详情接口', '/web/sys/interfaces/detail/{interfacesId}', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051181', '修改接口接口', '/web/sys/interfaces/modify', 'PUT', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051201', '用户角色数据权限接口', '/web/sys/interfaces/userRoleDataPermission', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051221', '数据权限分配接口', '/web/sys/interfaces/dataPermissionAssignment/{interfacesId}', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051241', '用户登出接口', '/web/loginAccess/logout', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051261', '获得字典信息接口', '/web/loginAccess/getDictionary', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051281', '获取redis中的token信息接口', '/web/loginAccess/getRedisTokenData', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051291', '查询模块接口', '/web/sys/module/list', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051311', '修改模块接口', '/web/sys/module/modify', 'PUT', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051331', '模块详情接口', '/web/sys/module/detail/{moduleId}', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051351', '新增模块接口', '/web/sys/module/add', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051371', '删除模块接口', '/web/sys/module/delete/{moduleId}', 'DELETE', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051391', '获取模块ID和模块名称列表接口', '/web/sys/module/getModuleIdAndNameList/{moduleType}', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051411', '在线用户列表接口', '/web/sys/onlineUser/list', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051441', '用户下线接口', '/web/sys/onlineUser/offline/{key}', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051461', '查询操作日志接口', '/web/sys/operationLog/list', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051481', '删除角色接口', '/web/sys/role/delete/{roleId}', 'DELETE', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051501', '角色模块信息接口', '/web/sys/role/roleModuleInfo/{roleId},/web/sys/role/roleModuleInfo', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051521', '修改角色接口', '/web/sys/role/modify', 'PUT', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051541', '新增角色接口', '/web/sys/role/add', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051561', '角色详情接口', '/web/sys/role/detail/{roleId}', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051581', '查询角色接口', '/web/sys/role/list', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051601', '角色模块分配接口', '/web/sys/role/roleModuleAssignment/{roleId}', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051621', '日程列表接口', '/web/sys/schedule/list', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051651', '保存日程接口', '/web/sys/schedule/add', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051671', null, '/test', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051691', null, '/getQrCode', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051711', null, '/eurekaTest', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051741', '修改用户接口', '/web/sys/user/modify', 'PUT', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051761', '删除用户接口', '/web/sys/user/delete/{userId}', 'DELETE', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051781', '用户角色信息接口', '/web/sys/user/userRoleInfo/{userId},/web/sys/user/userRoleInfo', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051801', '用户模块信息接口', '/web/sys/user/userModuleInfo/{userId},/web/sys/user/userModuleInfo', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051821', '查询用户接口', '/web/sys/user/list', 'POST', '3', '秒', '1', '1', '3秒1次', '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051841', '用户详情接口', '/web/sys/user/detail/{userId}', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051861', '初始化密码接口', '/web/sys/user/initPassword/{userId}', 'GET', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051881', '新增用户接口', '/web/sys/user/add', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051901', '用户模块分配接口', '/web/sys/user/userModuleAssignment/{userId}', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051921', '用户角色分配接口', '/web/sys/user/userRoleAssignment/{userId}', 'POST', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051931', null, '/swagger-resources', '', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051951', null, '/swagger-resources/configuration/ui', '', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051971', null, '/swagger-resources/configuration/security', '', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005161425051991', null, '/error', '', null, null, null, '0', null, '2020-05-16 14:25:05', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005201102090531', '用户头像上传接口', '/web/sys/user/portraitUpload/{userId}', 'POST', null, null, null, '0', null, '2020-05-20 11:02:09', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
+INSERT INTO `sys_interfaces` VALUES ('202005210936158501', '获取用户头像接口', '/web/sys/user/userPortrait', 'GET', null, null, null, '0', null, '2020-05-21 09:36:15', 'admin123456', '2020-05-21 14:46:11', 'admin123456', '0');
 
 -- ----------------------------
 -- Table structure for `sys_module`
@@ -266,6 +266,12 @@ INSERT INTO `sys_operation_log` VALUES ('202005142057359171', 'admin123456', 'ht
 INSERT INTO `sys_operation_log` VALUES ('202005142058198551', 'admin123456', 'http://localhost:2001/web/sys/dictionary/add', 'POST', '[Ljava.lang.Object;@36e46899', '192.168.2.124', '2020-05-14 20:58:19', null);
 INSERT INTO `sys_operation_log` VALUES ('202005161009380741', 'admin123456', 'http://localhost:2001/web/sys/dictionary/modify', 'PUT', '[Ljava.lang.Object;@149d6ca0', '192.168.2.124', '2020-05-16 10:09:38', null);
 INSERT INTO `sys_operation_log` VALUES ('202005161009512331', 'admin123456', 'http://localhost:2001/web/sys/dictionary/delete/202005161006580161', 'DELETE', '[Ljava.lang.Object;@64545634', '192.168.2.124', '2020-05-16 10:09:51', null);
+INSERT INTO `sys_operation_log` VALUES ('202005211447068371', 'admin123456', 'http://localhost:2001/web/sys/dictionary/modify', 'PUT', '[Ljava.lang.Object;@1d0097cc', '10.131.9.221', '2020-05-21 14:47:06', null);
+INSERT INTO `sys_operation_log` VALUES ('202005211447517901', 'admin123456', 'http://localhost:2001/web/sys/interfaces/dataPermissionAssignment/202005161425051821', 'POST', '[Ljava.lang.Object;@575b38f3', '10.131.9.221', '2020-05-21 14:47:51', null);
+INSERT INTO `sys_operation_log` VALUES ('202005211448405491', 'admin123456', 'http://localhost:2001/web/sys/user/modify', 'PUT', '[Ljava.lang.Object;@2fa298f3', '10.131.9.221', '2020-05-21 14:48:40', null);
+INSERT INTO `sys_operation_log` VALUES ('202005211448520031', 'admin123456', 'http://localhost:2001/web/sys/user/userRoleAssignment/202004041601405691', 'POST', '[Ljava.lang.Object;@5523f671', '10.131.9.221', '2020-05-21 14:48:52', null);
+INSERT INTO `sys_operation_log` VALUES ('202005211449526001', '202004041601405691', 'http://localhost:2001/web/sys/user/delete/202004041601405691', 'DELETE', '[Ljava.lang.Object;@66c10b14', '10.131.9.221', '2020-05-21 14:49:52', null);
+INSERT INTO `sys_operation_log` VALUES ('202005211450338251', 'admin123456', 'http://localhost:2001/web/sys/user/modify', 'PUT', '[Ljava.lang.Object;@68ceb3a3', '10.131.9.221', '2020-05-21 14:50:33', null);
 
 -- ----------------------------
 -- Table structure for `sys_role`
@@ -309,6 +315,7 @@ CREATE TABLE `sys_role_data` (
 -- ----------------------------
 -- Records of sys_role_data
 -- ----------------------------
+INSERT INTO `sys_role_data` VALUES ('202005211447517211', '202004052117534261', '202005211447517191');
 
 -- ----------------------------
 -- Table structure for `sys_role_module`
@@ -460,8 +467,7 @@ CREATE TABLE `sys_user` (
 -- Records of sys_user
 -- ----------------------------
 INSERT INTO `sys_user` VALUES ('202004041557207981', 'username_9', '6ca13d52ca70c883e0f0bb101e425a89e8624de51db2d2392593af6a84118090', '用户_9', 'user14@qq.com', '11111111111', null, 'admin123456', null, '1', 'dad', '0', '2020-04-04 15:57:20', 'admin123456', '2020-05-16 14:11:54', 'admin123456', '0');
-INSERT INTO `sys_user` VALUES ('202004041600480641', 'username_8', '6ca13d52ca70c883e0f0bb101e425a89e8624de51db2d2392593af6a84118090', '用户_8', 'user13@qq.com', '11111111111', null, 'admin123456', null, '1', 'dadasd', '0', '2020-04-04 16:00:48', 'admin123456', '2020-05-16 14:11:56', 'admin123456', '0');
-INSERT INTO `sys_user` VALUES ('202004041601405691', 'username_2', '6ca13d52ca70c883e0f0bb101e425a89e8624de51db2d2392593af6a84118090', '用户_2', 'user12@qq.com', '11111111111', null, 'admin123456', null, '1', '备注', '1', '2020-04-04 16:01:40', 'admin123456', '2020-05-16 14:15:33', 'admin123456', '0');
+INSERT INTO `sys_user` VALUES ('202004041600480641', 'username_8', '6ca13d52ca70c883e0f0bb101e425a89e8624de51db2d2392593af6a84118090', '用户_8', 'user13@qq.com', '11111111111', null, 'admin123456', null, '1', 'dadasd', '1', '2020-04-04 16:00:48', 'admin123456', '2020-05-21 14:50:33', 'admin123456', '0');
 INSERT INTO `sys_user` VALUES ('202004041609538011', 'username_1', '6ca13d52ca70c883e0f0bb101e425a89e8624de51db2d2392593af6a84118090', '用户_1', 'user11@qq.com', '11111111111', null, 'admin123456', null, '1', '这是用户1', '0', '2020-04-04 16:09:53', 'admin123456', '2020-05-21 10:22:26', 'admin123456', '0');
 INSERT INTO `sys_user` VALUES ('202004041609538012', 'username_3', '6ca13d52ca70c883e0f0bb101e425a89e8624de51db2d2392593af6a84118090', '用户_3', 'user10@qq.com', '11111111111', null, 'admin123456', null, '1', 'adad', '0', '2019-12-21 11:22:33', 'admin123456', '2020-05-16 14:12:00', 'admin123456', '0');
 INSERT INTO `sys_user` VALUES ('202004041609538013', 'username_4', '6ca13d52ca70c883e0f0bb101e425a89e8624de51db2d2392593af6a84118090', '用户_4', 'user9@qq.com', '11111111111', null, 'admin123456', null, '1', 'adasd', '0', '2019-12-21 11:22:33', 'admin123456', '2020-05-16 14:12:02', 'admin123456', '0');
@@ -487,6 +493,7 @@ CREATE TABLE `sys_user_data` (
 -- ----------------------------
 -- Records of sys_user_data
 -- ----------------------------
+INSERT INTO `sys_user_data` VALUES ('202005211447517111', '202004041609538011', '202005211447517101');
 
 -- ----------------------------
 -- Table structure for `sys_user_module`
