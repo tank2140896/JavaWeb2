@@ -23,7 +23,13 @@ public class TokenDataHandlerMethodArgumentResolver implements HandlerMethodArgu
     }
     
 	public Object resolveArgument(MethodParameter parameter,ModelAndViewContainer container,NativeWebRequest request,WebDataBinderFactory factory) throws Exception {
-		String token = request.getHeader(SystemConstant.HEAD_TOKEN);
+		String token = request.getParameter(SystemConstant.HEAD_TOKEN);
+		if(token==null){
+			token = request.getHeader(SystemConstant.HEAD_TOKEN);
+		}
+		if(token==null){
+			throw new TokenExpiredException();
+		}
 		return TokenDataHandlerMethodArgumentResolver.getTokenData(redisTemplate,token);
     }
     
