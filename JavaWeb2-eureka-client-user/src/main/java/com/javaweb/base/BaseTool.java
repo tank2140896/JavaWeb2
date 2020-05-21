@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.server.ServerHttpRequest;
@@ -23,7 +24,9 @@ import com.javaweb.web.eo.TokenData;
 
 public class BaseTool extends BaseInject {
 	
-	private static RedisTemplate<String,Object> redisTemplate = null;
+	private static RedisTemplate<String,Object> staticRedisTemplate = null;
+	
+	private static Environment staticEnvironment = null;
 	
 	@Resource(name="redisTemplate")
 	protected ValueOperations<Object,Object> valueOperations;
@@ -44,6 +47,35 @@ public class BaseTool extends BaseInject {
 		return stringRedisTemplate.delete(key);
 	}
 
+	public String getMessage(String messageKey){
+		return messageSource.getMessage(messageKey,null,LocaleContextHolder.getLocale());
+	}
+	
+	public String getValidateMessage(BindingResult bindingResult){
+		String message = CommonConstant.EMPTY_VALUE;
+		List<ObjectError> list = bindingResult.getAllErrors();
+		if(list!=null&&list.size()!=0){
+			message = getMessage(list.get(0).getDefaultMessage());
+		}
+		return message;
+	}
+	
+	public BaseResponseResult getBaseResponseResult(HttpCodeEnum httpCodeEnum,String messageKey) {
+		return new BaseResponseResult(httpCodeEnum.getCode(),getMessage(messageKey),CommonConstant.EMPTY_VALUE);
+	}
+	
+	public BaseResponseResult getBaseResponseResult(HttpCodeEnum httpCodeEnum,String messageKey,Object data) {
+		return new BaseResponseResult(httpCodeEnum.getCode(),getMessage(messageKey),data);
+	}
+	
+	public BaseResponseResult getBaseResponseResult(HttpCodeEnum httpCodeEnum,BindingResult bindingResult) {
+		return new BaseResponseResult(httpCodeEnum.getCode(),getValidateMessage(bindingResult),CommonConstant.EMPTY_VALUE);
+	}
+	
+	public BaseResponseResult getBaseResponseResult(HttpCodeEnum httpCodeEnum,BindingResult bindingResult,Object data) {
+		return new BaseResponseResult(httpCodeEnum.getCode(),getValidateMessage(bindingResult),data);
+	}
+	
 	//优先获取header里的token
 	public static String getToken(HttpServletRequest httpServletRequest){
 		String token = httpServletRequest.getHeader(SystemConstant.HEAD_TOKEN);//1、支持header传参方式
@@ -93,39 +125,17 @@ public class BaseTool extends BaseInject {
 	
 	@SuppressWarnings("unchecked")
 	public static RedisTemplate<String,Object> getRedisTemplate(){
-		if(redisTemplate==null){
-			redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
+		if(staticRedisTemplate==null){
+			staticRedisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
 		}
-		return redisTemplate;
+		return staticRedisTemplate;
 	}
 	
-	public String getMessage(String messageKey){
-		return messageSource.getMessage(messageKey,null,LocaleContextHolder.getLocale());
-	}
-	
-	public String getValidateMessage(BindingResult bindingResult){
-		String message = CommonConstant.EMPTY_VALUE;
-		List<ObjectError> list = bindingResult.getAllErrors();
-		if(list!=null&&list.size()!=0){
-			message = getMessage(list.get(0).getDefaultMessage());
+	public static Environment getEnvironment(){
+		if(staticEnvironment==null){
+			staticEnvironment = (Environment)ApplicationContextHelper.getBean(SystemConstant.ENVIRONMENT);
 		}
-		return message;
-	}
-	
-	public BaseResponseResult getBaseResponseResult(HttpCodeEnum httpCodeEnum,String messageKey) {
-		return new BaseResponseResult(httpCodeEnum.getCode(),getMessage(messageKey),CommonConstant.EMPTY_VALUE);
-	}
-	
-	public BaseResponseResult getBaseResponseResult(HttpCodeEnum httpCodeEnum,String messageKey,Object data) {
-		return new BaseResponseResult(httpCodeEnum.getCode(),getMessage(messageKey),data);
-	}
-	
-	public BaseResponseResult getBaseResponseResult(HttpCodeEnum httpCodeEnum,BindingResult bindingResult) {
-		return new BaseResponseResult(httpCodeEnum.getCode(),getValidateMessage(bindingResult),CommonConstant.EMPTY_VALUE);
-	}
-	
-	public BaseResponseResult getBaseResponseResult(HttpCodeEnum httpCodeEnum,BindingResult bindingResult,Object data) {
-		return new BaseResponseResult(httpCodeEnum.getCode(),getValidateMessage(bindingResult),data);
+		return staticEnvironment;
 	}
 	
 }

@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.core.annotation.AnnotatedElementUtils;
-import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -17,7 +16,6 @@ import com.javaweb.base.BaseTool;
 import com.javaweb.constant.ApiConstant;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
-import com.javaweb.context.ApplicationContextHelper;
 import com.javaweb.web.eo.TokenData;
 
 //页面端总拦截器
@@ -26,8 +24,6 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 	
 	//private Logger logger = LoggerFactory.getLogger(PermissionInterceptor.class);//本类日志
 	//private Logger urlLog = LoggerFactory.getLogger("urlLog");//自定义输出日志
-	
-	private Environment environment = null;
 
 	/**
 	 * httpServletRequest.getRequestURI()            -------------------- /javaweb/app/html/home.html
@@ -46,10 +42,8 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 		//RedisTemplate redisTemplate = (RedisTemplate) factory.getBean("redisTemplate"); 
 		//RedisTemplate<String,Object> redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
 		//String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath(); 
-		if(environment==null){
-			environment = (Environment)ApplicationContextHelper.getBean(SystemConstant.ENVIRONMENT);
-		}
-		Long redisSessionTimeout = Long.parseLong(environment.getProperty("redis.session.timeout"));//获得配置文件中redis设置session失效的时间
+		
+		Long redisSessionTimeout = Long.parseLong(BaseTool.getEnvironment().getProperty("redis.session.timeout"));//获得配置文件中redis设置session失效的时间
 		String servletPath = request.getServletPath();
 		TokenData tokenData = BaseTool.getTokenData(BaseTool.getToken(request));
 		if(tokenData==null){
