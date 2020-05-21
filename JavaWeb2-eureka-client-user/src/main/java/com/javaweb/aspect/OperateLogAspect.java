@@ -52,8 +52,6 @@ public class OperateLogAspect {
 		return object;
 	}
 	
-
-	
 	private Boolean getOperatelogOpenFlag(){
 		Boolean open = false;
 		Dictionary dictionary = BaseSystemMemory.getDictionaryByKey("operatelog.aspect.open");
