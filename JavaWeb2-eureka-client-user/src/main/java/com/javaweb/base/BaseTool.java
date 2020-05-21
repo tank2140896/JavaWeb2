@@ -41,14 +41,12 @@ public class BaseTool extends BaseInject {
 
 	public static TokenData getTokenData(HttpServletRequest httpServletRequest,RedisTemplate<String,Object> redisTemplate){
 		TokenData tokenData = null;
-		try{
-			String token = httpServletRequest.getHeader(SystemConstant.HEAD_TOKEN);
-			token = SecretUtil.base64DecoderString(token,"UTF-8");
-	    	String tokens[] = token.split(CommonConstant.COMMA);//token由三部分组成：token,userId,type
-	    	token = tokens[1]+CommonConstant.COMMA+tokens[2];//userId+type
-	    	tokenData = (TokenData)(redisTemplate.opsForValue().get(token));
-		}catch(Exception e){
-			//do nothing
+		String token = httpServletRequest.getParameter(SystemConstant.HEAD_TOKEN);//1、支持问号传参方式
+		if(token==null){
+			token = httpServletRequest.getHeader(SystemConstant.HEAD_TOKEN);//2、支持header传参方式
+		}
+		if(token!=null){
+	    	tokenData = getTokenData(token,redisTemplate);
 		}
 		return tokenData;
 	}
