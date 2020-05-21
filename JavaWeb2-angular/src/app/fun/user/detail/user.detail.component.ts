@@ -26,12 +26,14 @@ export class UserDetailComponent implements OnInit {
   }
 
   private userDetailResponse:UserDetailResponse = new UserDetailResponse();//用户详情
+  private userPortraitSrc;
 
   //初始化
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe(queryParam => {
       let userId = queryParam.userId;
       this.userDetail(userId);
+      this.userPortraitSrc = ApiConstant.getPath(ApiConstant.SYS_USER_PORTRAIT+'?userId='+userId+'&token='+this.sessionService.getHeadToken().token+'&t='+new Date().getTime(),true);
     });
   }
 
@@ -48,7 +50,7 @@ export class UserDetailComponent implements OnInit {
             this.userDetailResponse.phone = result.data.phone;//手机号码
             this.userDetailResponse.status = result.data.status;//用户状态
             this.userDetailResponse.remark = result.data.remark;//备注
-            this.userPortrait(userId,result.data.portrait);
+            //this.userPortrait(userId,result.data.portrait);
           }else{
             alert(result.message);
           }
@@ -59,6 +61,7 @@ export class UserDetailComponent implements OnInit {
     );
   }
 
+  /**
   public userPortrait(userId:string,portrait:string):void {
     if(portrait==null||portrait==CommonConstant.EMPTY){
       let img = document.getElementById('img');
@@ -73,7 +76,7 @@ export class UserDetailComponent implements OnInit {
         writable : true,
         enumerable : true,
         configurable : true
-      })
+      });
       let img = document.getElementById('img');
       //let url = img.getAttribute('authSrc');
       let request = new XMLHttpRequest();
@@ -93,6 +96,7 @@ export class UserDetailComponent implements OnInit {
       request.send(null);
     }
   }
+  */
 
   //返回
   public userDetailBack():void{
