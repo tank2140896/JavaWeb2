@@ -31,6 +31,7 @@ export class UserModifyComponent implements OnInit {
   private userModifyRequest:UserModifyRequest = new UserModifyRequest();//用户修改
   private UserStateFromDictionaryData:any;
   private userPortraitFormData:any = null;
+  private userPortraitSrc;
 
   //初始化
   ngOnInit(): void {
@@ -38,6 +39,7 @@ export class UserModifyComponent implements OnInit {
       let userId = queryParam.userId;
       this.userModifyRequest.userId = userId;
       this.userDetail(userId);
+      this.userPortraitSrc = ApiConstant.getPath(ApiConstant.SYS_USER_PORTRAIT+'?userId='+userId+'&token='+this.sessionService.getHeadToken().token+'&t='+new Date().getTime(),true);
     });
   }
 
@@ -55,7 +57,7 @@ export class UserModifyComponent implements OnInit {
             this.userModifyRequest.status = result.data.status;//用户状态
             this.userModifyRequest.remark = result.data.remark;//备注
             this.getUserStateFromDictionary();
-            this.userPortrait(userId,result.data.portrait);
+            //this.userPortrait(userId,result.data.portrait);
           }else{
             alert(result.message);
           }
@@ -113,6 +115,7 @@ export class UserModifyComponent implements OnInit {
     this.router.navigate(['../'],{relativeTo:this.activatedRoute});
   }
 
+  /**
   public userPortrait(userId:string,portrait:string):void {
     if(portrait==null||portrait==CommonConstant.EMPTY){
       let img = document.getElementById('img');
@@ -127,7 +130,7 @@ export class UserModifyComponent implements OnInit {
         writable : true,
         enumerable : true,
         configurable : true
-      })
+      });
       let img = document.getElementById('img');
       //let url = img.getAttribute('authSrc');
       let request = new XMLHttpRequest();
@@ -147,6 +150,7 @@ export class UserModifyComponent implements OnInit {
       request.send(null);
     }
   }
+  */
 
   //选择头像
   public portraitSelect($event):void {
