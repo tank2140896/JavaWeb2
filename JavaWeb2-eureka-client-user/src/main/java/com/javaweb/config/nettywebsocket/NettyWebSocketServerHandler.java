@@ -3,7 +3,6 @@ package com.javaweb.config.nettywebsocket;
 import java.time.Duration;
 
 import org.springframework.core.env.Environment;
-import org.springframework.data.redis.core.RedisTemplate;
 
 import com.javaweb.base.BaseTool;
 import com.javaweb.constant.SystemConstant;
@@ -21,27 +20,21 @@ import net.sf.json.JSONObject;
 //若要被Controller调用加上@Service即可
 public class NettyWebSocketServerHandler extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 	
-	private RedisTemplate<String,Object> redisTemplate = null;
-	
 	private Environment environment = null;
 	
 	public static ChannelGroup channelGroup = new DefaultChannelGroup(GlobalEventExecutor.INSTANCE);
 
-	@SuppressWarnings("unchecked")
 	protected void channelRead0(ChannelHandlerContext channelHandlerContext, TextWebSocketFrame textWebSocketFrame) throws Exception {
 		String content = textWebSocketFrame.text();
 		//System.out.println("接收到客户端的消息为:"+content);
-		if(redisTemplate==null){
-			redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
-		}
 		if(environment==null){
 			environment = (Environment)ApplicationContextHelper.getBean(SystemConstant.ENVIRONMENT);
 		}
 		Long redisSessionTimeout = Long.parseLong(environment.getProperty("redis.session.timeout"));//获得配置文件中redis设置session失效的时间
-		TokenData tokenData = BaseTool.getTokenData(JSONObject.fromObject(content).getString(SystemConstant.HEAD_TOKEN),redisTemplate);
+		TokenData tokenData = BaseTool.getTokenData(JSONObject.fromObject(content).getString(SystemConstant.HEAD_TOKEN));
 		if(tokenData!=null){
 			sendMessageToAll(content);
-			redisTemplate.opsForValue().set(tokenData.getToken(),tokenData,Duration.ofMinutes(redisSessionTimeout));
+			BaseTool.getRedisTemplate().opsForValue().set(tokenData.getToken(),tokenData,Duration.ofMinutes(redisSessionTimeout));
 		}else{
 			this.channelInactive(channelHandlerContext);
 		}
