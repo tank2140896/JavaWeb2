@@ -27,7 +27,8 @@
   </div>
   <div class="form-group">
     <label>头像</label>
-    <img id='img' authSrc='' class="form-control" style="height:200px;width: 200px;"/>
+    <!-- <img id='img' authSrc='' class="form-control" style="height:200px;width: 200px;"/> -->
+    <img id='img' [src]="userPortraitSrc" onerror="javascript:this.src='../../../../assets/image/user/portrait.jpg';" class="form-control" style="height:200px;width: 200px;"/>
   </div>
   <button type="button" (click)="userDetailBack()" class="btn btn-primary" style="margin-left:1%;">返回</button>
 </div>
