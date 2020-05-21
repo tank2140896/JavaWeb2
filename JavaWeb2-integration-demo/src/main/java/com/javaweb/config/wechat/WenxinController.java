@@ -218,12 +218,13 @@ public class WenxinController {
 	}
 	
 	/** 企业微信扫码登录 start */
+		/** 原版正常对接步骤
 	//step1.获取企业微信登录二维码
 	@GetMapping("/getLoginQrCode")
 	public void getLoginQrCode(HttpServletRequest request,HttpServletResponse response){
 		try{
 			QRCodeWriter qrCodeWriter = new QRCodeWriter();
-			BitMatrix bitMatrix = qrCodeWriter.encode("https://127.0.0.1:8080/JavaWeb2/workLogin",BarcodeFormat.QR_CODE,180,180);
+			BitMatrix bitMatrix = qrCodeWriter.encode("https://127.0.0.1:8001/service_manage_admin/workLogin",BarcodeFormat.QR_CODE,180,180);
 			MatrixToImageWriter.writeToStream(bitMatrix,"jpg",response.getOutputStream());
 		}catch(Exception e){
 			//do nothing
@@ -236,7 +237,7 @@ public class WenxinController {
 	public void workLogin(HttpServletResponse response) throws Exception {
 		String appid = "appid";//企业微信的CorpID，在企业微信管理端查看
 		String agentid = "agentid";//权方的网页应用ID，在具体的网页应用中查看
-		String redirect_uri = "https://127.0.0.1:8080/JavaWeb2/workLoginCallBack";//重定向地址，需要进行UrlEncode
+		String redirect_uri = "https://127.0.0.1:8001/service_manage_admin/workLoginCallBack";//重定向地址，需要进行UrlEncode
 		String state = "state";//用于保持请求和回调的状态，授权请求后原样带回给企业。该参数可用于防止csrf攻击（跨站请求伪造攻击），建议企业带上该参数，可设置为简单的随机数加session进行校验
 		String url = "https://open.work.weixin.qq.com/wwopen/sso/qrConnect?appid="+appid+"&agentid="+agentid+"&redirect_uri="+URLEncoder.encode(redirect_uri,"UTF-8")+"&state="+state;
 		//response.sendRedirect(url);
@@ -255,46 +256,134 @@ public class WenxinController {
 		System.out.println(url);
 		//根据用户ID获取用户信息，参考：https://open.work.weixin.qq.com/api/doc/90000/90135/90196
 		//用户名和密码要Base64加密
-		response.sendRedirect("https://127.0.0.1:8081/前端页面/login?username=abc123&password=123456");//跳至前端页面模拟登录请求
+		response.sendRedirect("https://127.0.0.1:8001/前端页面/login?username=abc123&password=123456");//跳至前端页面模拟登录请求
 	}
+	*/
 	
-	/** 简化版沟通对接步骤
+	/** 现版沟通对接步骤
 	1.甲方提供扫码URL，如https://www.xxx.com/甲方/x?a=1&b=2  
 	2.乙方（我）在后面拼接一段唯一字符串，形如：https://www.xxx.com/甲方/x?a=1&b=2&uniqueCode=xxxxxxxx  
 	也就是说我的二维码https://www.xxx.com/甲方/x?a=1&b=2&uniqueCode=xxxxxxxx并由用户扫码
 	3.乙方（我）向甲方提供乙方（我）的回调地址，如https://www.yyy.com/workLoginCallBack  
 	4.甲方调用乙方（我）的回调地址，传入是否企业用户扫码成功标识（successFlag）、uniqueCode和userCode（工号）
+	*/
 	@GetMapping("/getLoginQrCode")
 	public void getLoginQrCode(HttpServletRequest request,HttpServletResponse response){
 		try{
-			String uniqueCode = SecretUtil.getWorkWeixinUniqueCode();
+			String uniqueCode = SecretUtil.getWorkWeixinUniqueCode(HttpUtil.getIpAddress(request));
+			logger.info("送出去的uniqueCode是:["+uniqueCode+"]");
 			QRCodeWriter qrCodeWriter = new QRCodeWriter();
-			BitMatrix bitMatrix = qrCodeWriter.encode("https://www.xxx.com/甲方/x?a=1&b=2&uniqueCode="+uniqueCode,BarcodeFormat.QR_CODE,180,180);
+			String replace = "https://qywx.cpic.com.cn/suz/qrauth?src=sm&qrid="+uniqueCode;
+			//replace = URLEncoder.encode(replace,"UTF-8");
+			replace = SecretUtil.base64EncoderString(replace,"UTF-8");
+			String url = SystemConstant.getConfigByKeyCode("weixin.scan.url").getValueCode().replace("[replace]",replace);
+			//System.out.println(url);
+			valueOperations.set("weixin_sm="+HttpUtil.getIpAddress(request),"a",Duration.ofMinutes(SystemConstant.WEIXIN_ERWEIMA_CODE));//扫码5分钟有效
+			logger.info("获取login qrcode成功,key is:["+"weixin_sm="+HttpUtil.getIpAddress(request)+"],value is:[a]");
+			BitMatrix bitMatrix = qrCodeWriter.encode(url,BarcodeFormat.QR_CODE,180,180);
 			MatrixToImageWriter.writeToStream(bitMatrix,"jpg",response.getOutputStream());
 		}catch(Exception e){
 			//do nothing
 		}
 	}
 	
+	/**
+	甲方要求：扫码后，企业号后台返回微信前端结果，并向当前应用后台回调地址返回结果
+    /workLoginCallBack?successFlag=1&uniqueCode=aaabbbbccc&userCode=49853
+    successFlag=1为成功
+    successFlag=-1为失败
+	*/
 	@RequestMapping("/workLoginCallBack")
 	public void workLoginCallBack(HttpServletRequest request,HttpServletResponse response,
-			                      @RequestParam("successFlag") String successFlag,
+								  @RequestBody WorkLoginCallBackRequest workLoginCallBackRequest	
+			                      /*@RequestParam("successFlag") Integer successFlag,
 			                      @RequestParam("uniqueCode") String uniqueCode,
-			                      @RequestParam("userCode") String userCode) throws Exception{
-		if(SecretUtil.workWeixinUniqueCodeCheck(uniqueCode)){//校验uniqueCode
-			User user = userService.getUserByUserCode(userCode);//根据userCode（工号）获取用户ID然后获取用户密码
-			if(user!=null){
-				PasswordRecord passwordRecord = passwordRecordService.getPasswordRecordByUserId(user.getUserId());
-				if(passwordRecord!=null){
-					System.out.println(SecretUtil.base64EncoderString(user.getUserCode(),"UTF-8")+","+SecretUtil.base64EncoderString(passwordRecord.getPassword(),"UTF-8"));//Base64加密
-					//若是HttpClient调用方式response.sendRedirect状态码是302,一般200的话可以用response.getWrite()处理
-					response.sendRedirect("https://127.0.0.1:8081/前端页面/login?username=abc123&password=123456");//跳至前端页面模拟登录请求
+			                      @RequestParam("userCode") String userCode*/) throws Exception{
+		String message = "";
+		boolean successFlag = false;
+		String username = "";
+		String password = "";
+		String checkValue = null;
+		try{
+			if(/*successFlag*/workLoginCallBackRequest.getSuccessFlag()==1){//1：成功；2：失败
+				checkValue = SecretUtil.workWeixinUniqueCodeCheck(/*uniqueCode*/workLoginCallBackRequest.getUniqueCode());
+				if(checkValue!=null){//校验uniqueCode
+					User user = userService.getUserByUserCode(/*userCode*/workLoginCallBackRequest.getUserCode());//根据userCode（工号）获取用户ID然后获取用户密码
+					if(user!=null){
+						PasswordRecord passwordRecord = passwordRecordService.getPasswordRecordByUserId(user.getId());
+						if(passwordRecord!=null){
+							username = SecretUtil.base64EncoderString(user.getUserCode(),"UTF-8");
+							password = SecretUtil.base64EncoderString(passwordRecord.getPassword(),"UTF-8");
+							successFlag = true;
+						}else{
+							message="回调错误[用户未设定密码]";
+						}
+					}else{
+						message="回调错误[用户工号("+workLoginCallBackRequest.getUserCode()+")不存在]";
+					}
+				}else{
+					message="回调错误[校验未通过，接收到的unicode是("+workLoginCallBackRequest.getUniqueCode()+")]";
 				}
+			}else{
+				message="回调错误[successFlag是("+workLoginCallBackRequest.getSuccessFlag()+")]";
 			}
+		}catch(Exception e){
+			message="回调错误[系统异常:("+e.getMessage()+")]";
 		}
-		response.sendRedirect("https://127.0.0.1:8081/前端页面/login?errorCode=605");//跳至前端页面模拟登录请求
+		if(successFlag){
+			//String url = frontendUrl+"?username="+username+"&password="+password;
+			//url = URLEncoder.encode(url,"UTF-8");
+			String out = username+","+password;
+			valueOperations.set("weixin_sm="+checkValue.split(",")[0],out,Duration.ofMinutes(SystemConstant.WEIXIN_SCAN_CODE));
+			message= "回调成功[key是:"+"weixin_sm="+HttpUtil.getIpAddress(request)+",value是:"+out+"]";
+			logger.info(message);
+			request.setCharacterEncoding("utf-8");
+			response.setContentType("text/javascript;charset=utf-8");
+			PrintWriter printWriter = response.getWriter();
+			String info = JSONObject.fromObject(new BaseResponseResult(200,message,null)).toString();
+			printWriter.write(info);
+			//response.sendRedirect(url);//返回302状态码给甲方
+			response.flushBuffer();
+			return;
+		}else{
+			//String url = frontendUrl+"?errorCode=605";
+			//url = URLEncoder.encode(url,"UTF-8");
+			valueOperations.set("weixin_sm="+checkValue.split(",")[0],"b",Duration.ofMinutes(SystemConstant.WEIXIN_SCAN_CODE));
+			logger.info(message);
+			request.setCharacterEncoding("utf-8");
+			response.setContentType("text/javascript;charset=utf-8");
+			PrintWriter printWriter = response.getWriter();
+			String info = JSONObject.fromObject(new BaseResponseResult(500,message,null)).toString();
+			printWriter.write(info);
+			//response.sendRedirect(url);//返回302状态码给甲方
+			response.flushBuffer();
+			return;
+		}
 	}
-	*/
+	
+	//前端扫码持续监听
+	@GetMapping("/workLoginFrontend")
+	public BaseResponseResult workLoginCallBack(HttpServletRequest request) throws Exception {
+		Object value = valueOperations.get("weixin_sm="+HttpUtil.getIpAddress(request));
+		if(value!=null){
+			if(value.toString().equals("a")){
+				//logger.info("二维码生成成功，等待扫码");
+				return new BaseResponseResult(600,"二维码生成成功，等待扫码",value);
+			}else if(value.toString().equals("b")){
+				//logger.info("扫码失败，请重新扫码");
+				return new BaseResponseResult(605,"扫码失败，请重新扫码",value);
+			}else{
+				stringRedisTemplate.delete("weixin_sm="+HttpUtil.getIpAddress(request));
+				logger.info("扫码成功");
+				return new BaseResponseResult(200,"扫码成功",value);
+			}
+		}else{
+			String url = SystemConstant.getConfigByKeyCode("frontend.url").getValueCode()+"?errorCode=605";
+			url = URLEncoder.encode(url,"UTF-8");
+			//logger.info("扫码失效，请刷新页面重新获取二维码");
+			return new BaseResponseResult(605,"扫码失效，请刷新页面重新获取二维码",url);
+		}
+	}
 	/** 企业微信扫码登录 end */
 	
 	/* -------------------------------------------------- 分界线 -------------------------------------------------- */
