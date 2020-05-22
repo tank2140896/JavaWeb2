@@ -122,8 +122,7 @@ export class ModuleModifyComponent implements OnInit {
 
   //修改模块
   public moduleModify():void{
-    console.log(this.moduleModifyRequest.parentId);
-    /**
+    //console.log(this.moduleModifyRequest.parentId);
     this.httpService.putJsonData(ApiConstant.getPath(ApiConstant.SYS_MODULE_MODIFY,true),JSON.stringify(this.moduleModifyRequest),this.sessionService.getHeadToken()).subscribe(
       {
         next:(result:any) => {
@@ -140,7 +139,6 @@ export class ModuleModifyComponent implements OnInit {
         complete:() => {}
       }
     );
-     */
   }
 
   //返回
