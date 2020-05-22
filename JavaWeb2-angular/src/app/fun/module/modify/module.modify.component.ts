@@ -96,6 +96,7 @@ export class ModuleModifyComponent implements OnInit {
           //console.log(result);
           if(result.code==200){
             this.moduleNameAndIdListData = result.data;
+            /** 这是新增时的处理，修改不需要
             if(moduleType==1){
               this.moduleModifyRequest.parentId = CommonConstant.EMPTY;
             }else{
@@ -105,6 +106,7 @@ export class ModuleModifyComponent implements OnInit {
                 this.moduleModifyRequest.parentId = CommonConstant.EMPTY;
               }
             }
+            */
           }else{
             alert(result.message);
           }

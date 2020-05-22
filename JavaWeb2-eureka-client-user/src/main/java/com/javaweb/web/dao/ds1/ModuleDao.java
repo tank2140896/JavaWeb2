@@ -37,4 +37,8 @@ public interface ModuleDao extends DaoForMySql<Module> {
 	
 	public List<User> getAllUserByModuleId(String moduleId);
 	
+	public void setModuleParentIdNull(Module module);
+	
+	public List<Module> getModuleByParentId(String parentId);
+	
 }

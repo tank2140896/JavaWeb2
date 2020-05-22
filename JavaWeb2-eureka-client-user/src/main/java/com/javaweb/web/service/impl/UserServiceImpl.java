@@ -56,7 +56,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 		for(String id:userIds){
 			User user = userDao.selectByPkForMySql(userId);
 			if(user.getPortrait()!=null){
-				new File(user.getPortrait()).delete();
+				new File(user.getPortrait()).delete();//文件不存在也不会报错的
 			}
 			userDao.userDelete(id);
 		}
@@ -182,6 +182,10 @@ public class UserServiceImpl extends BaseService implements UserService {
 		if(writeSuccess){
 			User user = userDao.selectByPkForMySql(userId);
 			if(user!=null){
+				String portrait = user.getPortrait();
+				if((portrait!=null)&&(!CommonConstant.EMPTY_VALUE.equals(portrait))){
+					new File(portrait).delete();//文件不存在也不会报错的
+				}
 				user.setPortrait(rootPath+uploadFileName);
 				userDao.updateForMySql(user);
 			}

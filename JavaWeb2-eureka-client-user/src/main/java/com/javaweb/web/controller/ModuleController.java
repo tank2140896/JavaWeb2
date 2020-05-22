@@ -1,5 +1,7 @@
 package com.javaweb.web.controller;
 
+import java.util.List;
+
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,7 +18,6 @@ import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.base.BaseValidatedGroup;
 import com.javaweb.constant.ApiConstant;
-import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SwaggerConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.enums.HttpCodeEnum;
@@ -59,17 +60,6 @@ public class ModuleController extends BaseController {
 			module.setCreateDate(DateUtil.getDefaultDate());
 			module.setCreator(currentUser.getUserName());
 			module.setDelFlag(0);
-			if(module.getModuleType()==1){//目录
-				module.setApiUrl(null);
-				module.setPageUrl(null);
-			}else if(module.getModuleType()==2){//菜单
-				module.setApiUrl(null);
-			}else if(module.getModuleType()==3){//功能
-				module.setPageUrl(null);
-			}
-			if(module.getParentId()==null||CommonConstant.EMPTY_VALUE.equals(module.getParentId().trim())){
-				module.setParentId(null);
-			}
 			moduleService.moduleAdd(module);
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.add.success",null);
 		}
@@ -88,14 +78,27 @@ public class ModuleController extends BaseController {
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}else{
+			Module originModule = moduleService.moduleDetail(module.getModuleId());
+			if(originModule.getModuleId().equals(module.getParentId())){//不能自己关联自己
+				return getBaseResponseResult(HttpCodeEnum.INVALID_REQUEST,"module.modify.fail",null);
+			}
+			List<Module> moduleList = moduleService.getModuleByParentId(module.getModuleId());
+			if(moduleList!=null&&moduleList.size()>0){//判断是否有下级关联
+				if(originModule.getModuleType()!=module.getModuleType()){//判断是否是同级操作
+					if(originModule.getModuleType()<module.getModuleType()){//判断是否是降级操作
+						return getBaseResponseResult(HttpCodeEnum.INVALID_REQUEST,"module.modify.fail",null);
+					}else{
+						if(originModule.getModuleType()!=1){//若是升级操作，只能原来是目录的升目录
+							return getBaseResponseResult(HttpCodeEnum.INVALID_REQUEST,"module.modify.fail",null);
+						}
+					}
+				}
+			}
 			User currentUser = tokenData.getUser();
 			module.setLevel(null);
 			module.setType(null);
 			module.setUpdateDate(DateUtil.getDefaultDate());
 			module.setUpdater(currentUser.getUserName());
-			if(module.getParentId()==null||CommonConstant.EMPTY_VALUE.equals(module.getParentId().trim())){
-				module.setParentId(null);
-			}
 			moduleService.moduleModify(module);
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.modify.success",null);
 		}
@@ -112,7 +115,18 @@ public class ModuleController extends BaseController {
 	@ApiOperation(value=SwaggerConstant.SWAGGER_MODULE_DELETE)
 	@DeleteMapping(ApiConstant.MODULE_DELETE)
 	public BaseResponseResult moduleDelete(@PathVariable(name="moduleId",required=true) String moduleId){
-		moduleService.moduleDelete(moduleId);
+		String moduleIds[] = moduleId.split(",");
+		for(String eachModuleId:moduleIds){
+			//删除权限，只需要判断当前权限有没有下级关联，没有即可删除
+			Module module = moduleService.moduleDetail(eachModuleId);
+			if(module.getModuleType()!=3){//非功能需要进一步判断才能确定是否可以删除
+				List<Module> moduleList = moduleService.getModuleByParentId(module.getModuleId());
+				if(moduleList!=null&&moduleList.size()>0){//当删除目录或菜单时，若有下级关联，则不允许删除
+					return getBaseResponseResult(HttpCodeEnum.INVALID_REQUEST,"module.delete.fail",null);
+				}
+			}
+		}
+		moduleService.moduleDelete(moduleIds);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.delete.success",null);
 	}
 	

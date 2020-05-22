@@ -209,6 +209,7 @@ public class AllOpenController extends BaseController {
 		List<SidebarInfoResponse> moduleList = new ArrayList<>();
 		for (int i = 0; i < originList.size(); i++) {
 			SidebarInfoResponse currentModule = originList.get(i);
+			//这里树形结构处理时需要parentId只能为null，不能为空或其它值
 			if((module!=null&&module.getModuleId().equals(currentModule.getParentId()))||(module==null&&currentModule.getParentId()==null)){
 				currentModule.setList(setTreeList(originList, currentModule));
 				moduleList.add(currentModule);

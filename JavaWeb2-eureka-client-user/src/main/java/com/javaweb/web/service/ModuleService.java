@@ -17,7 +17,7 @@ public interface ModuleService {
 	
 	public Page moduleList(ModuleListRequest moduleListRequest);
 	
-	public void moduleDelete(String moduleId);
+	public void moduleDelete(String moduleIds[]);
 	
 	public void moduleAdd(Module module);
 	
@@ -29,4 +29,6 @@ public interface ModuleService {
 	
 	public List<User> getAllUserByModuleId(String moduleId);
 	
+	public List<Module> getModuleByParentId(String parentId);
+
 }

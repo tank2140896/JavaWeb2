@@ -113,4 +113,16 @@
 		)
 	</select>
 	
+	<update id="setModuleParentIdNull" parameterType="com.javaweb.web.po.Module">
+		update sys_module set parent_id = null where module_id = #{moduleId};
+	</update>
+	
+	<select id="getModuleByParentId" parameterType="java.lang.String" resultType="com.javaweb.web.po.Module">
+		SELECT module_id as moduleId,module_name as moduleName,page_url as pageUrl,api_url as apiUrl,parent_id as parentId,
+		(select n.module_name from sys_module n where n.module_id = sys_module.parent_id and n.del_flag = 0) as parentName,
+		fcode,level,orders,module_type as moduleType,alias,parent_alias as parentAlias,remark,icon,
+		create_date as createDate,creator,update_date as updateDate,updater,del_flag as delFlag
+		from sys_module WHERE parent_id = #{_parameter}
+	</select>
+	
 </mapper>

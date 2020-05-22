@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.javaweb.base.BaseService;
+import com.javaweb.constant.CommonConstant;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.module.ModuleIdAndNameResponse;
 import com.javaweb.web.eo.module.ModuleLevelAndOrdersResponse;
@@ -70,8 +71,7 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
 	}
 
 	@Transactional
-	public void moduleDelete(String moduleId) {
-		String moduleIds[] = moduleId.split(",");
+	public void moduleDelete(String moduleIds[]) {
 		for(String id:moduleIds){
 			moduleDao.moduleDelete(id);
 		}
@@ -79,6 +79,17 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
 
 	@Transactional
 	public void moduleAdd(Module module) {
+		if(module.getModuleType()==1){//目录
+			module.setApiUrl(null);
+			module.setPageUrl(null);
+		}else if(module.getModuleType()==2){//菜单
+			module.setApiUrl(null);
+		}else if(module.getModuleType()==3){//功能
+			module.setPageUrl(null);
+		}
+		if(module.getParentId()==null||CommonConstant.EMPTY_VALUE.equals(module.getParentId().trim())){
+			module.setParentId(null);
+		}
 		ModuleLevelAndOrdersResponse moduleLevelAndOrdersResponse = moduleDao.getModuleLevelAndOrdersByParentId(module.getParentId());
 		if(moduleLevelAndOrdersResponse==null) {
 			moduleLevelAndOrdersResponse = moduleDao.getModuleLevelAndOrdersWithoutParentId();	
@@ -90,6 +101,10 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
 	
 	@Transactional
 	public void moduleModify(Module module) {
+		if(module.getParentId()==null||CommonConstant.EMPTY_VALUE.equals(module.getParentId().trim())){
+			module.setParentId(null);
+			moduleDao.setModuleParentIdNull(module);//当parentId为null表示设置为根目录，此时需要特殊处理，因为大部分更新操作代码逻辑对null值是不更新数据库数据的
+		}
 		moduleDao.updateForMySql(module);
 	}
 
@@ -114,6 +129,10 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
 	
 	public List<User> getAllUserByModuleId(String moduleId) {
 		return moduleDao.getAllUserByModuleId(moduleId);
+	}
+
+	public List<Module> getModuleByParentId(String parentId) {
+		return moduleDao.getModuleByParentId(parentId);
 	}
 
 }

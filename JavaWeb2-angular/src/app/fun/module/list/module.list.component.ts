@@ -123,7 +123,7 @@ export class ModuleListComponent implements OnInit {
             this.moduleSearch(1);
             alert('模块删除成功');
           }else{
-            alert('模块删除失败');
+            alert(result.message);
           }
         },
         error:e => {},
