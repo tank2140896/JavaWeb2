@@ -16,6 +16,7 @@ import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.base.BaseValidatedGroup;
 import com.javaweb.constant.ApiConstant;
+import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SwaggerConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.enums.HttpCodeEnum;
@@ -66,6 +67,9 @@ public class ModuleController extends BaseController {
 			}else if(module.getModuleType()==3){//功能
 				module.setPageUrl(null);
 			}
+			if(module.getParentId()==null||CommonConstant.EMPTY_VALUE.equals(module.getParentId().trim())){
+				module.setParentId(null);
+			}
 			moduleService.moduleAdd(module);
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.add.success",null);
 		}
@@ -89,6 +93,9 @@ public class ModuleController extends BaseController {
 			module.setType(null);
 			module.setUpdateDate(DateUtil.getDefaultDate());
 			module.setUpdater(currentUser.getUserName());
+			if(module.getParentId()==null||CommonConstant.EMPTY_VALUE.equals(module.getParentId().trim())){
+				module.setParentId(null);
+			}
 			moduleService.moduleModify(module);
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.modify.success",null);
 		}
