@@ -1,4 +1,4 @@
-package com.javaweb.annotation.validate.userServer;
+package com.javaweb.annotation.validate.user;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

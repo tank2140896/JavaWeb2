@@ -12,6 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.javaweb.base.BaseService;
 import com.javaweb.constant.CommonConstant;
+import com.javaweb.constant.SystemConstant;
+import com.javaweb.util.core.DateUtil;
+import com.javaweb.util.core.SecretUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.module.ModuleIdAndNameResponse;
 import com.javaweb.web.eo.module.ModuleLevelAndOrdersResponse;
@@ -78,7 +81,11 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
 	}
 
 	@Transactional
-	public void moduleAdd(Module module) {
+	public void moduleAdd(User user,Module module) {
+		module.setModuleId(SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO));
+		module.setCreateDate(DateUtil.getDefaultDate());
+		module.setCreator(user.getUserId());
+		module.setDelFlag(0);
 		if(module.getModuleType()==1){//目录
 			module.setApiUrl(null);
 			module.setPageUrl(null);
@@ -100,7 +107,11 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
 	}
 	
 	@Transactional
-	public void moduleModify(Module module) {
+	public void moduleModify(User user,Module module) {
+		module.setLevel(null);
+		module.setType(null);
+		module.setUpdateDate(DateUtil.getDefaultDate());
+		module.setUpdater(user.getUserId());
 		if(module.getParentId()==null||CommonConstant.EMPTY_VALUE.equals(module.getParentId().trim())){
 			module.setParentId(null);
 			moduleDao.setModuleParentIdNull(module);//当parentId为null表示设置为根目录，此时需要特殊处理，因为大部分更新操作代码逻辑对null值是不更新数据库数据的

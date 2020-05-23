@@ -55,7 +55,10 @@ export class LoginComponent implements OnInit {
                     this.userLoginErrorMessage = result.message;
                   }
                 },
-                error:e => {console.log(e);/*this.userLoginErrorMessage = e.message;*/},
+                error:e => {
+                  //console.log(e);
+                  //this.userLoginErrorMessage = e.message;
+                },
                 complete:() => {}
               }
             );
@@ -64,7 +67,10 @@ export class LoginComponent implements OnInit {
             this.userLoginErrorMessage = result.message;
           }
         },
-        error:e => {console.log(e);this.userLoginErrorMessage = e.message;},
+        error:e => {
+          //console.log(e);
+          //this.userLoginErrorMessage = e.message;
+        },
         complete:() => {}
       }
     );

@@ -60,7 +60,7 @@ public class DictionaryController extends BaseController {
 	public BaseResponseResult dictionaryModify(@RequestBody Dictionary dictionary,@TokenDataAnnotation TokenData tokenData){
 		User currentUser = tokenData.getUser();
 		dictionary.setUpdateDate(DateUtil.getDefaultDate());
-		dictionary.setUpdater(currentUser.getUserName());
+		dictionary.setUpdater(currentUser.getUserId());
 		dictionaryService.dictionaryModify(dictionary);
 		BaseSystemMemory.dictionaryList = dictionaryService.selectAll();
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"dictionary.modify.success",null);

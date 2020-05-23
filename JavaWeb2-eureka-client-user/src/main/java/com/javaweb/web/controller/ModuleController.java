@@ -19,15 +19,11 @@ import com.javaweb.base.BaseResponseResult;
 import com.javaweb.base.BaseValidatedGroup;
 import com.javaweb.constant.ApiConstant;
 import com.javaweb.constant.SwaggerConstant;
-import com.javaweb.constant.SystemConstant;
 import com.javaweb.enums.HttpCodeEnum;
-import com.javaweb.util.core.DateUtil;
-import com.javaweb.util.core.SecretUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.module.ModuleListRequest;
 import com.javaweb.web.po.Module;
-import com.javaweb.web.po.User;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -55,12 +51,7 @@ public class ModuleController extends BaseController {
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}else{
-			User currentUser = tokenData.getUser();
-			module.setModuleId(SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO));
-			module.setCreateDate(DateUtil.getDefaultDate());
-			module.setCreator(currentUser.getUserName());
-			module.setDelFlag(0);
-			moduleService.moduleAdd(module);
+			moduleService.moduleAdd(tokenData.getUser(),module);
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.add.success",null);
 		}
 	}
@@ -72,6 +63,16 @@ public class ModuleController extends BaseController {
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.list.success",page);
 	}
 	
+	/**
+	修改的逻辑为：
+	1、删除权限的逻辑应该是：当前权限若是目录或菜单且有下级关联时，不能删除
+	2、修改权限的逻辑应该是：
+    	2.1、不能自己关联自己，即将pid设置为自己
+     	2.2、判断是否有下级关联
+     	2.3、在有下级关联的情况下（操作（按钮）永远排除在外），升降级判断（即非同级操作）：
+        	2.3.1、当前权限若是目录不能向下降级为菜单或操作（按钮）
+            2.3.2、当前权限若是菜单既不能向上升级也不能向下降级
+	*/
 	@ApiOperation(value=SwaggerConstant.SWAGGER_MODULE_MODIFY)
 	@PutMapping(ApiConstant.MODULE_MODIFY)
 	public BaseResponseResult moduleModify(@RequestBody @Validated({BaseValidatedGroup.update.class}) Module module,BindingResult bindingResult,@TokenDataAnnotation TokenData tokenData){
@@ -80,26 +81,21 @@ public class ModuleController extends BaseController {
 		}else{
 			Module originModule = moduleService.moduleDetail(module.getModuleId());
 			if(originModule.getModuleId().equals(module.getParentId())){//不能自己关联自己
-				return getBaseResponseResult(HttpCodeEnum.INVALID_REQUEST,"module.modify.fail",null);
+				return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"module.modify.fail",null);
 			}
 			List<Module> moduleList = moduleService.getModuleByParentId(module.getModuleId());
 			if(moduleList!=null&&moduleList.size()>0){//判断是否有下级关联
 				if(originModule.getModuleType()!=module.getModuleType()){//判断是否是同级操作
 					if(originModule.getModuleType()<module.getModuleType()){//判断是否是降级操作
-						return getBaseResponseResult(HttpCodeEnum.INVALID_REQUEST,"module.modify.fail",null);
+						return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"module.modify.fail",null);
 					}else{
 						if(originModule.getModuleType()!=1){//若是升级操作，只能原来是目录的升目录
-							return getBaseResponseResult(HttpCodeEnum.INVALID_REQUEST,"module.modify.fail",null);
+							return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"module.modify.fail",null);
 						}
 					}
 				}
 			}
-			User currentUser = tokenData.getUser();
-			module.setLevel(null);
-			module.setType(null);
-			module.setUpdateDate(DateUtil.getDefaultDate());
-			module.setUpdater(currentUser.getUserName());
-			moduleService.moduleModify(module);
+			moduleService.moduleModify(tokenData.getUser(),module);
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.modify.success",null);
 		}
 	}
@@ -122,7 +118,7 @@ public class ModuleController extends BaseController {
 			if(module.getModuleType()!=3){//非功能需要进一步判断才能确定是否可以删除
 				List<Module> moduleList = moduleService.getModuleByParentId(module.getModuleId());
 				if(moduleList!=null&&moduleList.size()>0){//当删除目录或菜单时，若有下级关联，则不允许删除
-					return getBaseResponseResult(HttpCodeEnum.INVALID_REQUEST,"module.delete.fail",null);
+					return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"module.delete.fail",null);
 				}
 			}
 		}

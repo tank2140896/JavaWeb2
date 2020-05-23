@@ -57,7 +57,7 @@ public class UserController extends BaseController {
 			user.setParentId(currentUser.getUserId());
 			user.setLevel(currentUser.getLevel()+1);//数字越大用户级别越低，这里默认新创建的用户都比创建它的用户低一级（数字是加1）
 			user.setCreateDate(DateUtil.getDefaultDate());
-			user.setCreator(currentUser.getUserName());
+			user.setCreator(currentUser.getUserId());
 			userService.userAdd(user);
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.add.success",user.getUserId());
 		}
@@ -80,7 +80,7 @@ public class UserController extends BaseController {
 			User currentUser = tokenData.getUser();
 			user.setPassword(null);//密码不在此处修改
 			user.setUpdateDate(DateUtil.getDefaultDate());
-			user.setUpdater(currentUser.getUserName());
+			user.setUpdater(currentUser.getUserId());
 			userService.userModify(user);
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.modify.success",user.getUserId());
 		}

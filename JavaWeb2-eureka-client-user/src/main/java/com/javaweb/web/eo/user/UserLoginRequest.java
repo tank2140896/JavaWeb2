@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
-import com.javaweb.annotation.validate.userServer.UserLoginRequestTypeValidate;
+import com.javaweb.annotation.validate.user.UserLoginRequestTypeValidate;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -27,8 +27,8 @@ public class UserLoginRequest implements Serializable {
 	@UserLoginRequestTypeValidate(easyWayCheck=true,message="validated.user.type.pattern")//自定义校验
 	private String type = "1";
 	
-	private String kaptcha;
+	private String kaptcha;//图片验证码
 	
-	private String requestId;
+	private String verifyCode;//短信验证码
 	
 }

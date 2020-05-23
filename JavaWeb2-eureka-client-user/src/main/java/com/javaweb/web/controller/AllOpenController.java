@@ -63,7 +63,6 @@ public class AllOpenController extends BaseController {
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}
-		//还可以进行验证码校验等处理
 		TokenData tokenData = null;
 		if(systemAdminCheck(userLoginRequest)){//管理员判断
 			userLoginRequest.setType("0");
@@ -83,7 +82,7 @@ public class AllOpenController extends BaseController {
 	        if(user.getStatus()==1){
 	        	return getBaseResponseResult(HttpCodeEnum.LOGIN_FAIL,"login.user.userLocked");
 	        }
-	        user.setPassword(null);
+	        user.setPassword(null);//用户密码不对外提供
 	        tokenData = getToken(false,user,userLoginRequest.getType());
 	        setDefaultDataToRedis(user.getUserId()+CommonConstant.COMMA+userLoginRequest.getType(),tokenData);
 		}
@@ -133,6 +132,7 @@ public class AllOpenController extends BaseController {
 	
 	//管理员判断
 	private boolean systemAdminCheck(UserLoginRequest userLoginRequest){
+		//管理员账号密码在本项目中是固定的，当然也可以配置在数据库中
 		final String systemAdminUsernameAndPassword = SystemConstant.SYSTEM_DEFAULT_USER_NAME+SystemConstant.SYSTEM_DEFAULT_USER_PASSWORD;
 		final String requestUsernameAndPassword = userLoginRequest.getUsername()+userLoginRequest.getPassword();
 		//final String requestType = userLoginRequest.getType();

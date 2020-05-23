@@ -19,9 +19,9 @@ public interface ModuleService {
 	
 	public void moduleDelete(String moduleIds[]);
 	
-	public void moduleAdd(Module module);
+	public void moduleAdd(User user,Module module);
 	
-	public void moduleModify(Module module);
+	public void moduleModify(User user,Module module);
 	
 	public Module moduleDetail(String moduleId);
 	

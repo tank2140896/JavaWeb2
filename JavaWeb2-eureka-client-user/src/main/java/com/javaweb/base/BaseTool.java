@@ -76,6 +76,8 @@ public class BaseTool extends BaseInject {
 		return new BaseResponseResult(httpCodeEnum.getCode(),getValidateMessage(bindingResult),data);
 	}
 	
+	/* -------------------------------------------------- 分界线 -------------------------------------------------- */
+	
 	//优先获取header里的token
 	public static String getToken(HttpServletRequest httpServletRequest){
 		String token = httpServletRequest.getHeader(SystemConstant.HEAD_TOKEN);//1、支持header传参方式
@@ -100,7 +102,7 @@ public class BaseTool extends BaseInject {
 		if(token==null){
 			try{
 				token = serverHttpRequest.getURI().getPath();//2、支持问号传参方式
-				token = token.split(SystemConstant.HEAD_TOKEN+"=")[1].split("&")[0];
+				token = token.split(SystemConstant.HEAD_TOKEN+CommonConstant.EQUAL)[1].split(CommonConstant.AND)[0];
 			}catch(Exception e){
 				//do nothing
 			}

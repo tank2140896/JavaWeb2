@@ -47,7 +47,7 @@ public class RoleController extends BaseController {
 			User currentUser = tokenData.getUser();
 			role.setRoleId(SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO));
 			role.setCreateDate(DateUtil.getDefaultDate());
-			role.setCreator(currentUser.getUserName());
+			role.setCreator(currentUser.getUserId());
 			role.setDelFlag(0);
 			roleService.roleAdd(role);
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"role.add.success",null);
@@ -69,7 +69,7 @@ public class RoleController extends BaseController {
 		}else{
 			User currentUser = tokenData.getUser();
 			role.setUpdateDate(DateUtil.getDefaultDate());
-			role.setUpdater(currentUser.getUserName());
+			role.setUpdater(currentUser.getUserId());
 			roleService.roleModify(role);
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"role.modify.success",null);
 		}

@@ -50,7 +50,7 @@ public class InterfacesController extends BaseController {
 	public BaseResponseResult interfacesModify(@RequestBody Interfaces interfaces,@TokenDataAnnotation TokenData tokenData){
 		User currentUser = tokenData.getUser();
 		interfaces.setUpdateDate(DateUtil.getDefaultDate());
-		interfaces.setUpdater(currentUser.getUserName());
+		interfaces.setUpdater(currentUser.getUserId());
 		interfacesService.interfacesModify(interfaces);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"interfaces.modify.success",null);
 	}

@@ -17,6 +17,12 @@ public class CommonConstant {
 	//逗号
 	public static final String COMMA = ",";
 	
+	//等号
+	public static final String EQUAL = "=";
+	
+	//且
+	public static final String AND = "&";
+	
 	//点
 	public static final String DOT = ".";
 	
