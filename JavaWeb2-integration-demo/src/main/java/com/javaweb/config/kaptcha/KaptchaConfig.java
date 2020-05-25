@@ -17,7 +17,8 @@ public class KaptchaConfig {
         Properties properties = new Properties();  
         properties.setProperty("kaptcha.border","yes");  
         properties.setProperty("kaptcha.border.color","105,179,90");  
-        properties.setProperty("kaptcha.textproducer.font.color","blue");
+        properties.setProperty("kaptcha.textproducer.font.color","black");
+	properties.setProperty("kaptcha.background.impl","com.javaweb.config.kaptcha.SelfBackground");
         properties.setProperty("kaptcha.image.width","300");
         properties.setProperty("kaptcha.image.height","75");
         properties.setProperty("kaptcha.noise.impl","com.cpic.config.kaptcha.SelfNoise");//干扰 com.google.code.kaptcha.impl.NoNoise为无干扰，此处用的selfNoise是自己实现的干扰配置
