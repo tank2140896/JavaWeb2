@@ -21,7 +21,7 @@ public class KaptchaConfig {
 	properties.setProperty("kaptcha.background.impl","com.javaweb.config.kaptcha.SelfBackground");
         properties.setProperty("kaptcha.image.width","300");
         properties.setProperty("kaptcha.image.height","75");
-        properties.setProperty("kaptcha.noise.impl","com.cpic.config.kaptcha.SelfNoise");//干扰 com.google.code.kaptcha.impl.NoNoise为无干扰，此处用的selfNoise是自己实现的干扰配置
+        properties.setProperty("kaptcha.noise.impl","com.javaweb.config.kaptcha.SelfNoise");//干扰 com.google.code.kaptcha.impl.NoNoise为无干扰，此处用的selfNoise是自己实现的干扰配置
         //properties.setProperty("kaptcha.obscurificator.impl","com.google.code.kaptcha.impl.ShadowGimpy");
         properties.setProperty("kaptcha.textproducer.font.size","70");
         properties.setProperty("kaptcha.textproducer.char.length","4");  
