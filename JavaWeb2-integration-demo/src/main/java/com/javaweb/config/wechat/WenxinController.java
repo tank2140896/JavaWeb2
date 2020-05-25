@@ -218,7 +218,7 @@ public class WenxinController {
 	}
 	
 	/** 企业微信扫码登录 start */
-		/** 原版正常对接步骤
+	/** 原版正常对接步骤 */
 	//step1.获取企业微信登录二维码
 	@GetMapping("/getLoginQrCode")
 	public void getLoginQrCode(HttpServletRequest request,HttpServletResponse response){
@@ -258,7 +258,6 @@ public class WenxinController {
 		//用户名和密码要Base64加密
 		response.sendRedirect("https://127.0.0.1:8001/前端页面/login?username=abc123&password=123456");//跳至前端页面模拟登录请求
 	}
-	*/
 	
 	/** 现版沟通对接步骤
 	1.甲方提供扫码URL，如https://www.xxx.com/甲方/x?a=1&b=2  
@@ -267,6 +266,7 @@ public class WenxinController {
 	3.乙方（我）向甲方提供乙方（我）的回调地址，如https://www.yyy.com/workLoginCallBack  
 	4.甲方调用乙方（我）的回调地址，传入是否企业用户扫码成功标识（successFlag）、uniqueCode和userCode（工号）
 	*/
+	/**
 	@GetMapping("/getLoginQrCode")
 	public void getLoginQrCode(HttpServletRequest request,HttpServletResponse response){
 		try{
@@ -287,28 +287,28 @@ public class WenxinController {
 		}
 	}
 	
-	/**
-	甲方要求：扫码后，企业号后台返回微信前端结果，并向当前应用后台回调地址返回结果
-    /workLoginCallBack?successFlag=1&uniqueCode=aaabbbbccc&userCode=49853
-    successFlag=1为成功
-    successFlag=-1为失败
-	*/
+	//甲方要求：扫码后，企业号后台返回微信前端结果，并向当前应用后台回调地址返回结果
+    ///workLoginCallBack?successFlag=1&uniqueCode=aaabbbbccc&userCode=49853
+    //successFlag=1为成功
+    //successFlag=-1为失败
 	@RequestMapping("/workLoginCallBack")
 	public void workLoginCallBack(HttpServletRequest request,HttpServletResponse response,
 								  @RequestBody WorkLoginCallBackRequest workLoginCallBackRequest	
-			                      /*@RequestParam("successFlag") Integer successFlag,
-			                      @RequestParam("uniqueCode") String uniqueCode,
-			                      @RequestParam("userCode") String userCode*/) throws Exception{
+			                      //@RequestParam("successFlag") Integer successFlag,@RequestParam("uniqueCode") String uniqueCode,@RequestParam("userCode") 
+			                      String userCode) throws Exception{
 		String message = "";
 		boolean successFlag = false;
 		String username = "";
 		String password = "";
 		String checkValue = null;
 		try{
-			if(/*successFlag*/workLoginCallBackRequest.getSuccessFlag()==1){//1：成功；2：失败
-				checkValue = SecretUtil.workWeixinUniqueCodeCheck(/*uniqueCode*/workLoginCallBackRequest.getUniqueCode());
+			//successFlag
+			if(workLoginCallBackRequest.getSuccessFlag()==1){//1：成功；2：失败
+				//uniqueCode
+				checkValue = SecretUtil.workWeixinUniqueCodeCheck(workLoginCallBackRequest.getUniqueCode());
 				if(checkValue!=null){//校验uniqueCode
-					User user = userService.getUserByUserCode(/*userCode*/workLoginCallBackRequest.getUserCode());//根据userCode（工号）获取用户ID然后获取用户密码
+					//userCode
+					User user = userService.getUserByUserCode(workLoginCallBackRequest.getUserCode());//根据userCode（工号）获取用户ID然后获取用户密码
 					if(user!=null){
 						PasswordRecord passwordRecord = passwordRecordService.getPasswordRecordByUserId(user.getId());
 						if(passwordRecord!=null){
@@ -384,6 +384,7 @@ public class WenxinController {
 			return new BaseResponseResult(605,"扫码失效，请刷新页面重新获取二维码",url);
 		}
 	}
+	*/
 	/** 企业微信扫码登录 end */
 	
 	/* -------------------------------------------------- 分界线 -------------------------------------------------- */
