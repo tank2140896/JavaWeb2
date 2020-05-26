@@ -70,6 +70,12 @@ public class MongoDbController {
     	for(int i=0;i<list.size();i++){
     		System.out.println(list.get(i).getMongoDbId()+"~"+list.get(i).getId());
     	}
+    	/** 分页
+    	Query query = new Query();
+    	query.addCriteria(Criteria.where("username").regex("username_"));
+    	query.skip(10);
+    	query.limit(5);
+    	*/
 		return new BaseResponseResult(200,"success",list.size());
     }
     
