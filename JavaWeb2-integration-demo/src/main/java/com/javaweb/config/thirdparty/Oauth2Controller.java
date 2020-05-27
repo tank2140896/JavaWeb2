@@ -27,7 +27,7 @@ state随便一串随机字符串即可（可选）
 url为本服务地址
 3、用户输入本服务（第三方）的账号和密码，前端将appid、agentid、state、redirect_uri和账号密码通过post请求本服务（第三方）
 4、本服务（第三方）登录成功后回调应用（A），然后直接带一个如加密的code（包含账号密码）返回本服务（第三方）前端然后由本服务（第三方）前端跳转至应用（A）
-5、应用（A）拿到code（包含账号密码）经过校验后模拟本系统登录
+5、应用（A）拿到code经过校验后模拟本系统登录
 */
 @RestController
 public class Oauth2Controller {
@@ -40,9 +40,10 @@ public class Oauth2Controller {
     	String agentid = loginBody.getAgentid();//request.getParameter("agentid");
 
     	String code = SecretUtil.defaultGenRandomPass(10);
-    	code = RsaUtil.encrypt(code,null/*传入公钥*/);
+    	code = RsaUtil.encrypt(code,null/*传入公钥*/);//公钥的话可以直接向应用（A）获取或者放入appid或agentid或新起个字段
 		code = code+","+appid+","+agentid;
 		code = SecretUtil.base64EncoderString(code,"UTF-8");
+		//code也可以在最后加密，加密前的code也可以转化成JwtToken，参考SecretUtil的createJwtToken及analyseJwtToken方法
 		
 		String state = loginBody.getState();//request.getParameter("state");
 		String redirect_uri = loginBody.getRedirectUri();//request.getParameter("redirect_uri");
