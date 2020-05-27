@@ -19,13 +19,13 @@ JavaWeb2-angular（npm start）
 1、JavaWeb2-eureka-server（要起3个，端口1001、1002、1003）                          
 2、JavaWeb2-eureka-client-user（端口2001）、JavaWeb2-eureka-client-log（端口2002）、JavaWeb2-eureka-client-zuul（端口3001）          
 3、JavaWeb2-angular（端口4200）     
-注：与Angular整合看效果的话只要导入JavaWeb2-eureka-client-user/src/main/resources/sql/init.sql，然后启动JavaWeb2-eureka-server、JavaWeb2-eureka-client-user和JavaWeb2-angular即可，页面访问：localhost:4200，账号和密码都是admin123456     
+注：与Angular整合看效果的话只要导入JavaWeb2-eureka-client-user/src/main/resources/sql/init.sql，然后配置域名对应的地址（参考JavaWeb2-eureka-server中的配置文件），最后启动JavaWeb2-eureka-server、JavaWeb2-eureka-client-user和JavaWeb2-angular即可，页面访问：localhost:4200，账号和密码都是admin123456     
 # 四、使用前重要说明                                                                     
 1、本项目存在很多不足，水平有限，请见谅                            
 2、本项目没有使用session，而是使用redis替代session，没有使用spring-session-redis，而是自己代码处理的                          
 3、后端几乎所有的增删改查删除操作都是物理操作（忽略数据库表中的del_flag字段），如果想做逻辑操作（使用数据库表中的del_flag字段）需要重写相关SQL语句                        
 4、本项目所有接口都可以用JUnit或Postman验证接口，JUnit代码也有部分可做参考                                       
-5、JavaWeb2-integration-demo包括了一些常用技术与SpringBoot组合的示例（hbase、kafka、netty、solr、切面处理、mongodb、websocket（SpringBoot版和Netty版）、elasticsearch、neo4j、kaptcha、邮件发送、redis、restTemplate、quartz（分布式）定时任务、文件上传下载、activiti、qq、wechat、poi-excel、HTTPS和HTTP2.0）                                                                                            
+5、JavaWeb2-integration-demo包括了一些常用技术与SpringBoot组合的示例（hbase、kafka、netty、solr、切面处理、mongodb、websocket（SpringBoot版和Netty版）、elasticsearch、neo4j、kaptcha、邮件发送、redis、restTemplate、quartz（分布式）定时任务、文件上传下载、activiti、qq、wechat、poi-excel、HTTPS和HTTP2.0、第三方接入（Oauth2）、简单接口对接（对方请求我们的数据））                                                                                            
 # 五、开发计划                                                                             
 1、持续优化迭代各已有功能                                                              
 2、lucene、hadoop、spark                                                                
