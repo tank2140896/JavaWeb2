@@ -90,8 +90,8 @@ export class InterfacesListComponent implements OnInit {
   }
 
   //数据权限分配
-  public interfacesDataPermissionAssignmentFunction(id:string,url:string):void {
-    this.router.navigate(['dataPermissionAssignment'],{relativeTo:this.activatedRoute,queryParams:{id:id,url:url}});
+  public interfacesDataPermissionAssignmentFunction(eachData):void {
+    this.router.navigate(['dataPermissionAssignment'],{relativeTo:this.activatedRoute,queryParams:{id:eachData.id,url:eachData.url,entity:eachData.entity}});
   }
 
 }
