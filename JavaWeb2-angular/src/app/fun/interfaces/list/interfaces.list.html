@@ -43,7 +43,7 @@
             <td>
               <button *ngIf="interfacesDetailZone" (click)="interfacesDetailFunction(eachData.id)" class="btn btn-sm btn-info" style="margin-right:10px;">接口详情</button>
               <button *ngIf="interfacesModifyZone" (click)="interfacesModifyFunction(eachData.id)" class="btn btn-sm btn-warning" style="margin-right:10px;">修改接口</button>
-              <button *ngIf="eachData.dataPermission==1 && interfacesUserRoleDataPermissionZone" (click)="interfacesDataPermissionAssignmentFunction(eachData.id,eachData.url)" class="btn btn-sm btn-primary">数据权限分配</button>
+              <button *ngIf="eachData.dataPermission==1 && interfacesUserRoleDataPermissionZone" (click)="interfacesDataPermissionAssignmentFunction(eachData)" class="btn btn-sm btn-primary">数据权限分配</button>
             </td>
           </tr>
         </tbody>
