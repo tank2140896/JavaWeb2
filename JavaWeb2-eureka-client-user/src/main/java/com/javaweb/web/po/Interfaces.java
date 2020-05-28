@@ -40,6 +40,9 @@ public class Interfaces extends BaseEntity implements Serializable {
 	@Column(name="data_permission")
 	private Integer dataPermission;//数据权限（0:无数据权限；1：有数据权限）
 	
+	@Column(name="entity")
+	private String entity;//返回的实体类（主要数据对象）
+	
 	@Column(name="remark")
 	private String remark;//备注
 
