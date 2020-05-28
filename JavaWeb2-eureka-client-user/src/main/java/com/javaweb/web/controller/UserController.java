@@ -35,6 +35,7 @@ import com.javaweb.web.eo.role.ModuleInfoResponse;
 import com.javaweb.web.eo.role.RoleIdAndStrategyRequest;
 import com.javaweb.web.eo.user.RoleInfoResponse;
 import com.javaweb.web.eo.user.UserListRequest;
+import com.javaweb.web.eo.user.UserListResponse;
 import com.javaweb.web.po.User;
 
 import io.swagger.annotations.Api;
@@ -63,7 +64,7 @@ public class UserController extends BaseController {
 		}
 	}
 	
-	@DataPermission
+	@DataPermission(entity=UserListResponse.class)
 	@ApiOperation(value=SwaggerConstant.SWAGGER_USER_LIST)
 	@PostMapping(ApiConstant.USER_LIST)
 	public BaseResponseResult userList(@RequestBody UserListRequest userListRequest,@TokenDataAnnotation TokenData tokenData){
