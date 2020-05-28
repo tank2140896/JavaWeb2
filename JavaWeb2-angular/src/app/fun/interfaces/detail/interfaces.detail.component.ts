@@ -47,6 +47,7 @@ export class InterfacesDetailComponent implements OnInit {
             this.interfacesDetailResponse.times = result.data.times;//时间
             this.interfacesDetailResponse.unit = result.data.unit;//单位
             this.interfacesDetailResponse.counts = result.data.counts;//次数
+            this.interfacesDetailResponse.entity = result.data.entity;//返回的实体类
             this.interfacesDetailResponse.remark = result.data.remark;//备注
           }else{
             alert(result.message);
