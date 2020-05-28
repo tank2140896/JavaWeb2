@@ -10,6 +10,8 @@ export class InterfacesModifyRequest {
 
   counts:string;//次数
 
+  entity:string;//返回的实体类（主要数据对象）
+
   remark:string;//备注
 
 }
