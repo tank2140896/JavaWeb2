@@ -49,7 +49,7 @@ JavaWeb2-angular（npm start）
 8、kafka【kafka生产者（producer）一般可以使用kafkaTemplate；kafka消费者（consumer）一般可以使用@KafkaListener；实际项目中生产者和消费者一般都是分开的】                 
 9、Netty客户端和服务端示例（IO模型、数据协议、线程模型）                 
 10、websocket            
-11、数据权限：本项目的数据权限全部围绕接口展开的，使用时在Controller的方法上加上@DataPermission，默认/web开头的接口都是权限受控的，参考：UserController中的userList                                          
+11、数据权限：本项目的数据权限全部围绕接口展开的，使用时在Controller的方法上加上@DataPermission(entity=UserListResponse.class)，默认/web开头的接口都是权限受控的，参考：UserController中的userList                                          
 12、代码自动生成                             
 # 七、项目使用说明                                                       
 1、除了涉及事务的service加上@Transactional，建议涉及事务的Controller也加上@Transactional，另外不建议try、catch，除非能确保无数据库相关事务操作或确保Controller内的方法不会抛出异常；另外自定义异常如果继承Exception的话，方法需要显式抛出异常，而如果继承RuntimeException，方法不需要显式抛出异常                 
