@@ -46,6 +46,7 @@ export class InterfacesModifyComponent implements OnInit {
             this.interfacesModifyRequest.times = result.data.times;//时间
             this.interfacesModifyRequest.unit = result.data.unit;//单位
             this.interfacesModifyRequest.counts = result.data.counts;//次数
+            this.interfacesModifyRequest.entity = result.data.entity;//返回的实体类
             this.interfacesModifyRequest.remark = result.data.remark;//备注
           }else{
             alert(result.message);
