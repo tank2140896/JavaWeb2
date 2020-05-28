@@ -76,6 +76,7 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 					dbListEach.setUrl(projectListEach.getUrl());
 					dbListEach.setMethod(projectListEach.getMethod());
 					dbListEach.setDataPermission(projectListEach.getDataPermission());
+					dbListEach.setEntity(projectListEach.getEntity());
 					dbListEach.setUpdateDate(DateUtil.getDefaultDate());
 					dbListEach.setUpdater(SystemConstant.SYSTEM_DEFAULT_USER_ID);
 					forUpdate.add(dbListEach);
@@ -129,6 +130,10 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 					dataPermission = map.get(requestMappingInfo).getMethodAnnotation(DataPermission.class);
 					if(dataPermission!=null){
 						interfaces.setDataPermission(1);
+						Class<?> c = dataPermission.entity();
+						if(!(DataPermission.class.getName().equals(c.getClass().getName()))){//不是DataPermission的实例，定义了明确的实体类
+							interfaces.setEntity(Stream.of(c.getDeclaredFields()).map(e->e.getName()).filter(e->!"serialVersionUID".equals(e)).collect(Collectors.toList()).toString());
+						}
 					}
 				}catch(Exception e){
 					//do nothing
