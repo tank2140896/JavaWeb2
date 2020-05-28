@@ -1,10 +1,11 @@
-<h5 style="color:red;margin-top:1%;margin-left:1%">接口名称：{{url}}</h5>
-<div style="margin-top:1%;margin-left:1%">
+<h5 style="color:red;margin-top:1%;margin-left:1%">接口名称：{{url}}，可修改的返回的实体类字段：{{entity}}</h5>
+<hr/>
+<div style="margin-left:1%">
   用户名<input type="text" style="height:35px;" placeholder="请输入用户名" [(ngModel)]="interfacesUserRoleDataPermissionResponse_user.userName">
   <button type="button" class="btn btn-primary" style="margin-left:1%;" (click)="interfacesUserSearch(1)">查询</button>
   <button type="button" class="btn btn-info" style="margin-left:1%;" (click)="resetUser()">重置</button>
 </div>
-<div class="col col-xl-12 col-lg-12" style="margin-top:1%;">
+<div class="col col-xl-12 col-lg-12" style="margin-top:10px">
   <div class="card mb-3">
     <div class="card-body table table-hover">
       <table class="table">
@@ -49,12 +50,12 @@
   </div>
 </div>
 
-<div style="margin-top:1%;margin-left:1%">
+<div style="margin-left:1%">
   角色名<input type="text" style="height:35px;" placeholder="请输入角色名" [(ngModel)]="interfacesUserRoleDataPermissionResponse_role.roleName">
   <button type="button" class="btn btn-primary" style="margin-left:1%;" (click)="interfacesRoleSearch(1)">查询</button>
   <button type="button" class="btn btn-info" style="margin-left:1%;" (click)="resetRole()">重置</button>
 </div>
-<div class="col col-xl-12 col-lg-12" style="margin-top:1%;">
+<div class="col col-xl-12 col-lg-12" style="margin-top:10px">
   <div class="card mb-3">
     <div class="card-body table table-hover">
       <table class="table">
@@ -98,7 +99,7 @@
     </div>
   </div>
 </div>
-<div style="margin-top:1%;margin-left:1%">
+<div style="margin-top:10px;margin-left:1%">
   <button type="button" (click)="dataPermissionAssignment()" class="btn btn-primary" style="margin-left:1%;">分配</button>
   <button type="button" (click)="dataPermissionAssignmentBack()" class="btn btn-primary" style="margin-left:1%;">返回</button>
 </div>
