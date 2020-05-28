@@ -9,4 +9,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DataPermission {
 	
+	Class<?> entity() default DataPermission.class;//实体类
+	
 }
