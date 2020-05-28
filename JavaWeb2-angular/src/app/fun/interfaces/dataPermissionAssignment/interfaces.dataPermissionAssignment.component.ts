@@ -32,6 +32,7 @@ export class InterfacesDataPermissionAssignmentComponent implements OnInit {
   private resultPage_role:ResultPage = new ResultPage();//分页结果初始化;
   private url:String;
   private id:string;
+  private entity:string;
 
   //初始化
   ngOnInit(): void {
@@ -44,6 +45,7 @@ export class InterfacesDataPermissionAssignmentComponent implements OnInit {
     this.activatedRoute.queryParams.subscribe(queryParam => {
       this.id = queryParam.id;
       this.url = queryParam.url;
+      this.entity = queryParam.entity;
       this.interfacesUserRoleDataPermissionResponse_user.interfacesId = this.id;
       this.interfacesUserRoleDataPermissionResponse_user.type = 1;//用户
       this.interfacesUserRoleDataPermissionResponse_role.interfacesId = this.id;
