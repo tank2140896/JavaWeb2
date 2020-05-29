@@ -22,6 +22,7 @@ public class SelfNoise extends Configurable implements NoiseProducer {
     }
 
     public void makeNoise(BufferedImage image, float factorOne, float factorTwo, float factorThree, float factorFour) {
+    	//Color color = this.getColor();
     	Color color = this.getConfig().getNoiseColor();
         int width = image.getWidth();
         int height = image.getHeight();
