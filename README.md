@@ -67,7 +67,7 @@ C、@ConfigurationProperties(prefix="com.demo")
 5、指定读取配置文件的几种常用方式           
 A、java -jar demo.jar --spring.config.location=application.properties           
 B、java -jar demo.jar --spring.profiles.active=dev          
-C、外部，通常是demo.jar同一目录下建一个config文件夹，然后里面放多个配置文件：1.properties、2.properties        
+C、外部，通常是demo.jar同一目录下建一个config文件夹，然后里面放个配置文件：application.properties              
 # 八、后期侧重点                                                                           
 数学、算法、人工智能、机器学习、编程语言底层实现                                        
 # 九、其它       
