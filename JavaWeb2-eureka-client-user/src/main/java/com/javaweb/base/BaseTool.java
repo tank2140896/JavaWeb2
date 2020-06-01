@@ -3,13 +3,11 @@ package com.javaweb.base;
 import java.time.Duration;
 import java.util.List;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -27,9 +25,6 @@ public class BaseTool extends BaseInject {
 	private static RedisTemplate<String,Object> staticRedisTemplate = null;
 	
 	private static Environment staticEnvironment = null;
-	
-	@Resource(name="redisTemplate")
-	protected ValueOperations<Object,Object> valueOperations;
 	
 	public void setDataToRedis(String key,Object value,Duration duration){
 		valueOperations.set(key,value,duration);
