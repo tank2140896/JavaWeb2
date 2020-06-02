@@ -79,4 +79,10 @@ public class SystemConstant {
 		SYSTEM_DEFAULT_USER.setUpdater(SYSTEM_DEFAULT_USER_ID);
 	}
 	
+	/* ------------------------------ 分割线 ------------------------------ */
+	public static final String DICTIONARY_KEY_OPERATELOG_ASPECT_OPEN = "operatelog.aspect.open";
+	public static final String DICTIONARY_KEY_INIT_USER_PASSWORD = "init.user.password";
+	public static final String DICTIONARY_KEY_USER_PORTRAIT_LINUX_PATH = "user.portrait.linux.path";
+	public static final String DICTIONARY_KEY_USER_PORTRAIT_WINDOWS_PATH = "user.portrait.windows.path";
+	
 }
