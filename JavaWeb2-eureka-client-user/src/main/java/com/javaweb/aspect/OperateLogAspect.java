@@ -20,7 +20,6 @@ import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.HttpUtil;
 import com.javaweb.util.core.SecretUtil;
 import com.javaweb.web.eo.TokenData;
-import com.javaweb.web.po.Dictionary;
 import com.javaweb.web.po.OperationLog;
 import com.javaweb.web.service.OperationLogService;
 
@@ -52,10 +51,10 @@ public class OperateLogAspect {
 	
 	private Boolean getOperatelogOpenFlag(){
 		Boolean open = false;
-		Dictionary dictionary = BaseSystemMemory.getDictionaryByKey("operatelog.aspect.open");
+		String value = BaseSystemMemory.getDictionaryValueByKey(SystemConstant.DICTIONARY_KEY_OPERATELOG_ASPECT_OPEN);
 		try{
-			if(dictionary!=null){
-				open = Boolean.parseBoolean(dictionary.getValueCode());
+			if(value!=null){
+				open = Boolean.parseBoolean(value);
 			}
 		}catch(Exception e){
 			//do nothing
