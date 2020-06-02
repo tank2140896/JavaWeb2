@@ -202,7 +202,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 					return rootPath;
 				}
 			}
-			return rootPath = SystemConstant.SYSTEM_DEFAULT_USER_INIT_PASSWORD;
+			return rootPath = SystemConstant.SYSTEM_DEFAULT_USER_PORTRAIT_LINUX_PATH;
 		}else{//windows路径
 			Dictionary dictionary = BaseSystemMemory.getDictionaryByKey("user.portrait.windows.path");
 			if(dictionary!=null){
