@@ -5,10 +5,8 @@ import java.time.Duration;
 import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.EnableCaching;
-//import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-//import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.connection.RedisStandaloneConfiguration;
 import org.springframework.data.redis.connection.lettuce.LettuceClientConfiguration;
@@ -22,6 +20,11 @@ import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.jsontype.impl.LaissezFaireSubTypeValidator;
 
+/**
+常用命令：
+字符串：get、mget、set、mset、getset、del、strlen、append、incr、incrby、decr、decrby、incrbyfloat、decrbyfloat
+散列：hset、hget、hincrby、hincrbyfloat、hexists、hdel、hlen、hmset、hmget、hkeys、hvals、hgetall
+*/
 @Configuration
 @EnableCaching
 public class RedisConfig {
