@@ -20,7 +20,6 @@ import com.javaweb.constant.SystemConstant;
 import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.FileUtil;
 import com.javaweb.util.core.SecretUtil;
-import com.javaweb.util.core.StringUtil;
 import com.javaweb.util.core.SystemUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.TokenData;
@@ -30,7 +29,6 @@ import com.javaweb.web.eo.user.RoleInfoResponse;
 import com.javaweb.web.eo.user.UserListRequest;
 import com.javaweb.web.eo.user.UserListResponse;
 import com.javaweb.web.eo.user.UserLoginRequest;
-import com.javaweb.web.po.Dictionary;
 import com.javaweb.web.po.User;
 import com.javaweb.web.po.UserModule;
 import com.javaweb.web.po.UserRole;
@@ -145,9 +143,9 @@ public class UserServiceImpl extends BaseService implements UserService {
 
 	public void userInitPassword(String userId,TokenData tokenData) {
 		String initPassword = SystemConstant.SYSTEM_DEFAULT_USER_INIT_PASSWORD;
-		Dictionary dictionary = BaseSystemMemory.getDictionaryByKey("init.user.password");
-		if(dictionary!=null){
-			initPassword = StringUtil.handleNullString(dictionary.getValueCode());
+		String value = BaseSystemMemory.getDictionaryValueByKey(SystemConstant.DICTIONARY_KEY_INIT_USER_PASSWORD);
+		if(value!=null){
+			initPassword = value;
 			if(initPassword.length()<6){
 				initPassword = SystemConstant.SYSTEM_DEFAULT_USER_INIT_PASSWORD;
 			}
@@ -195,18 +193,18 @@ public class UserServiceImpl extends BaseService implements UserService {
 	private String getRootPath(){
 		String rootPath = CommonConstant.EMPTY_VALUE;
 		if(SystemUtil.isLinux()){//linux路径
-			Dictionary dictionary = BaseSystemMemory.getDictionaryByKey("user.portrait.linux.path");
-			if(dictionary!=null){
-				rootPath = StringUtil.handleNullString(dictionary.getValueCode());
+			String value = BaseSystemMemory.getDictionaryValueByKey(SystemConstant.DICTIONARY_KEY_USER_PORTRAIT_LINUX_PATH);
+			if(value!=null){
+				rootPath = value;
 				if(!CommonConstant.EMPTY_VALUE.equals(rootPath)){
 					return rootPath;
 				}
 			}
 			return rootPath = SystemConstant.SYSTEM_DEFAULT_USER_PORTRAIT_LINUX_PATH;
 		}else{//windows路径
-			Dictionary dictionary = BaseSystemMemory.getDictionaryByKey("user.portrait.windows.path");
-			if(dictionary!=null){
-				rootPath = StringUtil.handleNullString(dictionary.getValueCode());
+			String value = BaseSystemMemory.getDictionaryValueByKey(SystemConstant.DICTIONARY_KEY_USER_PORTRAIT_WINDOWS_PATH);
+			if(value!=null){
+				rootPath = value;
 				if(!CommonConstant.EMPTY_VALUE.equals(rootPath)){
 					return rootPath;
 				}
