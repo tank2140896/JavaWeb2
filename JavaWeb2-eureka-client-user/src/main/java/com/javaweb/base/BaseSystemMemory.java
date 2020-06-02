@@ -2,8 +2,10 @@ package com.javaweb.base;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.javaweb.constant.CommonConstant;
 import com.javaweb.web.po.Dictionary;
 
 public class BaseSystemMemory {
@@ -15,12 +17,21 @@ public class BaseSystemMemory {
     }
     
     public static Dictionary getDictionaryByKey(String key){
-    	List<Dictionary> list = dictionaryList.stream().filter(each->{return each.getKeyCode().equals(key);}).collect(Collectors.toList());
-    	if(list==null||list.size()!=1){
-    		return null;
-    	}else{
-    		return list.get(0);
+    	Dictionary dictionary = null;
+    	Optional<Dictionary> optional = dictionaryList.stream().filter(each->{return each.getKeyCode().equals(key);}).findFirst();
+    	if(optional.isPresent()){
+    		dictionary = optional.get();
     	}
+    	return dictionary;
+    }
+    
+    public static String getDictionaryValueByKey(String key){
+    	String value = CommonConstant.NULL_VALUE;
+    	Dictionary dictionary = getDictionaryByKey(key);
+    	if(dictionary!=null){
+    		value = dictionary.getValueCode();
+    	}
+    	return value;
     }
     
 }
