@@ -36,7 +36,8 @@ public class SwaggerConfig {
                 .globalOperationParameters(parameters)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage(SystemConstant.BASE_PACKAGE))
+                .apis(RequestHandlerSelectors.basePackage(SystemConstant.BASE_PACKAGE))//包形式
+                //.apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))//注解形式
                 .paths(PathSelectors.any())
                 .build();
     }
