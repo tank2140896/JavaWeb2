@@ -77,6 +77,7 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 					dbListEach.setMethod(projectListEach.getMethod());
 					dbListEach.setDataPermission(projectListEach.getDataPermission());
 					dbListEach.setEntity(projectListEach.getEntity());
+					dbListEach.setHistoryTimes(projectListEach.getHistoryTimes());
 					dbListEach.setUpdateDate(DateUtil.getDefaultDate());
 					dbListEach.setUpdater(SystemConstant.SYSTEM_DEFAULT_USER_ID);
 					forUpdate.add(dbListEach);

@@ -1,6 +1,7 @@
 package com.javaweb.web.po;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 
 import com.javaweb.annotation.sql.Column;
 import com.javaweb.annotation.sql.Table;
@@ -42,6 +43,9 @@ public class Interfaces extends BaseEntity implements Serializable {
 	
 	@Column(name="entity")
 	private String entity;//返回的实体类（主要数据对象）
+	
+	@Column(name="history_times")
+	private BigInteger historyTimes;//历史接口被调用次数
 	
 	@Column(name="remark")
 	private String remark;//备注
