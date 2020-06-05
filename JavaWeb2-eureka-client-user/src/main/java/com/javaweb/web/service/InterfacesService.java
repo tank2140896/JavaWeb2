@@ -25,5 +25,7 @@ public interface InterfacesService {
 	public void dataPermissionAssignment(UserRolePermissionRequest userRolePermissionResponse,String interfacesId,User user);
 	
 	public List<ExcludeInfoResponse> getExcludeInfoResponseList(String userId);
+	
+	public void synchronizedRedisInterfaceHistoryTimes();
 
 }
