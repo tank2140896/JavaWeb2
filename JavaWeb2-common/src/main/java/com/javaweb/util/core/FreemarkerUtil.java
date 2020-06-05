@@ -13,6 +13,7 @@ import java.util.UUID;
 import java.util.zip.ZipOutputStream;
 
 import com.javaweb.constant.CommonConstant;
+import com.javaweb.enums.CamelCaseEnum;
 import com.javaweb.enums.JsonTypeEnum;
 import com.javaweb.util.entity.JavaJsonFtl;
 
@@ -45,8 +46,8 @@ public class FreemarkerUtil {
 			String value = jo.get(key).toString();
 			/** ↓↓↓↓↓↓↓↓↓↓未做更加细致的处理,JSON类型的key值请保持驼峰法命名规则↓↓↓↓↓↓↓↓↓↓ */
 			jjf.setAttribute(key);
-			jjf.setAttributeLowerCase(key.substring(0,1).toLowerCase()+key.substring(1,key.length()));
-			jjf.setAttributeUpperCase(key.substring(0,1).toUpperCase()+key.substring(1,key.length()));
+			jjf.setAttributeLowerCase(StringUtil.camelCaseConvert(key,CamelCaseEnum.FIRST_WORD_LOWER)/*key.substring(0,1).toLowerCase()+key.substring(1,key.length())*/);
+			jjf.setAttributeUpperCase(StringUtil.camelCaseConvert(key,CamelCaseEnum.FIRST_WORD_UPPER)/*key.substring(0,1).toUpperCase()+key.substring(1,key.length())*/);
 			/** ↑↑↑↑↑↑↑↑↑↑未做更加细致的处理,JSON类型的key值请保持驼峰法命名规则↑↑↑↑↑↑↑↑↑↑ */
 			JsonTypeEnum jte = StringUtil.getJsonType(jo.get(key));
 			if(JsonTypeEnum.STRING==jte||JsonTypeEnum.NULL==jte) {//字符串类型

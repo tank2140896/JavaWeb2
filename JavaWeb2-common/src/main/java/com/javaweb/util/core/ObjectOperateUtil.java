@@ -8,6 +8,8 @@ import java.util.Map;
 
 import org.springframework.beans.BeanUtils;
 
+import com.javaweb.enums.CamelCaseEnum;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
@@ -74,9 +76,9 @@ public class ObjectOperateUtil {
 					continue;
 				}
 				//得到源对象对应的get方法名称
-				sourceMethodName = METHOD_GET+sourceFiledName.substring(0,1).toUpperCase()+sourceFiledName.substring(1,sourceFiledName.length());
+				sourceMethodName = METHOD_GET+StringUtil.camelCaseConvert(sourceFiledName,CamelCaseEnum.FIRST_WORD_UPPER)/*sourceFiledName.substring(0,1).toUpperCase()+sourceFiledName.substring(1,sourceFiledName.length())*/;
 				//拼接获得目标对象的set方法名称
-				targetMethodName = METHOD_SET+targetFiledName.substring(0,1).toUpperCase()+targetFiledName.substring(1,targetFiledName.length());
+				targetMethodName = METHOD_SET+StringUtil.camelCaseConvert(targetFiledName,CamelCaseEnum.FIRST_WORD_UPPER)/*targetFiledName.substring(0,1).toUpperCase()+targetFiledName.substring(1,targetFiledName.length())*/;
 				//得到源对象对应的get方法
 				sourcetMethod = sourceObject.getClass().getMethod(sourceMethodName,NULL_CLASS);
 				//得到目标对象对应的set方法
@@ -90,10 +92,10 @@ public class ObjectOperateUtil {
 	}
 	
 	//获取简单类名
-	public static String getSimpleClassName(Class<?> c,boolean firstWordLowerCase){
+	public static String getSimpleClassName(Class<?> c,CamelCaseEnum camelCaseEnum){
 		String simpleName = c.getSimpleName(); 
-		if(firstWordLowerCase){
-			return simpleName.substring(0,1).toLowerCase()+simpleName.substring(1,simpleName.length());
+		if(camelCaseEnum==CamelCaseEnum.FIRST_WORD_LOWER){
+			return StringUtil.camelCaseConvert(simpleName,camelCaseEnum);
 		}else{
 			return simpleName;
 		}

@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javaweb.constant.CommonConstant;
+import com.javaweb.enums.CamelCaseEnum;
 import com.javaweb.enums.JsonTypeEnum;
 
 import net.sf.json.JSONObject;
@@ -209,11 +210,35 @@ public class StringUtil{
 	}
 	
 	//对象中包含日期格式转字符串
-	public static String withDate2JsonString(Object object) throws Exception {
+	public static String withDate2JsonString(Object object,String datePattern) throws Exception {
 		ObjectMapper objectMapper = new ObjectMapper();
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(datePattern/*"yyyy-MM-dd HH:mm:ss"*/);
 		objectMapper.setDateFormat(simpleDateFormat);
 		return objectMapper.writeValueAsString(object);
 	}
+	
+	public static String camelCaseConvert(String str,CamelCaseEnum camelCaseEnum){
+		str = handleNullString(str);//全部转成小写
+		str.replaceAll(CommonConstant.BAR,CommonConstant.UNDERLINE);//将-替换为_
+		String strs[] = str.split(CommonConstant.UNDERLINE);//分割_
+		StringBuilder stringBuilder = new StringBuilder();
+		for(int i=0;i<strs.length;i++){
+			if(i==0){
+				if(camelCaseEnum==CamelCaseEnum.FIRST_WORD_LOWER){
+					stringBuilder.append(strs[i].substring(0,1).toLowerCase()).append(strs[i].substring(1,strs[i].length()));
+				}else if(camelCaseEnum==CamelCaseEnum.FIRST_WORD_UPPER){
+					stringBuilder.append(strs[i].substring(0,1).toUpperCase()).append(strs[i].substring(1,strs[i].length()));
+				}
+			}else{
+				stringBuilder.append(strs[i].substring(0,1).toUpperCase()).append(strs[i].substring(1,strs[i].length()));
+			}
+		}
+		return stringBuilder.toString();
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(camelCaseConvert("userName",CamelCaseEnum.FIRST_WORD_UPPER));
+	}
+	
 	
 }
