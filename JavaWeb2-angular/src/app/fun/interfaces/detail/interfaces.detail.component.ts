@@ -43,6 +43,7 @@ export class InterfacesDetailComponent implements OnInit {
           if(result.code==200){
             this.interfacesDetailResponse.name = result.data.name;//接口名称
             this.interfacesDetailResponse.url = result.data.url;//URL
+            this.interfacesDetailResponse.historyTimes = result.data.historyTimes;//总被调用次数
             this.interfacesDetailResponse.method = result.data.method;//方法名称
             this.interfacesDetailResponse.times = result.data.times;//时间
             this.interfacesDetailResponse.unit = result.data.unit;//单位
