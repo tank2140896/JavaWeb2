@@ -28,7 +28,7 @@ JavaWeb2-angular（npm start）
 5、JavaWeb2-integration-demo包括了一些常用技术与SpringBoot组合的示例（hbase、kafka、netty、solr、切面处理、mongodb、websocket（SpringBoot版和Netty版）、elasticsearch、neo4j、kaptcha、邮件发送、redis、restTemplate、quartz（分布式）定时任务、文件上传下载、activiti、qq、wechat、poi-excel、HTTPS和HTTP2.0、本项目作为第三方的接入（Oauth2）、接口对接（对方请求我们的数据））                                                                                            
 6、所有SQL语句均未优化且没有索引等，如有需要请自行优化                
 # 五、开发计划                                                                             
-1、持续优化迭代各已有功能（①接口调用次数统计）                                                              
+1、持续优化迭代各已有功能                                                              
 2、lucene、hadoop、spark                                                                
 3、容器技术                                     
 4、将zuul变为gateway                 
