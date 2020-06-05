@@ -26,6 +26,7 @@ JavaWeb2-angular（npm start）
 3、后端几乎所有的增删改查删除操作都是物理操作（忽略数据库表中的del_flag字段），如果想做逻辑操作（使用数据库表中的del_flag字段）需要重写相关SQL语句                        
 4、本项目所有接口都可以用JUnit或Postman验证接口，JUnit代码也有部分可做参考                                       
 5、JavaWeb2-integration-demo包括了一些常用技术与SpringBoot组合的示例（hbase、kafka、netty、solr、切面处理、mongodb、websocket（SpringBoot版和Netty版）、elasticsearch、neo4j、kaptcha、邮件发送、redis、restTemplate、quartz（分布式）定时任务、文件上传下载、activiti、qq、wechat、poi-excel、HTTPS和HTTP2.0、本项目作为第三方的接入（Oauth2）、接口对接（对方请求我们的数据））                                                                                            
+6、所有SQL语句均未优化且没有索引等，如有需要请自行优化                
 # 五、开发计划                                                                             
 1、持续优化迭代各已有功能（①接口调用次数统计）                                                              
 2、lucene、hadoop、spark                                                                
