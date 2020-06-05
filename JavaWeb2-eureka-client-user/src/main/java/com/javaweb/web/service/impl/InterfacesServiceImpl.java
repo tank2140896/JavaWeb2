@@ -1,5 +1,6 @@
 package com.javaweb.web.service.impl;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -251,6 +252,30 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 			return dataPermissionDao.selectExcludeInfo(allList);
 		}else{
 			return null;
+		}
+	}
+
+	public void synchronizedRedisInterfaceHistoryTimes() {
+		List<Interfaces> list = interfacesDao.selectAllForMySql();
+		Set<Object> set = stringRedisTemplate.opsForHash().keys(SystemConstant.REDIS_INTERFACE_COUNT_KEY);
+		if(list!=null&&list.size()>0){
+			if(set!=null&&set.size()>0){
+				for(Object obj:set){
+					String url = obj.toString().replaceAll(CommonConstant.ZERO_STRING_VALUE,"/");
+					BigInteger historyTimes = new BigInteger(stringRedisTemplate.opsForHash().get(SystemConstant.REDIS_INTERFACE_COUNT_KEY,obj).toString());
+					for(int i=0;i<list.size();i++){
+						Interfaces each = list.get(i);
+						if(each.getUrl().startsWith(url)){
+							each.setHistoryTimes(historyTimes.add(each.getHistoryTimes()));//数字累加
+							stringRedisTemplate.opsForHash().put(SystemConstant.REDIS_INTERFACE_COUNT_KEY,obj,CommonConstant.ZERO_STRING_VALUE);//重置redis中的统计数据为0
+							break;
+						}
+					}
+				}
+			}
+		}
+		for(int i=0;i<list.size();i++){
+			interfacesDao.updateForMySql(list.get(i));//更新库中的统计数据信息
 		}
 	}
 
