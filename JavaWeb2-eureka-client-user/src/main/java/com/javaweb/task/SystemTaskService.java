@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.javaweb.base.BaseService;
@@ -35,7 +36,17 @@ public class SystemTaskService extends BaseService {
     public void task_synchronizedInterfaces() {  
     	interfacesService.synchronizedInterfaces();//同步数据库中的接口信息表
     	logger.info("[同步数据库中的接口信息表]执行完毕");
-    } 
+    	interfacesService.synchronizedRedisInterfaceHistoryTimes();//同步redis中的各个接口调用次数
+    	logger.info("[同步redis中的各个接口调用次数]执行完毕");
+    }
+    
+    //每隔1小时执行一次（整点）
+    @Async
+	@Scheduled(cron="0 0 */1 * * ?")//https://tool.lu/crontab
+	public void cronTask_1(){
+    	interfacesService.synchronizedRedisInterfaceHistoryTimes();//同步redis中的各个接口调用次数
+    	logger.info("[同步redis中的各个接口调用次数]执行完毕");
+	}
     
     @Async  
     public /*Future<String>*/ void task3() throws InterruptedException{  
@@ -56,13 +67,8 @@ public class SystemTaskService extends BaseService {
 	*/
     
     /**
-	@Scheduled(cron="0/1 * * * * ?")//https://tool.lu/crontab
-	//@Scheduled(fixedRate=5000)
-	public void task4(){
-		System.out.println("我每隔1秒被输出一次");
-	}
-    
     @Scheduled(fixedDelay=2000)
+    //@Scheduled(fixedRate=5000)
     @Async
     public void task5() {
     	System.out.println("我每隔2秒被输出一次");
