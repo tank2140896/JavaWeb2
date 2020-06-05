@@ -35,6 +35,8 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 	 * request.getSession().getServletContext().getRealPath("/")//位于WebRoot下
 	 */
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response,Object handler) throws Exception {
+		String servletPath = request.getServletPath();
+		BaseTool.getRedisTemplate().opsForHash().increment(SystemConstant.REDIS_INTERFACE_COUNT_KEY,specialHandleUrl(servletPath),1);//接口调用次数加1
 		if(ignoreUrl(handler)) {
 	        return true;
 		}
@@ -42,9 +44,7 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 		//RedisTemplate redisTemplate = (RedisTemplate) factory.getBean("redisTemplate"); 
 		//RedisTemplate<String,Object> redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
 		//String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath(); 
-		
 		Long redisSessionTimeout = Long.parseLong(BaseTool.getEnvironment().getProperty("redis.session.timeout"));//获得配置文件中redis设置session失效的时间
-		String servletPath = request.getServletPath();
 		TokenData tokenData = BaseTool.getTokenData(BaseTool.getToken(request));
 		if(tokenData==null){
 			request.getRequestDispatcher(ApiConstant.INVALID_REQUEST).forward(request,response);
@@ -82,6 +82,14 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
             }
         }
 	    return false;
+	}
+	
+	//特殊处理，去除url后面的数字，并把/替换为数字0
+	private static String specialHandleUrl(String url){
+		if(url.matches(".*(/[0-9]*)")){
+			url = url.substring(0,url.lastIndexOf("/"));
+		}
+		return url.replaceAll("/","0");
 	}
 
 }
