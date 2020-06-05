@@ -13,7 +13,8 @@
           <tr class="text-center">
             <th>序号</th>
             <th>接口名称</th>
-            <th>url</th>
+            <th>URL</th>
+            <th>总被调用次数</th>
             <th>方法名称</th>
             <th>是否可分配数据权限</th>
             <th>单位时间调用次数</th>
@@ -35,6 +36,7 @@
             <td>{{(xh+1)+(resultPage.currentPage-1)*resultPage.pageSize}}</td>
             <td>{{eachData.name}}</td>
             <td>{{eachData.url}}</td>
+            <td>{{eachData.historyTimes}}</td>
             <td>{{eachData.method}}</td>
             <td *ngIf="eachData.dataPermission==1" style="color:#06801f">是</td>
             <td *ngIf="eachData.dataPermission==0" style="color:#ff0b0c">否</td>
