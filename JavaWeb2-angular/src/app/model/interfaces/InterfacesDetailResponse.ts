@@ -4,6 +4,8 @@ export class InterfacesDetailResponse {
 
   url:string;//URL
 
+  historyTimes:string;//总被调用次数
+
   method:string;//方法名称
 
   times:string;//时间
