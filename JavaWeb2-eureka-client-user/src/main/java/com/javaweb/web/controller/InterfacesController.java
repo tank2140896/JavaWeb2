@@ -51,6 +51,7 @@ public class InterfacesController extends BaseController {
 		User currentUser = tokenData.getUser();
 		interfaces.setUpdateDate(DateUtil.getDefaultDate());
 		interfaces.setUpdater(currentUser.getUserId());
+		interfaces.setHistoryTimes(null);//接口调用次数由程序自动获取处理，不需要被修改
 		interfacesService.interfacesModify(interfaces);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"interfaces.modify.success",null);
 	}
