@@ -50,6 +50,8 @@ public class SystemConstant {
 	
 	public static final String ENVIRONMENT = "environment";
 	
+	public static final String REDIS_INTERFACE_COUNT_KEY = "redis_interface_count_key";
+	
 	public static final String SYSTEM_DEFAULT_USER_INIT_PASSWORD = "abc123";
 	
 	public static final String SYSTEM_DEFAULT_USER_PORTRAIT_LINUX_PATH = "/tmp/user_portrait/";
