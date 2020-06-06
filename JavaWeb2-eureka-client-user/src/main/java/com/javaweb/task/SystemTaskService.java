@@ -1,5 +1,7 @@
 package com.javaweb.task;
 
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,16 +28,18 @@ public class SystemTaskService extends BaseService {
 	
 	//将字典表数据加载进内存
     @Async  
-    public void task_loadDictionaryInSystemMemory() {  
+    public void task_loadDictionaryInSystemMemory() { 
     	BaseSystemMemory.dictionaryList = dictionaryService.selectAll(); 
     	logger.info("[将字典表数据加载进内存]执行完毕");
-    }  
+    } 
       
     //同步数据库中的接口信息表
     @Async  
     public void task_synchronizedInterfaces() {  
     	interfacesService.synchronizedInterfaces();//同步数据库中的接口信息表
     	logger.info("[同步数据库中的接口信息表]执行完毕");
+    	BaseSystemMemory.baseUrlList = interfacesService.getAll().stream().map(e->e.getBaseUrl()).collect(Collectors.toList()); 
+    	logger.info("[将基础URL信息加载进内存]执行完毕");
     	interfacesService.synchronizedRedisInterfaceHistoryTimes();//同步redis中的各个接口调用次数
     	logger.info("[同步redis中的各个接口调用次数]执行完毕");
     }
@@ -48,15 +52,6 @@ public class SystemTaskService extends BaseService {
     	logger.info("[同步redis中的各个接口调用次数]执行完毕");
 	}
     
-    @Async  
-    public /*Future<String>*/ void task3() throws InterruptedException{  
-        long currentTimeMillis1 = System.currentTimeMillis();  
-        Thread.sleep(3000);  
-        long currentTimeMillis2 = System.currentTimeMillis();  
-        System.out.println("task3任务耗时:"+(currentTimeMillis2-currentTimeMillis1)+"ms");  
-        //return new AsyncResult<String>("task3执行完毕");  
-    }
-    
 	/** 广播
 	@Autowired
 	private WebSocketHandleService webSocketHandleService;
@@ -67,6 +62,16 @@ public class SystemTaskService extends BaseService {
 	*/
     
     /**
+    @Async  
+    //public Future<String> task3() throws InterruptedException {
+    public void task3() throws InterruptedException {  
+        long currentTimeMillis1 = System.currentTimeMillis();  
+        Thread.sleep(3000);  
+        long currentTimeMillis2 = System.currentTimeMillis();  
+        System.out.println("task3任务耗时:"+(currentTimeMillis2-currentTimeMillis1)+"ms");  
+        //return new AsyncResult<String>("task3执行完毕");  
+    }
+    
     @Scheduled(fixedDelay=2000)
     //@Scheduled(fixedRate=5000)
     @Async

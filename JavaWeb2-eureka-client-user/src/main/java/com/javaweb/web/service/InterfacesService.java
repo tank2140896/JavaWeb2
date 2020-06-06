@@ -27,5 +27,7 @@ public interface InterfacesService {
 	public List<ExcludeInfoResponse> getExcludeInfoResponseList(String userId);
 	
 	public void synchronizedRedisInterfaceHistoryTimes();
+	
+	public List<Interfaces> getAll();
 
 }

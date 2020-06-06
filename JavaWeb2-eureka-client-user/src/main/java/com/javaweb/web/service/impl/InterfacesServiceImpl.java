@@ -64,7 +64,7 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 	@Transactional
 	public void synchronizedInterfaces() {
 		List<Interfaces> projectList = getAllInterfaces();//获得本项目中的所有接口
-		List<Interfaces> dbList = interfacesDao.selectAllForMySql();//获得数据库中的所有接口
+		List<Interfaces> dbList = getAll();//获得数据库中的所有接口
 		List<Interfaces> forUpdate = new ArrayList<>();
 		List<Interfaces> forInsert = new ArrayList<>();
 		for(int i=0;i<projectList.size();i++){
@@ -75,6 +75,7 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 				if(projectListEach.getUrl().trim().equals(dbListEach.getUrl().trim())){//存在则更新
 					dbListEach.setName(projectListEach.getName());
 					dbListEach.setUrl(projectListEach.getUrl());
+					dbListEach.setBaseUrl(projectListEach.getBaseUrl());
 					dbListEach.setMethod(projectListEach.getMethod());
 					dbListEach.setDataPermission(projectListEach.getDataPermission());
 					dbListEach.setEntity(projectListEach.getEntity());
@@ -143,6 +144,7 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 				//url.matches("/web(?!/loginAccess).*")&&methodName.matches("GET||POST")
 				interfaces.setName(swaggerApiName);
 				interfaces.setUrl(url);
+				interfaces.setBaseUrl(url.split(CommonConstant.COMMA)[0].replaceAll("/\\{.*\\}",CommonConstant.EMPTY_VALUE));
 				interfaces.setMethod(methodName);
 				list.add(interfaces);
 				urlMap.put(url,url);
@@ -261,11 +263,11 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 		if(list!=null&&list.size()>0){
 			if(set!=null&&set.size()>0){
 				for(Object obj:set){
-					String url = obj.toString().replaceAll(CommonConstant.ZERO_STRING_VALUE,"/");
+					String url = obj.toString();
 					BigInteger historyTimes = new BigInteger(stringRedisTemplate.opsForHash().get(SystemConstant.REDIS_INTERFACE_COUNT_KEY,obj).toString());
 					for(int i=0;i<list.size();i++){
 						Interfaces each = list.get(i);
-						if(each.getUrl().startsWith(url)){
+						if(each.getBaseUrl().equals(url)){
 							each.setHistoryTimes(historyTimes.add(each.getHistoryTimes()));//数字累加
 							stringRedisTemplate.opsForHash().put(SystemConstant.REDIS_INTERFACE_COUNT_KEY,obj,CommonConstant.ZERO_STRING_VALUE);//重置redis中的统计数据为0
 							break;
@@ -277,6 +279,10 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 		for(int i=0;i<list.size();i++){
 			interfacesDao.updateForMySql(list.get(i));//更新库中的统计数据信息
 		}
+	}
+
+	public List<Interfaces> getAll() {
+		return interfacesDao.selectAllForMySql();//获得数据库中的所有接口;
 	}
 
 }

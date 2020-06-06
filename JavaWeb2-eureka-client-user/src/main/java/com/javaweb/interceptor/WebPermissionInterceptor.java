@@ -2,6 +2,7 @@ package com.javaweb.interceptor;
 
 import java.lang.reflect.Method;
 import java.time.Duration;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,6 +13,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.javaweb.annotation.url.IgnoreUrl;
+import com.javaweb.base.BaseSystemMemory;
 import com.javaweb.base.BaseTool;
 import com.javaweb.constant.ApiConstant;
 import com.javaweb.constant.CommonConstant;
@@ -36,6 +38,7 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 	 */
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response,Object handler) throws Exception {
 		String servletPath = request.getServletPath();
+		//接口调用次数统计，若不需要使用注释掉即可
 		BaseTool.getRedisTemplate().opsForHash().increment(SystemConstant.REDIS_INTERFACE_COUNT_KEY,specialHandleUrl(servletPath),1);//接口调用次数加1
 		if(ignoreUrl(handler)) {
 	        return true;
@@ -84,12 +87,16 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 	    return false;
 	}
 	
-	//特殊处理，去除url后面的数字，并把/替换为数字0
+	//特殊处理URL
 	private static String specialHandleUrl(String url){
-		if(url.matches(".*(/[0-9]*)")){
-			url = url.substring(0,url.lastIndexOf("/"));
+		List<String> baseUrlList = BaseSystemMemory.baseUrlList;
+		for(int i=0;i<baseUrlList.size();i++){
+			if(url.startsWith(baseUrlList.get(i))){
+				url = baseUrlList.get(i);
+				break;
+			}
 		}
-		return url.replaceAll("/","0");
+		return url;
 	}
 
 }

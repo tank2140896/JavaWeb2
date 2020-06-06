@@ -26,6 +26,9 @@ public class Interfaces extends BaseEntity implements Serializable {
 	@Column(name="url")
 	private String url;//URL
 	
+	@Column(name="base_url")
+	private String baseUrl;//基础URL
+	
 	@Column(name="method")
 	private String method;//方法名称
 	

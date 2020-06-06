@@ -12,6 +12,8 @@ public class BaseSystemMemory {
     
     public static List<Dictionary> dictionaryList = new ArrayList<>();
     
+    public static List<String> baseUrlList = new ArrayList<>();
+    
     public static List<Dictionary> getDictionaryByDataType(String dataType){
         return dictionaryList.stream().filter(each->{return each.getDataType().equals(dataType);}).collect(Collectors.toList());
     }
