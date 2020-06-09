@@ -105,8 +105,7 @@ public class FreemarkerUtil {
 	
 	public static void freemarkerForDbTablesCodeGenerate(Map<String,Object> map,String templateFileName[],String outFileName,ZipOutputStream zipOutputStream) throws Exception {
 		Configuration configuration = new Configuration(Configuration.VERSION_2_3_28);
-		//不要带有中文路径
-		configuration.setDirectoryForTemplateLoading(new File(Thread.currentThread().getContextClassLoader().getResource("ftl/dbTablesCodeGenerate").getFile()));
+		configuration.setDirectoryForTemplateLoading(new File(URLDecoder.decode(Thread.currentThread().getContextClassLoader().getResource("ftl/dbTablesCodeGenerate").getPath(),"UTF-8")/*Thread.currentThread().getContextClassLoader().getResource("ftl/dbTablesCodeGenerate").getFile()//使用此方式需要没有中文路径*/));
 		//configuration.setDirectoryForTemplateLoading(new File("D:/dbTablesCodeGenerate"));
 		configuration.setObjectWrapper(new DefaultObjectWrapper(Configuration.VERSION_2_3_28));
 		String rootFileName = "E:/"+UUID.randomUUID();
