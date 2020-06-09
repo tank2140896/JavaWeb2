@@ -217,6 +217,7 @@ public class StringUtil{
 		return objectMapper.writeValueAsString(object);
 	}
 	
+	//驼峰转化
 	public static String camelCaseConvert(String str,CamelCaseEnum camelCaseEnum){
 		str = handleNullString(str);//全部转成小写
 		str.replaceAll(CommonConstant.BAR,CommonConstant.UNDERLINE);//将-替换为_
@@ -235,10 +236,5 @@ public class StringUtil{
 		}
 		return stringBuilder.toString();
 	}
-	
-	public static void main(String[] args) {
-		System.out.println(camelCaseConvert("userName",CamelCaseEnum.FIRST_WORD_UPPER));
-	}
-	
 	
 }
