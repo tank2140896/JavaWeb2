@@ -95,9 +95,14 @@ public class DateUtil {
 		return localDate.lengthOfMonth();
 	}
 	
-	//根据默认格式(yyyy-MM-dd HH:mm:ss)得到日期
+	//根据默认格式(yyyy-MM-dd HH:mm:ss)得到当前日期
 	public static String getDefaultDate(){
 		return LocalDateTime.now().format(DateTimeFormatter.ofPattern(DEFAULT_DATETIME_PATTERN));
+	}
+	
+	//根据指定格式得到当前日期
+	public static String getDefaultDate(String pattern){
+		return LocalDateTime.now().format(DateTimeFormatter.ofPattern(pattern));
 	}
 	
 	//根据指定格式得到当前日期的字符串

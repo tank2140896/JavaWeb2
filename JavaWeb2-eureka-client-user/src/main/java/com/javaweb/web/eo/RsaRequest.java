@@ -1,10 +1,15 @@
 package com.javaweb.web.eo;
 
-import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.DESedeKeySpec;
 import javax.servlet.http.HttpServletRequest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.javaweb.util.core.DateUtil;
+import com.javaweb.util.core.DesUtil;
 import com.javaweb.util.core.RsaUtil;
 import com.javaweb.util.core.SecretUtil;
 
@@ -34,19 +39,14 @@ public class RsaRequest {
 					return false;
 				}
 			}
-			new SimpleDateFormat("yyyyMMddHHmmss").parse(currentTime);//日期校验，判断传的是不是日期
-			/**
-			//RSA结合3DES
-			try{
-				nonce = RsaUtil.decrypt(nonce,RsaUtil.getPrivateKey(tokenData.getRsaPrivateKeyOfBackend()));
-			}catch(Exception e){
-				//do nothing
-			}
-			*/
-			if(nonce.length()!=24){//随机数长度判断
+			Duration duration = DateUtil.getDuration(DateUtil.getDateTime(currentTime,DateUtil.DATETIME_PATTERN_TYPE1),LocalDateTime.now());//日期校验
+			if(duration.getSeconds()>60*5){//客户端时间与本地时间间隔（算上各种延迟）不应该超过300秒（5分钟）
 				return false;
 			}
 			if("GET".equals(request.getMethod().toUpperCase())||"DELETE".equals(request.getMethod().toUpperCase())){
+				if(nonce.length()!=24){//随机数长度判断
+					return false;
+				}
 				//1.用后端私钥解密sign
 				String d1 = RsaUtil.decrypt(thatSign,RsaUtil.getPrivateKey(tokenData.getRsaPrivateKeyOfBackend()));
 				//2.计算MD5(currentTime+","+nonce)
@@ -54,13 +54,15 @@ public class RsaRequest {
 				//3.判断两个值是否一致
 				return d1.equals(d2);
 			}else{
-				/**
 				//RSA结合3DES（推荐），原因参考：https://ask.csdn.net/questions/763621和https://github.com/travist/jsencrypt/issues/137
+				nonce = RsaUtil.decrypt(nonce,RsaUtil.getPrivateKey(tokenData.getRsaPrivateKeyOfBackend()));
+				if(nonce.length()!=24){//随机数长度判断
+					return false;
+				}
 				//1.用3DES解密code
 				String d1 = DesUtil.decrypt(this.code,SecretKeyFactory.getInstance("DESede").generateSecret(new DESedeKeySpec(nonce.getBytes("UTF8")))); 
-				*/
 				//1.用后端私钥解密code
-				String d1 = RsaUtil.decrypt(this.code,RsaUtil.getPrivateKey(tokenData.getRsaPrivateKeyOfBackend()));
+				//String d1 = RsaUtil.decrypt(this.code,RsaUtil.getPrivateKey(tokenData.getRsaPrivateKeyOfBackend()));
 				//2.用前端公钥验签
 				boolean pass = RsaUtil.verify(SecretUtil.getSecret(currentTime+","+nonce+","+d1,"MD5"),RsaUtil.getPublicKey(tokenData.getRsaPublicKeyOfFrontend()),this.sign);
 				if(pass){
