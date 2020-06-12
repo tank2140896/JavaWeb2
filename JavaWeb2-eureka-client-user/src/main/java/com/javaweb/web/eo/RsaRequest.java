@@ -43,10 +43,11 @@ public class RsaRequest {
 			if(duration.getSeconds()>60*5){//客户端时间与本地时间间隔（算上各种延迟）不应该超过300秒（5分钟）
 				return false;
 			}
+			nonce = RsaUtil.decrypt(nonce,RsaUtil.getPrivateKey(tokenData.getRsaPrivateKeyOfBackend()));
+			if(nonce.length()!=24){//随机数长度判断
+				return false;
+			}
 			if("GET".equals(request.getMethod().toUpperCase())||"DELETE".equals(request.getMethod().toUpperCase())){
-				if(nonce.length()!=24){//随机数长度判断
-					return false;
-				}
 				//1.用后端私钥解密sign
 				String d1 = RsaUtil.decrypt(thatSign,RsaUtil.getPrivateKey(tokenData.getRsaPrivateKeyOfBackend()));
 				//2.计算MD5(currentTime+","+nonce)
@@ -55,10 +56,6 @@ public class RsaRequest {
 				return d1.equals(d2);
 			}else{
 				//RSA结合3DES（推荐），原因参考：https://ask.csdn.net/questions/763621和https://github.com/travist/jsencrypt/issues/137
-				nonce = RsaUtil.decrypt(nonce,RsaUtil.getPrivateKey(tokenData.getRsaPrivateKeyOfBackend()));
-				if(nonce.length()!=24){//随机数长度判断
-					return false;
-				}
 				//1.用3DES解密code
 				String d1 = DesUtil.decrypt(this.code,SecretKeyFactory.getInstance("DESede").generateSecret(new DESedeKeySpec(nonce.getBytes("UTF8")))); 
 				//1.用后端私钥解密code
