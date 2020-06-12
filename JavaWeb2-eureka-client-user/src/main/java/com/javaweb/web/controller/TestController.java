@@ -4,7 +4,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.zxing.BarcodeFormat;
@@ -16,6 +20,7 @@ import com.javaweb.base.BaseResponseResult;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.web.docking.LogServerApi;
 import com.javaweb.web.docking.LogServerApiEntity;
+import com.javaweb.web.po.RoleModule;
 
 @RestController
 public class TestController extends BaseController {
@@ -23,10 +28,28 @@ public class TestController extends BaseController {
     @Autowired
     private LogServerApi logServerApi;
     
-    //测试
-    @GetMapping("/test")
-    public BaseResponseResult test() {
+    //测试Get
+    @GetMapping("/getTest")
+    public BaseResponseResult getTest() {
 		return new BaseResponseResult(200,"success",null);
+    }
+    
+    //测试Put
+    @PutMapping("/putTest")
+    public BaseResponseResult putTest(@RequestBody RoleModule roleModule) {
+		return new BaseResponseResult(200,"success",roleModule);
+    }
+    
+    //测试Delete
+    @DeleteMapping("/deleteTest")
+    public BaseResponseResult deleteTest() {
+		return new BaseResponseResult(200,"success",null);
+    }
+    
+    //测试Post
+    @PostMapping("/postTest")
+    public BaseResponseResult postTest(@RequestBody RoleModule roleModule) {
+		return new BaseResponseResult(200,"success",roleModule);
     }
     
     //获取二维码
