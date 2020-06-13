@@ -42,6 +42,7 @@ import {OnlineUserComponent} from './fun/onlineUser/online.user.component';
 import {DbTablesComponent} from './fun/dbTables/db.tables.component';
 import {DbTablesListComponent} from './fun/dbTables/list/db.tables.list.component';
 import {DbTablesDetailComponent} from './fun/dbTables/detail/db.tables.detail.component';
+import {InterfacesTestComponent} from './fun/interfaces/test/interfaces.test.component';
 
 const routes: Routes = [
   {path:'',component:LoginComponent},//默认登录页面
@@ -104,6 +105,7 @@ const routes: Routes = [
       {path:'modify',component:InterfacesModifyComponent},//接口修改页面
       {path:'detail',component:InterfacesDetailComponent},//接口详情页面
       {path:'dataPermissionAssignment',component:InterfacesDataPermissionAssignmentComponent},//数据权限分配页面
+      {path:'test',component:InterfacesTestComponent},//接口测试页面
       {path:'**',redirectTo:'/web',pathMatch:'full'}
     ],canActivate:[AuthService]},
     {path:'sys/onlineChat',component:OnlineChatComponent,children:[

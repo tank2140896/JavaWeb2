@@ -5,6 +5,7 @@ import java.util.List;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.interfaces.ExcludeInfoResponse;
 import com.javaweb.web.eo.interfaces.InterfacesListRequest;
+import com.javaweb.web.eo.interfaces.InterfacesTestRequest;
 import com.javaweb.web.eo.interfaces.UserRoleDataPermissionRequest;
 import com.javaweb.web.eo.interfaces.UserRolePermissionRequest;
 import com.javaweb.web.po.Interfaces;
@@ -29,5 +30,7 @@ public interface InterfacesService {
 	public void synchronizedRedisInterfaceHistoryTimes();
 	
 	public List<Interfaces> getAll();
+	
+	public String interfacesTest(InterfacesTestRequest interfacesTestRequest);
 
 }

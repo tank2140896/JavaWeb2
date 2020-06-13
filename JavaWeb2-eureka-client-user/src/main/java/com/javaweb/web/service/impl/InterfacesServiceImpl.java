@@ -10,6 +10,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import org.apache.http.Header;
+import org.apache.http.message.BasicHeader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,10 +24,12 @@ import com.javaweb.base.BaseService;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.util.core.DateUtil;
+import com.javaweb.util.core.HttpUtil;
 import com.javaweb.util.core.SecretUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.interfaces.ExcludeInfoResponse;
 import com.javaweb.web.eo.interfaces.InterfacesListRequest;
+import com.javaweb.web.eo.interfaces.InterfacesTestRequest;
 import com.javaweb.web.eo.interfaces.RolePermissionResponse;
 import com.javaweb.web.eo.interfaces.UserPermissionResponse;
 import com.javaweb.web.eo.interfaces.UserRoleDataPermissionRequest;
@@ -38,6 +42,7 @@ import com.javaweb.web.po.UserRole;
 import com.javaweb.web.service.InterfacesService;
 
 import io.swagger.annotations.ApiOperation;
+import net.sf.json.JSONObject;
 
 @Service("interfacesServiceImpl")
 public class InterfacesServiceImpl extends BaseService implements InterfacesService {
@@ -282,7 +287,40 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 	}
 
 	public List<Interfaces> getAll() {
-		return interfacesDao.selectAllForMySql();//获得数据库中的所有接口;
+		return interfacesDao.selectAllForMySql();//获得数据库中的所有接口
+	}
+
+	public String interfacesTest(InterfacesTestRequest interfacesTestRequest) {
+		String out = null;
+		try{
+			String url = interfacesTestRequest.getRequestUrl();
+			List<Header> list = null;
+			if(interfacesTestRequest.getRequestHeader()!=null&&!"".equals(interfacesTestRequest.getRequestHeader().trim())){
+				list = new ArrayList<>();
+				String keyvalue[] = interfacesTestRequest.getRequestHeader().split(CommonConstant.SEMICOLON);
+				for(String str:keyvalue){
+					String strs[] = str.split(CommonConstant.COLON); 
+					Header header = new BasicHeader(strs[0],strs[1]);
+					list.add(header);
+				}
+			}
+			String body = interfacesTestRequest.getRequestBody();
+			if(body!=null&&!"".equals(body)){
+				body = JSONObject.fromObject(body.replaceAll("\n","")).toString();
+			}
+			if("GET".equals(interfacesTestRequest.getRequestType().toUpperCase())){
+				out = HttpUtil.defaultGetRequest(url,list);
+			}else if("PUT".equals(interfacesTestRequest.getRequestType().toUpperCase())){
+				out = HttpUtil.defaultPutRequest(url,body,list);
+			}else if("POST".equals(interfacesTestRequest.getRequestType().toUpperCase())){
+				out = HttpUtil.defaultPostRequest(url,body,list);
+			}else if("DELETE".equals(interfacesTestRequest.getRequestType().toUpperCase())){
+				out = HttpUtil.defaultDeleteRequest(url,body,list);
+			}
+		}catch(Exception e){
+			out = e.getMessage();
+		}
+		return out;
 	}
 
 }

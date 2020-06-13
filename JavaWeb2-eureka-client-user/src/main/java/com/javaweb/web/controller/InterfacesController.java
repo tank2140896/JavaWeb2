@@ -18,6 +18,7 @@ import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.interfaces.InterfacesListRequest;
+import com.javaweb.web.eo.interfaces.InterfacesTestRequest;
 import com.javaweb.web.eo.interfaces.UserRoleDataPermissionRequest;
 import com.javaweb.web.eo.interfaces.UserRolePermissionRequest;
 import com.javaweb.web.po.Interfaces;
@@ -71,6 +72,12 @@ public class InterfacesController extends BaseController {
 			                                           @TokenDataAnnotation TokenData tokenData){
 		interfacesService.dataPermissionAssignment(userRolePermissionResponse,interfacesId,tokenData.getUser());
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"interfaces.dataPermissionAssignment.success",null);
+	}
+	
+	@ApiOperation(value=SwaggerConstant.SWAGGER_INTERFACES_TEST)
+	@PostMapping(ApiConstant.INTERFACES_TEST)
+	public BaseResponseResult interfacesTest(@RequestBody InterfacesTestRequest interfacesTestRequest){
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"interfaces.test.success",interfacesService.interfacesTest(interfacesTestRequest));
 	}
 	
 }

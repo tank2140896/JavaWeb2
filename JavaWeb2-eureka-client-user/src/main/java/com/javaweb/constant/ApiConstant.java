@@ -71,6 +71,7 @@ public class ApiConstant {
 	public static final String INTERFACES_DETAIL = "/detail/{interfacesId}";//接口详情接口
 	public static final String INTERFACES_USER_ROLE_DATA_PERMISSION = "/userRoleDataPermission";//用户角色数据权限接口
 	public static final String INTERFACES_DATA_PERMISSION_ASSIGNMENT = "/dataPermissionAssignment/{interfacesId}";//数据权限分配接口
+	public static final String INTERFACES_TEST = "/test";//测试接口
 	
 	public static final String WEB_ONLINE_USER_PREFIX = "/web/sys/onlineUser";
 	public static final String ONLINE_USER_LIST = "/list";//在线用户列表接口

@@ -17,6 +17,12 @@ public class CommonConstant {
 	//逗号
 	public static final String COMMA = ",";
 	
+	//分号
+	public static final String SEMICOLON = ";";
+	
+	//冒号
+	public static final String COLON = ":";
+	
 	//等号
 	public static final String EQUAL = "=";
 	

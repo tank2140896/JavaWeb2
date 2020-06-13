@@ -4,6 +4,7 @@
   方法名称<input type="text" style="height:35px;" placeholder="请输入方法名称" [(ngModel)]="interfacesListRequest.method">
   <button type="button" class="btn btn-primary" style="margin-left:1%;" (click)="interfacesSearch(1)" *ngIf="interfacesListZone">查询</button>
   <button type="button" class="btn btn-info" style="margin-left:1%;" (click)="reset()">重置</button>
+  <button type="button" class="btn btn-success" style="margin-left:1%;" (click)="interfacesTestFunction()" *ngIf="interfacesTestZone">接口测试</button>
 </div>
 <div class="col col-xl-12 col-lg-12" style="margin-top:1%;">
   <div class="card mb-3">

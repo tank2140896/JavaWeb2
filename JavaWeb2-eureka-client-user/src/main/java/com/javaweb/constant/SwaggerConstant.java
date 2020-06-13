@@ -104,7 +104,8 @@ public class SwaggerConstant {
 	public static final String SWAGGER_INTERFACES_MODIFY = "修改接口接口";
 	public static final String SWAGGER_INTERFACES_DETAIL = "接口详情接口";
 	public static final String SWAGGER_INTERFACES_USER_ROLE_DATA_PERMISSION = "用户角色数据权限接口";
-	public static final String SWAGGER_INTERFACES_DATA_PERMISSION_ASSIGNMENT = "数据权限分配接口"; 
+	public static final String SWAGGER_INTERFACES_DATA_PERMISSION_ASSIGNMENT = "数据权限分配接口";
+	public static final String SWAGGER_INTERFACES_TEST = "接口测试接口";
 	/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ swagger-UserController ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */
 	
 	/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ swagger-OnlineUserController ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */

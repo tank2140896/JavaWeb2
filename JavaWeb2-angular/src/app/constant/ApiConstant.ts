@@ -59,6 +59,7 @@ export class ApiConstant{
   public static SYS_INTERFACES_DETAIL = '/web/sys/interfaces/detail';//接口详情
   public static SYS_INTERFACES_USER_ROLE_DATA_PERMISSION = '/web/sys/interfaces/userRoleDataPermission';//用户角色数据权限接口
   public static SYS_INTERFACES_DATA_PERMISSION_ASSIGNMENT = '/web/sys/interfaces/dataPermissionAssignment';//数据权限分配接口
+  public static SYS_INTERFACES_TEST = '/web/sys/interfaces/test';//测试接口
 
   public static SYS_ONLINE_USER_LIST = '/web/sys/onlineUser/list';//在线用户列表
   public static SYS_ONLINE_USER_OFFLINE = '/web/sys/onlineUser/offline';//用户下线
