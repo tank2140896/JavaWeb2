@@ -165,6 +165,15 @@ public class MathUtil {
     public static boolean isPrime(long number) {
         return !LongStream.rangeClosed(2,Math.round(Math.sqrt(number))).anyMatch(n->number%n==0);
     }
+    
+    //获取最大公约数（欧几里得算法）
+    public static long getGreatestCommonDivisor(long m,long n){
+    	if(n==0){//处理一个为0和两个都为0的情况
+    		return m;
+    	}
+    	long temp = m%n;//核心就是辗转相余法
+    	return getGreatestCommonDivisor(n,temp);//m%n，相当于先处理的是m，因此下一个先处理的就是n
+    }
 
     //判断某个无符号整数是不是2的幂或0(true:是;false:不是)
 	public static boolean isPowerTwoOrZero(long number) {
