@@ -29,7 +29,7 @@ JavaWeb2-angular（npm start）
 6、所有SQL语句均未优化且没有索引等，如有需要请自行优化                
 # 五、开发计划                                                                             
 1、持续优化迭代各已有功能                                                              
-2、lucene、hadoop、spark                                                                
+2、tokenStream&lucene分词器、hadoop、spark                                                                
 3、容器技术                                     
 4、将zuul变为gateway                 
 5、加入SpringCloudConfig、SpringCloudSleuth、SpringBootAdmin、SpringSecurityOAuth2JWT                 
