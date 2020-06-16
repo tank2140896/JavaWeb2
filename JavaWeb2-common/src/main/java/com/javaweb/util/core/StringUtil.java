@@ -209,6 +209,37 @@ public class StringUtil{
 		return stringBuilder.toString();
 	}
 	
+	//将JOSN字符串格式化输出
+	/**
+	原字符串
+	{"userName":"张三","score":[1,2,3],"face":{"positionCount":"我b c","image":["x","y","z"]},"age":17}
+	转化后
+	{
+		"score":[
+			1,
+			2,
+			3
+		],
+		"face":{
+			"image":[
+				"x",
+				"y",
+				"z"
+			],
+			"positionCount":"我b c"
+		},
+		"userName":"张三",
+		"age":17
+	}
+	*/
+	public static String jsonStringToJsonFormatForAlibaba(String jsonString){
+		com.alibaba.fastjson.JSONObject object = com.alibaba.fastjson.JSONObject.parseObject(jsonString);
+	    String out = com.alibaba.fastjson.JSON.toJSONString(object,com.alibaba.fastjson.serializer.SerializerFeature.PrettyFormat,
+	    														   com.alibaba.fastjson.serializer.SerializerFeature.WriteMapNullValue, 
+	    														   com.alibaba.fastjson.serializer.SerializerFeature.WriteDateUseDateFormat);
+	    return out;
+	}
+	
 	//对象中包含日期格式转字符串
 	public static String withDate2JsonString(Object object,String datePattern) throws Exception {
 		ObjectMapper objectMapper = new ObjectMapper();

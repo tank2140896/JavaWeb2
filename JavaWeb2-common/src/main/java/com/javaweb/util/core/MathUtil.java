@@ -166,7 +166,7 @@ public class MathUtil {
         return !LongStream.rangeClosed(2,Math.round(Math.sqrt(number))).anyMatch(n->number%n==0);
     }
     
-    //获取最大公约数（欧几里得算法）
+    //获取最大公约数（欧几里得算法）（延伸扩展：Stein算法）
     public static long getGreatestCommonDivisor(long m,long n){
     	if(n==0){//处理一个为0和两个都为0的情况
     		return m;

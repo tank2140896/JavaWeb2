@@ -82,7 +82,7 @@
 		 	<groupId>commons-codec</groupId>
 		    <artifactId>commons-codec</artifactId>
 		</dependency>
-		<!-- Bouncy Castle -->
+		<!-- 加解密 -->
 		<dependency>
 		    <groupId>org.bouncycastle</groupId>
 		    <artifactId>bcprov-jdk15on</artifactId>
@@ -98,12 +98,6 @@
 	    <dependency>
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-freemarker</artifactId>
-		</dependency>
-		<!-- 加解密 -->
-		<dependency>
-		    <groupId>org.bouncycastle</groupId>
-		    <artifactId>bcprov-jdk15on</artifactId>
-		    <version>1.65</version>
 		</dependency>
 		<!-- 拼音 -->
 		<dependency>
@@ -142,6 +136,17 @@
 			<artifactId>poi-contrib</artifactId>
 			<version>3.6</version>
 		</dependency>
+		<!-- 解析json(google的) -->
+		<dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		</dependency>
+		<!-- 解析json(阿里巴巴的) -->
+	    <dependency>
+	        <groupId>com.alibaba</groupId>
+	        <artifactId>fastjson</artifactId>
+	        <version>1.2.61</version>
+	    </dependency>
         <!-- JavaWeb2-common end -->
         <!-- JavaWeb2-database start -->
         <!-- SpringBoot和Mybatis整合 -->
@@ -166,11 +171,6 @@
 	      	<groupId>io.lettuce</groupId>
 	      	<artifactId>lettuce-core</artifactId>
 	    </dependency>
-	    <!-- 解析json(google的) -->
-		<dependency>
-		    <groupId>com.google.code.gson</groupId>
-		    <artifactId>gson</artifactId>
-		</dependency>
         <!-- RxJava2响应式编程 -->
     	<dependency>
 		    <groupId>io.reactivex.rxjava2</groupId>
@@ -192,12 +192,6 @@
     		<groupId>org.springframework.boot</groupId>
 	        <artifactId>spring-boot-devtools</artifactId>
     	</dependency>
-    	<!-- 解析json(阿里巴巴的) -->
-	    <dependency>
-	        <groupId>com.alibaba</groupId>
-	        <artifactId>fastjson</artifactId>
-	        <version>1.2.61</version>
-	    </dependency>
 		<!-- swagger -->
 		<dependency>
 		    <groupId>io.springfox</groupId>
