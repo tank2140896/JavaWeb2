@@ -265,5 +265,11 @@ public class DateUtil {
 		//ZoneId zoneId = ZoneId.of("Europe/Rome");
 		return TimeZone.getDefault().toZoneId();
 	}
+	
+	//判断两个日期是否有交集
+	public static boolean dateCrossing(Date oneStartTime,Date oneEndTime,Date anotherStartTime,Date anotherEndTime){
+		return (oneStartTime.compareTo(anotherStartTime)!=-1||oneStartTime.compareTo(anotherEndTime)!=-1)
+		       ||(oneEndTime.compareTo(anotherStartTime)!=-1||oneEndTime.compareTo(anotherEndTime)!=-1);
+	}
 
 }

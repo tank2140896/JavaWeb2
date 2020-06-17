@@ -16,6 +16,16 @@ public class MathUtil {
         return ((BigDecimal)MVEL.eval(formula,parameterMap)).setScale(2,RoundingMode.HALF_UP);
     }
     
+    //BigDecimal大数值比较
+    public static boolean bigDecimalCompare(String oneValue,String anotherValue){
+    	int result = new BigDecimal(oneValue).compareTo(new BigDecimal(anotherValue));
+    	if(result==-1){//oneValue<anotherValue
+    		return false;
+    	}else{//oneValue>=anotherValue
+    		return true;
+    	}
+    }
+    
     //计算逆序数
     public static int getInversionNumber(int[] array) {
         int count = 0;

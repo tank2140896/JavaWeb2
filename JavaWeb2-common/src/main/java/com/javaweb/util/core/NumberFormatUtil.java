@@ -8,8 +8,13 @@ import com.javaweb.constant.CommonConstant;
 public class NumberFormatUtil {
 	
 	/**
-	BigDecimal bigDecimal = new BigDecimal("0.000");bigDecimal.setScale(3,RoundingMode.HALF_UP);
-	注意:toString()最终的结果并不一定是理想中的精度结果,建议采用类似bigDecimal.floatValue()的写法
+	示例一：
+	BigDecimal bigDecimal = new BigDecimal("0.000000");
+	bigDecimal = bigDecimal.setScale(3,RoundingMode.HALF_UP);
+	示例二：
+	BigDecimal bigDecimal = new BigDecimal("20.786");
+	bigDecimal = bigDecimal.add(new BigDecimal("1.00000"));
+	bigDecimal = bigDecimal.setScale(2,RoundingMode.HALF_UP);
 	*/
 	//保留小数位数(new DecimalFormat("#,##0.00").format(number))
 	public static String roundNumber(Object number,int degree){
