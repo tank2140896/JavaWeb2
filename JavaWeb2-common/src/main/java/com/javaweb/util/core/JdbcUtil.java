@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.javaweb.util.entity.JdbcInfo;
 
@@ -75,6 +78,21 @@ public class JdbcUtil {
 			//do nothing
 		}
 		return jdbcInfo;
+	}
+	
+	//获得返回字段
+	public static List<String> getColumnNameList(ResultSet resultSet){
+		List<String> columnNameList = new ArrayList<>();
+		try{
+			ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+			int columnCount = resultSetMetaData.getColumnCount();
+			for(int i=1;i<=columnCount;i++){
+				columnNameList.add(resultSetMetaData.getColumnName(i));
+			}
+		}catch(Exception e){
+			//do nothing
+		}
+		return columnNameList;
 	}
     
     //加载驱动
