@@ -227,8 +227,8 @@ public class AllOpenController extends BaseController {
 			Module currentModule = originList.get(i);
 			//String类型写法
 			if((module!=null&&module.getModuleId().equals(currentModule.getParentId()))||(module==null&&currentModule.getParentId()==null)){
-			//Long类型写法
-			//if(((module!=null)&&(module.getModuleId()==currentModule.getParentId()))||((module==null)&&(currentModule.getParentId()==null||currentModule.getParentId()==0))){
+			//Long类型写法（这里注意了，封装类型一定要用equals或.longValue()比较！！！）
+			//if(((module!=null)&&(module.getModuleId().longValue()==currentModule.getParentId().longValue()))||((module==null)&&(currentModule.getParentId()==null||currentModule.getParentId().longValue()==0))){
 				currentModule.setList(setTreeList(originList, currentModule));
 				moduleList.add(currentModule);
 			}
