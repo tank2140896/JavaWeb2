@@ -13,7 +13,7 @@ public class A {
 		print_N(s.length,s);
 	}
 	
-	//2µÄN´Î·½
+	//2çš„Næ¬¡æ–¹
 	public static void print_N(int n,String[] s){
 		String temp = null;;
 		for(int i=0;i<n;i++){
