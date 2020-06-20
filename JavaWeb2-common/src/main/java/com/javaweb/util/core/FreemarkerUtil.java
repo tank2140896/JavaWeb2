@@ -143,5 +143,27 @@ public class FreemarkerUtil {
 		}
 		fileRoot.delete();
 	}
+	
+	public static void freemarkerForEoCodeGenerate(String packageName,String className,List<String> columnNameList) throws Exception {
+		Map<String,Object> map = new HashMap<>();
+		map.put("packageName",packageName);
+		map.put("className",className);
+		for(int i=0;i<columnNameList.size();i++){
+			columnNameList.set(i,StringUtil.camelCaseConvert(columnNameList.get(i),CamelCaseEnum.FIRST_WORD_LOWER));
+		}
+		map.put("propertyList",columnNameList);
+		Configuration configuration = new Configuration(Configuration.VERSION_2_3_28);
+		configuration.setDirectoryForTemplateLoading(new File(URLDecoder.decode(Thread.currentThread().getContextClassLoader().getResource("ftl/dbTablesCodeGenerate").getPath(),"UTF-8")/*Thread.currentThread().getContextClassLoader().getResource("ftl/dbTablesCodeGenerate").getFile()//使用此方式需要没有中文路径*/));
+		//configuration.setDirectoryForTemplateLoading(new File("D:/dbTablesCodeGenerate"));
+		configuration.setObjectWrapper(new DefaultObjectWrapper(Configuration.VERSION_2_3_28));
+		File file = new File("E:/"+className+".java");
+		Template template = configuration.getTemplate("eo.ftl");
+		FileWriter fileWriter = new FileWriter(file);
+	    BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+	    template.process(map,bufferedWriter);
+	    bufferedWriter.flush();
+	    bufferedWriter.close();
+	    fileWriter.close();
+	}
 
 }
