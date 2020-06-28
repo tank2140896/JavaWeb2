@@ -14,6 +14,5 @@ public class ExcludeInfoResponse implements Serializable {
 	private String excludeField;
 	
 	private String url;
-	
 
 }

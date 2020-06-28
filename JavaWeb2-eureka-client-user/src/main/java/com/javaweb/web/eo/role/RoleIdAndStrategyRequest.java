@@ -1,13 +1,17 @@
 package com.javaweb.web.eo.role;
 
+import java.io.Serializable;
+
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class RoleIdAndStrategyRequest {
+public class RoleIdAndStrategyRequest implements Serializable {
 
-    private String roleId;
+	private static final long serialVersionUID = -507429746720199113L;
+
+	private String roleId;
     
     private Integer moduleStrategy;
     
