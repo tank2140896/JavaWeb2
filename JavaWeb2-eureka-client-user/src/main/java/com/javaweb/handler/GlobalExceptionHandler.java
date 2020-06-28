@@ -34,5 +34,10 @@ public class GlobalExceptionHandler extends BaseTool {
 		logger.error(e.getMessage());
 		return getBaseResponseResult(HttpCodeEnum.INTERNAL_ERROR,"validated.permission.internalError");
 	}
+	
+	@ExceptionHandler(MissingServletRequestParameterException.class)
+	public BaseResponseResult handleMissingServletRequestParameterException(HttpServletRequest request,MissingServletRequestParameterException e){
+		return new BaseResponseResult(HttpCodeEnum.INVALID_REQUEST,"validated.permission.invalidRequest");
+	}
 
 }
