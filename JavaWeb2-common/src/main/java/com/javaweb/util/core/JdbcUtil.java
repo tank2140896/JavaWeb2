@@ -5,11 +5,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
-import com.javaweb.util.entity.JdbcInfo;
+import java.util.Map;
 
 public class JdbcUtil {
     
@@ -41,49 +40,68 @@ public class JdbcUtil {
 		String url = "jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf8&characterSetResults=utf8&autoReconnect=true&allowMultiQueries=true&serverTimezone=GMT%2B8";
 	    String username = "root";
 	    String password = "root";
-		String sql = "select * from module where module_name like ?";
-	    
-	    JdbcInfo jdbcInfo = new JdbcInfo();
-	    jdbcInfo.setSql(sql);
-	    jdbcInfo.setUrl(url);
-	    jdbcInfo.setUsername(username);
-	    jdbcInfo.setPassword(password);
-	    
-	    jdbcInfo = getResultSet(jdbcInfo,(preparedStatement)->{
+		String sql = "select * from sys_module where module_name like ?";
+		List<Map<String,Object>> list = JdbcUtil.getResultSet(url, username, password, sql,(preparedStatement)->{
+		//List<String> list = JdbcUtil.getColumnNameList(url, username, password, sql,(preparedStatement)->{
 	    	try {
 				preparedStatement.setString(1,"%管理%");
 			} catch (Exception e) {
 				//do nothing
 			}
 	    });
-	    ResultSet resultSet = jdbcInfo.getResultSet();
-	    while(resultSet.next()) {
-	         System.out.println(resultSet.getObject(1));
-	         System.out.println(resultSet.getObject(2));
-	         System.out.println(resultSet.getObject(3));
-	    }
-	    close(jdbcInfo);
+	    System.out.println(list);
 	}
 	*/
 	
+    //加载驱动
+    static {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver1");
+        } catch (ClassNotFoundException e) {
+            //do nothing
+        }
+    }
+	
 	//获得结果集
-	public static JdbcInfo getResultSet(JdbcInfo jdbcInfo,PreparedStatementLambda preparedStatementLambda){
+	public static List<Map<String,Object>> getResultSet(String url,String username,String password,String sql,PreparedStatementLambda preparedStatementLambda){
+		List<Map<String,Object>> list = new ArrayList<>();
 		try {
-			jdbcInfo.setConnection(getConnection(jdbcInfo));
-			PreparedStatement preparedStatement = jdbcInfo.getConnection().prepareStatement(jdbcInfo.getSql());
+			Connection connection = DriverManager.getConnection(url,username,password);
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatementLambda.excute(preparedStatement);
-			jdbcInfo.setPreparedStatement(preparedStatement);
-			jdbcInfo.setResultSet(preparedStatement.executeQuery());
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()){
+				Map<String,Object> map = new HashMap<>(); 
+				ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
+				int columnCount = resultSetMetaData.getColumnCount();
+				for(int i=1;i<=columnCount;i++){
+					map.put(resultSetMetaData.getColumnName(i),resultSet.getObject(i));
+				}
+				list.add(map);
+			}
+			if(resultSet!=null){
+				resultSet.close();
+	    	}
+	    	if(preparedStatement!=null){
+    			preparedStatement.close();
+	    	}
+	    	if(connection!=null){
+				connection.close();
+	    	}
 		} catch (Exception e) {
 			//do nothing
 		}
-		return jdbcInfo;
+		return list;
 	}
 	
 	//获得返回字段
-	public static List<String> getColumnNameList(ResultSet resultSet){
+	public static List<String> getColumnNameList(String url,String username,String password,String sql,PreparedStatementLambda preparedStatementLambda){
 		List<String> columnNameList = new ArrayList<>();
 		try{
+			Connection connection = DriverManager.getConnection(url,username,password);
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatementLambda.excute(preparedStatement);
+			ResultSet resultSet = preparedStatement.executeQuery();
 			ResultSetMetaData resultSetMetaData = resultSet.getMetaData();
 			int columnCount = resultSetMetaData.getColumnCount();
 			for(int i=1;i<=columnCount;i++){
@@ -94,48 +112,6 @@ public class JdbcUtil {
 		}
 		return columnNameList;
 	}
-    
-    //加载驱动
-    static {
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            //do nothing
-        }
-    }
-    
-    //获得连接
-    public static Connection getConnection(JdbcInfo jdbcInfo) throws SQLException{
-    	return DriverManager.getConnection(jdbcInfo.getUrl(),jdbcInfo.getUsername(),jdbcInfo.getPassword());
-    }
-    
-    //关闭连接
-    public static void close(JdbcInfo jdbcInfo){
-    	ResultSet resultSet = jdbcInfo.getResultSet();
-    	PreparedStatement preparedStatement = jdbcInfo.getPreparedStatement();
-    	Connection connection = jdbcInfo.getConnection();
-    	if(resultSet!=null){
-    		try {
-				resultSet.close();
-			} catch (SQLException e) {
-				//do nothing
-			}
-    	}
-    	if(preparedStatement!=null){
-    		try {
-    			preparedStatement.close();
-			} catch (SQLException e) {
-				//do nothing
-			}
-    	}
-    	if(connection!=null){
-    		try {
-				connection.close();
-			} catch (SQLException e) {
-				//do nothing
-			}
-    	}
-    }
     
     public interface PreparedStatementLambda {
     	
