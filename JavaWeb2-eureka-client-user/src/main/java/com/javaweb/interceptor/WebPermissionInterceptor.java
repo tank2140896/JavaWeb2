@@ -61,12 +61,7 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 			BaseTool.getRedisTemplate().opsForValue().set(tokenData.getUser().getUserId()+CommonConstant.COMMA+tokenData.getType(),tokenData,Duration.ofMinutes(redisSessionTimeout));
 			return true;
 		}
-		long count = tokenData.getApiUrlList().stream().filter(i->{
-			if(servletPath.startsWith(i)){
-				return true;
-			}
-			return false; 
-		}).count();
+		long count = tokenData.getApiUrlList().stream().filter(i->{return servletPath.startsWith(i);}).count();
 		if(count<=0){
 			request.getRequestDispatcher(ApiConstant.NO_AUTHORY).forward(request,response);
 			return false;

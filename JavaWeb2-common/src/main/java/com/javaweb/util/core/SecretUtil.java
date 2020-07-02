@@ -132,7 +132,7 @@ public class SecretUtil {
 	redisTemplate.opsForValue().set("defaultGenUniqueStr",1);
 	System.out.println(redisTemplate.opsForValue().increment("defaultGenUniqueStr",1));
 	*/
-	public static String defaultGenUniqueStr(int systemNo){
+	public static String defaultGenUniqueStr(String systemNo){
 		synchronized ("defaultGenUniqueStr") {
 			try {
 				TimeUnit.MILLISECONDS.sleep(1);

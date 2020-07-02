@@ -6,7 +6,7 @@ import com.javaweb.web.po.User;
 
 public class SystemConstant {
 	
-	public static final Integer SYSTEM_NO = 1;
+	public static final String SYSTEM_NO = "1";
 	
 	public static final String PROJECT_NAME = "JavaWeb";
 	
