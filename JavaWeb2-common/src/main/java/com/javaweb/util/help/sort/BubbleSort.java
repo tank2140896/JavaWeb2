@@ -1,7 +1,9 @@
 package com.javaweb.util.help.sort;
 
+import java.util.Arrays;
+
 //冒泡排序
-public class BubbleSort implements BaseSort<Integer> {
+public class BubbleSort<T> implements SortTemplete<T> {
 
 	/**
 	<<算法导论>>的伪代码如下:
@@ -10,24 +12,24 @@ public class BubbleSort implements BaseSort<Integer> {
 			if A[j]<A[j-1]
 				exchange A[j] with A[j-1]
 	*/
-	public Integer[] sort(Integer[] array) {
-		final int toSortLength = array.length;
-		for (int i = 0; i < toSortLength; i++) {
-			for (int j = i+1; j < toSortLength; j++) {
-				if(array[i]>array[j]){
-					//两数交换
-					array[i] = array[i]^array[j];
-					array[j] = array[i]^array[j];
-					array[i] = array[i]^array[j];
-					/** 两数交换还能这么做
-					x = x+y;
-					y = x-y;
-					x = x-y;
-					*/
+	public void sort(Comparable<T>[] array) {
+		final int arrayLength = array.length;
+		for(int i = 0;i<arrayLength;i++){
+			int minIndex = i;//使用此变量就不必一比较符合条件就马上交换两个值，现在只需最终全部比完再交换
+			for(int j=i+1;j<arrayLength;j++){
+				if(more(array[minIndex],array[j])){//从小到大
+					minIndex = j;
 				}
 			}
+			exchange(array,i,minIndex);
 		}
-		return array;
+	}
+	
+	public static void main(String[] args) {
+		Integer[] i = {4,5,6,7,3,2,5,2,1,1};
+		SortTemplete<Integer> st = new BubbleSort<Integer>();
+		st.sort(i);
+		System.out.println(Arrays.toString(i));
 	}
 
 }

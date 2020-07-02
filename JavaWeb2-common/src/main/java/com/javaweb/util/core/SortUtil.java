@@ -44,7 +44,7 @@ public class SortUtil {
 	private static final Map<String,Supplier<BaseSort<Integer>>> SORT_MAP = new HashMap<>();
 	
 	static {
-		SORT_MAP.put(BUBBLE_SORT,BubbleSort::new);
+		//SORT_MAP.put(BUBBLE_SORT,BubbleSort::new);
 		SORT_MAP.put(INSERT_SORT,InsertSort::new);
 		SORT_MAP.put(MERGE_SORT,MergeSort::new);
 		SORT_MAP.put(BUCKET_SORT,BucketSort::new);
