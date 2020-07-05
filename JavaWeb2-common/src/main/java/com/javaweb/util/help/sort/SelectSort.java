@@ -1,9 +1,7 @@
 package com.javaweb.util.help.sort;
 
-import java.util.Arrays;
-
-//冒泡排序
-public class BubbleSort<T> implements SortTemplete<T> {
+//选择（冒泡）排序（相比插入排序，可以理解为【从前往后】）
+public class SelectSort<T> implements SortTemplete<T> {
 
 	/**
 	<<算法导论>>的伪代码如下:
@@ -25,11 +23,4 @@ public class BubbleSort<T> implements SortTemplete<T> {
 		}
 	}
 	
-	public static void main(String[] args) {
-		Integer[] i = {4,5,6,7,3,2,5,2,1,1};
-		SortTemplete<Integer> st = new BubbleSort<Integer>();
-		st.sort(i);
-		System.out.println(Arrays.toString(i));
-	}
-
 }

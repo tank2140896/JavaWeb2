@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import com.javaweb.util.help.sort.BaseSort;
-import com.javaweb.util.help.sort.BubbleSort;
+import com.javaweb.util.help.sort.SelectSort;
 import com.javaweb.util.help.sort.BucketSort;
 import com.javaweb.util.help.sort.CountSort;
 import com.javaweb.util.help.sort.HeapSort;
@@ -27,7 +27,7 @@ import com.javaweb.util.help.sort.QuickSort;
  */
 public class SortUtil {
 	
-	private static final String BUBBLE_SORT = BubbleSort.class.getSimpleName();//冒泡排序
+	private static final String BUBBLE_SORT = SelectSort.class.getSimpleName();//冒泡排序
 	
 	private static final String INSERT_SORT = InsertSort.class.getSimpleName();//插入排序
 	
@@ -45,7 +45,7 @@ public class SortUtil {
 	
 	static {
 		//SORT_MAP.put(BUBBLE_SORT,BubbleSort::new);
-		SORT_MAP.put(INSERT_SORT,InsertSort::new);
+		//SORT_MAP.put(INSERT_SORT,InsertSort::new);
 		SORT_MAP.put(MERGE_SORT,MergeSort::new);
 		SORT_MAP.put(BUCKET_SORT,BucketSort::new);
 		SORT_MAP.put(HEAP_SORT,HeapSort::new);
