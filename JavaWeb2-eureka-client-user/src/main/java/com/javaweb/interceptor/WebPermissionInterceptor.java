@@ -48,7 +48,7 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 		//RedisTemplate<String,Object> redisTemplate = (RedisTemplate<String,Object>)ApplicationContextHelper.getBean(SystemConstant.REDIS_TEMPLATE);
 		//String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+request.getContextPath(); 
 		Long redisSessionTimeout = Long.parseLong(BaseTool.getEnvironment().getProperty("redis.session.timeout"));//获得配置文件中redis设置session失效的时间
-		TokenData tokenData = BaseTool.getTokenData(BaseTool.getToken(request));
+		TokenData tokenData = BaseTool.getTokenData(BaseTool.getToken(request)); 
 		if(tokenData==null){
 			request.getRequestDispatcher(ApiConstant.INVALID_REQUEST).forward(request,response);
 			return false;
