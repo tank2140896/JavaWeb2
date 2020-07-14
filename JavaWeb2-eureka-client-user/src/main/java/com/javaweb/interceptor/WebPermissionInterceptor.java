@@ -36,7 +36,7 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 	 * System.getProperty("catalina.home")+File.separator+"webapps\\项目名称\\WEB-INF\\classes"
 	 * request.getSession().getServletContext().getRealPath("/")//位于WebRoot下
 	 */
-	public boolean preHandle(HttpServletRequest request,HttpServletResponse response,Object handler) throws Exception {
+	public boolean preHandle(HttpServletRequest request,HttpServletResponse response,Object handler) throws Exception {//本方法异常不应该主动抛出
 		String servletPath = request.getServletPath();
 		//接口调用次数统计，若不需要使用注释掉即可
 		BaseTool.getRedisTemplate().opsForHash().increment(SystemConstant.REDIS_INTERFACE_COUNT_KEY,specialHandleUrl(servletPath),1);//接口调用次数加1
