@@ -89,6 +89,8 @@ public class SecretRequest {
 	
 	public <T> T getEntity(Class<T> c){
 		try {
+			//System.out.println(this.code);
+			//objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
 			return new ObjectMapper().readValue(this.code,c);
 		} catch (Exception e) {
 			return null;
