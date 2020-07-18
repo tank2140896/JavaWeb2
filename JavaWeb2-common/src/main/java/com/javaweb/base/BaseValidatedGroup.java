@@ -9,10 +9,16 @@ public class BaseValidatedGroup {
 	//删除校验组
 	public interface delete{}
 	
-	//更新校验组
+	//修改校验组
 	public interface update{}
 	
 	//查询校验组
 	public interface select{}
+	
+	//上传校验组
+	public interface upload{}
+	
+	//下载校验组
+	public interface download{}
 	
 }

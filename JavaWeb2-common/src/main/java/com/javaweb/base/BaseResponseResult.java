@@ -21,9 +21,12 @@ public class BaseResponseResult implements Serializable {
 		
 	}
 	
+	public BaseResponseResult(Object code){
+		this(code,null,null);
+	}
+	
 	public BaseResponseResult(Object code,Object message){
-		this.code = code;
-		this.message = message;
+		this(code,message,null);
 	}
 	
 	public BaseResponseResult(Object code,Object message,Object data){
