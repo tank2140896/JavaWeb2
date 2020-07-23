@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.javaweb.base.BaseResponseResult;
@@ -29,6 +30,16 @@ public class GlobalExceptionHandler extends BaseTool {
 		return new BaseResponseResult(HttpCodeEnum.INVALID_REQUEST,"validated.permission.invalidRequest");
 	}
 	
+	@ExceptionHandler(MissingServletRequestParameterException.class)
+	public BaseResponseResult handleMissingServletRequestParameterException(HttpServletRequest request,MissingServletRequestParameterException e){
+		return new BaseResponseResult(HttpCodeEnum.INVALID_REQUEST,"validated.permission.invalidRequest");
+	}
+	
+	@ExceptionHandler(MultipartException.class)
+	public BaseResponseResult uploadExcepttion(MultipartException e){
+	        return new BaseResponseResult(HttpCodeEnum.INVALID_REQUEST,e.getMessage());
+	}
+	
 	@ExceptionHandler(Exception.class)
 	public BaseResponseResult handleException(HttpServletRequest request,Exception e) {
 		//e.printStackTrace();
@@ -36,9 +47,4 @@ public class GlobalExceptionHandler extends BaseTool {
 		return getBaseResponseResult(HttpCodeEnum.INTERNAL_ERROR,"validated.permission.internalError");
 	}
 	
-	@ExceptionHandler(MissingServletRequestParameterException.class)
-	public BaseResponseResult handleMissingServletRequestParameterException(HttpServletRequest request,MissingServletRequestParameterException e){
-		return new BaseResponseResult(HttpCodeEnum.INVALID_REQUEST,"validated.permission.invalidRequest");
-	}
-
 }
