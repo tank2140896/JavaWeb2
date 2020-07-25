@@ -7,6 +7,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Getter;
 import lombok.Setter;
 
+//注：既然@JSONField用的是com.alibaba.fastjson那么转化时也要用com.alibaba.fastjson，即JSONObject.parseObject(data,DemoDockingEntity.class)
 @Getter
 @Setter
 public class DemoDockingEntity implements Serializable {

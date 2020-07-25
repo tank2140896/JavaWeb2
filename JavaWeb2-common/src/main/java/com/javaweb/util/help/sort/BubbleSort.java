@@ -1,7 +1,7 @@
 package com.javaweb.util.help.sort;
 
-//选择（冒泡）排序（相比插入排序，可以理解为【从前往后】）
-public class SelectSort<T> implements SortTemplete<T> {
+//冒泡排序（相比插入排序，可以理解为【从前往后】）
+public class BubbleSort<T> implements SortTemplete<T> {
 
 	/**
 	<<算法导论>>的伪代码如下:
