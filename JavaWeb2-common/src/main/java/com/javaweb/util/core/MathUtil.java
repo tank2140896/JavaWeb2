@@ -26,6 +26,27 @@ public class MathUtil {
     	}
     }
     
+	//将总数近似平均分成等份
+    public static BigDecimal[] getNumAvg(BigDecimal num,int size){
+    	if(size<=0){
+    		return new BigDecimal[]{};
+    	}
+    	if(size<2){
+    		return new BigDecimal[]{num};
+    	}
+		BigDecimal one = num.divide(new BigDecimal(size),2,RoundingMode.DOWN);
+		BigDecimal another = num.subtract(one.multiply(new BigDecimal(size)));
+		BigDecimal[] outArray = new BigDecimal[size];
+		for(int i=0;i<outArray.length;i++){
+			if(i!=0){
+				outArray[i] = one;
+			}else{
+				outArray[i] = another.add(one);
+			}
+		}
+		return outArray;
+	}
+    
     //计算逆序数
     public static int getInversionNumber(int[] array) {
         int count = 0;
