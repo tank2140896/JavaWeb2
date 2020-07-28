@@ -25,50 +25,50 @@ import com.javaweb.constant.CommonConstant;
 public class PoiXssfExcelUtil {
 	
 	//遍历所有sheet
-	public static Object[] readAllExcelSheet(InputStream inputStream) throws IOException {
+	public static Object[] readAllExcelSheet(InputStream inputStream,int skipLines) throws IOException {
 		XSSFWorkbook xssfWorkbook = new XSSFWorkbook(inputStream);
 		int sheets = xssfWorkbook.getNumberOfSheets();
 		Object[] objects = new Object[sheets];
 		for(int i=0;i<sheets;i++){
 			XSSFSheet xssfSheet = xssfWorkbook.getSheetAt(i);
-			objects[i] = readSheet(xssfSheet);
+			objects[i] = readSheet(xssfSheet,skipLines);
 		}
 		xssfWorkbook.close();
 		return objects;
 	}
 	
 	//根据sheet名字遍历单个sheet
-	public static List<List<String>> readSingleExcelSheet(InputStream inputStream,String sheetName) throws IOException {
+	public static List<List<String>> readSingleExcelSheet(InputStream inputStream,int skipLines,String sheetName) throws IOException {
 		XSSFWorkbook xssfWorkbook = new XSSFWorkbook(inputStream);
 		XSSFSheet xssfSheet = xssfWorkbook.getSheet(sheetName);
-		List<List<String>> list = readSheet(xssfSheet);
+		List<List<String>> list = readSheet(xssfSheet,skipLines);
 		xssfWorkbook.close();
 		return list;
 	}
 	
 	//根据sheet名字遍历单个sheet
-	public static <T> List<T> readSingleExcelSheet(InputStream inputStream,String sheetName,Map<Integer,String> map,Class<T> objectClass) throws Exception {
+	public static <T> List<T> readSingleExcelSheet(InputStream inputStream,String sheetName,int skipLines,Map<Integer,String> map,Class<T> objectClass) throws Exception {
 		XSSFWorkbook xssfWorkbook = new XSSFWorkbook(inputStream);
 		XSSFSheet xssfSheet = xssfWorkbook.getSheet(sheetName);
-		List<T> list = readSheet(xssfSheet,map,objectClass);
+		List<T> list = readSheet(xssfSheet,skipLines,map,objectClass);
 		xssfWorkbook.close();
 		return list;
 	}
 	
 	//根据sheet序号遍历单个sheet
-	public static List<List<String>> readSingleExcelSheet(InputStream inputStream,int sheetIndex) throws IOException {
+	public static List<List<String>> readSingleExcelSheet(InputStream inputStream,int sheetIndex,int skipLines) throws IOException {
 		XSSFWorkbook xssfWorkbook = new XSSFWorkbook(inputStream);
 		XSSFSheet xssfSheet = xssfWorkbook.getSheetAt(sheetIndex);
-		List<List<String>> list = readSheet(xssfSheet);
+		List<List<String>> list = readSheet(xssfSheet,skipLines);
 		xssfWorkbook.close();
 		return list;
 	}
 	
 	//根据sheet序号遍历单个sheet
-	public static <T> List<T> readSingleExcelSheet(InputStream inputStream,int sheetIndex,Map<Integer,String> map,Class<T> objectClass) throws Exception {
+	public static <T> List<T> readSingleExcelSheet(InputStream inputStream,int sheetIndex,int skipLines,Map<Integer,String> map,Class<T> objectClass) throws Exception {
 		XSSFWorkbook xssfWorkbook = new XSSFWorkbook(inputStream);
 		XSSFSheet xssfSheet = xssfWorkbook.getSheetAt(sheetIndex);
-		List<T> list = readSheet(xssfSheet,map,objectClass);
+		List<T> list = readSheet(xssfSheet,skipLines,map,objectClass);
 		xssfWorkbook.close();
 		return list;
 	}
@@ -96,8 +96,8 @@ public class PoiXssfExcelUtil {
 	}
 	
 	//写入Excel
-	public static void writeExcelObject(OutputStream outputStream,List<Object> data,String sheetName) throws Exception{
-		XSSFWorkbook xssfWorkbook = writeSheetObject(data,sheetName);
+	public static void writeExcelObject(OutputStream outputStream,List<Object> data,List<String> headers,String sheetName) throws Exception{
+		XSSFWorkbook xssfWorkbook = writeSheetObject(data,headers,sheetName);
 		xssfWorkbook.write(outputStream);
 		outputStream.flush();
 		outputStream.close();
@@ -105,11 +105,11 @@ public class PoiXssfExcelUtil {
 	}
 	
 	//写入Excel
-	public static void writeExcelObject(HttpServletResponse response,List<Object> data,String sheetName,String fileName) throws Exception{
+	public static void writeExcelObject(HttpServletResponse response,List<Object> data,List<String> headers,String sheetName,String fileName) throws Exception{
 		response.setContentType("application/vnd.ms-excel");
 		response.setHeader("Content-Disposition","attachment;filename="+fileName+".xlsx");
 		ServletOutputStream outputStream = response.getOutputStream();
-		XSSFWorkbook xssfWorkbook = writeSheetObject(data,sheetName);
+		XSSFWorkbook xssfWorkbook = writeSheetObject(data,headers,sheetName);
 		xssfWorkbook.write(outputStream);
 		outputStream.flush();
 		outputStream.close();
@@ -118,10 +118,10 @@ public class PoiXssfExcelUtil {
 	}
 	
 	//读取每个sheet里的数据
-	public static List<List<String>> readSheet(XSSFSheet xssfSheet){
+	public static List<List<String>> readSheet(XSSFSheet xssfSheet,int skipLines){
 		int rows = xssfSheet.getPhysicalNumberOfRows();
 		List<List<String>> rowList = new ArrayList<>();
-		for(int i=0;i<rows;i++){//遍历每一行
+		for(int i=0+skipLines;i<rows;i++){//遍历每一行
 			XSSFRow row = xssfSheet.getRow(i);
 			if(row==null){
 				continue;
@@ -144,10 +144,10 @@ public class PoiXssfExcelUtil {
 	}
 	
 	//读取每个sheet里的数据
-	public static <T> List<T> readSheet(XSSFSheet xssfSheet,Map<Integer,String> map,Class<T> objectClass) throws Exception{
+	public static <T> List<T> readSheet(XSSFSheet xssfSheet,int skipLines,Map<Integer,String> map,Class<T> objectClass) throws Exception{
 		int rows = xssfSheet.getPhysicalNumberOfRows();
 		List<T> rowList = new ArrayList<>();
-		for(int i=0;i<rows;i++){//遍历每一行
+		for(int i=0+skipLines;i<rows;i++){//遍历每一行
 			T target = objectClass.newInstance();
 			XSSFRow row = xssfSheet.getRow(i);
 			if(row==null){
@@ -201,22 +201,32 @@ public class PoiXssfExcelUtil {
 	}
 	
 	//写入每个sheet里的数据
-	public static XSSFWorkbook writeSheetObject(List<Object> data,String sheetName) throws Exception {
+	public static XSSFWorkbook writeSheetObject(List<Object> data,List<String> headers,String sheetName) throws Exception {
 		XSSFWorkbook xssfWorkbook = new XSSFWorkbook();
 		XSSFSheet xssfSheet = xssfWorkbook.createSheet(sheetName);
-		XSSFRow[] rows = new XSSFRow[data.size()];
-		for(int i=0;i<data.size();i++){
+		XSSFRow[] rows = new XSSFRow[headers==null?data.size():data.size()+1];
+		int count = 0;
+		if(headers!=null){
+			XSSFCell[] cells = new XSSFCell[headers.size()];
+			rows[count] = xssfSheet.createRow(count);
+			for(int m=0;m<headers.size();m++){
+				cells[m] = rows[count].createCell(m);
+				cells[m].setCellValue(headers.get(m));
+			}
+			count++;
+		}
+		for(int i=0;i<data.size();i++,count++){
 			Object classes = data.get(i);
 			Object target = classes.getClass().newInstance();
 			Field[] fields = target.getClass().getDeclaredFields();
-			rows[i] = xssfSheet.createRow(i);
+			rows[count] = xssfSheet.createRow(count);
 			//xssfSheet.setDefaultColumnWidth(columnWidth);//设置列的长度
 			XSSFCell[] cells = new XSSFCell[fields.length];
 			for(int j=0;j<fields.length;j++){
 				String fieldName = fields[j].getName();
 				fieldName = fieldName.substring(0,1).toUpperCase()+fieldName.substring(1,fieldName.length());
 				Method method = target.getClass().getDeclaredMethod("get"+fieldName,new Class[]{});
-				cells[j] = rows[i].createCell(j);
+				cells[j] = rows[count].createCell(j);
 				Object value = method.invoke(classes,new Object[]{});
 				if(value instanceof Double){
 					cells[j].setCellValue(new Double(value.toString()));
