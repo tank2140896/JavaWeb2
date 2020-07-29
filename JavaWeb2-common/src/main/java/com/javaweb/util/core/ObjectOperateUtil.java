@@ -115,6 +115,7 @@ public class ObjectOperateUtil {
 	A a3 = new A("c",20,"x3");
 	list.add(a1);list.add(a2);list.add(a3);
 	B b = new B(200,"success",list);
+	//请注意：如果code:200变为userName:200，同时data里面要排除的属性也是userName,那么userName:200同样会被排除
 	//{"code":200,"data":[{"address":"x1","age":18},{"address":"x2","age":19},{"address":"x3","age":20}],"message":"success"}
 	System.out.println(excludeField(b,new String[]{"userName"},false));
 	*/
