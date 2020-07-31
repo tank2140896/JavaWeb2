@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title></title>
+<meta http-equiv="pragma" content="no-cache">
+<meta http-equiv="cache-control" content="no-cache">
+<meta http-equiv="expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+</head>
+<body>
+	<div>
+		请输入真实姓名：<br/>
+		<input type="text" id="userName"><br/><br/>
+		请输入真实有效的身份证号码：<br/><br/>
+		<input type="text" id="idCard"><br/><br/>
+		<button class="btn btn_primary" id="invoke">开始人脸识别</button>
+	</div>
+</body>
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+<script src="https://cdn.bootcss.com/jquery/1.7.2/jquery.min.js"></script>
+<script>
+//參考：https://developers.weixin.qq.com/doc/offiaccount/OA_Web_Apps/JS-SDK.html
+$.ajax({
+    type : 'GET',
+    contentType: 'application/json;charset=UTF-8',
+    url : 'http://test.5gzvip.idcfengye.com/wechat/getFaceRequestConfig?t='+encodeURI(window.location.href.split('#')[0]),
+    success : function(result) {
+    	wx.config({
+   		  beta: true,
+   		  debug: false,
+   		  appId: 'wxb133d58afa5cabef',
+   		  timestamp: result.data.timestamp,
+   		  nonceStr: result.data.nonceStr,
+   		  signature: result.data.signature,
+   		  jsApiList: [
+   		    'requestWxFacePictureVerifyUnionVideo'
+   		  ]
+   		});
+    },
+    error : function(e){
+        console.log(e);
+    }
+});
+
+wx.ready(function(){
+	document.querySelector('#invoke').onclick = function() {
+		/**
+		wx.invoke("checkIsSupportFaceDetect",{},function(res){
+			alert(1);
+			//res.err_code==0表示支持人脸采集
+		});
+		*/
+		var content = {"name":$("#userName").val(),"id_card_number":$("#idCard").val()};
+        wx.invoke("requestWxFacePictureVerifyUnionVideo",{"appId":"wxb133d58afa5cabef","request_verify_pre_info":JSON.stringify(content)},function(res){
+        	if (res.err_code==0) {
+	           	//var verify_result = res.verify_result;
+	           	/** 此接口为内部测试调试用的
+        		$.ajax({
+        		    type : 'GET',
+        		    contentType: 'application/json;charset=UTF-8',
+        		    url : 'http://test.5gzvip.idcfengye.com/wechat/getFaceResultVerify/'+res.verify_result,
+        		    success : function(result) {
+        		    	if(result.code==200){
+        		    		alert('实名认证成功，将为您跳转至主页登录');
+        		    	}else{
+        		    		alert('实名认证失败，将为您跳转至主页登录');
+        		    	}
+        		    	window.location.href = 'https://www.baidu.com';
+        		    },
+        		    error : function(e){
+        		        console.log(e);
+        		    }
+        		});
+	           	*/
+        		alert('实名认证成功');
+          	}else{
+            	//var msg = res.err_msg;
+            	//var code = res.err_code;
+            	//alert(JSON.stringify(res));
+            	alert('实名认证失败，请记下代码：【'+res.err_code+'】联系客服');
+          	}
+        });
+  	}
+});
+
+wx.error(function(res){
+	alert('我错了');
+});
+</script>
+</html>

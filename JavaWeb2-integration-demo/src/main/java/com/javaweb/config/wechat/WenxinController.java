@@ -1,9 +1,12 @@
 package com.javaweb.config.wechat;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
@@ -14,11 +17,16 @@ import java.util.Set;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,8 +38,14 @@ import com.google.zxing.BarcodeFormat;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.javaweb.base.BaseResponseResult;
 import com.javaweb.eo.wechat.AccessTokenResponse;
+import com.javaweb.eo.wechat.FaceRequestConfigResponse;
 import com.javaweb.eo.wechat.UserInfoResponse;
+import com.javaweb.util.core.HttpUtil;
+import com.javaweb.util.core.SecretUtil;
+import com.javaweb.util.core.StringUtil;
+import com.javaweb.util.core.XmlUtil;
 
 import net.sf.json.JSONObject;
 
@@ -48,12 +62,17 @@ import net.sf.json.JSONObject;
 @RestController
 public class WenxinController {
 	
+	private Logger logger = LogManager.getLogger(WenxinController.class);
+	
+	@Resource(name="redisTemplate1")
+	private ValueOperations<Object,Object> valueOperations1;
+	
 	@Autowired
 	private WechatConfig weixinConfig;
 	
-	//微信公众平台服务器配置(初始化)
-	@GetMapping("/wxgzptServerConfig")
-	public String wxgzptServerConfigForGet(HttpServletRequest request) {
+	//微信公众平台服务器配置（用于关联微信确定微信发送的服务器地址）
+	@GetMapping("/wechatServerConfig")
+	public String wechatServerConfigForGet(HttpServletRequest request) {
 		String echostr = null;
 		try {
 			String signature = request.getParameter("signature");
@@ -66,7 +85,7 @@ public class WenxinController {
 			for(int i=0;i<array.length;i++) {
 				stringBuilder.append(array[i]);
 			}
-			boolean ret = signature.equals(""/*SecretUtil.getSecret(stringBuilder.toString(),"SHA-1")*/);
+			boolean ret = signature.equals(SecretUtil.getSecret(stringBuilder.toString(),"SHA-1"));
 			if(!ret) {
 				echostr = null;
 			}
@@ -77,61 +96,72 @@ public class WenxinController {
 	}
 	
 	//微信公众平台消息处理
-	@PostMapping("/wxgzptServerConfig")
-	public String wxgzptServerConfigForPost(@RequestBody String body) {
-		String out = null;
+	@PostMapping("/wechatServerConfig")
+	public String wechatServerConfigForPost(@RequestBody String body) {
+		String returnMessage = "success";
 		try {
-			//{Content=1,CreateTime=1560003360,ToUserName=gh_4b54a6836ccf,FromUserName=o8hKM1IHWwSYOtjjRG15bkOYaJF4,MsgType=text,MsgId=22333880939653582}
-			Map<String,String> map = new HashMap<>();//XmlUtil.xmlToMap(body);
-			String msgType = map.get("MsgType");
-			String content = map.get("Content");
-			//String createTime = map.get("CreateTime");
-			String fromUserName = map.get("FromUserName");
+			Map<String,String> map = XmlUtil.xmlToMap(body);
+			//System.out.println(map);
 			String toUserName = map.get("ToUserName");
+			String fromUserName = map.get("FromUserName");
+			//String createTime = map.get("CreateTime");
+			String content = map.get("Content");
 			//String msgId = map.get("MsgId");
-			if("text".equals(msgType)) {//发送文字消息
-				Map<String,String> outMap = new HashMap<>();
-				outMap.put("ToUserName",fromUserName);
-				outMap.put("FromUserName",toUserName);
-				outMap.put("CreateTime",String.valueOf(new Date().getTime()));
-				outMap.put("MsgType","text");
-				if("模板消息".equals(content)) {
-					new Thread(()->{
-						try {
-							String outTemplete = "";//HttpUtil.defaultGetRequest(String.format(weixinConfig.getWxopenAccessToken(),weixinConfig.getWxopenAppid(),weixinConfig.getWxopenAppsecret()),null);
-							outTemplete = JSONObject.fromObject(outTemplete).get("access_token").toString();
-							String outBody = "{\"touser\":\"oF5Is6N_InAXPwByh9Wh1NjdTkvg\",\"template_id\":\"1Dih-sHIXgcoctF1LkUa6iGgdBsvUWolG-3hkqke9R0\",\"url\":\"http://weixin.qq.com/download\",\"topcolor\":\"#FF0000\",\"data\":{\"date\":{\"value\":\"2019-01-01 11:11:11\",\"color\":\"#FF0000\"},\"orderNo\":{\"value\":\"123456789\",\"color\":\"#FF0000\"},\"money\":{\"value\":\"22.2\",\"color\":\"#FF0000\"}}}";
-							outTemplete = "";//HttpUtil.defaultPostRequest(String.format(weixinConfig.getWxopenMessageTemplete(),outTemplete),outBody,null);
-							System.out.println(outTemplete);
-						}catch (Exception e) {
-							System.out.println("发生异常");
-						}
-					}).start();
-				}
-				out = "";//HttpUtil.defaultGetRequest("http://api.qingyunke.com/api.php?key=free&appid=0&msg="+URLEncoder.encode(content,"UTF-8"),null);
-				outMap.put("Content","调用【青云客（http://api.qingyunke.com）】消息智能回复："+JSONObject.fromObject(out).get("content"));
-				out = "";//XmlUtil.mapToXml(outMap);
-			}else if("event".equals(msgType)){//关注/取消关注事件
-				if(map.get("Event").equals("subscribe")) {//订阅
-					String wxForwardUrl = String.format(weixinConfig.getWxopenAuthorizeUrl(),weixinConfig.getWxopenAppid(),URLEncoder.encode(weixinConfig.getWxopenRedirectUrl(),"UTF-8"));
-					Map<String,String> outMap = new HashMap<>();
-					outMap.put("ToUserName",fromUserName);
-					outMap.put("FromUserName",toUserName);
-					outMap.put("CreateTime",String.valueOf(new Date().getTime()));
-					outMap.put("MsgType","text");
-					outMap.put("Content",wxForwardUrl);
-					out = "";//XmlUtil.mapToXml(outMap);
-					System.out.println("用户关注了我");
-				}else if(map.get("Event").equals("unsubscribe")){//取消订阅
-					System.out.println("用户取消关注了我");
-				}else if(map.get("Event").equals("TEMPLATESENDJOBFINISH")) {
-					System.out.println("模板消息发送成功");
-				}
+			String msgType = map.get("MsgType");
+			String event = map.get("Event");
+			switch(msgType){
+				case "text"://发送文字消息
+					map.put("ToUserName",fromUserName);
+					map.put("FromUserName",toUserName);
+					map.put("CreateTime",String.valueOf(new Date().getTime()));
+					map.put("MsgType","text");
+					map.put("Content","接收到的消息为:["+content+"]");
+					returnMessage = XmlUtil.mapToXml(map);
+					break;
+				case "event":
+					System.out.println(event);
+					//event.equals("subscribe")//订阅 
+					//event.equals("unsubscribe")//取消订阅 
+					break;
 			}
 		} catch (Exception e) {
-			out = e.getMessage();
+			logger.error(e.getMessage());
 		}
-		return out;
+		return returnMessage;
+	}
+	
+	//微信人脸配置初始化
+	@GetMapping("/getFaceRequestConfig")
+	public BaseResponseResult getFaceRequestConfig(HttpServletRequest request) throws Exception {
+		//String appId = weixinConfig.getWxopenAppid();
+		//String appSecret = weixinConfig.getWxopenAppsecret();
+		String timestamp  = String.valueOf(new Date().getTime()).substring(0,10);
+		String nonceStr = SecretUtil.defaultGenRandomPass(16);
+		//String accessToken = getAccessTokenImpl();
+		String jsapiTicket = getJsApiTicketImpl();
+		String url = URLDecoder.decode(request.getParameter("t"),"UTF-8");
+		String str = "jsapi_ticket="+jsapiTicket+"&noncestr="+nonceStr+"&timestamp="+timestamp+"&url="+url;
+		//System.out.println(str);
+		String signature = SecretUtil.getSecret(str,"SHA-1");
+		FaceRequestConfigResponse faceRequestConfigResponse = new FaceRequestConfigResponse();
+		faceRequestConfigResponse.setTimestamp(timestamp);
+		faceRequestConfigResponse.setNonceStr(nonceStr);
+		faceRequestConfigResponse.setSignature(signature);
+		faceRequestConfigResponse.setUrl(url);
+		faceRequestConfigResponse.setJsapiTicket(jsapiTicket);
+		return new BaseResponseResult(200,"微信人脸配置初始化成功",faceRequestConfigResponse);
+	}
+	
+	//微信人脸识别验证结果查询
+	@GetMapping("/getFaceResultVerify/{verifyResult}")
+	public BaseResponseResult getFaceResultVerify(@PathVariable(value="verifyResult") String verifyResult) throws Exception {
+		String url = "https://api.weixin.qq.com/cityservice/face/identify/getinfo?access_token="+getAccessTokenImpl();
+		String out = HttpUtil.defaultPostRequest(url,"{\"verify_result\":\""+verifyResult+"\"}",null);
+		if(JSONObject.fromObject(out).getInt("identify_ret")==0){
+			return new BaseResponseResult(200,"微信人脸识别验证成功");
+		}else{
+			return new BaseResponseResult(605,"微信人脸识别验证失败");
+		}
 	}
 	
 	//微信公众平台获取用户信息回调地址
@@ -409,6 +439,137 @@ public class WenxinController {
 		String sign = createSign(sortedMap,key);
 		String weixinPaySign = sortedMap.get("sign").toUpperCase();
 		return sign.equals(weixinPaySign);
+	}
+	
+	//获取AccessToekn（需要配置IP白名单）
+	private String getAccessTokenImpl(){
+		String accessToken = null;
+		String accessTokenUrl = String.format(weixinConfig.getWxopenAccessToken(),"client_credential",weixinConfig.getWxopenAppid(),weixinConfig.getWxopenAppsecret());
+		try {
+			Object redisWechatAccesssToken = valueOperations1.get("redisWechatAccessToken");
+			if(redisWechatAccesssToken==null){
+				String response = HttpUtil.defaultGetRequest(accessTokenUrl,null);
+				//System.out.println(response);
+				accessToken = JSONObject.fromObject(response).getString("access_token");
+				if(accessToken!=null){
+					valueOperations1.set("redisWechatAccessToken",accessToken,Duration.ofSeconds(7000));//AccessToken有效时间为7200秒，则这里保险起见7000秒后刷新一次
+				}
+			}else{
+				accessToken = redisWechatAccesssToken.toString();
+			}
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		//System.out.println(accessToken);
+		return accessToken;
+	}
+	
+	//获取JsApiTicket
+	private String getJsApiTicketImpl(){
+		String jsApiTicket = null;
+		String jsApiTicketUrl = String.format(weixinConfig.getWxopenJsApiTicket(),getAccessTokenImpl());
+		try {
+			Object redisWechatJsApiTicket = valueOperations1.get("redisWechatJsApiTicket");
+			if(redisWechatJsApiTicket==null){
+				String response = HttpUtil.defaultGetRequest(jsApiTicketUrl,null);
+				//System.out.println(response);
+				jsApiTicket = JSONObject.fromObject(response).getString("ticket");
+				if(jsApiTicket!=null){
+					valueOperations1.set("redisWechatJsApiTicket",jsApiTicket,Duration.ofSeconds(7000));//AccessToken有效时间为7200秒，则这里保险起见7000秒后刷新一次
+				}
+			}else{
+				jsApiTicket = redisWechatJsApiTicket.toString();
+			}
+			
+		} catch (Exception e) {
+			logger.error(e.getMessage());
+		}
+		//System.out.println(jsApiTicket);
+		return jsApiTicket;
+	}
+	
+	//创建菜单
+	private void createSelfDefineMenuImpl() throws Exception {
+		//自定义菜单最多包括3个一级菜单，每个一级菜单最多包含5个二级菜单
+		//一级菜单最多4个汉字，二级菜单最多7个汉字，多出来的部分将会以...代替
+		String out = HttpUtil.defaultPostRequest(String.format(weixinConfig.getWxopenCreateMenuUrl(),getAccessTokenImpl()),StringUtil.jsonFormatFileToJosnString(new File(URLDecoder.decode(Thread.currentThread().getContextClassLoader().getResource("file/createMenu.txt").getPath(),"UTF-8")),"UTF-8"),null);
+		JSONObject jo = JSONObject.fromObject(out);
+		//System.out.println(jo);
+		if(!(jo.getString("errcode").equals("0"))){
+			throw new Exception(jo.getString("errmsg"));
+		}
+	}
+	
+	//创建标签
+	private String createTagImpl(String tagName) throws Exception {
+		String out = HttpUtil.defaultPostRequest(String.format(weixinConfig.getWxopenCreateTagUrl(),getAccessTokenImpl()),"{\"tag\":{\"name\":\""+tagName+"\"}}",null);
+		return JSONObject.fromObject(JSONObject.fromObject(out).get("tag")).getString("id");
+	}
+
+	//获取标签列表
+	private String getTagListImpl() throws Exception {
+		return HttpUtil.defaultGetRequest(String.format(weixinConfig.getWxopenTagListUrl(),getAccessTokenImpl()),null);
+	}
+	
+	//编辑标签
+	private String modifyTagImpl(Long id,String tagName) throws Exception {
+		return HttpUtil.defaultPostRequest(String.format(weixinConfig.getWxopenModifyTagUrl(),getAccessTokenImpl()),"{\"tag\":{\"id\":"+id+",\"name\":\""+tagName+"\"}}",null);
+	}
+	
+	//删除标签
+	private String deleteTagImpl(Long id) throws Exception {
+		return HttpUtil.defaultPostRequest(String.format(weixinConfig.getWxopenDeleteTagUrl(),getAccessTokenImpl()),"{\"tag\":{\"id\":"+id+"}}",null);
+	}
+	
+	//获取标签下的粉丝列表
+	private String getUserTagListImpl(Long tagId,String nextOpenId) throws Exception {
+		return HttpUtil.defaultPostRequest(String.format(weixinConfig.getWxopenUserTagListUrl(),getAccessTokenImpl()),"{\"tagid\":"+tagId+",\"next_openid\":\""+nextOpenId+"\"}",null);
+	}
+	
+	//获取微信用户列表
+	private String getUserListImpl(String nextOpenId) throws Exception {
+		return HttpUtil.defaultGetRequest(String.format(weixinConfig.getWxopenUserOpenIdListUrl(),getAccessTokenImpl(),nextOpenId),null);
+	}
+	
+	//获取微信用户基本信息
+	private UserInfoResponse getBasicUserInfoImpl(String openId) throws Exception {
+		String response = HttpUtil.defaultGetRequest(String.format(weixinConfig.getWxopenUserInfoUrl(),getAccessTokenImpl(),openId),null);
+		UserInfoResponse userInfoResponse = new ObjectMapper().readValue(response,UserInfoResponse.class);
+		return userInfoResponse;
+	}
+	
+	//批量为用户打标签或取消标签（batchSignOrUnsignUserTagRequest={"openid_list":["ocYxcuAEy30bX0NXmGn4ypqx3tI0","ocYxcuBt0mRugKZ7tGAHPnUaOW7Y"],"tagid":134}）
+	private void batchSignOrUnsignUserTagImpl(Integer type,String batchSignOrUnsignUserTagRequest) throws Exception {
+		String out = null;
+		if(type==1){//打标签
+			out = HttpUtil.defaultPostRequest(String.format(weixinConfig.getWxopenUserBatchTagUrl(),getAccessTokenImpl()),batchSignOrUnsignUserTagRequest,null);
+		}else if(type==2){//取消标签
+			out = HttpUtil.defaultPostRequest(String.format(weixinConfig.getWxopenUserBatchUntagUrl(),getAccessTokenImpl()),batchSignOrUnsignUserTagRequest,null);
+		}else{
+			throw new Exception("type数值错误");
+		}
+		JSONObject jo = JSONObject.fromObject(out);
+		//System.out.println(jo);
+		if(!(jo.getString("errcode").equals("0"))){
+			throw new Exception(jo.getString("errmsg"));
+		}
+	}
+	
+	//获取用户标签列表
+	private String getUserTagImpl(String openId) throws Exception {
+		String out = HttpUtil.defaultPostRequest(String.format(weixinConfig.getWxopenUserTagUrl(),getAccessTokenImpl()),"{\"openid\":\""+openId+"\"}",null);
+		return JSONObject.fromObject(out).getString("tagid_list");
+	}
+	
+	//获取openId
+	private String getOpenIdImpl(String code) throws Exception {
+		String response = HttpUtil.defaultGetRequest(String.format(weixinConfig.getWxopenOpenIdUrl(),weixinConfig.getWxopenAppid(),weixinConfig.getWxopenAppsecret(),code),null);
+		//System.out.println(response);
+		String openId = JSONObject.fromObject(response).getString("openid");
+		if(openId==null){
+			throw new Exception("openId获取失败");
+		}
+		return openId;
 	}
 	
 }
