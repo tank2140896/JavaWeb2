@@ -50,13 +50,13 @@ import com.javaweb.util.core.XmlUtil;
 import net.sf.json.JSONObject;
 
 /**
-  * 更多参考:
-  * 微信公众平台:https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1445241432
-  * 微信公众平台测试账号:https://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index
-  * 微信公众平台示例demo封装调用:https://github.com/Wechat-Group/WxJava    
-  * 扫码登录:https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&lang=zh_CN
-  * 微信付款:https://pay.weixin.qq.com/wiki/doc/api/index.html
-  * 扫码支付接入指引:https://pay.weixin.qq.com/guide/qrcode_payment.shtml
+ * 更多参考:
+ * 微信公众平台:https://mp.weixin.qq.com/wiki?t=resource/res_main&id=mp1445241432
+ * 微信公众平台测试账号:https://mp.weixin.qq.com/debug/cgi-bin/sandboxinfo?action=showinfo&t=sandbox/index
+ * 微信公众平台示例demo封装调用:https://github.com/Wechat-Group/WxJava    
+ * 扫码登录:https://open.weixin.qq.com/cgi-bin/showdocument?action=dir_list&t=resource/res_list&verify=1&lang=zh_CN
+ * 微信付款:https://pay.weixin.qq.com/wiki/doc/api/index.html
+ * 扫码支付接入指引:https://pay.weixin.qq.com/guide/qrcode_payment.shtml
  */
 @SuppressWarnings("unused")
 @RestController
