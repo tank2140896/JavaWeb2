@@ -248,14 +248,14 @@ public class DateUtil {
 	}
 	
 	//LocalDateTime转Date
-	public static Date LocalDateTimeToDate(LocalDateTime localDateTime){
+	public static Date localDateTimeToDate(LocalDateTime localDateTime){
 		ZoneId zoneId = ZoneId.systemDefault();
 		Instant instant = localDateTime.atZone(zoneId).toInstant();
 		return Date.from(instant);
 	}
 	
 	//Date转LocalDateTime
-	public static LocalDateTime DateToLocalDateTime(Date date){
+	public static LocalDateTime dateToLocalDateTime(Date date){
 		ZoneId zoneId = ZoneId.systemDefault();
 		Instant instant = date.toInstant();
 		return LocalDateTime.ofInstant(instant,zoneId);
