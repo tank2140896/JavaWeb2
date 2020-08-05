@@ -268,20 +268,27 @@ public class SecretUtil {
     }
 	
     //AES加密操作
-    public static String aesEncrypt(String data, String keyString) throws Exception {
-    	
-    	Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-		cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(keyString.getBytes(), "AES"));
-		//return new sun.misc.BASE64Encoder().encode(cipher.doFinal(data.getBytes("UTF-8")));
-		return new String(Base64.getEncoder().encode(cipher.doFinal(data.getBytes("UTF-8"))));
+    public static String aesEncrypt(String data, String keyString) {
+    	try{
+    		Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+    		cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(keyString.getBytes(), "AES"));
+    		//return new sun.misc.BASE64Encoder().encode(cipher.doFinal(data.getBytes("UTF-8")));
+    		return new String(Base64.getEncoder().encode(cipher.doFinal(data.getBytes("UTF-8"))));
+    	}catch(Exception e){
+    		return null;
+    	}
     }
 
     //AES解密操作
-    public static String aesDecrypt(String data, String keyString) throws Exception {
-    	Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-		cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(keyString.getBytes(), "AES"));
-		//return new String(cipher.doFinal(new sun.misc.BASE64Decoder().decodeBuffer(data)));
-		return new String((cipher.doFinal(Base64.getDecoder().decode(data.getBytes()))));
+    public static String aesDecrypt(String data, String keyString) {
+    	try{
+    		Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+    		cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(keyString.getBytes(), "AES"));
+    		//return new String(cipher.doFinal(new sun.misc.BASE64Decoder().decodeBuffer(data)));
+    		return new String((cipher.doFinal(Base64.getDecoder().decode(data.getBytes()))));
+    	}catch(Exception e){
+    		return null;
+    	}
     }
 	
 	//16进制字符串转byte数组
