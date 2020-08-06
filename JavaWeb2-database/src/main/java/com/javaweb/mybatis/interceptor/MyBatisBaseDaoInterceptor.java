@@ -158,7 +158,7 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 					Object value = method.invoke(parameter);
 					//目前只考虑到String、Integer、Long和Date类型
 					if(value instanceof Date){
-						entityValueList.add(DateUtil.DateToLocalDateTime((Date)value).format(DateTimeFormatter.ofPattern(DateUtil.DEFAULT_DATETIME_PATTERN)));
+						entityValueList.add(DateUtil.dateToLocalDateTime((Date)value).format(DateTimeFormatter.ofPattern(DateUtil.DEFAULT_DATETIME_PATTERN)));
 					}else{
 						entityValueList.add(value);
 					}

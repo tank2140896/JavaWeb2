@@ -31,7 +31,7 @@ public class QuartzServiceImpl extends BaseService implements QuartzService {
         if(quartz.getExecuteStartTime()==null) {
             triggerBuilder = triggerBuilder.startNow();
         }else {
-            triggerBuilder = triggerBuilder.startAt(DateUtil.LocalDateTimeToDate(DateUtil.getDateTime(quartz.getExecuteStartTime(),DateUtil.DEFAULT_DATETIME_PATTERN)));
+            triggerBuilder = triggerBuilder.startAt(DateUtil.localDateTimeToDate(DateUtil.getDateTime(quartz.getExecuteStartTime(),DateUtil.DEFAULT_DATETIME_PATTERN)));
         }
         trigger = triggerBuilder.withSchedule(scheduleBuilder).build();
         //trigger.getJobDataMap().put("invokeParam",quartz.getClass().getName());    
