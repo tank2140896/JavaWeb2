@@ -68,6 +68,9 @@ public class WechatConfig {
 	@Value("${wxopen.face.identify.url}")
 	private String wxopenFaceIdentifyUrl;
 	
+	@Value("${wxopen.send.user.message}")
+	private String wxopenSendUserMessage;
+	
 	@Value("${wxopen.authorize.url}")
 	private String wxopenAuthorizeUrl;
 	
