@@ -41,6 +41,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.eo.wechat.AccessTokenResponse;
 import com.javaweb.eo.wechat.FaceRequestConfigResponse;
+import com.javaweb.eo.wechat.SendUserMessageRequest;
 import com.javaweb.eo.wechat.UserInfoResponse;
 import com.javaweb.util.core.HttpUtil;
 import com.javaweb.util.core.SecretUtil;
@@ -559,6 +560,29 @@ public class WenxinController {
 	private String getUserTagImpl(String openId) throws Exception {
 		String out = HttpUtil.defaultPostRequest(String.format(weixinConfig.getWxopenUserTagUrl(),getAccessTokenImpl()),"{\"openid\":\""+openId+"\"}",null);
 		return JSONObject.fromObject(out).getString("tagid_list");
+	}
+	
+	//给用户发送消息
+	private void sendUserMessageImpl(SendUserMessageRequest sendUserMessageRequest) throws Exception {
+		Map<String,Object> map = new HashMap<>();
+		Map<String,String> mapString = new HashMap<>();
+		mapString.put("content",sendUserMessageRequest.getContent());
+		map.put("touser",sendUserMessageRequest.getOpenId());
+		map.put("msgtype","text");
+		map.put("text",mapString);
+		if(sendUserMessageRequest.getKefuAccount()!=null&&!"".equals(sendUserMessageRequest.getKefuAccount())){
+			//写的再完善点的话可以判断下客服账号是否存在
+			Map<String,String> mapString2 = new HashMap<>();
+			mapString2.put("kf_account",sendUserMessageRequest.getKefuAccount());
+			map.put("customservice",mapString2);
+			
+		}
+		String out = HttpUtil.defaultPostRequest(String.format(weixinConfig.getWxopenSendUserMessage(),getAccessTokenImpl()),JSONObject.fromObject(map).toString(),null);
+		JSONObject jo = JSONObject.fromObject(out);
+		//System.out.println(jo);
+		if(!(jo.getString("errcode").equals("0"))){
+			throw new Exception(jo.getString("errmsg"));
+		}
 	}
 	
 	//获取openId
