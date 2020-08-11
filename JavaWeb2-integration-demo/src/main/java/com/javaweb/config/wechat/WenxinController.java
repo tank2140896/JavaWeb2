@@ -194,6 +194,12 @@ public class WenxinController {
 		}
 	}
 	
+	/** 通过上面的getUserInfoCallBack方法和getUserInfo方法可以组合起来获得扫码人的openId
+	1、设置扫码请求的后端接口地址：http://www.abc.com/wechat/接口地址
+	2、构造URL：https://open.weixin.qq.com/connect/oauth2/authorize?appid=订阅号的AppID&redirect_uri=编码步骤1的地址&response_type=code&scope=snsapi_userinfo&state=12345#wechat_redirect
+	注：关键就是通过步骤2让微信回调至步骤1，然后用code换取openId
+	*/
+	
 	//微信扫码登录URL获取(currentPageUrl用于扫码登录后跳转到自己网站的主页)
 	@GetMapping("/weixin/getLoginUrl")
 	public String getLoginUrl(@RequestParam(name="currentPageUrl",required=true) String currentPageUrl) {
