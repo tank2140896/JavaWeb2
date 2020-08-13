@@ -5,10 +5,10 @@ public class IKAnalyzerDemo {
 	public static void main(String[] args) throws Exception {
 		/* ----------------------------- 方式一 ----------------------------- */
 		/**
-	    <dependency>
-		    <groupId>com.jianggujin</groupId>
-		    <artifactId>IKAnalyzer-lucene</artifactId>
-		    <version>8.0.0</version>
+		<dependency>
+			<groupId>com.jianggujin</groupId>
+			<artifactId>IKAnalyzer-lucene</artifactId>
+			<version>8.0.0</version>
 		</dependency>
 		*/
 		/**
@@ -32,19 +32,19 @@ public class IKAnalyzerDemo {
 		/* ----------------------------- 方式二 ----------------------------- */
 		/**
 		<dependency>
-	      	<groupId>com.janeluo</groupId>
-	      	<artifactId>ikanalyzer</artifactId>
-	      	<version>2012_u6</version>
-	    </dependency>
+			<groupId>com.janeluo</groupId>
+			<artifactId>ikanalyzer</artifactId>
+			<version>2012_u6</version>
+		</dependency>
 		*/
 		/**
 		String string = "塑料手套" ;
-        StringReader reader = new StringReader(string);
-        IKSegmenter ik = new  IKSegmenter(reader, true);// 当为true时，分词器进行最大词长切分
-        Lexeme lexeme = null;
-        while ((lexeme = ik.next()) != null){
-            System.out.print(lexeme.getLexemeText()+"|");
-        }
+		StringReader reader = new StringReader(string);
+		IKSegmenter ik = new  IKSegmenter(reader, true);// 当为true时，分词器进行最大词长切分
+		Lexeme lexeme = null;
+		while ((lexeme = ik.next()) != null){
+		    System.out.print(lexeme.getLexemeText()+"|");
+		}
 		*/
 	}
 
