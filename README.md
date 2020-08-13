@@ -30,7 +30,7 @@ JavaWeb2-angular（npm start）
 7、本项目所有主键都是字符串，而不是数字或自增，主要考虑到两方面：①分布式及数据迁移；②当数字类型超过16位时，前后端交互时，前端会有精度误差，当然转为字符串就可以了，但是这样相互转换个人感觉有点没意义                         
 # 五、开发计划                                                                             
 1、持续优化迭代各已有功能（首要目标是重写算法功能）                                                              
-2、tokenStream&lucene分词器、hadoop、spark                                                                
+2、hadoop、spark                                                                
 3、容器技术                                     
 4、将zuul变为gateway                 
 5、加入SpringCloudConfig、SpringCloudSleuth、SpringBootAdmin、SpringSecurityOAuth2JWT                 
