@@ -49,7 +49,7 @@ public class BaseTool extends BaseInject {
 	public String getValidateMessage(BindingResult bindingResult){
 		String message = CommonConstant.EMPTY_VALUE;
 		List<ObjectError> list = bindingResult.getAllErrors();
-		if(list!=null&&list.size()!=0){
+		if(list!=null&&list.size()>0){
 			message = getMessage(list.get(0).getDefaultMessage());
 		}
 		return message;
