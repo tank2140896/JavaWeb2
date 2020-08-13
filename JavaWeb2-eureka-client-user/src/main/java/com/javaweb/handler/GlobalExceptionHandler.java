@@ -14,6 +14,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.base.BaseTool;
 import com.javaweb.enums.HttpCodeEnum;
+import com.javaweb.exception.ServiceException;
 import com.javaweb.exception.TokenExpiredException;
 
 @RestControllerAdvice
@@ -44,6 +45,11 @@ public class GlobalExceptionHandler extends BaseTool {
 	@ExceptionHandler(DataIntegrityViolationException.class)
 	public BaseResponseResult handleDataIntegrityViolationException(DataIntegrityViolationException e){
 		return new BaseResponseResult(HttpCodeEnum.INVALID_REQUEST,e.getMessage());
+	}
+	
+	@ExceptionHandler(ServiceException.class)
+	public BaseResponseResult handleServiceException(HttpServletRequest request,ServiceException e){
+		return new BaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,e.getMessage());
 	}
 	
 	@ExceptionHandler(Exception.class)
