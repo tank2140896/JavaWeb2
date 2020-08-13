@@ -36,4 +36,12 @@ public class BaseSystemMemory {
     	return value;
     }
     
+    public static String getDictionaryValueByKey(String key,String defaultValue){
+    	String value = getDictionaryValueByKey(key);
+    	if(value==CommonConstant.NULL_VALUE){
+    		value = defaultValue;
+    	}
+    	return value;
+    }
+    
 }
