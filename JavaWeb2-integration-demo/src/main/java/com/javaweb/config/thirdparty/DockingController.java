@@ -19,7 +19,7 @@ public class DockingController {
 	//step2:通过RSA公钥加密key获取token
 	public String getTokenBykey(@RequestParam(value="key") String key){//key是经过RSA公钥加密的
 		//step2.1:可以做的全面点，存入表中，校验下给予的这个key（没有经过RSA公钥加密）是否正确、是否是指定的使用厂商、使用期限是否到期、是否被禁用等
-		//step2.2:将针对key（没有经过RSA公钥加密）生成token+3DES的key并将token+3DES的key存入如redis中，给其一个存续期
+		//step2.2:将针对key（没有经过RSA公钥加密）生成token+DES的key并将token+DES的key存入如redis中，给其一个存续期
 		return "token+DES的key";
 	}
 	
