@@ -21,13 +21,14 @@ JavaWeb2-angular（npm start）
 3、JavaWeb2-angular（端口4200）     
 注：与Angular整合看效果的话只要导入JavaWeb2-eureka-client-user/src/main/resources/sql/init.sql，然后配置域名对应的地址（参考JavaWeb2-eureka-server中的配置文件），最后启动JavaWeb2-eureka-server、JavaWeb2-eureka-client-user和JavaWeb2-angular即可，页面访问：localhost:4200，账号和密码都是admin123456     
 # 四、使用前重要说明                                                                     
-1、由于水平有限，本项目会存在很多不足，同时本项目更新会比较频繁、改动会比较大，请见谅（更新代码时也请同步更新JavaWeb2-eureka-client-user/src/main/resources/sql/init.sql）                            
+1、由于水平有限，本项目会存在很多不足，同时本项目更新会比较频繁、改动会比较大，请见谅（更新代码时也请同步更新JavaWeb2-eureka-client-user/src/main/resources/sql/init.sql）                 
 2、本项目没有使用session，而是使用redis替代session，没有使用spring-session-redis，而是自己代码处理的                          
 3、后端几乎所有的增删改查操作都是物理操作（忽略数据库表中的del_flag字段），如果想做逻辑操作（使用数据库表中的del_flag字段）需要重写相关SQL语句                        
 4、本项目所有接口都可以用JUnit或Postman验证接口，JUnit代码也有部分可做参考                                       
 5、JavaWeb2-integration-demo包括了一些常用技术与SpringBoot组合的示例（hbase、kafka、netty、solr、切面处理、mongodb、websocket（SpringBoot版和Netty版）、elasticsearch、neo4j、kaptcha、邮件发送、redis、restTemplate、quartz（分布式）定时任务、文件上传下载、activiti、qq、wechat、poi-excel、HTTPS和HTTP2.0、本项目作为第三方的接入（Oauth2）、接口对接（对方请求我们的数据）、中文分词器）                                                                                            
 6、所有SQL语句均未优化且没有索引等，如有需要请自行优化                          
-7、本项目所有主键都是字符串，而不是数字或自增，主要考虑到两方面：①分布式及数据迁移；②当数字类型超过16位时，前后端交互时，前端会有精度误差，当然转为字符串就可以了，但是这样相互转换个人感觉有点没意义                         
+7、本项目所有主键都是字符串，而不是数字或自增，主要考虑到两方面：①分布式及数据迁移；②当数字类型超过16位时，前后端交互时，前端会有精度误差，当然转为字符串就可以了，但是这样相互转换个人感觉有点没意义      
+8、注册中心有很多，比如eureka、zookeeper、consul、nacos等，本项目在这方面不是重点，只想快速上手，因此就用了官方套餐                    
 # 五、开发计划                                                                             
 1、持续优化迭代各已有功能（首要目标是重写算法功能）                                                              
 2、hadoop、spark                                                                
