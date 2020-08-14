@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javaweb.util.core.DateUtil;
-import com.javaweb.util.core.DesUtil;
+import com.javaweb.util.core.AesDesUtil;
 import com.javaweb.util.core.RsaUtil;
 import com.javaweb.util.core.SecretUtil;
 
@@ -72,9 +72,9 @@ public class SecretRequest {
 	}
 	
 	private boolean putPostCheck(TokenData tokenData,String currentTime,String nonce) throws Exception {
-		//RSA结合3DES（推荐），原因参考：https://ask.csdn.net/questions/763621和https://github.com/travist/jsencrypt/issues/137
+		//RSA结合DES（推荐），原因参考：https://ask.csdn.net/questions/763621和https://github.com/travist/jsencrypt/issues/137
 		//1.用3DES解密code
-		String d1 = DesUtil.decrypt(this.code,SecretKeyFactory.getInstance("DESede").generateSecret(new DESedeKeySpec(nonce.getBytes("UTF8")))); 
+		String d1 = AesDesUtil.decryptDes(this.code,SecretKeyFactory.getInstance("DESede").generateSecret(new DESedeKeySpec(nonce.getBytes("UTF8")))); 
 		//1.用后端私钥解密code
 		//String d1 = RsaUtil.decrypt(this.code,RsaUtil.getPrivateKey(tokenData.getRsaPrivateKeyOfBackend()));
 		//2.用前端公钥验签
