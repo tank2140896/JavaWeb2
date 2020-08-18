@@ -46,7 +46,7 @@
                 <exclusion>
             	    <groupId>org.springframework.boot</groupId>
              	    <artifactId>spring-boot-starter-tomcat</artifactId>
-         	</exclusion>
+         		</exclusion>
     	    </exclusions>
 	</dependency>
   	4、 标记有@SpringBootApplication的类继承SpringBootServletInitializer，然后重写：
