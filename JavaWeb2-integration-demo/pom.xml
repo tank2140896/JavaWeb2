@@ -32,15 +32,29 @@
   	<packaging>jar</packaging>
   	<!-- 打成war包 
   	1、 <packaging>war</packaging>
-  	2、 <dependency>
-	  	   <groupId>org.springframework.boot</groupId>
-	       <artifactId>spring-boot-starter-tomcat</artifactId>
-	       <scope>provided</scope>
- 	   </dependency>
-  	3、 标记有@SpringBootApplication的类继承SpringBootServletInitializer，然后重写：
+  	2、 添加tomcat依赖，用于编译和测试
+  	    <dependency>
+	    	<groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-tomcat</artifactId>
+	        <scope>provided</scope>
+ 	    </dependency>
+ 	3、排除内置tomcat
+ 	<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+            	    <groupId>org.springframework.boot</groupId>
+             	    <artifactId>spring-boot-starter-tomcat</artifactId>
+         	</exclusion>
+    	    </exclusions>
+	</dependency>
+  	4、 标记有@SpringBootApplication的类继承SpringBootServletInitializer，然后重写：
 	   protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
 	       return application.sources(SampleController.class);
 	   }
+	5、添加项目名称
+	<finalName>test</finalName>
 	-->
 
   	<properties>
