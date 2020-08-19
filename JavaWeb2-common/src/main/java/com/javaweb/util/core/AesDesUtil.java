@@ -78,6 +78,7 @@ public class AesDesUtil {
     		Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
     		cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(keyString.getBytes(), "AES"));
     		//return new sun.misc.BASE64Encoder().encode(cipher.doFinal(data.getBytes("UTF-8")));
+    		//return org.apache.commons.codec.binary.Base64.encodeBase64String(cipher.doFinal(data.getBytes("UTF-8")));
     		return new String(Base64.getEncoder().encode(cipher.doFinal(data.getBytes("UTF-8"))));
     	}catch(Exception e){
     		return null;
@@ -90,6 +91,7 @@ public class AesDesUtil {
     		Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
     		cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(keyString.getBytes(), "AES"));
     		//return new String(cipher.doFinal(new sun.misc.BASE64Decoder().decodeBuffer(data)));
+    		//return new String(cipher.doFinal(org.apache.commons.codec.binary.Base64.decodeBase64(data)));
     		return new String((cipher.doFinal(Base64.getDecoder().decode(data.getBytes()))));
     	}catch(Exception e){
     		return null;
