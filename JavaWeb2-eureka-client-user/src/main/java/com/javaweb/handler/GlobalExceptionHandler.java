@@ -47,6 +47,11 @@ public class GlobalExceptionHandler extends BaseTool {
 		return new BaseResponseResult(HttpCodeEnum.INVALID_REQUEST,e.getMessage());
 	}
 	
+	@ExceptionHandler(NumberFormatException.class)
+	public BaseResponseResult handleNumberFormatExceptionException(NumberFormatException e){
+		return new BaseResponseResult(HttpCodeEnum.INVALID_REQUEST,e.getMessage());
+	}
+	
 	@ExceptionHandler(ServiceException.class)
 	public BaseResponseResult handleServiceException(HttpServletRequest request,ServiceException e){
 		return new BaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,e.getMessage());
