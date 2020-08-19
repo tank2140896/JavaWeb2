@@ -24,6 +24,7 @@ import org.apache.http.client.methods.HttpPut;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.impl.conn.DefaultProxyRoutePlanner;
@@ -59,7 +60,7 @@ public class HttpUtil {
 		if(url.contains("https")){
 			try {
 				SSLConnectionSocketFactory sslcsf = new SSLConnectionSocketFactory(sslContext);
-				closeableHttpClient = HttpClients.custom().setSSLSocketFactory(sslcsf).build();
+				closeableHttpClient = HttpClients.custom().setRetryHandler(new DefaultHttpRequestRetryHandler(3,false)).setSSLSocketFactory(sslcsf).build();
 				/** 上面不行的话，请尝试下面的写法，其实上面的写法已经能满足了，之所以可能会用到下面的写法是因为有些地方强制必须唯一使用https，而有些地方可以兼容同时使用http和https
 				SSLConnectionSocketFactory sSLConnectionSocketFactory = new SSLConnectionSocketFactory(SSLContexts.custom().loadTrustMaterial(null,new TrustSelfSignedStrategy()).build(),NoopHostnameVerifier.INSTANCE);
 				closeableHttpClient = HttpClients.custom().setSSLSocketFactory(sSLConnectionSocketFactory).build();
@@ -80,7 +81,7 @@ public class HttpUtil {
 		if(url.contains("https")){
 			try {
 				SSLConnectionSocketFactory sslcsf = new SSLConnectionSocketFactory(sslContext);
-				closeableHttpClient = HttpClients.custom().setRoutePlanner(new DefaultProxyRoutePlanner(httpHost)).setSSLSocketFactory(sslcsf).build();
+				closeableHttpClient = HttpClients.custom().setRetryHandler(new DefaultHttpRequestRetryHandler(3,false)).setRoutePlanner(new DefaultProxyRoutePlanner(httpHost)).setSSLSocketFactory(sslcsf).build();
 				/** 上面不行的话，请尝试下面的写法，其实上面的写法已经能满足了，之所以可能会用到下面的写法是因为有些地方强制必须唯一使用https，而有些地方可以兼容同时使用http和https
 				SSLConnectionSocketFactory sSLConnectionSocketFactory = new SSLConnectionSocketFactory(SSLContexts.custom().loadTrustMaterial(null,new TrustSelfSignedStrategy()).build(),NoopHostnameVerifier.INSTANCE);
 				closeableHttpClient = HttpClients.custom().setSSLSocketFactory(sSLConnectionSocketFactory).build();
