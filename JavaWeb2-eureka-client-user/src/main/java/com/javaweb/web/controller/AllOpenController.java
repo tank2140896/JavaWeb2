@@ -60,9 +60,17 @@ public class AllOpenController extends BaseController {
     @ApiImplicitParam(name="userLoginRequest",value=SwaggerConstant.SWAGGER_LOGIN_PARAM,required=true,dataType="UserLoginRequest")
 	@PostMapping(ApiConstant.WEB_LOGIN)
 	public BaseResponseResult webLogin(@RequestBody @Validated UserLoginRequest userLoginRequest,BindingResult bindingResult,HttpServletRequest request){
+		//参数常规校验
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}
+		/**
+		//参数业务逻辑校验
+		BaseServiceValidateResult baseServiceValidateResult = xxxService.xxxValidate(userLoginRequest);
+		if(!baseServiceValidateResult.isValidatePass()){
+			return new BaseResponseResult(601,baseServiceValidateResult.getMessage());
+		}
+		*/
 		TokenData tokenData = null;
 		if(systemAdminCheck(userLoginRequest)){//管理员判断
 			userLoginRequest.setType("0");
