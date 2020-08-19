@@ -14,6 +14,7 @@ import javax.net.ssl.SSLContext;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.http.Header;
+import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.HttpDelete;
@@ -25,6 +26,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.DefaultProxyRoutePlanner;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.ssl.TrustStrategy;
 import org.apache.http.util.EntityUtils;
@@ -67,6 +69,27 @@ public class HttpUtil {
 			} 
 		}else{
 			closeableHttpClient = HttpClientBuilder.create().build(); 
+		}
+		return closeableHttpClient;
+	}
+	
+	//获得HTTP或HTTPS连接
+	public static CloseableHttpClient getCloseableHttpClient(String url,HttpHost httpHost) {
+		//HttpHost proxy = new HttpHost(ip,port); 
+		CloseableHttpClient closeableHttpClient = null;
+		if(url.contains("https")){
+			try {
+				SSLConnectionSocketFactory sslcsf = new SSLConnectionSocketFactory(sslContext);
+				closeableHttpClient = HttpClients.custom().setRoutePlanner(new DefaultProxyRoutePlanner(httpHost)).setSSLSocketFactory(sslcsf).build();
+				/** 上面不行的话，请尝试下面的写法，其实上面的写法已经能满足了，之所以可能会用到下面的写法是因为有些地方强制必须唯一使用https，而有些地方可以兼容同时使用http和https
+				SSLConnectionSocketFactory sSLConnectionSocketFactory = new SSLConnectionSocketFactory(SSLContexts.custom().loadTrustMaterial(null,new TrustSelfSignedStrategy()).build(),NoopHostnameVerifier.INSTANCE);
+				closeableHttpClient = HttpClients.custom().setSSLSocketFactory(sSLConnectionSocketFactory).build();
+				*/
+			} catch (Exception e) {
+				//do nothing
+			} 
+		}else{
+			closeableHttpClient = HttpClientBuilder.create().setRoutePlanner(new DefaultProxyRoutePlanner(httpHost)).build(); 
 		}
 		return closeableHttpClient;
 	}
