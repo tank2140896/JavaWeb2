@@ -2,7 +2,7 @@ package com.javaweb.web.po;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 import com.javaweb.annotation.sql.Column;
@@ -19,16 +19,16 @@ public class User extends BaseEntity implements Serializable {
 	
 	private static final long serialVersionUID = -696227785545506331L;
 
-	@NotNull(groups={update.class},message="validated.user.userId.notNull")
+	@NotEmpty(groups={update.class},message="validated.user.userId.notEmpty")
 	@Column(name="user_id",pk=true)
 	private String userId;//用户ID
 	
-	@NotNull(groups={add.class,update.class},message="validated.user.userName.notNull")
+	@NotEmpty(groups={add.class,update.class},message="validated.user.userName.notNull")
 	@Pattern(groups={add.class,update.class},regexp="^(?![^a-zA-Z]+$)(?!\\D+$).{6,20}$",message="validated.user.userName.pattern")
 	@Column(name="user_name")
 	private String userName;//用户名
 	
-	@NotNull(groups={add.class},message="validated.user.password.notNull")
+	@NotEmpty(groups={add.class},message="validated.user.password.notNull")
 	@Pattern(groups={add.class},regexp="^(?![^a-zA-Z]+$)(?!\\D+$).{6,20}$",message="validated.user.password.pattern")
 	@Column(name="password")
 	private String password;//用户密码

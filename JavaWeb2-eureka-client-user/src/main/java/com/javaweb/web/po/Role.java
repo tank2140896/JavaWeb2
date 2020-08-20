@@ -2,7 +2,7 @@ package com.javaweb.web.po;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 
 import com.javaweb.annotation.sql.Column;
 import com.javaweb.annotation.sql.Table;
@@ -18,11 +18,11 @@ public class Role extends BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = 7161573735090231747L;
 
-	@NotNull(groups={update.class,delete.class},message="validated.role.roleId.notNull")
+	@NotEmpty(groups={update.class,delete.class},message="validated.role.roleId.notEmpty")
 	@Column(name="role_id",pk=true)
 	private String roleId;//角色ID
 	
-	@NotNull(groups={add.class,update.class},message="validated.role.roleName.notNull")
+	@NotEmpty(groups={add.class,update.class},message="validated.role.roleName.notEmpty")
 	@Column(name="role_name")
 	private String roleName;//角色名称
 	

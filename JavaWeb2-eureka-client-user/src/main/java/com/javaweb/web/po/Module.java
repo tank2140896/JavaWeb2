@@ -3,7 +3,7 @@ package com.javaweb.web.po;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 
 import com.javaweb.annotation.sql.Column;
 import com.javaweb.annotation.sql.Table;
@@ -23,11 +23,11 @@ public class Module extends BaseEntity implements Serializable {
 	
 	private String parentName;/**辅助属性（模块的上级模块名称）*/
 	
-	@NotNull(groups={update.class,delete.class},message="validated.module.moduleId.notNull")
+	@NotEmpty(groups={update.class,delete.class},message="validated.module.moduleId.notEmpty")
 	@Column(name="module_id",pk=true)
 	private String moduleId;//模块ID
 	
-	@NotNull(groups={add.class,update.class},message="validated.module.moduleName.notNull")
+	@NotEmpty(groups={add.class,update.class},message="validated.module.moduleName.notEmpty")
 	@Column(name="module_name")
 	private String moduleName;//模块名称
 	

@@ -2,7 +2,7 @@ package com.javaweb.web.eo.user;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
 import com.javaweb.annotation.validate.user.UserLoginRequestTypeValidate;
@@ -16,11 +16,11 @@ public class UserLoginRequest implements Serializable {
 
 	private static final long serialVersionUID = 8226342751622290262L;
 
-	@NotNull(message="validated.user.userName.notNull")
+	@NotEmpty(message="validated.user.userName.notEmpty")
 	@Pattern(regexp="^(?![^a-zA-Z]+$)(?!\\D+$).{6,20}$",message="validated.user.userName.pattern")
 	private String username;
 	
-	@NotNull(message="validated.user.password.notNull")
+	@NotEmpty(message="validated.user.password.notEmpty")
 	@Pattern(regexp="^(?![^a-zA-Z]+$)(?!\\D+$).{6,20}$",message="validated.user.password.pattern")
 	private String password;
 	
