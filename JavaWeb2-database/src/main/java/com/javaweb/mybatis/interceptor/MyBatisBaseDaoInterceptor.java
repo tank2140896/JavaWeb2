@@ -126,6 +126,7 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 		List<String> entityList = new ArrayList<>();//获取实体类属性名称的集合
 		List<Object> entityValueList = new ArrayList<>();//获取实体类属性值的集合
 		List<String> columnList = new ArrayList<>();//获取数据库字段名称的集合
+		List<Boolean> canUpdateSetEmptyList = new ArrayList<>();
 		boolean useEntityValueList = true;
 		if((parameter==null)||(parameter instanceof String)||(parameter instanceof Number)||(parameter instanceof Map)){
 			useEntityValueList = false;
@@ -152,6 +153,11 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 				String fieldName = eachField.getName();
 				entityList.add(fieldName);
 				columnList.add(column.name());//数据库字段名称
+				if(column.canUpdateSetEmpty()){
+					canUpdateSetEmptyList.add(true);
+				}else{
+					canUpdateSetEmptyList.add(false);
+				}
 				if(useEntityValueList){
 					fieldName = fieldName.substring(0,1).toUpperCase()+fieldName.substring(1,fieldName.length());
 					Method method = c.getMethod("get"+fieldName);
@@ -174,6 +180,7 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 		sqlBuildInfo.setColumnList(columnList);
 		sqlBuildInfo.setPk(pk);
 		sqlBuildInfo.setPkGenerate(pkGenerate);
+		sqlBuildInfo.setCanUpdateSetEmptyList(canUpdateSetEmptyList);
 		return sqlBuildInfo;
 	}
 	

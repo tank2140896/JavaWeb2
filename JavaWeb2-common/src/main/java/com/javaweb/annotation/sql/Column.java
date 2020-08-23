@@ -19,4 +19,6 @@ public @interface Column {
 	
 	String columnDesc() default CommonConstant.EMPTY_VALUE;//字段说明
 	
+	boolean canUpdateSetEmpty() default false;//更新时是否能设置NULL或者空
+	
 }

@@ -23,4 +23,6 @@ public class SqlBuildInfo {
 	
 	private Boolean pkGenerate;//主键是否自增
 
+	private List<Boolean> canUpdateSetEmptyList;//更新时是否能设置NULL或者空
+
 }

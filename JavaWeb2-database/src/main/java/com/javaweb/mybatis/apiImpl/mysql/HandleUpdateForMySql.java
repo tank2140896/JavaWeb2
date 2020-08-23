@@ -2,6 +2,7 @@ package com.javaweb.mybatis.apiImpl.mysql;
 
 import java.util.List;
 
+import com.javaweb.constant.CommonConstant;
 import com.javaweb.mybatis.apiImpl.SqlBuildInfo;
 import com.javaweb.mybatis.apiImpl.SqlHandle;
 
@@ -11,13 +12,21 @@ public class HandleUpdateForMySql implements SqlHandle {
 		String tableName = sqlBuildInfo.getTableName();
 		Object pkValue = null;
 		List<Object> entityValueList = sqlBuildInfo.getEntityValueList();
+		List<Boolean> canUpdateSetEmptyList = sqlBuildInfo.getCanUpdateSetEmptyList();
 		List<String> columnList = sqlBuildInfo.getColumnList();
 		StringBuilder stringBuilder = new StringBuilder();
 		stringBuilder.append("update ").append(tableName).append(" set ");
 		for(int i=0;i<columnList.size();i++){
+			if(columnList.get(i).equals(sqlBuildInfo.getPk())){
+				pkValue = entityValueList.get(i);
+			}
 			Object eachValue = entityValueList.get(i);
-			if(eachValue==null){
-				continue;
+			if(eachValue==null||CommonConstant.EMPTY_VALUE.equals(eachValue.toString().trim())){
+				if(canUpdateSetEmptyList.get(i)){
+					stringBuilder.append(columnList.get(i)).append(" = ").append(eachValue);
+				}else{
+					continue;
+				}
 			}else if(eachValue instanceof String){
 				stringBuilder.append(columnList.get(i)).append(" = ").append("'").append(entityValueList.get(i)).append("'");
 			}else{
@@ -25,9 +34,6 @@ public class HandleUpdateForMySql implements SqlHandle {
 			}
 			if(i!=entityValueList.size()-1){
 				stringBuilder.append(",");
-			}
-			if(columnList.get(i).equals(sqlBuildInfo.getPk())){
-				pkValue = entityValueList.get(i);
 			}
 		}
 		if(pkValue instanceof String){
