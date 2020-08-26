@@ -31,9 +31,11 @@ public interface SortTemplete<T> extends Comparable<T>{
 	写法二：x = x+y;y = x-y;x = x-y;
 	*/
 	public default void exchange(Comparable<T>[] array,int one,int another){
-		Comparable<T> c = array[one];
-		array[one] = array[another];
-		array[another] = c;
+		if(one!=another){
+			Comparable<T> c = array[one];
+			array[one] = array[another];
+			array[another] = c;
+		}
 	}
 	
 }

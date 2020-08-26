@@ -1,6 +1,6 @@
 package com.javaweb.util.help.sort;
 
-//冒泡排序（相比插入排序，可以理解为【从前往后】）
+//冒泡排序
 public class BubbleSort<T> implements SortTemplete<T> {
 
 	/**
@@ -12,11 +12,12 @@ public class BubbleSort<T> implements SortTemplete<T> {
 	*/
 	public void sort(Comparable<T>[] array) {
 		final int arrayLength = array.length;
-		for(int i = 0;i<arrayLength;i++){
-			int minIndex = i;//使用此变量就不必一比较符合条件就马上交换两个值，现在只需最终全部比完再交换
+		int minIndex = 0;//哨兵
+		for(int i=0;i<arrayLength;i++){
+			minIndex = i;//使用此变量就不必一比较符合条件就马上交换两个值，现在只需最终全部比完再交换，此技巧只能改变交换次数并不能改变比较次数
 			for(int j=i+1;j<arrayLength;j++){
-				if(more(array[minIndex],array[j])){//从小到大
-					minIndex = j;
+				if(less(array[j],array[minIndex])){//从小到大
+					minIndex = j;//用于定位当前最小值所在的位置
 				}
 			}
 			exchange(array,i,minIndex);
