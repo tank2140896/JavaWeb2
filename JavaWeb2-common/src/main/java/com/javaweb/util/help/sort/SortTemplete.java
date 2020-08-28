@@ -1,5 +1,7 @@
 package com.javaweb.util.help.sort;
 
+import com.javaweb.enums.SortCompareEnum;
+
 @FunctionalInterface
 public interface SortTemplete<T> extends Comparable<T>{
 	
@@ -8,6 +10,10 @@ public interface SortTemplete<T> extends Comparable<T>{
 	@Override
 	public default int compareTo(T o) {
 		return 0;
+	}
+	
+	public default SortCompareEnum sortCompare(SortCompareEnum sortCompareEnum){
+		return SortCompareEnum.LESS_TO_MORE;
 	}
 	
 	@SuppressWarnings({"unchecked","rawtypes"})
