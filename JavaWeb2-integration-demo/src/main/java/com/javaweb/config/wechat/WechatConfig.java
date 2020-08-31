@@ -97,5 +97,23 @@ public class WechatConfig {
 	
 	@Value("${wxpay.unifiedorder.url}")
 	private String wxpayUnifiedorderUrl;
+	
+	@Value("${wxopen.get.industry.url}")
+	private String wxopenGetIndustryUrl;
+	
+	@Value("${wxopen.set.industry.url}")
+	private String wxopenSetIndustryUrl;
+	
+	@Value("${wxopen.get.template.url}")
+	private String wxopenGetTemplateUrl;
+
+	@Value("${wxopen.delete.template.url}")
+	private String wxopenDeleteTemplateUrl;
+	
+	@Value("${wxopen.list.template.url}")
+	private String wxopenListTemplateUrl;
+	
+	@Value("${wxopen.send.template.url}")
+	private String wxopenSendTemplateUrl;
 
 }

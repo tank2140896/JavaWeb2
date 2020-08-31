@@ -602,4 +602,42 @@ public class WenxinController {
 		return openId;
 	}
 	
+	//获取设置的行业信息
+	private String getIndustryImpl() throws Exception {
+		String response = HttpUtil.defaultGetRequest(String.format(weixinConfig.getWxopenGetIndustryUrl(),getAccessTokenImpl()),null);
+		//System.out.println(response);//{"primary_industry":{"first_class":"IT科技","second_class":"互联网|电子商务"},"secondary_industry":{"first_class":"金融业","second_class":"保险"}}
+		return response;
+	}
+	
+	//设置所属行业
+	private String setIndustryImpl(String code1,String code2) throws Exception {
+		JSONObject jo = new JSONObject();
+		jo.put("industry_id1",code1);
+		jo.put("industry_id2",code2);
+		String response = HttpUtil.defaultPostRequest(String.format(weixinConfig.getWxopenSetIndustryUrl(),getAccessTokenImpl()),jo.toString(),null);
+		return response;
+	}
+	
+	//获取模板ID
+	private String getTemplateIdImpl(String templateId) throws Exception {
+		JSONObject jo = new JSONObject();
+		jo.put("template_id_short",templateId);
+		String response = HttpUtil.defaultPostRequest(String.format(weixinConfig.getWxopenGetTemplateUrl(),getAccessTokenImpl()),jo.toString(),null);
+		return response;
+	}
+	
+	//删除模板ID
+	private String deleteTemplateIdImpl(String templateId) throws Exception {
+		JSONObject jo = new JSONObject();
+		jo.put("template_id",templateId);
+		String response = HttpUtil.defaultPostRequest(String.format(weixinConfig.getWxopenDeleteTemplateUrl(),getAccessTokenImpl()),jo.toString(),null);
+		return response;
+	}
+	
+	//获取模板列表
+	private String getTemplateListImpl() throws Exception {
+		String response = HttpUtil.defaultGetRequest(String.format(weixinConfig.getWxopenListTemplateUrl(),getAccessTokenImpl()),null);
+		return response;
+	}
+	
 }
