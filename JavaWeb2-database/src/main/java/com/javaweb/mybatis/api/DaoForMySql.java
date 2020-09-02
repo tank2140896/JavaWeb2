@@ -35,5 +35,7 @@ public interface DaoForMySql<T> {
 	@Select(CommonConstant.EMPTY_VALUE)
 	public List<T> selectAllByPagingForMySql(Map<String,Long> map);//分页查询(map的两个参数为:currentPage和pageSize)
 	
+	@Select(CommonConstant.EMPTY_VALUE)
+	public List<T> selectListForMySql(QueryWapper<T> queryWapper);//条件查询
 	
 }
