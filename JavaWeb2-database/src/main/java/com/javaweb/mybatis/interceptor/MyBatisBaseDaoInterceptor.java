@@ -37,7 +37,9 @@ import com.javaweb.mybatis.apiImpl.mysql.HandleSelectAllByPagingForMySql;
 import com.javaweb.mybatis.apiImpl.mysql.HandleSelectAllCountForMySql;
 import com.javaweb.mybatis.apiImpl.mysql.HandleSelectAllForMySql;
 import com.javaweb.mybatis.apiImpl.mysql.HandleSelectByPkForMySql;
+import com.javaweb.mybatis.apiImpl.mysql.HandleSelectListForMySql;
 import com.javaweb.mybatis.apiImpl.mysql.HandleUpdateForMySql;
+import com.javaweb.query.QueryWapper;
 import com.javaweb.util.core.DateUtil;
 
 /**
@@ -63,6 +65,7 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 		map.put("selectAllCountForMySql",new HandleSelectAllCountForMySql());
 		map.put("selectByPkForMySql",new HandleSelectByPkForMySql());
 		map.put("selectAllByPagingForMySql",new HandleSelectAllByPagingForMySql());
+		map.put("selectListForMySql",new HandleSelectListForMySql());
 		//can add other like oracle
 	}
 	
@@ -128,7 +131,7 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 		List<String> columnList = new ArrayList<>();//获取数据库字段名称的集合
 		List<Boolean> canUpdateSetEmptyList = new ArrayList<>();
 		boolean useEntityValueList = true;
-		if((parameter==null)||(parameter instanceof String)||(parameter instanceof Number)||(parameter instanceof Map)){
+		if((parameter==null)||(parameter instanceof String)||(parameter instanceof Number)||(parameter instanceof Map)||(parameter instanceof QueryWapper)){
 			useEntityValueList = false;
 		}
 		Table tabel = c.getAnnotation(Table.class);
