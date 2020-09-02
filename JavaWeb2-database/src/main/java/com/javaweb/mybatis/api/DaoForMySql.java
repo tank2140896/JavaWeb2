@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.javaweb.constant.CommonConstant;
+import com.javaweb.query.QueryWapper;
 
 @Mapper
 public interface DaoForMySql<T> {
