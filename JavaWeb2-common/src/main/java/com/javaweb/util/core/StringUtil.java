@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.net.URLDecoder;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -83,6 +84,25 @@ public class StringUtil{
             matcher.appendReplacement(stringBuffer,value);
         }
         matcher.appendTail(stringBuffer);
+        return stringBuffer.toString();
+	}
+	
+	//字符串替换"\\$\\{(.+?)\\}"
+	public static <T> String stringReplace(String template,T t,String regex) throws Exception {
+		StringBuffer stringBuffer = new StringBuffer();
+		Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(template);
+        Class<?> c = t.getClass();
+        while(matcher.find()){
+        	Field field = c.getDeclaredField(matcher.group(1));
+        	field.setAccessible(true);
+        	Object value = field.get(t);
+        	if(value==null){
+        		value = CommonConstant.EMPTY_VALUE;
+        	}
+        	matcher.appendReplacement(stringBuffer,value.toString());
+        }
+    	matcher.appendTail(stringBuffer);
         return stringBuffer.toString();
 	}
 	
