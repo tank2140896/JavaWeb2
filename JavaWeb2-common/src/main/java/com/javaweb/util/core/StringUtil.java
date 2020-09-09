@@ -78,10 +78,9 @@ public class StringUtil{
         while(matcher.find()){
             String name = matcher.group(1);//键名
             String value = data.get(name);//键值
-            if(value==null){
-            	value = CommonConstant.EMPTY_VALUE;
+            if(value!=null){
+            	matcher.appendReplacement(stringBuffer,value);
             }
-            matcher.appendReplacement(stringBuffer,value);
         }
         matcher.appendTail(stringBuffer);
         return stringBuffer.toString();
@@ -95,12 +94,13 @@ public class StringUtil{
         Class<?> c = t.getClass();
         while(matcher.find()){
         	Field field = c.getDeclaredField(matcher.group(1));
-        	field.setAccessible(true);
-        	Object value = field.get(t);
-        	if(value==null){
-        		value = CommonConstant.EMPTY_VALUE;
+        	if(field!=null){
+	        	field.setAccessible(true);
+	        	Object value = field.get(t);
+	        	if(value!=null){
+	        		matcher.appendReplacement(stringBuffer,value.toString());
+	        	}
         	}
-        	matcher.appendReplacement(stringBuffer,value.toString());
         }
     	matcher.appendTail(stringBuffer);
         return stringBuffer.toString();
