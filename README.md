@@ -17,7 +17,7 @@ JavaWeb2-angular（npm start）
 因此，要正确完成JavaWeb2-eureka-client-user的编译需要先编译JavaWeb2-common再编译JavaWeb2-database                                  
 # 三、启动顺序                                                       
 1、JavaWeb2-eureka-server（要起3个，端口1001、1002、1003）                          
-2、JavaWeb2-eureka-client-user（端口2001）、JavaWeb2-eureka-client-log（端口2002）、JavaWeb2-eureka-client-zuul（端口3001）          
+2、JavaWeb2-eureka-client-user（端口2001）、JavaWeb2-eureka-client-file（端口2002）、JavaWeb2-eureka-client-zuul（端口3001）          
 3、JavaWeb2-angular（端口4200）     
 注：与Angular整合看效果的话只要导入JavaWeb2-eureka-client-user/src/main/resources/sql/init.sql，然后配置域名对应的地址（参考JavaWeb2-eureka-server中的配置文件），最后启动JavaWeb2-eureka-server、JavaWeb2-eureka-client-user和JavaWeb2-angular即可，页面访问：localhost:4200，账号和密码都是admin123456     
 # 四、使用前重要说明                                                                     
