@@ -7,15 +7,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class TestController {
-
-    @PostMapping("/test")
-    public String test(@RequestBody LogServerApiEntity logServerApiEntity) {
-        return logServerApiEntity.toString();
+	
+    @GetMapping("/test")
+    public String test() {
+        return "test";
     }
-    
-    @GetMapping("/test2")
-    public String test2() {
-        return "test2";
+
+    @PostMapping("/test2")
+    public String test2(@RequestBody LogServerApiEntity logServerApiEntity) {
+        return logServerApiEntity.toString();
     }
     
 }
