@@ -17,6 +17,8 @@ import com.javaweb.util.core.HttpUtil;
 @RestController
 public class KaptchaController extends BaseInject {
 	
+	/*前后端分离下推荐后端返回图片的Base64字符串和一个加密后的字符串*/
+	
 	//获取验证码
 	@GetMapping("getKaptcha")
 	public void getKaptcha(HttpServletRequest request,HttpServletResponse response) {
