@@ -336,6 +336,27 @@ public class FileUtil {
 	}
 	
 	//图片转Base64字符串
+	public static String imageSrcToBase64String(BufferedImage image) {
+	    byte[] data = null;
+	    try{
+	    	ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	    	ImageOutputStream ios = ImageIO.createImageOutputStream(baos);
+	    	ImageIO.write(image,"jpeg",ios);
+	    	InputStream input = new ByteArrayInputStream(baos.toByteArray());
+	    	data = new byte[input.available()];
+	    	input.read(data);
+	    } catch (IOException e) {
+	    	data = null;
+	    }
+	    if(data==null){
+	    	return null;
+	    }else{
+	    	data = Base64.getEncoder().encode(data);
+	    	return new String(data);
+	    }
+	}
+	
+	//图片转Base64字符串
 	public static String imageSrcToBase64String(String src) {
 	    byte[] data = null;
 	    try(InputStream inputStream = new FileInputStream(new File(src))) {
