@@ -21,9 +21,9 @@ public class KaptchaController extends BaseInject {
 	@GetMapping("getKaptcha")
 	public void getKaptcha(HttpServletRequest request,HttpServletResponse response) {
 		try{
-			response.setHeader("Cache-Control","no-store,no-cache");
+		    response.setHeader("Cache-Control","no-store,no-cache");
 		    response.setContentType("image/jpeg");
-		    String ip = HttpUtil.getIpAddress(request);
+		    String ip = HttpUtil.getIpAddress(request);//request.getSession().getId()
 		    String text = defaultKaptcha.createText();
 		    stringRedisTemplate1.opsForValue().set("kaptcha_"+ip,text,Duration.ofMinutes(5L));
 		    BufferedImage image = defaultKaptcha.createImage(text);
@@ -36,7 +36,7 @@ public class KaptchaController extends BaseInject {
 	
 	//验证码校验
 	public boolean kaptchaCheck(String kaptchaFromFrontend,HttpServletRequest request){
-		String ip = HttpUtil.getIpAddress(request);
+		String ip = HttpUtil.getIpAddress(request);//request.getSession().getId()
 		boolean result = false;
 		//可以从redis中获取
 		String kaptcha = stringRedisTemplate1.opsForValue().get("kaptcha_"+ip);
