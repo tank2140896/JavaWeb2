@@ -62,12 +62,13 @@ public class FileController {
 	
 	public final String currentFileRootPath = "E:\\";
 	
+	//可以设置的参数如：单个文件上传大小限制和总文件上传大小限制等
     @PostMapping("/uploadFile")
     public BaseResponseResult uploadFile(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,
-    					      @RequestParam(value="uuid",required=true) String uuid,//唯一字符串
+    					      @RequestParam(value="uuid",required=false) String uuid,
     		                  @RequestParam(value="file",required=true) MultipartFile multipartFile[]) {
     	try{
-    		System.out.println("获得的唯一字符串为："+uuid);
+    		System.out.println("获得的UUID为："+uuid);
     		if(multipartFile!=null&&multipartFile.length>0){
         		for(int i=0;i<multipartFile.length;i++){
         			if (multipartFile[i].getBytes().length > 1024 * 1024 *10) {//10MB

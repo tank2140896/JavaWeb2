@@ -4,7 +4,7 @@
   	
   	<modelVersion>4.0.0</modelVersion>
   	<groupId>com.javaweb</groupId>
-  	<artifactId>JavaWeb2-eureka-client-feigin-user</artifactId>
+  	<artifactId>JavaWeb2-eureka-client-user</artifactId>
   	<version>1.0.0</version>
   	<packaging>jar</packaging>
 	
