@@ -13,7 +13,7 @@ JavaWeb2-eureka-server（要起3个，端口1001、1002、1003）
 JavaWeb2-eureka-client-user（端口2001）->JavaWeb2-database                                                                    
 JavaWeb2-eureka-client-file（端口2002）                                                                            
 JavaWeb2-eureka-client-zuul（端口3001）->JavaWeb2-common             
-JavaWeb2-angular（npm start）              
+JavaWeb2-angular（cnpm install->cnpm start）              
 因此，要正确完成JavaWeb2-eureka-client-user的编译需要先编译JavaWeb2-common再编译JavaWeb2-database                                  
 # 三、启动顺序                                                       
 1、JavaWeb2-eureka-server（要起3个，端口1001、1002、1003）                          
