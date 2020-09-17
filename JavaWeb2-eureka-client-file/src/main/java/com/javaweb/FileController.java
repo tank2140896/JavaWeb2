@@ -65,10 +65,10 @@ public class FileController {
 	//可以设置的参数如：单个文件上传大小限制和总文件上传大小限制等
     @PostMapping("/uploadFile")
     public BaseResponseResult uploadFile(HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse,
-    					      @RequestParam(value="uuid",required=false) String uuid,
+    					      @RequestParam(value="token",required=true) String token,
     		                  @RequestParam(value="file",required=true) MultipartFile multipartFile[]) {
     	try{
-    		System.out.println("获得的UUID为："+uuid);
+    		System.out.println("获得的token为："+token);
     		if(multipartFile!=null&&multipartFile.length>0){
         		for(int i=0;i<multipartFile.length;i++){
         			if (multipartFile[i].getBytes().length > 1024 * 1024 *10) {//10MB
