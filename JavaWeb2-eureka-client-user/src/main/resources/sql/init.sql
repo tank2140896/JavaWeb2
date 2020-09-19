@@ -74,6 +74,38 @@ INSERT INTO `sys_dictionary` VALUES ('202005142045309915', null, null, '0', 'use
 INSERT INTO `sys_dictionary` VALUES ('202005142045309916', null, null, '0', 'user_portrait_upload', 'user.portrait.windows.path', 'E:\\\\user_portrait\\\\', '配置类', '2', '用户头像', '0', null, '用户头像windows上传地址', '2020-05-14 20:46:46', 'admin123456', null, null, '0');
 
 -- ----------------------------
+-- Table structure for `sys_file`
+-- ----------------------------
+DROP TABLE IF EXISTS `sys_file`;
+CREATE TABLE `sys_file` (
+  `file_id` varchar(255) NOT NULL,
+  `user_id` varchar(255) DEFAULT NULL,
+  `micro_sys_no` varchar(255) DEFAULT NULL,
+  `file_name` varchar(255) DEFAULT NULL,
+  `file_path` varchar(255) DEFAULT NULL,
+  `file_full_path` varchar(255) DEFAULT NULL,
+  `file_size` varchar(255) DEFAULT NULL,
+  `file_unit` varchar(255) DEFAULT NULL,
+  `file_ser_no` varchar(255) DEFAULT NULL,
+  `remark` varchar(255) DEFAULT NULL,
+  `status` int(11) DEFAULT '0',
+  `create_date` varchar(19) DEFAULT NULL,
+  `creator` varchar(255) DEFAULT NULL,
+  `update_date` varchar(19) DEFAULT NULL,
+  `updater` varchar(255) DEFAULT NULL,
+  `del_flag` tinyint(4) DEFAULT '0',
+  PRIMARY KEY (`file_id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+
+-- ----------------------------
+-- Records of sys_file
+-- ----------------------------
+INSERT INTO `sys_file` VALUES ('202009191227314832', null, '2', '1010b1fc-3082-406b-baff-b95da6653694_1.bmp', 'E:\\file\\5\\20200919\\', 'E:\\file\\5\\20200919\\1010b1fc-3082-406b-baff-b95da6653694_1.bmp', '1936234', 'byte', 'dac84d8c-0594-4370-b4d5-84fc42244968', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_file` VALUES ('202009191227318012', null, '2', '801140b1-ca9d-4f98-a3f4-7833c8814d59_2.bmp', 'E:\\file\\5\\20200919\\', 'E:\\file\\5\\20200919\\801140b1-ca9d-4f98-a3f4-7833c8814d59_2.bmp', '1936234', 'byte', 'dac84d8c-0594-4370-b4d5-84fc42244968', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_file` VALUES ('202009191232158292', null, '2', '105630a8-8ccb-45ea-9f5e-be810d711c64_1.bmp', 'E:\\file\\8\\20200919\\', 'E:\\file\\8\\20200919\\105630a8-8ccb-45ea-9f5e-be810d711c64_1.bmp', '1936234', 'byte', '5476ff10-d254-4133-bff3-aed4c64c8954', null, '0', null, null, null, null, '0');
+INSERT INTO `sys_file` VALUES ('202009191232162372', null, '2', '19f9b842-99b2-4c3b-85aa-c4157cad7630_2.bmp', 'E:\\file\\8\\20200919\\', 'E:\\file\\8\\20200919\\19f9b842-99b2-4c3b-85aa-c4157cad7630_2.bmp', '1936234', 'byte', '5476ff10-d254-4133-bff3-aed4c64c8954', null, '0', null, null, null, null, '0');
+
+-- ----------------------------
 -- Table structure for `sys_interfaces`
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_interfaces`;

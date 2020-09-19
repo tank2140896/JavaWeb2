@@ -1,4 +1,4 @@
-package com.javaweb;
+package com.javaweb.eo;
 
 import lombok.Getter;
 import lombok.Setter;

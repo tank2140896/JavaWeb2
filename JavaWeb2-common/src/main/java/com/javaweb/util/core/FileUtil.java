@@ -1,5 +1,6 @@
 package com.javaweb.util.core;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
@@ -30,6 +31,9 @@ import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
+
+import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageOutputStream;
 
 import com.javaweb.constant.CommonConstant;
 
