@@ -7,10 +7,13 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
+import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.List;
 
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.http.Header;
@@ -21,6 +24,7 @@ import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpPut;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
@@ -53,6 +57,30 @@ public class HttpUtil {
 			
 		}
 	}
+	
+	//忽略HTTPS证书
+    public static CloseableHttpClient getCloseableHttpClientWithoutCertificate() {
+        try {
+            SSLContext ctx = SSLContext.getInstance("TLS");
+            X509TrustManager tm = new X509TrustManager() {
+                public X509Certificate[] getAcceptedIssuers() {
+                    return null;
+                }
+                public void checkClientTrusted(X509Certificate[] arg0,String arg1) throws CertificateException {
+                	
+                }
+                public void checkServerTrusted(X509Certificate[] arg0,String arg1) throws CertificateException {
+                	
+                }
+            };
+            ctx.init(null, new TrustManager[]{tm}, null);
+            SSLConnectionSocketFactory ssf = new SSLConnectionSocketFactory(ctx,NoopHostnameVerifier.INSTANCE);
+            CloseableHttpClient httpclient = HttpClients.custom().setSSLSocketFactory(ssf).build();
+            return httpclient;
+        } catch (Exception e) {
+            return HttpClients.createDefault();
+        }
+    }
 	
 	//获得HTTP或HTTPS连接
 	public static CloseableHttpClient getCloseableHttpClient(String url) {
