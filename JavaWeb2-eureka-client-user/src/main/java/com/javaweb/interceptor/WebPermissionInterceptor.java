@@ -37,6 +37,9 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 	 * request.getSession().getServletContext().getRealPath("/")//位于WebRoot下
 	 */
 	public boolean preHandle(HttpServletRequest request,HttpServletResponse response,Object handler) throws Exception {//本方法异常不应该主动抛出
+            //if(request.getMethod().toUpperCase().equals("OPTIONS")){
+            //    return true;//通过所有OPTIONS请求
+            //}
 		String servletPath = request.getServletPath();
 		//接口调用次数统计，若不需要使用注释掉即可
 		BaseTool.getRedisTemplate().opsForHash().increment(SystemConstant.REDIS_INTERFACE_COUNT_KEY,specialHandleUrl(servletPath),1);//接口调用次数加1
