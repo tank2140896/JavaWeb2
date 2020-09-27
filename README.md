@@ -35,7 +35,7 @@ JavaWeb2-angular（cnpm install->cnpm start）
 3、容器技术                                     
 4、将zuul变为gateway                 
 5、加入SpringCloudConfig、SpringCloudSleuth、SpringBootAdmin、SpringSecurityOAuth2JWT                 
-6、后端一部分将采用JAVA14+、函数式、异步编程（包括WebFlux/RxJava2/Netty）                 
+6、后端一部分将采用JAVA15+、函数式、异步编程（包括WebFlux/RxJava2/Netty）                 
 7、将JAVA算法改用C语言实现，JAVA本地调用C语言的实现方法                
 # 六、项目主要特点                                                       
 1、微服务                          
