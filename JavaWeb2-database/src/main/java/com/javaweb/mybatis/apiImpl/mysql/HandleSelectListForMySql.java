@@ -54,6 +54,9 @@ public class HandleSelectListForMySql implements SqlHandle {
 				}
 			}
 		}
+		if(queryWapper.getIsPaged()){
+			stringBuilder.append(" limit "+(queryWapper.getCurrentPage()-1)*queryWapper.getPageSize()+","+queryWapper.getPageSize());
+		}
 		return stringBuilder.toString();
 	}
 

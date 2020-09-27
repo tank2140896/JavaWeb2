@@ -1,7 +1,6 @@
 package com.javaweb.mybatis.api;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
@@ -34,9 +33,6 @@ public interface DaoForMySql<T> {
 	public T selectByPkForMySql(Object id);//根据主键查询
 
 	@Select(CommonConstant.EMPTY_VALUE)
-	public List<T> selectAllByPagingForMySql(Map<String,Long> map);//分页查询(map的两个参数为:currentPage和pageSize)
-	
-	@Select(CommonConstant.EMPTY_VALUE)
-	public List<T> selectListForMySql(QueryWapper<T> queryWapper);//条件查询
+	public List<T> selectListForMySql(QueryWapper<T> queryWapper);//条件查询（支持分页）
 	
 }

@@ -1,5 +1,8 @@
 package com.javaweb.util.core;
 
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -36,6 +39,7 @@ import javax.imageio.ImageIO;
 import javax.imageio.stream.ImageOutputStream;
 
 import com.javaweb.constant.CommonConstant;
+import com.javaweb.util.entity.ImageInfo;
 
 public class FileUtil {
 	
@@ -452,5 +456,61 @@ public class FileUtil {
             throw new IOException(e);
         }
     }
+	
+	//旋转图片（更多图片操作参考：Thumbnailator）
+	public static BufferedImage rotateImage(final BufferedImage bufferedimage,final int degree){
+		int src_width = bufferedimage.getWidth(null);
+        int src_height = bufferedimage.getHeight(null);
+        //计算旋转后图片的尺寸
+        Rectangle rect_des = calcRotatedSize(new Rectangle(new Dimension(src_width,src_height)),degree);
+        BufferedImage res = new BufferedImage(rect_des.width,rect_des.height,BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2 = res.createGraphics();
+        //进行转换
+        g2.translate((rect_des.width-src_width)/2,(rect_des.height-src_height)/2);
+        g2.rotate(Math.toRadians(degree),src_width/2,src_height/2);
+        g2.drawImage(bufferedimage,null,null);
+        return res;
+    }
+	
+	//计算旋转尺寸（更多图片操作参考：Thumbnailator）
+	public static Rectangle calcRotatedSize(Rectangle src,int angel) {
+        //如果旋转的角度大于90度做相应的转换
+        if(angel>=90){
+            if(angel/90%2==1){
+                int temp = src.height;
+                src.height = src.width;
+                src.width = temp;
+            }
+            angel = angel%90;
+        }
+        double r = Math.sqrt(src.height*src.height+src.width*src.width)/2;
+        double len = 2*Math.sin(Math.toRadians(angel)/2)*r;
+        double angel_alpha = (Math.PI-Math.toRadians(angel))/2;
+        double angel_dalta_width = Math.atan((double)src.height/src.width);
+        double angel_dalta_height = Math.atan((double)src.width/src.height);
+        int len_dalta_width = (int)(len*Math.cos(Math.PI-angel_alpha-angel_dalta_width));
+        int len_dalta_height = (int)(len * Math.cos(Math.PI-angel_alpha-angel_dalta_height));
+        int des_width = src.width+len_dalta_width*2;
+        int des_height = src.height+len_dalta_height*2;
+        return new Rectangle(new Dimension(des_width,des_height));
+    }
+	
+	//图片转字节（format如png）（更多图片操作参考：Thumbnailator）
+	public static byte[] imageToBytes(BufferedImage bufferedImage,String format) throws Exception {
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		ImageIO.write(bufferedImage,format,baos);
+		return baos.toByteArray();
+	}
+	
+	//获取图片信息（更多图片操作参考：Thumbnailator）
+	public static ImageInfo getImageInfo(File file) throws Exception {
+		ImageInfo imageInfo = new ImageInfo();
+		BufferedImage bufferedImage = ImageIO.read(new FileInputStream(file)); 
+		imageInfo.setFileSize(String.format("%.1f",file.length()/1024.0));//图片大小
+		imageInfo.setWidth(String.valueOf(bufferedImage.getWidth()));//图片宽度
+		imageInfo.setHeight(String.valueOf(bufferedImage.getHeight()));//图片高度
+		//还可以获得其他属性
+		return imageInfo;
+	}
 	
 }

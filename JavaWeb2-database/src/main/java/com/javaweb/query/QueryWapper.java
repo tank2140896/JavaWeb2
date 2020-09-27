@@ -10,10 +10,35 @@ public class QueryWapper<T> {
 
 	private QueryWapper<T> queryWapper = this;
 	
+	private long currentPage;
+	
+	private long pageSize;
+	
+	private boolean isPaged = false;
+	
 	private List<SqlCondition> sqlConditionList = new ArrayList<>();
 	
 	public List<SqlCondition> getSqlConditionList() {
 		return sqlConditionList;
+	}
+	
+	public QueryWapper<T> page(long currentPage,long pageSize){
+		this.currentPage = currentPage;
+		this.pageSize = pageSize;
+		this.isPaged = true;
+		return queryWapper;
+	}
+	
+	public long getCurrentPage() {
+		return currentPage;
+	}
+
+	public long getPageSize() {
+		return pageSize;
+	}
+	
+	public boolean getIsPaged() {
+		return isPaged;
 	}
 
 	public QueryWapper<T> eq(String columnName,Object columnValue){

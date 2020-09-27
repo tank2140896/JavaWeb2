@@ -14,6 +14,10 @@ import java.util.UUID;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
+import org.apache.poi.hssf.usermodel.HSSFPatriarch;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
@@ -357,6 +361,31 @@ public class ExcelDemo {
 			}
 		}
 		hwb.close();
+	}
+	
+	//插入图片到excel（只是个例子）
+	@Deprecated
+	public static void insertPictureToExcel(File pictureFile,File excelFile,String sheetName) throws Exception {
+		FileInputStream fis = new FileInputStream(pictureFile);
+        byte[] bytes = new byte[fis.available()];
+        fis.read(bytes);
+        fis.close();
+        OutputStream os = new FileOutputStream(excelFile);
+		HSSFWorkbook workbook = new HSSFWorkbook();
+        HSSFSheet sheet = workbook.createSheet(sheetName);
+        HSSFPatriarch patriarch = (HSSFPatriarch) sheet.createDrawingPatriarch();
+        HSSFClientAnchor anchor = new HSSFClientAnchor(0, 
+        		                                       0, 
+        		                                       0, 
+        		                                       0, 
+        		                                (short)3,//横着数第3个单元格开始（左上角） 
+        		                                       3,//竖着数第3个单元格开始（左上角）
+        		                                (short)9,//横着数第9个单元格结束（右下角）  
+        		                                       9);//横着数第9个单元格结束（右下角）  
+        patriarch.createPicture(anchor, workbook.addPicture(bytes,HSSFWorkbook.PICTURE_TYPE_PNG)); 
+        workbook.write(os);
+        workbook.close();
+        os.close();
 	}
 	
 }

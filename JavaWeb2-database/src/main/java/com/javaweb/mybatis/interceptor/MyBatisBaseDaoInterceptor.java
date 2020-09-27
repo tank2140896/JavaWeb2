@@ -33,7 +33,6 @@ import com.javaweb.mybatis.apiImpl.SqlBuildInfo;
 import com.javaweb.mybatis.apiImpl.SqlHandle;
 import com.javaweb.mybatis.apiImpl.mysql.HandleDeleteForMySql;
 import com.javaweb.mybatis.apiImpl.mysql.HandleInsertForMySql;
-import com.javaweb.mybatis.apiImpl.mysql.HandleSelectAllByPagingForMySql;
 import com.javaweb.mybatis.apiImpl.mysql.HandleSelectAllCountForMySql;
 import com.javaweb.mybatis.apiImpl.mysql.HandleSelectAllForMySql;
 import com.javaweb.mybatis.apiImpl.mysql.HandleSelectByPkForMySql;
@@ -64,7 +63,6 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 		map.put("selectAllForMySql",new HandleSelectAllForMySql());
 		map.put("selectAllCountForMySql",new HandleSelectAllCountForMySql());
 		map.put("selectByPkForMySql",new HandleSelectByPkForMySql());
-		map.put("selectAllByPagingForMySql",new HandleSelectAllByPagingForMySql());
 		map.put("selectListForMySql",new HandleSelectListForMySql());
 		//can add other like oracle
 	}
