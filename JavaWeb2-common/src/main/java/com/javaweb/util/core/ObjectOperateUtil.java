@@ -128,5 +128,10 @@ public class ObjectOperateUtil {
 			return JSONObject.fromObject(obj,jsonConfig).toString();
 		}
 	}
+	
+	//json字符串数组转Byte数组
+	public static Byte[] jsonArrayString2ByteArray(String jsonArray){
+		return (Byte[])JSONArray.toArray(JSONArray.fromObject(jsonArray),Byte.class);
+	}
 
 }
