@@ -71,6 +71,7 @@ public class OperateLogAspect {
 			operationLog.setUrl(url);
 			operationLog.setRequestMethod(httpServletRequest.getMethod());
 			//一般安全性较高的网站会对请求参数加密，这种情况下记录请求参数意义也不大，另外记录请求参数会暴露用户数据，所以个人觉得没有必要太详细清楚的记录请求参数的数据
+			//获得请求参数（一般指controller方法里的所有参数）			
 			operationLog.setRequestParameter(joinPoint.getArgs().toString()/*joinPoint.getSignature()*/);
 			operationLog.setRequestIpAddress(HttpUtil.getIpAddress(httpServletRequest));
 			operationLog.setRequestTime(DateUtil.getDefaultDate());
