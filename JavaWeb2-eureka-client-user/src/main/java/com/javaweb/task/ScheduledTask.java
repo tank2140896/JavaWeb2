@@ -16,7 +16,8 @@ import org.springframework.scheduling.config.ScheduledTaskRegistrar;
 import org.springframework.scheduling.config.TriggerTask;
 import org.springframework.scheduling.support.CronTrigger;
 
-//@Component//使用请解注
+//使用请解注
+//@Component
 public class ScheduledTask implements SchedulingConfigurer {
 	
 	//一般用于读取数据的定时任务操作

@@ -44,21 +44,21 @@ public class LogAspect {
 		ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes)RequestContextHolder.getRequestAttributes();
 		HttpServletRequest httpServletRequest = servletRequestAttributes.getRequest();
 		StringBuilder stringBuilder = new StringBuilder();
-		stringBuilder.append("请求URL:").append(httpServletRequest.getRequestURL().toString())
-					 .append(",")
-		             .append("请求方式:").append(httpServletRequest.getMethod())
-		             .append(",")
-		             .append("请求类方法:").append(joinPoint.getSignature())
-		             .append(",")
-		             .append("请求类方法参数:").append(Arrays.toString(joinPoint.getArgs()))
-					 .append(",")
-					 .append("请求IP:").append(HttpUtil.getIpAddress(httpServletRequest));
+		stringBuilder.append("请求URL：").append(httpServletRequest.getRequestURL().toString())
+					 .append("，")
+		             .append("请求方式：").append(httpServletRequest.getMethod())
+		             .append("，")
+		             .append("请求类方法：").append(joinPoint.getSignature())
+		             .append("，")
+		             .append("请求类方法参数：").append(Arrays.toString(joinPoint.getArgs()))
+					 .append("，")
+					 .append("请求IP：").append(HttpUtil.getIpAddress(httpServletRequest));
         log.info(stringBuilder.toString());
 	}
 	
 	@AfterReturning(value=DEFAULT_LOG_POINT_CUT,returning="object")
 	public void afterReturningMethod(Object object) {
-		log.info("返回内容:"+JSONObject.fromObject(object).toString());
+		log.info("返回内容："+JSONObject.fromObject(object).toString());
 	}
 
 }
