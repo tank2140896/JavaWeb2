@@ -276,7 +276,7 @@
 			<artifactId>poi-contrib</artifactId>
 			<version>3.6</version>
 		</dependency>
-	    	<!-- 一维码（条形码） -->
+	    <!-- 一维码（条形码） -->
 		<dependency>
 			<groupId>net.sf.barcode4j</groupId>
 			<artifactId>barcode4j-light</artifactId>
@@ -293,11 +293,17 @@
 		    <artifactId>javase</artifactId>
 		    <version>3.4.0</version>
 		</dependency>
-	    	<!-- activiti -->
+	    <!-- activiti -->
 		<dependency>
 		    <groupId>org.activiti</groupId>
 		    <artifactId>activiti-spring-boot-starter</artifactId>
 		    <version>7.1.0.M6</version>
+		</dependency>
+		<!-- minio -->
+		<dependency>
+		    <groupId>io.minio</groupId>
+		    <artifactId>minio</artifactId>
+		    <version>7.1.4</version>
 		</dependency>
 	</dependencies>
 	
