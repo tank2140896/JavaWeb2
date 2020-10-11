@@ -7,11 +7,11 @@
 5、lombok     
 6、nodejs              
 # 二、项目依赖关系                                                                 
-JavaWeb2-integration-demo                    
-JavaWeb2-database->JavaWeb2-common                        
+JavaWeb2-database->JavaWeb2-common                  
+JavaWeb2-integration-demo->JavaWeb2-database                                                                      
 JavaWeb2-eureka-server（要起3个，端口1001、1002、1003）                                                
 JavaWeb2-eureka-client-user（端口2001）->JavaWeb2-database                                                                    
-JavaWeb2-eureka-client-file（端口2002）->JavaWeb2-database                                                                                                                                                
+JavaWeb2-eureka-client-file（端口2002）->JavaWeb2-database                                                                                                             
 JavaWeb2-eureka-client-zuul（端口3001）->JavaWeb2-common             
 JavaWeb2-angular（cnpm install->cnpm start）              
 因此，要正确完成JavaWeb2-eureka-client-user的编译需要先编译JavaWeb2-common再编译JavaWeb2-database                                  
