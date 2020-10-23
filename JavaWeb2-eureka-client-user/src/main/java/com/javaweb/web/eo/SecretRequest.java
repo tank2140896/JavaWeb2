@@ -8,8 +8,9 @@ import javax.crypto.spec.DESedeKeySpec;
 import javax.servlet.http.HttpServletRequest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.javaweb.util.core.DateUtil;
+import com.javaweb.constant.CommonConstant;
 import com.javaweb.util.core.AesDesUtil;
+import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.RsaUtil;
 import com.javaweb.util.core.SecretUtil;
 
@@ -29,8 +30,12 @@ public class SecretRequest {
 		String token = request.getHeader("token");//token
 		String currentTime = request.getHeader("currentTime");//格式为yyyyMMddHHmmss
 		String nonce = request.getHeader("nonce");//长度为24位的随机小写字母和数字的组合
+		String thatCode = request.getHeader("code");//post和put的不是放在header里的
 		String thatSign = request.getHeader("sign");//post和put的不是放在header里的
 		String requestContentType = request.getHeader("requestContentType");//1（application/json）；2（multipart/form-data）；3（application/x-www-form-urlencoded）
+		if((!"1".equals(requestContentType))&&(!"2".equals(requestContentType))&&(!"3".equals(requestContentType))){
+			return false;
+		}
 		if(("0".equals(isAuth))&&(!isAuthController)){//只有此特殊情况下（前后端都需要特殊处理）不需要加密处理，其它一律认为需要加密处理
 			return true;
 		}
@@ -48,32 +53,25 @@ public class SecretRequest {
 			if(nonce.length()!=24){//随机数长度判断
 				return false;
 			}
-			if("1".equals(requestContentType)){
-				if("GET".equals(request.getMethod().toUpperCase())||"DELETE".equals(request.getMethod().toUpperCase())){
-					return getDeleteCheck(thatSign,tokenData,currentTime,nonce);
-				}else{
-					return putPostCheck(tokenData,currentTime,nonce);
+			if("GET".equals(request.getMethod().toUpperCase())||"DELETE".equals(request.getMethod().toUpperCase())){
+				if(thatCode==null||CommonConstant.EMPTY_VALUE.equals(thatCode.trim())){
+					return false;
 				}
-			}else{
-				return getDeleteCheck(thatSign,tokenData,currentTime,nonce);
+				if(thatSign==null||CommonConstant.EMPTY_VALUE.equals(thatSign.trim())){
+					return false;
+				}
+				this.code = thatCode;
+				this.sign = thatSign;
 			}
+			return codeSignCheck(tokenData,currentTime,nonce);
 		}catch(Exception e){
 			return false;
 		}
 	}
 	
-	private boolean getDeleteCheck(String thatSign,TokenData tokenData,String currentTime,String nonce) throws Exception {
-		//1.用后端私钥解密sign
-		String d1 = RsaUtil.decrypt(thatSign,RsaUtil.getPrivateKey(tokenData.getRsaPrivateKeyOfBackend()));
-		//2.计算MD5(currentTime+","+nonce)
-		String d2 = SecretUtil.getSecret(currentTime+","+nonce,"MD5");
-		//3.判断两个值是否一致
-		return d1.equals(d2);
-	}
-	
-	private boolean putPostCheck(TokenData tokenData,String currentTime,String nonce) throws Exception {
+	private boolean codeSignCheck(TokenData tokenData,String currentTime,String nonce) throws Exception {
 		//RSA结合DES（推荐），原因参考：https://ask.csdn.net/questions/763621和https://github.com/travist/jsencrypt/issues/137
-		//1.用3DES解密code
+		//1.用DES解密code
 		String d1 = AesDesUtil.decryptDes(this.code,SecretKeyFactory.getInstance("DESede").generateSecret(new DESedeKeySpec(nonce.getBytes("UTF8")))); 
 		//1.用后端私钥解密code
 		//String d1 = RsaUtil.decrypt(this.code,RsaUtil.getPrivateKey(tokenData.getRsaPrivateKeyOfBackend()));
