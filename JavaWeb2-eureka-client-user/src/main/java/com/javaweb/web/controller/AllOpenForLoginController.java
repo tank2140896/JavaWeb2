@@ -1,8 +1,5 @@
 package com.javaweb.web.controller;
 
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -12,11 +9,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javaweb.base.BaseController;
@@ -26,7 +20,6 @@ import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SwaggerConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.enums.HttpCodeEnum;
-import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.ObjectOperateUtil;
 import com.javaweb.util.core.RsaUtil;
 import com.javaweb.util.core.SecretUtil;
@@ -44,17 +37,8 @@ import io.swagger.annotations.ApiOperation;
 
 @Api(tags=SwaggerConstant.SWAGGER_ALL_OPEN_CONTROLLER_TAGS)
 @RestController
-public class AllOpenController extends BaseController {
+public class AllOpenForLoginController extends BaseController {
 	
-	//获取服务器时间接口
-	@ApiOperation(value=SwaggerConstant.SWAGGER_GET_SERVE_TIME)
-	@GetMapping(ApiConstant.GET_SERVE_TIME)
-	public BaseResponseResult getServeTime(){
-		LocalDateTime localDateTime = LocalDateTime.now(ZoneId.systemDefault());//ZoneId.of("GMT+8")
-		String dateTime = localDateTime.format(DateTimeFormatter.ofPattern(DateUtil.DEFAULT_DATETIME_PATTERN));
-		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"serve.getServeTime.success",dateTime);
-	}
-    
 	//登录接口
 	@ApiOperation(value=SwaggerConstant.SWAGGER_LOGIN,notes=SwaggerConstant.SWAGGER_LOGIN_NOTES)
     @ApiImplicitParam(name="userLoginRequest",value=SwaggerConstant.SWAGGER_LOGIN_PARAM,required=true,dataType="UserLoginRequest")
@@ -96,44 +80,6 @@ public class AllOpenController extends BaseController {
 		}
 		//这里我个人认为redis中包含权限信息，但是前端不需要获得太多权限信息，权限信息可以通过其它接口获得
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.loginSuccess",tokenData.getToken());
-	}
-	
-	/* -------------------------------------------------- 分界线 -------------------------------------------------- */
-	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_REQUEST_PARAMETER_LOST)
-	@RequestMapping(value=ApiConstant.REQUEST_PARAMETER_LOST,method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
-	public BaseResponseResult requestParameterLost() {
-		return getBaseResponseResult(HttpCodeEnum.REQUEST_PARAMETER_LOST,"validated.permission.requestParameterLost");
-	}
-	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_INVALID_REQUEST)
-	@RequestMapping(value=ApiConstant.INVALID_REQUEST,method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
-	public BaseResponseResult invalidRequest(){
-		return getBaseResponseResult(HttpCodeEnum.INVALID_REQUEST,"validated.permission.invalidRequest");
-	}
-	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_REQUEST_PARAMETER_ERROR)
-	@RequestMapping(value=ApiConstant.REQUEST_PARAMETER_ERROR,method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
-	public BaseResponseResult requestParameterError(){
-		return getBaseResponseResult(HttpCodeEnum.REQUEST_PARAMETER_ERROR,"validated.permission.requestParameterError");
-	}
-	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_NO_AUTHORY)
-	@RequestMapping(value=ApiConstant.NO_AUTHORY,method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
-	public BaseResponseResult noAuthory(){
-		return getBaseResponseResult(HttpCodeEnum.NO_AUTHORY,"validated.permission.noAuthory");
-	}
-	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_NOT_FOUND)
-	@RequestMapping(value=ApiConstant.NOT_FOUND,method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
-	public BaseResponseResult notFound(){
-		return getBaseResponseResult(HttpCodeEnum.NOT_FOUND,"validated.permission.notFound");
-	}
-	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_INTERNAL_ERROR)
-	@RequestMapping(value=ApiConstant.INTERNAL_ERROR,method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
-	public BaseResponseResult internalError(){
-		return getBaseResponseResult(HttpCodeEnum.INTERNAL_ERROR,"validated.permission.internalError");
 	}
 	
 	/* -------------------------------------------------- 分界线 -------------------------------------------------- */
