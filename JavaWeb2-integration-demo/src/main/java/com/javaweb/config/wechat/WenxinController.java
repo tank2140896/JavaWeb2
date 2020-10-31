@@ -457,7 +457,7 @@ public class WenxinController {
 			if(redisWechatAccesssToken==null){
 				String response = HttpUtil.defaultGetRequest(accessTokenUrl,null);
 				//System.out.println(response);
-				accessToken = JSONObject.fromObject(response).getString("access_token");
+				accessToken = JSONObject.fromObject(response).optString("access_token");
 				if(accessToken!=null){
 					valueOperations1.set("redisWechatAccessToken",accessToken,Duration.ofSeconds(7000));//AccessToken有效时间为7200秒，则这里保险起见7000秒后刷新一次
 				}
@@ -480,7 +480,7 @@ public class WenxinController {
 			if(redisWechatJsApiTicket==null){
 				String response = HttpUtil.defaultGetRequest(jsApiTicketUrl,null);
 				//System.out.println(response);
-				jsApiTicket = JSONObject.fromObject(response).getString("ticket");
+				jsApiTicket = JSONObject.fromObject(response).optString("ticket");
 				if(jsApiTicket!=null){
 					valueOperations1.set("redisWechatJsApiTicket",jsApiTicket,Duration.ofSeconds(7000));//AccessToken有效时间为7200秒，则这里保险起见7000秒后刷新一次
 				}
@@ -502,15 +502,15 @@ public class WenxinController {
 		String out = HttpUtil.defaultPostRequest(String.format(weixinConfig.getWxopenCreateMenuUrl(),getAccessTokenImpl()),StringUtil.jsonFormatFileToJosnString(new File(URLDecoder.decode(Thread.currentThread().getContextClassLoader().getResource("file/createMenu.txt").getPath(),"UTF-8")),"UTF-8"),null);
 		JSONObject jo = JSONObject.fromObject(out);
 		//System.out.println(jo);
-		if(!(jo.getString("errcode").equals("0"))){
-			throw new Exception(jo.getString("errmsg"));
+		if(!(jo.optString("errcode").equals("0"))){
+			throw new Exception(jo.optString("errmsg"));
 		}
 	}
 	
 	//创建标签
 	private String createTagImpl(String tagName) throws Exception {
 		String out = HttpUtil.defaultPostRequest(String.format(weixinConfig.getWxopenCreateTagUrl(),getAccessTokenImpl()),"{\"tag\":{\"name\":\""+tagName+"\"}}",null);
-		return JSONObject.fromObject(JSONObject.fromObject(out).get("tag")).getString("id");
+		return JSONObject.fromObject(JSONObject.fromObject(out).get("tag")).optString("id");
 	}
 
 	//获取标签列表
@@ -557,15 +557,15 @@ public class WenxinController {
 		}
 		JSONObject jo = JSONObject.fromObject(out);
 		//System.out.println(jo);
-		if(!(jo.getString("errcode").equals("0"))){
-			throw new Exception(jo.getString("errmsg"));
+		if(!(jo.optString("errcode").equals("0"))){
+			throw new Exception(jo.optString("errmsg"));
 		}
 	}
 	
 	//获取用户标签列表
 	private String getUserTagImpl(String openId) throws Exception {
 		String out = HttpUtil.defaultPostRequest(String.format(weixinConfig.getWxopenUserTagUrl(),getAccessTokenImpl()),"{\"openid\":\""+openId+"\"}",null);
-		return JSONObject.fromObject(out).getString("tagid_list");
+		return JSONObject.fromObject(out).optString("tagid_list");
 	}
 	
 	//给用户发送消息
@@ -586,8 +586,8 @@ public class WenxinController {
 		String out = HttpUtil.defaultPostRequest(String.format(weixinConfig.getWxopenSendUserMessage(),getAccessTokenImpl()),JSONObject.fromObject(map).toString(),null);
 		JSONObject jo = JSONObject.fromObject(out);
 		//System.out.println(jo);
-		if(!(jo.getString("errcode").equals("0"))){
-			throw new Exception(jo.getString("errmsg"));
+		if(!(jo.optString("errcode").equals("0"))){
+			throw new Exception(jo.optString("errmsg"));
 		}
 	}
 	
@@ -595,7 +595,7 @@ public class WenxinController {
 	private String getOpenIdImpl(String code) throws Exception {
 		String response = HttpUtil.defaultGetRequest(String.format(weixinConfig.getWxopenOpenIdUrl(),weixinConfig.getWxopenAppid(),weixinConfig.getWxopenAppsecret(),code),null);
 		//System.out.println(response);
-		String openId = JSONObject.fromObject(response).getString("openid");
+		String openId = JSONObject.fromObject(response).optString("openid");
 		if(openId==null){
 			throw new Exception("openId获取失败");
 		}

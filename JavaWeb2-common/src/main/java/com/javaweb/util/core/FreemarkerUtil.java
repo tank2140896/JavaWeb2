@@ -69,7 +69,7 @@ public class FreemarkerUtil {
 				if(value.startsWith("[{")) {
 					jjf.setJavaType("List<"+jjf.getAttributeUpperCase()+">");
 					//importMap.put("import "+jjf.getAttributeUpperCase()+";","import "+jjf.getAttributeUpperCase()+";");//同包中的类不需要引用
-					freemarkerForJsonGenerate(JSONArray.fromObject(value).getString(0),templateFileName,jjf.getAttributeUpperCase()+".java",outputFilePath);
+					freemarkerForJsonGenerate(JSONArray.fromObject(value).optString(0),templateFileName,jjf.getAttributeUpperCase()+".java",outputFilePath);
 				}else if(value.startsWith("[\"")) {
 					jjf.setJavaType("List<String>");
 				}else {

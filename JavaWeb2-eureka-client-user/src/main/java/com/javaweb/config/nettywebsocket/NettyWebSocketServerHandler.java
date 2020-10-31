@@ -23,7 +23,7 @@ public class NettyWebSocketServerHandler extends SimpleChannelInboundHandler<Tex
 		String content = textWebSocketFrame.text();
 		//System.out.println("接收到客户端的消息为:"+content);
 		Long redisSessionTimeout = Long.parseLong(BaseTool.getEnvironment().getProperty("redis.session.timeout"));//获得配置文件中redis设置session失效的时间
-		TokenData tokenData = BaseTool.getTokenData(JSONObject.fromObject(content).getString(SystemConstant.HEAD_TOKEN));
+		TokenData tokenData = BaseTool.getTokenData(JSONObject.fromObject(content).optString(SystemConstant.HEAD_TOKEN));
 		if(tokenData!=null){
 			sendMessageToAll(content);
 			BaseTool.getRedisTemplate().opsForValue().set(tokenData.getToken(),tokenData,Duration.ofMinutes(redisSessionTimeout));
