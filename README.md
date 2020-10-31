@@ -30,14 +30,15 @@ JavaWeb2-angular（cnpm install->cnpm start）
 7、本项目所有主键都是字符串，而不是数字或自增，主要考虑到两方面：①分布式及数据迁移；②当数字类型超过16位时，前后端交互时，前端会有精度误差，当然转为字符串就可以了，但是这样相互转换个人感觉有点没意义      
 8、注册中心有很多，比如eureka、zookeeper、consul、nacos等，本项目在这方面不是重点，只想快速上手，因此就用了官方套餐                    
 # 五、开发计划                                                                             
-1、改造权限，因为假设角色A对用户管理有/x和/y权限，对角色管理没有权限（角色管理有/y），那么角色A就能对角色管理进行操作了，而严格意义上来说是不能的                                                          
-2、持续优化迭代各已有功能（首要目标是重写算法功能）                                                              
-3、hadoop、spark                                                                
-4、容器技术                                     
-5、将zuul变为gateway                 
-6、加入SpringCloudConfig、SpringCloudSleuth、SpringBootAdmin、SpringSecurityOAuth2JWT                 
-7、后端一部分将采用JAVA15+、函数式、异步编程（包括WebFlux/RxJava2/Netty）                 
-8、将JAVA算法改用C语言实现，JAVA本地调用C语言的实现方法                
+1、补充po的columnDesc内容               
+2、改造权限，因为假设角色A对用户管理有/x和/y权限，对角色管理没有权限（角色管理有/y），那么角色A就能对角色管理进行操作了，而严格意义上来说是不能的                                                          
+3、持续优化迭代各已有功能（首要目标是重写算法功能）                                                              
+4、hadoop、spark                                                                
+5、容器技术                                     
+6、将zuul变为gateway                 
+7、加入SpringCloudConfig、SpringCloudSleuth、SpringBootAdmin、SpringSecurityOAuth2JWT                 
+8、后端一部分将采用JAVA15+、函数式、异步编程（包括WebFlux/RxJava2/Netty）                 
+9、将JAVA算法改用C语言实现，JAVA本地调用C语言的实现方法                
 # 六、项目主要特点                                                       
 1、微服务                          
 2、前后端分离                 
