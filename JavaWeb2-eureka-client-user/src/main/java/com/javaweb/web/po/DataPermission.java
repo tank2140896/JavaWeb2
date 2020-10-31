@@ -16,16 +16,16 @@ public class DataPermission extends BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = -4584788854424411139L;
 	
-    @Column(name="id",pk=true)
+    @Column(name="id",pk=true,columnDesc="ID")
     private String id;//ID
     
-    @Column(name="exclude_field")
+    @Column(name="exclude_field",columnDesc="排除字段")
     private String excludeField;//排除字段
     
-    @Column(name="interfaces_id")
+    @Column(name="interfaces_id",columnDesc="接口ID")
     private String interfacesId;//接口ID
     
-    @Column(name="remark")
+    @Column(name="remark",columnDesc="备注说明")
     private String remark;//备注说明
 
 }
