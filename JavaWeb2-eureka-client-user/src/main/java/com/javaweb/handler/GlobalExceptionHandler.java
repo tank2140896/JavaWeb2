@@ -5,6 +5,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -29,17 +31,22 @@ public class GlobalExceptionHandler extends BaseTool {
 	
 	@ExceptionHandler(TokenExpiredException.class)
 	public BaseResponseResult handleException(HttpServletRequest request,TokenExpiredException e) {
-		return new BaseResponseResult(HttpCodeEnum.INVALID_REQUEST,"validated.permission.invalidRequest");
+		return getBaseResponseResult(HttpCodeEnum.INVALID_REQUEST,"validated.permission.invalidRequest");
+	}
+	
+	@ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+	public BaseResponseResult handleHttpRequestMethodNotSupportedException(HttpServletRequest request,HttpRequestMethodNotSupportedException e) {
+		return getBaseResponseResult(HttpCodeEnum.INVALID_REQUEST,"validated.permission.invalidRequest");
 	}
 	
 	@ExceptionHandler(MissingServletRequestParameterException.class)
 	public BaseResponseResult handleMissingServletRequestParameterException(HttpServletRequest request,MissingServletRequestParameterException e){
-		return new BaseResponseResult(HttpCodeEnum.INVALID_REQUEST,"validated.permission.invalidRequest");
+		return getBaseResponseResult(HttpCodeEnum.INVALID_REQUEST,"validated.permission.invalidRequest");
 	}
 	
 	@ExceptionHandler(MultipartException.class)
 	public BaseResponseResult uploadExcepttion(MultipartException e){
-	        return new BaseResponseResult(HttpCodeEnum.INVALID_REQUEST,e.getMessage());
+	    return new BaseResponseResult(HttpCodeEnum.INVALID_REQUEST,e.getMessage());
 	}
 	
 	@ExceptionHandler(DataIntegrityViolationException.class)
@@ -55,6 +62,11 @@ public class GlobalExceptionHandler extends BaseTool {
 	@ExceptionHandler(ServiceException.class)
 	public BaseResponseResult handleServiceException(HttpServletRequest request,ServiceException e){
 		return new BaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,e.getMessage());
+	}
+	
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public BaseResponseResult handleMethodArgumentNotValidException(MethodArgumentNotValidException e){
+		return new BaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,e.getBindingResult().getFieldError().getDefaultMessage());
 	}
 	
 	@ExceptionHandler(Exception.class)
