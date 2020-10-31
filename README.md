@@ -31,14 +31,15 @@ JavaWeb2-angular（cnpm install->cnpm start）
 8、注册中心有很多，比如eureka、zookeeper、consul、nacos等，本项目在这方面不是重点，只想快速上手，因此就用了官方套餐                    
 # 五、开发计划                                                                             
 1、补充po的columnDesc内容               
-2、改造权限，因为假设角色A对用户管理有/x和/y权限，对角色管理没有权限（角色管理有/y），那么角色A就能对角色管理进行操作了，而严格意义上来说是不能的                                                          
-3、持续优化迭代各已有功能（首要目标是重写算法功能）                                                              
-4、hadoop、spark                                                                
-5、容器技术                                     
-6、将zuul变为gateway                 
-7、加入SpringCloudConfig、SpringCloudSleuth、SpringBootAdmin、SpringSecurityOAuth2JWT                 
-8、后端一部分将采用JAVA15+、函数式、异步编程（包括WebFlux/RxJava2/Netty）                 
-9、将JAVA算法改用C语言实现，JAVA本地调用C语言的实现方法                
+2、补充优化自动代码生成              
+3、改造权限，因为假设角色A对用户管理有/x和/y权限，对角色管理没有权限（角色管理有/y），那么角色A就能对角色管理进行操作了，而严格意义上来说是不能的                                                          
+4、持续优化迭代各已有功能（首要目标是重写算法功能）                                                              
+5、hadoop、spark                                                                
+6、容器技术                                     
+7、将zuul变为gateway                 
+8、加入SpringCloudConfig、SpringCloudSleuth、SpringBootAdmin、SpringSecurityOAuth2JWT                 
+9、后端一部分将采用JAVA15+、函数式、异步编程（包括WebFlux/RxJava2/Netty）                 
+10、将JAVA算法改用C语言实现，JAVA本地调用C语言的实现方法                
 # 六、项目主要特点                                                       
 1、微服务                          
 2、前后端分离                 
