@@ -5,11 +5,11 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.javaweb.mybatis.api.DaoForMySql;
+import com.javaweb.mybatis.api.DaoWapper;
 import com.javaweb.web.po.Schedule;
 
 @Mapper
-public interface ScheduleDao extends DaoForMySql<Schedule> {
+public interface ScheduleDao extends DaoWapper<Schedule> {
 	
 	public List<Schedule> getScheduleByDate(Map<String,String> map);
 	

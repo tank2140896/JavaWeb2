@@ -52,7 +52,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 	public void userDelete(String userId) {
 		String userIds[] = userId.split(",");
 		for(String id:userIds){
-			User user = userDao.selectByPkForMySql(userId);
+			User user = userDao.selectByPk(userId);
 			if(user.getPortrait()!=null){
 				new File(user.getPortrait()).delete();//文件不存在也不会报错的
 			}
@@ -62,12 +62,12 @@ public class UserServiceImpl extends BaseService implements UserService {
 	
 	@Transactional
 	public void userAdd(User user) {
-		userDao.insertForMySql(user);
+		userDao.insert(user);
 	}
 
 	@Transactional
 	public void userModify(User user) {
-		userDao.updateForMySql(user);
+		userDao.update(user);
 	}
 
 	public User userDetail(String userId) {
@@ -138,7 +138,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 	}
 
 	public List<User> getAllUsers() {
-		return userDao.selectAllForMySql();
+		return userDao.selectAll();
 	}
 
 	public void userInitPassword(String userId,TokenData tokenData) {
@@ -161,7 +161,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 		user.setStatus(null);
 		user.setUpdater(tokenData.getUser().getUserId());
 		user.setUpdateDate(DateUtil.getDefaultDate());
-		userDao.updateForMySql(user);
+		userDao.update(user);
 	}
 
 	@Transactional
@@ -178,14 +178,14 @@ public class UserServiceImpl extends BaseService implements UserService {
 			writeSuccess = false;
 		}
 		if(writeSuccess){
-			User user = userDao.selectByPkForMySql(userId);
+			User user = userDao.selectByPk(userId);
 			if(user!=null){
 				String portrait = user.getPortrait();
 				if((portrait!=null)&&(!CommonConstant.EMPTY_VALUE.equals(portrait))){
 					new File(portrait).delete();//文件不存在也不会报错的
 				}
 				user.setPortrait(rootPath+uploadFileName);
-				userDao.updateForMySql(user);
+				userDao.update(user);
 			}
 		}
 	}
@@ -215,7 +215,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 
 	public void userPortrait(String userId,HttpServletResponse httpServletResponse) {
 		if(userId!=null){
-			User user = userDao.selectByPkForMySql(userId);
+			User user = userDao.selectByPk(userId);
 			if(user!=null){
 				String portrait = user.getPortrait();
 				if(portrait!=null){

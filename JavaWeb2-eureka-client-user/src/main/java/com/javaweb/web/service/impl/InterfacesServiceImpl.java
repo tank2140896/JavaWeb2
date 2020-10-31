@@ -58,12 +58,12 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 	}
 	
 	public Interfaces interfacesDetail(String interfacesId) {
-		return interfacesDao.selectByPkForMySql(interfacesId);
+		return interfacesDao.selectByPk(interfacesId);
 	}
 
 	@Transactional
 	public void interfacesModify(Interfaces interfaces) {
-		interfacesDao.updateForMySql(interfaces);
+		interfacesDao.update(interfaces);
 	}
 
 	@Transactional
@@ -106,7 +106,7 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 		}
 		if(forUpdate.size()>0){
 			for(int k=0;k<forUpdate.size();k++){
-				interfacesDao.updateForMySql(forUpdate.get(k));
+				interfacesDao.update(forUpdate.get(k));
 			}
 		}
 		if(forInsert.size()>0){
@@ -200,8 +200,8 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 			userData.setId(SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO));
 			userData.setUserId(userPermissionResponseList.get(i).getUserId());
 			userData.setDataPermissionId(dataPermissionId);
-			dataPermissionDao.insertForMySql(dataPermission);
-			userDataDao.insertForMySql(userData);
+			dataPermissionDao.insert(dataPermission);
+			userDataDao.insert(userData);
 		}
 		for(int i=0;i<rolePermissionResponseList.size();i++){//角色数据权限
 			com.javaweb.web.po.DataPermission dataPermission = new com.javaweb.web.po.DataPermission();
@@ -215,8 +215,8 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 			roleData.setId(SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO));
 			roleData.setRoleId(rolePermissionResponseList.get(i).getRoleId());
 			roleData.setDataPermissionId(dataPermissionId);
-			dataPermissionDao.insertForMySql(dataPermission);
-			roleDataDao.insertForMySql(roleData);
+			dataPermissionDao.insert(dataPermission);
+			roleDataDao.insert(roleData);
 		}
 	}
 	
@@ -263,7 +263,7 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 	}
 
 	public void synchronizedRedisInterfaceHistoryTimes() {
-		List<Interfaces> list = interfacesDao.selectAllForMySql();
+		List<Interfaces> list = interfacesDao.selectAll();
 		Set<Object> set = stringRedisTemplate.opsForHash().keys(SystemConstant.REDIS_INTERFACE_COUNT_KEY);
 		if(list!=null&&list.size()>0){
 			if(set!=null&&set.size()>0){
@@ -282,12 +282,12 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 			}
 		}
 		for(int i=0;i<list.size();i++){
-			interfacesDao.updateForMySql(list.get(i));//更新库中的统计数据信息
+			interfacesDao.update(list.get(i));//更新库中的统计数据信息
 		}
 	}
 
 	public List<Interfaces> getAll() {
-		return interfacesDao.selectAllForMySql();//获得数据库中的所有接口
+		return interfacesDao.selectAll();//获得数据库中的所有接口
 	}
 
 	public String interfacesTest(InterfacesTestRequest interfacesTestRequest) {

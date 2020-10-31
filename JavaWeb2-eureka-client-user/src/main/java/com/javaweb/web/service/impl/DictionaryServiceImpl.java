@@ -15,7 +15,7 @@ import com.javaweb.web.service.DictionaryService;
 public class DictionaryServiceImpl extends BaseService implements DictionaryService {
 
     public List<Dictionary> selectAll() {
-         return dictionaryDao.selectAllForMySql();
+         return dictionaryDao.selectAll();
     }
 
     public List<Dictionary> getDictionary(Dictionary dictionary) {
@@ -24,7 +24,7 @@ public class DictionaryServiceImpl extends BaseService implements DictionaryServ
 
     @Transactional
 	public void dictionaryAdd(Dictionary dictionary) {
-		dictionaryDao.insertForMySql(dictionary);
+		dictionaryDao.insert(dictionary);
 	}
 	
 	public Page dictionaryList(DictionaryListRequest dictionaryListRequest){
@@ -36,18 +36,18 @@ public class DictionaryServiceImpl extends BaseService implements DictionaryServ
 
 	@Transactional
 	public void dictionaryModify(Dictionary dictionary) {
-		dictionaryDao.updateForMySql(dictionary);
+		dictionaryDao.update(dictionary);
 	}
 
 	public Dictionary dictionaryDetail(String dictionaryId) {
-		return dictionaryDao.selectByPkForMySql(dictionaryId);
+		return dictionaryDao.selectByPk(dictionaryId);
 	}
 
 	@Transactional
 	public void dictionaryDelete(String dictionaryId) {
 		String dictionaryIds[] = dictionaryId.split(",");
 		for(String id:dictionaryIds){
-			dictionaryDao.deleteForMySql(id);
+			dictionaryDao.delete(id);
 		}
 	}
 	

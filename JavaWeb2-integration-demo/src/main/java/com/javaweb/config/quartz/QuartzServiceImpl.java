@@ -46,7 +46,7 @@ public class QuartzServiceImpl extends BaseService implements QuartzService {
             quartz.setParam(quartz.getClass().getName());
             quartz.setStatus(1);
             quartz.setCreateDate(DateUtil.getDefaultDate());
-            quartzDao.insertForMySql(quartz);//quartz定时任务记录保存成功
+            quartzDao.insert(quartz);//quartz定时任务记录保存成功
         }
     }
 
@@ -69,7 +69,7 @@ public class QuartzServiceImpl extends BaseService implements QuartzService {
         }
         if(executeSuccess) {
             quartz.setUpdateDate(DateUtil.getDefaultDate());
-            quartzDao.updateForMySql(quartz);
+            quartzDao.update(quartz);
         }
     }
 
@@ -85,7 +85,7 @@ public class QuartzServiceImpl extends BaseService implements QuartzService {
             executeSuccess = false;
         }
         if(executeSuccess) {
-            quartzDao.deleteForMySql(quartz.getJobId());
+            quartzDao.delete(quartz.getJobId());
         }
     }
 
@@ -136,7 +136,7 @@ public class QuartzServiceImpl extends BaseService implements QuartzService {
         if(executeSuccess) {
             quartz.setStatus(2);
             quartz.setUpdateDate(DateUtil.getDefaultDate());
-            quartzDao.updateForMySql(quartz);
+            quartzDao.update(quartz);
         }
     }
 
@@ -154,7 +154,7 @@ public class QuartzServiceImpl extends BaseService implements QuartzService {
         if(executeSuccess) {
             quartz.setStatus(1);
             quartz.setUpdateDate(DateUtil.getDefaultDate());
-            quartzDao.updateForMySql(quartz);
+            quartzDao.update(quartz);
         }
     }
 

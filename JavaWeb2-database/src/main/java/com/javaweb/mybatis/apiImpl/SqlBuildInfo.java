@@ -2,6 +2,8 @@ package com.javaweb.mybatis.apiImpl;
 
 import java.util.List;
 
+import com.javaweb.enums.DbTypeEnum;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -24,5 +26,7 @@ public class SqlBuildInfo {
 	private Boolean pkGenerate;//主键是否自增
 
 	private List<Boolean> canUpdateSetEmptyList;//更新时是否能设置NULL或者空
+	
+	private DbTypeEnum dbTypeEnum;//数据库类型
 
 }

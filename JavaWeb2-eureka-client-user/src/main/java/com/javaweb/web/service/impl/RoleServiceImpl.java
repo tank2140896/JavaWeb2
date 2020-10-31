@@ -39,12 +39,12 @@ public class RoleServiceImpl extends BaseService implements RoleService {
 
 	@Transactional
 	public void roleAdd(Role role) {
-		roleDao.insertForMySql(role);
+		roleDao.insert(role);
 	}
 
 	@Transactional
 	public void roleModify(Role role) {
-		roleDao.updateForMySql(role);
+		roleDao.update(role);
 	}
 
 	public Role roleDetail(String roleId) {

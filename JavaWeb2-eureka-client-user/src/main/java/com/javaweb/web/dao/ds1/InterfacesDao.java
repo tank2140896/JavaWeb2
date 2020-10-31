@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.javaweb.mybatis.api.DaoForMySql;
+import com.javaweb.mybatis.api.DaoWapper;
 import com.javaweb.web.eo.interfaces.InterfacesListRequest;
 import com.javaweb.web.eo.interfaces.RolePermissionResponse;
 import com.javaweb.web.eo.interfaces.UserPermissionResponse;
@@ -12,7 +12,7 @@ import com.javaweb.web.eo.interfaces.UserRoleDataPermissionRequest;
 import com.javaweb.web.po.Interfaces;
 
 @Mapper
-public interface InterfacesDao extends DaoForMySql<Interfaces>{
+public interface InterfacesDao extends DaoWapper<Interfaces>{
 	
 	public void interfacesBatchInsert(List<Interfaces> list);
 	

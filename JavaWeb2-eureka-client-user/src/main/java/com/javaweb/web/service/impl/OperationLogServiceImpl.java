@@ -21,11 +21,11 @@ public class OperationLogServiceImpl extends BaseService implements OperationLog
 
 	@Transactional
 	public void saveOperationLog(OperationLog operationLog) {
-		operationLogDao.insertForMySql(operationLog);
+		operationLogDao.insert(operationLog);
 	}
 
 	public Page operationLogList(OperationLogListRequest operationLogListRequest) {
-		List<Module> moduleList = moduleDao.selectAllForMySql();
+		List<Module> moduleList = moduleDao.selectAll();
 		List<OperationLogListResponse> list = operationLogDao.operationLogList(operationLogListRequest);
 		Long count = operationLogDao.operationLogListCount(operationLogListRequest);
 		if(count!=null&&count>0){

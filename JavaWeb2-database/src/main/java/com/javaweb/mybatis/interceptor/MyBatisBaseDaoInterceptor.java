@@ -12,6 +12,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
+import javax.sql.DataSource;
+
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.MappedStatement;
@@ -28,16 +30,17 @@ import org.springframework.stereotype.Component;
 import com.javaweb.annotation.sql.Column;
 import com.javaweb.annotation.sql.Table;
 import com.javaweb.constant.CommonConstant;
+import com.javaweb.enums.DbTypeEnum;
 import com.javaweb.mybatis.apiImpl.BoundSqlSource;
 import com.javaweb.mybatis.apiImpl.SqlBuildInfo;
 import com.javaweb.mybatis.apiImpl.SqlHandle;
-import com.javaweb.mybatis.apiImpl.mysql.HandleDeleteForMySql;
-import com.javaweb.mybatis.apiImpl.mysql.HandleInsertForMySql;
-import com.javaweb.mybatis.apiImpl.mysql.HandleSelectAllCountForMySql;
-import com.javaweb.mybatis.apiImpl.mysql.HandleSelectAllForMySql;
-import com.javaweb.mybatis.apiImpl.mysql.HandleSelectByPkForMySql;
-import com.javaweb.mybatis.apiImpl.mysql.HandleSelectListForMySql;
-import com.javaweb.mybatis.apiImpl.mysql.HandleUpdateForMySql;
+import com.javaweb.mybatis.apiImpl.mysql.HandleDelete;
+import com.javaweb.mybatis.apiImpl.mysql.HandleInsert;
+import com.javaweb.mybatis.apiImpl.mysql.HandleSelectAllCount;
+import com.javaweb.mybatis.apiImpl.mysql.HandleSelectAll;
+import com.javaweb.mybatis.apiImpl.mysql.HandleSelectByPk;
+import com.javaweb.mybatis.apiImpl.mysql.HandleSelectList;
+import com.javaweb.mybatis.apiImpl.mysql.HandleUpdate;
 import com.javaweb.query.QueryWapper;
 import com.javaweb.util.core.DateUtil;
 
@@ -56,15 +59,13 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 	
 	private static final Map<String,SqlHandle> map = new HashMap<>();
 	static{
-		//mysql
-		map.put("insertForMySql",new HandleInsertForMySql());
-		map.put("updateForMySql",new HandleUpdateForMySql());
-		map.put("deleteForMySql",new HandleDeleteForMySql());
-		map.put("selectAllForMySql",new HandleSelectAllForMySql());
-		map.put("selectAllCountForMySql",new HandleSelectAllCountForMySql());
-		map.put("selectByPkForMySql",new HandleSelectByPkForMySql());
-		map.put("selectListForMySql",new HandleSelectListForMySql());
-		//can add other like oracle
+		map.put("insert",new HandleInsert());
+		map.put("update",new HandleUpdate());
+		map.put("delete",new HandleDelete());
+		map.put("selectAll",new HandleSelectAll());
+		map.put("selectAllCount",new HandleSelectAllCount());
+		map.put("selectByPk",new HandleSelectByPk());
+		map.put("selectList",new HandleSelectList());
 	}
 	
 	public Object intercept(Invocation invocation) throws Throwable {
@@ -85,6 +86,13 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 			builder = getBuilder(builder, mappedStatement);
 			MappedStatement newMappedStatement = builder.build();
 			invocation.getArgs()[0] = newMappedStatement;
+			DataSource dataSource = mappedStatement.getConfiguration().getEnvironment().getDataSource();
+			String driverName = dataSource.getConnection().getMetaData().getDriverName();
+			if(driverName.toLowerCase().contains("mysql")){
+				sqlBuildInfo.setDbTypeEnum(DbTypeEnum.MYSQL);
+			}else if(driverName.toLowerCase().contains("oracle")){
+				sqlBuildInfo.setDbTypeEnum(DbTypeEnum.ORACLE);
+			}
 		}
 		return invocation.proceed();
 	}

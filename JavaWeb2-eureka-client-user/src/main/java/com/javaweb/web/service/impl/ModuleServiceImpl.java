@@ -31,7 +31,7 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
 	
 	public List<Module> getModule(boolean adminFlag,String userId) {
 		if(adminFlag){//管理员
-			return moduleDao.selectAllForMySql();
+			return moduleDao.selectAll();
 		}else{//非管理员
 			//1.获得user_role的所有对应关系
 			List<UserRole> userRoleList = userRoleDao.getUserRoleByUserId(userId);
@@ -103,7 +103,7 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
 		}
 		module.setOrders(moduleLevelAndOrdersResponse.getOrders()+1);
 		module.setLevel(moduleLevelAndOrdersResponse.getLevel());
-		moduleDao.insertForMySql(module);
+		moduleDao.insert(module);
 	}
 	
 	@Transactional
@@ -116,7 +116,7 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
 			module.setParentId(null);
 			moduleDao.setModuleParentIdNull(module);//当parentId为null表示设置为根目录，此时需要特殊处理，因为大部分更新操作代码逻辑对null值是不更新数据库数据的
 		}
-		moduleDao.updateForMySql(module);
+		moduleDao.update(module);
 	}
 
 	public Module moduleDetail(String moduleId) {
