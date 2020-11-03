@@ -21,6 +21,6 @@ public class DbTablesColumnListResponse implements Serializable {
 	
 	private String defaultValue;//默认值
 	
-	private String extra;//额外说明
+	private String comment;//字段说明
 
 }
