@@ -25,7 +25,7 @@ public class Module extends BaseEntity implements Serializable {
 	
 	@NotEmpty(groups={update.class,delete.class},message="validated.module.moduleId.notEmpty")
 	@Column(name="module_id",pk=true,columnDesc="主键ID")
-	private String moduleId;//主键ID
+	private String moduleId;//模块ID
 	
 	@NotEmpty(groups={add.class,update.class},message="validated.module.moduleName.notEmpty")
 	@Column(name="module_name",columnDesc="模块名称")
