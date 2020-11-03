@@ -52,12 +52,12 @@ public class DbTablesServiceImpl extends BaseService implements DbTablesService 
 		for(int i=0;i<list.size();i++){
 			Map<String,Object> map = list.get(i);
 			DbTablesColumnListResponse dbTablesColumnListResponse = new DbTablesColumnListResponse();
-			dbTablesColumnListResponse.setField(map.get("Field").toString());
-			dbTablesColumnListResponse.setType(map.get("Type")==null?null:String.valueOf(map.get("Type")));
-			dbTablesColumnListResponse.setIsNull(map.get("Null")==null?null:String.valueOf(map.get("Null")));
-			dbTablesColumnListResponse.setExtra(map.get("Extra")==null?null:String.valueOf(map.get("Extra")));
-			dbTablesColumnListResponse.setDefaultValue(map.get("Default")==null?null:String.valueOf(map.get("Default")));
-			dbTablesColumnListResponse.setIsKey(map.get("Key")==null?null:String.valueOf(map.get("Key")));
+			dbTablesColumnListResponse.setField(map.get("COLUMN_NAME").toString());
+			dbTablesColumnListResponse.setType(map.get("COLUMN_TYPE")==null?null:String.valueOf(map.get("COLUMN_TYPE")));
+			dbTablesColumnListResponse.setIsNull(map.get("IS_NULLABLE")==null?null:String.valueOf(map.get("IS_NULLABLE")));
+			dbTablesColumnListResponse.setComment(map.get("COLUMN_COMMENT")==null?null:String.valueOf(map.get("COLUMN_COMMENT")));
+			dbTablesColumnListResponse.setDefaultValue(map.get("COLUMN_DEFAULT")==null?null:String.valueOf(map.get("COLUMN_DEFAULT")));
+			dbTablesColumnListResponse.setIsKey(map.get("COLUMN_KEY")==null?null:String.valueOf(map.get("COLUMN_KEY")));
 			result.add(dbTablesColumnListResponse);
 		}
 		return result;
@@ -75,10 +75,10 @@ public class DbTablesServiceImpl extends BaseService implements DbTablesService 
 		for(int i=0;i<list.size();i++){
 			Map<String,Object> map = list.get(i);
 			DbTablesCodeGenerateResponse dbTablesCodeGenerateResponse = new DbTablesCodeGenerateResponse();
-			dbTablesCodeGenerateResponse.setTableColumn(map.get("Field").toString());
-			dbTablesCodeGenerateResponse.setKey((map.get("Key")!=null&&map.get("Key").equals("PRI"))?true:false);
+			dbTablesCodeGenerateResponse.setTableColumn(map.get("COLUMN_NAME").toString());
+			dbTablesCodeGenerateResponse.setKey((map.get("COLUMN_KEY")!=null&&map.get("COLUMN_KEY").equals("PRI"))?true:false);
 			stringBuilder = new StringBuilder();
-			String fields[] = map.get("Field").toString().split(CommonConstant.UNDERLINE);
+			String fields[] = map.get("COLUMN_NAME").toString().split(CommonConstant.UNDERLINE);
 			for(int j=0;j<fields.length;j++){
 				if(j==0){
 					stringBuilder.append(fields[j]);
@@ -87,7 +87,7 @@ public class DbTablesServiceImpl extends BaseService implements DbTablesService 
 				}
 			}
 			dbTablesCodeGenerateResponse.setJavaPropertyName(stringBuilder.toString());
-			String type = map.get("Type")==null?null:String.valueOf(map.get("Type"));
+			String type = map.get("COLUMN_TYPE")==null?null:String.valueOf(map.get("COLUMN_TYPE"));
 			if(type==null){
 				type = "String";
 			}else{
