@@ -22,8 +22,8 @@ public class File extends BaseEntity implements Serializable {
 	@Column(name="user_id",columnDesc="用户ID")
 	private String userId;//用户ID
 	
-	@Column(name="micro_sys_no",columnDesc="微服务系统编号")
-	private String microSysNo;//微服务系统编号
+	@Column(name="system_id",columnDesc="系统ID")
+	private String systemId;//系统ID
 	
 	@Column(name="file_name",columnDesc="文件名称")
 	private String fileName;//文件名称
