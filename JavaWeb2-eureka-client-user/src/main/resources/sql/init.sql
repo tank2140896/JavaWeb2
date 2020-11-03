@@ -78,7 +78,7 @@ INSERT INTO `sys_dictionary` VALUES ('202005142045309916', null, null, '0', 'use
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_file`;
 CREATE TABLE `sys_file` (
-  `file_id` varchar(255) NOT NULL,
+  `id` varchar(255) NOT NULL,
   `user_id` varchar(255) DEFAULT NULL,
   `micro_sys_no` varchar(255) DEFAULT NULL,
   `file_name` varchar(255) DEFAULT NULL,
@@ -94,7 +94,7 @@ CREATE TABLE `sys_file` (
   `update_date` varchar(19) DEFAULT NULL,
   `updater` varchar(255) DEFAULT NULL,
   `del_flag` tinyint(4) DEFAULT '0',
-  PRIMARY KEY (`file_id`) USING BTREE
+  PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
