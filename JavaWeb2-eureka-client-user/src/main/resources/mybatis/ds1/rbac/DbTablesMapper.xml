@@ -17,16 +17,16 @@
 		)
 	</select>
 
-	<!-- 更详细的获取方式为：select * from information_schema.columns where table_name = #{_parameter} and table_schema = (select database()) order by ordinal_position -->
 	<select id="getTableColumnInfo" parameterType="java.lang.String" resultType="java.util.Map">
-		desc ${_parameter}
+		<!-- desc ${_parameter} -->
+		select * from information_schema.columns where table_name = #{_parameter} and table_schema = (select database()) order by ordinal_position
 	</select>
 	
 	<!-- oracle主要就是下面三条语句：
 	select table_name from user_tables where table_name like 'SYS%'
 	select column_name,data_type from user_tab_columns where table_name = 'SYS_USER'
 	select column_name,comments from user_col_comments where table_name = 'SYS_USER' 
-        连起来查询示例：
+	连起来查询示例：
 	select utc.column_name,utc.data_type,ucc.comments 
 	from user_tab_columns utc,user_col_comments ucc 
 	where utc.column_name = ucc.column_name 
