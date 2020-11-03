@@ -99,13 +99,13 @@ public class FileController {
     		List<String> list = new ArrayList<>();
     		if(multipartFile!=null&&multipartFile.length>0){
         		for(int i=0;i<multipartFile.length;i++){
-        			String fileId = SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO);//文件唯一ID
+        			String id = SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO);//文件唯一ID
         			String originFileName = multipartFile[i].getOriginalFilename();//原上传文件名称
         			String newFileName = UUID.randomUUID().toString()+"_"+originFileName;//新文件名称
         			String filePath = rootPath+newFileName;//文件全路径
         			FileUtil.writeFile(multipartFile[i].getInputStream(),new byte[1024],new File(filePath));
         			com.javaweb.po.File fileEntity = new com.javaweb.po.File();
-        			fileEntity.setFileId(fileId);
+        			fileEntity.setId(id);
         			//fileEntity.setUserId("可以根据token获得");
         			fileEntity.setMicroSysNo(SystemConstant.SYSTEM_NO);
         			fileEntity.setFileName(newFileName);
@@ -114,8 +114,8 @@ public class FileController {
         			fileEntity.setFileSize(String.valueOf(multipartFile[i].getSize()));
         			fileEntity.setFileUnit("byte");
         			fileEntity.setFileSerNo(fileSerNo);
-        			fileDao.insertForMySql(fileEntity);
-        			list.add(fileId);
+        			fileDao.insert(fileEntity);
+        			list.add(id);
         		}
         	}
     		return new BaseResponseResult(HttpCodeEnum.SUCCESS,"文件上传成功",list);
@@ -129,7 +129,7 @@ public class FileController {
     	try{
     		//下载文件可以根据token进行权限处理，此处省略
     		System.out.println("获得的token为："+httpServletRequest.getHeader(SystemConstant.HEAD_TOKEN));
-    		com.javaweb.po.File file = fileDao.selectByPkForMySql(fileId);
+    		com.javaweb.po.File file = fileDao.selectByPk(fileId);
 			FileUtil.downloadFile(httpServletResponse.getOutputStream(),new byte[1024],new File(file.getFileFullPath()));
 		}catch(Exception e) {
 			e.printStackTrace();
