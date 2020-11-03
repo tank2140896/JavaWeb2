@@ -204,26 +204,26 @@ INSERT INTO `sys_interfaces` VALUES ('202006131245542761', '接口测试接口',
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_module`;
 CREATE TABLE `sys_module` (
-  `module_id` varchar(255) NOT NULL,
-  `module_name` varchar(255) NOT NULL,
-  `page_url` varchar(255) DEFAULT NULL,
-  `api_url` varchar(10000) DEFAULT NULL,
-  `parent_id` varchar(255) DEFAULT NULL,
-  `fcode` varchar(255) DEFAULT NULL,
-  `level` int(11) DEFAULT NULL,
-  `orders` int(11) DEFAULT NULL,
-  `module_type` int(11) DEFAULT NULL,
-  `alias` varchar(255) DEFAULT NULL,
-  `parent_alias` varchar(255) DEFAULT NULL,
-  `system_id` varchar(255) DEFAULT NULL,
-  `remark` varchar(255) DEFAULT NULL,
-  `icon` varchar(255) DEFAULT NULL,
-  `type` int(11) DEFAULT NULL,
-  `create_date` varchar(19) DEFAULT NULL,
-  `creator` varchar(255) DEFAULT NULL,
-  `update_date` varchar(19) DEFAULT NULL,
-  `updater` varchar(255) DEFAULT NULL,
-  `del_flag` tinyint(4) DEFAULT NULL,
+  `module_id` varchar(255) NOT NULL COMMENT '主键ID',
+  `module_name` varchar(255) NOT NULL COMMENT '模块名称',
+  `page_url` varchar(255) DEFAULT NULL COMMENT '页面URL',
+  `api_url` varchar(10000) DEFAULT NULL COMMENT 'API的URL',
+  `parent_id` varchar(255) DEFAULT NULL COMMENT '模块的上级ID',
+  `fcode` varchar(255) DEFAULT NULL COMMENT '层级关系',
+  `level` int(11) DEFAULT NULL COMMENT '第几级(0表示未定义层级数;层级数1为最高,即根节点)',
+  `orders` int(11) DEFAULT NULL COMMENT '模块顺序(0表示没有顺序;顺序从1开始)',
+  `module_type` int(11) DEFAULT NULL COMMENT '模块类型(0:未定义模块类型;1:目录;2:菜单；3:功能)',
+  `alias` varchar(255) DEFAULT NULL COMMENT '别名',
+  `parent_alias` varchar(255) DEFAULT NULL COMMENT '上级别名',
+  `system_id` varchar(255) DEFAULT NULL COMMENT '系统ID',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `icon` varchar(255) DEFAULT NULL COMMENT '图标',
+  `type` int(11) DEFAULT NULL COMMENT '类型(0:未定义类型,作为全端通用接口使用;1:PC端;2:安卓端;3:IOS端) ',
+  `create_date` varchar(19) DEFAULT NULL COMMENT '创建时间',
+  `creator` varchar(255) DEFAULT NULL COMMENT '创建者',
+  `update_date` varchar(19) DEFAULT NULL COMMENT '更新时间',
+  `updater` varchar(255) DEFAULT NULL COMMENT '更新者',
+  `del_flag` tinyint(4) DEFAULT NULL COMMENT '删除标记(0:未被删除;1:已被删除)',
   PRIMARY KEY (`module_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
@@ -284,14 +284,14 @@ INSERT INTO `sys_module` VALUES ('202005161348165381', '接口测试', '/web/sys
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_operation_log`;
 CREATE TABLE `sys_operation_log` (
-  `id` varchar(255) NOT NULL,
-  `user_id` varchar(255) DEFAULT NULL,
-  `url` varchar(255) DEFAULT NULL,
-  `request_method` varchar(255) DEFAULT NULL,
-  `request_parameter` varchar(255) DEFAULT NULL,
-  `request_ip_address` varchar(255) DEFAULT NULL,
-  `request_time` varchar(255) DEFAULT NULL,
-  `remark` varchar(255) DEFAULT NULL,
+  `id` varchar(255) NOT NULL COMMENT '主键ID',
+  `user_id` varchar(255) DEFAULT NULL COMMENT '用户ID',
+  `url` varchar(255) DEFAULT NULL COMMENT '请求地址',
+  `request_method` varchar(255) DEFAULT NULL COMMENT '请求方法',
+  `request_parameter` varchar(255) DEFAULT NULL COMMENT '请求参数',
+  `request_ip_address` varchar(255) DEFAULT NULL COMMENT '请求IP地址',
+  `request_time` varchar(255) DEFAULT NULL COMMENT '请求时间',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
@@ -318,19 +318,19 @@ INSERT INTO `sys_operation_log` VALUES ('202005211450338251', 'admin123456', 'ht
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role`;
 CREATE TABLE `sys_role` (
-  `role_id` varchar(255) NOT NULL,
-  `role_name` varchar(255) NOT NULL,
-  `parent_id` varchar(255) DEFAULT NULL,
-  `fcode` varchar(255) DEFAULT NULL,
-  `level` int(11) DEFAULT '0',
-  `type` int(11) DEFAULT '0',
-  `system_id` varchar(255) DEFAULT NULL,
-  `remark` varchar(255) DEFAULT NULL,
-  `create_date` varchar(19) DEFAULT NULL,
-  `creator` varchar(255) DEFAULT NULL,
-  `update_date` varchar(19) DEFAULT NULL,
-  `updater` varchar(255) DEFAULT NULL,
-  `del_flag` tinyint(4) DEFAULT '0',
+  `role_id` varchar(255) NOT NULL COMMENT '角色ID',
+  `role_name` varchar(255) NOT NULL COMMENT '角色名称',
+  `parent_id` varchar(255) DEFAULT NULL COMMENT '角色的上级ID',
+  `fcode` varchar(255) DEFAULT NULL COMMENT '层级关系',
+  `level` int(11) DEFAULT '0' COMMENT '第几级(0表示未定义层级数;层级数1为最高,即根节点)',
+  `type` int(11) DEFAULT '0' COMMENT '类型(0:未定义类型,作为全端通用接口使用;1:PC端;2:安卓端;3:IOS端)',
+  `system_id` varchar(255) DEFAULT NULL COMMENT '系统ID',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `create_date` varchar(19) DEFAULT NULL COMMENT '创建时间',
+  `creator` varchar(255) DEFAULT NULL COMMENT '创建者',
+  `update_date` varchar(19) DEFAULT NULL COMMENT '更新时间',
+  `updater` varchar(255) DEFAULT NULL COMMENT '更新者',
+  `del_flag` tinyint(4) DEFAULT '0' COMMENT '删除标记(0:未被删除;1:已被删除)',
   PRIMARY KEY (`role_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
@@ -346,9 +346,9 @@ INSERT INTO `sys_role` VALUES ('202004052117534263', '角色3', null, null, '0',
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role_data`;
 CREATE TABLE `sys_role_data` (
-  `id` varchar(255) NOT NULL,
-  `role_id` varchar(255) NOT NULL,
-  `data_permission_id` varchar(255) NOT NULL,
+  `id` varchar(255) NOT NULL COMMENT '主键ID',
+  `role_id` varchar(255) NOT NULL COMMENT '角色ID',
+  `data_permission_id` varchar(255) NOT NULL COMMENT '数据权限ID',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -362,9 +362,9 @@ INSERT INTO `sys_role_data` VALUES ('202005211447517211', '202004052117534261', 
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_role_module`;
 CREATE TABLE `sys_role_module` (
-  `id` varchar(255) NOT NULL,
-  `role_id` varchar(255) NOT NULL,
-  `module_id` varchar(255) NOT NULL,
+  `id` varchar(255) NOT NULL COMMENT '主键ID',
+  `role_id` varchar(255) NOT NULL COMMENT '角色ID',
+  `module_id` varchar(255) NOT NULL COMMENT '模块ID',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
@@ -392,15 +392,15 @@ INSERT INTO `sys_role_module` VALUES ('202004271404222471', '202004052117534261'
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_schedule`;
 CREATE TABLE `sys_schedule` (
-  `id` varchar(255) NOT NULL,
-  `schedule_date` varchar(255) DEFAULT NULL,
-  `schedule_type` int(11) DEFAULT NULL COMMENT '1:周末;2:正常;3:节假日;4:休假',
-  `remark` varchar(255) DEFAULT NULL,
-  `create_date` varchar(255) DEFAULT NULL,
-  `creator` varchar(255) DEFAULT NULL,
-  `update_date` varchar(255) DEFAULT NULL,
-  `updater` varchar(255) DEFAULT NULL,
-  `del_flag` tinyint(4) DEFAULT NULL,
+  `id` varchar(255) NOT NULL COMMENT '主键ID',
+  `schedule_date` varchar(255) DEFAULT NULL COMMENT '日期',
+  `schedule_type` int(11) DEFAULT NULL COMMENT '日程类型（1:周末;2:正常;3:节假日;4:休假）',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `create_date` varchar(255) DEFAULT NULL COMMENT '创建时间',
+  `creator` varchar(255) DEFAULT NULL COMMENT '创建者',
+  `update_date` varchar(255) DEFAULT NULL COMMENT '更新时间',
+  `updater` varchar(255) DEFAULT NULL COMMENT '更新者',
+  `del_flag` tinyint(4) DEFAULT NULL COMMENT '删除标记(0:未被删除;1:已被删除)',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -483,23 +483,23 @@ INSERT INTO `sys_schedule` VALUES ('202005161328254601', '2020-06-07', '1', null
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user`;
 CREATE TABLE `sys_user` (
-  `user_id` varchar(255) NOT NULL,
-  `user_name` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `person_name` varchar(255) DEFAULT NULL,
-  `email` varchar(255) DEFAULT NULL,
-  `phone` varchar(255) DEFAULT NULL,
-  `portrait` varchar(255) DEFAULT NULL,
-  `parent_id` varchar(255) DEFAULT NULL,
-  `fcode` varchar(255) DEFAULT NULL,
-  `level` int(11) DEFAULT '0',
-  `remark` varchar(255) DEFAULT NULL,
-  `status` int(11) DEFAULT '0',
-  `create_date` varchar(19) DEFAULT NULL,
-  `creator` varchar(255) DEFAULT NULL,
-  `update_date` varchar(19) DEFAULT NULL,
-  `updater` varchar(255) DEFAULT NULL,
-  `del_flag` tinyint(4) DEFAULT '0',
+  `user_id` varchar(255) NOT NULL COMMENT '用户ID',
+  `user_name` varchar(255) NOT NULL COMMENT '用户名',
+  `password` varchar(255) NOT NULL COMMENT '用户密码',
+  `person_name` varchar(255) DEFAULT NULL COMMENT '用户姓名',
+  `email` varchar(255) DEFAULT NULL COMMENT '电子邮箱',
+  `phone` varchar(255) DEFAULT NULL COMMENT '手机号码',
+  `portrait` varchar(255) DEFAULT NULL COMMENT '头像',
+  `parent_id` varchar(255) DEFAULT NULL COMMENT '创建该用户的ID',
+  `fcode` varchar(255) DEFAULT NULL COMMENT '层级关系',
+  `level` int(11) DEFAULT '0' COMMENT '第几级(层级数0为最高,即根节点)',
+  `remark` varchar(255) DEFAULT NULL COMMENT '备注',
+  `status` int(11) DEFAULT '0' COMMENT '账号状态(0:正常；1：禁用)',
+  `create_date` varchar(19) DEFAULT NULL COMMENT '创建时间',
+  `creator` varchar(255) DEFAULT NULL COMMENT '创建者',
+  `update_date` varchar(19) DEFAULT NULL COMMENT '更新时间',
+  `updater` varchar(255) DEFAULT NULL COMMENT '更新者',
+  `del_flag` tinyint(4) DEFAULT '0' COMMENT '删除标记(0:未被删除;1:已被删除)',
   PRIMARY KEY (`user_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
@@ -523,9 +523,9 @@ INSERT INTO `sys_user` VALUES ('202004041609538019', 'username_11', '6ca13d52ca7
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user_data`;
 CREATE TABLE `sys_user_data` (
-  `id` varchar(255) NOT NULL,
-  `user_id` varchar(255) NOT NULL,
-  `data_permission_id` varchar(255) NOT NULL,
+  `id` varchar(255) NOT NULL COMMENT '主键ID',
+  `user_id` varchar(255) NOT NULL COMMENT '用户ID',
+  `data_permission_id` varchar(255) NOT NULL COMMENT '数据权限ID',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -539,9 +539,9 @@ INSERT INTO `sys_user_data` VALUES ('202005211447517111', '202004041609538011', 
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user_module`;
 CREATE TABLE `sys_user_module` (
-  `id` varchar(255) NOT NULL,
-  `user_id` varchar(255) NOT NULL,
-  `module_id` varchar(255) NOT NULL,
+  `id` varchar(255) NOT NULL COMMENT '主键ID',
+  `user_id` varchar(255) NOT NULL COMMENT '用户ID',
+  `module_id` varchar(255) NOT NULL COMMENT '模块ID',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
@@ -562,11 +562,11 @@ INSERT INTO `sys_user_module` VALUES ('202004261340308761', '202004041609538011'
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_user_role`;
 CREATE TABLE `sys_user_role` (
-  `id` varchar(255) NOT NULL,
-  `user_id` varchar(255) NOT NULL,
-  `role_id` varchar(255) NOT NULL,
-  `module_strategy` int(11) DEFAULT NULL,
-  `data_strategy` int(11) DEFAULT NULL,
+  `id` varchar(255) NOT NULL COMMENT '主键ID',
+  `user_id` varchar(255) NOT NULL COMMENT '用户ID',
+  `role_id` varchar(255) NOT NULL COMMENT '角色ID',
+  `module_strategy` int(11) DEFAULT NULL COMMENT '权限获取策略(0:自定义;1:并集;2:交集;3:以用户权限为准;4:以角色权限为准;其它:默认为未定义,作为并集处理)',
+  `data_strategy` int(11) DEFAULT NULL COMMENT '数据获取策略(0:自定义;1:并集;2:交集;3:以用户权限为准;4:以角色权限为准;其它:默认为未定义,作为并集处理)',
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
