@@ -15,13 +15,13 @@ public class RoleData implements Serializable {
 
 	private static final long serialVersionUID = -8720034407531582856L;
 
-	@Column(name="id",pk=true)
+	@Column(name="id",pk=true,columnDesc="主键ID")
 	private String id;//主键ID
 	
-	@Column(name="role_id")
+	@Column(name="role_id",columnDesc="角色ID")
 	private String roleId;//角色ID
 
-	@Column(name="data_permission_id")
+	@Column(name="data_permission_id",columnDesc="数据权限ID")
 	private String dataPermissionId;//数据权限ID
 	
 }

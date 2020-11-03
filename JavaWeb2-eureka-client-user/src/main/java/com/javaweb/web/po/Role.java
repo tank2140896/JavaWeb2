@@ -19,29 +19,29 @@ public class Role extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = 7161573735090231747L;
 
 	@NotEmpty(groups={update.class,delete.class},message="validated.role.roleId.notEmpty")
-	@Column(name="role_id",pk=true)
+	@Column(name="role_id",pk=true,columnDesc="角色ID")
 	private String roleId;//角色ID
 	
 	@NotEmpty(groups={add.class,update.class},message="validated.role.roleName.notEmpty")
-	@Column(name="role_name")
+	@Column(name="role_name",columnDesc="角色名称")
 	private String roleName;//角色名称
 	
-	@Column(name="parent_id")
+	@Column(name="parent_id",columnDesc="角色的上级ID")
 	private String parentId;//角色的上级ID
 	
-	@Column(name="fcode")
+	@Column(name="fcode",columnDesc="层级关系")
 	private String fcode;//层级关系
 	
-	@Column(name="level")
+	@Column(name="level",columnDesc="第几级(0表示未定义层级数;层级数1为最高,即根节点)")
 	private Integer level = 0;//第几级(0表示未定义层级数;层级数1为最高,即根节点)
 	
-	@Column(name="type")
+	@Column(name="type",columnDesc="类型(0:未定义类型,作为全端通用接口使用;1:PC端;2:安卓端;3:IOS端)")
 	private Integer type = 0;//类型(0:未定义类型,作为全端通用接口使用;1:PC端;2:安卓端;3:IOS端) 
 	
-	@Column(name="system_id")
+	@Column(name="system_id",columnDesc="系统ID")
 	private String systemId;//系统ID
 	
-	@Column(name="remark")
+	@Column(name="remark",columnDesc="备注")
 	private String remark;//备注
 
 }

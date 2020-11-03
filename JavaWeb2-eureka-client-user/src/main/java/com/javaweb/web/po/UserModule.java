@@ -15,13 +15,13 @@ public class UserModule implements Serializable {
 
 	private static final long serialVersionUID = -3308661987883600632L;
 
-	@Column(name="id",pk=true)
+	@Column(name="id",pk=true,columnDesc="主键ID")
 	private String id;//主键ID
 	
-	@Column(name="user_id")
+	@Column(name="user_id",columnDesc="用户ID")
 	private String userId;//用户ID
 	
-	@Column(name="module_id")
+	@Column(name="module_id",columnDesc="模块ID")
 	private String moduleId;//模块ID
 
 }

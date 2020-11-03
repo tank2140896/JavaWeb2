@@ -16,8 +16,8 @@ public class DataPermission extends BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = -4584788854424411139L;
 	
-    @Column(name="id",pk=true,columnDesc="ID")
-    private String id;//ID
+    @Column(name="id",pk=true,columnDesc="主键ID")
+    private String id;//主键ID
     
     @Column(name="exclude_field",columnDesc="排除字段")
     private String excludeField;//排除字段
