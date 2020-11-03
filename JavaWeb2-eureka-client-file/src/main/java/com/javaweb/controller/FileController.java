@@ -107,7 +107,7 @@ public class FileController {
         			com.javaweb.po.File fileEntity = new com.javaweb.po.File();
         			fileEntity.setId(id);
         			//fileEntity.setUserId("可以根据token获得");
-        			fileEntity.setMicroSysNo(SystemConstant.SYSTEM_NO);
+        			fileEntity.setSystemId(SystemConstant.SYSTEM_NO);
         			fileEntity.setFileName(newFileName);
         			fileEntity.setFilePath(rootPath);
         			fileEntity.setFileFullPath(filePath);
