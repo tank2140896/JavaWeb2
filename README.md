@@ -6,7 +6,7 @@
 4、mysql5.6+                 
 5、lombok     
 6、nodejs              
-# 二、项目1依赖关系                                                                 
+# 二、项目依赖关系                                                                 
 JavaWeb2-database->JavaWeb2-common                  
 JavaWeb2-integration-demo->JavaWeb2-database                                                                      
 JavaWeb2-eureka-server（要起3个，端口1001、1002、1003）                                                
