@@ -79,13 +79,6 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 		SqlHandle sqlHandle = map.get(lastString);
 		if(sqlHandle!=null){
 			SqlBuildInfo sqlBuildInfo = getSqlBuildInfo(c,parameter);//获取改造SQL所需要的数据
-			String sql = sqlHandle.handle(sqlBuildInfo);//改造SQL
-			BoundSql boundSql = mappedStatement.getBoundSql(parameter);
-			BoundSql newBoundSql = new BoundSql(mappedStatement.getConfiguration(),sql,boundSql.getParameterMappings(),boundSql.getParameterObject());  
-			Builder builder = new MappedStatement.Builder(mappedStatement.getConfiguration(),mappedStatement.getId(),new BoundSqlSource(newBoundSql),mappedStatement.getSqlCommandType());
-			builder = getBuilder(builder, mappedStatement);
-			MappedStatement newMappedStatement = builder.build();
-			invocation.getArgs()[0] = newMappedStatement;
 			DataSource dataSource = mappedStatement.getConfiguration().getEnvironment().getDataSource();
 			String driverName = dataSource.getConnection().getMetaData().getDriverName();
 			if(driverName.toLowerCase().contains("mysql")){
@@ -93,6 +86,13 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 			}else if(driverName.toLowerCase().contains("oracle")){
 				sqlBuildInfo.setDbTypeEnum(DbTypeEnum.ORACLE);
 			}
+			String sql = sqlHandle.handle(sqlBuildInfo);//改造SQL
+			BoundSql boundSql = mappedStatement.getBoundSql(parameter);
+			BoundSql newBoundSql = new BoundSql(mappedStatement.getConfiguration(),sql,boundSql.getParameterMappings(),boundSql.getParameterObject());  
+			Builder builder = new MappedStatement.Builder(mappedStatement.getConfiguration(),mappedStatement.getId(),new BoundSqlSource(newBoundSql),mappedStatement.getSqlCommandType());
+			builder = getBuilder(builder, mappedStatement);
+			MappedStatement newMappedStatement = builder.build();
+			invocation.getArgs()[0] = newMappedStatement;
 		}
 		return invocation.proceed();
 	}
