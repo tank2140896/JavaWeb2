@@ -1,4 +1,5 @@
-<div style="margin-top:1%;margin-left:1%">
+<div style="margin-top:1%;margin-left:1%;text-align:center;"><h3>当前数据连接源</h3></div>
+<div style="margin-left:1%">
   表名<input type="text" style="height:35px;" placeholder="请输入用户名" [(ngModel)]="dbTablesListRequest.tableName">
   <button type="button" class="btn btn-primary" style="margin-left:1%;" (click)="dbTablesSearch(1)" *ngIf="dbTablesListZone">查询</button>
   <button type="button" class="btn btn-info" style="margin-left:1%;" (click)="reset()">重置</button>
@@ -53,4 +54,17 @@
       </div>
     </div>
   </div>
+</div>
+<div style="margin-top:1%;margin-left:1%;text-align:center;"><h3>自定义数据连接源（未完待续）</h3></div>
+<div style="margin-left:1%">
+  数据库：mysql<input name="dbTypeRadio" type="radio">oracle<input name="dbTypeRadio" type="radio">
+  表空间：<input type="text" style="width:100px;">
+  mybatis的xml目录：<input type="text" style="width:150px;">
+  数据库映射实体类目录：<input type="text" style="width:150px;">
+  业务实体类目录：<input type="text" style="width:150px;">
+  controller目录：<input type="text" style="width:150px;">
+  service目录：<input type="text" style="width:150px;">
+  dao目录：<input type="text" style="width:150px;">
+  <button type="button" class="btn btn-primary" style="margin-left:1%;">查询</button>
+  <button type="button" class="btn btn-info" style="margin-left:1%;">重置</button>
 </div>

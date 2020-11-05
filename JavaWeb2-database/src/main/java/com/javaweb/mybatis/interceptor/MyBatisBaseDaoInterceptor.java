@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.sql.Connection;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -80,7 +81,8 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 		if(sqlHandle!=null){
 			SqlBuildInfo sqlBuildInfo = getSqlBuildInfo(c,parameter);//获取改造SQL所需要的数据
 			DataSource dataSource = mappedStatement.getConfiguration().getEnvironment().getDataSource();
-			String driverName = dataSource.getConnection().getMetaData().getDriverName();
+			Connection connection = dataSource.getConnection();
+			String driverName = connection.getMetaData().getDriverName();
 			if(driverName.toLowerCase().contains("mysql")){
 				sqlBuildInfo.setDbTypeEnum(DbTypeEnum.MYSQL);
 			}else if(driverName.toLowerCase().contains("oracle")){
@@ -93,6 +95,7 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 			builder = getBuilder(builder, mappedStatement);
 			MappedStatement newMappedStatement = builder.build();
 			invocation.getArgs()[0] = newMappedStatement;
+			connection.close();
 		}
 		return invocation.proceed();
 	}
