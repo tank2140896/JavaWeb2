@@ -28,11 +28,11 @@
             ],
             "styles": [
               "./src/style.css",
-              "node_modules/_bootstrap@4.5.2@bootstrap/dist/css/bootstrap.min.css"
+              "node_modules/_bootstrap@4.5.3@bootstrap/dist/css/bootstrap.css"
             ],
             "scripts": [
               "node_modules/_jquery@3.5.1@jquery/dist/jquery.slim.js",
-              "node_modules/_bootstrap@4.5.2@bootstrap/dist/js/bootstrap.min.js"
+              "node_modules/_bootstrap@4.5.3@bootstrap/dist/js/bootstrap.js"
             ]
           },
           "configurations": {
