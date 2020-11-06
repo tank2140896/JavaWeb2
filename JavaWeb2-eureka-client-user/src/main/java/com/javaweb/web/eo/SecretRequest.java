@@ -16,6 +16,7 @@ import com.javaweb.util.core.SecretUtil;
 
 import lombok.Getter;
 import lombok.Setter;
+import net.sf.json.JSONObject;
 
 @Getter
 @Setter
@@ -85,11 +86,20 @@ public class SecretRequest {
 		}
 	}
 	
-	public <T> T getEntity(Class<T> c){
+	public <T> T getEntityForPostPut(Class<T> c){
 		try {
 			//System.out.println(this.code);
 			//objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
 			return new ObjectMapper().readValue(this.code,c);
+		} catch (Exception e) {
+			return null;
+		} 
+	}
+	
+	public JSONObject getEntityForGetDelete(){
+		try {
+			//System.out.println(this.code);
+			return JSONObject.fromObject(this.code);
 		} catch (Exception e) {
 			return null;
 		} 

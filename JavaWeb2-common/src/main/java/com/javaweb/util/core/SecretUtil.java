@@ -110,8 +110,12 @@ public class SecretUtil {
 	}
 
 	//获取UUID
-	public static String getRandomUUID() {
-		return UUID.randomUUID().toString();
+	public static String getRandomUUID(boolean removeBar) {
+		String uuid = UUID.randomUUID().toString();
+		if(removeBar){
+			uuid.replaceAll(CommonConstant.BAR,CommonConstant.EMPTY_VALUE);
+		}
+		return uuid;
 	}
 	
 	//默认生成随机密码
@@ -123,20 +127,35 @@ public class SecretUtil {
 				}).mapToObj(each->Character.toString(KEYBORD_USED_CHARACTERSET[each])).limit(passLen).collect(Collectors.joining());
 	}
 	
+	//默认生成随机数字
+	public static String defaultGenRandomNum(int passLen) {
+		StringBuilder stringBuilder = new StringBuilder();
+		for(int i=0;i<passLen;i++){
+			stringBuilder.append(MathUtil.getRandomNumForLCRC(9));
+		}
+		return stringBuilder.toString();
+	}
+	
 	/**
-	默认根据当前时间生成唯一字符串（带系统编号，用于分布式，高并发下效率较低）
-	推荐redis处理，核心写法为：
+	默认根据当前时间生成唯一字符串（循环自增序号+时间+随机4位数字+分布式系统编号）
+	高并发推荐redis处理，核心写法为：
 	redisTemplate.opsForValue().set("defaultGenUniqueStr",1);
 	System.out.println(redisTemplate.opsForValue().increment("defaultGenUniqueStr",1));
 	*/
+	private static volatile int defaultGenUniqueStrNum = 1;
 	public static String defaultGenUniqueStr(String systemNo){
 		synchronized ("defaultGenUniqueStr") {
+			StringBuilder stringBuilder = new StringBuilder();
 			try {
 				TimeUnit.MILLISECONDS.sleep(1);
 			} catch (InterruptedException e) {
 				
 			}
-			return DateUtil.getStringDate(DateUtil.DATETIME_PATTERN_TYPE2)+systemNo;
+			stringBuilder.append(defaultGenUniqueStrNum++).append(new Date().getTime()).append(defaultGenRandomNum(4)).append(systemNo);
+			if(defaultGenUniqueStrNum==10){
+				defaultGenUniqueStrNum = 1;
+			}
+			return stringBuilder.toString();
 		}
 	}
 	
@@ -144,14 +163,14 @@ public class SecretUtil {
 	public static String decimal2AnyDecimal(long decimal,int arbitraryHexadecimal,char characterSet[]){  
 		StringBuilder stringBuilder = new StringBuilder();
 		while(decimal!=0){
-			stringBuilder.append(characterSet[(int) (decimal%arbitraryHexadecimal)]);
+			stringBuilder.append(characterSet[(int)(decimal%arbitraryHexadecimal)]);
 			decimal/=arbitraryHexadecimal;
 		}
 		return stringBuilder.reverse().toString();
    	} 
     
 	//任意进制数转化成十进制（目前只适用于正整数）  
-        public static String anyDecimal2decimal(String anyDecimal,int arbitraryHexadecimal,Map<Character,Integer> characteKV){  
+    public static String anyDecimal2decimal(String anyDecimal,int arbitraryHexadecimal,Map<Character,Integer> characteKV){  
 		int anyDecimalOfLength = anyDecimal.length();
 		long num = 0;
 		BigDecimal ret = new BigDecimal("0");

@@ -113,11 +113,11 @@ public class TreeUtil {
 	//构建二叉树(新增节点值也是调用该方法[这是用的是while的方式,也可以采用递归调用buildBinaryTree的方式])
 	public static void buildBinaryTree(BinaryTree<Integer> tree,Integer value){
 		if(tree.getUniqueIndex()==null){//表示根节点
-			tree.setUniqueIndex(SecretUtil.getRandomUUID());
+			tree.setUniqueIndex(SecretUtil.getRandomUUID(true));
 			tree.setValue(value);
 		}else{
 			BinaryTree<Integer> node = new BinaryTree<>();
-			node.setUniqueIndex(SecretUtil.getRandomUUID());
+			node.setUniqueIndex(SecretUtil.getRandomUUID(true));
 			node.setValue(value);
 			BinaryTree<Integer> tmp = tree;
 			while(true){
@@ -163,12 +163,12 @@ public class TreeUtil {
 	//构建红黑树(新增节点值也是调用该方法)-该方法与二叉树的新增只是略微不同
 	public static RedBlackTree<Integer> buildRedBlackTree(RedBlackTree<Integer> redBlackTree,Integer value){
 		if(redBlackTree.getUniqueIndex()==null){//表示根节点
-			redBlackTree.setUniqueIndex(SecretUtil.getRandomUUID());
+			redBlackTree.setUniqueIndex(SecretUtil.getRandomUUID(true));
 			redBlackTree.setValue(value);
 			redBlackTree.setRedBlackEnum(RedBlackEnum.RED);//此处无论设置为红色还是黑色都没关系,因为根节点最终都会设置为黑色
 		}else{
 			RedBlackTree<Integer> node = new RedBlackTree<>();
-			node.setUniqueIndex(SecretUtil.getRandomUUID());
+			node.setUniqueIndex(SecretUtil.getRandomUUID(true));
 			node.setValue(value);
 			node.setRedBlackEnum(RedBlackEnum.RED);
 			RedBlackTree<Integer> tmp = redBlackTree;
