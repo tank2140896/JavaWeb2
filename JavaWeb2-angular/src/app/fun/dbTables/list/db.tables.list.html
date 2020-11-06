@@ -11,10 +11,9 @@
         <thead>
           <tr class="text-center">
             <th>序号</th>
+            <th>表空间</th>
             <th>表名</th>
-            <th>存储引擎</th>
             <th>表说明</th>
-            <th>创建时间</th>
             <th>操作</th>
           </tr>
         </thead>
@@ -31,10 +30,9 @@
         <tbody *ngIf="resultPage.data!=null&&resultPage.data!=resultPage.dataLoading">
           <tr *ngFor="let eachData of resultPage.data;let xh=index" class="text-center">
             <td>{{(xh+1)+(resultPage.currentPage-1)*resultPage.pageSize}}</td>
+            <td>{{eachData.tableSchema}}</td>
             <td>{{eachData.tableName}}</td>
-            <td>{{eachData.engine}}</td>
             <td>{{eachData.tableComment}}</td>
-            <td>{{eachData.createTime}}</td>
             <td>
               <button style="margin-right:10px;" *ngIf="dbTablesDetailZone" class="btn btn-sm btn-info" (click)="dbTablesDetailFunction(eachData.tableName)">数据库表详情</button>
               <button *ngIf="dbTablesCodeGenerateZone" class="btn btn-sm btn-primary" (click)="dbTablesCodeGenerateFunction(eachData.tableName)">代码生成</button>
@@ -54,17 +52,4 @@
       </div>
     </div>
   </div>
-</div>
-<div style="margin-top:1%;margin-left:1%;text-align:center;"><h3>自定义数据连接源（未完待续）</h3></div>
-<div style="margin-left:1%">
-  数据库：mysql<input name="dbTypeRadio" type="radio">oracle<input name="dbTypeRadio" type="radio">
-  表空间：<input type="text" style="width:100px;">
-  mybatis的xml目录：<input type="text" style="width:150px;">
-  数据库映射实体类目录：<input type="text" style="width:150px;">
-  业务实体类目录：<input type="text" style="width:150px;">
-  controller目录：<input type="text" style="width:150px;">
-  service目录：<input type="text" style="width:150px;">
-  dao目录：<input type="text" style="width:150px;">
-  <button type="button" class="btn btn-primary" style="margin-left:1%;">查询</button>
-  <button type="button" class="btn btn-info" style="margin-left:1%;">重置</button>
 </div>

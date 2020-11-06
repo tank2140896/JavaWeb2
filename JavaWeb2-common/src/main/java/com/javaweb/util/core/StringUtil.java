@@ -24,6 +24,14 @@ import net.sf.json.JSONObject;
 
 public class StringUtil{
 	
+	//对象转字符串
+	public static String object2String(Object obj){
+		if(obj==null){
+			return CommonConstant.NULL_VALUE;
+		}
+		return String.valueOf(obj);
+	}
+	
 	//去除前后指定字符(trim()方法的补充)
 	public static String trim(String str,char c) {
        int start = 0;

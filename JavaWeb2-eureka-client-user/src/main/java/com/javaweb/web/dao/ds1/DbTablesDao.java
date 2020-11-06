@@ -10,9 +10,7 @@ import com.javaweb.web.eo.dbTables.DbTablesListResponse;
 @Mapper
 public interface DbTablesDao {
 	
-	public List<String> getTableList();
-	
-	public List<DbTablesListResponse> getTableInfo(List<String> list);
+	public List<DbTablesListResponse> getTableList(String tableSchema);
 	
 	public List<Map<String,Object>> getTableColumnInfo(String tableName);
 

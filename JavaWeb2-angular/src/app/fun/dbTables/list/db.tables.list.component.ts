@@ -41,9 +41,10 @@ export class DbTablesListComponent implements OnInit {
 
   //初始化
   ngOnInit(): void {
-    //若需修改分页大小或其它请求参数请注释后自行调整，这里使用默认值
+    /*若需修改分页大小或其它请求参数请注释后自行调整，这里使用默认值
     this.dbTablesListRequest.currentPage = 1;
     this.dbTablesListRequest.pageSize = 5;
+    */
     this.dbTablesListFunction(this.dbTablesListRequest);//初始化数据库表列表
   }
 

@@ -15,7 +15,7 @@ CREATE TABLE `sys_data_permission` (
   `updater` varchar(255) DEFAULT NULL COMMENT '更新者',
   `del_flag` tinyint(4) DEFAULT '0' COMMENT '删除标记(0:未被删除;1:已被删除)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) COMMENT = '系统数据权限表' ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_data_permission
@@ -47,7 +47,7 @@ CREATE TABLE `sys_dictionary` (
   `updater` varchar(255) DEFAULT NULL COMMENT '更新者',
   `del_flag` tinyint(4) DEFAULT '0' COMMENT '删除标记(0:未被删除;1:已被删除)',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) COMMENT = '系统字典表' ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_dictionary
@@ -95,7 +95,7 @@ CREATE TABLE `sys_file` (
   `updater` varchar(255) DEFAULT NULL COMMENT '更新者',
   `del_flag` tinyint(4) DEFAULT '0' COMMENT '删除标记(0:未被删除;1:已被删除)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) COMMENT = '系统文件表' ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_file
@@ -128,7 +128,7 @@ CREATE TABLE `sys_interfaces` (
   `updater` varchar(255) DEFAULT NULL COMMENT '更新者',
   `del_flag` tinyint(4) DEFAULT '0' COMMENT '删除标记(0:未被删除;1:已被删除)',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) COMMENT = '系统接口表' ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_interfaces
@@ -225,7 +225,7 @@ CREATE TABLE `sys_module` (
   `updater` varchar(255) DEFAULT NULL COMMENT '更新者',
   `del_flag` tinyint(4) DEFAULT NULL COMMENT '删除标记(0:未被删除;1:已被删除)',
   PRIMARY KEY (`module_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) COMMENT = '系统模块表' ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_module
@@ -293,7 +293,7 @@ CREATE TABLE `sys_operation_log` (
   `request_time` varchar(255) DEFAULT NULL COMMENT '请求时间',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) COMMENT = '系统操作日志表' ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_operation_log
@@ -332,7 +332,7 @@ CREATE TABLE `sys_role` (
   `updater` varchar(255) DEFAULT NULL COMMENT '更新者',
   `del_flag` tinyint(4) DEFAULT '0' COMMENT '删除标记(0:未被删除;1:已被删除)',
   PRIMARY KEY (`role_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) COMMENT = '系统角色表' ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role
@@ -350,7 +350,7 @@ CREATE TABLE `sys_role_data` (
   `role_id` varchar(255) NOT NULL COMMENT '角色ID',
   `data_permission_id` varchar(255) NOT NULL COMMENT '数据权限ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) COMMENT = '系统角色数据表' ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_role_data
@@ -366,7 +366,7 @@ CREATE TABLE `sys_role_module` (
   `role_id` varchar(255) NOT NULL COMMENT '角色ID',
   `module_id` varchar(255) NOT NULL COMMENT '模块ID',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) COMMENT = '系统角色模块表' ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_role_module
@@ -402,7 +402,7 @@ CREATE TABLE `sys_schedule` (
   `updater` varchar(255) DEFAULT NULL COMMENT '更新者',
   `del_flag` tinyint(4) DEFAULT NULL COMMENT '删除标记(0:未被删除;1:已被删除)',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) COMMENT = '系统日程表' ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_schedule
@@ -501,7 +501,7 @@ CREATE TABLE `sys_user` (
   `updater` varchar(255) DEFAULT NULL COMMENT '更新者',
   `del_flag` tinyint(4) DEFAULT '0' COMMENT '删除标记(0:未被删除;1:已被删除)',
   PRIMARY KEY (`user_id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) COMMENT = '系统用户表' ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user
@@ -527,7 +527,7 @@ CREATE TABLE `sys_user_data` (
   `user_id` varchar(255) NOT NULL COMMENT '用户ID',
   `data_permission_id` varchar(255) NOT NULL COMMENT '数据权限ID',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) COMMENT = '系统用户数据表' ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of sys_user_data
@@ -543,7 +543,7 @@ CREATE TABLE `sys_user_module` (
   `user_id` varchar(255) NOT NULL COMMENT '用户ID',
   `module_id` varchar(255) NOT NULL COMMENT '模块ID',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) COMMENT = '系统用户模块表' ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user_module
@@ -568,7 +568,7 @@ CREATE TABLE `sys_user_role` (
   `module_strategy` int(11) DEFAULT NULL COMMENT '权限获取策略(0:自定义;1:并集;2:交集;3:以用户权限为准;4:以角色权限为准;其它:默认为未定义,作为并集处理)',
   `data_strategy` int(11) DEFAULT NULL COMMENT '数据获取策略(0:自定义;1:并集;2:交集;3:以用户权限为准;4:以角色权限为准;其它:默认为未定义,作为并集处理)',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
+) COMMENT = '系统用户角色表' ENGINE=InnoDB DEFAULT CHARSET=utf8 ROW_FORMAT=DYNAMIC;
 
 -- ----------------------------
 -- Records of sys_user_role

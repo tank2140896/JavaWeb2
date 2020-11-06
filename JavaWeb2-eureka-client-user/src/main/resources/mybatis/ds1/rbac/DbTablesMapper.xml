@@ -3,36 +3,16 @@
 
 <mapper namespace="com.javaweb.web.dao.ds1.DbTablesDao">
 
-	<select id="getTableList" resultType="java.lang.String">
-		SHOW TABLES
+	<select id="getTableList" parameterType="java.lang.String" resultType="com.javaweb.web.eo.dbTables.DbTablesListResponse">
+		SELECT TABLE_SCHEMA as tableSchema,TABLE_NAME as tableName,TABLE_COMMENT as tableComment FROM information_schema.TABLES WHERE TABLE_SCHEMA = #{_parameter}
+		<!-- oracle
+		select OWNER as tableSchema,TABLE_NAME as tableName,COMMENTS as tableComment from all_tab_comments where owner = #{_parameter}
+		-->
 	</select>
 	
-	<select id="getTableInfo" parameterType="java.util.List" resultType="com.javaweb.web.eo.dbTables.DbTablesListResponse">
-		select table_name as tableName,`engine` as `engine`,table_comment as tableComment,create_time as createTime 
-		from information_schema.tables 
-		where table_schema = (select database()) and table_name in(
-			<foreach collection="list" index="index" item="item" open="" separator="," close="">   
-	        #{item}
-	    	</foreach>
-		)
-	</select>
-
 	<select id="getTableColumnInfo" parameterType="java.lang.String" resultType="java.util.Map">
 		<!-- desc ${_parameter} -->
 		select * from information_schema.columns where table_name = #{_parameter} and table_schema = (select database()) order by ordinal_position
 	</select>
-	
-	<!-- oracle主要就是下面三条语句：
-	select table_name from user_tables where table_name like 'SYS%'
-	select column_name,data_type from user_tab_columns where table_name = 'SYS_USER'
-	select column_name,comments from user_col_comments where table_name = 'SYS_USER' 
-	连起来查询示例：
-	select utc.column_name,utc.data_type,ucc.comments 
-	from user_tab_columns utc,user_col_comments ucc 
-	where utc.column_name = ucc.column_name 
-	and utc.table_name = 'SYS_USER' 
-	and ucc.table_name = 'SYS_USER' 
-	order by utc.column_id asc
-	-->
 	
 </mapper>

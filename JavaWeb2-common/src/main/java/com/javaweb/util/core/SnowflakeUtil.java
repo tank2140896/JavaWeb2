@@ -1,5 +1,6 @@
 package com.javaweb.util.core;
 
+//雪花算法
 public class SnowflakeUtil {
 	
 	//================================================Algorithm's Parameter=============================================

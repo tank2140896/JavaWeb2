@@ -1,7 +1,6 @@
 package com.javaweb.web.service.impl;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -28,21 +27,13 @@ import com.javaweb.web.service.DbTablesService;
 public class DbTablesServiceImpl extends BaseService implements DbTablesService {
 
 	public Page dbTablesList(DbTablesListRequest dbTablesListRequest) {
-		List<String> tablelist = dbTablesDao.getTableList();
+		List<DbTablesListResponse> tablelist = dbTablesDao.getTableList("test");
 		if(!(StringUtil.handleNullString(dbTablesListRequest.getTableName()).equals(CommonConstant.EMPTY_VALUE))){
-			tablelist = tablelist.stream().filter(e->e.contains(dbTablesListRequest.getTableName())).collect(Collectors.toList());
+			tablelist = tablelist.stream().filter(e->e.getTableName().contains(dbTablesListRequest.getTableName())).collect(Collectors.toList());
 		}
 		long count = tablelist.size();
 		tablelist = PageUtil.getSubList(tablelist,dbTablesListRequest.getPageSize(),dbTablesListRequest.getCurrentPage());
-		List<DbTablesListResponse> list = new ArrayList<>();
-		if(tablelist!=null&&tablelist.size()>0){
-			list = dbTablesDao.getTableInfo(tablelist).stream().sorted(new Comparator<DbTablesListResponse>() {
-				public int compare(DbTablesListResponse o1, DbTablesListResponse o2) {
-					return o1.getTableName().hashCode()>o2.getTableName().hashCode()?0:1;
-				}
-			}).collect(Collectors.toList());
-		}
-		Page page = new Page(dbTablesListRequest,list,count);
+		Page page = new Page(dbTablesListRequest,tablelist,count);
 		return page;
 	}
 	
@@ -52,12 +43,12 @@ public class DbTablesServiceImpl extends BaseService implements DbTablesService 
 		for(int i=0;i<list.size();i++){
 			Map<String,Object> map = list.get(i);
 			DbTablesColumnListResponse dbTablesColumnListResponse = new DbTablesColumnListResponse();
-			dbTablesColumnListResponse.setField(map.get("COLUMN_NAME").toString());
-			dbTablesColumnListResponse.setType(map.get("COLUMN_TYPE")==null?null:String.valueOf(map.get("COLUMN_TYPE")));
-			dbTablesColumnListResponse.setIsNull(map.get("IS_NULLABLE")==null?null:String.valueOf(map.get("IS_NULLABLE")));
-			dbTablesColumnListResponse.setComment(map.get("COLUMN_COMMENT")==null?null:String.valueOf(map.get("COLUMN_COMMENT")));
-			dbTablesColumnListResponse.setDefaultValue(map.get("COLUMN_DEFAULT")==null?null:String.valueOf(map.get("COLUMN_DEFAULT")));
-			dbTablesColumnListResponse.setIsKey(map.get("COLUMN_KEY")==null?null:String.valueOf(map.get("COLUMN_KEY")));
+			dbTablesColumnListResponse.setField(StringUtil.object2String(map.get("COLUMN_NAME")));
+			dbTablesColumnListResponse.setType(StringUtil.object2String(map.get("COLUMN_TYPE")));
+			dbTablesColumnListResponse.setIsNull(StringUtil.object2String(map.get("IS_NULLABLE")));
+			dbTablesColumnListResponse.setComment(StringUtil.object2String(map.get("COLUMN_COMMENT")));
+			dbTablesColumnListResponse.setDefaultValue(StringUtil.object2String(map.get("COLUMN_DEFAULT")));
+			dbTablesColumnListResponse.setIsKey(StringUtil.object2String(map.get("COLUMN_KEY")));
 			result.add(dbTablesColumnListResponse);
 		}
 		return result;
