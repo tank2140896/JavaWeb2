@@ -1,6 +1,7 @@
 package com.javaweb.util.core;
 
 import java.io.ByteArrayOutputStream;
+import java.math.BigDecimal;
 import java.security.MessageDigest;
 import java.util.Base64;
 import java.util.Base64.Decoder;
@@ -150,13 +151,13 @@ public class SecretUtil {
    	} 
     
 	//任意进制数转化成十进制（目前只适用于正整数）  
-	public static String anyDecimal2decimal(String anyDecimal,int arbitraryHexadecimal,Map<Character,Integer> characteKV){  
+        public static String anyDecimal2decimal(String anyDecimal,int arbitraryHexadecimal,Map<Character,Integer> characteKV){  
 		int anyDecimalOfLength = anyDecimal.length();
 		long num = 0;
-		long ret = 0;
+		BigDecimal ret = new BigDecimal("0");
 		for(int i=anyDecimalOfLength-1;i>-1;i--){
 			int indexValue = characteKV.get(anyDecimal.charAt(i));
-			ret += indexValue*Math.pow(arbitraryHexadecimal, num++);
+			ret = ret.add(new BigDecimal(indexValue*Math.pow(arbitraryHexadecimal,num++)));
 		}
 		return String.valueOf(ret);  
    	}
