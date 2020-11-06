@@ -1,6 +1,7 @@
 <div style="margin-top:1%;margin-left:1%">
   接口名称<input type="text" style="height:35px;" placeholder="请输入接口名称" [(ngModel)]="interfacesListRequest.name">
   url<input type="text" style="height:35px;" placeholder="请输入url" [(ngModel)]="interfacesListRequest.url">
+  基础url<input type="text" style="height:35px;" placeholder="请输入基础url" [(ngModel)]="interfacesListRequest.baseUrl">
   方法名称<input type="text" style="height:35px;" placeholder="请输入方法名称" [(ngModel)]="interfacesListRequest.method">
   <button type="button" class="btn btn-primary" style="margin-left:1%;" (click)="interfacesSearch(1)" *ngIf="interfacesListZone">查询</button>
   <button type="button" class="btn btn-info" style="margin-left:1%;" (click)="reset()">重置</button>
@@ -15,6 +16,7 @@
             <th>序号</th>
             <th>接口名称</th>
             <th>URL</th>
+            <th>基础URL</th>
             <th>总被调用次数</th>
             <th>方法名称</th>
             <th>是否可分配数据权限</th>
@@ -37,6 +39,7 @@
             <td>{{(xh+1)+(resultPage.currentPage-1)*resultPage.pageSize}}</td>
             <td>{{eachData.name}}</td>
             <td>{{eachData.url}}</td>
+            <td>{{eachData.baseUrl}}</td>
             <td>{{eachData.historyTimes}}</td>
             <td>{{eachData.method}}</td>
             <td *ngIf="eachData.dataPermission==1" style="color:#06801f">是</td>

@@ -18,11 +18,13 @@ import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.base.BaseValidatedGroup;
 import com.javaweb.constant.ApiConstant;
+import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SwaggerConstant;
 import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.module.ModuleListRequest;
+import com.javaweb.web.po.Interfaces;
 import com.javaweb.web.po.Module;
 
 import io.swagger.annotations.Api;
@@ -51,6 +53,16 @@ public class ModuleController extends BaseController {
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}else{
+			if(module.getModuleType()==3){//功能
+				List<Interfaces> interfacesList = interfacesService.getAll();
+				String apis[] = module.getApiUrl().split(CommonConstant.COMMA);
+				for(int i=0;i<apis.length;i++){
+					int j = i;
+					if(interfacesList.stream().filter(e->e.getBaseUrl().equals(apis[j])).count()<1){
+						return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"module.add.fail",null);
+					}
+				}
+			}
 			moduleService.moduleAdd(tokenData.getUser(),module);
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.add.success",null);
 		}

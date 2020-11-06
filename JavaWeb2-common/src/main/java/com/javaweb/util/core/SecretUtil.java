@@ -142,6 +142,7 @@ public class SecretUtil {
 	redisTemplate.opsForValue().set("defaultGenUniqueStr",1);
 	System.out.println(redisTemplate.opsForValue().increment("defaultGenUniqueStr",1));
 	*/
+	/**
 	private static volatile int defaultGenUniqueStrNum = 1;
 	public static String defaultGenUniqueStr(String systemNo){
 		synchronized ("defaultGenUniqueStr") {
@@ -156,6 +157,17 @@ public class SecretUtil {
 				defaultGenUniqueStrNum = 1;
 			}
 			return stringBuilder.toString();
+		}
+	}
+	*/
+	public static String defaultGenUniqueStr(String systemNo){
+		synchronized ("defaultGenUniqueStr") {
+			try {
+				TimeUnit.MILLISECONDS.sleep(1);
+			} catch (InterruptedException e) {
+				
+			}
+			return DateUtil.getStringDate(DateUtil.DATETIME_PATTERN_TYPE2)+systemNo;
 		}
 	}
 	

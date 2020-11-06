@@ -13,7 +13,9 @@ public class InterfacesListRequest implements Serializable {
 
 	private String name;//接口名称
     
-    private String url;//URL
+    private String url;//URL 
+
+    private String baseUrl;//基础URL
     
     private String method;//方法名称
     

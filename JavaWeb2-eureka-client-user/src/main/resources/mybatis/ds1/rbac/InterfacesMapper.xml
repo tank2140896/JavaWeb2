@@ -32,6 +32,7 @@
 			del_flag = 0
 			<if test="name != null and name != ''">and name like CONCAT('%',#{name},'%')</if>
 			<if test="url != null and url != ''">and url like CONCAT('%',#{url},'%')</if>
+			<if test="baseUrl != null and baseUrl != ''">and base_url like CONCAT('%',#{baseUrl},'%')</if>
 			<if test="method != null and method != ''">and method like CONCAT('%',#{method},'%')</if>
 		</where>
 		ORDER BY name desc
@@ -44,6 +45,7 @@
 			del_flag = 0
 			<if test="name != null and name != ''">and name like CONCAT('%',#{name},'%')</if>
 			<if test="url != null and url != ''">and url like CONCAT('%',#{url},'%')</if>
+			<if test="baseUrl != null and baseUrl != ''">and base_url like CONCAT('%',#{baseUrl},'%')</if>
 			<if test="method != null and method != ''">and method like CONCAT('%',#{method},'%')</if>
 		</where>
 	</select>

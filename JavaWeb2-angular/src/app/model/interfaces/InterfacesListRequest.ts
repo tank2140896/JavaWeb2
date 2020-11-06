@@ -4,6 +4,8 @@ export class InterfacesListRequest {
 
   url:string;//URL
 
+  baseUrl:string;//基础URL
+
   method:string;//方法名称
 
   currentPage = 1;//当前页数
