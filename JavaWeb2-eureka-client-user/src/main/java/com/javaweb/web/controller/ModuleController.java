@@ -59,7 +59,7 @@ public class ModuleController extends BaseController {
 				for(int i=0;i<apis.length;i++){
 					int j = i;
 					if(interfacesList.stream().filter(e->e.getBaseUrl().equals(apis[j])).count()<1){
-						return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"module.add.fail",null);
+						return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"interfaces.notExist.fail",null);
 					}
 				}
 			}
@@ -104,6 +104,16 @@ public class ModuleController extends BaseController {
 						if(originModule.getModuleType()!=1){//若是升级操作，只能原来是目录的升目录
 							return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"module.modify.fail",null);
 						}
+					}
+				}
+			}
+			if(module.getModuleType()==3){//功能
+				List<Interfaces> interfacesList = interfacesService.getAll();
+				String apis[] = module.getApiUrl().split(CommonConstant.COMMA);
+				for(int i=0;i<apis.length;i++){
+					int j = i;
+					if(interfacesList.stream().filter(e->e.getBaseUrl().equals(apis[j])).count()<1){
+						return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"interfaces.notExist.fail",null);
 					}
 				}
 			}

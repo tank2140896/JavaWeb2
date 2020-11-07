@@ -30,6 +30,8 @@ public class SystemConstant {
 	
 	public static final String DATA_SOURCE_KEY_2 = "mysql_d2";
 	
+	public static final String URL_WEB_INTERCEPTOR_START_PREFIX = "/web";
+	
 	public static final String URL_WEB_INTERCEPTOR_PATTERN = "/web/**";
 	
 	public static final String URL_APP_INTERCEPTOR_PATTERN = "/app/**";

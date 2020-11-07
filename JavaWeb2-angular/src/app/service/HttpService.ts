@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient,HttpHeaders} from '@angular/common/http';
 import {HeadToken} from '../model/HeadToken';
+import {ApiConstant} from '../constant/ApiConstant';
 
 @Injectable()
 export class HttpService {
@@ -16,6 +17,7 @@ export class HttpService {
     let headers:HttpHeaders = new HttpHeaders({
         'Content-Type':'application/json',
         'Access-Control-Allow-Headers':'Authorization',
+        'Api-Version':ApiConstant.API_VERSION,
         token:headToken.token//传入token
     });
     let options = {headers:headers,withCredentials:true};

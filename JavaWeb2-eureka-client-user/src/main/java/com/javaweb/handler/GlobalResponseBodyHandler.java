@@ -14,6 +14,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.base.BaseTool;
 import com.javaweb.constant.CommonConstant;
+import com.javaweb.constant.SystemConstant;
 import com.javaweb.util.core.ObjectOperateUtil;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.interfaces.ExcludeInfoResponse;
@@ -24,7 +25,7 @@ public class GlobalResponseBodyHandler implements ResponseBodyAdvice<BaseRespons
 	public BaseResponseResult beforeBodyWrite(BaseResponseResult baseResponseResult,MethodParameter methodParameter,MediaType mediaType,
 		   Class<? extends HttpMessageConverter<?>> c,ServerHttpRequest serverHttpRequest,ServerHttpResponse serverHttpResponse) {
 		String path = serverHttpRequest.getURI().getPath();
-		if(path.startsWith("/web")){//目前带权限的接口会处理数据权限
+		if(path.startsWith(SystemConstant.URL_WEB_INTERCEPTOR_START_PREFIX)){//目前带权限的接口会处理数据权限
 			try {
 				TokenData tokenData = BaseTool.getTokenData(BaseTool.getToken(serverHttpRequest));
 				if(tokenData!=null){

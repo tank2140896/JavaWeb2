@@ -35,6 +35,9 @@ public class CommonConstant {
 	//杠
 	public static final String BAR = "-";
 	
+	//问号
+	public static final String QUESTION_MARK = "?";
+	
 	//下划线
 	public static final String UNDERLINE = "_";
 	

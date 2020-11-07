@@ -1,5 +1,6 @@
 export class ApiConstant{
 
+  public static API_VERSION = '1.0.0';
   public static HTTP_REQUEST_PREFIX = 'http://localhost:2001';
   public static WEBSOCKET_REQUEST_URL = 'ws://127.0.0.1:2100/ws';
 
