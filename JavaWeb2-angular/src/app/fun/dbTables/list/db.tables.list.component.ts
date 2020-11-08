@@ -22,7 +22,6 @@ export class DbTablesListComponent implements OnInit {
   constructor(private router:Router,
               private activatedRoute:ActivatedRoute,
               private httpService:HttpService,
-              public httpClient:HttpClient,
               private authService:AuthService,
               private sessionService:SessionService){
     this.dbTablesListZone = authService.canShow(ApiConstant.getPath(ApiConstant.SYS_DB_TABLES_LIST,false));
@@ -92,7 +91,7 @@ export class DbTablesListComponent implements OnInit {
       token:this.sessionService.getHeadToken().token
     });
     let options:any = {headers:headers,withCredentials:true,responseType:'blob'};
-    this.httpClient.get(ApiConstant.getPath(ApiConstant.SYS_DB_TABLES_CODE_GENERATE+'/'+tableName,true),options).subscribe(
+    this.httpService.getJsonData(ApiConstant.getPath(ApiConstant.SYS_DB_TABLES_CODE_GENERATE+'/'+tableName,true),options).subscribe(
         {
           next:(result:any) => {
             const blob = new Blob([result],{ type:'application/OCTET-STREAM;charset=UTF-8'});
