@@ -42,7 +42,10 @@ export class AuthService implements CanActivate {
   }
 
   /** 操作权限判断 */
-  public canShow(apiUrl:string):boolean{
+  public canShow(apiUrl:string | boolean):boolean{
+    if(typeof apiUrl === 'boolean'){
+      return apiUrl;
+    }
     let tokenData:any = this.sessionService.getTokenData();
     if(tokenData==null){
       return false;
