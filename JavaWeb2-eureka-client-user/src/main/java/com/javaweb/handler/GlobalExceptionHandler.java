@@ -66,7 +66,7 @@ public class GlobalExceptionHandler extends BaseTool {
 	
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public BaseResponseResult handleMethodArgumentNotValidException(MethodArgumentNotValidException e){
-		return new BaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,e.getBindingResult().getFieldError().getDefaultMessage());
+		return new BaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
 	}
 	
 	@ExceptionHandler(Exception.class)
