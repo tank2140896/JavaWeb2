@@ -1,10 +1,17 @@
 package com.javaweb.base;
 
 import java.time.Duration;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
+import javax.validation.Validator;
 
+import org.hibernate.validator.HibernateValidator;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.core.env.Environment;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -135,4 +142,38 @@ public class BaseTool extends BaseInject {
 		return staticEnvironment;
 	}
 	
+	/* -------------------------------------------------- 分界线 -------------------------------------------------- */
+	
+	//快速校验
+	public static final Validator FAST_VALIDATOR = Validation.byProvider(HibernateValidator.class).configure().failFast(true).buildValidatorFactory().getValidator();
+	
+	//全部校验
+	public static final Validator ALL_VALIDATOR = Validation.buildDefaultValidatorFactory().getValidator();
+
+	public static <T> List<String> fastFailValidate(T t) {
+		List<String> errorMessages = new LinkedList<String>();
+		Set<ConstraintViolation<T>> constraintViolations = FAST_VALIDATOR.validate(t);
+        if(constraintViolations!=null&&constraintViolations.size()>0){
+        	//constraintViolations.iterator().next().getPropertyPath().toString()
+        	errorMessages.add(constraintViolations.iterator().next().getMessage());
+        }
+        return errorMessages;
+    }
+	
+	public static <T> List<String> allCheckValidate(T t) {
+		List<String> errorMessages = new LinkedList<String>();
+        Set<ConstraintViolation<T>> constraintViolations = ALL_VALIDATOR.validate(t);
+        if(constraintViolations!=null&&constraintViolations.size()>0) {
+            Iterator<ConstraintViolation<T>> iterator = constraintViolations.iterator();
+            while(iterator.hasNext()){
+                ConstraintViolation<T> violation = iterator.next();
+                //violation.getPropertyPath().toString()
+                errorMessages.add(violation.getMessage());
+            }
+        }
+        return errorMessages;
+	}
+	
+	/* -------------------------------------------------- 分界线 -------------------------------------------------- */
+
 }
