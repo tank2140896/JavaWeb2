@@ -3,4 +3,10 @@
 
 <mapper namespace="com.javaweb.web.dao.ds1.${className}Dao">
 
+	<!--
+	select <#list propertyList as pl>${pl.tableColumn} as ${pl.javaPropertyName}<#if (pl?size>=pl_index)>,</#if></#list> from ${tableName}
+	<#noparse>${currentPage}*${pageSize}</#noparse>
+	<#noparse>(${currentPage}-1)*${pageSize}</#noparse>
+	-->
+
 </mapper>
