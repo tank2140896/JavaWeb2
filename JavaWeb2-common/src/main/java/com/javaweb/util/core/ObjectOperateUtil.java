@@ -3,8 +3,12 @@ package com.javaweb.util.core;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeSet;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.BeanUtils;
 
@@ -23,6 +27,19 @@ public class ObjectOperateUtil {
 	private static final Object[] NULL_OBJECT = new Object[]{};//无返回值（void）
 	
 	private static final Class<?>[] NULL_CLASS = new Class[]{};//无参
+	
+	/**
+	 * 集合对象去重 
+	 * @param list 集合对象
+	 * @param function function表达式，形如：User::getName
+	 * @return List<T> 集合对象
+	 */
+	//排序：Collections.sort(list,Comparator.comparing(User::getName).thenComparing(User::getAge))
+	public static <T,U extends Comparable<? super U>> List<T> objectListDistinct(List<T> list,Function<? super T,? extends U> function){
+		List<T> newList = list;
+		newList = newList.stream().collect(Collectors.collectingAndThen(Collectors.toCollection(()->new TreeSet<>(Comparator.comparing(function))),ArrayList<T>::new));
+		return newList;
+	}
 	
 	//对象拷贝
 	public static void copyProperties(Object source,Object target){
