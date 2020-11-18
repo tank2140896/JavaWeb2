@@ -32,6 +32,14 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+/**
+HSSF——提供读写Microsoft Excel格式档案的功能，主要是处理xls后缀
+XSSF——提供读写Microsoft Excel OOXML格式档案的功能，主要是处理xlsx后缀
+HWPF——提供读写Microsoft Word格式档案的功能
+HSLF——提供读写Microsoft PowerPoint格式档案的功能
+HDGF——提供读写Microsoft Visio格式档案的功能
+POI的API为：http://poi.apache.org/apidocs/index.html
+*/
 public class ExcelDemo {
 	
 	//模拟生成Excel数据
