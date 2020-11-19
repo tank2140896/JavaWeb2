@@ -39,6 +39,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         	        .allowedOrigins("*")
         	        .allowedHeaders("*")
         	        .allowedMethods("*")
+        	        //.exposedHeaders("token")//处理前端拿不到服务器response返回的header里key对应的value值
         	        .allowCredentials(true);
     }
 
