@@ -241,6 +241,7 @@
       	<!-- self end -->
 	</dependencies>
 	
+	<!-- SpringBoot（2.2.1.RELEASE）与SpringCloud（Hoxton.RELEASE）版本对应需要参考：http://projects.spring.io/spring-cloud -->
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
