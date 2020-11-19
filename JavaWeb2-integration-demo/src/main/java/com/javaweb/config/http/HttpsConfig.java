@@ -8,6 +8,7 @@ import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactor
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+//证书生成：keytool -genkey -alias tomcat -keyalg RSA -keystore ./test.keystore
 @Configuration
 public class HttpsConfig {
 	
