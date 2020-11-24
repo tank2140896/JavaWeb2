@@ -214,14 +214,14 @@ public class SecretUtil {
         return encoderString;
 	}
 	
-	//简单解密字符串
+	//Base64解密字符串
     public static String base64DecoderString(String str,String charsetName) throws Exception {
         Decoder decoder = Base64.getDecoder();
         String decoderString = new String(decoder.decode(str.getBytes(charsetName)),charsetName);
         return decoderString;
     }
     
-	//简单解密字符串
+	//Base64解密字符串
     public static String base64DecoderString(byte str[],String charsetName) throws Exception {
         Decoder decoder = Base64.getDecoder();
         String decoderString = new String(decoder.decode(str),charsetName);
@@ -241,17 +241,6 @@ public class SecretUtil {
 	//byte转int
 	public static int byteToInt(byte[] bytes) {
 		return (bytes[0]&0xFF)<<24 | (bytes[1]&0xFF)<<16 | (bytes[2]&0xFF)<<8 | (bytes[3]&0xFF);
-	}
-	
-	//对token进行简单加密
-	public static String secretTokenForEasyWay(String token,boolean random) {
-		String randomNumber = CommonConstant.EMPTY_VALUE;
-		if(random){
-			randomNumber = String.valueOf(MathUtil.getRandomNumForLCRC(Integer.MAX_VALUE-1));
-		}
-		String out = token+randomNumber;
-		out = out.replaceAll(CommonConstant.BAR,CommonConstant.EMPTY_VALUE).toUpperCase();
-		return out;
 	}
 	
 	//生成JWT
