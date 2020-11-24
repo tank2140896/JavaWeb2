@@ -83,7 +83,7 @@ public class AesDesUtil {
     }
 	
     //AES加密操作
-    public static String aesEncrypt(String data, String keyString) {
+    public static String encryptAes(String data, String keyString) {
     	try{
     		Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
     		cipher.init(Cipher.ENCRYPT_MODE, new SecretKeySpec(keyString.getBytes(), "AES"));
@@ -96,7 +96,7 @@ public class AesDesUtil {
     }
 
     //AES解密操作
-    public static String aesDecrypt(String data, String keyString) {
+    public static String decryptAes(String data, String keyString) {
     	try{
     		Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
     		cipher.init(Cipher.DECRYPT_MODE, new SecretKeySpec(keyString.getBytes(), "AES"));
