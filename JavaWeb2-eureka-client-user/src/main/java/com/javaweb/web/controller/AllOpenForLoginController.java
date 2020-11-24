@@ -135,6 +135,7 @@ public class AllOpenForLoginController extends BaseController {
 		return out;
 	}
 	
+	//获得API的URL列表
 	public List<String> getApiUrlList(List<Module> moduleList){
 		List<String> apiUrlList = new ArrayList<>();
 		for(int i=0;i<moduleList.size();i++){
@@ -150,6 +151,7 @@ public class AllOpenForLoginController extends BaseController {
 		return apiUrlList;
 	}
 	
+	//获得PAGE的URL列表
 	public List<String> getPageUrlList(List<Module> moduleList){
 		List<String> pageUrlList = new ArrayList<>();
 		for(int i=0;i<moduleList.size();i++){
@@ -162,6 +164,7 @@ public class AllOpenForLoginController extends BaseController {
 		return pageUrlList;
 	}
 	
+	//RSA秘钥设置
 	public void setRsaKey(TokenData tokenData){
 		RsaKey rsaKey = RsaUtil.getRsaKey();
 		tokenData.setRsaPublicKeyOfBackend(rsaKey.getRsaStringPublicKey());
@@ -171,11 +174,13 @@ public class AllOpenForLoginController extends BaseController {
 		tokenData.setRsaPrivateKeyOfFrontend(rsaKey.getRsaStringPrivateKey());
 	}
 	
+	//封装成树形结构集合（递归版）
 	public List<SidebarInfoResponse> setTreeList(List<SidebarInfoResponse> originList,SidebarInfoResponse module){
 		List<SidebarInfoResponse> moduleList = new ArrayList<>();
 		for (int i = 0; i < originList.size(); i++) {
 			SidebarInfoResponse currentModule = originList.get(i);
-			//这里树形结构处理时需要parentId只能为null，不能为空或其它值
+			//这里树形结构处理时需要parentId只能为null，不能为空或其它值（这个在模块新增和修改时已经控制了）
+			//Long类型，封装类型一定要用equals或.longValue()比较！！！，形如：module.getModuleId().longValue()==currentModule.getParentId().longValue()
 			if((module!=null&&module.getModuleId().equals(currentModule.getParentId()))||(module==null&&currentModule.getParentId()==null)){
 				currentModule.setList(setTreeList(originList, currentModule));
 				moduleList.add(currentModule);
@@ -184,37 +189,21 @@ public class AllOpenForLoginController extends BaseController {
 		return moduleList;
 	}
 	
-	/* -------------------------------------------------- 分界线（下面的目前没用到） -------------------------------------------------- */
+	/* -------------------------------------------------- 分界线（下面的目前未用到） -------------------------------------------------- */
 	
-	//封装成树形结构集合(递归版)
-	public List<Module> setTreeList(List<Module> originList,Module module){
-		List<Module> moduleList = new ArrayList<>();
-		for (int i = 0; i < originList.size(); i++) {
-			Module currentModule = originList.get(i);
-			//String类型写法
-			if((module!=null&&module.getModuleId().equals(currentModule.getParentId()))||(module==null&&currentModule.getParentId()==null)){
-			//Long类型写法（这里注意了，封装类型一定要用equals或.longValue()比较！！！）
-			//if(((module!=null)&&(module.getModuleId().longValue()==currentModule.getParentId().longValue()))||((module==null)&&(currentModule.getParentId()==null||currentModule.getParentId().longValue()==0))){
-				currentModule.setList(setTreeList(originList, currentModule));
-				moduleList.add(currentModule);
-			}
-		}
-		return moduleList;
-	}
-	
-	//封装成树形结构集合(非递归版)
-    public List<Module> setTreeList(List<Module> list){
-        List<List<Module>> deepList = getEachDeep(list);
+	//封装成树形结构集合（非递归版）（目前未用到）
+    public List<SidebarInfoResponse> setTreeList(List<SidebarInfoResponse> list){
+        List<List<SidebarInfoResponse>> deepList = getEachDeep(list);
         for(int i=deepList.size()-1;i>0;i--){
-            List<Module> childs = deepList.get(i);
-            List<Module> parrents = deepList.get(i-1);
+            List<SidebarInfoResponse> childs = deepList.get(i);
+            List<SidebarInfoResponse> parrents = deepList.get(i-1);
             //将子类归属于父类
             for(int j=0;j<parrents.size();j++){
-                Module parentModule = parrents.get(j);
+            	SidebarInfoResponse parentModule = parrents.get(j);
                 for(int k=0;k<childs.size();k++){
-                    Module childModule = childs.get(k);
+                	SidebarInfoResponse childModule = childs.get(k);
                     if(parentModule.getModuleId().equals(childModule.getParentId())){
-                        List<Module> parentsList = parentModule.getList();
+                        List<SidebarInfoResponse> parentsList = parentModule.getList();
                         parentsList.add(childModule);
                         parentModule.setList(parentsList);
                         childs.remove(k);
@@ -227,14 +216,15 @@ public class AllOpenForLoginController extends BaseController {
         }
         return deepList.get(0);
     }
-	    
-    public List<List<Module>> getEachDeep(List<Module> list){
-        List<List<Module>> arrayList = new ArrayList<>();//定义一个深度集合
+	
+    //归类每一层（目前未用到）
+    public List<List<SidebarInfoResponse>> getEachDeep(List<SidebarInfoResponse> list){
+        List<List<SidebarInfoResponse>> arrayList = new ArrayList<>();//定义一个深度集合
         int deep = 0;//深度
         for(int i=0;i<list.size();){
-            Module module = list.get(i);
+        	SidebarInfoResponse module = list.get(i);
             if(module.getParentId()==null){//第一层(顶层)
-                List<Module> first = new ArrayList<>();
+                List<SidebarInfoResponse> first = new ArrayList<>();
                 first.add(module);
                 arrayList.add(first);
                 deep++;
@@ -244,12 +234,12 @@ public class AllOpenForLoginController extends BaseController {
                 if(deep-1<0){
                     continue;
                 }
-                List<Module> noFirst = new ArrayList<>();
-                List<Module> upper = arrayList.get(deep-1);//获得上一层
+                List<SidebarInfoResponse> noFirst = new ArrayList<>();
+                List<SidebarInfoResponse> upper = arrayList.get(deep-1);//获得上一层
                 for(int j=0;j<upper.size();j++){
-                    Module upperModule = upper.get(j);
+                	SidebarInfoResponse upperModule = upper.get(j);
                     for(int k=0;k<list.size();k++){
-                        Module restEachModule = list.get(k);
+                    	SidebarInfoResponse restEachModule = list.get(k);
                         if(upperModule.getModuleId().equals(restEachModule.getParentId())){
                             noFirst.add(restEachModule);
                             list.remove(k);
@@ -262,7 +252,7 @@ public class AllOpenForLoginController extends BaseController {
                 deep++;
             }
         }
-        //deep:由于数组下标是从0开始的,因此要获得深度,最终需要deep+1,才是我们理解的深度值
+        //deep：由于数组下标是从0开始的，因此要获得深度，最终需要deep+1，才是我们理解的深度值
         return arrayList;
     }
 	
