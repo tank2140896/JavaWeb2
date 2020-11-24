@@ -2,7 +2,6 @@ package com.javaweb.web.controller;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +19,9 @@ import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SwaggerConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.enums.HttpCodeEnum;
+import com.javaweb.util.core.AesDesUtil;
+import com.javaweb.util.core.DateUtil;
+import com.javaweb.util.core.MathUtil;
 import com.javaweb.util.core.ObjectOperateUtil;
 import com.javaweb.util.core.RsaUtil;
 import com.javaweb.util.core.SecretUtil;
@@ -97,12 +99,7 @@ public class AllOpenForLoginController extends BaseController {
 	private TokenData getToken(boolean adminFlag,User user,String type){
 		List<Module> moduleList = moduleService.getModule(adminFlag,user.getUserId());
 		TokenData tokenData = new TokenData();
-		String token = SecretUtil.secretTokenForEasyWay(UUID.randomUUID().toString(),true);
-		try {
-			token = SecretUtil.base64EncoderString(token+CommonConstant.COMMA+user.getUserId()+CommonConstant.COMMA+type,"UTF-8");
-		} catch (Exception e) {
-			//do nothing
-		}
+		String token = getTokenForEasyWay(user.getUserId(),type);
 		tokenData.setToken(token);
 		tokenData.setUser(user);
 		tokenData.setType(type);
@@ -121,6 +118,21 @@ public class AllOpenForLoginController extends BaseController {
 			tokenData.setExcludeInfoResponseList(excludeInfoResponseList);
 		}
 		return tokenData;
+	}
+	
+	//简单获得token
+	private String getTokenForEasyWay(String userId,String type) {
+		String date = DateUtil.getStringDate(DateUtil.DATETIME_PATTERN_TYPE1);
+		String randomNumber = String.valueOf(MathUtil.getRandomNumForLCRC(Integer.MAX_VALUE-1));
+		String out = randomNumber + SecretUtil.getRandomUUID(true) + date;
+		out = AesDesUtil.encryptAes(out,"6Pq=*s+H2ppL5{INRx9MhU;k");//可以用defaultGenRandomPass(24)生成
+		out = out + CommonConstant.COMMA + userId + CommonConstant.COMMA + type;
+		try {
+			out = SecretUtil.base64EncoderString(out,"UTF-8");
+		} catch (Exception e) {
+			//do nothing
+		}
+		return out;
 	}
 	
 	public List<String> getApiUrlList(List<Module> moduleList){
