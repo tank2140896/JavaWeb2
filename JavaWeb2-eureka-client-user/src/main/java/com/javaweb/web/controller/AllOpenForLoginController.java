@@ -110,7 +110,7 @@ public class AllOpenForLoginController extends BaseController {
 		List<Module> modules = moduleList.stream().filter(i->1==i.getModuleType()||2==i.getModuleType()).collect(Collectors.toList());//获得目录、菜单列表并封装成树型结构
 		List<SidebarInfoResponse> menuListForTree = new ArrayList<>();
 		menuListForTree = ObjectOperateUtil.copyListProperties(modules,SidebarInfoResponse.class);//主要用到：moduleName、pageUrl、icon
-		menuListForTree = setTreeList(menuListForTree,null);
+		menuListForTree = setTreeList(menuListForTree,null);//setTreeList(menuListForTree);
 		tokenData.setMenuListForTree(menuListForTree);
 		setRsaKey(tokenData);
 		if(!adminFlag){
@@ -191,7 +191,7 @@ public class AllOpenForLoginController extends BaseController {
 	
 	/* -------------------------------------------------- 分界线（下面的目前未用到） -------------------------------------------------- */
 	
-	//封装成树形结构集合（非递归版）（目前未用到）
+	//封装成树形结构集合（非递归版）
     public List<SidebarInfoResponse> setTreeList(List<SidebarInfoResponse> list){
         List<List<SidebarInfoResponse>> deepList = getEachDeep(list);
         for(int i=deepList.size()-1;i>0;i--){
@@ -200,14 +200,17 @@ public class AllOpenForLoginController extends BaseController {
             //将子类归属于父类
             for(int j=0;j<parrents.size();j++){
             	SidebarInfoResponse parentModule = parrents.get(j);
-                for(int k=0;k<childs.size();k++){
+                for(int k=0;k<childs.size();){
                 	SidebarInfoResponse childModule = childs.get(k);
                     if(parentModule.getModuleId().equals(childModule.getParentId())){
                         List<SidebarInfoResponse> parentsList = parentModule.getList();
+                        parentsList = (parentsList==null?new ArrayList<>():parentsList);
                         parentsList.add(childModule);
                         parentModule.setList(parentsList);
                         childs.remove(k);
-                        k--;
+                        k=0;
+                    }else{
+                    	k++;
                     }
                 }
                 parrents.set(j,parentModule);
@@ -217,43 +220,52 @@ public class AllOpenForLoginController extends BaseController {
         return deepList.get(0);
     }
 	
-    //归类每一层（目前未用到）
-    public List<List<SidebarInfoResponse>> getEachDeep(List<SidebarInfoResponse> list){
+    //归类每一层
+    private List<List<SidebarInfoResponse>> getEachDeep(List<SidebarInfoResponse> list){
         List<List<SidebarInfoResponse>> arrayList = new ArrayList<>();//定义一个深度集合
         int deep = 0;//深度
+        classifyFirstLevel(list,arrayList,deep);
         for(int i=0;i<list.size();){
-        	SidebarInfoResponse module = list.get(i);
-            if(module.getParentId()==null){//第一层(顶层)
-                List<SidebarInfoResponse> first = new ArrayList<>();
-                first.add(module);
-                arrayList.add(first);
-                deep++;
-                list.remove(i);
-                i=0;
-            }else{//非第一层(非顶层)
-                if(deep-1<0){
-                    continue;
-                }
-                List<SidebarInfoResponse> noFirst = new ArrayList<>();
-                List<SidebarInfoResponse> upper = arrayList.get(deep-1);//获得上一层
-                for(int j=0;j<upper.size();j++){
-                	SidebarInfoResponse upperModule = upper.get(j);
-                    for(int k=0;k<list.size();k++){
-                    	SidebarInfoResponse restEachModule = list.get(k);
-                        if(upperModule.getModuleId().equals(restEachModule.getParentId())){
-                            noFirst.add(restEachModule);
-                            list.remove(k);
-                            k--;//这里不是k=0
-                            i=0;
-                        }
-                    }
-                }
-                arrayList.add(noFirst);
-                deep++;
-            }
+        	deep++;
+        	classifyNoFirstLevel(list,arrayList,deep);
         }
-        //deep：由于数组下标是从0开始的，因此要获得深度，最终需要deep+1，才是我们理解的深度值
         return arrayList;
+    }
+    
+    //归类第一层（deep=0）
+    private void classifyFirstLevel(List<SidebarInfoResponse> list,List<List<SidebarInfoResponse>> arrayList,int deep){
+        List<SidebarInfoResponse> first = new ArrayList<>();
+        for(int i=0;i<list.size();){
+        	SidebarInfoResponse each = list.get(i);
+        	if(each.getParentId()==null){
+        		first.add(each);
+        		list.remove(each);
+        		i=0;
+        	}else{
+        		i++;
+        	}
+        }
+        arrayList.add(deep,first);
+    }
+    
+    //归类非第一层（deep!=0）
+    private void classifyNoFirstLevel(List<SidebarInfoResponse> list,List<List<SidebarInfoResponse>> arrayList,int deep){
+    	List<SidebarInfoResponse> parentLevel = arrayList.get(deep-1);//上一层
+    	List<SidebarInfoResponse> noFirst = new ArrayList<>();
+    	for(int i=0;i<parentLevel.size();i++){
+    		SidebarInfoResponse eachParentElement = parentLevel.get(i);
+    		for(int j=0;j<list.size();){
+            	SidebarInfoResponse each = list.get(j);
+            	if(each.getParentId().equals(eachParentElement.getModuleId())){
+            		noFirst.add(each);
+            		list.remove(each);
+            		i=0;
+            	}else{
+            		i++;
+            	}
+            }
+    	}
+    	arrayList.add(deep,noFirst);
     }
 	
 }
