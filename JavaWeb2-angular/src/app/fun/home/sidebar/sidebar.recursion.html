@@ -2,7 +2,7 @@
   <i class="{{(icon==null||icon=='')?'icon':icon}}" aria-hidden="true"></i>
   <a [routerLink]="[url]" href="javascript:void(0);">{{name}}</a>
 </div>
-<div *ngIf="list.length>0">
+<div *ngIf="list!=null&&list.length>0">
   <div style="margin-left:5%;">
     <i class="{{(icon==null||icon=='')?'icon':icon}}" aria-hidden="true"></i>
     <a (click)="addExpandClass()" href="javascript:void(0);">{{name}}</a>
