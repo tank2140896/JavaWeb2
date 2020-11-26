@@ -4,12 +4,12 @@
 <mapper namespace="com.javaweb.web.dao.ds1.RoleDao">
 
 	<sql id="selectRole" >
-		role_id as roleId,role_name as roleName,parent_id as parentId,fcode,level,type,remark,
+		role_id as roleId,role_name as roleName,role_code as roleCode,parent_id as parentId,fcode,level,type,remark,
 		create_date as createDate,creator,update_date as updateDate,updater,del_flag as delFlag
 	</sql>
 
 	<select id="roleList" parameterType="com.javaweb.web.eo.role.RoleListRequest" resultType="com.javaweb.web.eo.role.RoleListResponse">
-		select r.role_id as roleId,r.role_name as roleName,r.create_date as createDate
+		select r.role_id as roleId,r.role_name as roleName,r.role_code as roleCode,r.create_date as createDate
 		from sys_role r
 		<where>
 			r.del_flag = 0
