@@ -13,7 +13,9 @@ public class RoleListResponse implements Serializable {
 
 	private String roleId;//角色ID
 	
-	private String roleName;//角色名
+	private String roleName;//角色名称
+	
+	private String roleCode;//角色代码
 	
 	private String createDate;//注册日期
 
