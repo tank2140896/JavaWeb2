@@ -26,6 +26,9 @@ public class Role extends BaseEntity implements Serializable {
 	@Column(name="role_name",columnDesc="角色名称")
 	private String roleName;//角色名称
 	
+	@Column(name="role_code",columnDesc="角色代码")
+	private String roleCode;//角色代码
+	
 	@Column(name="parent_id",columnDesc="角色的上级ID")
 	private String parentId;//角色的上级ID
 	
