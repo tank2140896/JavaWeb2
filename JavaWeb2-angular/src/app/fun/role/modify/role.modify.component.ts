@@ -43,7 +43,8 @@ export class RoleModifyComponent implements OnInit {
         next:(result:any) => {
           //console.log(result);
           if(result.code==200){
-            this.roleModifyRequest.roleName = result.data.roleName;//角色名
+            this.roleModifyRequest.roleName = result.data.roleName;//角色名称
+            this.roleModifyRequest.roleCode = result.data.roleCode;//角色代码
             this.roleModifyRequest.remark = result.data.remark;//备注
           }else{
             alert(result.message);
