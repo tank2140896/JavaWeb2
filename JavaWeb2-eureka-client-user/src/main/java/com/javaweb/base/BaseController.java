@@ -14,7 +14,7 @@ import com.javaweb.web.service.RoleService;
 import com.javaweb.web.service.ScheduleService;
 import com.javaweb.web.service.UserService;
 
-public class BaseController extends BaseTool {
+public class BaseController extends BaseService {
 	
 	private static boolean initStartFlag = true;
 	
@@ -53,5 +53,8 @@ public class BaseController extends BaseTool {
 	
 	@Autowired
 	protected DbTablesService dbTablesService;
+	
+	@Autowired
+	protected BaseValidateService baseValidateService;
 	
 }
