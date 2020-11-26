@@ -41,7 +41,8 @@ export class RoleDetailComponent implements OnInit {
         next:(result:any) => {
           //console.log(result);
           if(result.code==200){
-            this.roleDetailResponse.roleName = result.data.roleName;//角色名
+            this.roleDetailResponse.roleName = result.data.roleName;//角色名称
+            this.roleDetailResponse.roleCode = result.data.roleCode;//角色代码
             this.roleDetailResponse.remark = result.data.remark;//备注
           }else{
             alert(result.message);
