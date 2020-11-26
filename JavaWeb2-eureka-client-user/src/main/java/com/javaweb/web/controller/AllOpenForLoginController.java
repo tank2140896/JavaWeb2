@@ -52,9 +52,11 @@ public class AllOpenForLoginController extends BaseController {
 		}
 		/**
 		//参数业务逻辑校验
-		BaseServiceValidateResult baseServiceValidateResult = xxxService.xxxValidate(userLoginRequest);
+		Map<String,Object> map = new HashMap<>();
+		map.put("user_name","username_1");
+		BaseServiceValidateResult baseServiceValidateResult = baseValidateService.isColumnsRepeat(map,userDao,"这里写I18N里的key值或自定义的消息或传null");
 		if(!baseServiceValidateResult.isValidatePass()){
-			return new BaseResponseResult(601,baseServiceValidateResult.getMessage());
+			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,baseServiceValidateResult.getMessage());
 		}
 		*/
 		TokenData tokenData = null;
