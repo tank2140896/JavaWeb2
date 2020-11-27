@@ -79,16 +79,19 @@ INSERT INTO `sys_dictionary` VALUES ('202005142045309916', null, null, '0', 'use
 DROP TABLE IF EXISTS `sys_file`;
 CREATE TABLE `sys_file` (
   `id` varchar(255) NOT NULL COMMENT '主键ID',
-  `user_id` varchar(255) DEFAULT NULL COMMENT '用户ID',
   `system_id` varchar(255) DEFAULT NULL COMMENT '系统ID',
-  `file_name` varchar(255) DEFAULT NULL COMMENT '文件名称',
+  `file_unique_index` varchar(255) DEFAULT NULL COMMENT '文件唯一索引',
+  `origin_file_name` varchar(255) DEFAULT NULL COMMENT '原始文件名称',
+  `current_file_name` varchar(255) DEFAULT NULL COMMENT '现文件名称',
   `file_path` varchar(255) DEFAULT NULL COMMENT '文件路径',
   `file_full_path` varchar(255) DEFAULT NULL COMMENT '文件全路径',
-  `file_size` varchar(255) DEFAULT NULL COMMENT '文件大小',
+  `file_suffix` varchar(255) DEFAULT NULL COMMENT '文件后缀',
+  `file_size` bigint(19) DEFAULT NULL COMMENT '文件大小',
   `file_unit` varchar(255) DEFAULT NULL COMMENT '文件大小单位',
   `file_ser_no` varchar(255) DEFAULT NULL COMMENT '文件批次号',
   `remark` varchar(255) DEFAULT NULL COMMENT '备注',
   `status` int(11) DEFAULT '0' COMMENT '状态(0:正常；1：禁用)',
+  `file_use_type` int(11) DEFAULT NULL COMMENT '文件使用类型（1：临时文件；2：正式文件）',
   `create_date` varchar(19) DEFAULT NULL COMMENT '创建时间',
   `creator` varchar(255) DEFAULT NULL COMMENT '创建者',
   `update_date` varchar(19) DEFAULT NULL COMMENT '更新时间',
@@ -100,10 +103,6 @@ CREATE TABLE `sys_file` (
 -- ----------------------------
 -- Records of sys_file
 -- ----------------------------
-INSERT INTO `sys_file` VALUES ('202009191227314832', null, '2', '1010b1fc-3082-406b-baff-b95da6653694_1.bmp', 'E:\\file\\5\\20200919\\', 'E:\\file\\5\\20200919\\1010b1fc-3082-406b-baff-b95da6653694_1.bmp', '1936234', 'byte', 'dac84d8c-0594-4370-b4d5-84fc42244968', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_file` VALUES ('202009191227318012', null, '2', '801140b1-ca9d-4f98-a3f4-7833c8814d59_2.bmp', 'E:\\file\\5\\20200919\\', 'E:\\file\\5\\20200919\\801140b1-ca9d-4f98-a3f4-7833c8814d59_2.bmp', '1936234', 'byte', 'dac84d8c-0594-4370-b4d5-84fc42244968', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_file` VALUES ('202009191232158292', null, '2', '105630a8-8ccb-45ea-9f5e-be810d711c64_1.bmp', 'E:\\file\\8\\20200919\\', 'E:\\file\\8\\20200919\\105630a8-8ccb-45ea-9f5e-be810d711c64_1.bmp', '1936234', 'byte', '5476ff10-d254-4133-bff3-aed4c64c8954', null, '0', null, null, null, null, '0');
-INSERT INTO `sys_file` VALUES ('202009191232162372', null, '2', '19f9b842-99b2-4c3b-85aa-c4157cad7630_2.bmp', 'E:\\file\\8\\20200919\\', 'E:\\file\\8\\20200919\\19f9b842-99b2-4c3b-85aa-c4157cad7630_2.bmp', '1936234', 'byte', '5476ff10-d254-4133-bff3-aed4c64c8954', null, '0', null, null, null, null, '0');
 
 -- ----------------------------
 -- Table structure for `sys_interfaces`
