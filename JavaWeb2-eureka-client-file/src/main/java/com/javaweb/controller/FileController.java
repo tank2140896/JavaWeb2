@@ -75,11 +75,16 @@ public class FileController {
     		//1、上传文件可以根据token进行权限处理，此处省略
     		System.out.println("获得的token为："+httpServletRequest.getHeader(SystemConstant.HEAD_TOKEN));
     		//2、上传文件大小校验，还可以校验总上传文件的大小
+    		long total = 0;
     		if(multipartFile!=null&&multipartFile.length>0){
         		for(int i=0;i<multipartFile.length;i++){
         			if (multipartFile[i].getBytes().length > 1024 * 1024 *10) {//10MB
                         return new BaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"每个文件大小不能超过10MB");
                     }
+        			total += multipartFile[i].getBytes().length;
+        		}
+        		if(total > 1024 * 1024 *10){
+        			return new BaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"文件总大小不能超过50MB");
         		}
         	}
     		//3、获得文件根路径
@@ -106,14 +111,19 @@ public class FileController {
         			FileUtil.writeFile(multipartFile[i].getInputStream(),new byte[1024],new File(filePath));
         			com.javaweb.po.File fileEntity = new com.javaweb.po.File();
         			fileEntity.setId(id);
-        			//fileEntity.setUserId("可以根据token获得");
         			fileEntity.setSystemId(SystemConstant.SYSTEM_NO);
-        			fileEntity.setFileName(newFileName);
+        			fileEntity.setFileUniqueIndex(UUID.randomUUID().toString());
+        			fileEntity.setOriginFileName(originFileName);
+        			fileEntity.setCurrentFileName(newFileName);
         			fileEntity.setFilePath(rootPath);
         			fileEntity.setFileFullPath(filePath);
-        			fileEntity.setFileSize(String.valueOf(multipartFile[i].getSize()));
+        			fileEntity.setFileSuffix(fileEntity.getOriginFileName().split("\\.")[fileEntity.getOriginFileName().split("\\.").length-1]);
+        			fileEntity.setFileSize(multipartFile[i].getSize());
         			fileEntity.setFileUnit("byte");
         			fileEntity.setFileSerNo(fileSerNo);
+        			fileEntity.setFileUseType(1);
+        			fileEntity.setCreator("admin");
+        			fileEntity.setCreateDate(DateUtil.getDefaultDate());
         			fileDao.insert(fileEntity);
         			list.add(id);
         		}
@@ -127,7 +137,7 @@ public class FileController {
     @GetMapping("/downloadFile/{fileId}")
     public void downloadFile(@PathVariable(value="fileId",required=true)String fileId,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse){
     	try{
-    		//下载文件可以根据token进行权限处理，此处省略
+    		//下载文件可以根据token进行权限处理，同时GET的参数也可以进行加密，此处省略
     		System.out.println("获得的token为："+httpServletRequest.getHeader(SystemConstant.HEAD_TOKEN));
     		com.javaweb.po.File file = fileDao.selectByPk(fileId);
 			FileUtil.downloadFile(httpServletResponse.getOutputStream(),new byte[1024],new File(file.getFileFullPath()));
@@ -135,5 +145,7 @@ public class FileController {
 			e.printStackTrace();
 		}
     }
+    
+    //还可自行添加删除文件、文件查询等操作
 
 }
