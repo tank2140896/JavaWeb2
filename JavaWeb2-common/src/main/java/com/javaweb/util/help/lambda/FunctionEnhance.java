@@ -7,6 +7,8 @@ import java.util.function.Function;
  * Function<Integer,Function<Integer,Function<Integer,Integer>>> f = 
  *          x             -> y             -> z     ->0
  */
+//@FunctionalInterface
+//public interface FunctionEnhance<T, R> extends Function<T, R>,Serializable {
 public interface FunctionEnhance<T, R> extends Function<T, R> {
 	
 	/**
