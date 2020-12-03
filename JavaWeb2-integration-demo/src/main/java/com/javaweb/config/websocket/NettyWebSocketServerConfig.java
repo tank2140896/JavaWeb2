@@ -2,6 +2,7 @@ package com.javaweb.config.websocket;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
 import io.netty.bootstrap.ServerBootstrap;
@@ -19,6 +20,9 @@ import io.netty.handler.stream.ChunkedWriteHandler;
 
 @Configuration
 public class NettyWebSocketServerConfig {
+	
+	@Value("${netty.websocket.server.port}")
+    private Integer nettyWebsocketServerPort;
 	
 	@PostConstruct
 	public void init(){
@@ -38,7 +42,7 @@ public class NettyWebSocketServerConfig {
 			ServerBootstrap bootstrap = new ServerBootstrap();
 			bootstrap.option(ChannelOption.SO_BACKLOG,1024);
 			bootstrap.group(group).channel(NioServerSocketChannel.class).
-            localAddress(2100).childHandler
+            localAddress(nettyWebsocketServerPort).childHandler
 			(new ChannelInitializer<NioSocketChannel>() {
 				@Override
 				public void initChannel(NioSocketChannel nioSocketChannel) throws Exception {
