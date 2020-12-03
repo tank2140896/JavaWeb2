@@ -43,6 +43,8 @@ import {DbTablesComponent} from './fun/dbTables/db.tables.component';
 import {DbTablesListComponent} from './fun/dbTables/list/db.tables.list.component';
 import {DbTablesDetailComponent} from './fun/dbTables/detail/db.tables.detail.component';
 import {InterfacesTestComponent} from './fun/interfaces/test/interfaces.test.component';
+import {SystemLogListComponent} from './fun/systemLog/list/system.log.list.component';
+import {SystemLogComponent} from './fun/systemLog/system.log.component';
 
 const routes: Routes = [
   {path:'',component:LoginComponent},//默认登录页面
@@ -95,8 +97,13 @@ const routes: Routes = [
       {path:'**',redirectTo:'/web',pathMatch:'full'}
     ],canActivate:[AuthService]},
     {path:'sys/schedule',component:ScheduleComponent,children:[
-      {path:'',component:ScheduleListComponent},//操作日志列表页面
-      {path:'list',component:ScheduleListComponent},//操作日志列表页面
+      {path:'',component:ScheduleListComponent},//日程列表页面
+      {path:'list',component:ScheduleListComponent},//日程列表页面
+      {path:'**',redirectTo:'/web',pathMatch:'full'}
+    ],canActivate:[AuthService]},
+    {path:'sys/systemLog',component:SystemLogComponent,children:[
+      {path:'',component:SystemLogListComponent},//系统日志列表页面
+      {path:'list',component:SystemLogListComponent},//系统日志列表页面
       {path:'**',redirectTo:'/web',pathMatch:'full'}
     ],canActivate:[AuthService]},
     {path:'sys/interfaces',component:InterfacesComponent,children:[
