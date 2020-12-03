@@ -17,7 +17,6 @@ import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.SecretUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.module.ModuleIdAndNameResponse;
-import com.javaweb.web.eo.module.ModuleLevelAndOrdersResponse;
 import com.javaweb.web.eo.module.ModuleListRequest;
 import com.javaweb.web.eo.module.ModuleListResponse;
 import com.javaweb.web.po.Module;
@@ -97,12 +96,18 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
 		if(module.getParentId()==null||CommonConstant.EMPTY_VALUE.equals(module.getParentId().trim())){
 			module.setParentId(null);
 		}
-		ModuleLevelAndOrdersResponse moduleLevelAndOrdersResponse = moduleDao.getModuleLevelAndOrdersByParentId(module.getParentId());
-		if(moduleLevelAndOrdersResponse==null) {
-			moduleLevelAndOrdersResponse = moduleDao.getModuleLevelAndOrdersWithoutParentId();	
+		if(module.getParentId()==null){//表示是顶级目录
+			module.setLevel(1);
+		}else{
+			Module parentModuleInfo = moduleDao.moduleDetail(module.getParentId());
+			module.setLevel(parentModuleInfo.getLevel()+1);
 		}
-		module.setOrders(moduleLevelAndOrdersResponse.getOrders()+1);
-		module.setLevel(moduleLevelAndOrdersResponse.getLevel());
+		Map<String,Object> map = new HashMap<>();
+		map.put("parentId",module.getParentId());
+		map.put("level",module.getLevel());
+		Long orders = moduleDao.getOrders(map);
+		orders = (orders==null?1:orders);
+		module.setOrders(orders.intValue());
 		module.setSystemId(SystemConstant.SYSTEM_NO);
 		moduleDao.insert(module);
 	}
