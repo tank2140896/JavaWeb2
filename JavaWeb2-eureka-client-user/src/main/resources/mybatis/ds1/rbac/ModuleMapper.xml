@@ -79,14 +79,6 @@
 		from sys_module where module_id = #{_parameter} and del_flag = 0 limit 1
 	</select>
 	
-	<select id="getModuleLevelAndOrdersByParentId" parameterType="java.lang.String" resultType="com.javaweb.web.eo.module.ModuleLevelAndOrdersResponse">
-		SELECT level,orders from sys_module where parent_id = #{_parameter} and del_flag = 0 ORDER BY level desc,orders desc LIMIT 1 
-	</select>
-	
-	<select id="getModuleLevelAndOrdersWithoutParentId" resultType="com.javaweb.web.eo.module.ModuleLevelAndOrdersResponse">
-		SELECT level,orders from sys_module where parent_id is null and del_flag = 0 ORDER BY level desc,orders desc LIMIT 1 
-	</select>
-	
 	<select id="getModuleIdAndNameList" parameterType="java.util.Map" resultType="com.javaweb.web.eo.module.ModuleIdAndNameResponse">
 		<!-- <if test='moduleType == "1" or moduleType == "2"'> -->
 		select module_id as moduleId,module_name as moduleName from sys_module where del_flag = 0
@@ -123,6 +115,10 @@
 		fcode,level,orders,module_type as moduleType,alias,parent_alias as parentAlias,remark,icon,
 		create_date as createDate,creator,update_date as updateDate,updater,del_flag as delFlag
 		from sys_module WHERE parent_id = #{_parameter}
+	</select>
+	
+	<select id="getOrders" parameterType="java.util.Map" resultType="java.lang.Long">
+		select orders from sys_module where parent_id = #{parentId} and level = ${level} order by orders desc limit 1
 	</select>
 	
 </mapper>
