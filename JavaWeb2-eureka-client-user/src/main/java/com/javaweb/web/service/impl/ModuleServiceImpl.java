@@ -103,6 +103,7 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
 		}
 		module.setOrders(moduleLevelAndOrdersResponse.getOrders()+1);
 		module.setLevel(moduleLevelAndOrdersResponse.getLevel());
+		module.setSystemId(SystemConstant.SYSTEM_NO);
 		moduleDao.insert(module);
 	}
 	
