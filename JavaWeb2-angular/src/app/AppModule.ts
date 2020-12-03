@@ -4,7 +4,7 @@ import {AppRoutingModule} from './AppRoutingModule';
 import {AppComponent} from './AppComponent';
 import {LoginModule} from './fun/login/login.module';
 import {HttpService} from './service/HttpService';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS,HttpClientModule} from '@angular/common/http';
 import {SessionService} from './service/SessionService';
 import {AuthService} from './service/AuthService';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
