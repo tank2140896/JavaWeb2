@@ -26,6 +26,7 @@ import com.javaweb.constant.SystemConstant;
 import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.HttpUtil;
 import com.javaweb.util.core.SecretUtil;
+import com.javaweb.util.core.SystemUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.interfaces.ExcludeInfoResponse;
 import com.javaweb.web.eo.interfaces.InterfacesListRequest;
@@ -52,6 +53,10 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 	
 	public Page interfacesList(InterfacesListRequest interfacesListRequest) {
 		List<Interfaces> list = interfacesDao.interfacesList(interfacesListRequest);
+		if(list!=null){
+			//只是为了显示方便（逗号分隔，回车展示）
+			list.stream().forEach(e->e.setUrl(String.join(SystemUtil.isLinux()==true?CommonConstant.ENTER_LINUX:CommonConstant.ENTER_WINDOWS,e.getUrl().split(CommonConstant.COMMA))));
+		}
 		long count = interfacesDao.interfacesListCount(interfacesListRequest);
 		Page page = new Page(interfacesListRequest,list,count);
 		return page;
