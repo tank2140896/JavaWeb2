@@ -7,7 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 import com.javaweb.mybatis.api.DaoWapper;
 import com.javaweb.web.eo.module.ModuleIdAndNameResponse;
-import com.javaweb.web.eo.module.ModuleLevelAndOrdersResponse;
 import com.javaweb.web.eo.module.ModuleListRequest;
 import com.javaweb.web.eo.module.ModuleListResponse;
 import com.javaweb.web.po.Module;
@@ -27,10 +26,6 @@ public interface ModuleDao extends DaoWapper<Module> {
 	
 	public Module moduleDetail(String moduleId);
 	
-	public ModuleLevelAndOrdersResponse getModuleLevelAndOrdersByParentId(String parentId);
-	
-	public ModuleLevelAndOrdersResponse getModuleLevelAndOrdersWithoutParentId();
-	
 	public List<ModuleIdAndNameResponse> getModuleIdAndNameList(Map<String,String> map);
 	
 	public List<Role> getAllRoleByModuleId(String moduleId);
@@ -40,5 +35,7 @@ public interface ModuleDao extends DaoWapper<Module> {
 	public void setModuleParentIdNull(Module module);
 	
 	public List<Module> getModuleByParentId(String parentId);
+	
+	public Long getOrders(Map<String,Object> map);
 	
 }
