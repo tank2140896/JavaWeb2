@@ -17,6 +17,7 @@ import com.javaweb.base.BaseService;
 import com.javaweb.web.eo.onlineChat.OnlineChatRequest;
 import com.javaweb.web.eo.onlineChat.OnlineChatResponse;
 
+//@Component
 @Service("webSocketOnLineChatHandleService")
 @ServerEndpoint(value="/ws/onlineChat") 
 public class WebSocketOnLineChatHandleService extends BaseService {

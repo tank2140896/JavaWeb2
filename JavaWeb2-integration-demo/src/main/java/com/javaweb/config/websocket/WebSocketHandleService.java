@@ -12,6 +12,7 @@ import javax.websocket.server.ServerEndpoint;
 
 import org.springframework.stereotype.Service;
 
+//@Component
 @Service
 @ServerEndpoint(value="/websocket/{key}")  
 public class WebSocketHandleService {

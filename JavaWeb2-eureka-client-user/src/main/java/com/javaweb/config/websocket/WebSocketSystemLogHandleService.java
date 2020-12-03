@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.javaweb.base.BaseService;
 
+//@Component
 @Service("webSocketSystemLogHandleService")
 @ServerEndpoint(value="/ws/systemLog") 
 public class WebSocketSystemLogHandleService extends BaseService {
