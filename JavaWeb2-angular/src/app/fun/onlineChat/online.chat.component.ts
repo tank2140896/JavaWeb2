@@ -35,7 +35,7 @@ export class OnlineChatComponent implements OnInit {
     if (this.webSocket != null) {
       this.webSocket.close();
     }
-    this.webSocket = new WebSocket(ApiConstant.WEBSOCKET_REQUEST_URL);
+    this.webSocket = new WebSocket(ApiConstant.WEBSOCKET_ONLINE_CHAT_URL);
     //let that = this;
 
     this.webSocket.onopen = (event)=>{
@@ -54,13 +54,13 @@ export class OnlineChatComponent implements OnInit {
     };
 
     this.webSocket.onclose = (closeEvent)=>{
-      console.log('发生错误');
+      console.log('连接关闭');
     };
   }
 
   //发送消息
   public sendFunction():void {
-    const sendInfo = {userName:this.userName,message:this.sendMessage,token:this.sessionService.getHeadToken().token};
+    const sendInfo = {userName:this.userName,userId:this.sessionService.getTokenData().user.userId,message:this.sendMessage,token:this.sessionService.getHeadToken().token};
     this.webSocket.send(JSON.stringify(sendInfo));
     this.getMessage += ('[我]' + this.sendMessage + '\n');
     this.sendMessage = CommonConstant.EMPTY;

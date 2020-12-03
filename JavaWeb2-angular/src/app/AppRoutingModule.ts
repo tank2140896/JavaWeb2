@@ -43,7 +43,6 @@ import {DbTablesComponent} from './fun/dbTables/db.tables.component';
 import {DbTablesListComponent} from './fun/dbTables/list/db.tables.list.component';
 import {DbTablesDetailComponent} from './fun/dbTables/detail/db.tables.detail.component';
 import {InterfacesTestComponent} from './fun/interfaces/test/interfaces.test.component';
-import {SystemLogListComponent} from './fun/systemLog/list/system.log.list.component';
 import {SystemLogComponent} from './fun/systemLog/system.log.component';
 
 const routes: Routes = [
@@ -102,8 +101,7 @@ const routes: Routes = [
       {path:'**',redirectTo:'/web',pathMatch:'full'}
     ],canActivate:[AuthService]},
     {path:'sys/systemLog',component:SystemLogComponent,children:[
-      {path:'',component:SystemLogListComponent},//系统日志列表页面
-      {path:'list',component:SystemLogListComponent},//系统日志列表页面
+      {path:'',component:SystemLogComponent},//系统日志列表页面
       {path:'**',redirectTo:'/web',pathMatch:'full'}
     ],canActivate:[AuthService]},
     {path:'sys/interfaces',component:InterfacesComponent,children:[

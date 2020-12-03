@@ -2,7 +2,8 @@ export class ApiConstant{
 
   public static API_VERSION = '1.0.0';
   public static HTTP_REQUEST_PREFIX = 'http://localhost:2001';
-  public static WEBSOCKET_REQUEST_URL = 'ws://127.0.0.1:2100/ws';
+  public static WEBSOCKET_ONLINE_CHAT_URL = 'ws://127.0.0.1:2001/ws/onlineChat';
+  public static WEBSOCKET_SYSTEM_LOG_URL = 'ws://127.0.0.1:2001/ws/systemLog';
 
   /** 任何人都能访问 start */
   public static GET_SERVE_TIME = '/getServeTime';//获取服务器时间
@@ -68,6 +69,7 @@ export class ApiConstant{
   public static SYS_DB_TABLES_LIST = '/web/sys/dbTables/list';//数据库表列表
   public static SYS_DB_TABLES_DETAIL = '/web/sys/dbTables/detail';//数据库表详情
   public static SYS_DB_TABLES_CODE_GENERATE = '/web/sys/dbTables/codeGenerate';//数据库表代码生成接口
+
   /** 拥有权限才能访问 end */
 
   public static getPath(urlName:string,isFullPath:boolean):string{

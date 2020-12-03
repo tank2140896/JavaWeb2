@@ -1,0 +1,10 @@
+<div style="margin-top:1%;margin-left:1%">
+    <button type="button" class="btn btn-success" style="margin-left:1%;margin-right:1%;" *ngIf="connectionStatus==0" disabled>已关闭</button>
+    <button type="button" class="btn btn-success" style="margin-left:1%;margin-right:1%;" *ngIf="connectionStatus==1" disabled>已连接</button>
+    <button type="button" class="btn btn-primary" style="margin-left:1%;" (click)="listLogs()" *ngIf="connectionStatus==0">查看日志</button>
+    <button type="button" class="btn btn-primary" style="margin-left:1%;" (click)="clearLogs()" *ngIf="connectionStatus==1">清空日志</button>
+    <button type="button" class="btn btn-primary" style="margin-left:1%;" (click)="disconnectLogs()" *ngIf="connectionStatus==1">断开日志</button>
+</div>
+<div class="col col-xl-12 col-lg-12" style="margin-top:1%;">
+    <textarea style="width:100%;height:800px;" disabled [(ngModel)]="logMessage"></textarea>
+</div>
