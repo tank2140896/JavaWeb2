@@ -41,6 +41,7 @@ import com.javaweb.mybatis.apiImpl.mysql.HandleSelectAllCount;
 import com.javaweb.mybatis.apiImpl.mysql.HandleSelectAll;
 import com.javaweb.mybatis.apiImpl.mysql.HandleSelectByPk;
 import com.javaweb.mybatis.apiImpl.mysql.HandleSelectList;
+import com.javaweb.mybatis.apiImpl.mysql.HandleSelectListCount;
 import com.javaweb.mybatis.apiImpl.mysql.HandleUpdate;
 import com.javaweb.query.QueryWapper;
 import com.javaweb.util.core.DateUtil;
@@ -67,6 +68,7 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 		map.put("selectAllCount",new HandleSelectAllCount());
 		map.put("selectByPk",new HandleSelectByPk());
 		map.put("selectList",new HandleSelectList());
+		map.put("selectListCount",new HandleSelectListCount());
 	}
 	
 	public Object intercept(Invocation invocation) throws Throwable {
