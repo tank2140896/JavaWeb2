@@ -10,14 +10,12 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-import com.javaweb.base.BaseService;
-
-//@Component
-@Service("webSocketSystemLogHandleService")
+//注意：无法注入
+@Component
 @ServerEndpoint(value="/ws/systemLog") 
-public class WebSocketSystemLogHandleService extends BaseService {
+public class WebSocketSystemLogHandle {
 	
 	private Process process;
 	
