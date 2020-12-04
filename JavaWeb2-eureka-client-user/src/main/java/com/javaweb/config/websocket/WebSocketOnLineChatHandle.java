@@ -10,17 +10,16 @@ import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.javaweb.base.BaseService;
 import com.javaweb.web.eo.onlineChat.OnlineChatRequest;
 import com.javaweb.web.eo.onlineChat.OnlineChatResponse;
 
-//@Component
-@Service("webSocketOnLineChatHandleService")
+//注意：无法注入
+@Component
 @ServerEndpoint(value="/ws/onlineChat") 
-public class WebSocketOnLineChatHandleService extends BaseService {
+public class WebSocketOnLineChatHandle {
 	
 	public static LinkedList<Session> client = new LinkedList<Session>();//如果是分布式部署的话，这里推荐采用redis进行存储替代
 	
