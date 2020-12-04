@@ -14,12 +14,12 @@ JavaWeb2-eureka-client-user（端口2001）->JavaWeb2-database
 JavaWeb2-eureka-client-file（端口2002）->JavaWeb2-database                                                                                                             
 JavaWeb2-eureka-client-zuul（端口3001）->JavaWeb2-common             
 JavaWeb2-angular（cnpm install->cnpm start）              
-因此，要正确完成JavaWeb2-eureka-client-user的编译需要先编译JavaWeb2-common再编译JavaWeb2-database                                  
+因此，要正确完成JavaWeb2-eureka-client-user的编译需要先编译JavaWeb2-common再编译JavaWeb2-database                        
 # 三、启动顺序                                                       
 1、JavaWeb2-eureka-server（要起3个，端口1001、1002、1003）                          
 2、JavaWeb2-eureka-client-user（端口2001）、JavaWeb2-eureka-client-file（端口2002）、JavaWeb2-eureka-client-zuul（端口3001）          
 3、JavaWeb2-angular（端口4200）     
-注：与Angular整合看效果的话只要导入JavaWeb2-eureka-client-user/src/main/resources/sql/init.sql，然后配置域名对应的地址（参考JavaWeb2-eureka-server中的配置文件），最后启动JavaWeb2-eureka-server、JavaWeb2-eureka-client-user和JavaWeb2-angular即可，页面访问：localhost:4200，账号和密码都是admin123456     
+注：与Angular整合看效果的话只要导入JavaWeb2-eureka-client-user/src/main/resources/sql/init.sql，然后修改JavaWeb2-eureka-client-user的pom.xml注释掉spring-cloud-starter-netflix-eureka-client和spring-cloud-starter-openfeign，然后加入spring-boot-starter-aop，待编译完成好后，注释掉报错代码即可，页面访问：localhost:4200，账号和密码都是admin123456     
 # 四、使用前重要说明                                                                     
 1、由于水平有限，本项目会存在很多不足，同时本项目更新会比较频繁、改动会比较大，请见谅（更新代码时也请同步更新JavaWeb2-eureka-client-user/src/main/resources/sql/init.sql）                 
 2、本项目没有使用session，而是使用redis替代session，没有使用spring-session-redis，而是自己代码处理的                          
