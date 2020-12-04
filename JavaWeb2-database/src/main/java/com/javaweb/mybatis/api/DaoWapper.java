@@ -35,4 +35,7 @@ public interface DaoWapper<T> {
 	@Select(CommonConstant.EMPTY_VALUE)
 	public List<T> selectList(QueryWapper<T> queryWapper);//条件查询（支持分页）
 	
+	@Select(CommonConstant.EMPTY_VALUE)
+	public Long selectListCount(QueryWapper<T> queryWapper);//条件查询统计（支持分页）
+	
 }
