@@ -10,7 +10,7 @@
 <div class="col col-xl-12 col-lg-12" style="margin-top:1%;">
   <div class="card mb-3">
     <div class="card-body table table-hover">
-      <table class="table">
+      <table class="table" style="table-layout:fixed;">
         <thead>
           <tr class="text-center">
             <th>序号</th>
@@ -19,19 +19,19 @@
             <th>基础URL</th>
             <th>总被调用次数</th>
             <th>方法名称</th>
-            <th>是否可分配数据权限</th>
+            <th>是否分配数据权限</th>
             <th>单位时间调用次数</th>
             <th>操作</th>
           </tr>
         </thead>
         <tbody *ngIf="resultPage.data==resultPage.dataLoading">
           <tr class="text-center">
-            <td colspan=6>数据获取中...</td>
+            <td colspan=9>数据获取中...</td>
           </tr>
         </tbody>
         <tbody *ngIf="resultPage.data==null">
           <tr class="text-center">
-            <td colspan=6>无数据</td>
+            <td colspan=9>无数据</td>
           </tr>
         </tbody>
         <tbody *ngIf="resultPage.data!=null&&resultPage.data!=resultPage.dataLoading">
