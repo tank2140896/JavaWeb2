@@ -23,4 +23,4 @@ set http_proxy=http://10.131.46.21:80/
 set https_proxy=http://10.131.46.21:80/                           
 B、设置完代理重新执行npm install继续下载包时报"Cannot read property 'match' of undefined"                             
 npm cache clear --force                     
-删除package-lock.json                              
+删除package-lock.json                                          
