@@ -25,6 +25,12 @@ import com.javaweb.web.service.OperationLogService;
 
 import net.sf.json.JSONObject;
 
+/**
+操作日志记录常见的有三种方式
+1、正则URL路径规则
+2、数据库URL开关控制
+3、Controller注解标记
+*/
 @Aspect
 @Component
 public class OperateLogAspect {
