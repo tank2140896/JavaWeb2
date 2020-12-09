@@ -302,11 +302,15 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 			List<Header> list = null;
 			if(interfacesTestRequest.getRequestHeader()!=null&&!"".equals(interfacesTestRequest.getRequestHeader().trim())){
 				list = new ArrayList<>();
-				String keyvalue[] = interfacesTestRequest.getRequestHeader().split(CommonConstant.SEMICOLON);
-				for(String str:keyvalue){
-					String strs[] = str.split(CommonConstant.COLON); 
-					Header header = new BasicHeader(strs[0],strs[1]);
-					list.add(header);
+				try{
+					String keyvalue[] = interfacesTestRequest.getRequestHeader().split(CommonConstant.SEMICOLON);
+					for(String str:keyvalue){
+						String strs[] = str.split(CommonConstant.COLON); 
+						Header header = new BasicHeader(strs[0],strs[1]);
+						list.add(header);
+					}
+				}catch(Exception e){
+					//header解析错误暂不做任何处理
 				}
 			}
 			String body = interfacesTestRequest.getRequestBody();
