@@ -1,6 +1,6 @@
 ﻿# JavaWeb2 V1.0         
 # 一、环境依赖                                                       
-1、jdk8                      
+1、jdk8                          
 2、maven3.3+                 
 3、redis4.0.8+                 
 4、mysql5.6+                 
