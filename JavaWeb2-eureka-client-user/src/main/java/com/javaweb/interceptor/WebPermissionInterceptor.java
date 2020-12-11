@@ -63,7 +63,7 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 			return false;
 		}
 		if(servletPath.startsWith(SystemConstant.URL_LOGIN_WEB_PERMISSION)){//该路径下只要登录即可访问，不需要权限
-			BaseTool.getRedisTemplate().opsForValue().set(tokenData.getUser().getUserId()+CommonConstant.COMMA+tokenData.getType(),tokenData,Duration.ofMinutes(redisSessionTimeout));
+			BaseTool.getRedisTemplate().opsForValue().set(tokenData.getUser().getUserId()+CommonConstant.COMMA+tokenData.getClientType()+CommonConstant.COMMA+tokenData.getLoginWay(),tokenData,Duration.ofMinutes(redisSessionTimeout));
 			return true;
 		}
 		long count = tokenData.getApiUrlList().stream().filter(i->{return servletPath.startsWith(i);}).count();
@@ -71,7 +71,7 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 			request.getRequestDispatcher(ApiConstant.NO_AUTHORY).forward(request,response);
 			return false;
 		}else{
-			BaseTool.getRedisTemplate().opsForValue().set(tokenData.getUser().getUserId()+CommonConstant.COMMA+tokenData.getType(),tokenData,Duration.ofMinutes(redisSessionTimeout));
+			BaseTool.getRedisTemplate().opsForValue().set(tokenData.getUser().getUserId()+CommonConstant.COMMA+tokenData.getClientType()+CommonConstant.COMMA+tokenData.getLoginWay(),tokenData,Duration.ofMinutes(redisSessionTimeout));
 			return true;
 		}
 	}
