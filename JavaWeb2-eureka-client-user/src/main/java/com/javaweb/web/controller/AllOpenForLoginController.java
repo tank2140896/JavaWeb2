@@ -60,10 +60,11 @@ public class AllOpenForLoginController extends BaseController {
 		*/
 		TokenData tokenData = null;
 		if(systemAdminCheck(userLoginRequest)){//管理员判断
-			userLoginRequest.setType("0");
+			userLoginRequest.setClientType(1);//管理员强制客户端为页面端
+			userLoginRequest.setLoginWay(1);//管理员强制登录方式为账号密码
 			User user = SystemConstant.SYSTEM_DEFAULT_USER;
-			tokenData = getToken(true,user,userLoginRequest.getType());
-			setDefaultDataToRedis(user.getUserId()+CommonConstant.COMMA+userLoginRequest.getType(),tokenData);
+			tokenData = getToken(true,user,userLoginRequest.getClientType(),userLoginRequest.getLoginWay());
+			setDefaultDataToRedis(user.getUserId()+CommonConstant.COMMA+userLoginRequest.getClientType()+CommonConstant.COMMA+userLoginRequest.getLoginWay(),tokenData);
 		}else {
 		    try{
 	            userLoginRequest.setPassword(SecretUtil.getSecret(userLoginRequest.getPassword(),"SHA-256"));
@@ -78,8 +79,8 @@ public class AllOpenForLoginController extends BaseController {
 	        	return getBaseResponseResult(HttpCodeEnum.LOGIN_FAIL,"login.user.userLocked");
 	        }
 	        user.setPassword(null);//用户密码不对外提供
-	        tokenData = getToken(false,user,userLoginRequest.getType());
-	        setDefaultDataToRedis(user.getUserId()+CommonConstant.COMMA+userLoginRequest.getType(),tokenData);
+	        tokenData = getToken(false,user,userLoginRequest.getClientType(),userLoginRequest.getLoginWay());
+	        setDefaultDataToRedis(user.getUserId()+CommonConstant.COMMA+userLoginRequest.getClientType()+CommonConstant.COMMA+userLoginRequest.getLoginWay(),tokenData);
 		}
 		//这里我个人认为redis中包含权限信息，但是前端不需要获得太多权限信息，权限信息可以通过其它接口获得
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.loginSuccess",tokenData.getToken());
@@ -97,13 +98,14 @@ public class AllOpenForLoginController extends BaseController {
 	}
 	
 	//token数据封装
-	private TokenData getToken(boolean adminFlag,User user,String type){
+	private TokenData getToken(boolean adminFlag,User user,Integer clientType,Integer loginWay){
 		List<Module> moduleList = moduleService.getModule(adminFlag,user.getUserId());
 		TokenData tokenData = new TokenData();
-		String token = getTokenForEasyWay(user.getUserId(),type);
+		String token = getTokenForEasyWay(user.getUserId(),clientType,loginWay);
 		tokenData.setToken(token);
 		tokenData.setUser(user);
-		tokenData.setType(type);
+		tokenData.setClientType(clientType);
+		tokenData.setLoginWay(loginWay);
 		List<String> pageUrlList = getPageUrlList(moduleList);//获得pageUrl列表
 		List<String> apiUrlList = getApiUrlList(moduleList);//获得apiUrl列表
 		tokenData.setPageUrlList(pageUrlList);
@@ -122,12 +124,12 @@ public class AllOpenForLoginController extends BaseController {
 	}
 	
 	//简单获得token
-	private String getTokenForEasyWay(String userId,String type) {
+	private String getTokenForEasyWay(String userId,Integer clientType,Integer loginWay) {
 		String date = DateUtil.getStringDate(DateUtil.DATETIME_PATTERN_TYPE1);
 		String randomNumber = String.valueOf(MathUtil.getRandomNumForLCRC(Integer.MAX_VALUE-1));
 		String out = randomNumber + SecretUtil.getRandomUUID(true) + date;
 		out = AesDesUtil.encryptAes(out,"6Pq=*s+H2ppL5{INRx9MhU;k");//可以用defaultGenRandomPass(24)生成
-		out = out + CommonConstant.COMMA + userId + CommonConstant.COMMA + type;
+		out = out + CommonConstant.COMMA + userId + CommonConstant.COMMA + clientType + CommonConstant.COMMA + loginWay;;
 		try {
 			out = SecretUtil.base64EncoderString(out,"UTF-8");
 		} catch (Exception e) {
