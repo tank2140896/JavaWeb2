@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
@@ -67,6 +68,11 @@ public class GlobalExceptionHandler extends BaseTool {
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	public BaseResponseResult handleMethodArgumentNotValidException(MethodArgumentNotValidException e){
 		return new BaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,e.getBindingResult().getAllErrors().get(0).getDefaultMessage());
+	}
+	
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public BaseResponseResult handleHttpMessageNotReadableException(HttpMessageNotReadableException e){
+		return getBaseResponseResult(HttpCodeEnum.REQUEST_PARAMETER_ERROR,"validated.permission.requestParameterError");
 	}
 	
 	@ExceptionHandler(Exception.class)
