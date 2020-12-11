@@ -117,8 +117,8 @@ public class BaseTool extends BaseInject {
 		try{
 			if(token!=null){
 				token = SecretUtil.base64DecoderString(token,"UTF-8");
-		    	String tokens[] = token.split(CommonConstant.COMMA);//token由三部分组成：token,userId,type
-		    	token = tokens[1]+CommonConstant.COMMA+tokens[2];//userId+type
+		    	String tokens[] = token.split(CommonConstant.COMMA);//token由四部分组成：token,userId,clientType,loginWay
+		    	token = tokens[1]+CommonConstant.COMMA+tokens[2]+CommonConstant.COMMA+tokens[3];//userId,clientType,loginWay
 		    	tokenData = (TokenData)(getRedisTemplate().opsForValue().get(token));
 			}
 		}catch(Exception e){
