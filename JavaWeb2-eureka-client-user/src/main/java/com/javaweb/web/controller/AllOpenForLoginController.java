@@ -34,7 +34,6 @@ import com.javaweb.web.po.Module;
 import com.javaweb.web.po.User;
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 
 @Api(tags=SwaggerConstant.SWAGGER_ALL_OPEN_CONTROLLER_TAGS)
@@ -42,8 +41,8 @@ import io.swagger.annotations.ApiOperation;
 public class AllOpenForLoginController extends BaseController {
 	
 	//登录接口
-	@ApiOperation(value=SwaggerConstant.SWAGGER_LOGIN,notes=SwaggerConstant.SWAGGER_LOGIN_NOTES)
-    @ApiImplicitParam(name="userLoginRequest",value=SwaggerConstant.SWAGGER_LOGIN_PARAM,required=true,dataType="UserLoginRequest")
+	@ApiOperation(value=SwaggerConstant.SWAGGER_LOGIN)//@ApiOperation(value="用户登录接口",notes="输入用户名、密码来进行登录")
+	//@ApiImplicitParam(name="userLoginRequest",value="用户登录实体类",required=true,dataType="UserLoginRequest")
 	@PostMapping(ApiConstant.WEB_LOGIN)
 	public BaseResponseResult webLogin(@RequestBody @Validated UserLoginRequest userLoginRequest,BindingResult bindingResult,HttpServletRequest request){
 		//参数常规校验
