@@ -4,6 +4,8 @@ export class UserLoginRequest {
 
   password:string;//密码
 
-  type:string;//类型
+  clientType:number = 1;//客户端类型
+
+  loginWay:number = 1;//登录方式
 
 }
