@@ -27,7 +27,7 @@ public class LoginAccessController extends BaseController {
 	@ApiOperation(value=SwaggerConstant.SWAGGER_LOGOUT)
 	@GetMapping(ApiConstant.LOGIN_OUT)
 	public BaseResponseResult logout(@TokenDataAnnotation TokenData tokenData){
-		if(deleteFromRedisByKey(tokenData.getUser().getUserId()+CommonConstant.COMMA+tokenData.getType())) {
+		if(deleteFromRedisByKey(tokenData.getUser().getUserId()+CommonConstant.COMMA+tokenData.getClientType()+CommonConstant.COMMA+tokenData.getLoginWay())) {
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.logoutSuccess");
 		}else {
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.logoutFail");
