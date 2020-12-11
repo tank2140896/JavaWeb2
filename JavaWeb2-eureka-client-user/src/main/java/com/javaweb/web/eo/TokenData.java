@@ -20,7 +20,9 @@ public class TokenData implements Serializable {
 	
 	private User user;
 	
-	private String type;
+	private Integer clientType;
+
+	private Integer loginWay;
 
 	private List<String> pageUrlList;
 	
