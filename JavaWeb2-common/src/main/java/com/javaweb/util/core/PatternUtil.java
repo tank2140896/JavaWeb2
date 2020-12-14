@@ -7,16 +7,20 @@ import com.javaweb.constant.CommonConstant;
 
 public class PatternUtil {
     
-    public static final Pattern NUMBER_PATTERN = Pattern.compile("[\\d]+[.]?[\\d]*");//数字的正则
+	public static final Pattern NUMBER_PATTERN = Pattern.compile("[\\d]+[.]?[\\d]*");//数字的正则
     
-    public static final Pattern ZERO_PATTERN = Pattern.compile("[+-]?0.?[0]*");//0的正则
+	public static final Pattern LETTER_PATTERN = Pattern.compile("(^[a-zA-Z]*)");//字母正则
+	
+	public static final Pattern NUMBER_LETTER_PATTERN = Pattern.compile("[0-9a-zA-Z]+");//数字字母正则
     
-    public static boolean isPattern(String str,Pattern pattern) {
-    	if(str==CommonConstant.NULL_VALUE||CommonConstant.EMPTY_VALUE.equals(str)){
+	public static final Pattern ZERO_PATTERN = Pattern.compile("[+-]?0.?[0]*");//0的正则
+    
+	public static boolean isPattern(String str,Pattern pattern) {
+		if(str==CommonConstant.NULL_VALUE||CommonConstant.EMPTY_VALUE.equals(str)){
 			return false;
 		}
-        Predicate<String> predicate = obj -> pattern.matcher(obj).matches();
-        return predicate.test(str);
-    }
+		Predicate<String> predicate = obj -> pattern.matcher(obj).matches();
+		return predicate.test(str);
+	}
 
 }
