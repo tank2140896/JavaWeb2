@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.userLoginRequest.type = '1';//0：admin；1：web；2：Android；3：IOS
+    
   }
 
   //回车事件
