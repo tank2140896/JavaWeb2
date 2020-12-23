@@ -1,5 +1,6 @@
 package com.javaweb.base;
 
+import java.io.File;
 import java.time.Duration;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -24,7 +25,10 @@ import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.context.ApplicationContextHelper;
 import com.javaweb.enums.HttpCodeEnum;
+import com.javaweb.util.core.DateUtil;
+import com.javaweb.util.core.FileUtil;
 import com.javaweb.util.core.SecretUtil;
+import com.javaweb.util.core.SystemUtil;
 import com.javaweb.web.eo.TokenData;
 
 public class BaseTool extends BaseInject {
@@ -172,6 +176,24 @@ public class BaseTool extends BaseInject {
             }
         }
         return errorMessages;
+	}
+	
+	/* -------------------------------------------------- 分界线 -------------------------------------------------- */
+	
+	//获取文件根路径
+	public static String getFileRootPath(){
+		String rootPath = CommonConstant.EMPTY_VALUE;
+		String yearMonthDay = DateUtil.getDefaultDate(DateUtil.DATE_PATTERN_TYPE1);//年月日
+		int random = (int)(Math.random()*10);//0-9
+		if(SystemUtil.isLinux()) {//linux路径
+            rootPath = BaseSystemMemory.getDictionaryValueByKey("file.root.linux.path","/tmp/file/");
+            rootPath += (random+File.separator+yearMonthDay+File.separator);
+        } else {//windows路径
+        	rootPath = BaseSystemMemory.getDictionaryValueByKey("file.root.windows.path","E:\\file\\");
+        	rootPath += (random+File.separator+yearMonthDay+File.separator);
+        }
+		FileUtil.makeFolder(new File(rootPath));
+		return rootPath;
 	}
 	
 	/* -------------------------------------------------- 分界线 -------------------------------------------------- */
