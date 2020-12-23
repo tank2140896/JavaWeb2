@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.javaweb.task.SystemTaskService;
 import com.javaweb.web.service.DbTablesService;
 import com.javaweb.web.service.DictionaryService;
+import com.javaweb.web.service.FileService;
 import com.javaweb.web.service.InterfacesService;
 import com.javaweb.web.service.ModuleService;
 import com.javaweb.web.service.OperationLogService;
@@ -53,6 +54,9 @@ public class BaseController extends BaseService {
 	
 	@Autowired
 	protected DbTablesService dbTablesService;
+	
+	@Autowired
+	protected FileService fileService;
 	
 	@Autowired
 	protected BaseValidateService baseValidateService;
