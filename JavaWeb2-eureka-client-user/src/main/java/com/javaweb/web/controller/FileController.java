@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,7 +23,9 @@ import com.javaweb.constant.ApiConstant;
 import com.javaweb.constant.SwaggerConstant;
 import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.util.core.FileUtil;
+import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.TokenData;
+import com.javaweb.web.eo.file.FileListRequest;
 
 import io.swagger.annotations.Api;
 
@@ -93,7 +96,7 @@ public class FileController extends BaseController{
                     }
         			total += multipartFile[i].getBytes().length;
         		}
-        		if(total > 1024 * 1024 *10){
+        		if(total > 1024 * 1024 *50){
         			return new BaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"文件总大小不能超过50MB");
         		}
         	}
@@ -101,9 +104,10 @@ public class FileController extends BaseController{
     		String rootPath = BaseTool.getFileRootPath();
     		//上传文件并保存相关文件信息到数据库
     		List<String> list = fileService.uploadFile(multipartFile,rootPath,tokenData.getUser());
-    		return new BaseResponseResult(HttpCodeEnum.SUCCESS,"文件上传成功",list);
+    		return new BaseResponseResult(200,"文件上传成功",list);
     	}catch(Exception e){
-    		return new BaseResponseResult(HttpCodeEnum.SUCCESS,"文件上传失败",e.getMessage());
+    		e.printStackTrace();
+    		return new BaseResponseResult(200,"文件上传失败",e.getMessage());
     	}
     }
     
@@ -121,6 +125,12 @@ public class FileController extends BaseController{
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
+    }
+    
+    @PostMapping("/list")
+    public BaseResponseResult list(@RequestBody FileListRequest fileListRequest){
+    	Page page = fileService.list(fileListRequest);
+    	return new BaseResponseResult(200,"获取文件列表成功",page);
     }
     
     //还可自行添加删除文件、文件查询、设置文件状态（临时和正式）、定时删除临时文件等操作
