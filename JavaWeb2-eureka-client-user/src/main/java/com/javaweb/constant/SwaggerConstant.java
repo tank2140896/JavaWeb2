@@ -121,7 +121,11 @@ public class SwaggerConstant {
 	
 	/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ swagger-FileController ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */
 	public static final String SWAGGER_FILE_CONTROLLER_TAGS = "12、登录且需要权限才可访问的文件管理模块";
-	
+	public static final String SWAGGER_FILE_UPLOAD = "文件上传接口";
+	public static final String SWAGGER_FILE_DOWNLOAD = "文件下载接口";
+	public static final String SWAGGER_FILE_LIST = "文件列表接口";
+	public static final String SWAGGER_FILE_DETAIL = "文件详情接口";
+	public static final String SWAGGER_FILE_DELETE = "文件删除接口";
 	/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ swagger-FileController ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */
 	
 }

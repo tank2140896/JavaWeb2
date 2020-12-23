@@ -28,6 +28,7 @@ import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.file.FileListRequest;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 /**
 import java.io.File;
@@ -84,7 +85,8 @@ public class Test {
 @RequestMapping(ApiConstant.WEB_FILE_PREFIX)
 public class FileController extends BaseController{
 	
-    @PostMapping("/uploadFile")
+    @ApiOperation(value=SwaggerConstant.SWAGGER_FILE_UPLOAD)
+	@PostMapping(ApiConstant.FILE_UPLOAD)
     public BaseResponseResult uploadFile(@TokenDataAnnotation TokenData tokenData,@RequestParam(value="file",required=true) MultipartFile multipartFile[]) {
     	try{
     		//上传文件大小校验，还可以校验总上传文件的大小
@@ -104,14 +106,14 @@ public class FileController extends BaseController{
     		String rootPath = BaseTool.getFileRootPath();
     		//上传文件并保存相关文件信息到数据库
     		List<String> list = fileService.uploadFile(multipartFile,rootPath,tokenData.getUser());
-    		return new BaseResponseResult(200,"文件上传成功",list);
+    		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"file.upload.success",list);
     	}catch(Exception e){
-    		e.printStackTrace();
-    		return new BaseResponseResult(200,"文件上传失败",e.getMessage());
+    		return getBaseResponseResult(HttpCodeEnum.INTERNAL_ERROR,"file.upload.fail");
     	}
     }
     
-    @GetMapping("/downloadFile/{fileId}")
+    @ApiOperation(value=SwaggerConstant.SWAGGER_FILE_DOWNLOAD)
+    @GetMapping(ApiConstant.FILE_DOWNLOAD)
     public void downloadFile(@PathVariable(value="fileId",required=true)String fileId,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse){
     	try{
     		com.javaweb.web.po.File file = fileDao.selectByPk(fileId);
@@ -127,12 +129,25 @@ public class FileController extends BaseController{
 		}
     }
     
-    @PostMapping("/list")
+    @ApiOperation(value=SwaggerConstant.SWAGGER_FILE_LIST)
+    @PostMapping(ApiConstant.FILE_LIST)
     public BaseResponseResult list(@RequestBody FileListRequest fileListRequest){
     	Page page = fileService.list(fileListRequest);
-    	return new BaseResponseResult(200,"获取文件列表成功",page);
+    	return getBaseResponseResult(HttpCodeEnum.SUCCESS,"file.list.success",page);
     }
     
-    //还可自行添加删除文件、文件查询、设置文件状态（临时和正式）、定时删除临时文件等操作
-
+    @ApiOperation(value=SwaggerConstant.SWAGGER_FILE_DETAIL)
+    @GetMapping(ApiConstant.FILE_DETAIL)
+    public BaseResponseResult detail(@PathVariable(value="fileId",required=true)String fileId){
+    	com.javaweb.web.po.File file = fileService.fileDetail(fileId);
+    	return getBaseResponseResult(HttpCodeEnum.SUCCESS,"file.detail.success",file);
+    }
+    
+    @ApiOperation(value=SwaggerConstant.SWAGGER_FILE_DELETE)
+    @GetMapping(ApiConstant.FILE_DELETE)
+    public BaseResponseResult delete(@PathVariable(value="fileId",required=true)String fileId){
+    	fileService.fileDelete(fileId);
+    	return getBaseResponseResult(HttpCodeEnum.SUCCESS,"file.delete.success");
+    }
+    
 }

@@ -83,5 +83,10 @@ public class ApiConstant {
 	public static final String DB_TABLES_CODE_GENERATE = "/codeGenerate/{tableName}";//数据库表代码生成接口
 	
 	public static final String WEB_FILE_PREFIX = "/web/sys/file";
+	public static final String FILE_UPLOAD = "/uploadFile";//文件上传接口
+	public static final String FILE_DOWNLOAD = "/downloadFile/{fileId}";//文件下载接口
+	public static final String FILE_LIST = "/list";//文件列表接口
+	public static final String FILE_DETAIL = "/detail/{fileId}";//文件详情接口
+	public static final String FILE_DELETE = "/delete/{fileId}";//文件删除接口
 	
 }

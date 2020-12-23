@@ -14,4 +14,8 @@ public interface FileService {
 	
 	public Page list(FileListRequest fileListRequest);
 	
+	public com.javaweb.web.po.File fileDetail(String id);
+	
+	public void fileDelete(String id);
+	
 }

@@ -46,7 +46,7 @@ public class FileServiceImpl extends BaseService implements FileService {
     			fileEntity.setFileSize(multipartFile[i].getSize());
     			fileEntity.setFileUnit("byte");
     			fileEntity.setFileSerNo(fileSerNo);
-    			fileEntity.setFileUseType(1);
+    			fileEntity.setFileUseType(2);
     			fileEntity.setCreator(user.getCreator());
     			fileEntity.setCreateDate(DateUtil.getDefaultDate());
     			fileDao.insert(fileEntity);
@@ -63,6 +63,22 @@ public class FileServiceImpl extends BaseService implements FileService {
 		Long count = fileDao.selectListCount(queryWapper);
 		Page page = new Page(fileListRequest,list,count);
 		return page;
+	}
+
+	public com.javaweb.web.po.File fileDetail(String id) {
+		return fileDao.selectByPk(id);
+	}
+	
+	@Transactional
+	public void fileDelete(String id){
+		String ids[] = id.split(",");
+		for(String eachId:ids){
+			com.javaweb.web.po.File file = fileDao.selectByPk(eachId);
+			if(file.getFileFullPath()!=null){
+				new File(file.getFileFullPath()).delete();//文件不存在也不会报错的
+			}
+			fileDao.delete(eachId);
+		}
 	}
 	
 }
