@@ -16,6 +16,7 @@ import {OnlineChatModule} from '../onlineChat/online.chat.module';
 import {OnlineUserModule} from '../onlineUser/online.user.module';
 import {DbTablesModule} from '../dbTables/db.tables.module';
 import {SystemLogModule} from '../systemLog/system.log.module';
+import { FileModule } from '../file/file.module';
 
 @NgModule({
   imports:[CommonModule,RouterModule,
@@ -23,7 +24,7 @@ import {SystemLogModule} from '../systemLog/system.log.module';
            UserModule,RoleModule,ModuleModule,
            DictionaryModule,OperationLogModule,ScheduleModule,
            InterfacesModule,OnlineChatModule,OnlineUserModule,
-           DbTablesModule,SystemLogModule
+           DbTablesModule,SystemLogModule,FileModule
   ],
   declarations:[HomeComponent],
   exports:[HomeComponent]

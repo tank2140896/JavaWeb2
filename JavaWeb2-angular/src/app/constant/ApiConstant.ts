@@ -70,6 +70,9 @@ export class ApiConstant{
   public static SYS_DB_TABLES_DETAIL = '/web/sys/dbTables/detail';//数据库表详情
   public static SYS_DB_TABLES_CODE_GENERATE = '/web/sys/dbTables/codeGenerate';//数据库表代码生成接口
 
+  public static SYS_FILE_LIST = '/web/sys/file/list';//文件列表
+  public static SYS_FILE_UPLOAD_FILE = '/web/sys/file/uploadFile';//上传文件
+
   /** 拥有权限才能访问 end */
 
   public static getPath(urlName:string,isFullPath:boolean):string{

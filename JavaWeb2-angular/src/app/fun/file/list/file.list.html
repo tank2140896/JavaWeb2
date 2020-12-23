@@ -1,0 +1,60 @@
+<div style="margin-top:1%;margin-left:1%">
+  <button type="button" class="btn btn-primary" style="margin-left:1%;" (click)="fileSearch(1)" *ngIf="fileListZone">查询</button>
+  <button type="button" class="btn btn-info" style="margin-left:1%;" (click)="reset()">重置</button>
+  <input type="file" style="width:200px;text-align:center;vertical-align:middle;margin-left:70%;" multiple="multiple" (change)="fileSelect($event)" *ngIf="fileUploadZone">
+  <button type="button" class="btn btn-success" style="margin-left:1%;" (click)="fileUpload()" *ngIf="fileUploadZone">文件上传</button>
+</div>
+<div class="col col-xl-12 col-lg-12" style="margin-top:1%;">
+  <div class="card mb-3">
+    <div class="card-body table table-hover">
+      <table class="table">
+        <thead>
+          <tr class="text-center">
+            <th>序号</th>
+            <th>原始文件名称</th>
+            <th>现文件名称</th>
+            <th>文件后缀</th>
+            <th>文件大小</th>
+            <th>文件大小单位</th>
+            <th>文件使用类型</th>
+            <th>操作</th>
+          </tr>
+        </thead>
+        <tbody *ngIf="resultPage.data==resultPage.dataLoading">
+          <tr class="text-center">
+            <td colspan=8>数据获取中...</td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="resultPage.data==null">
+          <tr class="text-center">
+            <td colspan=8>无数据</td>
+          </tr>
+        </tbody>
+        <tbody *ngIf="resultPage.data!=null&&resultPage.data!=resultPage.dataLoading">
+          <tr *ngFor="let eachData of resultPage.data;let xh=index" class="text-center">
+            <td>{{(xh+1)+(resultPage.currentPage-1)*resultPage.pageSize}}</td>
+            <td>{{eachData.originFileName}}</td>
+            <td>{{eachData.currentFileName}}</td>
+            <td>{{eachData.fileSuffix}}</td>
+            <td>{{eachData.fileSize}}</td>
+            <td>{{eachData.fileUnit}}</td>
+            <td *ngIf="eachData.fileUseType==1">临时文件</td><td *ngIf="eachData.fileUseType==2">正式文件</td>
+            <td>
+              暂无
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div *ngIf="resultPage.data!=null&&resultPage.data!=resultPage.dataLoading">
+      <div style="float:right;padding:0px 1em 1ex 0em;">
+        <span style="margin-right:10px;"><a *ngIf="resultPage.currentPage>1" (click)="fileSearch(1)" class="btn btn-info">首页</a></span>
+        <span style="margin-right:10px;"><a *ngIf="resultPage.currentPage>1" (click)="fileSearch(resultPage.currentPage-1)" class="btn btn-info">上一页</a></span>
+        <span style="margin-right:10px;"style="margin-right:10px;" *ngFor="let eachPage of resultPage.pageList"><a (click)="fileSearch(eachPage)" class="btn btn-info" [ngClass]="{'active':(resultPage.currentPage==eachPage)}">{{eachPage}}</a></span>
+        <span style="margin-right:10px;"><a *ngIf="resultPage.totalPage>resultPage.currentPage" (click)="fileSearch(resultPage.currentPage+1)" class="btn btn-info">下一页</a></span>
+        <span style="margin-right:10px;"><a *ngIf="resultPage.totalPage>resultPage.currentPage" (click)="fileSearch(resultPage.totalPage)" class="btn btn-info">末页</a></span>
+        <span *ngIf="resultPage.totalPage>=resultPage.currentPage">当前第{{resultPage.currentPage}}/{{resultPage.totalPage}}页，共{{resultPage.totalSize}}条</span>
+      </div>
+    </div>
+  </div>
+</div>

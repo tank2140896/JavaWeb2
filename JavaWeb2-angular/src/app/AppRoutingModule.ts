@@ -44,6 +44,8 @@ import {DbTablesListComponent} from './fun/dbTables/list/db.tables.list.componen
 import {DbTablesDetailComponent} from './fun/dbTables/detail/db.tables.detail.component';
 import {InterfacesTestComponent} from './fun/interfaces/test/interfaces.test.component';
 import {SystemLogComponent} from './fun/systemLog/system.log.component';
+import {FileComponent} from './fun/file/file.component';
+import {FileListComponent} from './fun/file/list/file.list.component';
 
 const routes: Routes = [
   {path:'',component:LoginComponent},//默认登录页面
@@ -126,6 +128,11 @@ const routes: Routes = [
       {path:'',component:DbTablesListComponent,canActivate:[AuthService]},//数据库表列表
       {path:'list',component:DbTablesListComponent,canActivate:[AuthService]},//数据库表列表
       {path:'detail',component:DbTablesDetailComponent,canActivate:[AuthService]},//数据库表详情
+      {path:'**',redirectTo:'/web',pathMatch:'full'}
+    ],canActivate:[AuthService]},
+    {path:'sys/file',component:FileComponent,children:[
+      {path:'',component:FileListComponent,canActivate:[AuthService]},//文件列表
+      {path:'list',component:FileListComponent,canActivate:[AuthService]},//文件列表
       {path:'**',redirectTo:'/web',pathMatch:'full'}
     ],canActivate:[AuthService]},
     {path:'**',redirectTo: '/web', pathMatch: 'full'}
