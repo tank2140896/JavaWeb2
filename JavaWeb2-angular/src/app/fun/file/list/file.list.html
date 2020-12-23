@@ -11,12 +11,9 @@
         <thead>
           <tr class="text-center">
             <th>序号</th>
-            <th>原始文件名称</th>
-            <th>现文件名称</th>
-            <th>文件后缀</th>
+            <th>文件名称</th>
             <th>文件大小</th>
-            <th>文件大小单位</th>
-            <th>文件使用类型</th>
+            <th>上传日期</th>
             <th>操作</th>
           </tr>
         </thead>
@@ -34,13 +31,11 @@
           <tr *ngFor="let eachData of resultPage.data;let xh=index" class="text-center">
             <td>{{(xh+1)+(resultPage.currentPage-1)*resultPage.pageSize}}</td>
             <td>{{eachData.originFileName}}</td>
-            <td>{{eachData.currentFileName}}</td>
-            <td>{{eachData.fileSuffix}}</td>
-            <td>{{eachData.fileSize}}</td>
-            <td>{{eachData.fileUnit}}</td>
-            <td *ngIf="eachData.fileUseType==1">临时文件</td><td *ngIf="eachData.fileUseType==2">正式文件</td>
+            <td>{{eachData.fileSize}}({{eachData.fileUnit}})</td>
+            <td>{{eachData.createDate}}</td>
             <td>
-              暂无
+              <button style="margin-right:10px;" *ngIf="fileDownloadZone" class="btn btn-sm btn-info" (click)="fileDwonloadFunction(eachData.id)">下载文件</button>
+              <button style="margin-right:10px;" *ngIf="fileDeleteZone" class="btn btn-sm btn-danger" (click)="fileDeleteFunction(eachData.id)">删除文件</button>
             </td>
           </tr>
         </tbody>

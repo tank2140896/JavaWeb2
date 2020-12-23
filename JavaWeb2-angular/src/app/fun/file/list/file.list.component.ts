@@ -27,14 +27,21 @@ export class FileListComponent implements OnInit {
               private sessionService:SessionService){
     this.fileListZone = authService.canShow(ApiConstant.getPath(ApiConstant.SYS_FILE_LIST,false));
     this.fileUploadZone = authService.canShow(ApiConstant.getPath(ApiConstant.SYS_FILE_UPLOAD_FILE,false));
+    this.fileDownloadZone = authService.canShow(ApiConstant.getPath(ApiConstant.SYS_FILE_DOWNLOAD_FILE,false));
+    //this.fileDetailZone = authService.canShow(ApiConstant.getPath(ApiConstant.SYS_FILE_DETAIL,false));
+    this.fileDeleteZone = authService.canShow(ApiConstant.getPath(ApiConstant.SYS_FILE_DELETE,false));
   }
 
   /** 操作权限 start */
   fileListZone:boolean;//文件列表
   fileUploadZone:boolean;//上传文件
+  fileDownloadZone:boolean;//下载文件
+  //fileDetailZone:boolean;//文件详情
+  fileDeleteZone:boolean;//删除文件
   /** 操作权限 end */
 
   private fileFormData:any = null;
+  private fileDownloadSrc:string = ApiConstant.getPath(ApiConstant.SYS_FILE_DOWNLOAD_FILE,true);
   private fileListRequest:FileListRequest = new FileListRequest();//文件列表搜索条件
   private resultPage:ResultPage = new ResultPage();//分页结果初始化
 
@@ -123,6 +130,31 @@ export class FileListComponent implements OnInit {
     }else{
       alert('请选择所要上传的文件');
     }
+  }
+
+  //下载文件
+  public fileDwonloadFunction(id:string):void{
+    window.open(ApiConstant.getPath(ApiConstant.SYS_FILE_DOWNLOAD_FILE+'/'+id+'?token='+this.sessionService.getHeadToken().token,true));
+  }
+
+  //删除文件
+  public fileDeleteFunction(id:string):void{
+    this.httpService.getJsonData(ApiConstant.getPath(ApiConstant.SYS_FILE_DELETE+'/'+id,true),this.sessionService.getHeadToken()).subscribe(
+      {
+        next:(result:any) => {
+          //console.log(result);
+          if(result.code==200){
+            this.fileSearch(1);
+            alert('文件删除成功');
+          }else{
+            this.fileSearch(1);
+            alert('文件删除失败');
+          }
+        },
+        error:e => {},
+        complete:() => {}
+      }
+    );
   }
 
 }

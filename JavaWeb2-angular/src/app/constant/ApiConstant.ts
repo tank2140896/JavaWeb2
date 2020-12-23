@@ -72,6 +72,9 @@ export class ApiConstant{
 
   public static SYS_FILE_LIST = '/web/sys/file/list';//文件列表
   public static SYS_FILE_UPLOAD_FILE = '/web/sys/file/uploadFile';//上传文件
+  public static SYS_FILE_DOWNLOAD_FILE = '/web/sys/file/downloadFile';//下载文件
+  public static SYS_FILE_DETAIL = '/web/sys/file/detail';//文件详情
+  public static SYS_FILE_DELETE = '/web/sys/file/delete';//文件删除
 
   /** 拥有权限才能访问 end */
 
