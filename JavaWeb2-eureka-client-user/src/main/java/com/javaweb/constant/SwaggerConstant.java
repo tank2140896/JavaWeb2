@@ -119,4 +119,9 @@ public class SwaggerConstant {
 	public static final String SWAGGER_DB_TABLES_CODE_GENERATE = "数据库表代码生成接口";
 	/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ swagger-DbTablesController ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */
 	
+	/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ swagger-FileController ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */
+	public static final String SWAGGER_FILE_CONTROLLER_TAGS = "12、登录且需要权限才可访问的文件管理模块";
+	
+	/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ swagger-FileController ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */
+	
 }
