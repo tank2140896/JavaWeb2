@@ -10,14 +10,13 @@
 JavaWeb2-database->JavaWeb2-common                  
 JavaWeb2-integration-demo->JavaWeb2-database                                                                      
 JavaWeb2-eureka-server（要起3个，端口1001、1002、1003）                                                
-JavaWeb2-eureka-client-user（端口2001）->JavaWeb2-database                                                                    
-JavaWeb2-eureka-client-file（端口2002）->JavaWeb2-database                                                                                                             
+JavaWeb2-eureka-client-user（端口2001）->JavaWeb2-database                                                                                                                       
 JavaWeb2-eureka-client-zuul（端口3001）->JavaWeb2-common             
 JavaWeb2-angular（cnpm install->cnpm start）              
 因此，要正确完成JavaWeb2-eureka-client-user的编译需要先编译JavaWeb2-common再编译JavaWeb2-database                        
 # 三、启动顺序                                                       
 1、JavaWeb2-eureka-server（要起3个，端口1001、1002、1003）                          
-2、JavaWeb2-eureka-client-user（端口2001）、JavaWeb2-eureka-client-file（端口2002）、JavaWeb2-eureka-client-zuul（端口3001）          
+2、JavaWeb2-eureka-client-user（端口2001）、JavaWeb2-eureka-client-zuul（端口3001）          
 3、JavaWeb2-angular（端口4200）     
 注：与Angular整合看效果的话只要导入JavaWeb2-eureka-client-user/src/main/resources/sql/init.sql，然后修改JavaWeb2-eureka-client-user的pom.xml注释掉spring-cloud-starter-netflix-eureka-client和spring-cloud-starter-openfeign，然后加入spring-boot-starter-aop，待编译完成好后，注释掉报错代码即可，页面访问：localhost:4200，账号和密码都是admin123456     
 # 四、使用前重要说明                                                                     
