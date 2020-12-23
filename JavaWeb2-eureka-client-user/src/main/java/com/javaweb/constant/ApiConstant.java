@@ -82,4 +82,6 @@ public class ApiConstant {
 	public static final String DB_TABLES_DETAIL = "/detail/{tableName}";//数据库表详情接口
 	public static final String DB_TABLES_CODE_GENERATE = "/codeGenerate/{tableName}";//数据库表代码生成接口
 	
+	public static final String WEB_FILE_PREFIX = "/web/sys/file";
+	
 }
