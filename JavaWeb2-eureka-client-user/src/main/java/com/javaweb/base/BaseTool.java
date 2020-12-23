@@ -187,10 +187,10 @@ public class BaseTool extends BaseInject {
 		int random = (int)(Math.random()*10);//0-9
 		if(SystemUtil.isLinux()) {//linux路径
             rootPath = BaseSystemMemory.getDictionaryValueByKey("file.root.linux.path","/tmp/file/");
-            rootPath += (random+File.separator+yearMonthDay+File.separator);
+            rootPath += (random+"/"+yearMonthDay+"/");
         } else {//windows路径
         	rootPath = BaseSystemMemory.getDictionaryValueByKey("file.root.windows.path","E:\\file\\");
-        	rootPath += (random+File.separator+yearMonthDay+File.separator);
+        	rootPath += (random+"\\\\"+yearMonthDay+"\\\\");
         }
 		FileUtil.makeFolder(new File(rootPath));
 		return rootPath;
