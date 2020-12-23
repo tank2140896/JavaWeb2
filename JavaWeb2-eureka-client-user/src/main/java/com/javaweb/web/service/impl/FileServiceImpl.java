@@ -6,19 +6,24 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.javaweb.base.BaseService;
 import com.javaweb.constant.SystemConstant;
+import com.javaweb.query.QueryWapper;
 import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.FileUtil;
 import com.javaweb.util.core.SecretUtil;
+import com.javaweb.util.entity.Page;
+import com.javaweb.web.eo.file.FileListRequest;
 import com.javaweb.web.po.User;
 import com.javaweb.web.service.FileService;
 
 @Service("fileServiceImpl")
 public class FileServiceImpl extends BaseService implements FileService {
 
+	@Transactional
 	public List<String> uploadFile(MultipartFile multipartFile[],String rootPath,User user) throws Exception {
 		final String fileSerNo = UUID.randomUUID().toString();//文件批次号（同一批次上传的多个文件的批次号应该相同）
 		List<String> list = new ArrayList<>();
@@ -49,6 +54,15 @@ public class FileServiceImpl extends BaseService implements FileService {
     		}
     	}
 		return list;
+	}
+
+	public Page list(FileListRequest fileListRequest) {
+		QueryWapper<com.javaweb.web.po.File> queryWapper = new QueryWapper<>();
+		queryWapper.page(fileListRequest.getCurrentPage(),fileListRequest.getPageSize());
+		List<com.javaweb.web.po.File> list = fileDao.selectList(queryWapper);
+		Long count = fileDao.selectListCount(queryWapper);
+		Page page = new Page(fileListRequest,list,count);
+		return page;
 	}
 	
 }
