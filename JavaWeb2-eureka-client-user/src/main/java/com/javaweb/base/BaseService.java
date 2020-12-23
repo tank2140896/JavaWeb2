@@ -6,6 +6,7 @@ import com.javaweb.web.dao.ds1.CommonDao;
 import com.javaweb.web.dao.ds1.DataPermissionDao;
 import com.javaweb.web.dao.ds1.DbTablesDao;
 import com.javaweb.web.dao.ds1.DictionaryDao;
+import com.javaweb.web.dao.ds1.FileDao;
 import com.javaweb.web.dao.ds1.InterfacesDao;
 import com.javaweb.web.dao.ds1.ModuleDao;
 import com.javaweb.web.dao.ds1.OperationLogDao;
@@ -64,5 +65,8 @@ public class BaseService extends BaseTool {
 	
 	@Autowired
 	protected DbTablesDao dbTablesDao;
+	
+	@Autowired
+	protected FileDao fileDao;
 
 }
