@@ -1,11 +1,9 @@
 package com.javaweb.config.thirdparty;
 
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.javaweb.util.core.AesDesUtil;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,21 +12,20 @@ import lombok.Setter;
 @RestController
 public class DockingController {
 
-	//step1:给予对方一个key和RSA公钥
+	//step1:给予对方key、RSA公钥、UUID
 	
-	//step2:通过RSA公钥加密key获取token
-	public String getTokenBykey(@RequestParam(value="key") String key){//key是经过RSA公钥加密的
+	//step2:获取token（header传：1、RSA公钥加密key；2、time[yyyyMMddHHmmss]；3、MD5(time+","+UUID)）
+	@GetMapping("/getToken")
+	public String getToken(){
 		//step2.1:可以做的全面点，存入表中，校验下给予的这个key（没有经过RSA公钥加密）是否正确、是否是指定的使用厂商、使用期限是否到期、是否被禁用等
-		//step2.2:将针对key（没有经过RSA公钥加密）生成token+DES的key并将token+DES的key存入如redis中，给其一个存续期
-		return "token+DES的key";
+		//step2.2:key作为键，DES(新的UUID+","+新的时间)作为value存入如redis中，给其一个存续期
+		return "（token是key对应的value值）和（DES的秘钥）";
 	}
 	
-	//step3:请求方将body（带有token）参数用DES加密传给我们，我们解密并返回数据给请求方
+	@PostMapping("/returnResult")
+	//step3:请求接口（1、请求体：{'code':DES(body),'time':'yyyyMMddHHmmss,'sign':RSA公钥加密time'}；2、token）
 	public String returnResult(@RequestBody GiveMeRequestBody giveMeRequestBody) throws Exception {
-		String code = giveMeRequestBody.getCode();
-		code = AesDesUtil.decryptDes(code,null/*秘钥*/);
-		Object obj = new ObjectMapper().readValue(code,Object.class/*某个实体类*/);
-		return obj.toString();//返回调用方需要的数据
+		return "调用方需要的数据";//返回调用方需要的数据
 	}
 	
 }
@@ -37,4 +34,6 @@ public class DockingController {
 @Setter
 class GiveMeRequestBody {
 	private String code;
+	private String time;
+	private String sign;
 }
