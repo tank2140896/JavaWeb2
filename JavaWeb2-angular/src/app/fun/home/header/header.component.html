@@ -1,8 +1,9 @@
-<div style="text-align: center">
-  <div>
-    <span style="color:#0b048b">欢迎您：</span><span style="color: red">{{userName}}</span><a (click)="logout()" href="javascript:void(0);" style="margin-left:1%">退出</a>
+<div style="text-align:center;">
+  <div style="float:right;margin-right:1%;">
+    <div>用户（<span style="color: red">{{userName}}</span>）<a (click)="logout()" href="javascript:void(0);">登出</a></div>
   </div>
-  <div>
-    <span>当前服务器时间为：{{serveTime}}</span><span style="margin-left:1%;">当前本地时间为：{{localTime}}</span>
+  <div style="float:left;margin-left:1%;">
+    <div><span>服务器时间：{{serveTime}}</span></div>
+    <div><span>本地区时间：{{localTime}}</span></div>
   </div>
 </div>
