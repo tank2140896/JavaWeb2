@@ -1,10 +1,10 @@
 ﻿# JavaWeb2 V1.0         
 # 一、界面预览                      
-![image](https://github.com/tank2140896/JavaWeb2/blob/master/%E7%95%8C%E9%9D%A2%E6%88%AA%E5%9B%BE/%E7%99%BB%E5%BD%95.bmp)         
-![image](https://github.com/tank2140896/JavaWeb2/blob/master/%E7%95%8C%E9%9D%A2%E6%88%AA%E5%9B%BE/%E9%A6%96%E9%A1%B5.bmp)           
-![image](https://github.com/tank2140896/JavaWeb2/blob/master/%E7%95%8C%E9%9D%A2%E6%88%AA%E5%9B%BE/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86.bmp)          
-![image](https://github.com/tank2140896/JavaWeb2/blob/master/%E7%95%8C%E9%9D%A2%E6%88%AA%E5%9B%BE/%E6%97%A5%E7%A8%8B%E7%AE%A1%E7%90%86.bmp)         
-![image](https://github.com/tank2140896/JavaWeb2/blob/master/%E7%95%8C%E9%9D%A2%E6%88%AA%E5%9B%BE/%E6%A8%A1%E5%9D%97%E7%AE%A1%E7%90%86.bmp)                
+![image1](./%E7%95%8C%E9%9D%A2%E6%88%AA%E5%9B%BE/%E7%99%BB%E5%BD%95.bmp)         
+![image2](./%E7%95%8C%E9%9D%A2%E6%88%AA%E5%9B%BE/%E9%A6%96%E9%A1%B5.bmp)           
+![image3](./%E7%95%8C%E9%9D%A2%E6%88%AA%E5%9B%BE/%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86.bmp)          
+![image4](./%E7%95%8C%E9%9D%A2%E6%88%AA%E5%9B%BE/%E6%97%A5%E7%A8%8B%E7%AE%A1%E7%90%86.bmp)         
+![image5](./%E7%95%8C%E9%9D%A2%E6%88%AA%E5%9B%BE/%E6%A8%A1%E5%9D%97%E7%AE%A1%E7%90%86.bmp)                
 # 二、环境依赖                                                       
 1、jdk8                          
 2、maven3.3+                 
