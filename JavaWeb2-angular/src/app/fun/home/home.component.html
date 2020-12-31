@@ -1,9 +1,17 @@
-<div class="app-web-home-header">
-  <app-web-home-header></app-web-home-header>
-</div>
-<div class="app-web-home-sidebar">
-  <app-web-home-sidebar></app-web-home-sidebar>
-</div>
-<div class="app-web-home-centeral">
-  <router-outlet></router-outlet>
+<div class="app-web-home">
+  <!--左侧sidebar-->
+  <div class="app-web-home-sidebar">
+    <app-web-home-sidebar></app-web-home-sidebar>
+  </div>
+  <!--右侧-->
+  <div class="app-web-right">
+    <!--右侧header-->
+    <div class="app-web-home-header">
+      <app-web-home-header></app-web-home-header>
+    </div>
+    <!--右侧centeral-->
+    <div class="app-web-home-centeral">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>
