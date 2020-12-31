@@ -1,21 +1,34 @@
+.app-web-home{
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+  .app-web-right{
+    width: 90%;
+    height: 100%;
+    background-color: #efefef;
+    position: absolute;
+    left: 10%;
+    top: 0;
+  }
+}
 .app-web-home-header{
-  width: 90%;
+  width: 100%;
   height: 50px;
-  float: right;
-  background-color: lightblue;
+  background-color: #efefef;
 }
 .app-web-home-sidebar{
   width: 10%;
   height:calc(100% - 0px);
-  background-color: bisque;
-  float: left;
   position: absolute;
+  left: 0;
+  top: 0;
+  border-right: solid #ACC0D8 3px;
+  background-color: #efefef;
 }
 .app-web-home-centeral{
-  width: 90%;
-  height:calc(100% - 0px);
-  background-color: #ffffff;
-  float: right;
-  position: relative;
-  border-top: solid #ACC0D8 1px;
+  width: 100%;
+  height:calc(100% - 50px);
+  border-top: solid #ACC0D8 3px;
 }
