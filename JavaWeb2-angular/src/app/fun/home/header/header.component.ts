@@ -58,16 +58,18 @@ export class HeaderComponent implements OnInit {
   }
 
   public logout():void{
-    this.httpService.getJsonData(ApiConstant.getPath(ApiConstant.LOGOUT,true),this.sessionService.getHeadToken()).subscribe(
-      {
-        next:(result:any) => {
-          this.router.navigate(['']);
-          this.sessionService.clearTokenData();
-        },
-        error:e => {},
-        complete:() => {}
-      }
-    );
+    if(window.confirm('您确定要登出吗？')){
+      this.httpService.getJsonData(ApiConstant.getPath(ApiConstant.LOGOUT,true),this.sessionService.getHeadToken()).subscribe(
+        {
+          next:(result:any) => {
+            this.router.navigate(['']);
+            this.sessionService.clearTokenData();
+          },
+          error:e => {},
+          complete:() => {}
+        }
+      );
+    }
   }
 
 }
