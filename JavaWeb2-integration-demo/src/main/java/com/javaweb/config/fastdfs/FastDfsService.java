@@ -1,10 +1,11 @@
 package com.javaweb.config.fastdfs;
 
+import java.security.MessageDigest;
 import java.util.Set;
 
-import javax.annotation.Resource;
-
+import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.io.FilenameUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -17,9 +18,9 @@ import com.github.tobato.fastdfs.service.FastFileStorageClient;
 @Component
 public class FastDfsService {
     
-	//private static final Logger LOGGER = LoggerFactory.getLogger(FastDfsUtil.class);
+    //private static final Logger LOGGER = LoggerFactory.getLogger(FastDfsUtil.class);
     
-    @Resource
+    @Autowired
     private FastFileStorageClient storageClient ;
     
     /**
@@ -43,6 +44,20 @@ public class FastDfsService {
     public void deleteFile(String fileUrl) throws Exception {
     	StorePath storePath = StorePath.parseFromUrl(fileUrl);
         storageClient.deleteFile(storePath.getGroup(),storePath.getPath());
+    }
+	
+    //计算token值（不能加上group1！！！getToken("M00/00/00/CoMALF_RsLeAP-fgAACwsyaLgL0777.jpg",(int)(System.currentTimeMillis()/1000),"FastDFS1234567890")）
+    public String getToken(String remoteFilename, int ts, String secretKey) throws Exception {
+    	byte[] bsFilename = remoteFilename.getBytes("UTF-8");
+        byte[] bsKey = secretKey.getBytes("UTF-8");
+        byte[] bsTimestamp = (new Long(ts)).toString().getBytes("UTF-8");
+        byte[] buff = new byte[bsFilename.length + bsKey.length + bsTimestamp.length];
+        System.arraycopy(bsFilename, 0, buff, 0, bsFilename.length);
+        System.arraycopy(bsKey, 0, buff, bsFilename.length, bsKey.length);
+        System.arraycopy(bsTimestamp, 0, buff, bsFilename.length + bsKey.length, bsTimestamp.length);
+        MessageDigest messageDigest = MessageDigest.getInstance("MD5");
+        byte[] hash = messageDigest.digest(buff);
+        return Hex.encodeHexString(hash);
     }
     
 }
