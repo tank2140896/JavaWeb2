@@ -46,15 +46,23 @@ public class FastDfsService {
         storageClient.deleteFile(storePath.getGroup(),storePath.getPath());
     }
 	
-    //计算token值（不能加上group1！！！getToken("M00/00/00/CoMALF_RsLeAP-fgAACwsyaLgL0777.jpg",(int)(System.currentTimeMillis()/1000),"FastDFS1234567890")）
-    public String getToken(String remoteFilename, int ts, String secretKey) throws Exception {
-    	byte[] bsFilename = remoteFilename.getBytes("UTF-8");
+    //
+    /**
+     * 计算token值（不能加上group1！！！getToken("M00/00/00/CoMALF_RsLeAP-fgAACwsyaLgL0777.jpg",(int)(System.currentTimeMillis()/1000),"FastDFS1234567890")）
+     * @param remoteFilePath 目标文件路径
+     * @param ts 时间
+     * @param secretKey 密钥
+     * @return token
+     * @throws Exception 异常
+     */
+    public String getToken(String remoteFilePath, int ts,String secretKey) throws Exception {
+    	byte[] bsFilePath = remoteFilePath.getBytes("UTF-8");
         byte[] bsKey = secretKey.getBytes("UTF-8");
         byte[] bsTimestamp = (new Long(ts)).toString().getBytes("UTF-8");
-        byte[] buff = new byte[bsFilename.length + bsKey.length + bsTimestamp.length];
-        System.arraycopy(bsFilename, 0, buff, 0, bsFilename.length);
-        System.arraycopy(bsKey, 0, buff, bsFilename.length, bsKey.length);
-        System.arraycopy(bsTimestamp, 0, buff, bsFilename.length + bsKey.length, bsTimestamp.length);
+        byte[] buff = new byte[bsFilePath.length + bsKey.length + bsTimestamp.length];
+        System.arraycopy(bsFilePath, 0, buff, 0, bsFilePath.length);
+        System.arraycopy(bsKey, 0, buff, bsFilePath.length, bsKey.length);
+        System.arraycopy(bsTimestamp, 0, buff, bsFilePath.length + bsKey.length, bsTimestamp.length);
         MessageDigest messageDigest = MessageDigest.getInstance("MD5");
         byte[] hash = messageDigest.digest(buff);
         return Hex.encodeHexString(hash);
