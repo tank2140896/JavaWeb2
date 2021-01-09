@@ -8,4 +8,6 @@ export class UserLoginRequest {
 
   loginWay:number = 1;//登录方式
 
+  time:string;//时间戳
+
 }

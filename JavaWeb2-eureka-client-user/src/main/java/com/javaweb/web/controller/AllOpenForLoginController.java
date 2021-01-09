@@ -2,6 +2,7 @@ package com.javaweb.web.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,7 @@ import com.javaweb.util.core.AesDesUtil;
 import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.MathUtil;
 import com.javaweb.util.core.ObjectOperateUtil;
+import com.javaweb.util.core.PatternUtil;
 import com.javaweb.util.core.RsaUtil;
 import com.javaweb.util.core.SecretUtil;
 import com.javaweb.util.entity.RsaKey;
@@ -49,6 +51,16 @@ public class AllOpenForLoginController extends BaseController {
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
 		}
+		/* 密码特殊处理 start */
+		String password = decodePassword(userLoginRequest.getPassword(),userLoginRequest.getTime());
+		if(CommonConstant.EMPTY_VALUE.equals(password)){
+			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"validated.user.password.error");
+		}
+		if(!PatternUtil.isPattern(password,Pattern.compile("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$"))){
+			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"validated.user.password.pattern");
+		}
+		userLoginRequest.setPassword(password);
+		/* 密码特殊处理 end */
 		/**
 		//参数业务逻辑校验
 		Map<String,Object> map = new HashMap<>();
@@ -192,6 +204,32 @@ public class AllOpenForLoginController extends BaseController {
 		return moduleList;
 	}
 	
+    //解码密码
+    public String decodePassword(String password,String time){
+		String out = CommonConstant.EMPTY_VALUE;
+    	try{
+			char[] charArray = password.toCharArray();
+			int one,another;char tmp;
+			for(int i=time.length()-1;i>=0;){
+				one = Integer.parseInt(String.valueOf(time.charAt(i--)));
+				another = Integer.parseInt(String.valueOf(time.charAt(i--)));
+				tmp = charArray[one];
+				charArray[one] = charArray[another];
+				charArray[another] = tmp;
+			}
+			out = SecretUtil.base64DecoderString(String.valueOf(charArray),"UTF-8");
+			int position = (int)(Long.parseLong(time)%2);
+			if(position==0){//偶数
+				out = out.substring(0,out.length()-time.length());
+			}else{//奇数
+				out = out.substring(time.length(),out.length());
+			}
+		}catch(Exception e){
+			//do nothing
+		}
+		return out;
+	}
+	
 	/* -------------------------------------------------- 分界线（下面的目前未用到） -------------------------------------------------- */
 	
 	//封装成树形结构集合（非递归版）
@@ -271,21 +309,4 @@ public class AllOpenForLoginController extends BaseController {
     	arrayList.add(deep,noFirst);
     }
     
-    public String decodePassword(String password,String time){
-		try{
-			char[] charArray = password.toCharArray();
-			int one,another;char tmp;
-			for(int i=time.length()-1;i>=0;i--){
-				one = Integer.parseInt(String.valueOf(time.charAt(i--)));
-				another = Integer.parseInt(String.valueOf(time.charAt(i--)));
-				tmp = charArray[one];
-				charArray[one] = charArray[another];
-				charArray[another] = tmp;
-			}
-			return String.valueOf(charArray);
-		}catch(Exception e){
-			return CommonConstant.EMPTY_VALUE;
-		}
-	}
-	
 }

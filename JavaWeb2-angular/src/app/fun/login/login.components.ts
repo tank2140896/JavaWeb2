@@ -7,6 +7,7 @@ import {SessionService} from '../../service/SessionService';
 import {Router} from '@angular/router';
 import {HeadToken} from '../../model/HeadToken';
 import {DatePipe} from '@angular/common';
+import {Base64} from 'js-base64/base64'
 
 @Component({
   selector: 'app-web-login',
@@ -30,9 +31,8 @@ export class LoginComponent implements OnInit {
 
   }
 
-  /**
-  //简单登录密码加密（1、安装："js-base64": "3.6.0"；2、AppModule.ts中加入DatePipe；3、调用：this.datePipe.transform(new Date(),'yyyyMMddHHmmss')）
-  public getPasswordEncode(passwod:string,time:string):string {
+  //简单登录密码加密
+  public encodePassword(passwod:string,time:string):string {
     console.log(passwod,time)
     let passwordEncod:string;
     let position = Number.parseInt(time)%2;
@@ -56,7 +56,6 @@ export class LoginComponent implements OnInit {
     passwordEncod = temArray.toString().replace(new RegExp( ',' , 'g' ),'');
     return passwordEncod;
   }
-  */
 
   //回车事件
   public keydownEnter($event):void {
@@ -66,7 +65,14 @@ export class LoginComponent implements OnInit {
 
   //用户登录
   public login():void{
-    this.httpService.postJsonData(ApiConstant.getPath(ApiConstant.LOGIN,true),this.userLoginRequest,null).subscribe(
+    let newUserLoginRequest:UserLoginRequest = new UserLoginRequest();
+    let time = this.datePipe.transform(new Date(),'yyyyMMddHHmmss');
+    newUserLoginRequest.username = this.userLoginRequest.username;
+    newUserLoginRequest.password = this.encodePassword(this.userLoginRequest.password,time);
+    newUserLoginRequest.clientType = this.userLoginRequest.clientType;
+    newUserLoginRequest.loginWay = this.userLoginRequest.loginWay;
+    newUserLoginRequest.time = time;
+    this.httpService.postJsonData(ApiConstant.getPath(ApiConstant.LOGIN,true),newUserLoginRequest/*this.userLoginRequest*/,null).subscribe(
       {
         next:(result:any) => {
           if(result.code==200){
