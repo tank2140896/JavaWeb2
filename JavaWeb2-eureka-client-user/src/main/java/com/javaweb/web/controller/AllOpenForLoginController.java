@@ -87,7 +87,7 @@ public class AllOpenForLoginController extends BaseController {
 	}
 	
 	/* -------------------------------------------------- 分界线 -------------------------------------------------- */
-	
+
 	//管理员判断
 	private boolean systemAdminCheck(UserLoginRequest userLoginRequest){
 		//管理员账号密码在本项目中是固定的，当然也可以配置在数据库中
@@ -270,5 +270,22 @@ public class AllOpenForLoginController extends BaseController {
     	}
     	arrayList.add(deep,noFirst);
     }
+    
+    public String decodePassword(String password,String time){
+		try{
+			char[] charArray = password.toCharArray();
+			int one,another;char tmp;
+			for(int i=time.length()-1;i>=0;i--){
+				one = Integer.parseInt(String.valueOf(time.charAt(i--)));
+				another = Integer.parseInt(String.valueOf(time.charAt(i--)));
+				tmp = charArray[one];
+				charArray[one] = charArray[another];
+				charArray[another] = tmp;
+			}
+			return String.valueOf(charArray);
+		}catch(Exception e){
+			return CommonConstant.EMPTY_VALUE;
+		}
+	}
 	
 }

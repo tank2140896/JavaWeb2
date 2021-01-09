@@ -13,6 +13,7 @@ import {HomeModule} from './fun/home/home.module';
 import {FormsModule} from '@angular/forms';
 import {DemoModule} from './fun/demo/demo.module';
 import {HttpServiceInterceptor} from './interceptor/HttpServiceInterceptor';
+import {DatePipe} from '@angular/common';
 
 //可以写入多个拦截器
 export const InterceptorProviders = [
@@ -28,9 +29,9 @@ export const InterceptorProviders = [
     AppRoutingModule,
     LoginModule,HomeModule,DemoModule
   ],
-  providers: [HttpService,SessionService,AuthService,InterceptorProviders],
+  providers: [DatePipe,HttpService,SessionService,AuthService,InterceptorProviders],
   bootstrap: [AppComponent]
 })
-export class AppModule { 
-  
+export class AppModule {
+
 }

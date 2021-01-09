@@ -6,6 +6,7 @@ import {ApiConstant} from '../../constant/ApiConstant';
 import {SessionService} from '../../service/SessionService';
 import {Router} from '@angular/router';
 import {HeadToken} from '../../model/HeadToken';
+import {DatePipe} from '@angular/common';
 
 @Component({
   selector: 'app-web-login',
@@ -20,13 +21,42 @@ export class LoginComponent implements OnInit {
 
   constructor(public httpService:HttpService,
               public sessionService:SessionService,
-              public router:Router) {
+              public router:Router,
+              public datePipe: DatePipe) {
 
   }
 
   ngOnInit() {
-    
+
   }
+
+  /**
+  //简单登录密码加密（1、安装："js-base64": "3.6.0"；2、AppModule.ts中加入DatePipe；3、调用：this.datePipe.transform(new Date(),'yyyyMMddHHmmss')）
+  public getPasswordEncode(passwod:string,time:string):string {
+    console.log(passwod,time)
+    let passwordEncod:string;
+    let position = Number.parseInt(time)%2;
+    if(position==0){//偶数
+      passwordEncod = Base64.encode(passwod+time);
+    }else{//奇数
+      passwordEncod = Base64.encode(time+passwod);
+    }
+    let temArray:Array<any> = new Array(passwordEncod.length);
+    for(let i=0;i<passwordEncod.length;i++){
+      temArray[i] = passwordEncod.charAt(i);
+    }
+    let one,another,tmp;
+    for(let i=0;i<time.length;){
+      one = time.charAt(i++);
+      another = time.charAt((i++));
+      tmp = temArray[one];
+      temArray[one] = temArray[another];
+      temArray[another] = tmp;
+    }
+    passwordEncod = temArray.toString().replace(new RegExp( ',' , 'g' ),'');
+    return passwordEncod;
+  }
+  */
 
   //回车事件
   public keydownEnter($event):void {

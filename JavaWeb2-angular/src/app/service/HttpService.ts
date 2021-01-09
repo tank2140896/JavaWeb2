@@ -2,11 +2,12 @@ import {Injectable} from '@angular/core';
 import {HttpClient,HttpHeaders} from '@angular/common/http';
 import {HeadToken} from '../model/HeadToken';
 import {ApiConstant} from '../constant/ApiConstant';
+import {DatePipe} from '@angular/common';
 
 @Injectable()
 export class HttpService {
 
-  constructor(public httpClient:HttpClient){
+  constructor(public httpClient:HttpClient,public datePipe: DatePipe){
 
   }
 
@@ -18,7 +19,8 @@ export class HttpService {
         'Content-Type':'application/json',
         'Access-Control-Allow-Headers':'Authorization',
         'Api-Version':ApiConstant.API_VERSION,
-        token:headToken.token//传入token
+        token:headToken.token,//传入token
+        time:this.datePipe.transform(new Date(),'yyyyMMddHHmmss')//传入时间
     });
     let options = {headers:headers,withCredentials:true};
     return options;
