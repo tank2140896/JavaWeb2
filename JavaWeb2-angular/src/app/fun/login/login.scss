@@ -1,6 +1,8 @@
 .userLoginErrorMessage{
   color:red;
   text-align:center;
+  background-color: rgb(11, 83, 238);
+  font-weight:bold;
 }
 .login{
   text-align:center;
@@ -8,9 +10,13 @@
   left:50%;
   top:40%;
   transform:translate(-50%, -50%);
+  display: flex;
+  flex-flow: column;
+  justify-items: flex-start;
+  align-items: center;
 }
 .login h2{
-  color: #72df18;
+  color: #000000;
   font-weight:bold;
 }
 .loginImage{
