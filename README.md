@@ -27,7 +27,8 @@ JavaWeb2-angular（cnpm install->cnpm start）
 5、JavaWeb2-integration-demo包括了一些常用技术与SpringBoot组合的示例（hbase、kafka、netty、solr、切面处理、mongodb、websocket（SpringBoot版和Netty版）、elasticsearch、neo4j、barcode（一维条形码）、kaptcha（二维码）、邮件发送、redis、restTemplate、quartz（分布式）定时任务、文件上传下载、activiti、qq、wechat、poi-excel、HTTPS和HTTP2.0、本项目作为第三方的接入（Oauth2）、接口对接（对方请求我们的数据）、中文分词器、轻量级文件服务器minio、FastDFS、SpringBatch批处理、JNI）                                                                        
 6、所有SQL语句均未优化且没有索引等，如有需要请自行优化                          
 7、本项目所有主键都是字符串，而不是数字或自增，主要考虑到两方面：①分布式及数据迁移；②当数字类型超过16位时，前后端交互时，前端会有精度误差，当然前端转化下或后端转化下就可以了，这里主要是为了避免相互转换的麻烦                    
-8、注册中心有很多，比如eureka、zookeeper、consul、nacos等，本项目在这方面不是重点，只想快速上手，因此就用了官方套餐                    
+8、注册中心有很多，比如eureka、zookeeper、consul、nacos等，本项目在这方面不是重点，只想快速上手，因此就用了官方套餐                  
+9、tomcat容器顺序：Filter->Servlet->Inteceptor->Aspect->Controller               
 # 五、开发计划                                                                                                         
 1、持续优化迭代各已有功能（首要目标是重写算法功能）                                                              
 2、hadoop、spark                                                                
