@@ -1,7 +1,5 @@
 package com.javaweb.task;
 
-import java.util.stream.Collectors;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +38,6 @@ public class SystemTaskService extends BaseService {
     	logger.info("[同步数据库中的接口信息表]执行完毕");
     	BaseSystemMemory.interfacesList = interfacesService.getAll();
     	logger.info("[将所有接口信息加载进内存]执行完毕");
-    	BaseSystemMemory.baseUrlList = BaseSystemMemory.interfacesList.stream().map(e->e.getBaseUrl()).collect(Collectors.toList()); 
-    	logger.info("[将基础URL信息加载进内存]执行完毕");
     	interfacesService.synchronizedRedisInterfaceHistoryTimes();//同步redis中的各个接口调用次数
     	logger.info("[同步redis中的各个接口调用次数]执行完毕");
     }
