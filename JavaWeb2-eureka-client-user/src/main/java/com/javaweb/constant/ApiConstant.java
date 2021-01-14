@@ -11,6 +11,7 @@ public class ApiConstant {
 	public static final String NO_AUTHORY = "/noAuthory";//没有权限接口
 	public static final String NOT_FOUND = "/notFound";//请求接口不存在接口
 	public static final String INTERNAL_ERROR = "/internalError";//系统异常接口
+	public static final String REQUEST_LIMIT = "/requestLimit";//请求接口受限接口
 	
 	public static final String WEB_LOGIN_ACCESS_PREFIX = "/web/loginAccess";
 	public static final String LOGIN_OUT = "/logout";//用户登出接口
