@@ -32,6 +32,12 @@ public class AllOpenForOtherController extends BaseController {
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"serve.getServeTime.success",dateTime);
 	}
 	
+	@ApiOperation(value=SwaggerConstant.SWAGGER_REQUEST_LIMIT)
+	@RequestMapping(value=ApiConstant.REQUEST_LIMIT,method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
+	public BaseResponseResult requestLimit() {
+		return getBaseResponseResult(HttpCodeEnum.REQUEST_LIMIT,"validated.permission.requestLimit");
+	}
+	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_REQUEST_PARAMETER_LOST)
 	@RequestMapping(value=ApiConstant.REQUEST_PARAMETER_LOST,method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
 	public BaseResponseResult requestParameterLost() {
