@@ -20,6 +20,7 @@ public class SwaggerConstant {
 	public static final String SWAGGER_NO_AUTHORY = "没有权限接口";
 	public static final String SWAGGER_NOT_FOUND = "请求接口不存在接口";
 	public static final String SWAGGER_INTERNAL_ERROR = "系统异常接口";
+	public static final String SWAGGER_REQUEST_LIMIT = "请求接口受限接口";
 	/* ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ swagger-AllOpenController ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ */
 	
 	/* ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ swagger-LoginAccessController ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ */
