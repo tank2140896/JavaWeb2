@@ -7,10 +7,13 @@ import java.util.stream.Collectors;
 
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.web.po.Dictionary;
+import com.javaweb.web.po.Interfaces;
 
 public class BaseSystemMemory {
     
     public static List<Dictionary> dictionaryList = new ArrayList<>();
+    
+    public static List<Interfaces> interfacesList = new ArrayList<>();
     
     public static List<String> baseUrlList = new ArrayList<>();
     
