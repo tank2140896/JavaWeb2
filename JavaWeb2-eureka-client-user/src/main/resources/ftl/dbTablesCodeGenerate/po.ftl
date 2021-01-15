@@ -21,5 +21,8 @@ public class ${className} extends BaseEntity implements Serializable {
     private ${pl.javaType} ${pl.javaPropertyName};
     
 </#list>
-
+<#list propertyList as pl>
+	public static final String ${pl.javaPropertyName}Column = "${pl.tableColumn}";
+	
+</#list>
 }
