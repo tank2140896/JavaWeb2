@@ -54,5 +54,19 @@ public class Dictionary extends BaseEntity implements Serializable {
     
     @Column(name="remark",columnDesc="备注说明")
     private String remark;//备注说明
+    
+    public static final String idColumn = "id";
+    public static final String parentIdColumn = "parent_id";
+    public static final String fcodeColumn = "fcode";
+    public static final String levelColumn = "level";
+    public static final String dataTypeColumn = "data_type";
+    public static final String keyCodeColumn = "key_code";
+    public static final String valueCodeColumn = "value_code";
+    public static final String categoryColumn = "category";
+    public static final String sortColumn = "sort";
+    public static final String meansColumn = "means";
+    public static final String universallyColumn = "universally";
+    public static final String systemIdColumn = "system_id";
+    public static final String remarkColumn = "remark";
 
 }
