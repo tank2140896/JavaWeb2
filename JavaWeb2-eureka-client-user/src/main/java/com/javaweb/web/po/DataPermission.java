@@ -27,5 +27,10 @@ public class DataPermission extends BaseEntity implements Serializable {
     
     @Column(name="remark",columnDesc="备注说明")
     private String remark;//备注说明
+    
+    public static final String idColumn = "id";
+    public static final String excludeFieldColumn = "exclude_field";
+    public static final String interfacesIdColumn = "interfaces_id";
+    public static final String remarkColumn = "remark";
 
 }
