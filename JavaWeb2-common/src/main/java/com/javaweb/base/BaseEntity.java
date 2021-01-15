@@ -39,13 +39,9 @@ public class BaseEntity extends BaseValidatedGroup {
 	private Integer delFlag = 0;//删除标记(0:未被删除;1:已被删除)
 	
 	public static final String createDateColumn = "create_date";
-	
 	public static final String creatorColumn = "creator";
-	
 	public static final String updateDateColumn = "update_date";
-	
 	public static final String updaterColumn = "updater";
-	
 	public static final String delFlagColumn = "del_flag";
 
 }
