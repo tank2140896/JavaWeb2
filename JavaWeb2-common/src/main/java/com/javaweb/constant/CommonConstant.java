@@ -6,8 +6,8 @@ public class CommonConstant {
     public static final Integer ZERO_NUMBER_VALUE = 0;
     
     //0值字符串
-    public static final String ZERO_STRING_VALUE = "0";
-	
+    public static final String ZERO_STRING_VALUE = String.valueOf(ZERO_NUMBER_VALUE);
+    
 	//空值
 	public static final String EMPTY_VALUE = "";
 	

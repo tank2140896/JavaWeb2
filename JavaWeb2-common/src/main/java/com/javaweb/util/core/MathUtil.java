@@ -26,6 +26,16 @@ public class MathUtil {
     	}
     }
     
+    //BigDecimal大数值比较
+    public static boolean bigDecimalCompare(BigDecimal oneValue,BigDecimal anotherValue){
+    	int result = oneValue.compareTo(anotherValue);
+    	if(result==-1){//oneValue<anotherValue
+    		return false;
+    	}else{//oneValue>=anotherValue
+    		return true;
+    	}
+    }
+    
 	//将总数近似平均分成等份
     public static BigDecimal[] getNumAvg(BigDecimal num,int size){
     	if(size<=0){

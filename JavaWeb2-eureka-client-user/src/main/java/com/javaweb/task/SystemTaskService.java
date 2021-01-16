@@ -47,8 +47,27 @@ public class SystemTaskService extends BaseService {
 	@Scheduled(cron="0 0 */1 * * ?")//https://tool.lu/crontab
 	public void cronTask_1(){
     	interfacesService.synchronizedRedisInterfaceHistoryTimes();//同步redis中的各个接口调用次数
-    	logger.info("[同步redis中的各个接口调用次数]执行完毕");
+    	logger.info("每隔1小时[同步redis中的各个接口调用次数]执行完毕");
 	}
+    
+    /**
+    //每隔60秒执行一次
+    @Async
+    @Scheduled(fixedDelay=60000)//@Scheduled(fixedRate=60000)
+    public void cronTask_2() {
+    	Runtime runtime = Runtime.getRuntime();
+    	long maxMemory = runtime.maxMemory();
+    	long totalMemory = runtime.totalMemory();
+    	long freeMemory = runtime.freeMemory();
+    	logger.info("每隔60秒[" + 
+    	            "可以获得的最大总内存是：" + NumberFormatUtil.getdefaultFormatCapacity(new BigDecimal(maxMemory)) + 
+    			    "，目前已经分配到的内存是：" + NumberFormatUtil.getdefaultFormatCapacity(new BigDecimal(totalMemory)) + 
+    			    "，目前使用分配到的内存是：" + NumberFormatUtil.getdefaultFormatCapacity(new BigDecimal(totalMemory-freeMemory)) + 
+    			    "，目前剩余分配到的内存是：" + NumberFormatUtil.getdefaultFormatCapacity(new BigDecimal(freeMemory)) + 
+    			    "，还可以获得的最大剩余内存是：" + NumberFormatUtil.getdefaultFormatCapacity(new BigDecimal(maxMemory - (totalMemory - freeMemory))) + 
+    			    "]执行完毕");
+    }
+    */
     
 	/** 广播
 	@Autowired
@@ -68,13 +87,6 @@ public class SystemTaskService extends BaseService {
         long currentTimeMillis2 = System.currentTimeMillis();  
         System.out.println("task3任务耗时:"+(currentTimeMillis2-currentTimeMillis1)+"ms");  
         //return new AsyncResult<String>("task3执行完毕");  
-    }
-    
-    @Scheduled(fixedDelay=2000)
-    //@Scheduled(fixedRate=5000)
-    @Async
-    public void task5() {
-    	System.out.println("我每隔2秒被输出一次");
     }
     */
     

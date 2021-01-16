@@ -42,5 +42,5 @@ public class SystemUtil {
         List<String> unique = tmpMacList.stream().distinct().collect(Collectors.toList());
         return unique;
     }
-
+    
 }
