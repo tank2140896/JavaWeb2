@@ -23,5 +23,9 @@ public class RoleModule implements Serializable {
 	
 	@Column(name="module_id",columnDesc="模块ID")
 	private String moduleId;//模块ID
+	
+	public static final String idColumn = "id";
+	public static final String roleIdColumn = "role_id";
+	public static final String moduleIdColumn = "module_id";
 
 }

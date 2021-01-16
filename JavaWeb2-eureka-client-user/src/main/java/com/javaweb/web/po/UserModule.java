@@ -23,5 +23,9 @@ public class UserModule implements Serializable {
 	
 	@Column(name="module_id",columnDesc="模块ID")
 	private String moduleId;//模块ID
+	
+	public static final String idColumn = "id";
+	public static final String userIdColumn = "user_id";
+	public static final String moduleIdColumn = "module_id";
 
 }

@@ -39,4 +39,13 @@ public class OperationLog implements Serializable {
 	@Column(name="remark",columnDesc="备注")
 	private String remark;//备注
 	
+	public static final String idColumn = "id";
+	public static final String userIdColumn = "user_id";
+	public static final String urlColumn = "url";
+	public static final String requestMethodColumn = "request_method";
+	public static final String requestParameterColumn = "request_parameter";
+	public static final String requestIpAddressColumn = "request_ip_address";
+	public static final String requestTimeColumn = "request_time";
+	public static final String remarkColumn = "remark";
+	
 }

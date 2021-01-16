@@ -24,4 +24,8 @@ public class RoleData implements Serializable {
 	@Column(name="data_permission_id",columnDesc="数据权限ID")
 	private String dataPermissionId;//数据权限ID
 	
+	public static final String idColumn = "id";
+	public static final String roleIdColumn = "role_id";
+	public static final String dataPermissionIdColumn = "data_permission_id";
+	
 }

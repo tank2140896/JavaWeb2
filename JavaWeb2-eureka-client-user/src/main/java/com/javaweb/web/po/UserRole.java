@@ -33,4 +33,11 @@ public class UserRole implements Serializable {
 	//@Column(name="subordinate_authorize",columnDesc="限定用户下级授权权,即当前用户如果有两个权限,那么当他拥有分配角色权限时最多给其下级自己所拥有的两个权限,一般不推荐使用此字段(0:不启用;1:启用)")
 	//private Integer subordinateAuthorize = 0;//限定用户下级授权权,即当前用户如果有两个权限,那么当他拥有分配角色权限时最多给其下级自己所拥有的两个权限,一般不推荐使用此字段(0:不启用;1:启用)
 
+	public static final String idColumn = "id";
+	public static final String userIdColumn = "user_id";
+	public static final String roleIdColumn = "role_id";
+	public static final String moduleStrategyColumn = "module_strategy";
+	public static final String dataStrategyColumn = "data_strategy";
+	//public static final String subordinateAuthorizeColumn = "subordinate_authorize";
+	
 }

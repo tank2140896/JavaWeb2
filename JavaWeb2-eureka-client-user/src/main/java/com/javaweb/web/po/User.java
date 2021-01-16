@@ -59,5 +59,18 @@ public class User extends BaseEntity implements Serializable {
 	
 	@Column(name="status",columnDesc="账号状态(0:正常；1：禁用)")
 	private Integer status = 0;//账号状态(0:正常；1：禁用)
+	
+	public static final String userIdColumn = "user_id";
+	public static final String userNameColumn = "user_name";
+	public static final String passwordColumn = "password";
+	public static final String personNameColumn = "person_name";
+	public static final String emailColumn = "email";
+	public static final String phoneColumn = "phone";
+	public static final String portraitColumn = "portrait";
+	public static final String parentIdColumn = "parent_id";
+	public static final String fcodeColumn = "fcode";
+	public static final String levelColumn = "level";
+	public static final String remarkColumn = "remark";
+	public static final String statusColumn = "status";
 
 }

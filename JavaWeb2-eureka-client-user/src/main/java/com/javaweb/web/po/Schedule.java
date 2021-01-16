@@ -28,4 +28,9 @@ public class Schedule extends BaseEntity implements Serializable {
 	@Column(name="remark",columnDesc="备注")
 	private String remark;//备注
 	
+	public static final String idColumn = "id";
+	public static final String scheduleDateColumn = "schedule_date";
+	public static final String scheduleTypeColumn = "schedule_type";
+	public static final String remarkColumn = "remark";
+	
 }

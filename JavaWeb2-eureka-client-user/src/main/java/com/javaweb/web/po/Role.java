@@ -46,5 +46,15 @@ public class Role extends BaseEntity implements Serializable {
 	
 	@Column(name="remark",columnDesc="备注")
 	private String remark;//备注
+	
+	public static final String roleIdColumn = "role_id";
+	public static final String roleNameColumn = "role_name";
+	public static final String roleCodeColumn = "role_code";
+	public static final String parentIdColumn = "parent_id";
+	public static final String fcodeColumn = "fcode";
+	public static final String levelColumn = "level";
+	public static final String typeColumn = "type";
+	public static final String systemIdColumn = "system_id";
+	public static final String remarkColumn = "remark";
 
 }

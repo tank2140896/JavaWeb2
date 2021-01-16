@@ -70,4 +70,20 @@ public class Module extends BaseEntity implements Serializable {
 	@Column(name="type",columnDesc="类型(0:未定义类型,作为全端通用接口使用;1:PC端;2:安卓端;3:IOS端) ")
 	private Integer type = 0;//类型(0:未定义类型,作为全端通用接口使用;1:PC端;2:安卓端;3:IOS端) 
 
+	public static final String moduleIdColumn = "module_id";
+	public static final String moduleNameColumn = "module_name";
+	public static final String pageUrlColumn = "page_url";
+	public static final String apiUrlColumn = "api_url";
+	public static final String parentIdColumn = "parent_id";
+	public static final String fcodeColumn = "fcode";
+	public static final String levelColumn = "level";
+	public static final String ordersColumn = "orders";
+	public static final String moduleTypeColumn = "module_type";
+	public static final String aliasColumn = "alias";
+	public static final String parentAliasColumn = "parent_alias";
+	public static final String systemIdColumn = "system_id";
+	public static final String remarkColumn = "remark";
+	public static final String iconColumn = "icon";
+	public static final String typeColumn = "type";
+	
 }

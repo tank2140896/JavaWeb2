@@ -57,5 +57,20 @@ public class File extends BaseEntity implements Serializable {
 	
 	@Column(name="file_use_type",columnDesc="文件使用类型（1：临时文件；2：正式文件）") 
 	private Integer fileUseType;//文件使用类型（1：临时文件；2：正式文件）
+	
+	public static final String idColumn = "id";
+	public static final String systemIdColumn = "system_id";
+	public static final String fileUniqueIndexColumn = "file_unique_index";
+	public static final String originFileNameColumn = "origin_file_name";
+	public static final String currentFileNameColumn = "current_file_name";
+	public static final String filePathColumn = "file_path";
+	public static final String fileFullPathColumn = "file_full_path";
+	public static final String fileSuffixColumn = "file_suffix";
+	public static final String fileSizeColumn = "file_size";
+	public static final String fileUnitColumn = "file_unit";
+	public static final String fileSerNoColumn = "file_ser_no";
+	public static final String remarkColumn = "remark";
+	public static final String statusColumn = "status";
+	public static final String fileUseTypeColumn = "file_use_type";
 
 }

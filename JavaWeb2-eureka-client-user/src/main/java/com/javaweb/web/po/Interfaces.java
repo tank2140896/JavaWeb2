@@ -52,5 +52,18 @@ public class Interfaces extends BaseEntity implements Serializable {
 	
 	@Column(name="remark",columnDesc="备注")
 	private String remark;//备注
+	
+	public static final String idColumn = "id";
+	public static final String nameColumn = "name";
+	public static final String urlColumn = "url";
+	public static final String baseUrlColumn = "base_url";
+	public static final String methodColumn = "method";
+	public static final String timesColumn = "times";
+	public static final String unitColumn = "unit";
+	public static final String countsColumn = "counts";
+	public static final String dataPermissionColumn = "data_permission";
+	public static final String entityColumn = "entity";
+	public static final String historyTimesColumn = "history_times";
+	public static final String remarkColumn = "remark";
 
 }
