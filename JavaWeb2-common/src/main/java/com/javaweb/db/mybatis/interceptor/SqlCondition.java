@@ -1,4 +1,4 @@
-package com.javaweb.mybatis.apiImpl;
+package com.javaweb.db.mybatis.interceptor;
 
 import com.javaweb.enums.SqlConditionEnum;
 

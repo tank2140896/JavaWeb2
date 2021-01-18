@@ -1,4 +1,4 @@
-package com.javaweb.mybatis.api;
+package com.javaweb.db.mybatis.api;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.javaweb.constant.CommonConstant;
-import com.javaweb.query.QueryWapper;
+import com.javaweb.db.query.QueryWapper;
 
 @Mapper
 public interface DaoWapper<T> {

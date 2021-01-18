@@ -19,7 +19,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import com.javaweb.constant.SystemConstant;
-import com.javaweb.mybatis.interceptor.MyBatisBaseDaoInterceptor;
+import com.javaweb.db.mybatis.interceptor.MyBatisBaseDaoInterceptor;
 import com.zaxxer.hikari.HikariDataSource;
 
 @Configuration

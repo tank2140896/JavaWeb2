@@ -1,11 +1,11 @@
-package com.javaweb.mybatis.apiImpl.mysql;
+package com.javaweb.db.mybatis.api.impl.mysql;
 
 import java.util.List;
 
+import com.javaweb.db.mybatis.interceptor.SqlBuildInfo;
+import com.javaweb.db.mybatis.interceptor.SqlHandle;
 import com.javaweb.enums.DbTypeEnum;
 import com.javaweb.exception.ServiceException;
-import com.javaweb.mybatis.apiImpl.SqlBuildInfo;
-import com.javaweb.mybatis.apiImpl.SqlHandle;
 
 public class HandleInsert implements SqlHandle {
 

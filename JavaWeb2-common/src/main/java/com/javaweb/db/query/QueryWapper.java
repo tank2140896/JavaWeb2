@@ -1,10 +1,10 @@
-package com.javaweb.query;
+package com.javaweb.db.query;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import com.javaweb.db.mybatis.interceptor.SqlCondition;
 import com.javaweb.enums.SqlConditionEnum;
-import com.javaweb.mybatis.apiImpl.SqlCondition;
 
 public class QueryWapper<T> {
 

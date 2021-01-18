@@ -20,7 +20,6 @@
     </parent>
     
     <dependencies>
-    	<!-- 用到JavaWeb2-database就不需要引入JavaWeb2-common了，因为JavaWeb2-database已经包含JavaWeb2-common了 -->
     	<dependency>
     		<groupId>com.javaweb</groupId>
 	    	<artifactId>JavaWeb2-common</artifactId>

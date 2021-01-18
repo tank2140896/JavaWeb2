@@ -126,10 +126,9 @@
     </parent>
     
     <dependencies>
-    	<!-- 编译时需要加入JavaWeb2-database所依赖的所有包 -->
         <dependency>
     		<groupId>com.javaweb</groupId>
-	    	<artifactId>JavaWeb2-database</artifactId>
+	    	<artifactId>JavaWeb2-common</artifactId>
 	    	<version>1.0.0</version>
     	</dependency>
         <!-- json-lib -->

@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.javaweb.base.BaseService;
 import com.javaweb.constant.SystemConstant;
-import com.javaweb.query.QueryWapper;
+import com.javaweb.db.query.QueryWapper;
 import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.FileUtil;
 import com.javaweb.util.core.SecretUtil;

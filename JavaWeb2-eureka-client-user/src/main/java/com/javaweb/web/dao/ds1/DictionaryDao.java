@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.javaweb.mybatis.api.DaoWapper;
+import com.javaweb.db.mybatis.api.DaoWapper;
 import com.javaweb.web.eo.dictionary.DictionaryListRequest;
 import com.javaweb.web.po.Dictionary;
 

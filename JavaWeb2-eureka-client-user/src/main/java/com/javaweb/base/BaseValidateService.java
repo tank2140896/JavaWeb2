@@ -2,7 +2,7 @@ package com.javaweb.base;
 
 import java.util.Map;
 
-import com.javaweb.mybatis.api.DaoWapper;
+import com.javaweb.db.mybatis.api.DaoWapper;
 
 public interface BaseValidateService {
 	

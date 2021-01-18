@@ -1,4 +1,4 @@
-package com.javaweb.mybatis.interceptor;
+package com.javaweb.db.mybatis.interceptor;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -31,19 +31,16 @@ import org.springframework.stereotype.Component;
 import com.javaweb.annotation.sql.Column;
 import com.javaweb.annotation.sql.Table;
 import com.javaweb.constant.CommonConstant;
+import com.javaweb.db.mybatis.api.impl.mysql.HandleDelete;
+import com.javaweb.db.mybatis.api.impl.mysql.HandleInsert;
+import com.javaweb.db.mybatis.api.impl.mysql.HandleSelectAll;
+import com.javaweb.db.mybatis.api.impl.mysql.HandleSelectAllCount;
+import com.javaweb.db.mybatis.api.impl.mysql.HandleSelectByPk;
+import com.javaweb.db.mybatis.api.impl.mysql.HandleSelectList;
+import com.javaweb.db.mybatis.api.impl.mysql.HandleSelectListCount;
+import com.javaweb.db.mybatis.api.impl.mysql.HandleUpdate;
+import com.javaweb.db.query.QueryWapper;
 import com.javaweb.enums.DbTypeEnum;
-import com.javaweb.mybatis.apiImpl.BoundSqlSource;
-import com.javaweb.mybatis.apiImpl.SqlBuildInfo;
-import com.javaweb.mybatis.apiImpl.SqlHandle;
-import com.javaweb.mybatis.apiImpl.mysql.HandleDelete;
-import com.javaweb.mybatis.apiImpl.mysql.HandleInsert;
-import com.javaweb.mybatis.apiImpl.mysql.HandleSelectAllCount;
-import com.javaweb.mybatis.apiImpl.mysql.HandleSelectAll;
-import com.javaweb.mybatis.apiImpl.mysql.HandleSelectByPk;
-import com.javaweb.mybatis.apiImpl.mysql.HandleSelectList;
-import com.javaweb.mybatis.apiImpl.mysql.HandleSelectListCount;
-import com.javaweb.mybatis.apiImpl.mysql.HandleUpdate;
-import com.javaweb.query.QueryWapper;
 import com.javaweb.util.core.DateUtil;
 
 /**

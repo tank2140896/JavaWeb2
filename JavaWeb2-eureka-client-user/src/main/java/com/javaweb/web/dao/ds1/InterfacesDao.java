@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.javaweb.mybatis.api.DaoWapper;
+import com.javaweb.db.mybatis.api.DaoWapper;
 import com.javaweb.web.eo.interfaces.InterfacesListRequest;
 import com.javaweb.web.eo.interfaces.RolePermissionResponse;
 import com.javaweb.web.eo.interfaces.UserPermissionResponse;

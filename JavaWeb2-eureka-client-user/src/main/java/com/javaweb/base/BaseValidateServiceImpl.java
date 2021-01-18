@@ -6,8 +6,8 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.javaweb.constant.CommonConstant;
-import com.javaweb.mybatis.api.DaoWapper;
-import com.javaweb.query.QueryWapper;
+import com.javaweb.db.mybatis.api.DaoWapper;
+import com.javaweb.db.query.QueryWapper;
 
 @Service("baseValidateServiceImpl")
 public class BaseValidateServiceImpl extends BaseService implements BaseValidateService {

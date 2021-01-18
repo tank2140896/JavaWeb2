@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import com.javaweb.mybatis.api.DaoWapper;
+import com.javaweb.db.mybatis.api.DaoWapper;
 import com.javaweb.web.eo.role.ModuleInfoResponse;
 import com.javaweb.web.eo.user.RoleInfoResponse;
 import com.javaweb.web.eo.user.UserListRequest;
