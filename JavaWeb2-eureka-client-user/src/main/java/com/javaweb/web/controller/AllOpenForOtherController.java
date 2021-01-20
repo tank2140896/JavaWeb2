@@ -23,7 +23,6 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 public class AllOpenForOtherController extends BaseController {
 	
-	//获取服务器时间接口
 	@ApiOperation(value=SwaggerConstant.SWAGGER_GET_SERVE_TIME)
 	@GetMapping(ApiConstant.GET_SERVE_TIME)
 	public BaseResponseResult getServeTime(){
@@ -31,6 +30,8 @@ public class AllOpenForOtherController extends BaseController {
 		String dateTime = localDateTime.format(DateTimeFormatter.ofPattern(DateUtil.DEFAULT_DATETIME_PATTERN));
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"serve.getServeTime.success",dateTime);
 	}
+	
+	/* -------------------------------------------------- 分界线 -------------------------------------------------- */
 	
 	@ApiOperation(value=SwaggerConstant.SWAGGER_REQUEST_LIMIT)
 	@RequestMapping(value=ApiConstant.REQUEST_LIMIT,method={RequestMethod.GET,RequestMethod.POST,RequestMethod.PUT,RequestMethod.DELETE})
