@@ -43,7 +43,7 @@ import io.swagger.annotations.ApiOperation;
 public class AllOpenForLoginController extends BaseController {
 	
 	//登录接口
-	@ApiOperation(value=SwaggerConstant.SWAGGER_LOGIN)//@ApiOperation(value="用户登录接口",notes="输入用户名、密码来进行登录")
+	@ApiOperation(value=SwaggerConstant.SWAGGER_LOGIN/*,notes="输入用户名、密码来进行登录"*/)
 	//@ApiImplicitParam(name="userLoginRequest",value="用户登录实体类",required=true,dataType="UserLoginRequest")
 	@PostMapping(ApiConstant.WEB_LOGIN)
 	public BaseResponseResult webLogin(@RequestBody @Validated UserLoginRequest userLoginRequest,BindingResult bindingResult,HttpServletRequest request){
@@ -56,7 +56,7 @@ public class AllOpenForLoginController extends BaseController {
 		if(CommonConstant.EMPTY_VALUE.equals(password)){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"validated.user.password.error");
 		}
-		if(!PatternUtil.isPattern(password,Pattern.compile("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$"))){
+		if(!PatternUtil.isPattern(password,Pattern.compile(UserLoginRequest.PASSWORD_REGEXP))){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"validated.user.password.pattern");
 		}
 		userLoginRequest.setPassword(password);
@@ -71,29 +71,27 @@ public class AllOpenForLoginController extends BaseController {
 		}
 		*/
 		TokenData tokenData = null;
-		if(systemAdminCheck(userLoginRequest)){//管理员判断
-			userLoginRequest.setClientType(1);//管理员强制客户端为页面端
-			userLoginRequest.setLoginWay(1);//管理员强制登录方式为账号密码
-			User user = SystemConstant.SYSTEM_DEFAULT_USER;
-			tokenData = getToken(true,user,userLoginRequest.getClientType(),userLoginRequest.getLoginWay());
-			setDefaultDataToRedis(user.getUserId()+CommonConstant.COMMA+userLoginRequest.getClientType()+CommonConstant.COMMA+userLoginRequest.getLoginWay(),tokenData);
+		User user = null;
+		boolean isAdmin = systemAdminCheck(userLoginRequest);
+		if(isAdmin){//管理员判断
+			user = SystemConstant.SYSTEM_DEFAULT_USER;
 		}else {
 		    try{
-	            userLoginRequest.setPassword(SecretUtil.getSecret(userLoginRequest.getPassword(),"SHA-256"));
-	        }catch(Exception e){
-	            //do nothing
-	        }
-	        User user = userService.userLogin(userLoginRequest);
-	        if(user==null){
-	            return getBaseResponseResult(HttpCodeEnum.LOGIN_FAIL,"login.user.userNameOrPassword");
-	        }
-	        if(user.getStatus()==1){
-	        	return getBaseResponseResult(HttpCodeEnum.LOGIN_FAIL,"login.user.userLocked");
-	        }
-	        user.setPassword(null);//用户密码不对外提供
-	        tokenData = getToken(false,user,userLoginRequest.getClientType(),userLoginRequest.getLoginWay());
-	        setDefaultDataToRedis(user.getUserId()+CommonConstant.COMMA+userLoginRequest.getClientType()+CommonConstant.COMMA+userLoginRequest.getLoginWay(),tokenData);
+		    	userLoginRequest.setPassword(SecretUtil.getSecret(userLoginRequest.getPassword(),"SHA-256"));
+		    }catch(Exception e){
+		    	//do nothing
+		    }
+	        user = userService.userLogin(userLoginRequest);
 		}
+		if(user==null){
+            return getBaseResponseResult(HttpCodeEnum.LOGIN_FAIL,"login.user.userNameOrPassword");
+        }
+        if(user.getStatus()==1){
+        	return getBaseResponseResult(HttpCodeEnum.LOGIN_FAIL,"login.user.userLocked");
+        }
+        user.setPassword("********");//用户密码不对外提供
+		tokenData = getToken(isAdmin,user,userLoginRequest.getClientType(),userLoginRequest.getLoginWay());
+		setDefaultDataToRedis(user.getUserId()+CommonConstant.COMMA+userLoginRequest.getClientType()+CommonConstant.COMMA+userLoginRequest.getLoginWay(),tokenData);
 		//这里我个人认为redis中包含权限信息，但是前端不需要获得太多权限信息，权限信息可以通过其它接口获得
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.loginSuccess",tokenData.getToken());
 	}
@@ -105,8 +103,7 @@ public class AllOpenForLoginController extends BaseController {
 		//管理员账号密码在本项目中是固定的，当然也可以配置在数据库中
 		final String systemAdminUsernameAndPassword = SystemConstant.SYSTEM_DEFAULT_USER_NAME+SystemConstant.SYSTEM_DEFAULT_USER_PASSWORD;
 		final String requestUsernameAndPassword = userLoginRequest.getUsername()+userLoginRequest.getPassword();
-		//final String requestType = userLoginRequest.getType();
-		return (systemAdminUsernameAndPassword.equals(requestUsernameAndPassword))/*&&("0".equals(requestType))*/;
+		return (systemAdminUsernameAndPassword.equals(requestUsernameAndPassword))&&(1==userLoginRequest.getClientType())&&(1==userLoginRequest.getLoginWay());
 	}
 	
 	//token数据封装
@@ -179,31 +176,6 @@ public class AllOpenForLoginController extends BaseController {
 		return pageUrlList;
 	}
 	
-	//RSA秘钥设置
-	public void setRsaKey(TokenData tokenData){
-		RsaKey rsaKey = RsaUtil.getRsaKey();
-		tokenData.setRsaPublicKeyOfBackend(rsaKey.getRsaStringPublicKey());
-		tokenData.setRsaPrivateKeyOfBackend(rsaKey.getRsaStringPrivateKey());
-		rsaKey = RsaUtil.getRsaKey();
-		tokenData.setRsaPublicKeyOfFrontend(rsaKey.getRsaStringPublicKey());
-		tokenData.setRsaPrivateKeyOfFrontend(rsaKey.getRsaStringPrivateKey());
-	}
-	
-	//封装成树形结构集合（递归版）
-	public List<SidebarInfoResponse> setTreeList(List<SidebarInfoResponse> originList,SidebarInfoResponse module){
-		List<SidebarInfoResponse> moduleList = new ArrayList<>();
-		for (int i = 0; i < originList.size(); i++) {
-			SidebarInfoResponse currentModule = originList.get(i);
-			//这里树形结构处理时需要parentId只能为null，不能为空或其它值（这个在模块新增和修改时已经控制了）
-			//Long类型，封装类型一定要用equals或.longValue()比较！！！，形如：module.getModuleId().longValue()==currentModule.getParentId().longValue()
-			if((module!=null&&module.getModuleId().equals(currentModule.getParentId()))||(module==null&&currentModule.getParentId()==null)){
-				currentModule.setList(setTreeList(originList, currentModule));
-				moduleList.add(currentModule);
-			}
-		}
-		return moduleList;
-	}
-	
     //解码密码
     public String decodePassword(String password,String time){
 		String out = CommonConstant.EMPTY_VALUE;
@@ -230,8 +202,31 @@ public class AllOpenForLoginController extends BaseController {
 		return out;
 	}
 	
-	/* -------------------------------------------------- 分界线（下面的目前未用到） -------------------------------------------------- */
+	//RSA秘钥设置
+	public void setRsaKey(TokenData tokenData){
+		RsaKey rsaKey = RsaUtil.getRsaKey();
+		tokenData.setRsaPublicKeyOfBackend(rsaKey.getRsaStringPublicKey());
+		tokenData.setRsaPrivateKeyOfBackend(rsaKey.getRsaStringPrivateKey());
+		rsaKey = RsaUtil.getRsaKey();
+		tokenData.setRsaPublicKeyOfFrontend(rsaKey.getRsaStringPublicKey());
+		tokenData.setRsaPrivateKeyOfFrontend(rsaKey.getRsaStringPrivateKey());
+	}
 	
+	//封装成树形结构集合（递归版）
+	public List<SidebarInfoResponse> setTreeList(List<SidebarInfoResponse> originList,SidebarInfoResponse module){
+		List<SidebarInfoResponse> moduleList = new ArrayList<>();
+		for (int i = 0; i < originList.size(); i++) {
+			SidebarInfoResponse currentModule = originList.get(i);
+			//这里树形结构处理时需要parentId只能为null，不能为空或其它值（这个在模块新增和修改时已经控制了）
+			//Long类型，封装类型一定要用equals或.longValue()比较！！！，形如：module.getModuleId().longValue()==currentModule.getParentId().longValue()
+			if((module!=null&&module.getModuleId().equals(currentModule.getParentId()))||(module==null&&currentModule.getParentId()==null)){
+				currentModule.setList(setTreeList(originList, currentModule));
+				moduleList.add(currentModule);
+			}
+		}
+		return moduleList;
+	}
+	/**
 	//封装成树形结构集合（非递归版）
     public List<SidebarInfoResponse> setTreeList(List<SidebarInfoResponse> list){
         List<List<SidebarInfoResponse>> deepList = getEachDeep(list);
@@ -308,5 +303,6 @@ public class AllOpenForLoginController extends BaseController {
     	}
     	arrayList.add(deep,noFirst);
     }
-    
+    */
+	
 }
