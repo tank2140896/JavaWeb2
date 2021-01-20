@@ -16,8 +16,11 @@ public class UserLoginRequest implements Serializable {
 
 	private static final long serialVersionUID = 8226342751622290262L;
 	
+	public static final String USERNAME_REGEXP = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$";
+	public static final String PASSWORD_REGEXP = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$";
+	
 	@NotEmpty(message="validated.user.userName.notEmpty")
-	@Pattern(regexp="^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$",message="validated.user.userName.pattern")
+	@Pattern(regexp=USERNAME_REGEXP,message="validated.user.userName.pattern")
 	private String username;
 	
 	@NotEmpty(message="validated.user.password.notEmpty")
