@@ -1,7 +1,7 @@
 package com.javaweb.db.mybatis.api.handle;
 
-import com.javaweb.db.mybatis.interceptor.SqlBuildInfo;
-import com.javaweb.db.mybatis.interceptor.SqlHandle;
+import com.javaweb.db.help.SqlBuildInfo;
+import com.javaweb.db.help.SqlHandle;
 import com.javaweb.enums.DbTypeEnum;
 import com.javaweb.exception.ServiceException;
 

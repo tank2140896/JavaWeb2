@@ -1,4 +1,4 @@
-package com.javaweb.db.mybatis.interceptor;
+package com.javaweb.db.help;
 
 import org.apache.ibatis.mapping.BoundSql;
 import org.apache.ibatis.mapping.SqlSource;

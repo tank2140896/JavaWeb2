@@ -3,8 +3,8 @@ package com.javaweb.db.mybatis.api.impl;
 import java.util.List;
 
 import com.javaweb.constant.CommonConstant;
-import com.javaweb.db.mybatis.interceptor.SqlBuildInfo;
-import com.javaweb.db.mybatis.interceptor.SqlCondition;
+import com.javaweb.db.help.SqlBuildInfo;
+import com.javaweb.db.help.SqlCondition;
 import com.javaweb.db.query.QueryWapper;
 import com.javaweb.enums.SqlConditionEnum;
 

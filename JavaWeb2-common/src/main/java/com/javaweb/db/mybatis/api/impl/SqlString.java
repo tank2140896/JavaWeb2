@@ -1,6 +1,6 @@
 package com.javaweb.db.mybatis.api.impl;
 
-import com.javaweb.db.mybatis.interceptor.SqlBuildInfo;
+import com.javaweb.db.help.SqlBuildInfo;
 
 public interface SqlString {
 	
