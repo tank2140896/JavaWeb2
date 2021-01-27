@@ -58,7 +58,7 @@ public class RsaUtil {
 	console.log('解密后数据:%o', uncrypted);
 	</script>
 	</html>
-    */
+	*/
     
 	/**
 	public static void main(String[] args) throws Exception {
@@ -86,25 +86,25 @@ public class RsaUtil {
 	}
 	*/
 
-	private static final int MAX_ENCRYPT_BLOCK = 117;//RSA最大加密明文大小
-	private static final int MAX_DECRYPT_BLOCK = 128;//RSA最大解密密文大小
+    private static final int MAX_ENCRYPT_BLOCK = 117;//RSA最大加密明文大小
+    private static final int MAX_DECRYPT_BLOCK = 128;//RSA最大解密密文大小
 	
     public static RsaKey getRsaKey() {
-		RsaKey rsaKey = new RsaKey();
-		try{
-		    KeyPair keyPair = getKeyPair();
-		    PublicKey publicKey = keyPair.getPublic();
-		    PrivateKey privateKey = keyPair.getPrivate();
-		    String stringPublicKey = new String(Base64.encodeBase64(keyPair.getPublic().getEncoded()));
-		    String stringPrivateKey = new String(Base64.encodeBase64(keyPair.getPrivate().getEncoded()));
-		    rsaKey.setRsaPublicKey(publicKey);
-		    rsaKey.setRsaPrivateKey(privateKey);
-		    rsaKey.setRsaStringPublicKey(stringPublicKey);
-		    rsaKey.setRsaStringPrivateKey(stringPrivateKey);
-		}catch(Exception e){
-		    //do nothing
-		}
-		return rsaKey;
+	RsaKey rsaKey = new RsaKey();
+	try{
+	    KeyPair keyPair = getKeyPair();
+	    PublicKey publicKey = keyPair.getPublic();
+	    PrivateKey privateKey = keyPair.getPrivate();
+	    String stringPublicKey = new String(Base64.encodeBase64(keyPair.getPublic().getEncoded()));
+	    String stringPrivateKey = new String(Base64.encodeBase64(keyPair.getPrivate().getEncoded()));
+	    rsaKey.setRsaPublicKey(publicKey);
+	    rsaKey.setRsaPrivateKey(privateKey);
+	    rsaKey.setRsaStringPublicKey(stringPublicKey);
+	    rsaKey.setRsaStringPrivateKey(stringPrivateKey);
+	}catch(Exception e){
+	    //do nothing
+	}
+	return rsaKey;
     }
 	
     public static KeyPair getKeyPair() throws Exception {
@@ -154,7 +154,7 @@ public class RsaUtil {
         return signature.verify(Base64.decodeBase64(sign.getBytes()));
     }
     
-    //加密
+    //加密（正常是公钥加密私钥解密，要用私钥加密的话，修改下将PublicKey变为PrivateKey即可）
     public static String encrypt(String data, PublicKey publicKey) throws Exception {
     	Cipher cipher = Cipher.getInstance("RSA");//RSA/ECB/NoPadding或RSA/ECB/PKCS1Padding
     	cipher.init(Cipher.ENCRYPT_MODE, publicKey);
@@ -165,14 +165,14 @@ public class RsaUtil {
     	int i = 0;
     	//对数据分段加密
     	while (inputLen - offset > 0) {
-    		if (inputLen - offset > MAX_ENCRYPT_BLOCK) {
-    			cache = cipher.doFinal(data.getBytes(), offset, MAX_ENCRYPT_BLOCK);
-    		} else {
-    			cache = cipher.doFinal(data.getBytes(), offset, inputLen - offset);
-    		}
-    		out.write(cache, 0, cache.length);
-    		i++;
-    		offset = i * MAX_ENCRYPT_BLOCK;
+		if (inputLen - offset > MAX_ENCRYPT_BLOCK) {
+			cache = cipher.doFinal(data.getBytes(), offset, MAX_ENCRYPT_BLOCK);
+		} else {
+			cache = cipher.doFinal(data.getBytes(), offset, inputLen - offset);
+		}
+		out.write(cache, 0, cache.length);
+		i++;
+		offset = i * MAX_ENCRYPT_BLOCK;
     	}
     	byte[] encryptedData = out.toByteArray();
     	out.close();
@@ -181,7 +181,7 @@ public class RsaUtil {
     	return new String(Base64.encodeBase64String(encryptedData));
 	}
 
-    //解密
+    //解密（正常是公钥加密私钥解密，要用公钥解密的话，修改下将PrivateKey变为PublicKey即可）
     public static String decrypt(String data, PrivateKey privateKey) throws Exception {
     	Cipher cipher = Cipher.getInstance("RSA");//RSA/ECB/NoPadding或RSA/ECB/PKCS1Padding
         cipher.init(Cipher.DECRYPT_MODE, privateKey);
