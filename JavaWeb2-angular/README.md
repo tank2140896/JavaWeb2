@@ -24,3 +24,6 @@ set https_proxy=http://10.131.46.21:80/
 B、设置完代理重新执行npm install继续下载包时报"Cannot read property 'match' of undefined"                             
 npm cache clear --force                     
 删除package-lock.json                                          
+三、常见错误及解决                 
+1、ERROR in The Angular Compiler requires TypeScript >=3.9.2 and <4.1.0 but 4.1.3 was found instead     
+解决：npm install typescript@">=3.9.2 < 4.1.0"   
