@@ -7,7 +7,7 @@ import {SessionService} from '../../service/SessionService';
 import {Router} from '@angular/router';
 import {HeadToken} from '../../model/HeadToken';
 import {DatePipe} from '@angular/common';
-import {Base64} from 'js-base64/base64'
+import {Base64} from 'js-base64/base64';
 
 @Component({
   selector: 'app-web-login',
@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
 
   //简单登录密码加密
   public encodePassword(passwod:string,time:string):string {
-    console.log(passwod,time)
+    //console.log(passwod,time);
     let passwordEncod:string;
     let position = Number.parseInt(time)%2;
     if(position==0){//偶数
