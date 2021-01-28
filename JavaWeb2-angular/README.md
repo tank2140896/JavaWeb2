@@ -2,7 +2,7 @@
 cnpm install     
 cnpm start      
 cnpm run build                    
-注：如果要用npm命令，请注意修改angular.json中引用的jquery、bootstrap等相关路径                
+注：如果要用npm命令，请注意修改angular.json中引用的jquery、bootstrap等相关路径同时删除现存的node_modules（如果有）                       
 二、npm相关配置                        
 1、下载最新版的node.js（https://nodejs.org/zh-cn/），配置环境变量                     
 2、命令行输入：npm config get prefix获得路径，如：C:\Users\admin\AppData\Roaming                               
