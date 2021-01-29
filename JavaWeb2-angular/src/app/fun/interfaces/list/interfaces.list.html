@@ -13,15 +13,17 @@
       <table class="table" style="table-layout:fixed;">
         <thead>
           <tr class="text-center">
-            <th width="65px;">序号</th>
-            <th>接口名称</th>
-            <th>URL通配</th>
-            <th>基础URL</th>
+            <th width="70px;">序号</th>
+            <th width="200px;">接口名称</th>
+            <th width="200px;">URL通配</th>
+            <th width="200px;">基础URL</th>
             <th width="120px;">总被调用次数</th>
-            <th width="200px;">方法名称</th>
-            <th width="160px;">是否分配数据权限</th>
-            <th width="160px;">单位时间调用次数</th>
-            <th width="300px;">操作</th>
+            <th width="120px;">方法名称</th>
+            <th width="130px;">数据权限</th>
+            <th width="130px;">频次</th>
+            <th width="130px;">请求加密</th>
+            <th width="130px;">响应加密</th>
+            <th>操作</th>
           </tr>
         </thead>
         <tbody *ngIf="resultPage.data==resultPage.dataLoading">
@@ -46,6 +48,10 @@
             <td *ngIf="eachData.dataPermission==0" style="color:#ff0b0c">否</td>
             <td *ngIf="eachData.counts == null || eachData.counts.trim() == '' || eachData.times == null || eachData.times.trim() == '' || eachData.unit == null || eachData.unit.trim() == ''" style="color:#06801f">无限制</td>
             <td *ngIf="eachData.counts != null && eachData.counts.trim() != '' && eachData.times != null && eachData.times.trim() != '' && eachData.unit != null && eachData.unit.trim() != ''" style="color:#ff0b0c">{{eachData.times}}{{eachData.unit}}{{eachData.counts}}次</td>
+            <td *ngIf="eachData.requestDataSecret==1" style="color:#06801f">是</td>
+            <td *ngIf="eachData.requestDataSecret==0" style="color:#ff0b0c">否</td>
+            <td *ngIf="eachData.responseDataSecret==1" style="color:#06801f">是</td>
+            <td *ngIf="eachData.responseDataSecret==0" style="color:#ff0b0c">否</td>            
             <td>
               <button *ngIf="interfacesDetailZone" (click)="interfacesDetailFunction(eachData.id)" class="btn btn-sm btn-info" style="margin-right:10px;">接口详情</button>
               <button *ngIf="interfacesModifyZone" (click)="interfacesModifyFunction(eachData.id)" class="btn btn-sm btn-warning" style="margin-right:10px;">修改接口</button>
