@@ -15,8 +15,8 @@ import lombok.Setter;
 @Table(name="sys_interfaces")
 public class Interfaces extends BaseEntity implements Serializable {
 
-	private static final long serialVersionUID = -627334587177260300L;
-	
+	private static final long serialVersionUID = 6266560002081651008L;
+
 	@Column(name="id",pk=true,columnDesc="主键ID")
 	private String id;//主键ID
 	
@@ -50,6 +50,12 @@ public class Interfaces extends BaseEntity implements Serializable {
 	@Column(name="history_times",columnDesc="历史接口被调用次数")
 	private BigInteger historyTimes;//历史接口被调用次数
 	
+	@Column(name="request_data_secret",columnDesc="请求数据加密（0：不加密；1：加密）")
+	private Integer requestDataSecret;//请求数据加密（0：不加密；1：加密）
+	
+	@Column(name="response_data_secret",columnDesc="返回数据加密（0：不加密；1：加密）")
+	private Integer responseDataSecret;//返回数据加密（0：不加密；1：加密）
+	
 	@Column(name="remark",columnDesc="备注")
 	private String remark;//备注
 	
@@ -64,6 +70,8 @@ public class Interfaces extends BaseEntity implements Serializable {
 	public static final String dataPermissionColumn = "data_permission";
 	public static final String entityColumn = "entity";
 	public static final String historyTimesColumn = "history_times";
+	public static final String requestDataSecretColumn = "request_data_secret";
+	public static final String responseDataSecretColumn = "response_data_secret";
 	public static final String remarkColumn = "remark";
 
 }
