@@ -24,9 +24,13 @@ public class SqlBuildInfo {
 	private String pk;//数据库主键名称
 	
 	private Boolean pkGenerate;//主键是否自增
+	
+	private String id;//自动生成ID名称
+
+	private Boolean idAutoCreate;//是否自动生成
 
 	private List<Boolean> canUpdateSetEmptyList;//更新时是否能设置NULL或者空
 	
 	private DbTypeEnum dbTypeEnum;//数据库类型
-
+	
 }
