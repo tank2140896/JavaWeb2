@@ -55,7 +55,9 @@ JavaWeb2-angular（cnpm install->cnpm start）
 9、Netty客户端和服务端示例（IO模型、数据协议、线程模型）                 
 10、websocket            
 11、数据权限：本项目的数据权限全部围绕接口展开的，使用时在Controller的方法上加上@DataPermission(entity=UserListResponse.class)，默认/web开头的接口都是权限受控的，参考：UserController中的userList                                          
-12、代码自动生成                             
+12、代码自动生成            
+13、ID自动生成
+①作为@Component组件实现IdAutoCreate接口；②实体类@Column加入idAutoCreate=true       
 # 七、项目使用说明                                                       
 1、除了涉及事务的service加上@Transactional，建议涉及事务的Controller也加上@Transactional，另外不建议try、catch，除非能确保无数据库相关事务操作或确保Controller内的方法不会抛出异常；另外自定义异常如果继承Exception的话，方法需要显式抛出异常，而如果继承RuntimeException，方法不需要显式抛出异常                 
 2、关于@Configuration的类，配置代码常用的有两种写法，一是通过常量类配置，二是通过配置文件配置，若不想该配置类生效，可以加上如：@ConditionalOnProperty(name="http.server.on",havingValue="true")                                         
