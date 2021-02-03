@@ -18,11 +18,11 @@ import lombok.Setter;
 public class User extends BaseEntity implements Serializable {
 	
 	private static final long serialVersionUID = -696227785545506331L;
-
-	@NotEmpty(groups={update.class},message="validated.user.userId.notEmpty")
-	@Column(name="user_id",pk=true,columnDesc="用户ID")
-	private String userId;//用户ID
 	
+	@NotEmpty(groups={update.class},message="validated.user.userId.notEmpty")
+	@Column(name="user_id",pk=true,columnDesc="用户ID"/*,idAutoCreate=true*/)
+	private String userId;//用户ID
+
 	@NotEmpty(groups={add.class,update.class},message="validated.user.userName.notNull")
 	@Pattern(groups={add.class,update.class},regexp="^(?![^a-zA-Z]+$)(?!\\D+$).{6,20}$",message="validated.user.userName.pattern")
 	@Column(name="user_name",columnDesc="用户名")
