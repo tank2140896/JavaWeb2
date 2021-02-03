@@ -15,6 +15,8 @@ public @interface Column {
 	
 	boolean pk() default false;//是否是主键
 	
+	boolean idAutoCreate() default false;//是否ID自动生成
+
 	boolean keyGenerate() default false;//是否主键自增
 	
 	String columnDesc() default CommonConstant.EMPTY_VALUE;//字段说明
