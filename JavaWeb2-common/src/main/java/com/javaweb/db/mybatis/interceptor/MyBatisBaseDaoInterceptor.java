@@ -148,7 +148,9 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 		Table tabel = c.getAnnotation(Table.class);
 		String tableName = tabel.name();//获取持久化对象所对应的表名
 		String pk = CommonConstant.EMPTY_VALUE;
+		String id = CommonConstant.EMPTY_VALUE;
 		boolean pkGenerate = false;
+		boolean idAutoCreate = false;
 		while(c!=null){
 			Field[] field = c.getDeclaredFields();
 			for(int i=0;i<field.length;i++){
@@ -163,6 +165,11 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 				}
 				if(column.keyGenerate()){
 					pkGenerate = true;//获取主键是否自增，暂时只支持单主键
+				}else{
+					if(column.idAutoCreate()){//获取ID是否自动生成
+						id = column.name();
+						idAutoCreate = true;
+					}
 				}
 				String fieldName = eachField.getName();
 				entityList.add(fieldName);
@@ -194,6 +201,8 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 		sqlBuildInfo.setColumnList(columnList);
 		sqlBuildInfo.setPk(pk);
 		sqlBuildInfo.setPkGenerate(pkGenerate);
+		sqlBuildInfo.setId(id);
+		sqlBuildInfo.setIdAutoCreate(idAutoCreate);
 		sqlBuildInfo.setCanUpdateSetEmptyList(canUpdateSetEmptyList);
 		return sqlBuildInfo;
 	}
