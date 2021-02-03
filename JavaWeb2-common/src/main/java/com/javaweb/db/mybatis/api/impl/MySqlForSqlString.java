@@ -1,14 +1,31 @@
 package com.javaweb.db.mybatis.api.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import com.javaweb.constant.CommonConstant;
+import com.javaweb.context.ApplicationContextHelper;
+import com.javaweb.db.help.IdAutoCreate;
 import com.javaweb.db.help.SqlBuildInfo;
 import com.javaweb.db.help.SqlCondition;
 import com.javaweb.db.query.QueryWapper;
 import com.javaweb.enums.SqlConditionEnum;
+import com.javaweb.util.core.SecretUtil;
 
 public class MySqlForSqlString implements SqlString {
+	
+	private Object getIdAutoCreate(){
+		try{
+			Map<String,?> result = ApplicationContextHelper.getInterfaceImpl(IdAutoCreate.class);
+			if(result!=null){
+				IdAutoCreate<?> idAutoCreate = (IdAutoCreate<?>)result.get(result.keySet().iterator().next());
+				return idAutoCreate.idCreate();
+			}
+		}catch(Exception e){
+			//do nothing
+		}
+		return SecretUtil.defaultGenUniqueStr(CommonConstant.ZERO_STRING_VALUE);
+	}
 
 	public String getInsertStringSql(SqlBuildInfo sqlBuildInfo) {
 		StringBuilder stringBuilder = new StringBuilder();
@@ -20,6 +37,13 @@ public class MySqlForSqlString implements SqlString {
 				if(sqlBuildInfo.getPk().equals(columnList.get(i))){
 					columnList.remove(i);
 					entityValueList.remove(i);
+					break;
+				}
+			}
+		}else{
+			for(int i=0;i<columnList.size();i++){
+				if(sqlBuildInfo.getIdAutoCreate()&&sqlBuildInfo.getId().equals(columnList.get(i))){
+					entityValueList.set(i,getIdAutoCreate());
 					break;
 				}
 			}
