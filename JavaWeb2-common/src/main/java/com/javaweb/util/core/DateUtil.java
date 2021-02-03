@@ -25,6 +25,15 @@ import com.javaweb.util.entity.DateTimeInfo;
  * LocalDateTime localDateTime = LocalDateTime.now();
  * localDateTime = localDateTime.with(ChronoField.YEAR,2020);
  */
+/** 时分间隔
+Duration duration = getDuration(LocalDateTime.parse("2021-02-03 09:00:00",DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")),LocalDateTime.parse("2021-02-03 17:30:00",DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
+System.out.println(duration.toMinutes()/33);//15
+String temp = "2021-02-03 09:00:00";
+for(int i=1;i<=15+1;i++){
+	System.out.println(temp);
+	temp = countTimeAfter(temp,"yyyy-MM-dd HH:mm:ss",33*60);
+}
+*/
 public class DateUtil {
 	
 	//默认每月第一天是1号
