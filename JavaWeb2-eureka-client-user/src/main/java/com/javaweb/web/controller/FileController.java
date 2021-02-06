@@ -31,40 +31,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 /**
-import java.io.File;
-
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpRequestRetryHandler;
-import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.util.EntityUtils;
-
-public class Test {
-
-	public static void main(String[] args) throws Exception {
-		CloseableHttpClient closeableHttpClient = HttpClientBuilder.create().setRetryHandler(new DefaultHttpRequestRetryHandler(3,false)).build();  
-		HttpPost httpPost = new HttpPost("http://client2:2002/file/uploadFile");
-        MultipartEntityBuilder multipartEntityBuilder = MultipartEntityBuilder.create();
-        for(int i=1;i<=2;i++){
-            multipartEntityBuilder.addBinaryBody("file",new File("E:\\\\"+i+".bmp"));
-        }
-        //multipartEntityBuilder.addPart("uuid",new StringBody(UUID.randomUUID().toString(),ContentType.MULTIPART_FORM_DATA));
-        httpPost.setEntity(multipartEntityBuilder.build());
-        HttpResponse httpResponse = closeableHttpClient.execute(httpPost);
-        if(httpResponse.getStatusLine().getStatusCode()==HttpStatus.SC_OK){
-            String jsonData = EntityUtils.toString(httpResponse.getEntity(),"UTF-8");  
-            System.out.println(jsonData);  
-        }else{
-            System.out.println(EntityUtils.toString(httpResponse.getEntity(),"UTF-8"));
-        }
-	}
-
-}
-*/
-/**
  * 当文件服务作为通用服务时，可以与其它用到文件服务的系统进行对接，做的更加安全的话，微服务内部也可以采用token等形式进行鉴权
  * 除了file文件表还可以设计一张对接平台配置表，主要有如下字段：platform（平台、微服务系统编号等都可以）、url（微服务或远程调用的请求地址）、secret_key（秘钥）
  * 主要对接流程如下：
