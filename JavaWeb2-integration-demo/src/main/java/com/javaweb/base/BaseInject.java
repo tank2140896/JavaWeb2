@@ -3,7 +3,7 @@ package com.javaweb.base;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.solr.client.solrj.SolrClient;
-import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.client.RestHighLevelClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -40,7 +40,7 @@ public class BaseInject {
 	protected WebSocketHandleService webSocketHandleService;
 	
 	@Autowired
-	protected TransportClient transportClient;
+	protected RestHighLevelClient restHighLevelClient;
 	
 	@Autowired
 	protected DefaultKaptcha defaultKaptcha;
