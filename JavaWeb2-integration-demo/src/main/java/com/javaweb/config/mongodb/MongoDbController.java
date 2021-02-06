@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.util.core.MathUtil;
+import com.mongodb.client.MongoClient;
 import com.mongodb.client.gridfs.GridFSBucket;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
@@ -45,6 +46,9 @@ db.test.drop
 */
 @RestController
 public class MongoDbController {
+	
+	@Autowired
+    private MongoClient mongoClient;
 
 	@Autowired
 	private MongoTemplate mongoTemplate;
@@ -60,7 +64,7 @@ public class MongoDbController {
     	if(mongoTemplate==null||gridFsTemplate==null){
     		return new BaseResponseResult(500,"fail",null);
     	}else{
-    		return new BaseResponseResult(200,"success",mongoTemplate.toString()+"~"+gridFsTemplate.toString()+"~"+gridFSBucket.toString());
+    		return new BaseResponseResult(200,"success",mongoTemplate.toString()+"~"+mongoClient.toString()+"~"+gridFsTemplate.toString()+"~"+gridFSBucket.toString());
     	}
     }
     

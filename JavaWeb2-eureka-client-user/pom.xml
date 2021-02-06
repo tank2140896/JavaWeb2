@@ -17,7 +17,7 @@
   	<parent>
     	<groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.2.1.RELEASE</version>
+        <version>2.3.8.RELEASE</version>
     </parent>
     
     <dependencies>
@@ -36,8 +36,8 @@
         </dependency>
         <!-- JavaWeb2-common start -->
         <!-- lombok(eclipse.ini添加) 
-			-Xbootclaspath/C:/Users/admin/.m2/repository/org/projectlombok/lombok/1.18.2/lombok-1.18.2.jar
-			-javaagent:C:/Users/admin/.m2/repository/org/projectlombok/lombok/1.18.2/lombok-1.18.2.jar
+			-Xbootclaspath/C:/Users/admin/.m2/repository/org/projectlombok/lombok/1.18.16/lombok-1.18.16.jar
+			-javaagent:C:/Users/admin/.m2/repository/org/projectlombok/lombok/1.18.16/lombok-1.18.16.jar
 		-->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -51,6 +51,11 @@
 	        <!-- webflux(用了webflux就不要spring-boot-starter-web了) -->
 	        <!-- <artifactId>spring-boot-starter-webflux</artifactId> -->
 	    </dependency>
+	    <!-- validation -->
+	   	<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
      	<!-- json-lib -->
 		<dependency>
 		    <groupId>net.sf.json-lib</groupId>
@@ -237,13 +242,13 @@
       	<!-- self end -->
 	</dependencies>
 	
-	<!-- SpringBoot（2.2.1.RELEASE）与SpringCloud（Hoxton.RELEASE）版本对应需要参考：http://projects.spring.io/spring-cloud -->
+	<!-- SpringBoot（2.3.8.RELEASE）与SpringCloud（Hoxton.SR9）版本对应需要参考：http://projects.spring.io/spring-cloud -->
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
-				<version>Hoxton.RELEASE</version>
+				<version>Hoxton.SR9</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>

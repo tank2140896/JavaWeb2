@@ -22,6 +22,11 @@ public class WebMvcConfig implements WebMvcConfigurer {
 	@Value("${test.model.open}")
 	private boolean testModelOpen;
 	
+	/** 现在是5.2.12，到了5.3可以不用了
+	for the time being it's necessary to continue using it in order to set it
+	to {@code false}. In 5.3 when {@code false} becomes the default, use of
+	this property will no longer be necessary.
+	*/
 	public void configureContentNegotiation(ContentNegotiationConfigurer configurer) {
         configurer.favorPathExtension(false);
     }
