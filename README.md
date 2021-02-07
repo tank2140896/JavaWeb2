@@ -21,16 +21,17 @@ JavaWeb2-angular（cnpm install->cnpm start）
 3、JavaWeb2-angular（端口4200）     
 注：与Angular整合看效果的话只要导入JavaWeb2-eureka-client-user/src/main/resources/sql/init.sql，然后修改JavaWeb2-eureka-client-user的pom.xml注释掉spring-cloud-starter-netflix-eureka-client和spring-cloud-starter-openfeign，然后加入spring-boot-starter-aop，待编译完成好后，注释掉报错代码即可，页面访问：localhost:4200，账号和密码都是admin123456     
 # 四、使用前重要说明                                                                     
-1、由于水平有限，本项目会存在很多不足和BUG，尤其是前端angular。同时本项目更新会比较频繁、改动会比较大，请见谅（更新代码时也请同步更新JavaWeb2-eureka-client-user/src/main/resources/sql/init.sql并重新cnpm install）         
-2、本项目由于是前后端分离，因此没有使用session，而是使用redis替代session，同时也没有使用spring-session-redis，而是自己代码处理的                          
-3、后端几乎所有的增删改查操作都是物理操作（忽略数据库表中的del_flag字段），如果想做逻辑操作（使用数据库表中的del_flag字段）需要重写相关SQL语句                        
-4、本项目所有接口都可以用JUnit或Postman验证接口，JUnit代码也有部分可做参考                                       
-5、JavaWeb2-integration-demo包括了一些常用技术与SpringBoot组合的示例，基本验证通过，但是不同版本写法会有差异（hbase、kafka、netty、solr、切面处理、mongodb、websocket（SpringBoot版和Netty版）、elasticsearch、neo4j、barcode（一维条形码）、kaptcha（二维码）、邮件发送、redis、restTemplate、quartz（分布式）定时任务、文件上传下载、activiti、qq、wechat、poi-excel、HTTPS和HTTP2.0、本项目作为第三方的接入（Oauth2）、接口对接（对方请求我们的数据）、中文分词器、轻量级文件服务器minio、FastDFS、SpringBatch批处理、JNI、重写RequestBody数据格式）                                                                        
-6、所有SQL语句均未优化且没有索引等，如有需要请自行优化                          
-7、所有增删改查操作几乎没有进行任何校验，如有需要请自行优化                    
-8、本项目所有主键都是字符串类型，而不是数字（或数字自增）类型，主要考虑到两方面：①分布式及数据迁移；②当数字类型超过16位时，前后端交互时，前端会有精度误差，当然前端转化下或后端转化下就可以了，这里主要是为了避免相互转换的麻烦，但是写入的依然是数字，即类型是字符串类型但是值是数字。对于新、老数据的迁移、合并，systemNo的值是区分关键，参考SecretUtil的defaultGenUniqueStr方法         
-9、注册中心有很多，比如eureka、zookeeper、consul、nacos等，本项目在这方面不是重点，只想快速上手，因此就用了以前的官方套餐                  
-10、tomcat容器顺序：Filter->Servlet->Inteceptor->Aspect->Controller             
+1、界面效果截图（https://pan.baidu.com/s/1u9sA2dUCPRZGtL2dvsvVgw）                
+2、由于水平有限，本项目会存在很多不足和BUG，尤其是前端angular。同时本项目更新会比较频繁、改动会比较大，请见谅（更新代码时也请同步更新JavaWeb2-eureka-client-user/src/main/resources/sql/init.sql并重新cnpm install）         
+3、本项目由于是前后端分离，因此没有使用session，而是使用redis替代session，同时也没有使用spring-session-redis，而是自己代码处理的                          
+4、后端几乎所有的增删改查操作都是物理操作（忽略数据库表中的del_flag字段），如果想做逻辑操作（使用数据库表中的del_flag字段）需要重写相关SQL语句                        
+5、本项目所有接口都可以用JUnit或Postman验证接口，JUnit代码也有部分可做参考                                       
+6、JavaWeb2-integration-demo包括了一些常用技术与SpringBoot组合的示例，基本验证通过，但是不同版本写法会有差异（hbase、kafka、netty、solr、切面处理、mongodb、websocket（SpringBoot版和Netty版）、elasticsearch、neo4j、barcode（一维条形码）、kaptcha（二维码）、邮件发送、redis、restTemplate、quartz（分布式）定时任务、文件上传下载、activiti、qq、wechat、poi-excel、HTTPS和HTTP2.0、本项目作为第三方的接入（Oauth2）、接口对接（对方请求我们的数据）、中文分词器、轻量级文件服务器minio、FastDFS、SpringBatch批处理、JNI、重写RequestBody数据格式）                                                                        
+7、所有SQL语句均未优化且没有索引等，如有需要请自行优化                          
+8、所有增删改查操作几乎没有进行任何校验，如有需要请自行优化                    
+9、本项目所有主键都是字符串类型，而不是数字（或数字自增）类型，主要考虑到两方面：①分布式及数据迁移；②当数字类型超过16位时，前后端交互时，前端会有精度误差，当然前端转化下或后端转化下就可以了，这里主要是为了避免相互转换的麻烦，但是写入的依然是数字，即类型是字符串类型但是值是数字。对于新、老数据的迁移、合并，systemNo的值是区分关键，参考SecretUtil的defaultGenUniqueStr方法         
+10、注册中心有很多，比如eureka、zookeeper、consul、nacos等，本项目在这方面不是重点，只想快速上手，因此就用了以前的官方套餐                  
+11、tomcat容器顺序：Filter->Servlet->Inteceptor->Aspect->Controller             
 本项目中形成了：InterfaceLimitFilter（接口限流-所有编写有效的接口）->WebPermissionInterceptor（权限控制-所有权限受控的接口）->OperateLogAspect（日志切面-所有需要记录日志的接口）     
 # 五、开发计划                                                                                                         
 1、等待SpringBoot2.3.9版本并升级，然后将WebMvcConfig里的@Deprecated方法删除                       
