@@ -30,13 +30,13 @@ public class TokenData implements Serializable {
 	
 	private List<SidebarInfoResponse> menuListForTree;
 	
-	private String rsaPublicKeyOfBackend;
+	private String rsaPublicKeyOfBackend;//后端进行响应加密时会用到
 	
-	private String rsaPrivateKeyOfBackend;
+	private String rsaPrivateKeyOfBackend;//前端进行响应解密时会用到
 	
-	private String rsaPublicKeyOfFrontend;
+	private String rsaPublicKeyOfFrontend;//前端进行请求加密时会用到
 	
-	private String rsaPrivateKeyOfFrontend;
+	private String rsaPrivateKeyOfFrontend;//后端进行请求解密时会用到
 	
 	private List<ExcludeInfoResponse> excludeInfoResponseList;
 	

@@ -100,6 +100,10 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 			}
 			if(continueFlag){
 				projectListEach.setId(SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO));
+				projectListEach.setDataPermission(CommonConstant.ZERO_NUMBER_VALUE);
+				projectListEach.setHistoryTimes(new BigInteger(CommonConstant.ZERO_STRING_VALUE));
+				projectListEach.setRequestDataSecret(CommonConstant.ZERO_NUMBER_VALUE);
+				projectListEach.setResponseDataSecret(CommonConstant.ZERO_NUMBER_VALUE);
 				projectListEach.setCreateDate(DateUtil.getDefaultDate());
 				projectListEach.setCreator(SystemConstant.SYSTEM_DEFAULT_USER_ID);
 				projectListEach.setDelFlag(CommonConstant.ZERO_NUMBER_VALUE);

@@ -14,7 +14,6 @@ export class HttpServiceInterceptor implements HttpInterceptor {
   intercept(req:HttpRequest<any>,next:HttpHandler):Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
       tap(event=>{
-        //console.log(event);
         if(event instanceof HttpResponse && event.status == 200){//http正常响应
           let responseBody = event.body;
           if(responseBody.code != 200) {

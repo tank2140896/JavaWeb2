@@ -3,8 +3,6 @@ package com.javaweb.web.eo;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-import javax.crypto.SecretKeyFactory;
-import javax.crypto.spec.DESedeKeySpec;
 import javax.servlet.http.HttpServletRequest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -29,7 +27,7 @@ public class SecretRequest {
 	public boolean rsaCheckPass(HttpServletRequest request,TokenData tokenData,boolean isAuthController,boolean needToken){
 		String isAuth = request.getHeader("isAuth");//0（不加密）；1（加密）
 		String token = request.getHeader("token");//token
-		String currentTime = request.getHeader("currentTime");//格式为yyyyMMddHHmmss
+		String time = request.getHeader("time");//格式为yyyyMMddHHmmss
 		String nonce = request.getHeader("nonce");//长度为24位的随机小写字母和数字的组合
 		String thatCode = request.getHeader("code");//post和put的不是放在header里的
 		String thatSign = request.getHeader("sign");//post和put的不是放在header里的
@@ -46,7 +44,7 @@ public class SecretRequest {
 					return false;
 				}
 			}
-			Duration duration = DateUtil.getDuration(DateUtil.getDateTime(currentTime,DateUtil.DATETIME_PATTERN_TYPE1),LocalDateTime.now());//日期校验
+			Duration duration = DateUtil.getDuration(DateUtil.getDateTime(time,DateUtil.DATETIME_PATTERN_TYPE1),LocalDateTime.now());//日期校验
 			if(duration.getSeconds()>60*5){//客户端时间与本地时间间隔（算上各种延迟）不应该超过300秒（5分钟）
 				return false;
 			}
@@ -64,16 +62,16 @@ public class SecretRequest {
 				this.code = thatCode;
 				this.sign = thatSign;
 			}
-			return codeSignCheck(tokenData,currentTime,nonce);
+			return codeSignCheck(tokenData,time,nonce);
 		}catch(Exception e){
 			return false;
 		}
 	}
 	
 	private boolean codeSignCheck(TokenData tokenData,String currentTime,String nonce) throws Exception {
-		//RSA结合DES（推荐），原因参考：https://ask.csdn.net/questions/763621和https://github.com/travist/jsencrypt/issues/137
-		//1.用DES解密code
-		String d1 = AesDesUtil.decryptDes(this.code,SecretKeyFactory.getInstance("DESede").generateSecret(new DESedeKeySpec(nonce.getBytes("UTF8")))); 
+		//RSA结合AES（推荐），原因参考：https://ask.csdn.net/questions/763621和https://github.com/travist/jsencrypt/issues/137
+		//1.用AES解密code
+		String d1 = AesDesUtil.decryptAes(this.code,nonce); 
 		//1.用后端私钥解密code
 		//String d1 = RsaUtil.decrypt(this.code,RsaUtil.getPrivateKey(tokenData.getRsaPrivateKeyOfBackend()));
 		//2.用前端公钥验签
