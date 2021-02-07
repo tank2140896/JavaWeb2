@@ -21,7 +21,7 @@ export class HttpService {
         'Api-Version':ApiConstant.API_VERSION,
         token:headToken.token,//传入token
         time:this.datePipe.transform(new Date(),'yyyyMMddHHmmss'),//传入时间
-        isAuth:headToken.isAuth//传入isAuth
+        //isAuth:headToken.isAuth//传入isAuth
     });
     let options = {headers:headers,withCredentials:true};
     return options;

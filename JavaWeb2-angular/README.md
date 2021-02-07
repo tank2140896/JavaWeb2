@@ -1,4 +1,5 @@
 一、运行和打包                               
+[建议先删除原来的node_modules（如果有）]                 
 cnpm install     
 cnpm start      
 cnpm run build                    

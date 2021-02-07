@@ -1,30 +1,31 @@
 const jsrsasign = require('jsrsasign');//使用参考：https://www.cnblogs.com/web-chuanfa/p/11096951.html
-const crypto = require("crypto-js");//使用参考：https://cryptojs.gitbook.io/docs
+const crypto = require('crypto-js');//使用参考：https://cryptojs.gitbook.io/docs
 
 export class SecretUtil {
 
-    /** 
-    let paramStr = 'abc123';
-    let pk = "-----BEGIN PUBLIC KEY-----MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQD3XSdz1MnzazBEN5KOfTx0IyVJZ5wb57isrCuHDhnYXwtmdhQalgII0fozeeFpMpAvlnmHC1kpW7XVGvZnLx3bWbCEbf+pMSW4kmQuI+5cxRUJbCl7sdaODBrINgERHPICVC18AJLThEVMHyjuR6Jn4zQmyYNbReSktY/BrFTvMQIDAQAB-----END PUBLIC KEY-----";
-    var pub = jsrsasign.KEYUTIL.getKey(pk);
-    var enc = jsrsasign.KJUR.crypto.Cipher.encrypt(paramStr,pub);
-    console.log(enc);
-    */
+    //let publicKey = "-----BEGIN PUBLIC KEY-----MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQD3XSdz1MnzazBEN5KOfTx0IyVJZ5wb57isrCuHDhnYXwtmdhQalgII0fozeeFpMpAvlnmHC1kpW7XVGvZnLx3bWbCEbf+pMSW4kmQuI+5cxRUJbCl7sdaODBrINgERHPICVC18AJLThEVMHyjuR6Jn4zQmyYNbReSktY/BrFTvMQIDAQAB-----END PUBLIC KEY-----"
+    public static rsaEncrypt(data:string,publicKey:string):string{
+      let publicString = jsrsasign.KEYUTIL.getKey(publicKey);
+      let encryptString = jsrsasign.KJUR.crypto.Cipher.encrypt(data,publicString);
+      return encryptString;
+    }
 
     public static cryptoAesEncrypt(data:string,secretKey:string):string {
         let iv = SecretUtil.getCryptoIV();
         let key = crypto.enc.Hex.parse(crypto.enc.Utf8.parse(secretKey).toString(crypto.enc.Hex));
-        return crypto.AES.encrypt(data,key,{mode:crypto.mode.ECB,padding:crypto.pad.Pkcs7,iv:iv}).toString();
+        let encryptMode:any = {mode:crypto.mode.ECB,padding:crypto.pad.Pkcs7,iv:iv};
+        return crypto.AES.encrypt(data,key,encryptMode).toString();
     }
 
     public static cryptoAesDecrypt(secretData:string,secretKey:string):string {
         let iv = SecretUtil.getCryptoIV();
         let key = crypto.enc.Hex.parse(crypto.enc.Utf8.parse(secretKey).toString(crypto.enc.Hex));
-        return crypto.AES.decrypt(secretData,key,{mode:crypto.mode.ECB,padding:crypto.pad.Pkcs7,iv:iv}).toString(crypto.enc.Utf8);
+        let decryptMode:any = {mode:crypto.mode.ECB,padding:crypto.pad.Pkcs7,iv:iv};
+        return crypto.AES.decrypt(secretData,key,decryptMode).toString(crypto.enc.Utf8);
     }
 
     //适配JAVA的[AES/ECB/PKCS5Padding]模式
-    public static getCryptoIV():any {
+    private static getCryptoIV():any {
         let out = '';
         let tmpArray = [1,2,3,4,5,6,7,8];
         for(let i=0;i<tmpArray.length;i++) {
