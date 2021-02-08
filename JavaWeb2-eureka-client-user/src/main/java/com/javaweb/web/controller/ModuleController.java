@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javaweb.annotation.token.TokenDataAnnotation;
+import com.javaweb.annotation.url.ControllerMethod;
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.base.BaseValidatedGroup;
 import com.javaweb.constant.ApiConstant;
 import com.javaweb.constant.CommonConstant;
-import com.javaweb.constant.SwaggerConstant;
 import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.TokenData;
@@ -27,16 +27,13 @@ import com.javaweb.web.eo.module.ModuleListRequest;
 import com.javaweb.web.po.Interfaces;
 import com.javaweb.web.po.Module;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-
-@Api(tags=SwaggerConstant.SWAGGER_MODULE_CONTROLLER_TAGS)
+//登录且需要权限才可访问的模块管理模块
 @RestController
 @RequestMapping(ApiConstant.WEB_MODULE_PREFIX)
 public class ModuleController extends BaseController {
     
-    @ApiOperation(value=SwaggerConstant.SWAGGER_MODULE_GET_MODULE_ID_AND_NAME_LIST)
     @GetMapping(ApiConstant.MODULE_GET_MODULE_ID_AND_NAME_LIST)
+    @ControllerMethod(interfaceName="获取模块ID和模块名称列表接口")
     public BaseResponseResult getModuleIdAndNameList(@PathVariable(name="moduleType",required=false) String moduleType) {
         return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.getModuleIdAndNameList.success",moduleService.getModuleIdAndNameList(moduleType));
     }
@@ -47,8 +44,8 @@ public class ModuleController extends BaseController {
     2、菜单：模块的上级ID必选（所有目录，即moduleType=1），页面URL需要
     3、功能：模块的上级ID必选（所有菜单，即moduleType=2），API的URL需要
 	*/
-	@ApiOperation(value=SwaggerConstant.SWAGGER_MODULE_ADD)
 	@PostMapping(ApiConstant.MODULE_ADD)
+	@ControllerMethod(interfaceName="新增模块接口")
 	public BaseResponseResult moduleAdd(@RequestBody @Validated({BaseValidatedGroup.add.class}) Module module,BindingResult bindingResult,@TokenDataAnnotation TokenData tokenData){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
@@ -68,8 +65,8 @@ public class ModuleController extends BaseController {
 		}
 	}
 	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_MODULE_LIST)
 	@PostMapping(ApiConstant.MODULE_LIST)
+	@ControllerMethod(interfaceName="查询模块接口")
 	public BaseResponseResult moduleList(@RequestBody ModuleListRequest moduleListRequest){
 		Page page = moduleService.moduleList(moduleListRequest);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.list.success",page);
@@ -85,8 +82,8 @@ public class ModuleController extends BaseController {
         	2.3.1、当前权限若是目录不能向下降级为菜单或操作（按钮）
             2.3.2、当前权限若是菜单既不能向上升级也不能向下降级
 	*/
-	@ApiOperation(value=SwaggerConstant.SWAGGER_MODULE_MODIFY)
 	@PutMapping(ApiConstant.MODULE_MODIFY)
+	@ControllerMethod(interfaceName="修改模块接口")
 	public BaseResponseResult moduleModify(@RequestBody @Validated({BaseValidatedGroup.update.class}) Module module,BindingResult bindingResult,@TokenDataAnnotation TokenData tokenData){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
@@ -122,16 +119,15 @@ public class ModuleController extends BaseController {
 		}
 	}
 	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_MODULE_DETAIL)
 	@GetMapping(ApiConstant.MODULE_DETAIL)
+	@ControllerMethod(interfaceName="模块详情接口")
 	public BaseResponseResult moduleDetail(@PathVariable(name="moduleId",required=true) String moduleId){
 		Module module = moduleService.moduleDetail(moduleId);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.detail.success",module);
 	}
 	
-    //支持批量删除，用逗号隔开
-	@ApiOperation(value=SwaggerConstant.SWAGGER_MODULE_DELETE)
 	@DeleteMapping(ApiConstant.MODULE_DELETE)
+	@ControllerMethod(interfaceName="删除模块接口（支持批量删除，用逗号隔开）")
 	public BaseResponseResult moduleDelete(@PathVariable(name="moduleId",required=true) String moduleId){
 		String moduleIds[] = moduleId.split(",");
 		for(String eachModuleId:moduleIds){

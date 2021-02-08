@@ -16,19 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.javaweb.annotation.token.TokenDataAnnotation;
+import com.javaweb.annotation.url.ControllerMethod;
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.base.BaseTool;
 import com.javaweb.constant.ApiConstant;
-import com.javaweb.constant.SwaggerConstant;
 import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.util.core.FileUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.file.FileListRequest;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 
 /**
  * 当文件服务作为通用服务时，可以与其它用到文件服务的系统进行对接，做的更加安全的话，微服务内部也可以采用token等形式进行鉴权
@@ -46,14 +43,14 @@ import io.swagger.annotations.ApiOperation;
  * 3、B校验token是否失效，然后加密radomString后的值应该等于secretString；解密checkString后的值应该为yyyyMMddHHmmss的日期格式，且与B的服务器时间正负差不能超过5分钟
  * 4、B都校验通过后，返回格式如：{"code":200,"data":data,"message":"成功"}，data又包括：{"isExpired":"是否失效（0：没有失效；1：失效）","systemCode":"platform（暂定）","userCode":"用户ID（暂定）","type":"11（外网、微信）"}
  */
-@Api(tags=SwaggerConstant.SWAGGER_FILE_CONTROLLER_TAGS)
+//登录且需要权限才可访问的文件管理模块
 @RestController
 @RequestMapping(ApiConstant.WEB_FILE_PREFIX)
 public class FileController extends BaseController{
 	
-    @ApiOperation(value=SwaggerConstant.SWAGGER_FILE_UPLOAD)
 	@PostMapping(ApiConstant.FILE_UPLOAD)
-    public BaseResponseResult uploadFile(@TokenDataAnnotation TokenData tokenData,@RequestParam(value="file",required=true) MultipartFile multipartFile[]) {
+	@ControllerMethod(interfaceName="文件上传接口")
+	public BaseResponseResult uploadFile(@TokenDataAnnotation TokenData tokenData,@RequestParam(value="file",required=true) MultipartFile multipartFile[]) {
     	try{
     		//上传文件大小校验，还可以校验总上传文件的大小
     		long total = 0;
@@ -78,8 +75,8 @@ public class FileController extends BaseController{
     	}
     }
     
-    @ApiOperation(value=SwaggerConstant.SWAGGER_FILE_DOWNLOAD)
     @GetMapping(ApiConstant.FILE_DOWNLOAD)
+    @ControllerMethod(interfaceName="文件下载接口")
     public void downloadFile(@PathVariable(value="fileId",required=true)String fileId,HttpServletRequest httpServletRequest,HttpServletResponse httpServletResponse){
     	try{
     		com.javaweb.web.po.File file = fileDao.selectByPk(fileId);
@@ -95,22 +92,22 @@ public class FileController extends BaseController{
 		}
     }
     
-    @ApiOperation(value=SwaggerConstant.SWAGGER_FILE_LIST)
     @PostMapping(ApiConstant.FILE_LIST)
+    @ControllerMethod(interfaceName="文件列表接口")
     public BaseResponseResult list(@RequestBody FileListRequest fileListRequest){
     	Page page = fileService.list(fileListRequest);
     	return getBaseResponseResult(HttpCodeEnum.SUCCESS,"file.list.success",page);
     }
     
-    @ApiOperation(value=SwaggerConstant.SWAGGER_FILE_DETAIL)
     @GetMapping(ApiConstant.FILE_DETAIL)
+    @ControllerMethod(interfaceName="文件详情接口")
     public BaseResponseResult detail(@PathVariable(value="fileId",required=true)String fileId){
     	com.javaweb.web.po.File file = fileService.fileDetail(fileId);
     	return getBaseResponseResult(HttpCodeEnum.SUCCESS,"file.detail.success",file);
     }
     
-    @ApiOperation(value=SwaggerConstant.SWAGGER_FILE_DELETE)
     @GetMapping(ApiConstant.FILE_DELETE)
+    @ControllerMethod(interfaceName="文件删除接口")
     public BaseResponseResult delete(@PathVariable(value="fileId",required=true)String fileId){
     	fileService.fileDelete(fileId);
     	return getBaseResponseResult(HttpCodeEnum.SUCCESS,"file.delete.success");

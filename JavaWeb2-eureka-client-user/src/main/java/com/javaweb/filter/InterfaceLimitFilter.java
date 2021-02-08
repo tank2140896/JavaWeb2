@@ -46,7 +46,6 @@ public class InterfaceLimitFilter implements Filter {
 		String url = httpServletRequest.getServletPath();
 		List<Interfaces> list = BaseSystemMemory.interfacesList;
 		Optional<Interfaces> optional = list.stream().filter(e->url.startsWith(e.getBaseUrl())).findFirst();
-		
 		if(optional.isPresent()){
 			String key = CommonConstant.EMPTY_VALUE;
 			if(url!=null&&url.startsWith(SystemConstant.URL_WEB_INTERCEPTOR_START_PREFIX)){

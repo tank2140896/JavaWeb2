@@ -3,12 +3,8 @@ package com.javaweb.config.swagger;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import com.javaweb.constant.SwaggerConstant;
-import com.javaweb.constant.SystemConstant;
 
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
@@ -19,24 +15,23 @@ import springfox.documentation.service.ApiInfo;
 import springfox.documentation.service.Parameter;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+//一些过滤器、拦截器等可能会影响到swagger的界面访问
 @Configuration
+@EnableSwagger2
 public class SwaggerConfig {
-	
-	@Value("${swagger.open}")
-	private boolean swaggerOpen;
 	
 	@Bean
     public Docket createRestApi() {
     	List<Parameter> parameters = new ArrayList<Parameter>();
-    	parameters.add(new ParameterBuilder().name(SystemConstant.HEAD_TOKEN).description(SwaggerConstant.SWAGGER_HEAD_TOKEN).modelRef(new ModelRef("string")).parameterType("header").required(false).build());
-    	parameters.add(new ParameterBuilder().name(SystemConstant.HEAD_TYPE).description(SwaggerConstant.SWAGGER_HEAD_TYPE).modelRef(new ModelRef("string")).parameterType("header").required(false).build());
+    	parameters.add(new ParameterBuilder().name("token").description("token").modelRef(new ModelRef("string")).parameterType("header").required(false).build());
         return new Docket(DocumentationType.SWAGGER_2)
-                .enable(swaggerOpen)
+                .enable(true)
                 .globalOperationParameters(parameters)
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage(SystemConstant.BASE_PACKAGE))//包形式
+                .apis(RequestHandlerSelectors.basePackage("com.javaweb"))//包形式
                 //.apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))//注解形式
                 .paths(PathSelectors.any())
                 .build();
@@ -44,10 +39,10 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-        	.title(SwaggerConstant.SWAGGER_TITLE)
-            .description(SystemConstant.PROJECT_NAME)
-            .termsOfServiceUrl(SystemConstant.PROJECT_GITHUB_URL)
-            .version(SystemConstant.PROJECT_VERSION)
+        	.title("SpringBoot使用Swagger构建API文档")
+            .description("JavaWeb2")
+            .termsOfServiceUrl("https://github.com")
+            .version("1.0")
             .build();
     }
 

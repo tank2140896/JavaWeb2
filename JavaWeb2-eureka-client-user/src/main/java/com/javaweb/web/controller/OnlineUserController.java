@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.javaweb.annotation.url.ControllerMethod;
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.constant.ApiConstant;
 import com.javaweb.constant.CommonConstant;
-import com.javaweb.constant.SwaggerConstant;
 import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.util.core.PageUtil;
 import com.javaweb.util.core.StringUtil;
@@ -25,16 +25,13 @@ import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.onlineUser.OnlineUserListRequest;
 import com.javaweb.web.po.User;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-
-@Api(tags=SwaggerConstant.SWAGGER_ONLINE_USER_CONTROLLER_TAGS)
+//登录且需要权限才可访问的在线用户管理模块
 @RestController
 @RequestMapping(ApiConstant.WEB_ONLINE_USER_PREFIX)
 public class OnlineUserController extends BaseController {
 	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_ONLINE_USER_LIST)
 	@PostMapping(ApiConstant.ONLINE_USER_LIST)
+	@ControllerMethod(interfaceName="在线用户列表接口")
 	public BaseResponseResult list(@RequestBody OnlineUserListRequest onlineUserListRequest){
 		Set<String> set = stringRedisTemplate.keys("*,1");//只取web端的在线用户
 		set = (set==null?new HashSet<>():set);
@@ -68,8 +65,8 @@ public class OnlineUserController extends BaseController {
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"onlineUser.list.success",page);
 	}
 	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_ONLINE_USER_OFFLINE)
 	@GetMapping(ApiConstant.ONLINE_USER_OFFLINE)
+	@ControllerMethod(interfaceName="用户下线接口")
 	public BaseResponseResult offline(@PathVariable(name="key",required=true) String key){
 		stringRedisTemplate.delete(key);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"onlineUser.offline.success",null);

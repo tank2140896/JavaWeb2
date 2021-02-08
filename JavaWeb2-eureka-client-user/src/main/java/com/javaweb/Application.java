@@ -12,17 +12,13 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
-
 @SpringBootApplication(exclude={
 		DataSourceAutoConfiguration.class,//去除数据源默认配置
-		RedisAutoConfiguration.class,//去除redis默认配置
-		RedisRepositoriesAutoConfiguration.class//去除redis默认配置
+		RedisAutoConfiguration.class,RedisRepositoriesAutoConfiguration.class//去除redis默认配置
 })
 @EnableEurekaClient
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages={"com.javaweb"})
-@EnableSwagger2//开启Swagger
 @EnableScheduling//开启定时任务
 @EnableAsync//开启异步任务
 //@MapperScan("com.javaweb.web.dao")//这样写就不必在所有的dao接口上加@Mapper

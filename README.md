@@ -26,7 +26,7 @@ JavaWeb2-angular（cnpm install->cnpm start）
 3、本项目由于是前后端分离，因此没有使用session，而是使用redis替代session，同时也没有使用spring-session-redis，而是自己代码处理的                          
 4、后端几乎所有的增删改查操作都是物理操作（忽略数据库表中的del_flag字段），如果想做逻辑操作（使用数据库表中的del_flag字段）需要重写相关SQL语句                        
 5、本项目所有接口都可以用JUnit或Postman验证接口，JUnit代码也有部分可做参考                                       
-6、JavaWeb2-integration-demo包括了一些常用技术与SpringBoot组合的示例，基本验证通过，但是不同版本写法会有差异（hbase、kafka、netty、solr、切面处理、mongodb、websocket（SpringBoot版和Netty版）、elasticsearch、neo4j、barcode（一维条形码）、kaptcha（二维码）、邮件发送、redis、restTemplate、quartz（分布式）定时任务、文件上传下载、activiti、qq、wechat、poi-excel、HTTPS和HTTP2.0、本项目作为第三方的接入（Oauth2）、接口对接（对方请求我们的数据）、中文分词器、轻量级文件服务器minio、FastDFS、SpringBatch批处理、JNI、重写RequestBody数据格式）                                                                        
+6、JavaWeb2-integration-demo包括了一些常用技术与SpringBoot组合的示例，基本验证通过，但是不同版本写法会有差异（hbase、kafka、netty、solr、切面处理、mongodb、websocket（SpringBoot版和Netty版）、elasticsearch、neo4j、barcode（一维条形码）、kaptcha（二维码）、邮件发送、redis、restTemplate、quartz（分布式）定时任务、文件上传下载、activiti、swagger2、qq、wechat、poi-excel、HTTPS和HTTP2.0、本项目作为第三方的接入（Oauth2）、接口对接（对方请求我们的数据）、中文分词器、轻量级文件服务器minio、FastDFS、SpringBatch批处理、JNI、重写RequestBody数据格式）                                                                        
 7、所有SQL语句均未优化且没有索引等，如有需要请自行优化                          
 8、所有增删改查操作几乎没有进行任何校验，如有需要请自行优化                    
 9、本项目所有主键都是字符串类型，而不是数字（或数字自增）类型，主要考虑到两方面：①分布式及数据迁移；②当数字类型超过16位时，前后端交互时，前端会有精度误差，当然前端转化下或后端转化下就可以了，这里主要是为了避免相互转换的麻烦，但是写入的依然是数字，即类型是字符串类型但是值是数字。对于新、老数据的迁移、合并，systemNo的值是区分关键，参考SecretUtil的defaultGenUniqueStr方法         
@@ -56,7 +56,7 @@ JavaWeb2-angular（cnpm install->cnpm start）
 8、kafka【kafka生产者（producer）一般可以使用kafkaTemplate；kafka消费者（consumer）一般可以使用@KafkaListener；实际项目中生产者和消费者一般都是分开的】                 
 9、Netty客户端和服务端示例（IO模型、数据协议、线程模型）                 
 10、websocket            
-11、数据权限：本项目的数据权限全部围绕接口展开的，使用时在Controller的方法上加上@DataPermission(entity=UserListResponse.class)，默认/web开头的接口都是权限受控的，参考：UserController中的userList                                          
+11、数据权限：本项目的数据权限全部围绕接口展开的，使用时在Controller的方法上加上@ControllerMethod(dataPermissionEntity=UserListResponse.class)，默认/web开头的接口都是权限受控的，参考：UserController中的userList                                          
 12、代码自动生成            
 13、ID自动生成：作为@Component组件实现IdAutoCreate接口并且实体类@Column加入idAutoCreate=true       
 # 七、项目使用说明                                                       

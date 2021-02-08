@@ -19,7 +19,7 @@ import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.mvc.method.RequestMappingInfo;
 import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
-import com.javaweb.annotation.url.DataPermission;
+import com.javaweb.annotation.url.ControllerMethod;
 import com.javaweb.base.BaseService;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
@@ -42,7 +42,6 @@ import com.javaweb.web.po.UserData;
 import com.javaweb.web.po.UserRole;
 import com.javaweb.web.service.InterfacesService;
 
-import io.swagger.annotations.ApiOperation;
 import net.sf.json.JSONObject;
 
 @Service("interfacesServiceImpl")
@@ -134,21 +133,16 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 			RequestMappingInfo requestMappingInfo = iterator.next();
 			String methodName = requestMappingInfo.getMethodsCondition().getMethods().toString().replace("[","").replace("]","");
 			String url = requestMappingInfo.getPatternsCondition().toString().replace("[","").replace("]", "").replace(" || ",",");
-			String swaggerApiName = null;
-			DataPermission dataPermission = null;
+			String name = null;
+			ControllerMethod controllerMethod = null;
 			if(urlMap.get(url)==null){
-				try{
-					swaggerApiName = map.get(requestMappingInfo).getMethodAnnotation(ApiOperation.class).value();
-				}catch(Exception e){
-					//do nothing
-				}
 				interfaces.setDataPermission(0);
 				try{
-					dataPermission = map.get(requestMappingInfo).getMethodAnnotation(DataPermission.class);
-					if(dataPermission!=null){
-						interfaces.setDataPermission(1);
-						Class<?> c = dataPermission.entity();
-						if(!(DataPermission.class.getName().equals(c.getClass().getName()))){//不是DataPermission的实例，定义了明确的实体类
+					controllerMethod = map.get(requestMappingInfo).getMethodAnnotation(ControllerMethod.class);
+					if(controllerMethod!=null){
+						Class<?> c = controllerMethod.dataPermissionEntity();
+						if(!(ControllerMethod.class.getName().equals(c.getName()))){//不是DataPermission的实例，定义了明确的实体类
+							interfaces.setDataPermission(1);
 							interfaces.setEntity(Stream.of(c.getDeclaredFields()).map(e->e.getName()).filter(e->!"serialVersionUID".equals(e)).collect(Collectors.toList()).toString());
 						}
 					}
@@ -156,7 +150,7 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 					//do nothing
 				}
 				//url.matches("/web(?!/loginAccess).*")&&methodName.matches("GET||POST")
-				interfaces.setName(swaggerApiName);
+				interfaces.setName(name);
 				interfaces.setUrl(url);
 				interfaces.setBaseUrl(url.split(CommonConstant.COMMA)[0].replaceAll("/\\{.*\\}",CommonConstant.EMPTY_VALUE));
 				interfaces.setMethod(methodName);

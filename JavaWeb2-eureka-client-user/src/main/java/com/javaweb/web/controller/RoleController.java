@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javaweb.annotation.token.TokenDataAnnotation;
+import com.javaweb.annotation.url.ControllerMethod;
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.base.BaseValidatedGroup;
 import com.javaweb.constant.ApiConstant;
-import com.javaweb.constant.SwaggerConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.util.core.DateUtil;
@@ -30,16 +30,13 @@ import com.javaweb.web.eo.role.RoleListRequest;
 import com.javaweb.web.po.Role;
 import com.javaweb.web.po.User;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-
-@Api(tags=SwaggerConstant.SWAGGER_ROLE_CONTROLLER_TAGS)
+//登录且需要权限才可访问的角色管理模块
 @RestController
 @RequestMapping(ApiConstant.WEB_ROLE_PREFIX)
 public class RoleController extends BaseController {
 	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_ROLE_ADD)
 	@PostMapping(ApiConstant.ROLE_ADD)
+	@ControllerMethod(interfaceName="新增角色接")
 	public BaseResponseResult roleAdd(@RequestBody @Validated({BaseValidatedGroup.add.class}) Role role,BindingResult bindingResult,@TokenDataAnnotation TokenData tokenData){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
@@ -54,15 +51,15 @@ public class RoleController extends BaseController {
 		}
 	}
 	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_ROLE_LIST)
 	@PostMapping(ApiConstant.ROLE_LIST)
+	@ControllerMethod(interfaceName="查询角色接口")
 	public BaseResponseResult roleList(@RequestBody RoleListRequest roleListRequest){
 		Page page = roleService.roleList(roleListRequest);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"role.list.success",page);
 	}
 	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_ROLE_MODIFY)
 	@PutMapping(ApiConstant.ROLE_MODIFY)
+	@ControllerMethod(interfaceName="修改角色接口")
 	public BaseResponseResult roleModify(@RequestBody @Validated({BaseValidatedGroup.update.class}) Role role,BindingResult bindingResult,@TokenDataAnnotation TokenData tokenData){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
@@ -75,16 +72,15 @@ public class RoleController extends BaseController {
 		}
 	}
 	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_ROLE_DETAIL)
 	@GetMapping(ApiConstant.ROLE_DETAIL)
+	@ControllerMethod(interfaceName="角色详情接口")
 	public BaseResponseResult roleDetail(@PathVariable(name="roleId",required=true) String roleId){
 		Role role = roleService.roleDetail(roleId);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"role.detail.success",role);
 	}
 	
-	//支持批量删除，用逗号隔开
-	@ApiOperation(value=SwaggerConstant.SWAGGER_ROLE_DELETE)
 	@DeleteMapping(ApiConstant.ROLE_DELETE)
+	@ControllerMethod(interfaceName="删除角色接口（支持批量删除，用逗号隔开）")
 	public BaseResponseResult roleDelete(@PathVariable(name="roleId",required=true) String roleId){
 		roleService.roleDelete(roleId);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"role.delete.success",null);
@@ -92,15 +88,15 @@ public class RoleController extends BaseController {
 	
 	//ApiConstant.ROLE_MODULE_INFO：获取指定角色的模块信息
 	//ApiConstant.ROLE_MODULE_INFO2：获取所有模块信息
-	@ApiOperation(value=SwaggerConstant.SWAGGER_ROLE_MODULE_INFO)
 	@GetMapping(value={ApiConstant.ROLE_MODULE_INFO,ApiConstant.ROLE_MODULE_INFO2})
+	@ControllerMethod(interfaceName="角色模块信息接口")
 	public BaseResponseResult roleModuleInfo(@PathVariable(name="roleId",required=false) String roleId){
 		List<ModuleInfoResponse> list = roleService.roleModuleInfo(roleId);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"role.roleModuleInfo.success",list);
 	}
 	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_ROLE_MODULE_ASSIGNMENT)
 	@PostMapping(ApiConstant.ROLE_MODULE_ASSIGNMENT)
+	@ControllerMethod(interfaceName="角色模块分配接口")
 	public BaseResponseResult roleModuleAssignment(@RequestBody List<String> list,@PathVariable(name="roleId",required=true) String roleId){
 		roleService.roleModuleAssignment(roleId,list);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"role.roleModuleAssignment.success",null);

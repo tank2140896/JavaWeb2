@@ -10,12 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.javaweb.annotation.token.TokenDataAnnotation;
+import com.javaweb.annotation.url.ControllerMethod;
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.base.BaseSystemMemory;
 import com.javaweb.constant.ApiConstant;
 import com.javaweb.constant.CommonConstant;
-import com.javaweb.constant.SwaggerConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.util.core.DateUtil;
@@ -26,16 +26,13 @@ import com.javaweb.web.eo.dictionary.DictionaryListRequest;
 import com.javaweb.web.po.Dictionary;
 import com.javaweb.web.po.User;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-
-@Api(tags=SwaggerConstant.SWAGGER_DICTIONARY_CONTROLLER_TAGS)
+//登录且需要权限才可访问的字典管理模块
 @RestController
 @RequestMapping(ApiConstant.WEB_DICTIONARY_PREFIX)
 public class DictionaryController extends BaseController {
     
-	@ApiOperation(value=SwaggerConstant.SWAGGER_DICTIONARY_ADD)
 	@PostMapping(ApiConstant.DICTIONARY_ADD)
+	@ControllerMethod(interfaceName="新增字典接口")
 	public BaseResponseResult dictionaryAdd(@RequestBody Dictionary dictionary,@TokenDataAnnotation TokenData tokenData){
 		User currentUser = tokenData.getUser();
 		dictionary.setId(SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO));
@@ -48,15 +45,15 @@ public class DictionaryController extends BaseController {
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"dictionary.add.success",null);
 	}
 	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_DICTIONARY_LIST)
 	@PostMapping(ApiConstant.DICTIONARY_LIST)
+	@ControllerMethod(interfaceName="查询字典接口")
 	public BaseResponseResult dictionaryList(@RequestBody DictionaryListRequest dictionaryListRequest){
 		Page page = dictionaryService.dictionaryList(dictionaryListRequest);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"dictionary.list.success",page);
 	}
 	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_DICTIONARY_MODIFY)
 	@PutMapping(ApiConstant.DICTIONARY_MODIFY)
+	@ControllerMethod(interfaceName="修改字典接口")
 	public BaseResponseResult dictionaryModify(@RequestBody Dictionary dictionary,@TokenDataAnnotation TokenData tokenData){
 		User currentUser = tokenData.getUser();
 		dictionary.setUpdateDate(DateUtil.getDefaultDate());
@@ -66,16 +63,15 @@ public class DictionaryController extends BaseController {
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"dictionary.modify.success",null);
 	}
 	
-	@ApiOperation(value=SwaggerConstant.SWAGGER_DICTIONARY_DETAIL)
 	@GetMapping(ApiConstant.DICTIONARY_DETAIL)
+	@ControllerMethod(interfaceName="字典详情接口")
 	public BaseResponseResult dictionaryDetail(@PathVariable(name="dictionaryId",required=true) String dictionaryId){
 		Dictionary dictionary = dictionaryService.dictionaryDetail(dictionaryId);
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"dictionary.detail.success",dictionary);
 	}
 	
-    //支持批量删除，用逗号隔开
-	@ApiOperation(value=SwaggerConstant.SWAGGER_DICTIONARY_DELETE)
 	@DeleteMapping(ApiConstant.DICTIONARY_DELETE)
+	@ControllerMethod(interfaceName="删除字典接口（支持批量删除，用逗号隔开）")
 	public BaseResponseResult dictionaryDelete(@PathVariable(name="dictionaryId",required=true) String dictionaryId){
 		dictionaryService.dictionaryDelete(dictionaryId);
 		BaseSystemMemory.dictionaryList = dictionaryService.selectAll();
