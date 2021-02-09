@@ -41,6 +41,7 @@ import com.javaweb.db.mybatis.api.handle.HandleSelectAllCount;
 import com.javaweb.db.mybatis.api.handle.HandleSelectByPk;
 import com.javaweb.db.mybatis.api.handle.HandleSelectList;
 import com.javaweb.db.mybatis.api.handle.HandleSelectListCount;
+import com.javaweb.db.mybatis.api.handle.HandleSelectOne;
 import com.javaweb.db.mybatis.api.handle.HandleUpdate;
 import com.javaweb.db.query.QueryWapper;
 import com.javaweb.enums.DbTypeEnum;
@@ -67,6 +68,7 @@ public class MyBatisBaseDaoInterceptor implements Interceptor {
 		map.put("selectAll",new HandleSelectAll());
 		map.put("selectAllCount",new HandleSelectAllCount());
 		map.put("selectByPk",new HandleSelectByPk());
+		map.put("selectOne",new HandleSelectOne());
 		map.put("selectList",new HandleSelectList());
 		map.put("selectListCount",new HandleSelectListCount());
 	}

@@ -23,6 +23,7 @@ import com.javaweb.annotation.url.ControllerMethod;
 import com.javaweb.base.BaseService;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
+import com.javaweb.db.query.QueryWapper;
 import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.HttpUtil;
 import com.javaweb.util.core.SecretUtil;
@@ -225,7 +226,7 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 	
 	public List<ExcludeInfoResponse> getExcludeInfoResponseList(String userId){
 		//1、根据当前用户ID获得用户角色和策略
-		List<UserRole> userRoleList = userRoleDao.getUserRoleByUserId(userId);
+		List<UserRole> userRoleList = userRoleDao.selectList(new QueryWapper<UserRole>().eq(UserRole.userIdColumn,userId));
 		//2、根据当前用户ID获得data_permission_id
 		List<UserData> userDataList = userDataDao.selectAllByUserId(userId);
 		//3、根据当前用户角色ID获得data_permission_id

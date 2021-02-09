@@ -10,13 +10,10 @@ import com.javaweb.web.eo.role.ModuleInfoResponse;
 import com.javaweb.web.eo.user.RoleInfoResponse;
 import com.javaweb.web.eo.user.UserListRequest;
 import com.javaweb.web.eo.user.UserListResponse;
-import com.javaweb.web.eo.user.UserLoginRequest;
 import com.javaweb.web.po.User;
 
 @Mapper
 public interface UserDao extends DaoWapper<User> {
-	
-	public User userLogin(UserLoginRequest userLogin);
 	
 	public List<UserListResponse> userList(UserListRequest userListRequest);
 	

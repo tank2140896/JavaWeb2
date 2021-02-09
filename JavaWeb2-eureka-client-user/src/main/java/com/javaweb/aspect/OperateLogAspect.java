@@ -1,12 +1,14 @@
 package com.javaweb.aspect;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -76,11 +78,24 @@ public class OperateLogAspect {
 			operationLog.setUserId(tokenData.getUser().getUserId());
 			operationLog.setUrl(url);
 			operationLog.setRequestMethod(httpServletRequest.getMethod());
-			//一般安全性较高的网站会对请求参数加密，这种情况下记录请求参数意义也不大，另外记录请求参数会暴露用户数据，所以个人觉得没有必要太详细清楚的记录请求参数的数据
 			//获得请求参数（一般指controller方法里的所有参数）
-			operationLog.setRequestParameter(joinPoint.getArgs().toString()/*joinPoint.getSignature()*/);
+			String requestParameter = null;
+			Object obj[] = joinPoint.getArgs();
+			for(int i=0;i<obj.length;i++){
+				if(obj[i] instanceof BindingResult || obj[i] instanceof TokenData || obj[i] instanceof HttpServletRequest || obj[i] instanceof HttpServletResponse) {
+					continue;
+				}
+				try{
+					requestParameter = JSONObject.fromObject(obj[i]).toString();
+				}catch(Exception e){
+					//do nothing
+				}
+			}
+			operationLog.setRequestParameter(requestParameter/*joinPoint.getArgs().toString()*//*joinPoint.getSignature()*/);
 			operationLog.setRequestIpAddress(HttpUtil.getIpAddress(httpServletRequest));
 			operationLog.setRequestTime(DateUtil.getDefaultDate());
+			operationLog.setLoginWay(tokenData.getLoginWay());
+			operationLog.setClientType(tokenData.getClientType());
 			operationLogService.saveOperationLog(operationLog);//记录操作日志
 		}
 	}

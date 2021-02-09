@@ -9,10 +9,6 @@
 		update_date as updateDate,updater,del_flag as delFlag
 	</sql>
 	
-	<select id="userLogin" parameterType="com.javaweb.web.eo.user.UserLoginRequest" resultType="com.javaweb.web.po.User">
-		select <include refid="selectUser"></include> from sys_user where user_name = #{username} and password = #{password} and del_flag = 0 limit 1
-	</select>
-	
 	<select id="userList" parameterType="com.javaweb.web.eo.user.UserListRequest" resultType="com.javaweb.web.eo.user.UserListResponse">
 		select u.user_id as userId,u.user_name as userName,u.person_name as personName,u.status,u.create_date as createDate,
 		(select GROUP_CONCAT(r.role_name) from sys_role r where r.role_id in(select ur.role_id from sys_user_role ur where u.user_id = ur.user_id)) as roleName 

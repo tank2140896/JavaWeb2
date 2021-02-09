@@ -31,6 +31,9 @@ public interface DaoWapper<T> {
 	
 	@Select(CommonConstant.EMPTY_VALUE)
 	public T selectByPk(Object id);//根据主键查询
+	
+	@Select(CommonConstant.EMPTY_VALUE)
+	public T selectOne(QueryWapper<T> queryWapper);//条件查询
 
 	@Select(CommonConstant.EMPTY_VALUE)
 	public List<T> selectList(QueryWapper<T> queryWapper);//条件查询（支持分页）

@@ -175,6 +175,10 @@ public class MySqlForSqlString implements SqlString {
 		}
 		return stringBuilder.toString();
 	}
+	
+	public String getSelectOneStringSql(SqlBuildInfo sqlBuildInfo) {
+		return this.getSelectListStringSql(sqlBuildInfo) + "limit 1";
+	}
 
 	public String getSelectListStringSql(SqlBuildInfo sqlBuildInfo) {
 		StringBuilder stringBuilder = new StringBuilder();

@@ -17,6 +17,7 @@ import com.javaweb.base.BaseService;
 import com.javaweb.base.BaseSystemMemory;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
+import com.javaweb.db.query.QueryWapper;
 import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.FileUtil;
 import com.javaweb.util.core.SecretUtil;
@@ -38,7 +39,11 @@ import com.javaweb.web.service.UserService;
 public class UserServiceImpl extends BaseService implements UserService {
 	
 	public User userLogin(UserLoginRequest userLogin) {
-		return userDao.userLogin(userLogin);
+		QueryWapper<User> queryWapper = new QueryWapper<>();
+		queryWapper.eq(User.userNameColumn,userLogin.getUsername());
+		queryWapper.eq(User.passwordColumn,userLogin.getPassword());
+		queryWapper.eq(User.delFlagColumn,0);
+		return userDao.selectOne(queryWapper);
 	}
 
 	public Page userList(UserListRequest userListRequest){

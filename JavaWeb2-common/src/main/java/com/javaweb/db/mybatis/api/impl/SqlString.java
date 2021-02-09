@@ -16,6 +16,8 @@ public interface SqlString {
 	
 	public String getSelectByPkStringSql(SqlBuildInfo sqlBuildInfo);
 
+	public String getSelectOneStringSql(SqlBuildInfo sqlBuildInfo);
+
 	public String getSelectListStringSql(SqlBuildInfo sqlBuildInfo);
 	
 	public String getSelectListCountStringSql(SqlBuildInfo sqlBuildInfo);

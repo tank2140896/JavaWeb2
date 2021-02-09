@@ -13,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.javaweb.base.BaseService;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
+import com.javaweb.db.query.QueryWapper;
 import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.SecretUtil;
 import com.javaweb.util.entity.Page;
@@ -33,7 +34,7 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
 			return moduleDao.selectAll();
 		}else{//非管理员
 			//1.获得user_role的所有对应关系
-			List<UserRole> userRoleList = userRoleDao.getUserRoleByUserId(userId);
+			List<UserRole> userRoleList = userRoleDao.selectList(new QueryWapper<UserRole>().eq(UserRole.userIdColumn,userId));
 			//2.获得所有模块ID
 			List<String> allList = new ArrayList<>(); 
 			for(int i=0;i<userRoleList.size();i++){
