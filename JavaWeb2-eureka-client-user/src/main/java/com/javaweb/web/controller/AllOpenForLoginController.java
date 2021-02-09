@@ -55,7 +55,16 @@ public class AllOpenForLoginController extends BaseController {
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"validated.user.password.pattern");
 		}
 		userLoginRequest.setPassword(password);
-		//Part3：获取用户信息
+		//Part3：参数业务逻辑校验
+		/**
+		Map<String,Object> map = new HashMap<>();
+		map.put("user_name","username_1");
+		BaseServiceValidateResult baseServiceValidateResult = baseValidateService.isColumnsRepeat(map,userDao,"这里写I18N里的key值或自定义的消息或传null");
+		if(!baseServiceValidateResult.isValidatePass()){
+			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,baseServiceValidateResult.getMessage());
+		}
+		*/
+		//Part4：获取用户信息
 		boolean isAdmin = systemAdminCheck(userLoginRequest);
 		User user = getUser(userLoginRequest,isAdmin);
 		if(user==null){
@@ -65,7 +74,7 @@ public class AllOpenForLoginController extends BaseController {
         	return getBaseResponseResult(HttpCodeEnum.LOGIN_FAIL,"login.user.userLocked");
         }
         user.setPassword("********");//用户密码不对外提供
-        //Part4：tokenData设置
+        //Part5：tokenData设置
         TokenData tokenData = getToken(isAdmin,user,userLoginRequest);
 		setDefaultDataToRedis(user.getUserId()+CommonConstant.COMMA+userLoginRequest.getClientType()+CommonConstant.COMMA+userLoginRequest.getLoginWay(),tokenData);//key值组成：userId,clientType,loginWay
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.loginSuccess",tokenData.getToken());//这里我个人认为redis中包含权限信息，但是前端不需要获得太多权限信息，权限信息可以通过其它接口获得
