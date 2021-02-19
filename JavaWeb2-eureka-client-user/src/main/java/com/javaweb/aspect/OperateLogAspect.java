@@ -59,7 +59,7 @@ public class OperateLogAspect {
 	
 	private Boolean getOperatelogOpenFlag(){
 		Boolean open = false;
-		String value = BaseSystemMemory.getDictionaryValueByKey(SystemConstant.DICTIONARY_KEY_OPERATELOG_ASPECT_OPEN);
+		String value = BaseSystemMemory.getDictionaryValueByKey("operatelog.aspect.open","false");
 		try{
 			if(value!=null){
 				open = Boolean.parseBoolean(value);

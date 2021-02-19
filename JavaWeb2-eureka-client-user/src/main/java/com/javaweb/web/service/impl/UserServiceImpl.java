@@ -15,13 +15,13 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.javaweb.base.BaseService;
 import com.javaweb.base.BaseSystemMemory;
+import com.javaweb.base.BaseTool;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.db.query.QueryWapper;
 import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.FileUtil;
 import com.javaweb.util.core.SecretUtil;
-import com.javaweb.util.core.SystemUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.role.ModuleInfoResponse;
@@ -148,7 +148,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 
 	public void userInitPassword(String userId,TokenData tokenData) {
 		String initPassword = SystemConstant.SYSTEM_DEFAULT_USER_INIT_PASSWORD;
-		String value = BaseSystemMemory.getDictionaryValueByKey(SystemConstant.DICTIONARY_KEY_INIT_USER_PASSWORD);
+		String value = BaseSystemMemory.getDictionaryValueByKey("init.user.password","abcd1234");
 		if(value!=null){
 			initPassword = value;
 			if(initPassword.length()<6){
@@ -174,7 +174,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 		String uploadMultipartFileName = multipartFile.getOriginalFilename();//得到上传文件的文件名称
 		String uploadFileTypes[] = uploadMultipartFileName.split("\\.");
 		String uploadFileName = userId+CommonConstant.DOT+uploadFileTypes[uploadFileTypes.length-1];
-		String rootPath = getRootPath();
+		String rootPath = BaseTool.getFileRootPath();
 		FileUtil.makeFolder(new File(rootPath));
 		boolean writeSuccess = true;
 		try{
@@ -195,29 +195,6 @@ public class UserServiceImpl extends BaseService implements UserService {
 		}
 	}
 	
-	private String getRootPath(){
-		String rootPath = CommonConstant.EMPTY_VALUE;
-		if(SystemUtil.isLinux()){//linux路径
-			String value = BaseSystemMemory.getDictionaryValueByKey(SystemConstant.DICTIONARY_KEY_USER_PORTRAIT_LINUX_PATH);
-			if(value!=null){
-				rootPath = value;
-				if(!CommonConstant.EMPTY_VALUE.equals(rootPath)){
-					return rootPath;
-				}
-			}
-			return rootPath = SystemConstant.SYSTEM_DEFAULT_USER_PORTRAIT_LINUX_PATH;
-		}else{//windows路径
-			String value = BaseSystemMemory.getDictionaryValueByKey(SystemConstant.DICTIONARY_KEY_USER_PORTRAIT_WINDOWS_PATH);
-			if(value!=null){
-				rootPath = value;
-				if(!CommonConstant.EMPTY_VALUE.equals(rootPath)){
-					return rootPath;
-				}
-			}
-			return rootPath = SystemConstant.SYSTEM_DEFAULT_USER_PORTRAIT_WINDOWS_PATH;
-		}
-	}
-
 	public void userPortrait(String userId,HttpServletResponse httpServletResponse) {
 		if(userId!=null){
 			User user = userDao.selectByPk(userId);
