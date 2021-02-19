@@ -34,7 +34,7 @@ JavaWeb2-angular（cnpm install->cnpm start）
 11、tomcat容器顺序：Filter->Servlet->Inteceptor->Aspect->Controller             
 本项目中形成了：InterfaceLimitFilter（接口限流-所有编写有效的接口）->WebPermissionInterceptor（权限控制-所有权限受控的接口）->OperateLogAspect（日志切面-所有需要记录日志的接口）     
 # 五、开发计划                                                                                                         
-1、等待SpringBoot2.3.9版本并升级，然后将WebMvcConfig里的@Deprecated方法删除                       
+1、等待SpringBoot2.3.10+版本并升级，然后将WebMvcConfig里的@Deprecated方法删除                       
 2、持续优化迭代各已有功能（首要目标是重写算法功能）                                                              
 3、hadoop、spark、storm等大数据技术                                                                
 4、容器技术                                     
