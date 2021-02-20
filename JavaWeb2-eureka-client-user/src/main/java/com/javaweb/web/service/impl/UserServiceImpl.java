@@ -147,14 +147,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 	}
 
 	public void userInitPassword(String userId,TokenData tokenData) {
-		String initPassword = SystemConstant.SYSTEM_DEFAULT_USER_INIT_PASSWORD;
-		String value = BaseSystemMemory.getDictionaryValueByKey("init.user.password","abcd1234");
-		if(value!=null){
-			initPassword = value;
-			if(initPassword.length()<6){
-				initPassword = SystemConstant.SYSTEM_DEFAULT_USER_INIT_PASSWORD;
-			}
-		}
+		String initPassword = BaseSystemMemory.getDictionaryValueByKey("init.user.password","abcd1234");
 		try{
 			initPassword = SecretUtil.getSecret(initPassword,"SHA-256");
 		}catch(Exception e){ 
@@ -163,7 +156,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 		User user = new User();
 		user.setUserId(userId);
 		user.setPassword(initPassword);
-		user.setStatus(null);
+		user.setStatus(null);//只是初始化密码，并不改变原来账号的状态
 		user.setUpdater(tokenData.getUser().getUserId());
 		user.setUpdateDate(DateUtil.getDefaultDate());
 		userDao.update(user);
