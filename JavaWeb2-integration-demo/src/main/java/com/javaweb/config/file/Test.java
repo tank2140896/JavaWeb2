@@ -23,6 +23,7 @@ public class Test {
 		for(int i=1;i<=2;i++){
 			multipartEntityBuilder.addBinaryBody("file",new File("E:\\\\"+i+".jpg"));
 			//multipartEntityBuilder.addBinaryBody("file",files[i].getInputStream(),ContentType.MULTIPART_FORM_DATA,files[i].getOriginalFilename());
+			//multipartEntityBuilder.addBinaryBody("file",MultipartFileToFile.multipartFileToFile(new MockMultipartFile("文件名称",is)));
 			/**
 			URL url = new URL("http://www.url.com/1.jpg");
 	        	InputStream is = url.openStream();
