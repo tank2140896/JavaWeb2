@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import com.javaweb.annotation.sql.Column;
 import com.javaweb.annotation.sql.Table;
@@ -20,7 +21,7 @@ public class User extends BaseEntity implements Serializable {
 	private static final long serialVersionUID = -696227785545506331L;
 	
 	@NotEmpty(groups={update.class},message="validated.user.userId.notEmpty")
-	@Column(name="user_id",pk=true,columnDesc="用户ID"/*,idAutoCreate=true*/)
+	@Column(name="user_id",pk=true,idAutoCreate=true,columnDesc="用户ID")
 	private String userId;//用户ID
 
 	@NotEmpty(groups={add.class,update.class},message="validated.user.userName.notNull")
@@ -33,15 +34,19 @@ public class User extends BaseEntity implements Serializable {
 	@Column(name="password",columnDesc="用户密码")
 	private String password;//用户密码
 	
+	@Size(groups={add.class,update.class},max=20,message="validated.user.personName.maxLength.limit")
 	@Column(name="person_name",columnDesc="用户姓名")
 	private String personName;//用户姓名
 	
+	@Size(groups={add.class,update.class},max=20,message="validated.user.idCard.maxLength.limit")
 	@Column(name="id_card",columnDesc="身份证号码")
 	private String idCard;//身份证号码
 
+	@Size(groups={add.class,update.class},max=50,message="validated.user.email.maxLength.limit")
 	@Column(name="email",columnDesc="电子邮箱")
 	private String email;//电子邮箱
 	
+	@Size(groups={add.class,update.class},max=20,message="validated.user.phone.maxLength.limit")
 	@Column(name="phone",columnDesc="手机号码")
 	private String phone;//手机号码
 	
@@ -57,6 +62,7 @@ public class User extends BaseEntity implements Serializable {
 	@Column(name="level",columnDesc="第几级（层级数0为最高，即根节点）")
 	private Integer level;//第几级（层级数0为最高，即根节点）
 	
+	@Size(groups={add.class,update.class},max=100,message="validated.user.remark.maxLength.limit")
 	@Column(name="remark",columnDesc="备注")
 	private String remark;//备注
 	

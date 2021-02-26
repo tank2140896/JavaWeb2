@@ -54,7 +54,11 @@ public class BaseTool extends BaseInject {
 	}
 
 	public String getMessage(String messageKey){
-		return messageSource.getMessage(messageKey,null,LocaleContextHolder.getLocale());
+		try{
+			return messageSource.getMessage(messageKey,null,LocaleContextHolder.getLocale());
+		}catch(Exception e){
+			return messageKey;
+		}
 	}
 	
 	public String getValidateMessage(BindingResult bindingResult){

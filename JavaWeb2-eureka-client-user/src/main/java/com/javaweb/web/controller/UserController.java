@@ -22,9 +22,11 @@ import com.javaweb.annotation.token.TokenDataAnnotation;
 import com.javaweb.annotation.url.ControllerMethod;
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
+import com.javaweb.base.BaseServiceValidateResult;
 import com.javaweb.base.BaseValidatedGroup;
 import com.javaweb.constant.ApiConstant;
 import com.javaweb.constant.SystemConstant;
+import com.javaweb.db.query.QueryWapper;
 import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.SecretUtil;
@@ -35,6 +37,7 @@ import com.javaweb.web.eo.role.RoleIdAndStrategyRequest;
 import com.javaweb.web.eo.user.RoleInfoResponse;
 import com.javaweb.web.eo.user.UserListRequest;
 import com.javaweb.web.eo.user.UserListResponse;
+import com.javaweb.web.eo.validate.ColumnsRepeatRequest;
 import com.javaweb.web.po.User;
 
 //登录且需要权限才可访问的用户管理模块
@@ -47,17 +50,20 @@ public class UserController extends BaseController {
 	public BaseResponseResult userAdd(@RequestBody @Validated({BaseValidatedGroup.add.class}) User user,BindingResult bindingResult,@TokenDataAnnotation TokenData tokenData){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
-		}else{
-			User currentUser = tokenData.getUser();
-			user.setUserId(SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO));
-			try{user.setPassword(SecretUtil.getSecret(user.getPassword(),"SHA-256"));}catch(Exception e){}
-			user.setParentId(currentUser.getUserId());
-			user.setLevel(currentUser.getLevel()+1);//数字越大用户级别越低，这里默认新创建的用户都比创建它的用户低一级（数字是加1）
-			user.setCreateDate(DateUtil.getDefaultDate());
-			user.setCreator(currentUser.getUserId());
-			userService.userAdd(user);
-			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.add.success",user.getUserId());
 		}
+		ColumnsRepeatRequest<User> userColumnsRepeatRequest = new ColumnsRepeatRequest<User>(new QueryWapper<User>().eq(User.userNameColumn,user.getUserName()),"validated.user.userName.repeat");
+		BaseServiceValidateResult baseServiceValidateResult = baseValidateService.isColumnsValueRepeat(userColumnsRepeatRequest,userDao);
+		if(!baseServiceValidateResult.isValidatePass()){
+			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,baseServiceValidateResult.getMessage());
+		}
+		User currentUser = tokenData.getUser();
+		try{user.setPassword(SecretUtil.getSecret(user.getPassword(),"SHA-256"));}catch(Exception e){}
+		user.setParentId(currentUser.getUserId());
+		user.setLevel(currentUser.getLevel()+1);//数字越大用户级别越低，这里默认新创建的用户都比创建它的用户低一级（数字是加1）
+		user.setCreateDate(DateUtil.getDefaultDate());
+		user.setCreator(currentUser.getUserId());
+		userService.userAdd(user);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.add.success",user.getUserId());
 	}
 	
 	@PostMapping(ApiConstant.USER_LIST)
@@ -72,14 +78,24 @@ public class UserController extends BaseController {
 	public BaseResponseResult userModify(@RequestBody @Validated({BaseValidatedGroup.update.class}) User user,BindingResult bindingResult,@TokenDataAnnotation TokenData tokenData){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
-		}else{
-			User currentUser = tokenData.getUser();
-			user.setPassword(null);//密码不在此处修改
-			user.setUpdateDate(DateUtil.getDefaultDate());
-			user.setUpdater(currentUser.getUserId());
-			userService.userModify(user);
-			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.modify.success",user.getUserId());
 		}
+		User originUser = userService.userDetail(user.getUserId());
+		if(originUser==null){
+			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"validated.user.modify.notExist");
+		}
+		if(!originUser.getUserName().equals(user.getUserName())){
+			ColumnsRepeatRequest<User> userColumnsRepeatRequest = new ColumnsRepeatRequest<User>(new QueryWapper<User>().eq(User.userNameColumn,user.getUserName()),"validated.user.userName.repeat");
+			BaseServiceValidateResult baseServiceValidateResult = baseValidateService.isColumnsValueRepeat(userColumnsRepeatRequest,userDao);
+			if(!baseServiceValidateResult.isValidatePass()){
+				return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,baseServiceValidateResult.getMessage());
+			}
+		}
+		User currentUser = tokenData.getUser();
+		user.setPassword(null);//密码不在此处修改
+		user.setUpdateDate(DateUtil.getDefaultDate());
+		user.setUpdater(currentUser.getUserId());
+		userService.userModify(user);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.modify.success",user.getUserId());
 	}
 	
 	@GetMapping(ApiConstant.USER_DETAIL)
