@@ -12,7 +12,11 @@
     <input type="text" class="form-control" [(ngModel)]="userAddRequest.personName">
   </div>
   <div class="form-group">
-    <label>邮箱</label>
+    <label>身份证号码</label>
+    <input type="text" class="form-control" [(ngModel)]="userAddRequest.idCard">
+  </div>
+  <div class="form-group">
+    <label>电子邮箱</label>
     <input type="text" class="form-control" [(ngModel)]="userAddRequest.email">
   </div>
   <div class="form-group">
@@ -20,7 +24,7 @@
     <input type="text" class="form-control" [(ngModel)]="userAddRequest.phone">
   </div>
   <div class="form-group">
-    <label>用户状态</label>
+    <label>账号状态</label>
     <select (change)="selectChangeModule($event)" class="form-control">
       <option *ngFor="let eachData of userStateFromDictionaryData;" [selected]="eachData.valueCode=='0'" value="{{eachData.valueCode}}">{{eachData.means}}</option>
     </select>
