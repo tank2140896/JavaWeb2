@@ -6,6 +6,8 @@ export class UserAddRequest {
 
   personName:string;//用户姓名
 
+  idCard:string;//身份证号码
+
   email:string;//电子邮箱
 
   phone:string;//手机号码
