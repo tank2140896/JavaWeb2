@@ -10,8 +10,8 @@ import com.javaweb.annotation.token.TokenDataAnnotation;
 import com.javaweb.annotation.url.ControllerMethod;
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
+import com.javaweb.base.BaseTool;
 import com.javaweb.constant.ApiConstant;
-import com.javaweb.constant.CommonConstant;
 import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.po.Dictionary;
@@ -24,7 +24,7 @@ public class LoginAccessController extends BaseController {
 	@GetMapping(ApiConstant.LOGIN_OUT)
 	@ControllerMethod(interfaceName="用户登出接口")
 	public BaseResponseResult logout(@TokenDataAnnotation TokenData tokenData){
-		if(deleteFromRedisByKey(tokenData.getUser().getUserId()+CommonConstant.COMMA+tokenData.getClientType()+CommonConstant.COMMA+tokenData.getLoginWay())) {
+		if(deleteFromRedisByKey(BaseTool.getRedisTokenKey(tokenData))) {
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.logoutSuccess");
 		}else {
 			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.logoutFail");
