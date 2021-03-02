@@ -18,6 +18,7 @@ import com.javaweb.base.BaseSystemMemory;
 import com.javaweb.base.BaseTool;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
+import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.HttpUtil;
 import com.javaweb.util.core.SecretUtil;
@@ -112,7 +113,7 @@ public class OperateLogAspect {
 				BaseResponseResult baseResponseResult = new ObjectMapper().readValue(JSONObject.fromObject(object).toString(),BaseResponseResult.class);
 				Object code = baseResponseResult.getCode();
 				code = (code==null?CommonConstant.EMPTY_VALUE:code);
-				if("200".equals(code.toString())){
+				if(String.valueOf(HttpCodeEnum.SUCCESS.getCode()).equals(code.toString())){//200
 					match = true;
 				}
 			}

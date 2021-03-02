@@ -1,6 +1,8 @@
 package com.javaweb.exception;
 
-public class TokenExpiredException extends Exception {
+import com.javaweb.base.BaseException;
+
+public class TokenExpiredException extends BaseException {
 	
 	private static final long serialVersionUID = -5089043915083888174L;
 	
