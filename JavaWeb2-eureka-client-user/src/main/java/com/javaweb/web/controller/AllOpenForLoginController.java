@@ -76,7 +76,7 @@ public class AllOpenForLoginController extends BaseController {
 	/* -------------------------------------------------- 分界线 -------------------------------------------------- */
 
 	//解码密码
-    public String decodePassword(String password,String time){
+	private String decodePassword(String password,String time){
 		String out = CommonConstant.EMPTY_VALUE;
     	try{
 			char[] charArray = password.toCharArray();
@@ -144,8 +144,7 @@ public class AllOpenForLoginController extends BaseController {
 		menuListForTree = ObjectOperateUtil.copyListProperties(modules,SidebarInfoResponse.class);//主要用到：moduleName、pageUrl、icon
 		menuListForTree = setTreeList(menuListForTree,null);//setTreeList(menuListForTree);
 		tokenData.setMenuListForTree(menuListForTree);
-		if(!adminFlag){
-			//数据权限处理
+		if(!adminFlag){//非管理员时的数据权限处理
 			List<ExcludeInfoResponse> excludeInfoResponseList = interfacesService.getExcludeInfoResponseList(user.getUserId());
 			tokenData.setExcludeInfoResponseList(excludeInfoResponseList);
 		}
@@ -168,7 +167,7 @@ public class AllOpenForLoginController extends BaseController {
 	}
 	
 	//获得PAGE的URL列表
-	public List<String> getPageUrlList(List<Module> moduleList){
+	private List<String> getPageUrlList(List<Module> moduleList){
 		List<String> pageUrlList = new ArrayList<>();
 		for(int i=0;i<moduleList.size();i++){
 			String pageUrl = moduleList.get(i).getPageUrl();
@@ -181,7 +180,7 @@ public class AllOpenForLoginController extends BaseController {
 	}
 	
 	//获得API的URL列表
-	public List<String> getApiUrlList(List<Module> moduleList){
+	private List<String> getApiUrlList(List<Module> moduleList){
 		List<String> apiUrlList = new ArrayList<>();
 		for(int i=0;i<moduleList.size();i++){
 			String apiUrl = moduleList.get(i).getApiUrl();
@@ -197,7 +196,7 @@ public class AllOpenForLoginController extends BaseController {
 	}
 	
 	//RSA秘钥设置
-	public void setRsaKey(TokenData tokenData){
+	private void setRsaKey(TokenData tokenData){
 		RsaKey rsaKey = RsaUtil.getRsaKey();
 		tokenData.setRsaPublicKeyOfBackend(rsaKey.getRsaStringPublicKey());
 		tokenData.setRsaPrivateKeyOfBackend(rsaKey.getRsaStringPrivateKey());
@@ -207,12 +206,12 @@ public class AllOpenForLoginController extends BaseController {
 	}
 	
 	//封装成树形结构集合（递归版）
-	public List<SidebarInfoResponse> setTreeList(List<SidebarInfoResponse> originList,SidebarInfoResponse module){
+	private List<SidebarInfoResponse> setTreeList(List<SidebarInfoResponse> originList,SidebarInfoResponse module){
 		List<SidebarInfoResponse> moduleList = new ArrayList<>();
 		for (int i = 0; i < originList.size(); i++) {
 			SidebarInfoResponse currentModule = originList.get(i);
 			//这里树形结构处理时需要parentId只能为null，不能为空或其它值（这个在模块新增和修改时已经控制了）
-			//Long类型，封装类型一定要用equals或.longValue()比较！！！，形如：module.getModuleId().longValue()==currentModule.getParentId().longValue()
+			//Long类型，封装类型一定要用equals或longValue()比较！！！，形如：module.getModuleId().longValue()==currentModule.getParentId().longValue()
 			if((module!=null&&module.getModuleId().equals(currentModule.getParentId()))||(module==null&&currentModule.getParentId()==null)){
 				currentModule.setList(setTreeList(originList, currentModule));
 				moduleList.add(currentModule);
@@ -221,8 +220,8 @@ public class AllOpenForLoginController extends BaseController {
 		return moduleList;
 	}
 	/**
-	//封装成树形结构集合（非递归版）
-    public List<SidebarInfoResponse> setTreeList(List<SidebarInfoResponse> list){
+	//封装成树形结构集合（非递归版）【代码没问题，但是写的不够好，复杂了】
+    private List<SidebarInfoResponse> setTreeList(List<SidebarInfoResponse> list){
         List<List<SidebarInfoResponse>> deepList = getEachDeep(list);
         for(int i=deepList.size()-1;i>0;i--){
             List<SidebarInfoResponse> childs = deepList.get(i);
@@ -262,7 +261,7 @@ public class AllOpenForLoginController extends BaseController {
         return arrayList;
     }
     
-    //归类第一层（deep=0）
+    //归类第一层（deep==0）
     private void classifyFirstLevel(List<SidebarInfoResponse> list,List<List<SidebarInfoResponse>> arrayList,int deep){
         List<SidebarInfoResponse> first = new ArrayList<>();
         for(int i=0;i<list.size();){
