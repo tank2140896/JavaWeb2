@@ -52,7 +52,7 @@ JavaWeb2-angular（cnpm install->cnpm start）
 4、国际化                 
 5、接口入参校验                 
 6、reids                 
-7、mybatis共通dao(位于项目JavaWeb2-common)                 
+7、mybatis共通dao（位于项目JavaWeb2-common）                 
 8、kafka【kafka生产者（producer）一般可以使用kafkaTemplate；kafka消费者（consumer）一般可以使用@KafkaListener；实际项目中生产者和消费者一般都是分开的】                 
 9、Netty客户端和服务端示例（IO模型、数据协议、线程模型）                 
 10、websocket            
