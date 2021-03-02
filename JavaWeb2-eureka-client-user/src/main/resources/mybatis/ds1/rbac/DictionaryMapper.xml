@@ -4,8 +4,8 @@
 <mapper namespace="com.javaweb.web.dao.ds1.DictionaryDao">
 
 	<sql id="selectDictionary" >
-		id,parent_id as parentId,data_type as dataType,key_code as keyCode,value_code as valueCode,category,sort,means,remark,
-		create_date as createDate,creator,update_date as updateDate,updater,del_flag as delFlag
+		id,parent_id as parentId,fcode,level,data_type as dataType,key_code as keyCode,value_code as valueCode,category,sort,means,
+		universally,system_id as systemId,remark,create_date as createDate,creator,update_date as updateDate,updater,del_flag as delFlag
 	</sql>
 	
 	<select id="getDictionary" parameterType="com.javaweb.web.po.Dictionary" resultType="com.javaweb.web.po.Dictionary">
@@ -19,7 +19,7 @@
 		<if test="sort != null and sort != ''">and sort = #{sort}</if>
 		<if test="means != null and means != ''">and means = #{means}</if>
 		<if test="remark != null and remark != ''">and remark = #{remark}</if>
-		order by sort asc
+		order by category desc,data_type asc,value_code asc,sort asc
 	</select>
 	
 	<select id="dictionaryList" parameterType="com.javaweb.web.eo.dictionary.DictionaryListRequest" resultType="com.javaweb.web.po.Dictionary">
@@ -27,7 +27,7 @@
 		<if test="dataType != null and dataType != ''">and data_type like CONCAT('%',#{dataType},'%')</if>
 		<if test="keyCode != null and keyCode != ''">and key_code like CONCAT('%',#{keyCode},'%')</if>
 		<if test="means != null and means != ''">and means like CONCAT('%',#{means},'%')</if>
-		order by category desc,data_type asc,value_code asc
+		order by category desc,data_type asc,value_code asc,sort asc
 		limit ${(currentPage-1)*pageSize},${pageSize}
 	</select>
 	
