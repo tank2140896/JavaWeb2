@@ -57,7 +57,7 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
 				}else if(strategy==5){
 					list = list2;
 				}else{
-					list = Stream.concat(list1.stream(),list2.stream()).distinct().collect(Collectors.toList());
+					list = Stream.concat(list1.stream(),list2.stream()).distinct().collect(Collectors.toList());//自定义暂做并集处理
 				}
 				allList = Stream.concat(allList.stream(),list.stream()).distinct().collect(Collectors.toList());
 			}
