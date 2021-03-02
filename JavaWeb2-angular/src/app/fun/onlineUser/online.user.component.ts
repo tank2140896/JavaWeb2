@@ -72,7 +72,7 @@ export class OnlineUserComponent implements OnInit {
 
   //用户下线
   public onlineUserOffline(eachData):void {
-    this.httpService.getJsonData(ApiConstant.getPath(ApiConstant.SYS_ONLINE_USER_OFFLINE+'/'+eachData.userId+',1',true),this.sessionService.getHeadToken()).subscribe(
+    this.httpService.getJsonData(ApiConstant.getPath(ApiConstant.SYS_ONLINE_USER_OFFLINE+'/'+eachData.userId+',1,1',true),this.sessionService.getHeadToken()).subscribe(
       {
         next:(result:any) => {
           //console.log(result);
