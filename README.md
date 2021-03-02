@@ -22,7 +22,7 @@ JavaWeb2-angular（cnpm install->cnpm start）
 注：与Angular整合看效果的话只要导入JavaWeb2-eureka-client-user/src/main/resources/sql/init.sql，然后修改JavaWeb2-eureka-client-user的pom.xml注释掉spring-cloud-starter-netflix-eureka-client和spring-cloud-starter-openfeign，然后加入spring-boot-starter-aop，待编译完成好后，注释掉报错代码即可，页面访问：localhost:4200，账号和密码都是admin123456     
 # 四、使用前重要说明                                                                     
 1、界面效果截图（https://pan.baidu.com/s/1u9sA2dUCPRZGtL2dvsvVgw）                
-2、由于水平有限，本项目会存在很多不足和BUG，尤其是前端angular。同时本项目更新会比较频繁、改动会比较大，请见谅（更新代码时也请同步更新JavaWeb2-eureka-client-user/src/main/resources/sql/init.sql并重新cnpm install）         
+2、由于水平有限，本项目从2017年2月12日创建至今一直在迭代，然而依旧有很多不足和BUG，尤其是前端angular（正在考虑是否替换，所以目前仅做页面粗糙的展示下），所以本项目更新会比较频繁、改动会比较大，请见谅（更新代码时也请同步更新JavaWeb2-eureka-client-user/src/main/resources/sql/init.sql并重新cnpm install）         
 3、本项目由于是前后端分离，因此没有使用session，而是使用redis替代session，同时也没有使用spring-session-redis，而是自己代码处理的                          
 4、后端几乎所有的增删改查操作都是物理操作（忽略数据库表中的del_flag字段），如果想做逻辑操作（使用数据库表中的del_flag字段）需要重写相关SQL语句                        
 5、本项目所有接口都可以用JUnit或Postman验证接口，JUnit代码也有部分可做参考                                       
