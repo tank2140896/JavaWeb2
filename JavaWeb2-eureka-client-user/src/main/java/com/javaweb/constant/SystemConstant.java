@@ -2,6 +2,7 @@ package com.javaweb.constant;
 
 import java.util.regex.Pattern;
 
+import com.javaweb.util.core.SecretUtil;
 import com.javaweb.web.po.User;
 
 public class SystemConstant {
@@ -41,6 +42,8 @@ public class SystemConstant {
 	public static final String URL_LOGIN_WEB_PERMISSION = "/web/loginAccess";
 	
 	public static final Pattern LOGGERED_URL = Pattern.compile(".*/web/.*(add|modify|delete|Assignment|initPassword).*");
+	
+	public static final String TOKEN_AES_KEY = SecretUtil.defaultGenRandomPass(24);
 	
 	public static final String ADMIN = "admin123456";
 	
