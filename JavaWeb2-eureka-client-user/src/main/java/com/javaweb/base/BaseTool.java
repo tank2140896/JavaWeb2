@@ -137,6 +137,10 @@ public class BaseTool extends BaseInject {
 		return tokenData;
 	}
 	
+	public static String getRedisTokenKey(TokenData tokenData){
+		return tokenData.getUser().getUserId()+CommonConstant.COMMA+tokenData.getClientType()+CommonConstant.COMMA+tokenData.getLoginWay();//userId,clientType,loginWay
+	}
+	
 	@SuppressWarnings("unchecked")
 	public static RedisTemplate<String,Object> getRedisTemplate(){
 		if(staticRedisTemplate==null){
