@@ -25,6 +25,7 @@ import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.context.ApplicationContextHelper;
 import com.javaweb.enums.HttpCodeEnum;
+import com.javaweb.util.core.AesDesUtil;
 import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.FileUtil;
 import com.javaweb.util.core.SecretUtil;
@@ -125,7 +126,8 @@ public class BaseTool extends BaseInject {
 		try{
 			if(token!=null){
 				token = SecretUtil.base64DecoderString(token,"UTF-8");
-		    	String tokens[] = token.split(CommonConstant.COMMA);//token由四部分组成：token,userId,clientType,loginWay
+				token = AesDesUtil.decryptAes(token,SystemConstant.TOKEN_AES_KEY);
+		    	String tokens[] = token.split(CommonConstant.COMMA);
 		    	token = tokens[1]+CommonConstant.COMMA+tokens[2]+CommonConstant.COMMA+tokens[3];//userId,clientType,loginWay
 		    	tokenData = (TokenData)(getRedisTemplate().opsForValue().get(token));
 			}
