@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.javaweb.annotation.url.ControllerMethod;
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
+import com.javaweb.base.BaseTool;
 import com.javaweb.constant.ApiConstant;
 import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
@@ -69,7 +70,7 @@ public class AllOpenForLoginController extends BaseController {
         //Part5：tokenData设置
         TokenData tokenData = getToken(isAdmin,user,userLoginRequest);
         /** 当前登录方式下相同账号密码的后者会把前者踢下去 */
-		setDefaultDataToRedis(user.getUserId()+CommonConstant.COMMA+userLoginRequest.getClientType()+CommonConstant.COMMA+userLoginRequest.getLoginWay(),tokenData);//key值组成：userId,clientType,loginWay
+		setDefaultDataToRedis(BaseTool.getRedisTokenKey(tokenData),tokenData);//key值组成：userId,clientType,loginWay
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.loginSuccess",tokenData.getToken());//这里我个人认为redis中包含权限信息，但是前端不需要获得太多权限信息，权限信息可以通过其它接口获得
 	}
 	
