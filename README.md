@@ -29,7 +29,7 @@ JavaWeb2-angular（cnpm install->cnpm start）
 6、JavaWeb2-integration-demo包括了一些常用技术与SpringBoot组合的示例，基本验证通过，但是不同版本写法会有差异（hbase、kafka、netty、solr、切面处理、mongodb、websocket（SpringBoot版和Netty版）、elasticsearch、neo4j、barcode（一维条形码）、kaptcha（二维码）、邮件发送、redis、restTemplate、quartz（分布式）定时任务、文件上传下载、activiti、swagger2、qq、wechat、poi-excel、HTTPS和HTTP2.0、本项目作为第三方的接入（Oauth2）、接口对接（对方请求我们的数据）、中文分词器、轻量级文件服务器minio、FastDFS、SpringBatch批处理、JNI、重写RequestBody数据格式）                                                                        
 7、所有SQL语句均未优化且没有索引等，如有需要请自行优化                          
 8、所有增删改查操作只是简单的校验了下，有些甚至都没有校验，如有需要请自行增加、修改、优化                    
-9、本项目所有主键都是字符串类型，而不是数字（或数字自增）类型，主要考虑到两方面：①分布式及数据迁移；②当数字类型超过16位时，前后端交互时，前端会有精度误差，当然前端转化下或后端转化下就可以了，这里主要是为了避免相互转换的麻烦，但是写入的依然是数字，即类型是字符串类型但是值是数字。对于新、老数据的迁移、合并，systemNo的值是区分关键，参考SecretUtil的defaultGenUniqueStr方法         
+9、本项目所有主键都是字符串类型，而不是数字（或数字自增）类型，主要考虑到两方面：①分布式及数据迁移；②当数字类型超过16位时，前后端交互时，前端会有精度误差，当然前端转化下或后端转化下就可以了，这里主要是为了避免相互转换的麻烦，但是写入的依然是数字，即类型是字符串类型但是值是数字。另外前端传字符串后端JAVA依然可以用类似Long封装类型接收，原理就是Long.parseLong不报错即可；同理，数据库查出来数字类型，后端JAVA依然可以用字符串接收，原理就是String.valueOf不报错即可；当然，一般不推荐这么写。对于新、老数据的迁移、合并，systemNo的值是区分关键，参考SecretUtil的defaultGenUniqueStr方法         
 10、注册中心有很多，比如eureka、zookeeper、consul、nacos等，本项目在这方面不是重点，只想快速上手，因此就用了以前的官方套餐                  
 11、tomcat容器顺序：Filter->Servlet->Inteceptor->Aspect->Controller             
 本项目中形成了：InterfaceLimitFilter（接口限流-所有编写有效的接口）->WebPermissionInterceptor（权限控制-所有权限受控的接口）->OperateLogAspect（日志切面-所有需要记录日志的接口）     
@@ -52,7 +52,7 @@ JavaWeb2-angular（cnpm install->cnpm start）
 4、国际化                 
 5、接口入参校验                 
 6、reids                 
-7、mybatis共通dao(位于项目JavaWeb2-database)                 
+7、mybatis共通dao(位于项目JavaWeb2-common)                 
 8、kafka【kafka生产者（producer）一般可以使用kafkaTemplate；kafka消费者（consumer）一般可以使用@KafkaListener；实际项目中生产者和消费者一般都是分开的】                 
 9、Netty客户端和服务端示例（IO模型、数据协议、线程模型）                 
 10、websocket            
