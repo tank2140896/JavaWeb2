@@ -14,7 +14,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import com.javaweb.annotation.url.IgnoreUrl;
 import com.javaweb.base.BaseTool;
 import com.javaweb.constant.ApiConstant;
-import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.web.eo.TokenData;
 
@@ -59,7 +58,7 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 			return false;
 		}
 		if(servletPath.startsWith(SystemConstant.URL_LOGIN_WEB_PERMISSION)){//该路径下只要登录即可访问，不需要权限
-			BaseTool.getRedisTemplate().opsForValue().set(tokenData.getUser().getUserId()+CommonConstant.COMMA+tokenData.getClientType()+CommonConstant.COMMA+tokenData.getLoginWay(),tokenData,Duration.ofMinutes(redisSessionTimeout));
+			BaseTool.getRedisTemplate().opsForValue().set(BaseTool.getRedisTokenKey(tokenData),tokenData,Duration.ofMinutes(redisSessionTimeout));
 			return true;
 		}
 		long count = tokenData.getApiUrlList().stream().filter(i->{return servletPath.startsWith(i);}).count();
@@ -67,7 +66,7 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 			request.getRequestDispatcher(ApiConstant.NO_AUTHORY).forward(request,response);
 			return false;
 		}else{
-			BaseTool.getRedisTemplate().opsForValue().set(tokenData.getUser().getUserId()+CommonConstant.COMMA+tokenData.getClientType()+CommonConstant.COMMA+tokenData.getLoginWay(),tokenData,Duration.ofMinutes(redisSessionTimeout));
+			BaseTool.getRedisTemplate().opsForValue().set(BaseTool.getRedisTokenKey(tokenData),tokenData,Duration.ofMinutes(redisSessionTimeout));
 			return true;
 		}
 	}
@@ -75,8 +74,7 @@ public class WebPermissionInterceptor extends HandlerInterceptorAdapter {
 	private boolean ignoreUrl(Object handler) {
 	    if(handler instanceof HandlerMethod) {
             Method method = ((HandlerMethod)handler).getMethod();
-            if (AnnotatedElementUtils.isAnnotated(method,IgnoreUrl.class)) {
-                //IgnoreUrl ignoreUrl = method.getAnnotation(IgnoreUrl.class);
+            if (AnnotatedElementUtils.isAnnotated(method,IgnoreUrl.class)) {//IgnoreUrl ignoreUrl = method.getAnnotation(IgnoreUrl.class);
                 return true;
             }
         }
