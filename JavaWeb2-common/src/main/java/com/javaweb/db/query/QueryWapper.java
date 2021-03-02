@@ -7,19 +7,31 @@ import com.javaweb.db.help.SqlCondition;
 import com.javaweb.enums.SqlConditionEnum;
 
 public class QueryWapper<T> {
+	
+	public final long CURRENT_PAGE_VALUE = 1L;
+	public final long PAGE_SIZE_VALUE = 10L;
+	public final boolean IS_PAGED_VALUE = false;
 
 	private QueryWapper<T> queryWapper = this;
 	
-	private long currentPage;
+	private long currentPage = CURRENT_PAGE_VALUE;
 	
-	private long pageSize;
+	private long pageSize = PAGE_SIZE_VALUE;
 	
-	private boolean isPaged = false;
+	private boolean isPaged = IS_PAGED_VALUE;
 	
 	private List<SqlCondition> sqlConditionList = new ArrayList<>();
 	
 	public List<SqlCondition> getSqlConditionList() {
 		return sqlConditionList;
+	}
+	
+	public QueryWapper<T> clear(){
+		this.currentPage = CURRENT_PAGE_VALUE;
+		this.pageSize = PAGE_SIZE_VALUE;
+		this.isPaged = IS_PAGED_VALUE;
+		this.sqlConditionList = new ArrayList<>();
+		return queryWapper;
 	}
 	
 	public QueryWapper<T> page(long currentPage,long pageSize){
