@@ -62,7 +62,7 @@ JavaWeb2-angular（cnpm install->cnpm start）
 # 七、项目使用说明                                                       
 1、除了涉及事务的service加上@Transactional，建议涉及事务的Controller也加上@Transactional，另外不建议try、catch，除非能确保无数据库相关事务操作或确保Controller内的方法不会抛出异常；另外自定义异常如果继承Exception的话，方法需要显式抛出异常，而如果继承RuntimeException，方法不需要显式抛出异常                 
 2、关于@Configuration的类，配置代码常用的有两种写法，一是通过常量类配置，二是通过配置文件配置，若不想该配置类生效，可以加上如：@ConditionalOnProperty(name="http.server.on",havingValue="true")                                         
-3、src/main/resources下的静态资源文件在SpringBoot中的默认(未添加拦截器等情况下)查找顺序为:META/resources->resources->static->public                 
+3、src/main/resources下的静态资源文件在SpringBoot中的默认（未添加拦截器等情况下）的查找顺序为：META/resources->resources->static->public                 
 4、读取配置文件一般有以下三种常用写法                 
 A、@Autowired private Environment environment                 
 B、@Value("${server.port}") private String port                 
