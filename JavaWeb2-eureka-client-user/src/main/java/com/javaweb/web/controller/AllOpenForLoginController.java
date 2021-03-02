@@ -55,15 +55,7 @@ public class AllOpenForLoginController extends BaseController {
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"validated.user.password.pattern");
 		}
 		userLoginRequest.setPassword(password);
-		//Part3：参数业务逻辑校验
-		/**
-		Map<String,Object> map = new HashMap<>();
-		map.put("user_name","username_1");
-		BaseServiceValidateResult baseServiceValidateResult = baseValidateService.isColumnsRepeat(map,userDao,"这里写I18N里的key值或自定义的消息或传null");
-		if(!baseServiceValidateResult.isValidatePass()){
-			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,baseServiceValidateResult.getMessage());
-		}
-		*/
+		//Part3：参数业务逻辑校验（此处暂无，可参考其它Controller写法）
 		//Part4：获取用户信息
 		boolean isAdmin = systemAdminCheck(userLoginRequest);
 		User user = getUser(userLoginRequest,isAdmin);
@@ -73,9 +65,10 @@ public class AllOpenForLoginController extends BaseController {
         if(user.getStatus()==1){
         	return getBaseResponseResult(HttpCodeEnum.LOGIN_FAIL,"login.user.userLocked");
         }
-        user.setPassword("********");//用户密码不对外提供
+        user.setPassword(CommonConstant.NULL_VALUE);//用户密码不对外提供
         //Part5：tokenData设置
         TokenData tokenData = getToken(isAdmin,user,userLoginRequest);
+        /** 当前登录方式下相同账号密码的后者会把前者踢下去 */
 		setDefaultDataToRedis(user.getUserId()+CommonConstant.COMMA+userLoginRequest.getClientType()+CommonConstant.COMMA+userLoginRequest.getLoginWay(),tokenData);//key值组成：userId,clientType,loginWay
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"login.user.loginSuccess",tokenData.getToken());//这里我个人认为redis中包含权限信息，但是前端不需要获得太多权限信息，权限信息可以通过其它接口获得
 	}
@@ -163,9 +156,9 @@ public class AllOpenForLoginController extends BaseController {
 	private String getTokenForEasyWay(String userId,Integer clientType,Integer loginWay) {
 		String date = DateUtil.getStringDate(DateUtil.DATETIME_PATTERN_TYPE1);
 		String randomNumber = String.valueOf(MathUtil.getRandomNumForLCRC(Integer.MAX_VALUE-1));
-		String out = randomNumber + SecretUtil.getRandomUUID(true) + date;
-		out = AesDesUtil.encryptAes(out,"6Pq=*s+H2ppL5{INRx9MhU;k");//可以用defaultGenRandomPass(24)生成
+		String out = randomNumber + SecretUtil.getRandomUUID(false) + date;
 		out = out + CommonConstant.COMMA + userId + CommonConstant.COMMA + clientType + CommonConstant.COMMA + loginWay;;
+		out = AesDesUtil.encryptAes(out,SystemConstant.TOKEN_AES_KEY);
 		try {
 			out = SecretUtil.base64EncoderString(out,"UTF-8");
 		} catch (Exception e) {
