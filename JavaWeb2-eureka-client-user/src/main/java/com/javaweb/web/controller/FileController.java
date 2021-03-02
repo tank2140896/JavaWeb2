@@ -57,12 +57,12 @@ public class FileController extends BaseController{
     		if(multipartFile!=null&&multipartFile.length>0){
         		for(int i=0;i<multipartFile.length;i++){
         			if (multipartFile[i].getBytes().length > 1024 * 1024 *10) {//10MB
-                        return new BaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"每个文件大小不能超过10MB");
+        				return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"validated.file.upload.eachFileSize.limit");
                     }
         			total += multipartFile[i].getBytes().length;
         		}
         		if(total > 1024 * 1024 *50){
-        			return new BaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"文件总大小不能超过50MB");
+        			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"validated.file.upload.totalFileSize.limit");
         		}
         	}
     		//获得文件根路径

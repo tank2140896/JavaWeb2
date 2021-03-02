@@ -3,6 +3,7 @@ package com.javaweb.web.po;
 import java.io.Serializable;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import com.javaweb.annotation.sql.Column;
 import com.javaweb.annotation.sql.Table;
@@ -18,14 +19,17 @@ public class Role extends BaseEntity implements Serializable {
 
 	private static final long serialVersionUID = 7161573735090231747L;
 
-	@NotEmpty(groups={update.class,delete.class},message="validated.role.roleId.notEmpty")
-	@Column(name="role_id",pk=true,columnDesc="角色ID")
+	@NotEmpty(groups={update.class},message="validated.role.roleId.notEmpty")
+	@Column(name="role_id",pk=true,idAutoCreate=true,columnDesc="角色ID")
 	private String roleId;//角色ID
 	
 	@NotEmpty(groups={add.class,update.class},message="validated.role.roleName.notEmpty")
+	@Size(groups={add.class,update.class},max=20,message="validated.role.roleName.maxLength.limit")
 	@Column(name="role_name",columnDesc="角色名称")
 	private String roleName;//角色名称
 	
+	@NotEmpty(groups={add.class,update.class},message="validated.role.roleCode.notEmpty")
+	@Size(groups={add.class,update.class},max=20,message="validated.role.roleCode.maxLength.limit")
 	@Column(name="role_code",columnDesc="角色代码")
 	private String roleCode;//角色代码
 	

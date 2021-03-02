@@ -112,7 +112,7 @@ public class UserController extends BaseController {
 	@ControllerMethod(interfaceName="删除用户接口（支持批量删除，用逗号隔开）")
 	public BaseResponseResult userDelete(@PathVariable(name="userId",required=true) String userId){
 		userService.userDelete(userId);
-		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.delete.success",null);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.delete.success");
 	}
 	
 	//ApiConstant.USER_ROLE_INFO：获取指定用户的角色信息
@@ -128,7 +128,7 @@ public class UserController extends BaseController {
 	@ControllerMethod(interfaceName="用户角色分配接口")
 	public BaseResponseResult userRoleAssignment(@RequestBody List<RoleIdAndStrategyRequest> list,@PathVariable(name="userId",required=true) String userId){
 		userService.userRoleAssignment(userId,list);
-		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.userRoleAssignment.success",null);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.userRoleAssignment.success");
 	}
 	
 	//ApiConstant.USER_MODULE_INFO：获取指定用户的模块信息
@@ -144,21 +144,21 @@ public class UserController extends BaseController {
 	@ControllerMethod(interfaceName="用户模块分配接口")
 	public BaseResponseResult userModuleAssignment(@RequestBody List<String> list,@PathVariable(name="userId",required=true) String userId){
 		userService.userModuleAssignment(userId,list);
-		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.userModuleAssignment.success",null);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.userModuleAssignment.success");
 	}
 	
 	@GetMapping(ApiConstant.USER_INIT_PASSWORD)
 	@ControllerMethod(interfaceName="初始化密码接口")
 	public BaseResponseResult userInitPassword(@PathVariable(name="userId",required=true) String userId,@TokenDataAnnotation TokenData tokenData){
 		userService.userInitPassword(userId,tokenData);
-		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.init.password.success",null);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.init.password.success");
 	}
 	
 	@PostMapping(ApiConstant.USER_PORTRAIT_UPLOAD)
 	@ControllerMethod(interfaceName="用户头像上传接口")
 	public BaseResponseResult userPortraitUpload(@TokenDataAnnotation TokenData tokenData,@PathVariable(name="userId",required=true) String userId,@RequestParam(value="userPortraitFile") MultipartFile multipartFile){
 		userService.userPortraitUpload(userId,multipartFile);
-		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.portrait.upload.success",null);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"user.portrait.upload.success");
 	}
 	
 	@GetMapping(ApiConstant.USER_USER_PORTRAIT)

@@ -25,6 +25,7 @@ import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.po.OperationLog;
 import com.javaweb.web.service.OperationLogService;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 /**
@@ -88,7 +89,11 @@ public class OperateLogAspect {
 				try{
 					requestParameter = JSONObject.fromObject(obj[i]).toString();
 				}catch(Exception e){
-					//do nothing
+					try{
+						requestParameter = JSONArray.fromObject(obj[i]).toString();
+					}catch(Exception ee){
+						//do nothing
+					}
 				}
 			}
 			operationLog.setRequestParameter(requestParameter/*joinPoint.getArgs().toString()*//*joinPoint.getSignature()*/);

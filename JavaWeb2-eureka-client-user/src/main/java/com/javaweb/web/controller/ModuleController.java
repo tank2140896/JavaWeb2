@@ -1,5 +1,6 @@
 package com.javaweb.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.validation.BindingResult;
@@ -17,13 +18,16 @@ import com.javaweb.annotation.token.TokenDataAnnotation;
 import com.javaweb.annotation.url.ControllerMethod;
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
+import com.javaweb.base.BaseServiceValidateResult;
 import com.javaweb.base.BaseValidatedGroup;
 import com.javaweb.constant.ApiConstant;
 import com.javaweb.constant.CommonConstant;
+import com.javaweb.db.query.QueryWapper;
 import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.module.ModuleListRequest;
+import com.javaweb.web.eo.validate.ColumnsRepeatRequest;
 import com.javaweb.web.po.Interfaces;
 import com.javaweb.web.po.Module;
 
@@ -49,20 +53,27 @@ public class ModuleController extends BaseController {
 	public BaseResponseResult moduleAdd(@RequestBody @Validated({BaseValidatedGroup.add.class}) Module module,BindingResult bindingResult,@TokenDataAnnotation TokenData tokenData){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
-		}else{
-			if(module.getModuleType()==3){//功能
-				List<Interfaces> interfacesList = interfacesService.getAll();
-				String apis[] = module.getApiUrl().split(CommonConstant.COMMA);
-				for(int i=0;i<apis.length;i++){
-					int j = i;
-					if(interfacesList.stream().filter(e->e.getBaseUrl().equals(apis[j])).count()<1){
-						return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"interfaces.notExist.fail",null);
-					}
+		}
+		List<ColumnsRepeatRequest<Module>> columnsRepeatRequestList = new ArrayList<>();
+		columnsRepeatRequestList.add(new ColumnsRepeatRequest<Module>(new QueryWapper<Module>().eq(Module.moduleNameColumn,module.getModuleName()),"validated.module.moduleName.repeat"));
+		columnsRepeatRequestList.add(new ColumnsRepeatRequest<Module>(new QueryWapper<Module>().eq(Module.aliasColumn,module.getAlias()),"validated.module.alias.repeat"));
+		BaseServiceValidateResult baseServiceValidateResult = baseValidateService.isColumnsValueRepeat(columnsRepeatRequestList,moduleDao);
+		if(!baseServiceValidateResult.isValidatePass()){
+			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,baseServiceValidateResult.getMessage());
+		}
+		if(module.getModuleType()==3){//功能
+			List<Interfaces> interfacesList = interfacesService.getAll();
+			String apis[] = module.getApiUrl().split(CommonConstant.COMMA);
+			for(int i=0;i<apis.length;i++){
+				int j = i;
+				if(interfacesList.stream().filter(e->e.getBaseUrl().equals(apis[j])).count()<1){
+					return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"interfaces.notExist.fail");
 				}
 			}
-			moduleService.moduleAdd(tokenData.getUser(),module);
-			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.add.success",null);
 		}
+		moduleService.moduleAdd(tokenData.getUser(),module);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.add.success",null);
+		
 	}
 	
 	@PostMapping(ApiConstant.MODULE_LIST)
@@ -87,36 +98,52 @@ public class ModuleController extends BaseController {
 	public BaseResponseResult moduleModify(@RequestBody @Validated({BaseValidatedGroup.update.class}) Module module,BindingResult bindingResult,@TokenDataAnnotation TokenData tokenData){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
-		}else{
-			Module originModule = moduleService.moduleDetail(module.getModuleId());
-			if(originModule.getModuleId().equals(module.getParentId())){//不能自己关联自己
-				return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"module.modify.fail",null);
-			}
-			List<Module> moduleList = moduleService.getModuleByParentId(module.getModuleId());
-			if(moduleList!=null&&moduleList.size()>0){//判断是否有下级关联
-				if(originModule.getModuleType()!=module.getModuleType()){//判断是否是同级操作
-					if(originModule.getModuleType()<module.getModuleType()){//判断是否是降级操作
-						return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"module.modify.fail",null);
-					}else{
-						if(originModule.getModuleType()!=1){//若是升级操作，只能原来是目录的升目录
-							return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"module.modify.fail",null);
-						}
-					}
-				}
-			}
-			if(module.getModuleType()==3){//功能
-				List<Interfaces> interfacesList = interfacesService.getAll();
-				String apis[] = module.getApiUrl().split(CommonConstant.COMMA);
-				for(int i=0;i<apis.length;i++){
-					int j = i;
-					if(interfacesList.stream().filter(e->e.getBaseUrl().equals(apis[j])).count()<1){
-						return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"interfaces.notExist.fail",null);
-					}
-				}
-			}
-			moduleService.moduleModify(tokenData.getUser(),module);
-			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.modify.success",null);
 		}
+		Module originModule = moduleService.moduleDetail(module.getModuleId());
+		if(originModule==null){
+			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"validated.module.modify.notExist");
+		}
+		if(!originModule.getModuleName().equals(module.getModuleName())){
+			ColumnsRepeatRequest<Module> moduleColumnsRepeatRequest = new ColumnsRepeatRequest<Module>(new QueryWapper<Module>().eq(Module.moduleNameColumn,module.getModuleName()),"validated.module.moduleName.repeat");
+			BaseServiceValidateResult baseServiceValidateResult = baseValidateService.isColumnsValueRepeat(moduleColumnsRepeatRequest,moduleDao);
+			if(!baseServiceValidateResult.isValidatePass()){
+				return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,baseServiceValidateResult.getMessage());
+			}
+		}
+		if(!originModule.getAlias().equals(module.getAlias())){
+			ColumnsRepeatRequest<Module> moduleColumnsRepeatRequest = new ColumnsRepeatRequest<Module>(new QueryWapper<Module>().eq(Module.aliasColumn,module.getAlias()),"validated.module.alias.repeat");
+			BaseServiceValidateResult baseServiceValidateResult = baseValidateService.isColumnsValueRepeat(moduleColumnsRepeatRequest,moduleDao);
+			if(!baseServiceValidateResult.isValidatePass()){
+				return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,baseServiceValidateResult.getMessage());
+			}
+		}
+		if(originModule.getModuleId().equals(module.getParentId())){//不能自己关联自己
+			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"module.modify.fail");
+		}
+		List<Module> moduleList = moduleService.getModuleByParentId(module.getModuleId());
+		if(moduleList!=null&&moduleList.size()>0){//判断是否有下级关联
+			if(originModule.getModuleType()!=module.getModuleType()){//判断是否是同级操作
+				if(originModule.getModuleType()<module.getModuleType()){//判断是否是降级操作
+					return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"module.modify.fail");
+				}else{
+					if(originModule.getModuleType()!=1){//若是升级操作，只能原来是目录的升目录
+						return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"module.modify.fail");
+					}
+				}
+			}
+		}
+		if(module.getModuleType()==3){//功能
+			List<Interfaces> interfacesList = interfacesService.getAll();
+			String apis[] = module.getApiUrl().split(CommonConstant.COMMA);
+			for(int i=0;i<apis.length;i++){
+				int j = i;
+				if(interfacesList.stream().filter(e->e.getBaseUrl().equals(apis[j])).count()<1){
+					return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"interfaces.notExist.fail");
+				}
+			}
+		}
+		moduleService.moduleModify(tokenData.getUser(),module);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.modify.success",null);
 	}
 	
 	@GetMapping(ApiConstant.MODULE_DETAIL)
@@ -136,12 +163,12 @@ public class ModuleController extends BaseController {
 			if(module.getModuleType()!=3){//非功能需要进一步判断才能确定是否可以删除
 				List<Module> moduleList = moduleService.getModuleByParentId(module.getModuleId());
 				if(moduleList!=null&&moduleList.size()>0){//当删除目录或菜单时，若有下级关联，则不允许删除
-					return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"module.delete.fail",null);
+					return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"module.delete.fail");
 				}
 			}
 		}
 		moduleService.moduleDelete(moduleIds);
-		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.delete.success",null);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"module.delete.success");
 	}
 	
 }

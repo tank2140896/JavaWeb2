@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 
 import com.javaweb.annotation.sql.Column;
 import com.javaweb.annotation.sql.Table;
@@ -23,11 +24,12 @@ public class Module extends BaseEntity implements Serializable {
 	
 	private String parentName;/**辅助属性（模块的上级模块名称）*/
 	
-	@NotEmpty(groups={update.class,delete.class},message="validated.module.moduleId.notEmpty")
-	@Column(name="module_id",pk=true,columnDesc="主键ID")
+	@NotEmpty(groups={update.class},message="validated.module.moduleId.notEmpty")
+	@Column(name="module_id",pk=true,idAutoCreate=true,columnDesc="主键ID")
 	private String moduleId;//模块ID
 	
 	@NotEmpty(groups={add.class,update.class},message="validated.module.moduleName.notEmpty")
+	@Size(groups={add.class,update.class},max=20,message="validated.module.moduleName.maxLength.limit")
 	@Column(name="module_name",columnDesc="模块名称")
 	private String moduleName;//模块名称
 	
@@ -52,6 +54,8 @@ public class Module extends BaseEntity implements Serializable {
 	@Column(name="module_type",columnDesc="模块类型(0:未定义模块类型;1:目录;2:菜单；3:功能)")
 	private Integer moduleType = 0;//模块类型(0:未定义模块类型;1:目录;2:菜单；3:功能)
 	
+	@NotEmpty(groups={add.class,update.class},message="validated.module.alias.notEmpty")
+	@Size(groups={add.class,update.class},max=20,message="validated.module.alias.maxLength.limit")
 	@Column(name="alias",columnDesc="别名")
 	private String alias;//别名
 	

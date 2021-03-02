@@ -34,6 +34,7 @@ public class User extends BaseEntity implements Serializable {
 	@Column(name="password",columnDesc="用户密码")
 	private String password;//用户密码
 	
+	@NotEmpty(groups={add.class,update.class},message="validated.user.personName.notNull")
 	@Size(groups={add.class,update.class},max=20,message="validated.user.personName.maxLength.limit")
 	@Column(name="person_name",columnDesc="用户姓名")
 	private String personName;//用户姓名

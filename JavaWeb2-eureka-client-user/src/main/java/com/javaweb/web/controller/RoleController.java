@@ -1,5 +1,6 @@
 package com.javaweb.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.validation.BindingResult;
@@ -17,16 +18,17 @@ import com.javaweb.annotation.token.TokenDataAnnotation;
 import com.javaweb.annotation.url.ControllerMethod;
 import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
+import com.javaweb.base.BaseServiceValidateResult;
 import com.javaweb.base.BaseValidatedGroup;
 import com.javaweb.constant.ApiConstant;
-import com.javaweb.constant.SystemConstant;
+import com.javaweb.db.query.QueryWapper;
 import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.util.core.DateUtil;
-import com.javaweb.util.core.SecretUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.TokenData;
 import com.javaweb.web.eo.role.ModuleInfoResponse;
 import com.javaweb.web.eo.role.RoleListRequest;
+import com.javaweb.web.eo.validate.ColumnsRepeatRequest;
 import com.javaweb.web.po.Role;
 import com.javaweb.web.po.User;
 
@@ -36,19 +38,24 @@ import com.javaweb.web.po.User;
 public class RoleController extends BaseController {
 	
 	@PostMapping(ApiConstant.ROLE_ADD)
-	@ControllerMethod(interfaceName="新增角色接")
+	@ControllerMethod(interfaceName="新增角色接口")
 	public BaseResponseResult roleAdd(@RequestBody @Validated({BaseValidatedGroup.add.class}) Role role,BindingResult bindingResult,@TokenDataAnnotation TokenData tokenData){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
-		}else{
-			User currentUser = tokenData.getUser();
-			role.setRoleId(SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO));
-			role.setCreateDate(DateUtil.getDefaultDate());
-			role.setCreator(currentUser.getUserId());
-			role.setDelFlag(0);
-			roleService.roleAdd(role);
-			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"role.add.success",null);
 		}
+		List<ColumnsRepeatRequest<Role>> columnsRepeatRequestList = new ArrayList<>();
+		columnsRepeatRequestList.add(new ColumnsRepeatRequest<Role>(new QueryWapper<Role>().eq(Role.roleNameColumn,role.getRoleName()),"validated.role.roleName.repeat"));
+		columnsRepeatRequestList.add(new ColumnsRepeatRequest<Role>(new QueryWapper<Role>().eq(Role.roleCodeColumn,role.getRoleCode()),"validated.role.roleCode.repeat"));
+		BaseServiceValidateResult baseServiceValidateResult = baseValidateService.isColumnsValueRepeat(columnsRepeatRequestList,roleDao);
+		if(!baseServiceValidateResult.isValidatePass()){
+			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,baseServiceValidateResult.getMessage());
+		}
+		User currentUser = tokenData.getUser();
+		role.setCreateDate(DateUtil.getDefaultDate());
+		role.setCreator(currentUser.getUserId());
+		role.setDelFlag(0);
+		roleService.roleAdd(role);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"role.add.success");
 	}
 	
 	@PostMapping(ApiConstant.ROLE_LIST)
@@ -63,13 +70,31 @@ public class RoleController extends BaseController {
 	public BaseResponseResult roleModify(@RequestBody @Validated({BaseValidatedGroup.update.class}) Role role,BindingResult bindingResult,@TokenDataAnnotation TokenData tokenData){
 		if(bindingResult.hasErrors()){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,bindingResult);
-		}else{
-			User currentUser = tokenData.getUser();
-			role.setUpdateDate(DateUtil.getDefaultDate());
-			role.setUpdater(currentUser.getUserId());
-			roleService.roleModify(role);
-			return getBaseResponseResult(HttpCodeEnum.SUCCESS,"role.modify.success",null);
 		}
+		Role originRole = roleService.roleDetail(role.getRoleId());
+		if(originRole==null){
+			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"validated.role.modify.notExist");
+		}
+		if(!originRole.getRoleName().equals(role.getRoleName())){
+			ColumnsRepeatRequest<Role> roleColumnsRepeatRequest = new ColumnsRepeatRequest<Role>(new QueryWapper<Role>().eq(Role.roleNameColumn,role.getRoleName()),"validated.role.roleName.repeat");
+			BaseServiceValidateResult baseServiceValidateResult = baseValidateService.isColumnsValueRepeat(roleColumnsRepeatRequest,roleDao);
+			if(!baseServiceValidateResult.isValidatePass()){
+				return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,baseServiceValidateResult.getMessage());
+			}
+		}
+		if(!originRole.getRoleCode().equals(role.getRoleCode())){
+			ColumnsRepeatRequest<Role> userColumnsRepeatRequest = new ColumnsRepeatRequest<Role>(new QueryWapper<Role>().eq(Role.roleCodeColumn,role.getRoleCode()),"validated.role.roleCode.repeat");
+			BaseServiceValidateResult baseServiceValidateResult = baseValidateService.isColumnsValueRepeat(userColumnsRepeatRequest,roleDao);
+			if(!baseServiceValidateResult.isValidatePass()){
+				return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,baseServiceValidateResult.getMessage());
+			}
+		}
+		User currentUser = tokenData.getUser();
+		role.setUpdateDate(DateUtil.getDefaultDate());
+		role.setUpdater(currentUser.getUserId());
+		roleService.roleModify(role);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"role.modify.success");
+		
 	}
 	
 	@GetMapping(ApiConstant.ROLE_DETAIL)
@@ -83,12 +108,10 @@ public class RoleController extends BaseController {
 	@ControllerMethod(interfaceName="删除角色接口（支持批量删除，用逗号隔开）")
 	public BaseResponseResult roleDelete(@PathVariable(name="roleId",required=true) String roleId){
 		roleService.roleDelete(roleId);
-		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"role.delete.success",null);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"role.delete.success");
 	}
 	
-	//ApiConstant.ROLE_MODULE_INFO：获取指定角色的模块信息
-	//ApiConstant.ROLE_MODULE_INFO2：获取所有模块信息
-	@GetMapping(value={ApiConstant.ROLE_MODULE_INFO,ApiConstant.ROLE_MODULE_INFO2})
+	@GetMapping(value={ApiConstant.ROLE_MODULE_INFO/*获取指定角色的模块信息*/,ApiConstant.ROLE_MODULE_INFO2/*获取所有模块信息*/})
 	@ControllerMethod(interfaceName="角色模块信息接口")
 	public BaseResponseResult roleModuleInfo(@PathVariable(name="roleId",required=false) String roleId){
 		List<ModuleInfoResponse> list = roleService.roleModuleInfo(roleId);
@@ -99,7 +122,7 @@ public class RoleController extends BaseController {
 	@ControllerMethod(interfaceName="角色模块分配接口")
 	public BaseResponseResult roleModuleAssignment(@RequestBody List<String> list,@PathVariable(name="roleId",required=true) String roleId){
 		roleService.roleModuleAssignment(roleId,list);
-		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"role.roleModuleAssignment.success",null);
+		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"role.roleModuleAssignment.success");
 	}
 	
 }

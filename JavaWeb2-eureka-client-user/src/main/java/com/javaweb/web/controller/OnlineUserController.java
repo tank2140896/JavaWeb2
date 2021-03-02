@@ -18,6 +18,7 @@ import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.constant.ApiConstant;
 import com.javaweb.constant.CommonConstant;
+import com.javaweb.constant.SystemConstant;
 import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.util.core.PageUtil;
 import com.javaweb.util.core.StringUtil;
@@ -33,12 +34,13 @@ public class OnlineUserController extends BaseController {
 	@PostMapping(ApiConstant.ONLINE_USER_LIST)
 	@ControllerMethod(interfaceName="在线用户列表接口")
 	public BaseResponseResult list(@RequestBody OnlineUserListRequest onlineUserListRequest){
-		Set<String> set = stringRedisTemplate.keys("*,1");//只取web端的在线用户
+		Set<String> set = stringRedisTemplate.keys("*,1,1");//只取页面端用账号密码登录的在线用户
 		set = (set==null?new HashSet<>():set);
 		List<String> sortedList = new ArrayList<>();
 		for(String str:set){
-			sortedList.add(str.split(CommonConstant.COMMA)[0]);
+			sortedList.add(str);
 		}
+		sortedList = sortedList.stream().filter(e->(!e.contains(SystemConstant.ADMIN))).collect(Collectors.toList());//去除管理员
 		List<User> userList = userService.getAllUsers();
 		String userName = onlineUserListRequest.getUserName();
 		if(StringUtil.handleNullString(userName).trim().equals(CommonConstant.EMPTY_VALUE)){
@@ -59,7 +61,7 @@ public class OnlineUserController extends BaseController {
 		}
 		List<User> list = new ArrayList<>();
 		if(sortedList.size()!=0){
-			list = userService.getUsersByUserId(sortedList);
+			list = userService.getUsersByUserId(sortedList.stream().map(e->e.split(CommonConstant.COMMA)[0]).collect(Collectors.toList()));
 		}
 		Page page = new Page(onlineUserListRequest,list,(set.size()+0L));
 		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"onlineUser.list.success",page);

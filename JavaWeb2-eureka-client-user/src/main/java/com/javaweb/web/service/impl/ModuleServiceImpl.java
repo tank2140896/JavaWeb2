@@ -15,7 +15,6 @@ import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.db.query.QueryWapper;
 import com.javaweb.util.core.DateUtil;
-import com.javaweb.util.core.SecretUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.module.ModuleIdAndNameResponse;
 import com.javaweb.web.eo.module.ModuleListRequest;
@@ -82,7 +81,6 @@ public class ModuleServiceImpl extends BaseService implements ModuleService {
 
 	@Transactional
 	public void moduleAdd(User user,Module module) {
-		module.setModuleId(SecretUtil.defaultGenUniqueStr(SystemConstant.SYSTEM_NO));
 		module.setCreateDate(DateUtil.getDefaultDate());
 		module.setCreator(user.getUserId());
 		module.setDelFlag(0);
