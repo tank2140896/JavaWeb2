@@ -146,6 +146,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 		return userDao.selectAll();
 	}
 
+	@Transactional
 	public void userInitPassword(String userId,TokenData tokenData) {
 		String initPassword = BaseSystemMemory.getDictionaryValueByKey("init.user.password","abcd1234");
 		try{
