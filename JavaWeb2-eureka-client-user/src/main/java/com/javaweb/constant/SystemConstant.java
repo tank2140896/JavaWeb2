@@ -9,14 +9,14 @@ public class SystemConstant {
 	
 	public static final String SYSTEM_NO = "1";
 	
+	public static final String PROJECT_UNIQUE_CODE = "JavaWeb";
+
 	public static final String PROJECT_NAME = "JavaWeb";
 	
-	public static final String PROJECT_VERSION = "1.0";
+	public static final String PROJECT_VERSION = "1.0.0";
 
 	public static final String PROJECT_GITHUB_URL = "https://github.com/tank2140896/JavaWeb2";
 
-	public static final String DEFAULT_SECURITY_KEY = "the key of JavaWeb";
-	
 	public static final String BASE_PACKAGE = "com.javaweb";
 	
 	public static final String DEFAULT_DATA_SOURCE_POINT_CUT = "execution(* com.javaweb.web.dao..*.*(..))";

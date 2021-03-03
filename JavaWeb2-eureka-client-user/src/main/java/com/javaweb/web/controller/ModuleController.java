@@ -103,19 +103,15 @@ public class ModuleController extends BaseController {
 		if(originModule==null){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"validated.module.modify.notExist");
 		}
-		if(!originModule.getModuleName().equals(module.getModuleName())){
-			ColumnsRepeatRequest<Module> moduleColumnsRepeatRequest = new ColumnsRepeatRequest<Module>(new QueryWapper<Module>().eq(Module.moduleNameColumn,module.getModuleName()),"validated.module.moduleName.repeat");
-			BaseServiceValidateResult baseServiceValidateResult = baseValidateService.isColumnsValueRepeat(moduleColumnsRepeatRequest,moduleDao);
-			if(!baseServiceValidateResult.isValidatePass()){
-				return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,baseServiceValidateResult.getMessage());
-			}
+		ColumnsRepeatRequest<Module> moduleColumnsRepeatRequest = new ColumnsRepeatRequest<Module>(new QueryWapper<Module>().neq(Module.moduleIdColumn,originModule.getModuleId()).eq(Module.moduleNameColumn,module.getModuleName()),"validated.module.moduleName.repeat");
+		BaseServiceValidateResult baseServiceValidateResult = baseValidateService.isColumnsValueRepeat(moduleColumnsRepeatRequest,moduleDao);
+		if(!baseServiceValidateResult.isValidatePass()){
+			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,baseServiceValidateResult.getMessage());
 		}
-		if(!originModule.getAlias().equals(module.getAlias())){
-			ColumnsRepeatRequest<Module> moduleColumnsRepeatRequest = new ColumnsRepeatRequest<Module>(new QueryWapper<Module>().eq(Module.aliasColumn,module.getAlias()),"validated.module.alias.repeat");
-			BaseServiceValidateResult baseServiceValidateResult = baseValidateService.isColumnsValueRepeat(moduleColumnsRepeatRequest,moduleDao);
-			if(!baseServiceValidateResult.isValidatePass()){
-				return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,baseServiceValidateResult.getMessage());
-			}
+		moduleColumnsRepeatRequest = new ColumnsRepeatRequest<Module>(new QueryWapper<Module>().neq(Module.moduleIdColumn,originModule.getModuleId()).eq(Module.aliasColumn,module.getAlias()),"validated.module.alias.repeat");
+		baseServiceValidateResult = baseValidateService.isColumnsValueRepeat(moduleColumnsRepeatRequest,moduleDao);
+		if(!baseServiceValidateResult.isValidatePass()){
+			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,baseServiceValidateResult.getMessage());
 		}
 		if(originModule.getModuleId().equals(module.getParentId())){//不能自己关联自己
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"module.modify.fail");

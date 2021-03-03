@@ -177,7 +177,7 @@ public class MySqlForSqlString implements SqlString {
 	}
 	
 	public String getSelectOneStringSql(SqlBuildInfo sqlBuildInfo) {
-		return this.getSelectListStringSql(sqlBuildInfo) + "limit 1";
+		return this.getSelectListStringSql(sqlBuildInfo) + " limit 1";
 	}
 
 	public String getSelectListStringSql(SqlBuildInfo sqlBuildInfo) {
@@ -199,28 +199,32 @@ public class MySqlForSqlString implements SqlString {
 			for(int i=0;i<sqlConditionList.size();i++){
 				SqlCondition sqlCondition = sqlConditionList.get(i);
 				if(sqlCondition.getSqlConditionEnum().compareTo(SqlConditionEnum.EQ)==0){
-					stringBuilder.append("and ").append(sqlCondition.getColumnName()).append(" = ").append(sqlCondition.getColumnValue() instanceof Number ? (sqlCondition.getColumnValue()) : ("'"+sqlCondition.getColumnValue()+"'"));
-					break;
+					stringBuilder.append(" and ").append(sqlCondition.getColumnName()).append(" = ").append(sqlCondition.getColumnValue() instanceof Number ? (sqlCondition.getColumnValue()) : ("'"+sqlCondition.getColumnValue()+"'"));
+					continue;
+				}
+				if(sqlCondition.getSqlConditionEnum().compareTo(SqlConditionEnum.NEQ)==0){
+					stringBuilder.append(" and ").append(sqlCondition.getColumnName()).append(" != ").append(sqlCondition.getColumnValue() instanceof Number ? (sqlCondition.getColumnValue()) : ("'"+sqlCondition.getColumnValue()+"'"));
+					continue;
 				}
 				if(sqlCondition.getSqlConditionEnum().compareTo(SqlConditionEnum.LIKE)==0){
-					stringBuilder.append("and ").append(sqlCondition.getColumnName()).append(" like ").append("'%"+sqlCondition.getColumnValue()+"%'");
-					break;
+					stringBuilder.append(" and ").append(sqlCondition.getColumnName()).append(" like ").append("'%"+sqlCondition.getColumnValue()+"%'");
+					continue;
 				}
 				if(sqlCondition.getSqlConditionEnum().compareTo(SqlConditionEnum.LT)==0){
-					stringBuilder.append("and ").append(sqlCondition.getColumnName()).append(" < ").append(sqlCondition.getColumnValue() instanceof Number ? (sqlCondition.getColumnValue()) : ("'"+sqlCondition.getColumnValue()+"'"));
-					break;
+					stringBuilder.append(" and ").append(sqlCondition.getColumnName()).append(" < ").append(sqlCondition.getColumnValue() instanceof Number ? (sqlCondition.getColumnValue()) : ("'"+sqlCondition.getColumnValue()+"'"));
+					continue;
 				}
 				if(sqlCondition.getSqlConditionEnum().compareTo(SqlConditionEnum.LE)==0){
-					stringBuilder.append("and ").append(sqlCondition.getColumnName()).append(" <= ").append(sqlCondition.getColumnValue() instanceof Number ? (sqlCondition.getColumnValue()) : ("'"+sqlCondition.getColumnValue()+"'"));
-					break;
+					stringBuilder.append(" and ").append(sqlCondition.getColumnName()).append(" <= ").append(sqlCondition.getColumnValue() instanceof Number ? (sqlCondition.getColumnValue()) : ("'"+sqlCondition.getColumnValue()+"'"));
+					continue;
 				}
 				if(sqlCondition.getSqlConditionEnum().compareTo(SqlConditionEnum.GT)==0){
-					stringBuilder.append("and ").append(sqlCondition.getColumnName()).append(" > ").append(sqlCondition.getColumnValue() instanceof Number ? (sqlCondition.getColumnValue()) : ("'"+sqlCondition.getColumnValue()+"'"));
-					break;
+					stringBuilder.append(" and ").append(sqlCondition.getColumnName()).append(" > ").append(sqlCondition.getColumnValue() instanceof Number ? (sqlCondition.getColumnValue()) : ("'"+sqlCondition.getColumnValue()+"'"));
+					continue;
 				}
 				if(sqlCondition.getSqlConditionEnum().compareTo(SqlConditionEnum.GE)==0){
-					stringBuilder.append("and ").append(sqlCondition.getColumnName()).append(" >= ").append(sqlCondition.getColumnValue() instanceof Number ? (sqlCondition.getColumnValue()) : ("'"+sqlCondition.getColumnValue()+"'"));
-					break;
+					stringBuilder.append(" and ").append(sqlCondition.getColumnName()).append(" >= ").append(sqlCondition.getColumnValue() instanceof Number ? (sqlCondition.getColumnValue()) : ("'"+sqlCondition.getColumnValue()+"'"));
+					continue;
 				}
 			}
 		}
@@ -240,28 +244,32 @@ public class MySqlForSqlString implements SqlString {
 			for(int i=0;i<sqlConditionList.size();i++){
 				SqlCondition sqlCondition = sqlConditionList.get(i);
 				if(sqlCondition.getSqlConditionEnum().compareTo(SqlConditionEnum.EQ)==0){
-					stringBuilder.append("and ").append(sqlCondition.getColumnName()).append(" = ").append(sqlCondition.getColumnValue() instanceof Number ? (sqlCondition.getColumnValue()) : ("'"+sqlCondition.getColumnValue()+"'"));
-					break;
+					stringBuilder.append(" and ").append(sqlCondition.getColumnName()).append(" = ").append(sqlCondition.getColumnValue() instanceof Number ? (sqlCondition.getColumnValue()) : ("'"+sqlCondition.getColumnValue()+"'"));
+					continue;
+				}
+				if(sqlCondition.getSqlConditionEnum().compareTo(SqlConditionEnum.NEQ)==0){
+					stringBuilder.append(" and ").append(sqlCondition.getColumnName()).append(" != ").append(sqlCondition.getColumnValue() instanceof Number ? (sqlCondition.getColumnValue()) : ("'"+sqlCondition.getColumnValue()+"'"));
+					continue;
 				}
 				if(sqlCondition.getSqlConditionEnum().compareTo(SqlConditionEnum.LIKE)==0){
-					stringBuilder.append("and ").append(sqlCondition.getColumnName()).append(" like ").append("'%"+sqlCondition.getColumnValue()+"%'");
-					break;
+					stringBuilder.append(" and ").append(sqlCondition.getColumnName()).append(" like ").append("'%"+sqlCondition.getColumnValue()+"%'");
+					continue;
 				}
 				if(sqlCondition.getSqlConditionEnum().compareTo(SqlConditionEnum.LT)==0){
-					stringBuilder.append("and ").append(sqlCondition.getColumnName()).append(" < ").append(sqlCondition.getColumnValue() instanceof Number ? (sqlCondition.getColumnValue()) : ("'"+sqlCondition.getColumnValue()+"'"));
-					break;
+					stringBuilder.append(" and ").append(sqlCondition.getColumnName()).append(" < ").append(sqlCondition.getColumnValue() instanceof Number ? (sqlCondition.getColumnValue()) : ("'"+sqlCondition.getColumnValue()+"'"));
+					continue;
 				}
 				if(sqlCondition.getSqlConditionEnum().compareTo(SqlConditionEnum.LE)==0){
-					stringBuilder.append("and ").append(sqlCondition.getColumnName()).append(" <= ").append(sqlCondition.getColumnValue() instanceof Number ? (sqlCondition.getColumnValue()) : ("'"+sqlCondition.getColumnValue()+"'"));
-					break;
+					stringBuilder.append(" and ").append(sqlCondition.getColumnName()).append(" <= ").append(sqlCondition.getColumnValue() instanceof Number ? (sqlCondition.getColumnValue()) : ("'"+sqlCondition.getColumnValue()+"'"));
+					continue;
 				}
 				if(sqlCondition.getSqlConditionEnum().compareTo(SqlConditionEnum.GT)==0){
-					stringBuilder.append("and ").append(sqlCondition.getColumnName()).append(" > ").append(sqlCondition.getColumnValue() instanceof Number ? (sqlCondition.getColumnValue()) : ("'"+sqlCondition.getColumnValue()+"'"));
-					break;
+					stringBuilder.append(" and ").append(sqlCondition.getColumnName()).append(" > ").append(sqlCondition.getColumnValue() instanceof Number ? (sqlCondition.getColumnValue()) : ("'"+sqlCondition.getColumnValue()+"'"));
+					continue;
 				}
 				if(sqlCondition.getSqlConditionEnum().compareTo(SqlConditionEnum.GE)==0){
-					stringBuilder.append("and ").append(sqlCondition.getColumnName()).append(" >= ").append(sqlCondition.getColumnValue() instanceof Number ? (sqlCondition.getColumnValue()) : ("'"+sqlCondition.getColumnValue()+"'"));
-					break;
+					stringBuilder.append(" and ").append(sqlCondition.getColumnName()).append(" >= ").append(sqlCondition.getColumnValue() instanceof Number ? (sqlCondition.getColumnValue()) : ("'"+sqlCondition.getColumnValue()+"'"));
+					continue;
 				}
 			}
 		}

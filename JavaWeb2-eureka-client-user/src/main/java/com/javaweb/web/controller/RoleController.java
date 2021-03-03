@@ -75,19 +75,15 @@ public class RoleController extends BaseController {
 		if(originRole==null){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"validated.role.modify.notExist");
 		}
-		if(!originRole.getRoleName().equals(role.getRoleName())){
-			ColumnsRepeatRequest<Role> roleColumnsRepeatRequest = new ColumnsRepeatRequest<Role>(new QueryWapper<Role>().eq(Role.roleNameColumn,role.getRoleName()),"validated.role.roleName.repeat");
-			BaseServiceValidateResult baseServiceValidateResult = baseValidateService.isColumnsValueRepeat(roleColumnsRepeatRequest,roleDao);
-			if(!baseServiceValidateResult.isValidatePass()){
-				return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,baseServiceValidateResult.getMessage());
-			}
+		ColumnsRepeatRequest<Role> roleColumnsRepeatRequest = new ColumnsRepeatRequest<Role>(new QueryWapper<Role>().neq(Role.roleIdColumn,originRole.getRoleId()).eq(Role.roleNameColumn,role.getRoleName()),"validated.role.roleName.repeat");
+		BaseServiceValidateResult baseServiceValidateResult = baseValidateService.isColumnsValueRepeat(roleColumnsRepeatRequest,roleDao);
+		if(!baseServiceValidateResult.isValidatePass()){
+			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,baseServiceValidateResult.getMessage());
 		}
-		if(!originRole.getRoleCode().equals(role.getRoleCode())){
-			ColumnsRepeatRequest<Role> userColumnsRepeatRequest = new ColumnsRepeatRequest<Role>(new QueryWapper<Role>().eq(Role.roleCodeColumn,role.getRoleCode()),"validated.role.roleCode.repeat");
-			BaseServiceValidateResult baseServiceValidateResult = baseValidateService.isColumnsValueRepeat(userColumnsRepeatRequest,roleDao);
-			if(!baseServiceValidateResult.isValidatePass()){
-				return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,baseServiceValidateResult.getMessage());
-			}
+		roleColumnsRepeatRequest = new ColumnsRepeatRequest<Role>(new QueryWapper<Role>().neq(Role.roleIdColumn,originRole.getRoleId()).eq(Role.roleCodeColumn,role.getRoleCode()),"validated.role.roleCode.repeat");
+		baseServiceValidateResult = baseValidateService.isColumnsValueRepeat(roleColumnsRepeatRequest,roleDao);
+		if(!baseServiceValidateResult.isValidatePass()){
+			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,baseServiceValidateResult.getMessage());
 		}
 		User currentUser = tokenData.getUser();
 		role.setUpdateDate(DateUtil.getDefaultDate());

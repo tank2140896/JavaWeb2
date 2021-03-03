@@ -10,6 +10,8 @@ import lombok.Setter;
 public class FileListRequest implements Serializable {
 
 	private static final long serialVersionUID = -2687232983308745956L;
+	
+	private String fileName;//文件名称
     
 	private Long currentPage = 1L;//默认当前第1页
 	

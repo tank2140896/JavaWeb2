@@ -3,6 +3,8 @@ package com.javaweb.enums;
 public enum SqlConditionEnum {
 
 	EQ,//相等
+
+	NEQ,//不相等
 	
 	LIKE,//模糊查询
 	

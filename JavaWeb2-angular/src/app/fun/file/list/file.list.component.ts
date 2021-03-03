@@ -133,8 +133,16 @@ export class FileListComponent implements OnInit {
   }
 
   //下载文件
-  public fileDwonloadFunction(id:string):void{
-    window.open(ApiConstant.getPath(ApiConstant.SYS_FILE_DOWNLOAD_FILE+'/'+id+'?token='+this.sessionService.getHeadToken().token,true));
+  public fileDwonloadFunction(id:string,originFileName:string):void{
+    //window.open(ApiConstant.getPath(ApiConstant.SYS_FILE_DOWNLOAD_FILE+'/'+id+'?token='+this.sessionService.getHeadToken().token,true));
+    this.httpClient.get(ApiConstant.getPath(ApiConstant.SYS_FILE_DOWNLOAD_FILE+'/'+id+'?token='+this.sessionService.getHeadToken().token,true),{responseType:'blob'}).subscribe(blob =>{
+      const a = document.createElement('a');
+      const objectUrl = URL.createObjectURL(blob);
+      a.href = objectUrl;
+      a.download = originFileName;
+      a.click();
+      URL.revokeObjectURL(objectUrl);
+    })
   }
 
   //删除文件

@@ -83,12 +83,10 @@ public class UserController extends BaseController {
 		if(originUser==null){
 			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"validated.user.modify.notExist");
 		}
-		if(!originUser.getUserName().equals(user.getUserName())){
-			ColumnsRepeatRequest<User> userColumnsRepeatRequest = new ColumnsRepeatRequest<User>(new QueryWapper<User>().eq(User.userNameColumn,user.getUserName()),"validated.user.userName.repeat");
-			BaseServiceValidateResult baseServiceValidateResult = baseValidateService.isColumnsValueRepeat(userColumnsRepeatRequest,userDao);
-			if(!baseServiceValidateResult.isValidatePass()){
-				return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,baseServiceValidateResult.getMessage());
-			}
+		ColumnsRepeatRequest<User> userColumnsRepeatRequest = new ColumnsRepeatRequest<User>(new QueryWapper<User>().neq(User.userIdColumn,originUser.getUserId()).eq(User.userNameColumn,user.getUserName()),"validated.user.userName.repeat");
+		BaseServiceValidateResult baseServiceValidateResult = baseValidateService.isColumnsValueRepeat(userColumnsRepeatRequest,userDao);
+		if(!baseServiceValidateResult.isValidatePass()){
+			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,baseServiceValidateResult.getMessage());
 		}
 		User currentUser = tokenData.getUser();
 		user.setPassword(null);//密码不在此处修改

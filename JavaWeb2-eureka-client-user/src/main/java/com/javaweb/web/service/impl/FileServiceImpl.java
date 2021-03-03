@@ -1,6 +1,7 @@
 package com.javaweb.web.service.impl;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -14,9 +15,12 @@ import com.javaweb.constant.SystemConstant;
 import com.javaweb.db.query.QueryWapper;
 import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.FileUtil;
+import com.javaweb.util.core.NumberFormatUtil;
+import com.javaweb.util.core.ObjectOperateUtil;
 import com.javaweb.util.core.SecretUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.file.FileListRequest;
+import com.javaweb.web.eo.file.FileListResponse;
 import com.javaweb.web.po.User;
 import com.javaweb.web.service.FileService;
 
@@ -58,10 +62,13 @@ public class FileServiceImpl extends BaseService implements FileService {
 
 	public Page list(FileListRequest fileListRequest) {
 		QueryWapper<com.javaweb.web.po.File> queryWapper = new QueryWapper<>();
+		queryWapper.like(com.javaweb.web.po.File.originFileNameColumn,fileListRequest.getFileName());
 		queryWapper.page(fileListRequest.getCurrentPage(),fileListRequest.getPageSize());
 		List<com.javaweb.web.po.File> list = fileDao.selectList(queryWapper);
 		Long count = fileDao.selectListCount(queryWapper);
-		Page page = new Page(fileListRequest,list,count);
+		List<FileListResponse> fileListResponseList = ObjectOperateUtil.copyListProperties(list,FileListResponse.class);
+		fileListResponseList.stream().forEach(e->e.setFileSizeAndFileUnit(NumberFormatUtil.getdefaultFormatCapacity(new BigDecimal(e.getFileSize()))));
+		Page page = new Page(fileListRequest,fileListResponseList,count);
 		return page;
 	}
 

@@ -58,6 +58,11 @@ public class QueryWapper<T> {
 		return queryWapper;
 	}
 	
+	public QueryWapper<T> neq(String columnName,Object columnValue){
+		sqlConditionList.add(new SqlCondition(SqlConditionEnum.NEQ,columnName,columnValue));
+		return queryWapper;
+	}
+	
 	public QueryWapper<T> like(String columnName,Object columnValue){
 		sqlConditionList.add(new SqlCondition(SqlConditionEnum.LIKE,columnName,columnValue));
 		return queryWapper;
