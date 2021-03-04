@@ -134,13 +134,13 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 			RequestMappingInfo requestMappingInfo = iterator.next();
 			String methodName = requestMappingInfo.getMethodsCondition().getMethods().toString().replace("[","").replace("]","");
 			String url = requestMappingInfo.getPatternsCondition().toString().replace("[","").replace("]", "").replace(" || ",",");
-			String name = null;
 			ControllerMethod controllerMethod = null;
 			if(urlMap.get(url)==null){
 				interfaces.setDataPermission(0);
 				try{
 					controllerMethod = map.get(requestMappingInfo).getMethodAnnotation(ControllerMethod.class);
 					if(controllerMethod!=null){
+						interfaces.setName(controllerMethod.interfaceName());
 						Class<?> c = controllerMethod.dataPermissionEntity();
 						if(!(ControllerMethod.class.getName().equals(c.getName()))){//不是DataPermission的实例，定义了明确的实体类
 							interfaces.setDataPermission(1);
@@ -151,7 +151,6 @@ public class InterfacesServiceImpl extends BaseService implements InterfacesServ
 					//do nothing
 				}
 				//url.matches("/web(?!/loginAccess).*")&&methodName.matches("GET||POST")
-				interfaces.setName(name);
 				interfaces.setUrl(url);
 				interfaces.setBaseUrl(url.split(CommonConstant.COMMA)[0].replaceAll("/\\{.*\\}",CommonConstant.EMPTY_VALUE));
 				interfaces.setMethod(methodName);

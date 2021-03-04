@@ -20,5 +20,7 @@ public class FileListResponse implements Serializable {
 	private String createDate;//创建时间
 
 	private String fileSizeAndFileUnit;//文件大小和单位
+	
+	private String filePath;//文件路径
 
 }

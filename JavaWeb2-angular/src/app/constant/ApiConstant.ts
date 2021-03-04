@@ -71,6 +71,8 @@ export class ApiConstant{
   public static SYS_DB_TABLES_CODE_GENERATE = '/web/sys/dbTables/codeGenerate';//数据库表代码生成接口
 
   public static SYS_FILE_LIST = '/web/sys/file/list';//文件列表
+  public static SYS_FILE_CONTENT_LIST = '/web/sys/file/contentList';//文件目录列表
+  public static SYS_FILE_ROOT_PATH = '/web/sys/file/fileRootPath';//文件根路径接口
   public static SYS_FILE_UPLOAD_FILE = '/web/sys/file/uploadFile';//上传文件
   public static SYS_FILE_DOWNLOAD_FILE = '/web/sys/file/downloadFile';//下载文件
   public static SYS_FILE_DETAIL = '/web/sys/file/detail';//文件详情

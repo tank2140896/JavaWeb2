@@ -1,0 +1,19 @@
+.box_div{
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .left_div{
+        height: 50px;
+        width: 800px;
+    }
+    .right_div{
+        margin-right:1%;
+        .file_name{
+            width: 200px;
+            vertical-align:middle;
+            text-align: center;
+        }
+    }
+}

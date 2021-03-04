@@ -87,6 +87,8 @@ public class ApiConstant {
 	public static final String FILE_UPLOAD = "/uploadFile";//文件上传接口
 	public static final String FILE_DOWNLOAD = "/downloadFile/{fileId}";//文件下载接口
 	public static final String FILE_LIST = "/list";//文件列表接口
+	public static final String FILE_CONTENT_LIST = "/contentList";//文件目录列表接口
+	public static final String FILE_ROOT_PATH = "/fileRootPath";//文件根路径接口
 	public static final String FILE_DETAIL = "/detail/{fileId}";//文件详情接口
 	public static final String FILE_DELETE = "/delete/{fileId}";//文件删除接口
 	

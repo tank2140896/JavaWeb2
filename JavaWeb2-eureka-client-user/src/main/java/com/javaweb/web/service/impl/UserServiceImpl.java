@@ -168,7 +168,7 @@ public class UserServiceImpl extends BaseService implements UserService {
 		String uploadMultipartFileName = multipartFile.getOriginalFilename();//得到上传文件的文件名称
 		String uploadFileTypes[] = uploadMultipartFileName.split("\\.");
 		String uploadFileName = userId+CommonConstant.DOT+uploadFileTypes[uploadFileTypes.length-1];
-		String rootPath = BaseTool.getFileRootPath();
+		String rootPath = BaseTool.getFileUploadPath();
 		FileUtil.makeFolder(new File(rootPath));
 		boolean writeSuccess = true;
 		try{

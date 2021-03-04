@@ -11,14 +11,20 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.javaweb.base.BaseService;
+import com.javaweb.base.BaseTool;
+import com.javaweb.constant.CommonConstant;
 import com.javaweb.constant.SystemConstant;
 import com.javaweb.db.query.QueryWapper;
 import com.javaweb.util.core.DateUtil;
 import com.javaweb.util.core.FileUtil;
 import com.javaweb.util.core.NumberFormatUtil;
 import com.javaweb.util.core.ObjectOperateUtil;
+import com.javaweb.util.core.PageUtil;
 import com.javaweb.util.core.SecretUtil;
+import com.javaweb.util.core.SystemUtil;
 import com.javaweb.util.entity.Page;
+import com.javaweb.web.eo.file.FileContentListRequest;
+import com.javaweb.web.eo.file.FileContentListResponse;
 import com.javaweb.web.eo.file.FileListRequest;
 import com.javaweb.web.eo.file.FileListResponse;
 import com.javaweb.web.po.User;
@@ -71,6 +77,50 @@ public class FileServiceImpl extends BaseService implements FileService {
 		Page page = new Page(fileListRequest,fileListResponseList,count);
 		return page;
 	}
+	
+	public Page contentList(FileContentListRequest fileContentListRequest) {
+		String fileFolderPath = fileContentListRequest.getFolderPath();
+		if(fileFolderPath==null||CommonConstant.EMPTY_VALUE.equals(fileFolderPath)){//默认根路径
+			if(SystemUtil.isLinux()){
+				fileFolderPath = "/";
+			}else{
+				fileFolderPath = BaseTool.getFileRootPath().split(":\\\\")[0]+":\\";
+			}
+		}
+		List<File> fileList = FileUtil.getAllFilesName(new File(fileFolderPath),new ArrayList<>(),false,false);
+		long count = (fileList==null?0L:fileList.size());
+		List<FileContentListResponse> responseList = new ArrayList<>(); 
+		fileList = PageUtil.getSubList(fileList,fileContentListRequest.getPageSize(),fileContentListRequest.getCurrentPage());
+		if(fileList!=null){
+			for(int i=0;i<fileList.size();i++){
+				FileContentListResponse fileContentListResponse = new FileContentListResponse();
+				File eachFile = fileList.get(i);
+				if(eachFile.isFile()){//文件
+					String tempPath = fileFolderPath.replaceAll("\\\\","\\\\\\\\");
+					if(!tempPath.endsWith("\\\\")){
+						tempPath += "\\\\"; 
+					}
+					QueryWapper<com.javaweb.web.po.File> queryWapper = new QueryWapper<>();
+					queryWapper.eq(com.javaweb.web.po.File.currentFileNameColumn,eachFile.getName());
+					queryWapper.eq(com.javaweb.web.po.File.fileFullPathColumn,(tempPath+eachFile.getName()));
+					com.javaweb.web.po.File fileDetail = fileDao.selectOne(queryWapper);
+					if(fileDetail!=null){
+						fileContentListResponse.setId(fileDetail.getId());
+						fileContentListResponse.setCreateDate(fileDetail.getCreateDate());
+						fileContentListResponse.setFileSizeAndFileUnit(NumberFormatUtil.getdefaultFormatCapacity(new BigDecimal(fileDetail.getFileSize())));
+						fileContentListResponse.setFilePath(fileDetail.getFileFullPath());
+						fileContentListResponse.setOriginFileName(fileDetail.getOriginFileName());
+					}
+				}
+				fileContentListResponse.setFile(eachFile.isFile());//是否是文件
+				fileContentListResponse.setName(eachFile.getName());//文件或目录名称
+				fileContentListResponse.setFileAbsolutePath(eachFile.getAbsolutePath());//文件绝对路径
+				responseList.add(fileContentListResponse);
+			}
+		}
+		Page page = new Page(fileContentListRequest,responseList,count);
+		return page;
+	}
 
 	public com.javaweb.web.po.File fileDetail(String id) {
 		return fileDao.selectByPk(id);
@@ -87,5 +137,5 @@ public class FileServiceImpl extends BaseService implements FileService {
 			fileDao.delete(eachId);
 		}
 	}
-	
+
 }

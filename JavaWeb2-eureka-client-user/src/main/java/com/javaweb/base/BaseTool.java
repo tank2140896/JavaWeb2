@@ -189,17 +189,26 @@ public class BaseTool extends BaseInject {
 	}
 	
 	/* -------------------------------------------------- 分界线 -------------------------------------------------- */
-	
 	//获取文件根路径
 	public static String getFileRootPath(){
 		String rootPath = CommonConstant.EMPTY_VALUE;
+		if(SystemUtil.isLinux()) {//linux路径
+            rootPath = BaseSystemMemory.getDictionaryValueByKey("file.root.linux.path","/tmp/file/");
+        } else {//windows路径
+        	rootPath = BaseSystemMemory.getDictionaryValueByKey("file.root.windows.path","E:\\file\\");
+        }
+		FileUtil.makeFolder(new File(rootPath));
+		return rootPath;
+	}
+	
+	//获取文件根路径
+	public static String getFileUploadPath(){
+		String rootPath = getFileRootPath();
 		String yearMonthDay = DateUtil.getDefaultDate(DateUtil.DATE_PATTERN_TYPE1);//年月日
 		int random = (int)(Math.random()*10);//0-9
 		if(SystemUtil.isLinux()) {//linux路径
-            rootPath = BaseSystemMemory.getDictionaryValueByKey("file.root.linux.path","/tmp/file/");
             rootPath += (random+"/"+yearMonthDay+"/");
         } else {//windows路径
-        	rootPath = BaseSystemMemory.getDictionaryValueByKey("file.root.windows.path","E:\\file\\");
         	rootPath += (random+"\\\\"+yearMonthDay+"\\\\");
         }
 		FileUtil.makeFolder(new File(rootPath));

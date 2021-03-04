@@ -1,56 +1,132 @@
-<div style="margin-top:1%;margin-left:1%">
-  文件名称<input type="text" style="height:35px;" placeholder="请输入文件名称" [(ngModel)]="fileListRequest.fileName">
-  <button type="button" class="btn btn-primary" style="margin-left:1%;" (click)="fileSearch(1)" *ngIf="fileListZone">查询</button>
-  <button type="button" class="btn btn-info" style="margin-left:1%;" (click)="reset()">重置</button>
-  <input type="file" style="width:200px;text-align:center;vertical-align:middle;margin-left:55%;" multiple="multiple" (change)="fileSelect($event)" *ngIf="fileUploadZone">
-  <button type="button" class="btn btn-success" style="margin-left:1%;" (click)="fileUpload()" *ngIf="fileUploadZone">文件上传</button>
-</div>
-<div class="col col-xl-12 col-lg-12" style="margin-top:1%;">
-  <div class="card mb-3">
-    <div class="card-body table table-hover">
-      <table class="table">
-        <thead>
-          <tr class="text-center">
-            <th>序号</th>
-            <th>文件名称</th>
-            <th>文件大小</th>
-            <th>上传日期</th>
-            <th>操作</th>
-          </tr>
-        </thead>
-        <tbody *ngIf="resultPage.data==resultPage.dataLoading">
-          <tr class="text-center">
-            <td colspan=8>数据获取中...</td>
-          </tr>
-        </tbody>
-        <tbody *ngIf="resultPage.data==null">
-          <tr class="text-center">
-            <td colspan=8>无数据</td>
-          </tr>
-        </tbody>
-        <tbody *ngIf="resultPage.data!=null&&resultPage.data!=resultPage.dataLoading">
-          <tr *ngFor="let eachData of resultPage.data;let xh=index" class="text-center">
-            <td>{{(xh+1)+(resultPage.currentPage-1)*resultPage.pageSize}}</td>
-            <td>{{eachData.originFileName}}</td>
-            <td>{{eachData.fileSizeAndFileUnit}}</td>
-            <td>{{eachData.createDate}}</td>
-            <td>
-              <button style="margin-right:10px;" *ngIf="fileDownloadZone" class="btn btn-sm btn-info" (click)="fileDwonloadFunction(eachData.id,eachData.originFileName)">下载文件</button>
-              <button style="margin-right:10px;" *ngIf="fileDeleteZone" class="btn btn-sm btn-danger" (click)="fileDeleteFunction(eachData.id)">删除文件</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+<div style="margin-top:1%;">
+  <div *ngIf="fileListZone" style="margin-top:1%;text-align:center;"><h3>通用类型</h3></div>
+  <div *ngIf="fileListZone">
+    <div style="margin-left:1%;">
+      文件名称<input type="text" style="height:35px;" placeholder="请输入文件名称" [(ngModel)]="fileListRequest.fileName">
+      <button type="button" class="btn btn-primary" style="margin-left:1%;" (click)="fileSearch(1)" *ngIf="fileListZone">查询</button>
+      <button type="button" class="btn btn-info" style="margin-left:1%;" (click)="reset()">重置</button>
+      <input type="file" style="width:200px;text-align:center;vertical-align:middle;margin-left:58.5%;" multiple="multiple" (change)="fileSelect($event)" *ngIf="fileUploadZone">
+      <button type="button" class="btn btn-success" style="margin-right:1%;float:right;" (click)="fileUpload(null)" *ngIf="fileUploadZone">文件上传</button>
     </div>
-    <div *ngIf="resultPage.data!=null&&resultPage.data!=resultPage.dataLoading">
-      <div style="float:right;padding:0px 1em 1ex 0em;">
-        <span style="margin-right:10px;"><a *ngIf="resultPage.currentPage>1" (click)="fileSearch(1)" class="btn btn-info">首页</a></span>
-        <span style="margin-right:10px;"><a *ngIf="resultPage.currentPage>1" (click)="fileSearch(resultPage.currentPage-1)" class="btn btn-info">上一页</a></span>
-        <span style="margin-right:10px;"style="margin-right:10px;" *ngFor="let eachPage of resultPage.pageList"><a (click)="fileSearch(eachPage)" class="btn btn-info" [ngClass]="{'active':(resultPage.currentPage==eachPage)}">{{eachPage}}</a></span>
-        <span style="margin-right:10px;"><a *ngIf="resultPage.totalPage>resultPage.currentPage" (click)="fileSearch(resultPage.currentPage+1)" class="btn btn-info">下一页</a></span>
-        <span style="margin-right:10px;"><a *ngIf="resultPage.totalPage>resultPage.currentPage" (click)="fileSearch(resultPage.totalPage)" class="btn btn-info">末页</a></span>
-        <span *ngIf="resultPage.totalPage>=resultPage.currentPage">当前第{{resultPage.currentPage}}/{{resultPage.totalPage}}页，共{{resultPage.totalSize}}条</span>
+    <div class="col col-xl-12 col-lg-12" style="margin-top:1%;">
+      <div class="card mb-3">
+        <div class="card-body table table-hover">
+          <table class="table">
+            <thead>
+              <tr class="text-center">
+                <th>序号</th>
+                <th>文件名称</th>
+                <th>文件大小</th>
+                <th>文件路径</th>
+                <th>上传日期</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="resultPage.data==resultPage.dataLoading">
+              <tr class="text-center">
+                <td colspan=5>数据获取中...</td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="resultPage.data==null">
+              <tr class="text-center">
+                <td colspan=5>无数据</td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="resultPage.data!=null&&resultPage.data!=resultPage.dataLoading">
+              <tr *ngFor="let eachData of resultPage.data;let xh=index" class="text-center">
+                <td>{{(xh+1)+(resultPage.currentPage-1)*resultPage.pageSize}}</td>
+                <td>{{eachData.originFileName}}</td>
+                <td>{{eachData.fileSizeAndFileUnit}}</td>
+                <td>{{eachData.filePath}}</td>
+                <td>{{eachData.createDate}}</td>
+                <td>
+                  <button style="margin-right:10px;" *ngIf="fileDownloadZone" class="btn btn-sm btn-info" (click)="fileDwonloadFunction(eachData.id,eachData.originFileName)">下载文件</button>
+                  <button style="margin-right:10px;" *ngIf="fileDeleteZone" class="btn btn-sm btn-danger" (click)="fileDeleteFunction(eachData.id)">删除文件</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="resultPage.data!=null&&resultPage.data!=resultPage.dataLoading">
+          <div style="float:right;padding:0px 1em 1ex 0em;">
+            <span style="margin-right:10px;"><a *ngIf="resultPage.currentPage>1" (click)="fileSearch(1)" class="btn btn-info">首页</a></span>
+            <span style="margin-right:10px;"><a *ngIf="resultPage.currentPage>1" (click)="fileSearch(resultPage.currentPage-1)" class="btn btn-info">上一页</a></span>
+            <span style="margin-right:10px;"style="margin-right:10px;" *ngFor="let eachPage of resultPage.pageList"><a (click)="fileSearch(eachPage)" class="btn btn-info" [ngClass]="{'active':(resultPage.currentPage==eachPage)}">{{eachPage}}</a></span>
+            <span style="margin-right:10px;"><a *ngIf="resultPage.totalPage>resultPage.currentPage" (click)="fileSearch(resultPage.currentPage+1)" class="btn btn-info">下一页</a></span>
+            <span style="margin-right:10px;"><a *ngIf="resultPage.totalPage>resultPage.currentPage" (click)="fileSearch(resultPage.totalPage)" class="btn btn-info">末页</a></span>
+            <span *ngIf="resultPage.totalPage>=resultPage.currentPage">当前第{{resultPage.currentPage}}/{{resultPage.totalPage}}页，共{{resultPage.totalSize}}条</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
-</div>
+  <div *ngIf="fileContentListZone" style="margin-top:1%;text-align:center;"><h3>仿网盘目录结构类型</h3></div>
+  <div *ngIf="fileContentListZone">
+    <div style="margin-left:1%;">
+      <div class="box_div">
+          <div class="left_div">
+            <span>当前目录：{{folderPath}}</span>
+            <button type="button" class="btn btn-primary" style="margin-left:1%;" *ngIf="fileContentBackFlag" (click)="fileContentBack()">返回上一级</button>
+          </div>
+          <div class="right_div">
+            <input type="file" class="file_name" multiple="multiple" (change)="fileSelect($event)" *ngIf="fileUploadZone">
+            <button type="button" class="btn btn-success" (click)="fileUpload(folderPath)" *ngIf="fileUploadZone">文件上传</button>
+          </div>
+      </div>
+    </div>
+    <div class="col col-xl-12 col-lg-12" style="margin-top:1%;">
+      <div class="card mb-3">
+        <div class="card-body table table-hover">
+          <table class="table">
+            <thead>
+              <tr class="text-center">
+                <th>序号</th>            
+                <th>类型</th>
+                <th>名称</th>
+                <th>文件大小</th>
+                <th>文件路径</th>
+                <th>上传日期</th>
+                <th>操作</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="resultPage2.data==resultPage2.dataLoading">
+              <tr class="text-center">
+                <td colspan=7>数据获取中...</td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="resultPage2.data==null">
+              <tr class="text-center">
+                <td colspan=7>无数据</td>
+              </tr>
+            </tbody>
+            <tbody *ngIf="resultPage2.data!=null&&resultPage2.data!=resultPage2.dataLoading">
+              <tr *ngFor="let eachData of resultPage2.data;let xh=index" class="text-center">
+                <td>{{(xh+1)+(resultPage2.currentPage-1)*resultPage2.pageSize}}</td>
+                <td *ngIf="eachData.file==true"><span style="color:red;">文件</span></td><td *ngIf="eachData.file==false"><span style="color:blue;">目录</span></td>
+                <td *ngIf="eachData.file==true">{{eachData.name}}</td><td *ngIf="eachData.file==false"><a href="javascript:void(0);" (click)="fileContentSearch(1,eachData.fileAbsolutePath)">{{eachData.name}}</a></td>
+                <td>{{eachData.fileSizeAndFileUnit}}</td>
+                <td>{{eachData.filePath}}</td>
+                <td>{{eachData.createDate}}</td>
+                <td>
+                  <span *ngIf="eachData.id==null">未与数据库同步</span>
+                  <button style="margin-right:10px;" *ngIf="(fileDownloadZone)&&(eachData.id!=null)" class="btn btn-sm btn-info" (click)="fileDwonloadFunction(eachData.id,eachData.originFileName)">下载文件</button>
+                  <button style="margin-right:10px;" *ngIf="(fileDeleteZone)&&(eachData.id!=null)" class="btn btn-sm btn-danger" (click)="fileDeleteFunction(eachData.id)">删除文件</button> 
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div *ngIf="resultPage2.data!=null&&resultPage2.data!=resultPage2.dataLoading">
+          <div style="float:right;padding:0px 1em 1ex 0em;">
+            <span style="margin-right:10px;"><a *ngIf="resultPage2.currentPage>1" (click)="fileContentSearch(1,folderPath)" class="btn btn-info">首页</a></span>
+            <span style="margin-right:10px;"><a *ngIf="resultPage2.currentPage>1" (click)="fileContentSearch(resultPage2.currentPage-1,folderPath)" class="btn btn-info">上一页</a></span>
+            <span style="margin-right:10px;"style="margin-right:10px;" *ngFor="let eachPage of resultPage2.pageList"><a (click)="fileContentSearch(eachPage,folderPath)" class="btn btn-info" [ngClass]="{'active':(resultPage2.currentPage==eachPage)}">{{eachPage}}</a></span>
+            <span style="margin-right:10px;"><a *ngIf="resultPage2.totalPage>resultPage2.currentPage" (click)="fileContentSearch(resultPage2.currentPage+1,folderPath)" class="btn btn-info">下一页</a></span>
+            <span style="margin-right:10px;"><a *ngIf="resultPage2.totalPage>resultPage2.currentPage" (click)="fileContentSearch(resultPage2.totalPage,folderPath)" class="btn btn-info">末页</a></span>
+            <span *ngIf="resultPage.totalPage>=resultPage2.currentPage">当前第{{resultPage2.currentPage}}/{{resultPage2.totalPage}}页，共{{resultPage2.totalSize}}条</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+<div>

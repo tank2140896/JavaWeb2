@@ -69,12 +69,20 @@ public class FileUtil {
 	}
 	
 	//递归获得某个文件夹下的所有文件夹和文件名称
-	public static List<File> getAllFilesName(File file,List<File> fileList){
+	public static List<File> getAllFilesName(File file,List<File> fileList,boolean recursion,boolean showHidden){
 		if(file.isDirectory()){
 			File files[] = file.listFiles();
 			for (int i = 0; i < files.length; i++) {
-				fileList.add(files[i]);
-				getAllFilesName(files[i],fileList);
+				if(showHidden){
+					fileList.add(files[i]);
+				}else{
+					if(!files[i].isHidden()){
+						fileList.add(files[i]);
+					}
+				}
+				if(recursion){
+					getAllFilesName(files[i],fileList,recursion,showHidden);
+				}
 			}
 		}
 		return fileList;

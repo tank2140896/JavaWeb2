@@ -21,10 +21,13 @@ import com.javaweb.base.BaseController;
 import com.javaweb.base.BaseResponseResult;
 import com.javaweb.base.BaseTool;
 import com.javaweb.constant.ApiConstant;
+import com.javaweb.constant.CommonConstant;
 import com.javaweb.enums.HttpCodeEnum;
 import com.javaweb.util.core.FileUtil;
+import com.javaweb.util.core.SystemUtil;
 import com.javaweb.util.entity.Page;
 import com.javaweb.web.eo.TokenData;
+import com.javaweb.web.eo.file.FileContentListRequest;
 import com.javaweb.web.eo.file.FileListRequest;
 
 /**
@@ -50,7 +53,7 @@ public class FileController extends BaseController{
 	
 	@PostMapping(ApiConstant.FILE_UPLOAD)
 	@ControllerMethod(interfaceName="文件上传接口")
-	public BaseResponseResult uploadFile(@TokenDataAnnotation TokenData tokenData,@RequestParam(value="file",required=true) MultipartFile multipartFile[]) {
+	public BaseResponseResult uploadFile(@TokenDataAnnotation TokenData tokenData,@RequestParam(value="file",required=true) MultipartFile multipartFile[],@RequestParam(value="folderPath",required=false) String folderPath) {
     	try{
     		//上传文件大小校验，还可以校验总上传文件的大小
     		long total = 0;
@@ -65,10 +68,7 @@ public class FileController extends BaseController{
         			return getBaseResponseResult(HttpCodeEnum.VALIDATE_ERROR,"validated.file.upload.totalFileSize.limit");
         		}
         	}
-    		//获得文件根路径
-    		String rootPath = BaseTool.getFileRootPath();
-    		//上传文件并保存相关文件信息到数据库
-    		List<String> list = fileService.uploadFile(multipartFile,rootPath,tokenData.getUser());
+    		List<String> list = fileService.uploadFile(multipartFile,folderPath==null?BaseTool.getFileUploadPath():folderPath.replaceAll("\\\\","\\\\\\\\"),tokenData.getUser());
     		return getBaseResponseResult(HttpCodeEnum.SUCCESS,"file.upload.success",list);
     	}catch(Exception e){
     		return getBaseResponseResult(HttpCodeEnum.INTERNAL_ERROR,"file.upload.fail");
@@ -97,6 +97,25 @@ public class FileController extends BaseController{
     public BaseResponseResult list(@RequestBody FileListRequest fileListRequest){
     	Page page = fileService.list(fileListRequest);
     	return getBaseResponseResult(HttpCodeEnum.SUCCESS,"file.list.success",page);
+    }
+    
+    @PostMapping(ApiConstant.FILE_CONTENT_LIST)
+    @ControllerMethod(interfaceName="文件目录列表接口")
+    public BaseResponseResult contentList(@RequestBody FileContentListRequest fileContentListRequest){
+    	Page page = fileService.contentList(fileContentListRequest);
+    	return getBaseResponseResult(HttpCodeEnum.SUCCESS,"file.contentList.success",page);
+    }
+    
+    @GetMapping(ApiConstant.FILE_ROOT_PATH)
+    @ControllerMethod(interfaceName="文件根路径接口")
+    public BaseResponseResult fileRootPath(){
+    	String fileFolderPath = CommonConstant.NULL_VALUE;
+    	if(SystemUtil.isLinux()){
+			fileFolderPath = "/";
+		}else{
+			fileFolderPath = BaseTool.getFileRootPath().split(":\\\\")[0]+":\\";
+		}
+    	return getBaseResponseResult(HttpCodeEnum.SUCCESS,"file.fileRootPath.success",fileFolderPath);
     }
     
     @GetMapping(ApiConstant.FILE_DETAIL)
