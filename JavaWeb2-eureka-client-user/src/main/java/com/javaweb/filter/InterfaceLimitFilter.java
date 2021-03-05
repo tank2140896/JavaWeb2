@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
-import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -35,10 +34,6 @@ public class InterfaceLimitFilter implements Filter {
 	//import org.slf4j.Logger;
 	//import org.slf4j.LoggerFactory;
 	//private Logger logger = LoggerFactory.getLogger(InterfaceLimitFilter.class);
-	
-	public void init(FilterConfig filterConfig) throws ServletException {
-
-    }
 
 	public void doFilter(ServletRequest request,ServletResponse response,FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest httpServletRequest = (HttpServletRequest)request;
@@ -48,26 +43,36 @@ public class InterfaceLimitFilter implements Filter {
 		Optional<Interfaces> optional = list.stream().filter(e->url.startsWith(e.getBaseUrl())).findFirst();
 		if(optional.isPresent()){
 			String key = CommonConstant.EMPTY_VALUE;
-			if(url!=null&&url.startsWith(SystemConstant.URL_WEB_INTERCEPTOR_START_PREFIX)){
-				TokenData tokenData = BaseTool.getTokenData(BaseTool.getToken(httpServletRequest));
-				if((tokenData!=null)&&(tokenData.getUser()!=null)&&(!CommonConstant.EMPTY_VALUE.equals(StringUtil.handleNullString(tokenData.getUser().getUserId())))){
-					key = tokenData.getUser().getUserId() + CommonConstant.COMMA + url;//禁用户
-				}else{
-					key = HttpUtil.getIpAddress(httpServletRequest) + CommonConstant.COMMA + url;//禁IP
-				}
+			TokenData tokenData = BaseTool.getTokenData(BaseTool.getToken(httpServletRequest));
+			if((tokenData!=null)&&(tokenData.getUser()!=null)&&(!CommonConstant.EMPTY_VALUE.equals(StringUtil.handleNullString(tokenData.getUser().getUserId())))){
+				key = tokenData.getUser().getUserId() + CommonConstant.COMMA + url;//禁用户
 			}else{
 				key = HttpUtil.getIpAddress(httpServletRequest) + CommonConstant.COMMA + url;//禁IP
 			}
 			//logger.info("接口限流key值为："+key);
 			BaseTool.getRedisTemplate().opsForHash().increment(SystemConstant.REDIS_INTERFACE_COUNT_KEY,url,1);//接口调用次数加1（接口调用次数统计，若不需要使用注释掉即可）
 			Interfaces interfaces = optional.get();
-			//TODO 这里还未完善，目前只支持秒且其它字段也还没有格式限制
-			if(("秒".equals(interfaces.getUnit()))&&(interfaces.getTimes()!=null)&&(interfaces.getCounts()!=null)){
-				boolean isSuccess = BaseTool.getRedisTemplate().opsForValue().setIfAbsent(key,Integer.parseInt(interfaces.getCounts()),Integer.parseInt(interfaces.getTimes()),TimeUnit.SECONDS);//可以设置在5秒内不能重复提交表单
-				if(isSuccess){
+			//目前只支持秒分时日
+			TimeUnit timeUnit = null;
+			if("秒".equals(interfaces.getUnit())){
+				timeUnit = TimeUnit.SECONDS;
+			}else if("分".equals(interfaces.getUnit())){
+				timeUnit = TimeUnit.MINUTES;
+			}else if("时".equals(interfaces.getUnit())){
+				timeUnit = TimeUnit.HOURS;
+			}else if("日".equals(interfaces.getUnit())){
+				timeUnit = TimeUnit.DAYS;
+			}
+			if(timeUnit!=null&&interfaces.getTimes()!=null&&interfaces.getCounts()!=null){
+				try{
+					boolean isSuccess = BaseTool.getRedisTemplate().opsForValue().setIfAbsent(key,Integer.parseInt(interfaces.getCounts()),Integer.parseInt(interfaces.getTimes()),TimeUnit.SECONDS);//可以设置在5秒内不能重复提交表单
+					if(isSuccess){
+						chain.doFilter(request,response);
+					}else{
+						httpServletRequest.getRequestDispatcher(ApiConstant.REQUEST_LIMIT).forward(request,response);
+					}
+				}catch(Exception e){
 					chain.doFilter(request,response);
-				}else{
-					httpServletRequest.getRequestDispatcher(ApiConstant.REQUEST_LIMIT).forward(request,response);
 				}
 			}else{
 				chain.doFilter(request,response);
