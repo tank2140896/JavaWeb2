@@ -56,9 +56,11 @@ public class RedisConfig {
 		genericObjectPoolConfig.setMaxTotal(redisParameter.getMaxTotal());
 		genericObjectPoolConfig.setMaxWaitMillis(redisParameter.getMaxWaitMillis());
 		LettuceClientConfiguration lettuceClientConfiguration = LettucePoolingClientConfiguration.builder().commandTimeout(Duration.ofMillis(redisParameter.getCommandTimeout())).poolConfig(genericObjectPoolConfig).build();
-        LettuceConnectionFactory factory = new LettuceConnectionFactory(redisStandaloneConfiguration,lettuceClientConfiguration);
-        factory.afterPropertiesSet();//必须初始化实例
-        return factory;
+		LettuceConnectionFactory factory = new LettuceConnectionFactory(redisStandaloneConfiguration,lettuceClientConfiguration);
+		//factory.setDatabase(0);//默认0（可选值：0-15）
+		//factory.setValidateConnection(true);//连接校验
+		factory.afterPropertiesSet();//必须初始化实例
+		return factory;
 	}
 	
     @Bean("redisTemplate")
