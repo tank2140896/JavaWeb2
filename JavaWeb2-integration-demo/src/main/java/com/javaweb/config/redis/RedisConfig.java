@@ -45,9 +45,11 @@ public class RedisConfig {
 		genericObjectPoolConfig.setMaxTotal(redisParameter1.getMaxTotal());
 		genericObjectPoolConfig.setMaxWaitMillis(redisParameter1.getMaxWaitMillis());
 		LettuceClientConfiguration lettuceClientConfiguration = LettucePoolingClientConfiguration.builder().commandTimeout(Duration.ofMillis(redisParameter1.getCommandTimeout())).poolConfig(genericObjectPoolConfig).build();
-        LettuceConnectionFactory factory = new LettuceConnectionFactory(redisStandaloneConfiguration,lettuceClientConfiguration);
-        factory.afterPropertiesSet();//必须初始化实例
-        return factory;
+		LettuceConnectionFactory factory = new LettuceConnectionFactory(redisStandaloneConfiguration,lettuceClientConfiguration);
+		//factory.setDatabase(0);//默认0（可选值：0-15）
+		//factory.setValidateConnection(true);//连接校验
+		factory.afterPropertiesSet();//必须初始化实例
+		return factory;
 	}
 	
 	//redis连接2
@@ -62,9 +64,11 @@ public class RedisConfig {
 		genericObjectPoolConfig.setMaxTotal(redisParameter2.getMaxTotal());
 		genericObjectPoolConfig.setMaxWaitMillis(redisParameter2.getMaxWaitMillis());
 		LettuceClientConfiguration lettuceClientConfiguration = LettucePoolingClientConfiguration.builder().commandTimeout(Duration.ofMillis(redisParameter2.getCommandTimeout())).poolConfig(genericObjectPoolConfig).build();
-        LettuceConnectionFactory factory = new LettuceConnectionFactory(redisStandaloneConfiguration,lettuceClientConfiguration);
-        factory.afterPropertiesSet();//必须初始化实例
-        return factory;
+		LettuceConnectionFactory factory = new LettuceConnectionFactory(redisStandaloneConfiguration,lettuceClientConfiguration);
+		//factory.setDatabase(0);//默认0（可选值：0-15）
+		//factory.setValidateConnection(true);//连接校验
+		factory.afterPropertiesSet();//必须初始化实例
+		return factory;
 	}
 	
     @Bean("redisTemplate1")
