@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.github.tobato.fastdfs.domain.fdfs.FileInfo;
 import com.github.tobato.fastdfs.domain.fdfs.MetaData;
 import com.github.tobato.fastdfs.domain.fdfs.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
@@ -22,6 +23,13 @@ public class FastDfsService {
     
     @Autowired
     private FastFileStorageClient storageClient ;
+    
+    /**
+	@Autowired
+	private DefaultTrackerClient defaultTrackerClient;
+	List<GroupState> groupStates = defaultTrackerClient.listGroups();
+	List<StorageState> storageStates = defaultTrackerClient.listStorages(groupName);
+    */
     
     /**
      * 上传文件
@@ -44,6 +52,11 @@ public class FastDfsService {
     public void deleteFile(String fileUrl) throws Exception {
     	StorePath storePath = StorePath.parseFromUrl(fileUrl);
         storageClient.deleteFile(storePath.getGroup(),storePath.getPath());
+    }
+    
+    //参考：https://blog.csdn.net/SIMBA1949/article/details/101761771
+    public FileInfo queryFileInfo(String groupName,String remoteFileName) throws Exception {
+    	return storageClient.queryFileInfo(groupName, remoteFileName);
     }
 	
     //
